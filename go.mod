@@ -1,4 +1,4 @@
-module github.com/GoogleCloudPlatform/terraform-google-mapper
+module github.com/GoogleCloudPlatform/terraform-google-conversion
 
 require (
 	cloud.google.com/go v0.36.0
