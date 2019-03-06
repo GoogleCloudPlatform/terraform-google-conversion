@@ -14,7 +14,27 @@
 
 package google
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
+
+func GetComputeHttpsHealthCheckCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeHttpsHealthCheckApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.HttpsHealthCheck",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "HttpsHealthCheck",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
 
 func GetComputeHttpsHealthCheckApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})

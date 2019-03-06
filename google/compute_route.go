@@ -21,6 +21,23 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
+func GetComputeRouteCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeRouteApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.Route",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "Route",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeRouteApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	destRangeProp, err := expandComputeRouteDestRange(d.Get("dest_range"), d, config)

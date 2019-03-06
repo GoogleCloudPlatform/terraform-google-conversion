@@ -22,6 +22,23 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
+func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeForwardingRuleApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.ForwardingRule",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "ForwardingRule",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeForwardingRuleApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeForwardingRuleDescription(d.Get("description"), d, config)

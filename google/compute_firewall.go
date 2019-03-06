@@ -43,6 +43,23 @@ func resourceComputeFirewallRuleHash(v interface{}) int {
 	return hashcode.String(buf.String())
 }
 
+func GetComputeFirewallCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeFirewallApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.Firewall",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "Firewall",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeFirewallApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	allowedProp, err := expandComputeFirewallAllow(d.Get("allow"), d, config)

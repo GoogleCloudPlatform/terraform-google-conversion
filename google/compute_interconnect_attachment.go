@@ -19,6 +19,23 @@ import (
 	"reflect"
 )
 
+func GetComputeInterconnectAttachmentCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeInterconnectAttachmentApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.InterconnectAttachment",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "InterconnectAttachment",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeInterconnectAttachmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	interconnectProp, err := expandComputeInterconnectAttachmentInterconnect(d.Get("interconnect"), d, config)
