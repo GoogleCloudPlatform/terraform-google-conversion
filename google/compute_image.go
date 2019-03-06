@@ -19,6 +19,23 @@ import (
 	"reflect"
 )
 
+func GetComputeImageCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeImageApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.Image",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "Image",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeImageApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeImageDescription(d.Get("description"), d, config)
@@ -107,7 +124,16 @@ func expandComputeImageLabelFingerprint(v interface{}, d TerraformResourceData, 
 }
 
 func expandComputeImageLicenses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		f, err := parseGlobalFieldValue("licenses", raw.(string), "project", d, config, true)
+		if err != nil {
+			return nil, fmt.Errorf("Invalid value for licenses: %s", err)
+		}
+		req = append(req, f.RelativeLink())
+	}
+	return req, nil
 }
 
 func expandComputeImageName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

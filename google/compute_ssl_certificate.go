@@ -15,10 +15,28 @@
 package google
 
 import (
+	"fmt"
 	"reflect"
 
 	"github.com/hashicorp/terraform/helper/resource"
 )
+
+func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeSslCertificateApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.SslCertificate",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "SslCertificate",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
 
 func GetComputeSslCertificateApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})

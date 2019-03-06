@@ -125,6 +125,23 @@ func getVpnTunnelLink(config *Config, project string, region string, tunnel stri
 
 }
 
+func GetComputeVpnTunnelCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeVpnTunnelApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.VpnTunnel",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "VpnTunnel",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeVpnTunnelApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeVpnTunnelName(d.Get("name"), d, config)

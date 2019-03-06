@@ -19,6 +19,23 @@ import (
 	"reflect"
 )
 
+func GetComputeVpnGatewayCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeVpnGatewayApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.VpnGateway",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "VpnGateway",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeVpnGatewayApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeVpnGatewayDescription(d.Get("description"), d, config)

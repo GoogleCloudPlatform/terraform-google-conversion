@@ -19,6 +19,23 @@ import (
 	"reflect"
 )
 
+func GetComputeTargetHttpProxyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeTargetHttpProxyApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.TargetHttpProxy",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "TargetHttpProxy",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeTargetHttpProxyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeTargetHttpProxyDescription(d.Get("description"), d, config)

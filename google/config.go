@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/hashicorp/terraform/helper/logging"
 	"github.com/hashicorp/terraform/helper/pathorcontents"
@@ -35,7 +36,6 @@ import (
 	"google.golang.org/api/iam/v1"
 	cloudlogging "google.golang.org/api/logging/v2"
 	"google.golang.org/api/pubsub/v1"
-	redis "google.golang.org/api/redis/v1beta1"
 	runtimeconfig "google.golang.org/api/runtimeconfig/v1beta1"
 	"google.golang.org/api/servicemanagement/v1"
 	"google.golang.org/api/serviceusage/v1"
@@ -76,7 +76,6 @@ type Config struct {
 	clientKms                    *cloudkms.Service
 	clientLogging                *cloudlogging.Service
 	clientPubsub                 *pubsub.Service
-	clientRedis                  *redis.Service
 	clientResourceManager        *cloudresourcemanager.Service
 	clientResourceManagerV2Beta1 *resourceManagerV2Beta1.Service
 	clientRuntimeconfig          *runtimeconfig.Service
@@ -116,6 +115,10 @@ func (c *Config) LoadAndValidate() error {
 
 	client := oauth2.NewClient(context.Background(), tokenSource)
 	client.Transport = logging.NewTransport("Google", client.Transport)
+	// Each individual request should return within 30s - timeouts will be retried.
+	// This is a timeout for, e.g. a single GET request of an operation - not a
+	// timeout for the maximum amount of time a logical request can take.
+	client.Timeout, _ = time.ParseDuration("30s")
 
 	terraformVersion := httpclient.UserAgentString()
 	providerVersion := fmt.Sprintf("terraform-provider-google/%s", version.ProviderVersion)
@@ -208,13 +211,6 @@ func (c *Config) LoadAndValidate() error {
 		return err
 	}
 	c.clientDataflow.UserAgent = userAgent
-
-	log.Printf("[INFO] Instantiating Google Cloud Redis Client...")
-	c.clientRedis, err = redis.New(client)
-	if err != nil {
-		return err
-	}
-	c.clientRedis.UserAgent = userAgent
 
 	log.Printf("[INFO] Instantiating Google Cloud ResourceManager Client...")
 	c.clientResourceManager, err = cloudresourcemanager.New(client)

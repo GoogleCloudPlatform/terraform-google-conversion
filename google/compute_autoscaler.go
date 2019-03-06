@@ -19,6 +19,23 @@ import (
 	"reflect"
 )
 
+func GetComputeAutoscalerCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeAutoscalerApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.Autoscaler",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "Autoscaler",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeAutoscalerApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeAutoscalerName(d.Get("name"), d, config)

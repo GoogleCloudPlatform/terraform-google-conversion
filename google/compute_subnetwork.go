@@ -50,6 +50,23 @@ func splitSubnetID(id string) (region string, name string) {
 	return
 }
 
+func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeSubnetworkApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.Subnetwork",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "Subnetwork",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeSubnetworkApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeSubnetworkDescription(d.Get("description"), d, config)

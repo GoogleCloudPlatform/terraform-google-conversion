@@ -19,6 +19,23 @@ import (
 	"reflect"
 )
 
+func GetComputeRegionAutoscalerCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	if obj, err := GetComputeRegionAutoscalerApiObject(d, config); err == nil {
+		return Asset{
+			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Type: "google.compute.RegionAutoscaler",
+			Resource: &AssetResource{
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				DiscoveryName:        "RegionAutoscaler",
+				Data:                 obj,
+			},
+		}, nil
+	} else {
+		return Asset{}, err
+	}
+}
+
 func GetComputeRegionAutoscalerApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeRegionAutoscalerName(d.Get("name"), d, config)
