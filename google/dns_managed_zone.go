@@ -14,15 +14,16 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetDnsManagedZoneCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetDnsManagedZoneApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//dns.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.dns.ManagedZone",
 			Resource: &AssetResource{
 				Version:              "v1",

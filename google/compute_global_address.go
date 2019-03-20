@@ -14,15 +14,16 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetComputeGlobalAddressCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//compute.googleapis.com/projects/{{project}}/global/addresses/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetComputeGlobalAddressApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.compute.GlobalAddress",
 			Resource: &AssetResource{
 				Version:              "v1",

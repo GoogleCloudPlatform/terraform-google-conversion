@@ -14,15 +14,16 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetAppEngineFirewallRuleCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//appengine.googleapis.com/apps/{{project}}/firewall/ingressRules/{{priority}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetAppEngineFirewallRuleApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//appengine.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.appengine.FirewallRule",
 			Resource: &AssetResource{
 				Version:              "v1",

@@ -43,9 +43,13 @@ func sslPolicyCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
 }
 
 func GetComputeSslPolicyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//compute.googleapis.com/projects/{{project}}/global/sslPolicies/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetComputeSslPolicyApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.compute.SslPolicy",
 			Resource: &AssetResource{
 				Version:              "v1",

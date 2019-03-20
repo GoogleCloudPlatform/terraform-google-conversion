@@ -23,9 +23,13 @@ import (
 )
 
 func GetSpannerInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//spanner.googleapis.com/projects/{{project}}/instances/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetSpannerInstanceApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//spanner.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.spanner.Instance",
 			Resource: &AssetResource{
 				Version:              "v1",

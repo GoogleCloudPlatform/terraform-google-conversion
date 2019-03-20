@@ -21,9 +21,13 @@ import (
 )
 
 func GetPubsubSubscriptionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//pubsub.googleapis.com/projects/{{project}}/subscriptions/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetPubsubSubscriptionApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//pubsub.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.pubsub.Subscription",
 			Resource: &AssetResource{
 				Version:              "v1",
