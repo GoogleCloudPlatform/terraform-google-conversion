@@ -235,7 +235,7 @@ func GetComputeDiskCaiObject(d TerraformResourceData, config *Config) (Asset, er
 	if obj, err := GetComputeDiskApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.Disk",
+			Type: "compute.googleapis.com/Disk",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

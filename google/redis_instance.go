@@ -27,7 +27,7 @@ func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, 
 	if obj, err := GetRedisInstanceApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.redis.Instance",
+			Type: "redis.googleapis.com/Instance",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/redis/v1/rest",

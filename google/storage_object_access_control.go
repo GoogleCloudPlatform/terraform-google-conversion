@@ -24,7 +24,7 @@ func GetStorageObjectAccessControlCaiObject(d TerraformResourceData, config *Con
 	if obj, err := GetStorageObjectAccessControlApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.storage.ObjectAccessControl",
+			Type: "storage.googleapis.com/ObjectAccessControl",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/storage/v1/rest",

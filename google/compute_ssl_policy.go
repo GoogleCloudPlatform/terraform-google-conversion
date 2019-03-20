@@ -50,7 +50,7 @@ func GetComputeSslPolicyCaiObject(d TerraformResourceData, config *Config) (Asse
 	if obj, err := GetComputeSslPolicyApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.SslPolicy",
+			Type: "compute.googleapis.com/SslPolicy",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

@@ -27,7 +27,7 @@ func GetComputeRegionAutoscalerCaiObject(d TerraformResourceData, config *Config
 	if obj, err := GetComputeRegionAutoscalerApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.RegionAutoscaler",
+			Type: "compute.googleapis.com/RegionAutoscaler",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

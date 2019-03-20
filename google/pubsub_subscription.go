@@ -28,7 +28,7 @@ func GetPubsubSubscriptionCaiObject(d TerraformResourceData, config *Config) (As
 	if obj, err := GetPubsubSubscriptionApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.pubsub.Subscription",
+			Type: "pubsub.googleapis.com/Subscription",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/pubsub/v1/rest",

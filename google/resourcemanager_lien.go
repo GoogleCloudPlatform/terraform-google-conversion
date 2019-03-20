@@ -24,7 +24,7 @@ func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) (A
 	if obj, err := GetResourceManagerLienApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.resourcemanager.Lien",
+			Type: "resourcemanager.googleapis.com/Lien",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/resourcemanager/v1/rest",

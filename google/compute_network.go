@@ -24,7 +24,7 @@ func GetComputeNetworkCaiObject(d TerraformResourceData, config *Config) (Asset,
 	if obj, err := GetComputeNetworkApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.Network",
+			Type: "compute.googleapis.com/Network",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

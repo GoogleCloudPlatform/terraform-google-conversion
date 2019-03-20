@@ -27,7 +27,7 @@ func GetComputeAddressCaiObject(d TerraformResourceData, config *Config) (Asset,
 	if obj, err := GetComputeAddressApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.Address",
+			Type: "compute.googleapis.com/Address",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

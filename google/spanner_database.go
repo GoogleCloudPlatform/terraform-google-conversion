@@ -27,7 +27,7 @@ func GetSpannerDatabaseCaiObject(d TerraformResourceData, config *Config) (Asset
 	if obj, err := GetSpannerDatabaseApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.spanner.Database",
+			Type: "spanner.googleapis.com/Database",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/spanner/v1/rest",

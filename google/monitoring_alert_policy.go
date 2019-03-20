@@ -24,7 +24,7 @@ func GetMonitoringAlertPolicyCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetMonitoringAlertPolicyApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.monitoring.AlertPolicy",
+			Type: "monitoring.googleapis.com/AlertPolicy",
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",

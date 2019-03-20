@@ -51,7 +51,7 @@ func GetComputeFirewallCaiObject(d TerraformResourceData, config *Config) (Asset
 	if obj, err := GetComputeFirewallApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.Firewall",
+			Type: "compute.googleapis.com/Firewall",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
