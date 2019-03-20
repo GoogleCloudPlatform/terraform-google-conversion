@@ -14,15 +14,16 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetCloudBuildTriggerCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//cloudbuild.googleapis.com/projects/{{project}}/triggers/{{trigger_id}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetCloudBuildTriggerApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//cloudbuild.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.cloudbuild.Trigger",
 			Resource: &AssetResource{
 				Version:              "v1",

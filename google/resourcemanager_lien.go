@@ -14,15 +14,16 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//resourcemanager.googleapis.com/liens?parent={{parent}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetResourceManagerLienApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//resourcemanager.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.resourcemanager.Lien",
 			Resource: &AssetResource{
 				Version:              "v1",

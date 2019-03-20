@@ -14,15 +14,16 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetSourceRepoRepositoryCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//sourcerepo.googleapis.com/projects/{{project}}/repos/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetSourceRepoRepositoryApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//sourcerepo.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.sourcerepo.Repository",
 			Resource: &AssetResource{
 				Version:              "v1",

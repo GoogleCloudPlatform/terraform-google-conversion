@@ -14,15 +14,16 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetMonitoringAlertPolicyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//monitoring.googleapis.com/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetMonitoringAlertPolicyApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//monitoring.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.monitoring.AlertPolicy",
 			Resource: &AssetResource{
 				Version:              "v3",

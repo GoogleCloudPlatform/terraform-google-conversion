@@ -14,15 +14,16 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetStorageObjectAccessControlCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//storage.googleapis.com/b/{{bucket}}/o/{{object}}/acl/{{entity}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetStorageObjectAccessControlApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//storage.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.storage.ObjectAccessControl",
 			Resource: &AssetResource{
 				Version:              "v1",

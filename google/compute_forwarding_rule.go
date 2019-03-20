@@ -23,9 +23,13 @@ import (
 )
 
 func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/forwardingRules/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetComputeForwardingRuleApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.compute.ForwardingRule",
 			Resource: &AssetResource{
 				Version:              "v1",

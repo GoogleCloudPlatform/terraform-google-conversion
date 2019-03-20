@@ -56,9 +56,13 @@ func validateHttpHeaders() schema.SchemaValidateFunc {
 }
 
 func GetTpuNodeCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//tpu.googleapis.com/projects/{{project}}/locations/{{zone}}/nodes/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetTpuNodeApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//tpu.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.tpu.Node",
 			Resource: &AssetResource{
 				Version:              "v1",

@@ -20,9 +20,13 @@ import (
 )
 
 func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetRedisInstanceApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//redis.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.redis.Instance",
 			Resource: &AssetResource{
 				Version:              "v1",

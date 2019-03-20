@@ -20,9 +20,13 @@ import (
 )
 
 func GetComputeTargetHttpProxyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+	name, err := replaceVars(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetHttpProxies/{{name}}")
+	if err != nil {
+		return Asset{}, err
+	}
 	if obj, err := GetComputeTargetHttpProxyApiObject(d, config); err == nil {
 		return Asset{
-			Name: fmt.Sprintf("//compute.googleapis.com/%s", obj["selfLink"]),
+			Name: name,
 			Type: "google.compute.TargetHttpProxy",
 			Resource: &AssetResource{
 				Version:              "v1",
