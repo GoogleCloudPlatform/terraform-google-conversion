@@ -133,7 +133,7 @@ func GetComputeVpnTunnelCaiObject(d TerraformResourceData, config *Config) (Asse
 	if obj, err := GetComputeVpnTunnelApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.VpnTunnel",
+			Type: "compute.googleapis.com/VpnTunnel",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

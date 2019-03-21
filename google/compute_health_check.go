@@ -27,7 +27,7 @@ func GetComputeHealthCheckCaiObject(d TerraformResourceData, config *Config) (As
 	if obj, err := GetComputeHealthCheckApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.HealthCheck",
+			Type: "compute.googleapis.com/HealthCheck",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

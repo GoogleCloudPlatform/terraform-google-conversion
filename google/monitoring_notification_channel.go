@@ -24,7 +24,7 @@ func GetMonitoringNotificationChannelCaiObject(d TerraformResourceData, config *
 	if obj, err := GetMonitoringNotificationChannelApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.monitoring.NotificationChannel",
+			Type: "monitoring.googleapis.com/NotificationChannel",
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",

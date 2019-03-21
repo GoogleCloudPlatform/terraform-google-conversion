@@ -30,7 +30,7 @@ func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetComputeForwardingRuleApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.ForwardingRule",
+			Type: "compute.googleapis.com/ForwardingRule",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

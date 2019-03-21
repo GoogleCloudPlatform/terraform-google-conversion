@@ -24,7 +24,7 @@ func GetMonitoringUptimeCheckConfigCaiObject(d TerraformResourceData, config *Co
 	if obj, err := GetMonitoringUptimeCheckConfigApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.monitoring.UptimeCheckConfig",
+			Type: "monitoring.googleapis.com/UptimeCheckConfig",
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",

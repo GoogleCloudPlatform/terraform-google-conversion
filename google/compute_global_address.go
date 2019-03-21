@@ -24,7 +24,7 @@ func GetComputeGlobalAddressCaiObject(d TerraformResourceData, config *Config) (
 	if obj, err := GetComputeGlobalAddressApiObject(d, config); err == nil {
 		return Asset{
 			Name: name,
-			Type: "google.compute.GlobalAddress",
+			Type: "compute.googleapis.com/GlobalAddress",
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
