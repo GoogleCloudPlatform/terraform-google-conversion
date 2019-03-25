@@ -117,6 +117,12 @@ func GetComputeForwardingRuleApiObject(d TerraformResourceData, config *Config) 
 	} else if v, ok := d.GetOkExists("target"); !isEmptyValue(reflect.ValueOf(targetProp)) && (ok || !reflect.DeepEqual(v, targetProp)) {
 		obj["target"] = targetProp
 	}
+	allPortsProp, err := expandComputeForwardingRuleAllPorts(d.Get("all_ports"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("all_ports"); !isEmptyValue(reflect.ValueOf(allPortsProp)) && (ok || !reflect.DeepEqual(v, allPortsProp)) {
+		obj["allPorts"] = allPortsProp
+	}
 	networkTierProp, err := expandComputeForwardingRuleNetworkTier(d.Get("network_tier"), d, config)
 	if err != nil {
 		return nil, err
@@ -237,6 +243,10 @@ func expandComputeForwardingRuleTarget(v interface{}, d TerraformResourceData, c
 		return nil, err
 	}
 	return url + v.(string), nil
+}
+
+func expandComputeForwardingRuleAllPorts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeForwardingRuleNetworkTier(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
