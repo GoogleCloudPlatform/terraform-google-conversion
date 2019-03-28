@@ -17,7 +17,7 @@ package google
 import "reflect"
 
 func GetComputeBackendBucketCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := replaceVars(d, config, "//compute.googleapis.com/projects/{{project}}/global/backendBuckets/{{name}}")
+	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/backendBuckets/{{name}}")
 	if err != nil {
 		return Asset{}, err
 	}

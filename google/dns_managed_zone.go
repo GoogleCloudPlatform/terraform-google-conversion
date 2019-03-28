@@ -17,7 +17,7 @@ package google
 import "reflect"
 
 func GetDnsManagedZoneCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := replaceVars(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{name}}")
+	name, err := assetName(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{name}}")
 	if err != nil {
 		return Asset{}, err
 	}

@@ -17,7 +17,7 @@ package google
 import "reflect"
 
 func GetCloudBuildTriggerCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := replaceVars(d, config, "//cloudbuild.googleapis.com/projects/{{project}}/triggers/{{trigger_id}}")
+	name, err := assetName(d, config, "//cloudbuild.googleapis.com/projects/{{project}}/triggers/{{trigger_id}}")
 	if err != nil {
 		return Asset{}, err
 	}
