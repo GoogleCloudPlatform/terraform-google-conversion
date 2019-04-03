@@ -15,11 +15,144 @@
 package google
 
 import (
+	"bytes"
 	"fmt"
+	"log"
 	"reflect"
 
+	"github.com/hashicorp/terraform/helper/hashcode"
 	"github.com/hashicorp/terraform/helper/schema"
 )
+
+func resourceGoogleComputeBackendServiceBackendHash(v interface{}) int {
+	if v == nil {
+		return 0
+	}
+
+	var buf bytes.Buffer
+	m := v.(map[string]interface{})
+	log.Printf("[DEBUG] hashing %v", m)
+
+	if group, err := getRelativePath(m["group"].(string)); err != nil {
+		log.Printf("[WARN] Error on retrieving relative path of instance group: %s", err)
+		buf.WriteString(fmt.Sprintf("%s-", m["group"].(string)))
+	} else {
+		buf.WriteString(fmt.Sprintf("%s-", group))
+	}
+
+	if v, ok := m["balancing_mode"]; ok {
+		if v == nil {
+			v = ""
+		}
+
+		buf.WriteString(fmt.Sprintf("%s-", v.(string)))
+	}
+	if v, ok := m["capacity_scaler"]; ok {
+		if v == nil {
+			v = 0.0
+		}
+
+		buf.WriteString(fmt.Sprintf("%f-", v.(float64)))
+	}
+	if v, ok := m["description"]; ok {
+		if v == nil {
+			v = ""
+		}
+
+		log.Printf("[DEBUG] writing description %s", v)
+		buf.WriteString(fmt.Sprintf("%s-", v.(string)))
+	}
+	if v, ok := m["max_rate"]; ok {
+		if v == nil {
+			v = 0
+		}
+
+		buf.WriteString(fmt.Sprintf("%d-", int64(v.(int))))
+	}
+	if v, ok := m["max_rate_per_instance"]; ok {
+		if v == nil {
+			v = 0.0
+		}
+
+		buf.WriteString(fmt.Sprintf("%f-", v.(float64)))
+	}
+	if v, ok := m["max_connections"]; ok {
+		if v == nil {
+			v = 0
+		}
+
+		switch v := v.(type) {
+		case float64:
+			// The Golang JSON library can't tell int values apart from floats,
+			// because MM doesn't give fields strong types. Since another value
+			// in this block was a real float, it assumed this was a float too.
+			// It's not.
+			// Note that math.Round in Go is from float64 -> float64, so it will
+			// be a noop. int(floatVal) truncates extra parts, so if the float64
+			// representation of an int falls below the real value we'll have
+			// the wrong value. eg if 3 was represented as 2.999999, that would
+			// convert to 2. So we add 0.5, ensuring that we'll truncate to the
+			// correct value. This wouldn't remain true if we were far enough
+			// from 0 that we were off by > 0.5, but no float conversion *could*
+			// work correctly in that case. 53-bit floating types as the only
+			// numeric type was not a good idea, thanks Javascript.
+			var vInt int
+			if v < 0 {
+				vInt = int(v - 0.5)
+			} else {
+				vInt = int(v + 0.5)
+			}
+
+			log.Printf("[DEBUG] writing float value %f as integer value %v", v, vInt)
+			buf.WriteString(fmt.Sprintf("%d-", vInt))
+		default:
+			buf.WriteString(fmt.Sprintf("%d-", int64(v.(int))))
+		}
+	}
+	if v, ok := m["max_connections_per_instance"]; ok {
+		if v == nil {
+			v = 0
+		}
+
+		switch v := v.(type) {
+		case float64:
+			// The Golang JSON library can't tell int values apart from floats,
+			// because MM doesn't give fields strong types. Since another value
+			// in this block was a real float, it assumed this was a float too.
+			// It's not.
+			// Note that math.Round in Go is from float64 -> float64, so it will
+			// be a noop. int(floatVal) truncates extra parts, so if the float64
+			// representation of an int falls below the real value we'll have
+			// the wrong value. eg if 3 was represented as 2.999999, that would
+			// convert to 2. So we add 0.5, ensuring that we'll truncate to the
+			// correct value. This wouldn't remain true if we were far enough
+			// from 0 that we were off by > 0.5, but no float conversion *could*
+			// work correctly in that case. 53-bit floating types as the only
+			// numeric type was not a good idea, thanks Javascript.
+			var vInt int
+			if v < 0 {
+				vInt = int(v - 0.5)
+			} else {
+				vInt = int(v + 0.5)
+			}
+
+			log.Printf("[DEBUG] writing float value %f as integer value %v", v, vInt)
+			buf.WriteString(fmt.Sprintf("%d-", vInt))
+		default:
+			buf.WriteString(fmt.Sprintf("%d-", int64(v.(int))))
+		}
+	}
+	if v, ok := m["max_rate_per_instance"]; ok {
+		if v == nil {
+			v = 0.0
+		}
+
+		buf.WriteString(fmt.Sprintf("%f-", v.(float64)))
+	}
+
+	log.Printf("[DEBUG] computed hash value of %v from %v", hashcode.String(buf.String()), buf.String())
+	return hashcode.String(buf.String())
+}
 
 func GetComputeBackendServiceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/backendServices/{{name}}")
@@ -97,6 +230,12 @@ func GetComputeBackendServiceApiObject(d TerraformResourceData, config *Config) 
 		return nil, err
 	} else if v, ok := d.GetOkExists("iap"); ok || !reflect.DeepEqual(v, iapProp) {
 		obj["iap"] = iapProp
+	}
+	loadBalancingSchemeProp, err := expandComputeBackendServiceLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("load_balancing_scheme"); !isEmptyValue(reflect.ValueOf(loadBalancingSchemeProp)) && (ok || !reflect.DeepEqual(v, loadBalancingSchemeProp)) {
+		obj["loadBalancingScheme"] = loadBalancingSchemeProp
 	}
 	nameProp, err := expandComputeBackendServiceName(d.Get("name"), d, config)
 	if err != nil {
@@ -301,6 +440,13 @@ func expandComputeBackendServiceCdnPolicy(v interface{}, d TerraformResourceData
 		transformed["cacheKeyPolicy"] = transformedCacheKeyPolicy
 	}
 
+	transformedSignedUrlCacheMaxAgeSec, err := expandComputeBackendServiceCdnPolicySignedUrlCacheMaxAgeSec(original["signed_url_cache_max_age_sec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSignedUrlCacheMaxAgeSec); val.IsValid() && !isEmptyValue(val) {
+		transformed["signedUrlCacheMaxAgeSec"] = transformedSignedUrlCacheMaxAgeSec
+	}
+
 	return transformed, nil
 }
 
@@ -370,6 +516,10 @@ func expandComputeBackendServiceCdnPolicyCacheKeyPolicyQueryStringBlacklist(v in
 
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicyQueryStringWhitelist(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeBackendServiceCdnPolicySignedUrlCacheMaxAgeSec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -449,6 +599,10 @@ func expandComputeBackendServiceIapOauth2ClientSecret(v interface{}, d Terraform
 }
 
 func expandComputeBackendServiceIapOauth2ClientSecretSha256(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceLoadBalancingScheme(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
