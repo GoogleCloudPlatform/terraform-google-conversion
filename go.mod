@@ -18,6 +18,6 @@ require (
 	github.com/mitchellh/hashstructure v1.0.0 // indirect
 	github.com/terraform-providers/terraform-provider-google v1.20.0
 	github.com/zclconf/go-cty v0.0.0-20190201220620-4ca19710f056 // indirect
-	golang.org/x/oauth2 v0.0.0-20190130055435-99b60b757ec1
-	google.golang.org/api v0.1.0
+	golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421
+	google.golang.org/api v0.4.0
 )
