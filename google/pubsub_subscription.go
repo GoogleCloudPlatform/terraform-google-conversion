@@ -103,7 +103,7 @@ func GetPubsubSubscriptionApiObject(d TerraformResourceData, config *Config) (ma
 	expirationPolicyProp, err := expandPubsubSubscriptionExpirationPolicy(d.Get("expiration_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("expiration_policy"); !isEmptyValue(reflect.ValueOf(expirationPolicyProp)) && (ok || !reflect.DeepEqual(v, expirationPolicyProp)) {
+	} else if v, ok := d.GetOkExists("expiration_policy"); ok || !reflect.DeepEqual(v, expirationPolicyProp) {
 		obj["expirationPolicy"] = expirationPolicyProp
 	}
 
@@ -219,8 +219,13 @@ func expandPubsubSubscriptionRetainAckedMessages(v interface{}, d TerraformResou
 
 func expandPubsubSubscriptionExpirationPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
+	if len(l) == 0 {
 		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})
