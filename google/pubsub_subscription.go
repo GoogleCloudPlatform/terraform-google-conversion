@@ -107,6 +107,11 @@ func GetPubsubSubscriptionApiObject(d TerraformResourceData, config *Config) (ma
 		obj["expirationPolicy"] = expirationPolicyProp
 	}
 
+	return resourcePubsubSubscriptionEncoder(d, config, obj)
+}
+
+func resourcePubsubSubscriptionEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	delete(obj, "name")
 	return obj, nil
 }
 
