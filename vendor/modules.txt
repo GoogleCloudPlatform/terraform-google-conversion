@@ -126,23 +126,23 @@ github.com/hashicorp/terraform/helper/resource
 github.com/hashicorp/terraform/helper/schema
 github.com/hashicorp/terraform/helper/validation
 github.com/hashicorp/terraform/httpclient
+github.com/hashicorp/terraform/terraform
 github.com/hashicorp/terraform/config/module
 github.com/hashicorp/terraform/helper/config
-github.com/hashicorp/terraform/terraform
 github.com/hashicorp/terraform/config
 github.com/hashicorp/terraform/config/configschema
 github.com/hashicorp/terraform/helper/structure
 github.com/hashicorp/terraform/version
 github.com/hashicorp/terraform/dag
-github.com/hashicorp/terraform/registry
-github.com/hashicorp/terraform/registry/regsrc
-github.com/hashicorp/terraform/registry/response
-github.com/hashicorp/terraform/svchost/disco
-github.com/hashicorp/terraform/tfdiags
 github.com/hashicorp/terraform/flatmap
 github.com/hashicorp/terraform/helper/hilmapstructure
 github.com/hashicorp/terraform/moduledeps
 github.com/hashicorp/terraform/plugin/discovery
+github.com/hashicorp/terraform/tfdiags
+github.com/hashicorp/terraform/registry
+github.com/hashicorp/terraform/registry/regsrc
+github.com/hashicorp/terraform/registry/response
+github.com/hashicorp/terraform/svchost/disco
 github.com/hashicorp/terraform/config/hcl2shim
 github.com/hashicorp/terraform/svchost
 github.com/hashicorp/terraform/svchost/auth
@@ -219,14 +219,14 @@ golang.org/x/crypto/openpgp/elgamal
 # golang.org/x/net v0.0.0-20190311183353-d8887717615a
 golang.org/x/net/context
 golang.org/x/net/trace
+golang.org/x/net/html
 golang.org/x/net/context/ctxhttp
 golang.org/x/net/internal/timeseries
 golang.org/x/net/http2
 golang.org/x/net/http2/hpack
-golang.org/x/net/html
+golang.org/x/net/html/atom
 golang.org/x/net/http/httpguts
 golang.org/x/net/idna
-golang.org/x/net/html/atom
 # golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421
 golang.org/x/oauth2
 golang.org/x/oauth2/google
@@ -257,6 +257,7 @@ google.golang.org/api/container/v1
 google.golang.org/api/container/v1beta1
 google.golang.org/api/dataflow/v1b3
 google.golang.org/api/dataproc/v1
+google.golang.org/api/dataproc/v1beta2
 google.golang.org/api/dns/v1
 google.golang.org/api/dns/v1beta2
 google.golang.org/api/file/v1beta1
