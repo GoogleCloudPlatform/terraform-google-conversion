@@ -52,6 +52,11 @@ func GetPubsubTopicApiObject(d TerraformResourceData, config *Config) (map[strin
 		obj["labels"] = labelsProp
 	}
 
+	return resourcePubsubTopicEncoder(d, config, obj)
+}
+
+func resourcePubsubTopicEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	delete(obj, "name")
 	return obj, nil
 }
 
