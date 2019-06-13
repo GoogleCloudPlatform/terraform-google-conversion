@@ -1,7 +1,7 @@
 module github.com/GoogleCloudPlatform/terraform-google-conversion
 
 require (
-	cloud.google.com/go v0.36.0
+	cloud.google.com/go v0.38.0
 	github.com/apparentlymart/go-cidr v1.0.0
 	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/hashicorp/errwrap v1.0.0
@@ -18,6 +18,6 @@ require (
 	github.com/mitchellh/hashstructure v1.0.0 // indirect
 	github.com/terraform-providers/terraform-provider-google v1.20.0
 	github.com/zclconf/go-cty v0.0.0-20190201220620-4ca19710f056 // indirect
-	golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421
-	google.golang.org/api v0.4.0
+	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+	google.golang.org/api v0.6.0
 )
