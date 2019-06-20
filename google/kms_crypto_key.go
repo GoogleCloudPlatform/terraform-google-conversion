@@ -21,7 +21,7 @@ import (
 )
 
 func GetKmsCryptoKeyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := assetName(d, config, "//kms.googleapis.com/{{key_ring}}/cryptoKeys/{{name}}")
+	name, err := assetName(d, config, "//kms.googleapis.com/projects/{{projects}}/keyRings/{{key_ring}}/cryptoKeys/{{name}}")
 	if err != nil {
 		return Asset{}, err
 	}
