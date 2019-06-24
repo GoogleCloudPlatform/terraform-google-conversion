@@ -43,6 +43,12 @@ func GetKmsCryptoKeyCaiObject(d TerraformResourceData, config *Config) (Asset, e
 
 func GetKmsCryptoKeyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	labelsProp, err := expandKmsCryptoKeyLabels(d.Get("labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 	purposeProp, err := expandKmsCryptoKeyPurpose(d.Get("purpose"), d, config)
 	if err != nil {
 		return nil, err
@@ -79,6 +85,17 @@ func resourceKmsCryptoKeyEncoder(d TerraformResourceData, meta interface{}, obj 
 	}
 
 	return obj, nil
+}
+
+func expandKmsCryptoKeyLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandKmsCryptoKeyPurpose(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
