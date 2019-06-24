@@ -127,6 +127,12 @@ func GetComputeSubnetworkApiObject(d TerraformResourceData, config *Config) (map
 	} else if v, ok := d.GetOkExists("region"); !isEmptyValue(reflect.ValueOf(regionProp)) && (ok || !reflect.DeepEqual(v, regionProp)) {
 		obj["region"] = regionProp
 	}
+	logConfigProp, err := expandComputeSubnetworkLogConfig(d.Get("log_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("log_config"); !isEmptyValue(reflect.ValueOf(logConfigProp)) && (ok || !reflect.DeepEqual(v, logConfigProp)) {
+		obj["logConfig"] = logConfigProp
+	}
 
 	return obj, nil
 }
@@ -206,4 +212,49 @@ func expandComputeSubnetworkRegion(v interface{}, d TerraformResourceData, confi
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeSubnetworkLogConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAggregationInterval, err := expandComputeSubnetworkLogConfigAggregationInterval(original["aggregation_interval"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAggregationInterval); val.IsValid() && !isEmptyValue(val) {
+		transformed["aggregationInterval"] = transformedAggregationInterval
+	}
+
+	transformedFlowSampling, err := expandComputeSubnetworkLogConfigFlowSampling(original["flow_sampling"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFlowSampling); val.IsValid() && !isEmptyValue(val) {
+		transformed["flowSampling"] = transformedFlowSampling
+	}
+
+	transformedMetadata, err := expandComputeSubnetworkLogConfigMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !isEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandComputeSubnetworkLogConfigAggregationInterval(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkLogConfigFlowSampling(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkLogConfigMetadata(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }

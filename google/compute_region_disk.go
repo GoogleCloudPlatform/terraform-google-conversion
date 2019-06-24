@@ -247,6 +247,13 @@ func expandComputeRegionDiskDiskEncryptionKey(v interface{}, d TerraformResource
 		transformed["sha256"] = transformedSha256
 	}
 
+	transformedKmsKeyName, err := expandComputeRegionDiskDiskEncryptionKeyKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
 	return transformed, nil
 }
 
@@ -255,6 +262,10 @@ func expandComputeRegionDiskDiskEncryptionKeyRawKey(v interface{}, d TerraformRe
 }
 
 func expandComputeRegionDiskDiskEncryptionKeySha256(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskDiskEncryptionKeyKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -282,6 +293,13 @@ func expandComputeRegionDiskSourceSnapshotEncryptionKey(v interface{}, d Terrafo
 		transformed["rawKey"] = transformedRawKey
 	}
 
+	transformedKmsKeyName, err := expandComputeRegionDiskSourceSnapshotEncryptionKeyKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
 	transformedSha256, err := expandComputeRegionDiskSourceSnapshotEncryptionKeySha256(original["sha256"], d, config)
 	if err != nil {
 		return nil, err
@@ -293,6 +311,10 @@ func expandComputeRegionDiskSourceSnapshotEncryptionKey(v interface{}, d Terrafo
 }
 
 func expandComputeRegionDiskSourceSnapshotEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskSourceSnapshotEncryptionKeyKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 

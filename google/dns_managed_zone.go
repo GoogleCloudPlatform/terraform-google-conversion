@@ -85,6 +85,18 @@ func GetDnsManagedZoneApiObject(d TerraformResourceData, config *Config) (map[st
 	} else if v, ok := d.GetOkExists("private_visibility_config"); !isEmptyValue(reflect.ValueOf(privateVisibilityConfigProp)) && (ok || !reflect.DeepEqual(v, privateVisibilityConfigProp)) {
 		obj["privateVisibilityConfig"] = privateVisibilityConfigProp
 	}
+	forwardingConfigProp, err := expandDnsManagedZoneForwardingConfig(d.Get("forwarding_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("forwarding_config"); !isEmptyValue(reflect.ValueOf(forwardingConfigProp)) && (ok || !reflect.DeepEqual(v, forwardingConfigProp)) {
+		obj["forwardingConfig"] = forwardingConfigProp
+	}
+	peeringConfigProp, err := expandDnsManagedZonePeeringConfig(d.Get("peering_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("peering_config"); !isEmptyValue(reflect.ValueOf(peeringConfigProp)) && (ok || !reflect.DeepEqual(v, peeringConfigProp)) {
+		obj["peeringConfig"] = peeringConfigProp
+	}
 
 	return obj, nil
 }
@@ -270,5 +282,93 @@ func expandDnsManagedZonePrivateVisibilityConfigNetworks(v interface{}, d Terraf
 }
 
 func expandDnsManagedZonePrivateVisibilityConfigNetworksNetworkUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDnsManagedZoneForwardingConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTargetNameServers, err := expandDnsManagedZoneForwardingConfigTargetNameServers(original["target_name_servers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetNameServers); val.IsValid() && !isEmptyValue(val) {
+		transformed["targetNameServers"] = transformedTargetNameServers
+	}
+
+	return transformed, nil
+}
+
+func expandDnsManagedZoneForwardingConfigTargetNameServers(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIpv4Address, err := expandDnsManagedZoneForwardingConfigTargetNameServersIpv4Address(original["ipv4_address"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpv4Address); val.IsValid() && !isEmptyValue(val) {
+			transformed["ipv4Address"] = transformedIpv4Address
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDnsManagedZoneForwardingConfigTargetNameServersIpv4Address(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDnsManagedZonePeeringConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTargetNetwork, err := expandDnsManagedZonePeeringConfigTargetNetwork(original["target_network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetNetwork); val.IsValid() && !isEmptyValue(val) {
+		transformed["targetNetwork"] = transformedTargetNetwork
+	}
+
+	return transformed, nil
+}
+
+func expandDnsManagedZonePeeringConfigTargetNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNetworkUrl, err := expandDnsManagedZonePeeringConfigTargetNetworkNetworkUrl(original["network_url"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkUrl); val.IsValid() && !isEmptyValue(val) {
+		transformed["networkUrl"] = transformedNetworkUrl
+	}
+
+	return transformed, nil
+}
+
+func expandDnsManagedZonePeeringConfigTargetNetworkNetworkUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }

@@ -190,6 +190,13 @@ func expandComputeRegionAutoscalerAutoscalingPolicyMetric(v interface{}, d Terra
 			transformed["metric"] = transformedName
 		}
 
+		transformedSingleInstanceAssignment, err := expandComputeRegionAutoscalerAutoscalingPolicyMetricSingleInstanceAssignment(original["single_instance_assignment"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSingleInstanceAssignment); val.IsValid() && !isEmptyValue(val) {
+			transformed["singleInstanceAssignment"] = transformedSingleInstanceAssignment
+		}
+
 		transformedTarget, err := expandComputeRegionAutoscalerAutoscalingPolicyMetricTarget(original["target"], d, config)
 		if err != nil {
 			return nil, err
@@ -204,6 +211,13 @@ func expandComputeRegionAutoscalerAutoscalingPolicyMetric(v interface{}, d Terra
 			transformed["utilizationTargetType"] = transformedType
 		}
 
+		transformedFilter, err := expandComputeRegionAutoscalerAutoscalingPolicyMetricFilter(original["filter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !isEmptyValue(val) {
+			transformed["filter"] = transformedFilter
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -213,11 +227,19 @@ func expandComputeRegionAutoscalerAutoscalingPolicyMetricName(v interface{}, d T
 	return v, nil
 }
 
+func expandComputeRegionAutoscalerAutoscalingPolicyMetricSingleInstanceAssignment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeRegionAutoscalerAutoscalingPolicyMetricTarget(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
 func expandComputeRegionAutoscalerAutoscalingPolicyMetricType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionAutoscalerAutoscalingPolicyMetricFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 

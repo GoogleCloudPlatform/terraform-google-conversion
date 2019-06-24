@@ -73,6 +73,12 @@ func GetComputeRegionBackendServiceApiObject(d TerraformResourceData, config *Co
 	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	failoverPolicyProp, err := expandComputeRegionBackendServiceFailoverPolicy(d.Get("failover_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("failover_policy"); !isEmptyValue(reflect.ValueOf(failoverPolicyProp)) && (ok || !reflect.DeepEqual(v, failoverPolicyProp)) {
+		obj["failoverPolicy"] = failoverPolicyProp
+	}
 	fingerprintProp, err := expandComputeRegionBackendServiceFingerprint(d.Get("fingerprint"), d, config)
 	if err != nil {
 		return nil, err
@@ -153,6 +159,13 @@ func expandComputeRegionBackendServiceBackend(v interface{}, d TerraformResource
 			transformed["group"] = transformedGroup
 		}
 
+		transformedFailover, err := expandComputeRegionBackendServiceBackendFailover(original["failover"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFailover); val.IsValid() && !isEmptyValue(val) {
+			transformed["failover"] = transformedFailover
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -166,7 +179,56 @@ func expandComputeRegionBackendServiceBackendGroup(v interface{}, d TerraformRes
 	return v, nil
 }
 
+func expandComputeRegionBackendServiceBackendFailover(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeRegionBackendServiceDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceFailoverPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisableConnectionDrainOnFailover, err := expandComputeRegionBackendServiceFailoverPolicyDisableConnectionDrainOnFailover(original["disable_connection_drain_on_failover"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableConnectionDrainOnFailover); val.IsValid() && !isEmptyValue(val) {
+		transformed["disableConnectionDrainOnFailover"] = transformedDisableConnectionDrainOnFailover
+	}
+
+	transformedDropTrafficIfUnhealthy, err := expandComputeRegionBackendServiceFailoverPolicyDropTrafficIfUnhealthy(original["drop_traffic_if_unhealthy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDropTrafficIfUnhealthy); val.IsValid() && !isEmptyValue(val) {
+		transformed["dropTrafficIfUnhealthy"] = transformedDropTrafficIfUnhealthy
+	}
+
+	transformedFailoverRatio, err := expandComputeRegionBackendServiceFailoverPolicyFailoverRatio(original["failover_ratio"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFailoverRatio); val.IsValid() && !isEmptyValue(val) {
+		transformed["failoverRatio"] = transformedFailoverRatio
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceFailoverPolicyDisableConnectionDrainOnFailover(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceFailoverPolicyDropTrafficIfUnhealthy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceFailoverPolicyFailoverRatio(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -190,6 +190,13 @@ func expandComputeAutoscalerAutoscalingPolicyMetric(v interface{}, d TerraformRe
 			transformed["metric"] = transformedName
 		}
 
+		transformedSingleInstanceAssignment, err := expandComputeAutoscalerAutoscalingPolicyMetricSingleInstanceAssignment(original["single_instance_assignment"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSingleInstanceAssignment); val.IsValid() && !isEmptyValue(val) {
+			transformed["singleInstanceAssignment"] = transformedSingleInstanceAssignment
+		}
+
 		transformedTarget, err := expandComputeAutoscalerAutoscalingPolicyMetricTarget(original["target"], d, config)
 		if err != nil {
 			return nil, err
@@ -204,6 +211,13 @@ func expandComputeAutoscalerAutoscalingPolicyMetric(v interface{}, d TerraformRe
 			transformed["utilizationTargetType"] = transformedType
 		}
 
+		transformedFilter, err := expandComputeAutoscalerAutoscalingPolicyMetricFilter(original["filter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !isEmptyValue(val) {
+			transformed["filter"] = transformedFilter
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -213,11 +227,19 @@ func expandComputeAutoscalerAutoscalingPolicyMetricName(v interface{}, d Terrafo
 	return v, nil
 }
 
+func expandComputeAutoscalerAutoscalingPolicyMetricSingleInstanceAssignment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeAutoscalerAutoscalingPolicyMetricTarget(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
 func expandComputeAutoscalerAutoscalingPolicyMetricType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeAutoscalerAutoscalingPolicyMetricFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 

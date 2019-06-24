@@ -175,6 +175,12 @@ func GetComputeBackendServiceApiObject(d TerraformResourceData, config *Config) 
 	} else if v, ok := d.GetOkExists("connection_draining"); !isEmptyValue(reflect.ValueOf(connectionDrainingProp)) && (ok || !reflect.DeepEqual(v, connectionDrainingProp)) {
 		obj["connectionDraining"] = connectionDrainingProp
 	}
+	customRequestHeadersProp, err := expandComputeBackendServiceCustomRequestHeaders(d.Get("custom_request_headers"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_request_headers"); !isEmptyValue(reflect.ValueOf(customRequestHeadersProp)) && (ok || !reflect.DeepEqual(v, customRequestHeadersProp)) {
+		obj["customRequestHeaders"] = customRequestHeadersProp
+	}
 	fingerprintProp, err := expandComputeBackendServiceFingerprint(d.Get("fingerprint"), d, config)
 	if err != nil {
 		return nil, err
@@ -528,6 +534,11 @@ func expandComputeBackendServiceConnectionDraining(v interface{}, d TerraformRes
 }
 
 func expandComputeBackendServiceConnectionDrainingConnection_draining_timeout_sec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceCustomRequestHeaders(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 

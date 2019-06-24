@@ -60,6 +60,18 @@ func GetComputeGlobalAddressApiObject(d TerraformResourceData, config *Config) (
 	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
+	labelsProp, err := expandComputeGlobalAddressLabels(d.Get("labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
+	labelFingerprintProp, err := expandComputeGlobalAddressLabelFingerprint(d.Get("label_fingerprint"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("label_fingerprint"); !isEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
+		obj["labelFingerprint"] = labelFingerprintProp
+	}
 	ipVersionProp, err := expandComputeGlobalAddressIpVersion(d.Get("ip_version"), d, config)
 	if err != nil {
 		return nil, err
@@ -103,6 +115,21 @@ func expandComputeGlobalAddressDescription(v interface{}, d TerraformResourceDat
 }
 
 func expandComputeGlobalAddressName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeGlobalAddressLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandComputeGlobalAddressLabelFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -117,6 +117,18 @@ func GetComputeForwardingRuleApiObject(d TerraformResourceData, config *Config) 
 	} else if v, ok := d.GetOkExists("target"); !isEmptyValue(reflect.ValueOf(targetProp)) && (ok || !reflect.DeepEqual(v, targetProp)) {
 		obj["target"] = targetProp
 	}
+	labelsProp, err := expandComputeForwardingRuleLabels(d.Get("labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
+	labelFingerprintProp, err := expandComputeForwardingRuleLabelFingerprint(d.Get("label_fingerprint"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("label_fingerprint"); !isEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
+		obj["labelFingerprint"] = labelFingerprintProp
+	}
 	allPortsProp, err := expandComputeForwardingRuleAllPorts(d.Get("all_ports"), d, config)
 	if err != nil {
 		return nil, err
@@ -249,6 +261,21 @@ func expandComputeForwardingRuleTarget(v interface{}, d TerraformResourceData, c
 		return nil, err
 	}
 	return url + v.(string), nil
+}
+
+func expandComputeForwardingRuleLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandComputeForwardingRuleLabelFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeForwardingRuleAllPorts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

@@ -102,6 +102,12 @@ func GetComputeFirewallApiObject(d TerraformResourceData, config *Config) (map[s
 	} else if v, ok := d.GetOkExists("disabled"); ok || !reflect.DeepEqual(v, disabledProp) {
 		obj["disabled"] = disabledProp
 	}
+	enableLoggingProp, err := expandComputeFirewallEnableLogging(d.Get("enable_logging"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_logging"); ok || !reflect.DeepEqual(v, enableLoggingProp) {
+		obj["enableLogging"] = enableLoggingProp
+	}
 	nameProp, err := expandComputeFirewallName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
@@ -244,6 +250,10 @@ func expandComputeFirewallDirection(v interface{}, d TerraformResourceData, conf
 }
 
 func expandComputeFirewallDisabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeFirewallEnableLogging(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 

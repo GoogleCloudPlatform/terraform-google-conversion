@@ -14,7 +14,10 @@
 
 package google
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 func GetComputeGlobalForwardingRuleCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/forwardingRules/{{name}}")
@@ -63,6 +66,18 @@ func GetComputeGlobalForwardingRuleApiObject(d TerraformResourceData, config *Co
 	} else if v, ok := d.GetOkExists("ip_version"); !isEmptyValue(reflect.ValueOf(ipVersionProp)) && (ok || !reflect.DeepEqual(v, ipVersionProp)) {
 		obj["ipVersion"] = ipVersionProp
 	}
+	labelsProp, err := expandComputeGlobalForwardingRuleLabels(d.Get("labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
+	labelFingerprintProp, err := expandComputeGlobalForwardingRuleLabelFingerprint(d.Get("label_fingerprint"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("label_fingerprint"); !isEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
+		obj["labelFingerprint"] = labelFingerprintProp
+	}
 	loadBalancingSchemeProp, err := expandComputeGlobalForwardingRuleLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
 	if err != nil {
 		return nil, err
@@ -74,6 +89,12 @@ func GetComputeGlobalForwardingRuleApiObject(d TerraformResourceData, config *Co
 		return nil, err
 	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
+	}
+	networkProp, err := expandComputeGlobalForwardingRuleNetwork(d.Get("network"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network"); !isEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
+		obj["network"] = networkProp
 	}
 	portRangeProp, err := expandComputeGlobalForwardingRulePortRange(d.Get("port_range"), d, config)
 	if err != nil {
@@ -107,12 +128,35 @@ func expandComputeGlobalForwardingRuleIpVersion(v interface{}, d TerraformResour
 	return v, nil
 }
 
+func expandComputeGlobalForwardingRuleLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandComputeGlobalForwardingRuleLabelFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeGlobalForwardingRuleLoadBalancingScheme(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
 func expandComputeGlobalForwardingRuleName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeGlobalForwardingRuleNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for network: %s", err)
+	}
+	return f.RelativeLink(), nil
 }
 
 func expandComputeGlobalForwardingRulePortRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
