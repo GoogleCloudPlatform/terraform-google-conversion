@@ -105,6 +105,11 @@ func GetStorageBucketApiObject(d TerraformResourceData, config *Config) (map[str
 		}
 	}
 
+	if v, ok := d.GetOk("bucket_policy_only"); ok {
+		sb.BucketPolicyOnly = v.(bool)
+	}
+
+
 	m, err := jsonMap(sb)
 	if err != nil {
 		return nil, err
