@@ -57,6 +57,12 @@ func GetPubsubTopicApiObject(d TerraformResourceData, config *Config) (map[strin
 	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
+	messageStoragePolicyProp, err := expandPubsubTopicMessageStoragePolicy(d.Get("message_storage_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("message_storage_policy"); !isEmptyValue(reflect.ValueOf(messageStoragePolicyProp)) && (ok || !reflect.DeepEqual(v, messageStoragePolicyProp)) {
+		obj["messageStoragePolicy"] = messageStoragePolicyProp
+	}
 
 	return resourcePubsubTopicEncoder(d, config, obj)
 }
@@ -83,4 +89,27 @@ func expandPubsubTopicLabels(v interface{}, d TerraformResourceData, config *Con
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandPubsubTopicMessageStoragePolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedPersistenceRegions, err := expandPubsubTopicMessageStoragePolicyAllowedPersistenceRegions(original["allowed_persistence_regions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedPersistenceRegions); val.IsValid() && !isEmptyValue(val) {
+		transformed["allowedPersistenceRegions"] = transformedAllowedPersistenceRegions
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicMessageStoragePolicyAllowedPersistenceRegions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
