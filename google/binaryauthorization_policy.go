@@ -66,6 +66,12 @@ func GetBinaryAuthorizationPolicyApiObject(d TerraformResourceData, config *Conf
 	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	globalPolicyEvaluationModeProp, err := expandBinaryAuthorizationPolicyGlobalPolicyEvaluationMode(d.Get("global_policy_evaluation_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("global_policy_evaluation_mode"); !isEmptyValue(reflect.ValueOf(globalPolicyEvaluationModeProp)) && (ok || !reflect.DeepEqual(v, globalPolicyEvaluationModeProp)) {
+		obj["globalPolicyEvaluationMode"] = globalPolicyEvaluationModeProp
+	}
 	admissionWhitelistPatternsProp, err := expandBinaryAuthorizationPolicyAdmissionWhitelistPatterns(d.Get("admission_whitelist_patterns"), d, config)
 	if err != nil {
 		return nil, err
@@ -89,6 +95,10 @@ func GetBinaryAuthorizationPolicyApiObject(d TerraformResourceData, config *Conf
 }
 
 func expandBinaryAuthorizationPolicyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBinaryAuthorizationPolicyGlobalPolicyEvaluationMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
