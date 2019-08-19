@@ -192,6 +192,13 @@ func expandPubsubSubscriptionPushConfig(v interface{}, d TerraformResourceData, 
 		transformed["attributes"] = transformedAttributes
 	}
 
+	transformedOidcToken, err := expandPubsubSubscriptionPushConfigOidcToken(original["oidc_token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOidcToken); val.IsValid() && !isEmptyValue(val) {
+		transformed["oidcToken"] = transformedOidcToken
+	}
+
 	return transformed, nil
 }
 
@@ -208,6 +215,40 @@ func expandPubsubSubscriptionPushConfigAttributes(v interface{}, d TerraformReso
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandPubsubSubscriptionPushConfigOidcToken(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceAccountEmail, err := expandPubsubSubscriptionPushConfigOidcTokenServiceAccountEmail(original["service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !isEmptyValue(val) {
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
+	}
+
+	transformedAudience, err := expandPubsubSubscriptionPushConfigOidcTokenAudience(original["audience"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudience); val.IsValid() && !isEmptyValue(val) {
+		transformed["audience"] = transformedAudience
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionPushConfigOidcTokenServiceAccountEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionPushConfigOidcTokenAudience(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandPubsubSubscriptionAckDeadlineSeconds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
