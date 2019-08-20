@@ -54,6 +54,12 @@ func GetComputeInterconnectAttachmentApiObject(d TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	bandwidthProp, err := expandComputeInterconnectAttachmentBandwidth(d.Get("bandwidth"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("bandwidth"); !isEmptyValue(reflect.ValueOf(bandwidthProp)) && (ok || !reflect.DeepEqual(v, bandwidthProp)) {
+		obj["bandwidth"] = bandwidthProp
+	}
 	edgeAvailabilityDomainProp, err := expandComputeInterconnectAttachmentEdgeAvailabilityDomain(d.Get("edge_availability_domain"), d, config)
 	if err != nil {
 		return nil, err
@@ -105,6 +111,10 @@ func expandComputeInterconnectAttachmentInterconnect(v interface{}, d TerraformR
 }
 
 func expandComputeInterconnectAttachmentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAttachmentBandwidth(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
