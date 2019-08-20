@@ -42,6 +42,12 @@ func GetComputeInterconnectAttachmentCaiObject(d TerraformResourceData, config *
 
 func GetComputeInterconnectAttachmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	adminEnabledProp, err := expandComputeInterconnectAttachmentAdminEnabled(d.Get("admin_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("admin_enabled"); !isEmptyValue(reflect.ValueOf(adminEnabledProp)) && (ok || !reflect.DeepEqual(v, adminEnabledProp)) {
+		obj["adminEnabled"] = adminEnabledProp
+	}
 	interconnectProp, err := expandComputeInterconnectAttachmentInterconnect(d.Get("interconnect"), d, config)
 	if err != nil {
 		return nil, err
@@ -104,6 +110,10 @@ func GetComputeInterconnectAttachmentApiObject(d TerraformResourceData, config *
 	}
 
 	return obj, nil
+}
+
+func expandComputeInterconnectAttachmentAdminEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeInterconnectAttachmentInterconnect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
