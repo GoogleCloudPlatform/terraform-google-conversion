@@ -517,17 +517,17 @@ func expandComputeBackendServiceCdnPolicySignedUrlCacheMaxAgeSec(v interface{}, 
 
 func expandComputeBackendServiceConnectionDraining(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	transformed := make(map[string]interface{})
-	transformedConnection_draining_timeout_sec, err := expandComputeBackendServiceConnectionDrainingConnection_draining_timeout_sec(d.Get("connection_draining_timeout_sec"), d, config)
+	transformedConnectionDrainingTimeoutSec, err := expandComputeBackendServiceConnectionDrainingConnectionDrainingTimeoutSec(d.Get("connection_draining_timeout_sec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedConnection_draining_timeout_sec); val.IsValid() && !isEmptyValue(val) {
-		transformed["drainingTimeoutSec"] = transformedConnection_draining_timeout_sec
+	} else if val := reflect.ValueOf(transformedConnectionDrainingTimeoutSec); val.IsValid() && !isEmptyValue(val) {
+		transformed["drainingTimeoutSec"] = transformedConnectionDrainingTimeoutSec
 	}
 
 	return transformed, nil
 }
 
-func expandComputeBackendServiceConnectionDrainingConnection_draining_timeout_sec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeBackendServiceConnectionDrainingConnectionDrainingTimeoutSec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 

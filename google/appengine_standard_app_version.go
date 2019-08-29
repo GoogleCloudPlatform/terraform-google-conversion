@@ -43,7 +43,7 @@ func GetAppEngineStandardAppVersionCaiObject(d TerraformResourceData, config *Co
 
 func GetAppEngineStandardAppVersionApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	idProp, err := expandAppEngineStandardAppVersionVersion_id(d.Get("version_id"), d, config)
+	idProp, err := expandAppEngineStandardAppVersionVersionId(d.Get("version_id"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("version_id"); !isEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
@@ -101,7 +101,7 @@ func GetAppEngineStandardAppVersionApiObject(d TerraformResourceData, config *Co
 	return obj, nil
 }
 
-func expandAppEngineStandardAppVersionVersion_id(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineStandardAppVersionVersionId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
