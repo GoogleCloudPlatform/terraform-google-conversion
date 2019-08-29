@@ -266,6 +266,9 @@ func (b *body) unpackBlock(v node, typeName string, typeRange *hcl.Range, labels
 	copy(labelR, labelRanges)
 
 	switch tv := v.(type) {
+	case *nullVal:
+		// There is no block content, e.g the value is null.
+		return
 	case *objectVal:
 		// Single instance of the block
 		*blocks = append(*blocks, &hcl.Block{
@@ -324,6 +327,8 @@ func (b *body) collectDeepAttrs(v node, labelName *string) ([]*objectAttr, hcl.D
 	var attrs []*objectAttr
 
 	switch tv := v.(type) {
+	case *nullVal:
+		// If a value is null, then we don't return any attributes or return an error.
 
 	case *objectVal:
 		attrs = append(attrs, tv.Attrs...)
@@ -411,12 +416,14 @@ func (e *expression) Value(ctx *hcl.EvalContext) (cty.Value, hcl.Diagnostics) {
 	case *booleanVal:
 		return cty.BoolVal(v.Value), nil
 	case *arrayVal:
+		var diags hcl.Diagnostics
 		vals := []cty.Value{}
 		for _, jsonVal := range v.Values {
-			val, _ := (&expression{src: jsonVal}).Value(ctx)
+			val, valDiags := (&expression{src: jsonVal}).Value(ctx)
 			vals = append(vals, val)
+			diags = append(diags, valDiags...)
 		}
-		return cty.TupleVal(vals), nil
+		return cty.TupleVal(vals), diags
 	case *objectVal:
 		var diags hcl.Diagnostics
 		attrs := map[string]cty.Value{}
@@ -494,6 +501,8 @@ func (e *expression) Value(ctx *hcl.EvalContext) (cty.Value, hcl.Diagnostics) {
 			return cty.DynamicVal, diags
 		}
 		return cty.ObjectVal(attrs), diags
+	case *nullVal:
+		return cty.NullVal(cty.DynamicPseudoType), nil
 	default:
 		// Default to DynamicVal so that ASTs containing invalid nodes can
 		// still be partially-evaluated.
