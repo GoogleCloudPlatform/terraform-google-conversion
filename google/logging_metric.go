@@ -224,11 +224,11 @@ func expandLoggingMetricBucketOptions(v interface{}, d TerraformResourceData, co
 		transformed["exponentialBuckets"] = transformedExponentialBuckets
 	}
 
-	transformedExplicit, err := expandLoggingMetricBucketOptionsExplicit(original["explicit"], d, config)
+	transformedExplicitBuckets, err := expandLoggingMetricBucketOptionsExplicitBuckets(original["explicit_buckets"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedExplicit); val.IsValid() && !isEmptyValue(val) {
-		transformed["explicit"] = transformedExplicit
+	} else if val := reflect.ValueOf(transformedExplicitBuckets); val.IsValid() && !isEmptyValue(val) {
+		transformed["explicitBuckets"] = transformedExplicitBuckets
 	}
 
 	return transformed, nil
@@ -324,7 +324,7 @@ func expandLoggingMetricBucketOptionsExponentialBucketsScale(v interface{}, d Te
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExplicit(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExplicitBuckets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -333,7 +333,7 @@ func expandLoggingMetricBucketOptionsExplicit(v interface{}, d TerraformResource
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedBounds, err := expandLoggingMetricBucketOptionsExplicitBounds(original["bounds"], d, config)
+	transformedBounds, err := expandLoggingMetricBucketOptionsExplicitBucketsBounds(original["bounds"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedBounds); val.IsValid() && !isEmptyValue(val) {
@@ -343,6 +343,6 @@ func expandLoggingMetricBucketOptionsExplicit(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsExplicitBounds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExplicitBucketsBounds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
