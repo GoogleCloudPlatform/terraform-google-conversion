@@ -106,6 +106,13 @@ func expandLoggingMetricMetricDescriptor(v interface{}, d TerraformResourceData,
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedUnit, err := expandLoggingMetricMetricDescriptorUnit(original["unit"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUnit); val.IsValid() && !isEmptyValue(val) {
+		transformed["unit"] = transformedUnit
+	}
+
 	transformedValueType, err := expandLoggingMetricMetricDescriptorValueType(original["value_type"], d, config)
 	if err != nil {
 		return nil, err
@@ -128,6 +135,10 @@ func expandLoggingMetricMetricDescriptor(v interface{}, d TerraformResourceData,
 	}
 
 	return transformed, nil
+}
+
+func expandLoggingMetricMetricDescriptorUnit(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandLoggingMetricMetricDescriptorValueType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
