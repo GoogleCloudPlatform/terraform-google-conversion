@@ -57,6 +57,9 @@ func healthCheckCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
 	if diff.Get("https_health_check") != nil {
 		return validatePortSpec(diff, "https_health_check")
 	}
+	if diff.Get("http2_health_check") != nil {
+		return validatePortSpec(diff, "http2_health_check")
+	}
 	if diff.Get("tcp_health_check") != nil {
 		return validatePortSpec(diff, "tcp_health_check")
 	}
@@ -81,6 +84,8 @@ func portDiffSuppress(k, old, new string, _ *schema.ResourceData) bool {
 			case "http_health_check":
 				defaultPort = 80
 			case "https_health_check":
+				defaultPort = 443
+			case "http2_health_check":
 				defaultPort = 443
 			case "tcp_health_check":
 				defaultPort = 80
@@ -183,6 +188,12 @@ func GetComputeHealthCheckApiObject(d TerraformResourceData, config *Config) (ma
 	} else if v, ok := d.GetOkExists("ssl_health_check"); !isEmptyValue(reflect.ValueOf(sslHealthCheckProp)) && (ok || !reflect.DeepEqual(v, sslHealthCheckProp)) {
 		obj["sslHealthCheck"] = sslHealthCheckProp
 	}
+	http2HealthCheckProp, err := expandComputeHealthCheckHttp2HealthCheck(d.Get("http2_health_check"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("http2_health_check"); !isEmptyValue(reflect.ValueOf(http2HealthCheckProp)) && (ok || !reflect.DeepEqual(v, http2HealthCheckProp)) {
+		obj["http2HealthCheck"] = http2HealthCheckProp
+	}
 
 	return resourceComputeHealthCheckEncoder(d, config, obj)
 }
@@ -213,6 +224,19 @@ func resourceComputeHealthCheckEncoder(d TerraformResourceData, meta interface{}
 			}
 		}
 		obj["type"] = "HTTPS"
+		return obj, nil
+	}
+	if _, ok := d.GetOk("http2_health_check"); ok {
+		hc := d.Get("http2_health_check").([]interface{})[0]
+		ps := hc.(map[string]interface{})["port_specification"]
+
+		if ps == "USE_FIXED_PORT" || ps == "" {
+			m := obj["http2HealthCheck"].(map[string]interface{})
+			if m["port"] == nil {
+				m["port"] = 443
+			}
+		}
+		obj["type"] = "HTTP2"
 		return obj, nil
 	}
 	if _, ok := d.GetOk("tcp_health_check"); ok {
@@ -600,5 +624,94 @@ func expandComputeHealthCheckSslHealthCheckProxyHeader(v interface{}, d Terrafor
 }
 
 func expandComputeHealthCheckSslHealthCheckPortSpecification(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckHttp2HealthCheck(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHost, err := expandComputeHealthCheckHttp2HealthCheckHost(original["host"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHost); val.IsValid() && !isEmptyValue(val) {
+		transformed["host"] = transformedHost
+	}
+
+	transformedRequestPath, err := expandComputeHealthCheckHttp2HealthCheckRequestPath(original["request_path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestPath); val.IsValid() && !isEmptyValue(val) {
+		transformed["requestPath"] = transformedRequestPath
+	}
+
+	transformedResponse, err := expandComputeHealthCheckHttp2HealthCheckResponse(original["response"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponse); val.IsValid() && !isEmptyValue(val) {
+		transformed["response"] = transformedResponse
+	}
+
+	transformedPort, err := expandComputeHealthCheckHttp2HealthCheckPort(original["port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !isEmptyValue(val) {
+		transformed["port"] = transformedPort
+	}
+
+	transformedPortName, err := expandComputeHealthCheckHttp2HealthCheckPortName(original["port_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPortName); val.IsValid() && !isEmptyValue(val) {
+		transformed["portName"] = transformedPortName
+	}
+
+	transformedProxyHeader, err := expandComputeHealthCheckHttp2HealthCheckProxyHeader(original["proxy_header"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProxyHeader); val.IsValid() && !isEmptyValue(val) {
+		transformed["proxyHeader"] = transformedProxyHeader
+	}
+
+	transformedPortSpecification, err := expandComputeHealthCheckHttp2HealthCheckPortSpecification(original["port_specification"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPortSpecification); val.IsValid() && !isEmptyValue(val) {
+		transformed["portSpecification"] = transformedPortSpecification
+	}
+
+	return transformed, nil
+}
+
+func expandComputeHealthCheckHttp2HealthCheckHost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckHttp2HealthCheckRequestPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckHttp2HealthCheckResponse(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckHttp2HealthCheckPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckHttp2HealthCheckPortName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckHttp2HealthCheckProxyHeader(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckHttp2HealthCheckPortSpecification(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
