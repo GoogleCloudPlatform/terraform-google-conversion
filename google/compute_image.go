@@ -60,12 +60,6 @@ func GetComputeImageApiObject(d TerraformResourceData, config *Config) (map[stri
 	} else if v, ok := d.GetOkExists("family"); !isEmptyValue(reflect.ValueOf(familyProp)) && (ok || !reflect.DeepEqual(v, familyProp)) {
 		obj["family"] = familyProp
 	}
-	guestOsFeaturesProp, err := expandComputeImageGuestOsFeatures(d.Get("guest_os_features"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("guest_os_features"); !isEmptyValue(reflect.ValueOf(guestOsFeaturesProp)) && (ok || !reflect.DeepEqual(v, guestOsFeaturesProp)) {
-		obj["guestOsFeatures"] = guestOsFeaturesProp
-	}
 	labelsProp, err := expandComputeImageLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -115,32 +109,6 @@ func expandComputeImageDiskSizeGb(v interface{}, d TerraformResourceData, config
 }
 
 func expandComputeImageFamily(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeImageGuestOsFeatures(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedType, err := expandComputeImageGuestOsFeaturesType(original["type"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !isEmptyValue(val) {
-			transformed["type"] = transformedType
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandComputeImageGuestOsFeaturesType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
