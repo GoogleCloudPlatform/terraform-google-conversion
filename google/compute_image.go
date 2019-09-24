@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func GetComputeImageCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
@@ -119,6 +121,7 @@ func expandComputeImageFamily(v interface{}, d TerraformResourceData, config *Co
 }
 
 func expandComputeImageGuestOsFeatures(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
