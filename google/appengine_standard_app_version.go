@@ -17,7 +17,7 @@ package google
 import (
 	"reflect"
 
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 func GetAppEngineStandardAppVersionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
