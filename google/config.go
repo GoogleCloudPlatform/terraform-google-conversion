@@ -10,7 +10,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/logging"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/pathorcontents"
-	"github.com/hashicorp/terraform/httpclient"
+	"github.com/hashicorp/terraform-plugin-sdk/httpclient"
 	"github.com/terraform-providers/terraform-provider-google/version"
 
 	"golang.org/x/oauth2"
