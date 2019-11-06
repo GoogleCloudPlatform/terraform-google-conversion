@@ -55,17 +55,17 @@ func GetComputeUrlMapApiObject(d TerraformResourceData, config *Config) (map[str
 	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	hostRulesProp, err := expandComputeUrlMapHostRule(d.Get("host_rule"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("host_rule"); !isEmptyValue(reflect.ValueOf(hostRulesProp)) && (ok || !reflect.DeepEqual(v, hostRulesProp)) {
-		obj["hostRules"] = hostRulesProp
-	}
 	fingerprintProp, err := expandComputeUrlMapFingerprint(d.Get("fingerprint"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("fingerprint"); !isEmptyValue(reflect.ValueOf(fingerprintProp)) && (ok || !reflect.DeepEqual(v, fingerprintProp)) {
 		obj["fingerprint"] = fingerprintProp
+	}
+	hostRulesProp, err := expandComputeUrlMapHostRule(d.Get("host_rule"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("host_rule"); !isEmptyValue(reflect.ValueOf(hostRulesProp)) && (ok || !reflect.DeepEqual(v, hostRulesProp)) {
+		obj["hostRules"] = hostRulesProp
 	}
 	nameProp, err := expandComputeUrlMapName(d.Get("name"), d, config)
 	if err != nil {
@@ -96,6 +96,10 @@ func expandComputeUrlMapDefaultService(v interface{}, d TerraformResourceData, c
 }
 
 func expandComputeUrlMapDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -146,10 +150,6 @@ func expandComputeUrlMapHostRuleHosts(v interface{}, d TerraformResourceData, co
 }
 
 func expandComputeUrlMapHostRulePathMatcher(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -224,13 +224,6 @@ func expandComputeUrlMapPathMatcherPathRule(v interface{}, d TerraformResourceDa
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
-		transformedPaths, err := expandComputeUrlMapPathMatcherPathRulePaths(original["paths"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedPaths); val.IsValid() && !isEmptyValue(val) {
-			transformed["paths"] = transformedPaths
-		}
-
 		transformedService, err := expandComputeUrlMapPathMatcherPathRuleService(original["service"], d, config)
 		if err != nil {
 			return nil, err
@@ -238,19 +231,26 @@ func expandComputeUrlMapPathMatcherPathRule(v interface{}, d TerraformResourceDa
 			transformed["service"] = transformedService
 		}
 
+		transformedPaths, err := expandComputeUrlMapPathMatcherPathRulePaths(original["paths"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPaths); val.IsValid() && !isEmptyValue(val) {
+			transformed["paths"] = transformedPaths
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
 }
 
-func expandComputeUrlMapPathMatcherPathRulePaths(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
-	return v, nil
-}
-
 // ResourceRef only supports 1 type and UrlMap has references to a BackendBucket or BackendService. Just read the self_link string
 // instead of extracting the name and making a self_link out of it.
 func expandComputeUrlMapPathMatcherPathRuleService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherPathRulePaths(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
