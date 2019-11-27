@@ -45,10 +45,7 @@ func resourceComputeFirewallRuleHash(v interface{}) int {
 }
 
 func compareCaseInsensitive(k, old, new string, d *schema.ResourceData) bool {
-	if strings.ToLower(old) == strings.ToLower(new) {
-		return true
-	}
-	return false
+	return strings.ToLower(old) == strings.ToLower(new)
 }
 
 func GetComputeFirewallCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
