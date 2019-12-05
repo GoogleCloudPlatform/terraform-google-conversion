@@ -20,7 +20,7 @@ import (
 )
 
 func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := assetName(d, config, "//cloudrun.googleapis.com/domains.cloudrun.com/v1/namespaces/{{project}}/domainmappings/{{name}}")
+	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/domains.cloudrun.com/v1/namespaces/{{project}}/domainmappings/{{name}}")
 	if err != nil {
 		return Asset{}, err
 	}
@@ -29,8 +29,8 @@ func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) 
 			Name: name,
 			Type: "cloudrun.googleapis.com/DomainMapping",
 			Resource: &AssetResource{
-				Version:              "apis",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudrun/apis/rest",
+				Version:              "{{location}}-run.googleapis.com",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudrun/{{location}}-run.googleapis.com/rest",
 				DiscoveryName:        "DomainMapping",
 				Data:                 obj,
 			},
