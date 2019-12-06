@@ -57,6 +57,9 @@ func GetCloudRunServiceApiObject(d TerraformResourceData, config *Config) (map[s
 
 func resourceCloudRunServiceEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	name := d.Get("name").(string)
+	if obj["metadata"] == nil {
+		obj["metadata"] = make(map[string]interface{})
+	}
 	metadata := obj["metadata"].(map[string]interface{})
 	metadata["name"] = name
 
