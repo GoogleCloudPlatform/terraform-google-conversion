@@ -1313,6 +1313,13 @@ func expandComputeUrlMapPathMatcherRouteRules(v interface{}, d TerraformResource
 			transformed["priority"] = transformedPriority
 		}
 
+		transformedService, err := expandComputeUrlMapPathMatcherRouteRulesService(original["service"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedService); val.IsValid() && !isEmptyValue(val) {
+			transformed["service"] = transformedService
+		}
+
 		transformedHeaderAction, err := expandComputeUrlMapPathMatcherRouteRulesHeaderAction(original["header_action"], d, config)
 		if err != nil {
 			return nil, err
@@ -1348,6 +1355,14 @@ func expandComputeUrlMapPathMatcherRouteRules(v interface{}, d TerraformResource
 
 func expandComputeUrlMapPathMatcherRouteRulesPriority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherRouteRulesService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for service: %s", err)
+	}
+	return f.RelativeLink(), nil
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesHeaderAction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
