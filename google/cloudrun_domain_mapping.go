@@ -14,10 +14,7 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-)
+import "reflect"
 
 func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/domains.cloudrun.com/v1/namespaces/{{project}}/domainmappings/{{name}}")
@@ -107,11 +104,7 @@ func expandCloudRunDomainMappingSpecForceOverride(v interface{}, d TerraformReso
 }
 
 func expandCloudRunDomainMappingSpecRouteName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	f, err := parseGlobalFieldValue("services", v.(string), "project", d, config, true)
-	if err != nil {
-		return nil, fmt.Errorf("Invalid value for route_name: %s", err)
-	}
-	return f.RelativeLink(), nil
+	return GetResourceNameFromSelfLink(v.(string)), nil
 }
 
 func expandCloudRunDomainMappingSpecCertificateMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
