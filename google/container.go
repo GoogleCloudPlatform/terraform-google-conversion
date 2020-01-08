@@ -1,13 +1,13 @@
-// This file is written manually and is not based from terraform-provider-google.
-// There is a huge potential for drift. The longer term plan is to have this
-// file generated from the logic in terraform-provider-google. Please
-// see https://github.com/GoogleCloudPlatform/magic-modules/pull/2485#issuecomment-545680059
+// This file is written manually and is not based from terraform-provider-google. 
+// There is a huge potential for drift. The longer term plan is to have this 
+// file generated from the logic in terraform-provider-google. Please 
+// see https://github.com/GoogleCloudPlatform/magic-modules/pull/2485#issuecomment-545680059 
 // for the discussion.
 
 package google
 
 import (
-	"fmt"
+  "fmt"
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -1100,9 +1100,12 @@ func expandContainerClusterMasterAuthorizedNetworksConfig(v interface{}, d Terra
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	// enabled is always true as long as there is a master_authorized_networks_config config block.
-	// There is no option in Terraform to disable that when master_authorized_networks_config is seen.
-	transformed["enabled"] = true
+	transformedEnabled, err := expandContainerClusterMasterAuthorizedNetworksConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !isEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
 
 	transformedCidrBlocks, err := expandContainerClusterMasterAuthorizedNetworksConfigCidrBlocks(original["cidr_blocks"], d, config)
 	if err != nil {
@@ -1112,6 +1115,10 @@ func expandContainerClusterMasterAuthorizedNetworksConfig(v interface{}, d Terra
 	}
 
 	return transformed, nil
+}
+
+func expandContainerClusterMasterAuthorizedNetworksConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandContainerClusterMasterAuthorizedNetworksConfigCidrBlocks(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
