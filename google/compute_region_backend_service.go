@@ -140,7 +140,7 @@ func expandComputeRegionBackendServiceBackend(v interface{}, d TerraformResource
 		transformedCapacityScaler, err := expandComputeRegionBackendServiceBackendCapacityScaler(original["capacity_scaler"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedCapacityScaler); val.IsValid() && !isEmptyValue(val) {
+		} else {
 			transformed["capacityScaler"] = transformedCapacityScaler
 		}
 
