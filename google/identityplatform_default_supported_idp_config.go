@@ -17,7 +17,7 @@ package google
 import "reflect"
 
 func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := assetName(d, config, "//identityplatform.googleapis.com/projects/{{project}}/defaultSupportedIdpConfigs/{{client_id}}")
+	name, err := assetName(d, config, "//identityplatform.googleapis.com/projects/{{project}}/defaultSupportedIdpConfigs/{{idp_id}}")
 	if err != nil {
 		return Asset{}, err
 	}
