@@ -18,22 +18,7 @@ import (
 	"fmt"
 	"reflect"
 	"regexp"
-	"strings"
-
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
-
-func comparePubsubSubscriptionExpirationPolicy(_, old, new string, _ *schema.ResourceData) bool {
-	trimmedNew := strings.TrimLeft(new, "0")
-	trimmedOld := strings.TrimLeft(old, "0")
-	if strings.Contains(trimmedNew, ".") {
-		trimmedNew = strings.TrimRight(strings.TrimSuffix(trimmedNew, "s"), "0") + "s"
-	}
-	if strings.Contains(trimmedOld, ".") {
-		trimmedOld = strings.TrimRight(strings.TrimSuffix(trimmedOld, "s"), "0") + "s"
-	}
-	return trimmedNew == trimmedOld
-}
 
 func GetPubsubSubscriptionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/subscriptions/{{name}}")

@@ -14,46 +14,7 @@
 
 package google
 
-import (
-	"fmt"
-	"reflect"
-	"regexp"
-
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-)
-
-// compareTpuNodeSchedulingConfig diff suppresses for the default
-// scheduling, i.e. if preemptible is false, the API may either return no
-// schedulingConfig or an empty schedulingConfig.
-func compareTpuNodeSchedulingConfig(k, old, new string, d *schema.ResourceData) bool {
-	if k == "scheduling_config.0.preemptible" {
-		return old == "" && new == "false"
-	}
-	if k == "scheduling_config.#" {
-		o, n := d.GetChange("scheduling_config.0.preemptible")
-		return o.(bool) == n.(bool)
-	}
-	return false
-}
-
-func validateHttpHeaders() schema.SchemaValidateFunc {
-	return func(i interface{}, k string) (s []string, es []error) {
-		headers := i.(map[string]interface{})
-		if _, ok := headers["Content-Length"]; ok {
-			es = append(es, fmt.Errorf("Cannot set the Content-Length header on %s", k))
-			return
-		}
-		r := regexp.MustCompile(`(X-Google-|X-AppEngine-).*`)
-		for key := range headers {
-			if r.MatchString(key) {
-				es = append(es, fmt.Errorf("Cannot set the %s header on %s", key, k))
-				return
-			}
-		}
-
-		return
-	}
-}
+import "reflect"
 
 func GetTPUNodeCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//tpu.googleapis.com/projects/{{project}}/locations/{{zone}}/nodes/{{name}}")
