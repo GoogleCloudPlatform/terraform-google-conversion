@@ -16,6 +16,7 @@ package google
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -111,6 +112,44 @@ func GetComputeRegionBackendServiceApiObject(d TerraformResourceData, config *Co
 		obj["region"] = regionProp
 	}
 
+	return resourceComputeRegionBackendServiceEncoder(d, config, obj)
+}
+
+func resourceComputeRegionBackendServiceEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	if d.Get("load_balancing_scheme").(string) != "INTERNAL" {
+		return obj, nil
+	}
+
+	backendServiceOnlyNonInternalApiFieldNames := []string{
+		"capacityScaler",
+		"maxConnections",
+		"maxConnectionsPerInstance",
+		"maxConnectionsPerEndpoint",
+		"maxRate",
+		"maxRatePerInstance",
+		"maxRatePerEndpoint",
+		"maxUtilization",
+	}
+
+	var backends []interface{}
+	if lsV := obj["backends"]; lsV != nil {
+		backends = lsV.([]interface{})
+	}
+	for idx, v := range backends {
+		if v == nil {
+			continue
+		}
+		backend := v.(map[string]interface{})
+		// Remove fields from backends that cannot be sent for INTERNAL
+		// backend services
+		for _, k := range backendServiceOnlyNonInternalApiFieldNames {
+			log.Printf("[DEBUG] Removing field %q for request for INTERNAL backend service %s", k, d.Get("name"))
+			delete(backend, k)
+		}
+		backends[idx] = backend
+	}
+
+	obj["backends"] = backends
 	return obj, nil
 }
 
@@ -135,7 +174,7 @@ func expandComputeRegionBackendServiceBackend(v interface{}, d TerraformResource
 		transformedCapacityScaler, err := expandComputeRegionBackendServiceBackendCapacityScaler(original["capacity_scaler"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedCapacityScaler); val.IsValid() && !isEmptyValue(val) {
+		} else {
 			transformed["capacityScaler"] = transformedCapacityScaler
 		}
 
