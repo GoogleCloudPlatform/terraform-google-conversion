@@ -16,8 +16,31 @@ package google
 
 import (
 	"fmt"
+	"net"
 	"reflect"
+
+	"github.com/apparentlymart/go-cidr/cidr"
 )
+
+// Whether the IP CIDR change shrinks the block.
+func isShrinkageIpCidr(old, new, _ interface{}) bool {
+	_, oldCidr, oldErr := net.ParseCIDR(old.(string))
+	_, newCidr, newErr := net.ParseCIDR(new.(string))
+
+	if oldErr != nil || newErr != nil {
+		// This should never happen. The ValidateFunc on the field ensures it.
+		return false
+	}
+
+	oldStart, oldEnd := cidr.AddressRange(oldCidr)
+
+	if newCidr.Contains(oldStart) && newCidr.Contains(oldEnd) {
+		// This is a CIDR range expansion, no need to ForceNew, we have an update method for it.
+		return false
+	}
+
+	return true
+}
 
 func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{name}}")

@@ -14,7 +14,25 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+)
+
+func sslSettingsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	// If certificate id is empty, and ssl management type is `MANUAL`, then
+	// ssl settings will not be configured, and ssl_settings block is not returned
+
+	if k == "ssl_settings.#" &&
+		old == "0" && new == "1" &&
+		d.Get("ssl_settings.0.certificate_id") == "" &&
+		d.Get("ssl_settings.0.ssl_management_type") == "MANUAL" {
+		return true
+	}
+
+	return false
+}
 
 func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/domainMappings/{{domain_name}}")

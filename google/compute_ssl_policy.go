@@ -15,10 +15,32 @@
 package google
 
 import (
+	"fmt"
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
+
+func sslPolicyCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
+	profile := diff.Get("profile")
+	customFeaturesCount := diff.Get("custom_features.#")
+
+	// Validate that policy configs aren't incompatible during all phases
+	// CUSTOM profile demands non-zero custom_features, and other profiles (i.e., not CUSTOM) demand zero custom_features
+	if diff.HasChange("profile") || diff.HasChange("custom_features") {
+		if profile.(string) == "CUSTOM" {
+			if customFeaturesCount.(int) == 0 {
+				return fmt.Errorf("Error in SSL Policy %s: the profile is set to %s but no custom_features are set.", diff.Get("name"), profile.(string))
+			}
+		} else {
+			if customFeaturesCount != 0 {
+				return fmt.Errorf("Error in SSL Policy %s: the profile is set to %s but using custom_features requires the profile to be CUSTOM.", diff.Get("name"), profile.(string))
+			}
+		}
+		return nil
+	}
+	return nil
+}
 
 func GetComputeSslPolicyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/sslPolicies/{{name}}")
