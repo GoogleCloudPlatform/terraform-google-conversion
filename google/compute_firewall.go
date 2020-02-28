@@ -15,11 +15,38 @@
 package google
 
 import (
+	"bytes"
 	"fmt"
 	"reflect"
+	"sort"
+	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/helper/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
+
+func resourceComputeFirewallRuleHash(v interface{}) int {
+	var buf bytes.Buffer
+	m := v.(map[string]interface{})
+	buf.WriteString(fmt.Sprintf("%s-", strings.ToLower(m["protocol"].(string))))
+
+	// We need to make sure to sort the strings below so that we always
+	// generate the same hash code no matter what is in the set.
+	if v, ok := m["ports"]; ok && v != nil {
+		s := convertStringArr(v.([]interface{}))
+		sort.Strings(s)
+
+		for _, v := range s {
+			buf.WriteString(fmt.Sprintf("%s-", v))
+		}
+	}
+
+	return hashcode.String(buf.String())
+}
+
+func compareCaseInsensitive(k, old, new string, d *schema.ResourceData) bool {
+	return strings.ToLower(old) == strings.ToLower(new)
+}
 
 func GetComputeFirewallCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/firewalls/{{name}}")

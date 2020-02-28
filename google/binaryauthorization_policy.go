@@ -22,6 +22,21 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
+func defaultBinaryAuthorizationPolicy(project string) map[string]interface{} {
+	return map[string]interface{}{
+		"name": fmt.Sprintf("projects/%s/policy", project),
+		"admissionWhitelistPatterns": []interface{}{
+			map[string]interface{}{
+				"namePattern": "gcr.io/google_containers/*",
+			},
+		},
+		"defaultAdmissionRule": map[string]interface{}{
+			"evaluationMode":  "ALWAYS_ALLOW",
+			"enforcementMode": "ENFORCED_BLOCK_AND_AUDIT_LOG",
+		},
+	}
+}
+
 func GetBinaryAuthorizationPolicyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//binaryauthorization.googleapis.com/projects/{{project}}/policy")
 	if err != nil {
