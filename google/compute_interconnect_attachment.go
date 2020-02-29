@@ -16,32 +16,8 @@ package google
 
 import (
 	"fmt"
-	"log"
 	"reflect"
-	"time"
-
-	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
-
-// waitForAttachmentToBeProvisioned waits for an attachment to leave the
-// "UNPROVISIONED" state, to indicate that it's either ready or awaiting partner
-// activity.
-func waitForAttachmentToBeProvisioned(d *schema.ResourceData, config *Config, timeout time.Duration) error {
-	return resource.Retry(timeout, func() *resource.RetryError {
-		if err := resourceComputeInterconnectAttachmentRead(d, config); err != nil {
-			return resource.NonRetryableError(err)
-		}
-
-		name := d.Get("name").(string)
-		state := d.Get("state").(string)
-		if state == "UNPROVISIONED" {
-			return resource.RetryableError(fmt.Errorf("InterconnectAttachment %q has state %q.", name, state))
-		}
-		log.Printf("InterconnectAttachment %q has state %q.", name, state)
-		return nil
-	})
-}
 
 func GetComputeInterconnectAttachmentCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/interconnectAttachments/{{name}}")
