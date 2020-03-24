@@ -161,6 +161,13 @@ func expandAccessContextManagerAccessLevelBasicConditions(v interface{}, d Terra
 			transformed["devicePolicy"] = transformedDevicePolicy
 		}
 
+		transformedRegions, err := expandAccessContextManagerAccessLevelBasicConditionsRegions(original["regions"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRegions); val.IsValid() && !isEmptyValue(val) {
+			transformed["regions"] = transformedRegions
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -290,6 +297,10 @@ func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyRequireAdmi
 }
 
 func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyRequireCorpOwned(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerAccessLevelBasicConditionsRegions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
