@@ -14,7 +14,20 @@
 
 package google
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+)
+
+func revisionNameCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
+	autogen := diff.Get("autogenerate_revision_name").(bool)
+	if autogen && diff.HasChange("template.0.metadata.0.name") {
+		return fmt.Errorf("google_cloud_run_service: `template.metadata.name` cannot be set while `autogenerate_revision_name` is true. Please remove the field or set `autogenerate_revision_name` to false.")
+	}
+	return nil
+}
 
 func GetCloudRunServiceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/serving.knative.dev/v1/namespaces/{{project}}/services/{{name}}")
@@ -280,6 +293,9 @@ func expandCloudRunServiceSpecTemplateMetadataAnnotations(v interface{}, d Terra
 }
 
 func expandCloudRunServiceSpecTemplateMetadataName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	if d.Get("autogenerate_revision_name") == true {
+		return nil, nil
+	}
 	return v, nil
 }
 
