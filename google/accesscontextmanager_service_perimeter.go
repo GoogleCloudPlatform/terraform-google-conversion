@@ -130,6 +130,13 @@ func expandAccessContextManagerServicePerimeterStatus(v interface{}, d Terraform
 		transformed["restrictedServices"] = transformedRestrictedServices
 	}
 
+	transformedVPCAccessibleServices, err := expandAccessContextManagerServicePerimeterStatusVPCAccessibleServices(original["vpc_accessible_services"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVPCAccessibleServices); val.IsValid() && !isEmptyValue(val) {
+		transformed["vpcAccessibleServices"] = transformedVPCAccessibleServices
+	}
+
 	return transformed, nil
 }
 
@@ -142,6 +149,41 @@ func expandAccessContextManagerServicePerimeterStatusAccessLevels(v interface{},
 }
 
 func expandAccessContextManagerServicePerimeterStatusRestrictedServices(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVPCAccessibleServices(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableRestriction, err := expandAccessContextManagerServicePerimeterStatusVPCAccessibleServicesEnableRestriction(original["enable_restriction"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableRestriction); val.IsValid() && !isEmptyValue(val) {
+		transformed["enableRestriction"] = transformedEnableRestriction
+	}
+
+	transformedAllowedServices, err := expandAccessContextManagerServicePerimeterStatusVPCAccessibleServicesAllowedServices(original["allowed_services"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedServices); val.IsValid() && !isEmptyValue(val) {
+		transformed["allowedServices"] = transformedAllowedServices
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVPCAccessibleServicesEnableRestriction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVPCAccessibleServicesAllowedServices(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
