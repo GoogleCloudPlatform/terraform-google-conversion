@@ -106,6 +106,12 @@ func GetPubsubSubscriptionApiObject(d TerraformResourceData, config *Config) (ma
 	} else if v, ok := d.GetOkExists("expiration_policy"); ok || !reflect.DeepEqual(v, expirationPolicyProp) {
 		obj["expirationPolicy"] = expirationPolicyProp
 	}
+	deadLetterPolicyProp, err := expandPubsubSubscriptionDeadLetterPolicy(d.Get("dead_letter_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dead_letter_policy"); ok || !reflect.DeepEqual(v, deadLetterPolicyProp) {
+		obj["deadLetterPolicy"] = deadLetterPolicyProp
+	}
 
 	return resourcePubsubSubscriptionEncoder(d, config, obj)
 }
@@ -269,5 +275,39 @@ func expandPubsubSubscriptionExpirationPolicy(v interface{}, d TerraformResource
 }
 
 func expandPubsubSubscriptionExpirationPolicyTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionDeadLetterPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDeadLetterTopic, err := expandPubsubSubscriptionDeadLetterPolicyDeadLetterTopic(original["dead_letter_topic"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDeadLetterTopic); val.IsValid() && !isEmptyValue(val) {
+		transformed["deadLetterTopic"] = transformedDeadLetterTopic
+	}
+
+	transformedMaxDeliveryAttempts, err := expandPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(original["max_delivery_attempts"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxDeliveryAttempts); val.IsValid() && !isEmptyValue(val) {
+		transformed["maxDeliveryAttempts"] = transformedMaxDeliveryAttempts
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionDeadLetterPolicyDeadLetterTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
