@@ -92,6 +92,12 @@ func GetComputeUrlMapApiObject(d TerraformResourceData, config *Config) (map[str
 	} else if v, ok := d.GetOkExists("test"); !isEmptyValue(reflect.ValueOf(testsProp)) && (ok || !reflect.DeepEqual(v, testsProp)) {
 		obj["tests"] = testsProp
 	}
+	defaultUrlRedirectProp, err := expandComputeUrlMapDefaultUrlRedirect(d.Get("default_url_redirect"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("default_url_redirect"); !isEmptyValue(reflect.ValueOf(defaultUrlRedirectProp)) && (ok || !reflect.DeepEqual(v, defaultUrlRedirectProp)) {
+		obj["defaultUrlRedirect"] = defaultUrlRedirectProp
+	}
 
 	return obj, nil
 }
@@ -356,6 +362,13 @@ func expandComputeUrlMapPathMatcher(v interface{}, d TerraformResourceData, conf
 			return nil, err
 		} else if val := reflect.ValueOf(transformedRouteRules); val.IsValid() && !isEmptyValue(val) {
 			transformed["routeRules"] = transformedRouteRules
+		}
+
+		transformedDefaultUrlRedirect, err := expandComputeUrlMapPathMatcherDefaultUrlRedirect(original["default_url_redirect"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDefaultUrlRedirect); val.IsValid() && !isEmptyValue(val) {
+			transformed["defaultUrlRedirect"] = transformedDefaultUrlRedirect
 		}
 
 		req = append(req, transformed)
@@ -2576,6 +2589,84 @@ func expandComputeUrlMapPathMatcherRouteRulesUrlRedirectStripQuery(v interface{}
 	return v, nil
 }
 
+func expandComputeUrlMapPathMatcherDefaultUrlRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHostRedirect, err := expandComputeUrlMapPathMatcherDefaultUrlRedirectHostRedirect(original["host_redirect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostRedirect); val.IsValid() && !isEmptyValue(val) {
+		transformed["hostRedirect"] = transformedHostRedirect
+	}
+
+	transformedHttpsRedirect, err := expandComputeUrlMapPathMatcherDefaultUrlRedirectHttpsRedirect(original["https_redirect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHttpsRedirect); val.IsValid() && !isEmptyValue(val) {
+		transformed["httpsRedirect"] = transformedHttpsRedirect
+	}
+
+	transformedPathRedirect, err := expandComputeUrlMapPathMatcherDefaultUrlRedirectPathRedirect(original["path_redirect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPathRedirect); val.IsValid() && !isEmptyValue(val) {
+		transformed["pathRedirect"] = transformedPathRedirect
+	}
+
+	transformedPrefixRedirect, err := expandComputeUrlMapPathMatcherDefaultUrlRedirectPrefixRedirect(original["prefix_redirect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrefixRedirect); val.IsValid() && !isEmptyValue(val) {
+		transformed["prefixRedirect"] = transformedPrefixRedirect
+	}
+
+	transformedRedirectResponseCode, err := expandComputeUrlMapPathMatcherDefaultUrlRedirectRedirectResponseCode(original["redirect_response_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRedirectResponseCode); val.IsValid() && !isEmptyValue(val) {
+		transformed["redirectResponseCode"] = transformedRedirectResponseCode
+	}
+
+	transformedStripQuery, err := expandComputeUrlMapPathMatcherDefaultUrlRedirectStripQuery(original["strip_query"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStripQuery); val.IsValid() && !isEmptyValue(val) {
+		transformed["stripQuery"] = transformedStripQuery
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultUrlRedirectHostRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultUrlRedirectHttpsRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultUrlRedirectPathRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultUrlRedirectPrefixRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultUrlRedirectRedirectResponseCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultUrlRedirectStripQuery(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeUrlMapTest(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -2632,5 +2723,83 @@ func expandComputeUrlMapTestPath(v interface{}, d TerraformResourceData, config 
 }
 
 func expandComputeUrlMapTestService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultUrlRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHostRedirect, err := expandComputeUrlMapDefaultUrlRedirectHostRedirect(original["host_redirect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostRedirect); val.IsValid() && !isEmptyValue(val) {
+		transformed["hostRedirect"] = transformedHostRedirect
+	}
+
+	transformedHttpsRedirect, err := expandComputeUrlMapDefaultUrlRedirectHttpsRedirect(original["https_redirect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHttpsRedirect); val.IsValid() && !isEmptyValue(val) {
+		transformed["httpsRedirect"] = transformedHttpsRedirect
+	}
+
+	transformedPathRedirect, err := expandComputeUrlMapDefaultUrlRedirectPathRedirect(original["path_redirect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPathRedirect); val.IsValid() && !isEmptyValue(val) {
+		transformed["pathRedirect"] = transformedPathRedirect
+	}
+
+	transformedPrefixRedirect, err := expandComputeUrlMapDefaultUrlRedirectPrefixRedirect(original["prefix_redirect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrefixRedirect); val.IsValid() && !isEmptyValue(val) {
+		transformed["prefixRedirect"] = transformedPrefixRedirect
+	}
+
+	transformedRedirectResponseCode, err := expandComputeUrlMapDefaultUrlRedirectRedirectResponseCode(original["redirect_response_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRedirectResponseCode); val.IsValid() && !isEmptyValue(val) {
+		transformed["redirectResponseCode"] = transformedRedirectResponseCode
+	}
+
+	transformedStripQuery, err := expandComputeUrlMapDefaultUrlRedirectStripQuery(original["strip_query"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStripQuery); val.IsValid() && !isEmptyValue(val) {
+		transformed["stripQuery"] = transformedStripQuery
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapDefaultUrlRedirectHostRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultUrlRedirectHttpsRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultUrlRedirectPathRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultUrlRedirectPrefixRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultUrlRedirectRedirectResponseCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultUrlRedirectStripQuery(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
