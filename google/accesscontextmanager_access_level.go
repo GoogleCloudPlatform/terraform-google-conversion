@@ -202,7 +202,7 @@ func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicy(v interfac
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedRequireScreenLock); val.IsValid() && !isEmptyValue(val) {
-		transformed["requireScreenLock"] = transformedRequireScreenLock
+		transformed["requireScreenlock"] = transformedRequireScreenLock
 	}
 
 	transformedAllowedEncryptionStatuses, err := expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyAllowedEncryptionStatuses(original["allowed_encryption_statuses"], d, config)
