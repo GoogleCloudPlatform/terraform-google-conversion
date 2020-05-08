@@ -210,6 +210,12 @@ func GetComputeRegionBackendServiceApiObject(d TerraformResourceData, config *Co
 	} else if v, ok := d.GetOkExists("outlier_detection"); !isEmptyValue(reflect.ValueOf(outlierDetectionProp)) && (ok || !reflect.DeepEqual(v, outlierDetectionProp)) {
 		obj["outlierDetection"] = outlierDetectionProp
 	}
+	portNameProp, err := expandComputeRegionBackendServicePortName(d.Get("port_name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("port_name"); !isEmptyValue(reflect.ValueOf(portNameProp)) && (ok || !reflect.DeepEqual(v, portNameProp)) {
+		obj["portName"] = portNameProp
+	}
 	protocolProp, err := expandComputeRegionBackendServiceProtocol(d.Get("protocol"), d, config)
 	if err != nil {
 		return nil, err
@@ -899,6 +905,10 @@ func expandComputeRegionBackendServiceOutlierDetectionSuccessRateRequestVolume(v
 }
 
 func expandComputeRegionBackendServiceOutlierDetectionSuccessRateStdevFactor(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServicePortName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
