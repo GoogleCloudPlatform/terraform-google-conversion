@@ -135,6 +135,13 @@ func expandMonitoringSloServiceLevelIndicator(v interface{}, d TerraformResource
 		transformed["basicSli"] = transformedBasicSli
 	}
 
+	transformedRequestBasedSli, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSli(d.Get("request_based_sli"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestBasedSli); val.IsValid() && !isEmptyValue(val) {
+		transformed["requestBased"] = transformedRequestBasedSli
+	}
+
 	return transformed, nil
 }
 
@@ -213,6 +220,141 @@ func expandMonitoringSloServiceLevelIndicatorBasicSliLatency(v interface{}, d Te
 }
 
 func expandMonitoringSloServiceLevelIndicatorBasicSliLatencyThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSli(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGoodTotalRatio, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliGoodTotalRatio(original["good_total_ratio"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGoodTotalRatio); val.IsValid() && !isEmptyValue(val) {
+		transformed["goodTotalRatio"] = transformedGoodTotalRatio
+	}
+
+	transformedDistributionCut, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCut(original["distribution_cut"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDistributionCut); val.IsValid() && !isEmptyValue(val) {
+		transformed["distributionCut"] = transformedDistributionCut
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliGoodTotalRatio(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGoodServiceFilter, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliGoodTotalRatioGoodServiceFilter(original["good_service_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGoodServiceFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["goodServiceFilter"] = transformedGoodServiceFilter
+	}
+
+	transformedBadServiceFilter, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliGoodTotalRatioBadServiceFilter(original["bad_service_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBadServiceFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["badServiceFilter"] = transformedBadServiceFilter
+	}
+
+	transformedTotalServiceFilter, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliGoodTotalRatioTotalServiceFilter(original["total_service_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTotalServiceFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["totalServiceFilter"] = transformedTotalServiceFilter
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliGoodTotalRatioGoodServiceFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliGoodTotalRatioBadServiceFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliGoodTotalRatioTotalServiceFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCut(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDistributionFilter, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutDistributionFilter(original["distribution_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDistributionFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["distributionFilter"] = transformedDistributionFilter
+	}
+
+	transformedRange, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutRange(original["range"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRange); val.IsValid() && !isEmptyValue(val) {
+		transformed["range"] = transformedRange
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutDistributionFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMin, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutRangeMin(original["min"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMin); val.IsValid() && !isEmptyValue(val) {
+		transformed["min"] = transformedMin
+	}
+
+	transformedMax, err := expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutRangeMax(original["max"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMax); val.IsValid() && !isEmptyValue(val) {
+		transformed["max"] = transformedMax
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutRangeMin(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutRangeMax(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
