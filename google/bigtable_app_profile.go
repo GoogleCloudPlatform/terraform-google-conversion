@@ -14,11 +14,7 @@
 
 package google
 
-import (
-	"reflect"
-
-	"google.golang.org/api/bigtableadmin/v2"
-)
+import "reflect"
 
 func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//bigtable.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")

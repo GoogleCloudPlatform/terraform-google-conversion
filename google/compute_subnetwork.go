@@ -18,8 +18,6 @@ import (
 	"fmt"
 	"net"
 	"reflect"
-
-	"github.com/apparentlymart/go-cidr/cidr"
 )
 
 // Whether the IP CIDR change shrinks the block.
