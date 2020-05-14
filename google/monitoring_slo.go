@@ -142,6 +142,13 @@ func expandMonitoringSloServiceLevelIndicator(v interface{}, d TerraformResource
 		transformed["requestBased"] = transformedRequestBasedSli
 	}
 
+	transformedWindowsBasedSli, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSli(d.Get("windows_based_sli"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWindowsBasedSli); val.IsValid() && !isEmptyValue(val) {
+		transformed["windowsBased"] = transformedWindowsBasedSli
+	}
+
 	return transformed, nil
 }
 
@@ -355,6 +362,439 @@ func expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutRange
 }
 
 func expandMonitoringSloServiceLevelIndicatorRequestBasedSliDistributionCutRangeMax(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSli(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWindowPeriod, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliWindowPeriod(original["window_period"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWindowPeriod); val.IsValid() && !isEmptyValue(val) {
+		transformed["windowPeriod"] = transformedWindowPeriod
+	}
+
+	transformedGoodBadMetricFilter, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodBadMetricFilter(original["good_bad_metric_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGoodBadMetricFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["goodBadMetricFilter"] = transformedGoodBadMetricFilter
+	}
+
+	transformedGoodTotalRatioThreshold, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThreshold(original["good_total_ratio_threshold"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGoodTotalRatioThreshold); val.IsValid() && !isEmptyValue(val) {
+		transformed["goodTotalRatioThreshold"] = transformedGoodTotalRatioThreshold
+	}
+
+	transformedMetricMeanInRange, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRange(original["metric_mean_in_range"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetricMeanInRange); val.IsValid() && !isEmptyValue(val) {
+		transformed["metricMeanInRange"] = transformedMetricMeanInRange
+	}
+
+	transformedMetricSumInRange, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRange(original["metric_sum_in_range"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetricSumInRange); val.IsValid() && !isEmptyValue(val) {
+		transformed["metricSumInRange"] = transformedMetricSumInRange
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliWindowPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodBadMetricFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedThreshold, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdThreshold(original["threshold"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThreshold); val.IsValid() && !isEmptyValue(val) {
+		transformed["threshold"] = transformedThreshold
+	}
+
+	transformedPerformance, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformance(original["performance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPerformance); val.IsValid() && !isEmptyValue(val) {
+		transformed["performance"] = transformedPerformance
+	}
+
+	transformedBasicSliPerformance, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformance(original["basic_sli_performance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBasicSliPerformance); val.IsValid() && !isEmptyValue(val) {
+		transformed["basicSliPerformance"] = transformedBasicSliPerformance
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformance(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGoodTotalRatio, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceGoodTotalRatio(original["good_total_ratio"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGoodTotalRatio); val.IsValid() && !isEmptyValue(val) {
+		transformed["goodTotalRatio"] = transformedGoodTotalRatio
+	}
+
+	transformedDistributionCut, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCut(original["distribution_cut"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDistributionCut); val.IsValid() && !isEmptyValue(val) {
+		transformed["distributionCut"] = transformedDistributionCut
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceGoodTotalRatio(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGoodServiceFilter, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceGoodTotalRatioGoodServiceFilter(original["good_service_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGoodServiceFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["goodServiceFilter"] = transformedGoodServiceFilter
+	}
+
+	transformedBadServiceFilter, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceGoodTotalRatioBadServiceFilter(original["bad_service_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBadServiceFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["badServiceFilter"] = transformedBadServiceFilter
+	}
+
+	transformedTotalServiceFilter, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceGoodTotalRatioTotalServiceFilter(original["total_service_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTotalServiceFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["totalServiceFilter"] = transformedTotalServiceFilter
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceGoodTotalRatioGoodServiceFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceGoodTotalRatioBadServiceFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceGoodTotalRatioTotalServiceFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCut(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDistributionFilter, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCutDistributionFilter(original["distribution_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDistributionFilter); val.IsValid() && !isEmptyValue(val) {
+		transformed["distributionFilter"] = transformedDistributionFilter
+	}
+
+	transformedRange, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCutRange(original["range"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRange); val.IsValid() && !isEmptyValue(val) {
+		transformed["range"] = transformedRange
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCutDistributionFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCutRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMin, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCutRangeMin(original["min"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMin); val.IsValid() && !isEmptyValue(val) {
+		transformed["min"] = transformedMin
+	}
+
+	transformedMax, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCutRangeMax(original["max"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMax); val.IsValid() && !isEmptyValue(val) {
+		transformed["max"] = transformedMax
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCutRangeMin(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdPerformanceDistributionCutRangeMax(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformance(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMethod, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceMethod(original["method"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMethod); val.IsValid() && !isEmptyValue(val) {
+		transformed["method"] = transformedMethod
+	}
+
+	transformedLocation, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceLocation(original["location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !isEmptyValue(val) {
+		transformed["location"] = transformedLocation
+	}
+
+	transformedVersion, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !isEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	transformedLatency, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceLatency(original["latency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLatency); val.IsValid() && !isEmptyValue(val) {
+		transformed["latency"] = transformedLatency
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceMethod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceLatency(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedThreshold, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceLatencyThreshold(original["threshold"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThreshold); val.IsValid() && !isEmptyValue(val) {
+		transformed["threshold"] = transformedThreshold
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceLatencyThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTimeSeries, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRangeTimeSeries(original["time_series"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTimeSeries); val.IsValid() && !isEmptyValue(val) {
+		transformed["timeSeries"] = transformedTimeSeries
+	}
+
+	transformedRange, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRangeRange(original["range"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRange); val.IsValid() && !isEmptyValue(val) {
+		transformed["range"] = transformedRange
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRangeTimeSeries(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRangeRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMin, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRangeRangeMin(original["min"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMin); val.IsValid() && !isEmptyValue(val) {
+		transformed["min"] = transformedMin
+	}
+
+	transformedMax, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRangeRangeMax(original["max"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMax); val.IsValid() && !isEmptyValue(val) {
+		transformed["max"] = transformedMax
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRangeRangeMin(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricMeanInRangeRangeMax(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTimeSeries, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRangeTimeSeries(original["time_series"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTimeSeries); val.IsValid() && !isEmptyValue(val) {
+		transformed["timeSeries"] = transformedTimeSeries
+	}
+
+	transformedRange, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRangeRange(original["range"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRange); val.IsValid() && !isEmptyValue(val) {
+		transformed["range"] = transformedRange
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRangeTimeSeries(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRangeRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMin, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRangeRangeMin(original["min"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMin); val.IsValid() && !isEmptyValue(val) {
+		transformed["min"] = transformedMin
+	}
+
+	transformedMax, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRangeRangeMax(original["max"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMax); val.IsValid() && !isEmptyValue(val) {
+		transformed["max"] = transformedMax
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRangeRangeMin(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliMetricSumInRangeRangeMax(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
