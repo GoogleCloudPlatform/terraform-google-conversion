@@ -14,7 +14,15 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+	"regexp"
+)
+
+var (
+	bigqueryDatasetRegexp = regexp.MustCompile("projects/(.+)/datasets/(.+)")
+	bigqueryTableRegexp   = regexp.MustCompile("projects/(.+)/datasets/(.+)/tables/(.+)")
+)
 
 func GetBigQueryJobCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/jobs/{{job_id}}")
@@ -281,40 +289,28 @@ func expandBigQueryJobConfigurationQueryDestinationTable(v interface{}, d Terraf
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedProjectId, err := expandBigQueryJobConfigurationQueryDestinationTableProjectId(original["project_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+	transformedProjectId := original["project_id"]
+	if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
 		transformed["projectId"] = transformedProjectId
 	}
 
-	transformedDatasetId, err := expandBigQueryJobConfigurationQueryDestinationTableDatasetId(original["dataset_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
+	transformedDatasetId := original["dataset_id"]
+	if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
 		transformed["datasetId"] = transformedDatasetId
 	}
 
-	transformedTableId, err := expandBigQueryJobConfigurationQueryDestinationTableTableId(original["table_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
+	transformedTableId := original["table_id"]
+	if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
 		transformed["tableId"] = transformedTableId
 	}
 
+	if parts := bigqueryTableRegexp.FindStringSubmatch(transformedTableId.(string)); parts != nil {
+		transformed["projectId"] = parts[1]
+		transformed["datasetId"] = parts[2]
+		transformed["tableId"] = parts[3]
+	}
+
 	return transformed, nil
-}
-
-func expandBigQueryJobConfigurationQueryDestinationTableProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationQueryDestinationTableDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationQueryDestinationTableTableId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandBigQueryJobConfigurationQueryUserDefinedFunctionResources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -371,29 +367,22 @@ func expandBigQueryJobConfigurationQueryDefaultDataset(v interface{}, d Terrafor
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedDatasetId, err := expandBigQueryJobConfigurationQueryDefaultDatasetDatasetId(original["dataset_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
-		transformed["datasetId"] = transformedDatasetId
-	}
-
-	transformedProjectId, err := expandBigQueryJobConfigurationQueryDefaultDatasetProjectId(original["project_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+	transformedProjectId := original["project_id"]
+	if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
 		transformed["projectId"] = transformedProjectId
 	}
 
+	transformedDatasetId := original["dataset_id"]
+	if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
+		transformed["datasetId"] = transformedDatasetId
+	}
+
+	if parts := bigqueryDatasetRegexp.FindStringSubmatch(transformedDatasetId.(string)); parts != nil {
+		transformed["projectId"] = parts[1]
+		transformed["datasetId"] = parts[2]
+	}
+
 	return transformed, nil
-}
-
-func expandBigQueryJobConfigurationQueryDefaultDatasetDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationQueryDefaultDatasetProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandBigQueryJobConfigurationQueryPriority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -658,40 +647,28 @@ func expandBigQueryJobConfigurationLoadDestinationTable(v interface{}, d Terrafo
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedProjectId, err := expandBigQueryJobConfigurationLoadDestinationTableProjectId(original["project_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+	transformedProjectId := original["project_id"]
+	if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
 		transformed["projectId"] = transformedProjectId
 	}
 
-	transformedDatasetId, err := expandBigQueryJobConfigurationLoadDestinationTableDatasetId(original["dataset_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
+	transformedDatasetId := original["dataset_id"]
+	if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
 		transformed["datasetId"] = transformedDatasetId
 	}
 
-	transformedTableId, err := expandBigQueryJobConfigurationLoadDestinationTableTableId(original["table_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
+	transformedTableId := original["table_id"]
+	if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
 		transformed["tableId"] = transformedTableId
 	}
 
+	if parts := bigqueryTableRegexp.FindStringSubmatch(transformedTableId.(string)); parts != nil {
+		transformed["projectId"] = parts[1]
+		transformed["datasetId"] = parts[2]
+		transformed["tableId"] = parts[3]
+	}
+
 	return transformed, nil
-}
-
-func expandBigQueryJobConfigurationLoadDestinationTableProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationLoadDestinationTableDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationLoadDestinationTableTableId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandBigQueryJobConfigurationLoadCreateDisposition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -879,42 +856,31 @@ func expandBigQueryJobConfigurationCopySourceTables(v interface{}, d TerraformRe
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
-		transformedProjectId, err := expandBigQueryJobConfigurationCopySourceTablesProjectId(original["project_id"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+		transformedProjectId := original["project_id"]
+		if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
 			transformed["projectId"] = transformedProjectId
 		}
 
-		transformedDatasetId, err := expandBigQueryJobConfigurationCopySourceTablesDatasetId(original["dataset_id"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
+		transformedDatasetId := original["dataset_id"]
+		if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
 			transformed["datasetId"] = transformedDatasetId
 		}
 
-		transformedTableId, err := expandBigQueryJobConfigurationCopySourceTablesTableId(original["table_id"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
+		transformedTableId := original["table_id"]
+		if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
 			transformed["tableId"] = transformedTableId
+		}
+
+		tableRef := regexp.MustCompile("projects/(.+)/datasets/(.+)/tables/(.+)")
+		if parts := tableRef.FindStringSubmatch(transformedTableId.(string)); parts != nil {
+			transformed["projectId"] = parts[1]
+			transformed["datasetId"] = parts[2]
+			transformed["tableId"] = parts[3]
 		}
 
 		req = append(req, transformed)
 	}
 	return req, nil
-}
-
-func expandBigQueryJobConfigurationCopySourceTablesProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationCopySourceTablesDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationCopySourceTablesTableId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandBigQueryJobConfigurationCopyDestinationTable(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -926,40 +892,28 @@ func expandBigQueryJobConfigurationCopyDestinationTable(v interface{}, d Terrafo
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedProjectId, err := expandBigQueryJobConfigurationCopyDestinationTableProjectId(original["project_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+	transformedProjectId := original["project_id"]
+	if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
 		transformed["projectId"] = transformedProjectId
 	}
 
-	transformedDatasetId, err := expandBigQueryJobConfigurationCopyDestinationTableDatasetId(original["dataset_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
+	transformedDatasetId := original["dataset_id"]
+	if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
 		transformed["datasetId"] = transformedDatasetId
 	}
 
-	transformedTableId, err := expandBigQueryJobConfigurationCopyDestinationTableTableId(original["table_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
+	transformedTableId := original["table_id"]
+	if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
 		transformed["tableId"] = transformedTableId
 	}
 
+	if parts := bigqueryTableRegexp.FindStringSubmatch(transformedTableId.(string)); parts != nil {
+		transformed["projectId"] = parts[1]
+		transformed["datasetId"] = parts[2]
+		transformed["tableId"] = parts[3]
+	}
+
 	return transformed, nil
-}
-
-func expandBigQueryJobConfigurationCopyDestinationTableProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationCopyDestinationTableDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationCopyDestinationTableTableId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandBigQueryJobConfigurationCopyCreateDisposition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -1094,40 +1048,28 @@ func expandBigQueryJobConfigurationExtractSourceTable(v interface{}, d Terraform
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedProjectId, err := expandBigQueryJobConfigurationExtractSourceTableProjectId(original["project_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+	transformedProjectId := original["project_id"]
+	if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
 		transformed["projectId"] = transformedProjectId
 	}
 
-	transformedDatasetId, err := expandBigQueryJobConfigurationExtractSourceTableDatasetId(original["dataset_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
+	transformedDatasetId := original["dataset_id"]
+	if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
 		transformed["datasetId"] = transformedDatasetId
 	}
 
-	transformedTableId, err := expandBigQueryJobConfigurationExtractSourceTableTableId(original["table_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
+	transformedTableId := original["table_id"]
+	if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
 		transformed["tableId"] = transformedTableId
 	}
 
+	if parts := bigqueryTableRegexp.FindStringSubmatch(transformedTableId.(string)); parts != nil {
+		transformed["projectId"] = parts[1]
+		transformed["datasetId"] = parts[2]
+		transformed["tableId"] = parts[3]
+	}
+
 	return transformed, nil
-}
-
-func expandBigQueryJobConfigurationExtractSourceTableProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationExtractSourceTableDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigQueryJobConfigurationExtractSourceTableTableId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandBigQueryJobConfigurationExtractSourceModel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
