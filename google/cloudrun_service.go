@@ -30,7 +30,7 @@ func revisionNameCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
 }
 
 func GetCloudRunServiceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/serving.knative.dev/v1/namespaces/{{project}}/services/{{name}}")
+	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/serving.knative.dev/namespaces/{{project}}/services/{{name}}")
 	if err != nil {
 		return Asset{}, err
 	}
@@ -39,8 +39,8 @@ func GetCloudRunServiceCaiObject(d TerraformResourceData, config *Config) (Asset
 			Name: name,
 			Type: "cloudrun.googleapis.com/Service",
 			Resource: &AssetResource{
-				Version:              "{{location}}-run.googleapis.com",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudrun/{{location}}-run.googleapis.com/rest",
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudrun/v1/rest",
 				DiscoveryName:        "Service",
 				Data:                 obj,
 			},
