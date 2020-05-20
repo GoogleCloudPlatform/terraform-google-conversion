@@ -108,6 +108,7 @@ type Config struct {
 	RedisBasePath                string
 	ResourceManagerBasePath      string
 	RuntimeConfigBasePath        string
+	SecretManagerBasePath        string
 	SecurityCenterBasePath       string
 	ServiceManagementBasePath    string
 	ServiceUsageBasePath         string
@@ -246,6 +247,7 @@ var PubsubDefaultBasePath = "https://pubsub.googleapis.com/v1/"
 var RedisDefaultBasePath = "https://redis.googleapis.com/v1/"
 var ResourceManagerDefaultBasePath = "https://cloudresourcemanager.googleapis.com/v1/"
 var RuntimeConfigDefaultBasePath = "https://runtimeconfig.googleapis.com/v1beta1/"
+var SecretManagerDefaultBasePath = "https://secretmanager.googleapis.com/v1/"
 var SecurityCenterDefaultBasePath = "https://securitycenter.googleapis.com/v1/"
 var ServiceManagementDefaultBasePath = "https://servicemanagement.googleapis.com/v1/"
 var ServiceUsageDefaultBasePath = "https://serviceusage.googleapis.com/v1/"
@@ -759,6 +761,7 @@ func ConfigureBasePaths(c *Config) {
 	c.RedisBasePath = RedisDefaultBasePath
 	c.ResourceManagerBasePath = ResourceManagerDefaultBasePath
 	c.RuntimeConfigBasePath = RuntimeConfigDefaultBasePath
+	c.SecretManagerBasePath = SecretManagerDefaultBasePath
 	c.SecurityCenterBasePath = SecurityCenterDefaultBasePath
 	c.ServiceManagementBasePath = ServiceManagementDefaultBasePath
 	c.ServiceUsageBasePath = ServiceUsageDefaultBasePath
