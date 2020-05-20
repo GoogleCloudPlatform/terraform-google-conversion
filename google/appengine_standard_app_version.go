@@ -21,7 +21,7 @@ import (
 )
 
 func GetAppEngineStandardAppVersionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}/versions/{{version_id}}")
+	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}/versions/{{version_id}}?view=FULL")
 	if err != nil {
 		return Asset{}, err
 	}
