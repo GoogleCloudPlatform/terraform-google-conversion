@@ -21,7 +21,7 @@ import (
 )
 
 func GetAppEngineFlexibleAppVersionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}/versions/{{version_id}}")
+	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}/versions/{{version_id}}?view=FULL")
 	if err != nil {
 		return Asset{}, err
 	}
@@ -102,6 +102,12 @@ func GetAppEngineFlexibleAppVersionApiObject(d TerraformResourceData, config *Co
 		return nil, err
 	} else if v, ok := d.GetOkExists("runtime_api_version"); !isEmptyValue(reflect.ValueOf(runtimeApiVersionProp)) && (ok || !reflect.DeepEqual(v, runtimeApiVersionProp)) {
 		obj["runtimeApiVersion"] = runtimeApiVersionProp
+	}
+	handlersProp, err := expandAppEngineFlexibleAppVersionHandlers(d.Get("handlers"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("handlers"); !isEmptyValue(reflect.ValueOf(handlersProp)) && (ok || !reflect.DeepEqual(v, handlersProp)) {
+		obj["handlers"] = handlersProp
 	}
 	runtimeMainExecutablePathProp, err := expandAppEngineFlexibleAppVersionRuntimeMainExecutablePath(d.Get("runtime_main_executable_path"), d, config)
 	if err != nil {
@@ -393,6 +399,209 @@ func expandAppEngineFlexibleAppVersionServingStatus(v interface{}, d TerraformRe
 }
 
 func expandAppEngineFlexibleAppVersionRuntimeApiVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlers(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedUrlRegex, err := expandAppEngineFlexibleAppVersionHandlersUrlRegex(original["url_regex"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUrlRegex); val.IsValid() && !isEmptyValue(val) {
+			transformed["urlRegex"] = transformedUrlRegex
+		}
+
+		transformedSecurityLevel, err := expandAppEngineFlexibleAppVersionHandlersSecurityLevel(original["security_level"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSecurityLevel); val.IsValid() && !isEmptyValue(val) {
+			transformed["securityLevel"] = transformedSecurityLevel
+		}
+
+		transformedLogin, err := expandAppEngineFlexibleAppVersionHandlersLogin(original["login"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLogin); val.IsValid() && !isEmptyValue(val) {
+			transformed["login"] = transformedLogin
+		}
+
+		transformedAuthFailAction, err := expandAppEngineFlexibleAppVersionHandlersAuthFailAction(original["auth_fail_action"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAuthFailAction); val.IsValid() && !isEmptyValue(val) {
+			transformed["authFailAction"] = transformedAuthFailAction
+		}
+
+		transformedRedirectHttpResponseCode, err := expandAppEngineFlexibleAppVersionHandlersRedirectHttpResponseCode(original["redirect_http_response_code"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRedirectHttpResponseCode); val.IsValid() && !isEmptyValue(val) {
+			transformed["redirectHttpResponseCode"] = transformedRedirectHttpResponseCode
+		}
+
+		transformedScript, err := expandAppEngineFlexibleAppVersionHandlersScript(original["script"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedScript); val.IsValid() && !isEmptyValue(val) {
+			transformed["script"] = transformedScript
+		}
+
+		transformedStaticFiles, err := expandAppEngineFlexibleAppVersionHandlersStaticFiles(original["static_files"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedStaticFiles); val.IsValid() && !isEmptyValue(val) {
+			transformed["staticFiles"] = transformedStaticFiles
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersUrlRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersSecurityLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersLogin(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersAuthFailAction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersRedirectHttpResponseCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersScript(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedScriptPath, err := expandAppEngineFlexibleAppVersionHandlersScriptScriptPath(original["script_path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScriptPath); val.IsValid() && !isEmptyValue(val) {
+		transformed["scriptPath"] = transformedScriptPath
+	}
+
+	return transformed, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersScriptScriptPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersStaticFiles(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPath, err := expandAppEngineFlexibleAppVersionHandlersStaticFilesPath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !isEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	transformedUploadPathRegex, err := expandAppEngineFlexibleAppVersionHandlersStaticFilesUploadPathRegex(original["upload_path_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUploadPathRegex); val.IsValid() && !isEmptyValue(val) {
+		transformed["uploadPathRegex"] = transformedUploadPathRegex
+	}
+
+	transformedHttpHeaders, err := expandAppEngineFlexibleAppVersionHandlersStaticFilesHttpHeaders(original["http_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHttpHeaders); val.IsValid() && !isEmptyValue(val) {
+		transformed["httpHeaders"] = transformedHttpHeaders
+	}
+
+	transformedMimeType, err := expandAppEngineFlexibleAppVersionHandlersStaticFilesMimeType(original["mime_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMimeType); val.IsValid() && !isEmptyValue(val) {
+		transformed["mimeType"] = transformedMimeType
+	}
+
+	transformedExpiration, err := expandAppEngineFlexibleAppVersionHandlersStaticFilesExpiration(original["expiration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpiration); val.IsValid() && !isEmptyValue(val) {
+		transformed["expiration"] = transformedExpiration
+	}
+
+	transformedRequireMatchingFile, err := expandAppEngineFlexibleAppVersionHandlersStaticFilesRequireMatchingFile(original["require_matching_file"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequireMatchingFile); val.IsValid() && !isEmptyValue(val) {
+		transformed["requireMatchingFile"] = transformedRequireMatchingFile
+	}
+
+	transformedApplicationReadable, err := expandAppEngineFlexibleAppVersionHandlersStaticFilesApplicationReadable(original["application_readable"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApplicationReadable); val.IsValid() && !isEmptyValue(val) {
+		transformed["applicationReadable"] = transformedApplicationReadable
+	}
+
+	return transformed, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersStaticFilesPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersStaticFilesUploadPathRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersStaticFilesHttpHeaders(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersStaticFilesMimeType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersStaticFilesExpiration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersStaticFilesRequireMatchingFile(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionHandlersStaticFilesApplicationReadable(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
