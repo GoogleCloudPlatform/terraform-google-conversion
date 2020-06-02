@@ -201,6 +201,7 @@ func expandAppEngineFlexibleAppVersionVersionId(v interface{}, d TerraformResour
 }
 
 func expandAppEngineFlexibleAppVersionInboundServices(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
