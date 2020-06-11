@@ -322,6 +322,13 @@ func expandCloudRunServiceSpecTemplateSpec(v interface{}, d TerraformResourceDat
 		transformed["containerConcurrency"] = transformedContainerConcurrency
 	}
 
+	transformedTimeoutSeconds, err := expandCloudRunServiceSpecTemplateSpecTimeoutSeconds(original["timeout_seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTimeoutSeconds); val.IsValid() && !isEmptyValue(val) {
+		transformed["timeoutSeconds"] = transformedTimeoutSeconds
+	}
+
 	transformedServiceAccountName, err := expandCloudRunServiceSpecTemplateSpecServiceAccountName(original["service_account_name"], d, config)
 	if err != nil {
 		return nil, err
@@ -651,6 +658,10 @@ func expandCloudRunServiceSpecTemplateSpecContainersResourcesRequests(v interfac
 }
 
 func expandCloudRunServiceSpecTemplateSpecContainerConcurrency(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecTimeoutSeconds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
