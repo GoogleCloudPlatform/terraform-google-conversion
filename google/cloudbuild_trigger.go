@@ -205,6 +205,13 @@ func expandCloudBuildTriggerTriggerTemplate(v interface{}, d TerraformResourceDa
 		transformed["dir"] = transformedDir
 	}
 
+	transformedInvertRegex, err := expandCloudBuildTriggerTriggerTemplateInvertRegex(original["invert_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInvertRegex); val.IsValid() && !isEmptyValue(val) {
+		transformed["invertRegex"] = transformedInvertRegex
+	}
+
 	transformedBranchName, err := expandCloudBuildTriggerTriggerTemplateBranchName(original["branch_name"], d, config)
 	if err != nil {
 		return nil, err
@@ -238,6 +245,10 @@ func expandCloudBuildTriggerTriggerTemplateRepoName(v interface{}, d TerraformRe
 }
 
 func expandCloudBuildTriggerTriggerTemplateDir(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerTriggerTemplateInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
