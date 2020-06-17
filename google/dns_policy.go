@@ -16,6 +16,7 @@ package google
 
 import (
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
@@ -169,5 +170,14 @@ func expandDNSPolicyNetworks(v interface{}, d TerraformResourceData, config *Con
 }
 
 func expandDNSPolicyNetworksNetworkUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
+	if v == nil || v.(string) == "" {
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		return v, nil
+	}
+	url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+	if err != nil {
+		return "", err
+	}
+	return ConvertSelfLinkToV1(url), nil
 }
