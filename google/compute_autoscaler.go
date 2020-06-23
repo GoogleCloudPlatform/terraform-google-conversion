@@ -114,6 +114,13 @@ func expandComputeAutoscalerAutoscalingPolicy(v interface{}, d TerraformResource
 		transformed["coolDownPeriodSec"] = transformedCooldownPeriod
 	}
 
+	transformedMode, err := expandComputeAutoscalerAutoscalingPolicyMode(original["mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !isEmptyValue(val) {
+		transformed["mode"] = transformedMode
+	}
+
 	transformedCpuUtilization, err := expandComputeAutoscalerAutoscalingPolicyCpuUtilization(original["cpu_utilization"], d, config)
 	if err != nil {
 		return nil, err
@@ -147,6 +154,10 @@ func expandComputeAutoscalerAutoscalingPolicyMaxReplicas(v interface{}, d Terraf
 }
 
 func expandComputeAutoscalerAutoscalingPolicyCooldownPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeAutoscalerAutoscalingPolicyMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
