@@ -159,6 +159,20 @@ func expandMonitoringUptimeCheckConfigHttpCheck(v interface{}, d TerraformResour
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedRequestMethod, err := expandMonitoringUptimeCheckConfigHttpCheckRequestMethod(original["request_method"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestMethod); val.IsValid() && !isEmptyValue(val) {
+		transformed["requestMethod"] = transformedRequestMethod
+	}
+
+	transformedContentType, err := expandMonitoringUptimeCheckConfigHttpCheckContentType(original["content_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContentType); val.IsValid() && !isEmptyValue(val) {
+		transformed["contentType"] = transformedContentType
+	}
+
 	transformedAuthInfo, err := expandMonitoringUptimeCheckConfigHttpCheckAuthInfo(original["auth_info"], d, config)
 	if err != nil {
 		return nil, err
@@ -208,7 +222,22 @@ func expandMonitoringUptimeCheckConfigHttpCheck(v interface{}, d TerraformResour
 		transformed["maskHeaders"] = transformedMaskHeaders
 	}
 
+	transformedBody, err := expandMonitoringUptimeCheckConfigHttpCheckBody(original["body"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBody); val.IsValid() && !isEmptyValue(val) {
+		transformed["body"] = transformedBody
+	}
+
 	return transformed, nil
+}
+
+func expandMonitoringUptimeCheckConfigHttpCheckRequestMethod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringUptimeCheckConfigHttpCheckContentType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckAuthInfo(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -273,6 +302,10 @@ func expandMonitoringUptimeCheckConfigHttpCheckValidateSsl(v interface{}, d Terr
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckMaskHeaders(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringUptimeCheckConfigHttpCheckBody(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
