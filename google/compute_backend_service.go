@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -315,6 +316,24 @@ func resourceComputeBackendServiceEncoder(d TerraformResourceData, meta interfac
 		iap := iapVal.(map[string]interface{})
 		iap["enabled"] = true
 		obj["iap"] = iap
+	}
+
+	backendsRaw, ok := obj["backends"]
+	if !ok {
+		return obj, nil
+	}
+	backends := backendsRaw.([]interface{})
+	for _, backendRaw := range backends {
+		backend := backendRaw.(map[string]interface{})
+		backendGroup, ok := backend["group"]
+		if !ok {
+			continue
+		}
+		if strings.Contains(backendGroup.(string), "global/networkEndpointGroups") {
+			// Remove `max_utilization` from any backend that belongs to a global NEG. This field
+			// has a default value and causes API validation errors
+			backend["maxUtilization"] = nil
+		}
 	}
 
 	return obj, nil
