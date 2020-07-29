@@ -15,10 +15,30 @@
 package google
 
 import (
+	"bytes"
+	"fmt"
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/helper/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
+
+func resourceSourceRepoRepositoryPubSubConfigsHash(v interface{}) int {
+	if v == nil {
+		return 0
+	}
+
+	var buf bytes.Buffer
+	m := v.(map[string]interface{})
+
+	buf.WriteString(fmt.Sprintf("%s-", GetResourceNameFromSelfLink(m["topic"].(string))))
+	buf.WriteString(fmt.Sprintf("%s-", m["message_format"].(string)))
+	if v, ok := m["service_account_email"]; ok {
+		buf.WriteString(fmt.Sprintf("%s-", v.(string)))
+	}
+
+	return hashcode.String(buf.String())
+}
 
 func GetSourceRepoRepositoryCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//sourcerepo.googleapis.com/projects/{{project}}/repos/{{name}}")
