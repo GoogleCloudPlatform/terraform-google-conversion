@@ -284,6 +284,8 @@ func (c *Config) LoadAndValidate(ctx context.Context) error {
 		c.Scopes = DefaultClientScopes
 	}
 
+	c.context = ctx
+
 	tokenSource, err := c.getTokenSource(c.Scopes)
 	if err != nil {
 		return err
@@ -315,7 +317,6 @@ func (c *Config) LoadAndValidate(ctx context.Context) error {
 	userAgent := fmt.Sprintf("%s %s", tfUserAgent, providerVersion)
 
 	c.client = client
-	c.context = ctx
 	c.userAgent = userAgent
 
 	// This base path and some others below need the version and possibly more of the path
