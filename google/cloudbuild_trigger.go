@@ -94,6 +94,12 @@ func GetCloudBuildTriggerApiObject(d TerraformResourceData, config *Config) (map
 	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	tagsProp, err := expandCloudBuildTriggerTags(d.Get("tags"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tags"); !isEmptyValue(reflect.ValueOf(tagsProp)) && (ok || !reflect.DeepEqual(v, tagsProp)) {
+		obj["tags"] = tagsProp
+	}
 	disabledProp, err := expandCloudBuildTriggerDisabled(d.Get("disabled"), d, config)
 	if err != nil {
 		return nil, err
@@ -145,6 +151,10 @@ func expandCloudBuildTriggerName(v interface{}, d TerraformResourceData, config 
 }
 
 func expandCloudBuildTriggerDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -273,6 +283,13 @@ func expandCloudBuildTriggerBuild(v interface{}, d TerraformResourceData, config
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedSource, err := expandCloudBuildTriggerBuildSource(original["source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSource); val.IsValid() && !isEmptyValue(val) {
+		transformed["source"] = transformedSource
+	}
+
 	transformedTags, err := expandCloudBuildTriggerBuildTags(original["tags"], d, config)
 	if err != nil {
 		return nil, err
@@ -287,11 +304,39 @@ func expandCloudBuildTriggerBuild(v interface{}, d TerraformResourceData, config
 		transformed["images"] = transformedImages
 	}
 
+	transformedSubstitutions, err := expandCloudBuildTriggerBuildSubstitutions(original["substitutions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubstitutions); val.IsValid() && !isEmptyValue(val) {
+		transformed["substitutions"] = transformedSubstitutions
+	}
+
+	transformedQueueTtl, err := expandCloudBuildTriggerBuildQueueTtl(original["queue_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedQueueTtl); val.IsValid() && !isEmptyValue(val) {
+		transformed["queueTtl"] = transformedQueueTtl
+	}
+
+	transformedLogsBucket, err := expandCloudBuildTriggerBuildLogsBucket(original["logs_bucket"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLogsBucket); val.IsValid() && !isEmptyValue(val) {
+		transformed["logsBucket"] = transformedLogsBucket
+	}
+
 	transformedTimeout, err := expandCloudBuildTriggerBuildTimeout(original["timeout"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedTimeout); val.IsValid() && !isEmptyValue(val) {
 		transformed["timeout"] = transformedTimeout
+	}
+
+	transformedSecret, err := expandCloudBuildTriggerBuildSecret(original["secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecret); val.IsValid() && !isEmptyValue(val) {
+		transformed["secrets"] = transformedSecret
 	}
 
 	transformedStep, err := expandCloudBuildTriggerBuildStep(original["step"], d, config)
@@ -304,6 +349,184 @@ func expandCloudBuildTriggerBuild(v interface{}, d TerraformResourceData, config
 	return transformed, nil
 }
 
+func expandCloudBuildTriggerBuildSource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStorageSource, err := expandCloudBuildTriggerBuildSourceStorageSource(original["storage_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStorageSource); val.IsValid() && !isEmptyValue(val) {
+		transformed["storageSource"] = transformedStorageSource
+	}
+
+	transformedRepoSource, err := expandCloudBuildTriggerBuildSourceRepoSource(original["repo_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepoSource); val.IsValid() && !isEmptyValue(val) {
+		transformed["repoSource"] = transformedRepoSource
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerBuildSourceStorageSource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBucket, err := expandCloudBuildTriggerBuildSourceStorageSourceBucket(original["bucket"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucket); val.IsValid() && !isEmptyValue(val) {
+		transformed["bucket"] = transformedBucket
+	}
+
+	transformedObject, err := expandCloudBuildTriggerBuildSourceStorageSourceObject(original["object"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedObject); val.IsValid() && !isEmptyValue(val) {
+		transformed["object"] = transformedObject
+	}
+
+	transformedGeneration, err := expandCloudBuildTriggerBuildSourceStorageSourceGeneration(original["generation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGeneration); val.IsValid() && !isEmptyValue(val) {
+		transformed["generation"] = transformedGeneration
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerBuildSourceStorageSourceBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceStorageSourceObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceStorageSourceGeneration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedProjectId, err := expandCloudBuildTriggerBuildSourceRepoSourceProjectId(original["project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+		transformed["projectId"] = transformedProjectId
+	}
+
+	transformedRepoName, err := expandCloudBuildTriggerBuildSourceRepoSourceRepoName(original["repo_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepoName); val.IsValid() && !isEmptyValue(val) {
+		transformed["repoName"] = transformedRepoName
+	}
+
+	transformedDir, err := expandCloudBuildTriggerBuildSourceRepoSourceDir(original["dir"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDir); val.IsValid() && !isEmptyValue(val) {
+		transformed["dir"] = transformedDir
+	}
+
+	transformedInvertRegex, err := expandCloudBuildTriggerBuildSourceRepoSourceInvertRegex(original["invert_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInvertRegex); val.IsValid() && !isEmptyValue(val) {
+		transformed["invertRegex"] = transformedInvertRegex
+	}
+
+	transformedSubstitutions, err := expandCloudBuildTriggerBuildSourceRepoSourceSubstitutions(original["substitutions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubstitutions); val.IsValid() && !isEmptyValue(val) {
+		transformed["substitutions"] = transformedSubstitutions
+	}
+
+	transformedBranchName, err := expandCloudBuildTriggerBuildSourceRepoSourceBranchName(original["branch_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBranchName); val.IsValid() && !isEmptyValue(val) {
+		transformed["branchName"] = transformedBranchName
+	}
+
+	transformedTagName, err := expandCloudBuildTriggerBuildSourceRepoSourceTagName(original["tag_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTagName); val.IsValid() && !isEmptyValue(val) {
+		transformed["tagName"] = transformedTagName
+	}
+
+	transformedCommitSha, err := expandCloudBuildTriggerBuildSourceRepoSourceCommitSha(original["commit_sha"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCommitSha); val.IsValid() && !isEmptyValue(val) {
+		transformed["commitSha"] = transformedCommitSha
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSourceProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSourceRepoName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSourceDir(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSourceInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSourceSubstitutions(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSourceBranchName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSourceTagName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSourceRepoSourceCommitSha(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandCloudBuildTriggerBuildTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
@@ -312,8 +535,71 @@ func expandCloudBuildTriggerBuildImages(v interface{}, d TerraformResourceData, 
 	return v, nil
 }
 
+func expandCloudBuildTriggerBuildSubstitutions(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCloudBuildTriggerBuildQueueTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildLogsBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandCloudBuildTriggerBuildTimeout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSecret(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedKmsKeyName, err := expandCloudBuildTriggerBuildSecretKmsKeyName(original["kms_key_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+			transformed["kmsKeyName"] = transformedKmsKeyName
+		}
+
+		transformedSecretEnv, err := expandCloudBuildTriggerBuildSecretSecretEnv(original["secret_env"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSecretEnv); val.IsValid() && !isEmptyValue(val) {
+			transformed["secretEnv"] = transformedSecretEnv
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudBuildTriggerBuildSecretKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSecretSecretEnv(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandCloudBuildTriggerBuildStep(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
