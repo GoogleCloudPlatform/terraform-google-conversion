@@ -106,6 +106,12 @@ func GetPubsubSubscriptionApiObject(d TerraformResourceData, config *Config) (ma
 	} else if v, ok := d.GetOkExists("expiration_policy"); ok || !reflect.DeepEqual(v, expirationPolicyProp) {
 		obj["expirationPolicy"] = expirationPolicyProp
 	}
+	filterProp, err := expandPubsubSubscriptionFilter(d.Get("filter"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("filter"); !isEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
+		obj["filter"] = filterProp
+	}
 	deadLetterPolicyProp, err := expandPubsubSubscriptionDeadLetterPolicy(d.Get("dead_letter_policy"), d, config)
 	if err != nil {
 		return nil, err
@@ -275,6 +281,10 @@ func expandPubsubSubscriptionExpirationPolicy(v interface{}, d TerraformResource
 }
 
 func expandPubsubSubscriptionExpirationPolicyTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
