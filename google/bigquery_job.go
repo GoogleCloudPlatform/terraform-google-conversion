@@ -241,7 +241,7 @@ func expandBigQueryJobConfigurationQuery(v interface{}, d TerraformResourceData,
 	transformedUseLegacySql, err := expandBigQueryJobConfigurationQueryUseLegacySql(original["use_legacy_sql"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUseLegacySql); val.IsValid() && !isEmptyValue(val) {
+	} else {
 		transformed["useLegacySql"] = transformedUseLegacySql
 	}
 
