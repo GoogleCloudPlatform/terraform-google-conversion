@@ -83,7 +83,7 @@ func GetDNSManagedZoneApiObject(d TerraformResourceData, config *Config) (map[st
 	privateVisibilityConfigProp, err := expandDNSManagedZonePrivateVisibilityConfig(d.Get("private_visibility_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("private_visibility_config"); !isEmptyValue(reflect.ValueOf(privateVisibilityConfigProp)) && (ok || !reflect.DeepEqual(v, privateVisibilityConfigProp)) {
+	} else if v, ok := d.GetOkExists("private_visibility_config"); ok || !reflect.DeepEqual(v, privateVisibilityConfigProp) {
 		obj["privateVisibilityConfig"] = privateVisibilityConfigProp
 	}
 	forwardingConfigProp, err := expandDNSManagedZoneForwardingConfig(d.Get("forwarding_config"), d, config)
@@ -243,7 +243,11 @@ func expandDNSManagedZoneVisibility(v interface{}, d TerraformResourceData, conf
 func expandDNSManagedZonePrivateVisibilityConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
-		return nil, nil
+		// The API won't remove the the field unless an empty network array is sent.
+		transformed := make(map[string]interface{})
+		emptyNetwork := make([]interface{}, 0)
+		transformed["networks"] = emptyNetwork
+		return transformed, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})
