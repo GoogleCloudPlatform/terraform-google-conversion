@@ -118,6 +118,12 @@ func GetPubsubSubscriptionApiObject(d TerraformResourceData, config *Config) (ma
 	} else if v, ok := d.GetOkExists("dead_letter_policy"); ok || !reflect.DeepEqual(v, deadLetterPolicyProp) {
 		obj["deadLetterPolicy"] = deadLetterPolicyProp
 	}
+	enableMessageOrderingProp, err := expandPubsubSubscriptionEnableMessageOrdering(d.Get("enable_message_ordering"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_message_ordering"); !isEmptyValue(reflect.ValueOf(enableMessageOrderingProp)) && (ok || !reflect.DeepEqual(v, enableMessageOrderingProp)) {
+		obj["enableMessageOrdering"] = enableMessageOrderingProp
+	}
 
 	return resourcePubsubSubscriptionEncoder(d, config, obj)
 }
@@ -319,5 +325,9 @@ func expandPubsubSubscriptionDeadLetterPolicyDeadLetterTopic(v interface{}, d Te
 }
 
 func expandPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionEnableMessageOrdering(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
