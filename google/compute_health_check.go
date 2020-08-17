@@ -195,6 +195,12 @@ func GetComputeHealthCheckApiObject(d TerraformResourceData, config *Config) (ma
 	} else if v, ok := d.GetOkExists("http2_health_check"); !isEmptyValue(reflect.ValueOf(http2HealthCheckProp)) && (ok || !reflect.DeepEqual(v, http2HealthCheckProp)) {
 		obj["http2HealthCheck"] = http2HealthCheckProp
 	}
+	grpcHealthCheckProp, err := expandComputeHealthCheckGrpcHealthCheck(d.Get("grpc_health_check"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("grpc_health_check"); !isEmptyValue(reflect.ValueOf(grpcHealthCheckProp)) && (ok || !reflect.DeepEqual(v, grpcHealthCheckProp)) {
+		obj["grpcHealthCheck"] = grpcHealthCheckProp
+	}
 
 	return resourceComputeHealthCheckEncoder(d, config, obj)
 }
@@ -719,5 +725,61 @@ func expandComputeHealthCheckHttp2HealthCheckProxyHeader(v interface{}, d Terraf
 }
 
 func expandComputeHealthCheckHttp2HealthCheckPortSpecification(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckGrpcHealthCheck(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPort, err := expandComputeHealthCheckGrpcHealthCheckPort(original["port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !isEmptyValue(val) {
+		transformed["port"] = transformedPort
+	}
+
+	transformedPortName, err := expandComputeHealthCheckGrpcHealthCheckPortName(original["port_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPortName); val.IsValid() && !isEmptyValue(val) {
+		transformed["portName"] = transformedPortName
+	}
+
+	transformedPortSpecification, err := expandComputeHealthCheckGrpcHealthCheckPortSpecification(original["port_specification"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPortSpecification); val.IsValid() && !isEmptyValue(val) {
+		transformed["portSpecification"] = transformedPortSpecification
+	}
+
+	transformedGrpcServiceName, err := expandComputeHealthCheckGrpcHealthCheckGrpcServiceName(original["grpc_service_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGrpcServiceName); val.IsValid() && !isEmptyValue(val) {
+		transformed["grpcServiceName"] = transformedGrpcServiceName
+	}
+
+	return transformed, nil
+}
+
+func expandComputeHealthCheckGrpcHealthCheckPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckGrpcHealthCheckPortName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckGrpcHealthCheckPortSpecification(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckGrpcHealthCheckGrpcServiceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
