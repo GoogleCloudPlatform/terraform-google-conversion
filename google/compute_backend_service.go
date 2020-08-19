@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"log"
 	"reflect"
-	"strings"
+	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -329,8 +329,13 @@ func resourceComputeBackendServiceEncoder(d TerraformResourceData, meta interfac
 		if !ok {
 			continue
 		}
-		if strings.Contains(backendGroup.(string), "global/networkEndpointGroups") {
-			// Remove `max_utilization` from any backend that belongs to a global NEG. This field
+
+		match, err := regexp.MatchString("(?:global|regions/[^/]+)/networkEndpointGroups", backendGroup.(string))
+		if err != nil {
+			return nil, err
+		}
+		if match {
+			// Remove `max_utilization` from any backend that belongs to a serverless NEG. This field
 			// has a default value and causes API validation errors
 			backend["maxUtilization"] = nil
 		}
