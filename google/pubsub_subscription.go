@@ -118,6 +118,12 @@ func GetPubsubSubscriptionApiObject(d TerraformResourceData, config *Config) (ma
 	} else if v, ok := d.GetOkExists("dead_letter_policy"); ok || !reflect.DeepEqual(v, deadLetterPolicyProp) {
 		obj["deadLetterPolicy"] = deadLetterPolicyProp
 	}
+	retryPolicyProp, err := expandPubsubSubscriptionRetryPolicy(d.Get("retry_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("retry_policy"); !isEmptyValue(reflect.ValueOf(retryPolicyProp)) && (ok || !reflect.DeepEqual(v, retryPolicyProp)) {
+		obj["retryPolicy"] = retryPolicyProp
+	}
 	enableMessageOrderingProp, err := expandPubsubSubscriptionEnableMessageOrdering(d.Get("enable_message_ordering"), d, config)
 	if err != nil {
 		return nil, err
@@ -325,6 +331,40 @@ func expandPubsubSubscriptionDeadLetterPolicyDeadLetterTopic(v interface{}, d Te
 }
 
 func expandPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionRetryPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMinimumBackoff, err := expandPubsubSubscriptionRetryPolicyMinimumBackoff(original["minimum_backoff"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinimumBackoff); val.IsValid() && !isEmptyValue(val) {
+		transformed["minimumBackoff"] = transformedMinimumBackoff
+	}
+
+	transformedMaximumBackoff, err := expandPubsubSubscriptionRetryPolicyMaximumBackoff(original["maximum_backoff"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaximumBackoff); val.IsValid() && !isEmptyValue(val) {
+		transformed["maximumBackoff"] = transformedMaximumBackoff
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionRetryPolicyMinimumBackoff(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionRetryPolicyMaximumBackoff(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
