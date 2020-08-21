@@ -63,6 +63,12 @@ func GetBigqueryDataTransferConfigApiObject(d TerraformResourceData, config *Con
 	} else if v, ok := d.GetOkExists("schedule"); !isEmptyValue(reflect.ValueOf(scheduleProp)) && (ok || !reflect.DeepEqual(v, scheduleProp)) {
 		obj["schedule"] = scheduleProp
 	}
+	notificationPubsubTopicProp, err := expandBigqueryDataTransferConfigNotificationPubsubTopic(d.Get("notification_pubsub_topic"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("notification_pubsub_topic"); !isEmptyValue(reflect.ValueOf(notificationPubsubTopicProp)) && (ok || !reflect.DeepEqual(v, notificationPubsubTopicProp)) {
+		obj["notificationPubsubTopic"] = notificationPubsubTopicProp
+	}
 	dataRefreshWindowDaysProp, err := expandBigqueryDataTransferConfigDataRefreshWindowDays(d.Get("data_refresh_window_days"), d, config)
 	if err != nil {
 		return nil, err
@@ -98,6 +104,10 @@ func expandBigqueryDataTransferConfigDataSourceId(v interface{}, d TerraformReso
 }
 
 func expandBigqueryDataTransferConfigSchedule(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryDataTransferConfigNotificationPubsubTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
