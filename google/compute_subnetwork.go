@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"net"
 	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 // Whether the IP CIDR change shrinks the block.
@@ -207,6 +209,10 @@ func expandComputeSubnetworkLogConfig(v interface{}, d TerraformResourceData, co
 	transformed["aggregationInterval"] = original["aggregation_interval"]
 	transformed["flowSampling"] = original["flow_sampling"]
 	transformed["metadata"] = original["metadata"]
+	transformed["filterExpr"] = original["filter_expr"]
+
+	// make it JSON marshallable
+	transformed["metadataFields"] = original["metadata_fields"].(*schema.Set).List()
 
 	return transformed, nil
 }
