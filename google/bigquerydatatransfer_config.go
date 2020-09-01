@@ -14,7 +14,25 @@
 
 package google
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+)
+
+var sensitiveParams = []string{"secret_access_key"}
+
+func sensitiveParamCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
+	for _, sp := range sensitiveParams {
+		mapLabel := diff.Get("params." + sp).(string)
+		authLabel := diff.Get("sensitive_params.0." + sp).(string)
+		if mapLabel != "" && authLabel != "" {
+			return fmt.Errorf("Sensitive param [%s] cannot be set in both `params` and the `sensitive_params` block.", sp)
+		}
+	}
+	return nil
+}
 
 func GetBigqueryDataTransferConfigCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//bigquerydatatransfer.googleapis.com/{{name}}")
@@ -87,6 +105,26 @@ func GetBigqueryDataTransferConfigApiObject(d TerraformResourceData, config *Con
 	} else if v, ok := d.GetOkExists("params"); !isEmptyValue(reflect.ValueOf(paramsProp)) && (ok || !reflect.DeepEqual(v, paramsProp)) {
 		obj["params"] = paramsProp
 	}
+
+	return resourceBigqueryDataTransferConfigEncoder(d, config, obj)
+}
+
+func resourceBigqueryDataTransferConfigEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	paramMap, ok := obj["params"]
+	if !ok {
+		paramMap = make(map[string]string)
+	}
+
+	var params map[string]string
+	params = paramMap.(map[string]string)
+
+	for _, sp := range sensitiveParams {
+		if auth, _ := d.GetOkExists("sensitive_params.0." + sp); auth != "" {
+			params[sp] = auth.(string)
+		}
+	}
+
+	obj["params"] = params
 
 	return obj, nil
 }
