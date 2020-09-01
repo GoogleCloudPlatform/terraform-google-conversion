@@ -75,6 +75,12 @@ func GetOSConfigPatchDeploymentApiObject(d TerraformResourceData, config *Config
 	} else if v, ok := d.GetOkExists("recurring_schedule"); !isEmptyValue(reflect.ValueOf(recurringScheduleProp)) && (ok || !reflect.DeepEqual(v, recurringScheduleProp)) {
 		obj["recurringSchedule"] = recurringScheduleProp
 	}
+	rolloutProp, err := expandOSConfigPatchDeploymentRollout(d.Get("rollout"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("rollout"); !isEmptyValue(reflect.ValueOf(rolloutProp)) && (ok || !reflect.DeepEqual(v, rolloutProp)) {
+		obj["rollout"] = rolloutProp
+	}
 
 	return resourceOSConfigPatchDeploymentEncoder(d, config, obj)
 }
@@ -1250,5 +1256,69 @@ func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthDayOfWee
 }
 
 func expandOSConfigPatchDeploymentRecurringScheduleMonthlyMonthDay(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOSConfigPatchDeploymentRollout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMode, err := expandOSConfigPatchDeploymentRolloutMode(original["mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !isEmptyValue(val) {
+		transformed["mode"] = transformedMode
+	}
+
+	transformedDisruptionBudget, err := expandOSConfigPatchDeploymentRolloutDisruptionBudget(original["disruption_budget"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisruptionBudget); val.IsValid() && !isEmptyValue(val) {
+		transformed["disruptionBudget"] = transformedDisruptionBudget
+	}
+
+	return transformed, nil
+}
+
+func expandOSConfigPatchDeploymentRolloutMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOSConfigPatchDeploymentRolloutDisruptionBudget(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFixed, err := expandOSConfigPatchDeploymentRolloutDisruptionBudgetFixed(original["fixed"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFixed); val.IsValid() && !isEmptyValue(val) {
+		transformed["fixed"] = transformedFixed
+	}
+
+	transformedPercentage, err := expandOSConfigPatchDeploymentRolloutDisruptionBudgetPercentage(original["percentage"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPercentage); val.IsValid() && !isEmptyValue(val) {
+		transformed["percentage"] = transformedPercentage
+	}
+
+	return transformed, nil
+}
+
+func expandOSConfigPatchDeploymentRolloutDisruptionBudgetFixed(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOSConfigPatchDeploymentRolloutDisruptionBudgetPercentage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
