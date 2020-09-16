@@ -27,6 +27,7 @@ type TerraformResourceDiff interface {
 	GetChange(string) (interface{}, interface{})
 	Get(string) interface{}
 	Clear(string) error
+	ForceNew(string) error
 }
 
 // getRegionFromZone returns the region from a zone for Google cloud.
