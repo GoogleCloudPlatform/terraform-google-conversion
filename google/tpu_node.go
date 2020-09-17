@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"reflect"
 	"regexp"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
@@ -36,6 +37,36 @@ func compareTpuNodeSchedulingConfig(k, old, new string, d *schema.ResourceData) 
 	return false
 }
 
+func tpuNodeCustomizeDiff(diff *schema.ResourceDiff, meta interface{}) error {
+	old, new := diff.GetChange("network")
+	config := meta.(*Config)
+
+	networkLinkRegex := regexp.MustCompile("projects/(.+)/global/networks/(.+)")
+
+	var pid string
+
+	if networkLinkRegex.MatchString(new.(string)) {
+		parts := networkLinkRegex.FindStringSubmatch(new.(string))
+		pid = parts[1]
+	}
+
+	project, err := config.clientResourceManager.Projects.Get(pid).Do()
+	if err != nil {
+		return fmt.Errorf("Failed to retrieve project, pid: %s, err: %s", pid, err)
+	}
+
+	if networkLinkRegex.MatchString(old.(string)) {
+		parts := networkLinkRegex.FindStringSubmatch(old.(string))
+		i, err := strconv.ParseInt(parts[1], 10, 64)
+		if err == nil {
+			if project.ProjectNumber == i {
+				diff.SetNew("network", old)
+				return nil
+			}
+		}
+	}
+	return nil
+}
 func validateHttpHeaders() schema.SchemaValidateFunc {
 	return func(i interface{}, k string) (s []string, es []error) {
 		headers := i.(map[string]interface{})
@@ -114,6 +145,12 @@ func GetTPUNodeApiObject(d TerraformResourceData, config *Config) (map[string]in
 	} else if v, ok := d.GetOkExists("cidr_block"); !isEmptyValue(reflect.ValueOf(cidrBlockProp)) && (ok || !reflect.DeepEqual(v, cidrBlockProp)) {
 		obj["cidrBlock"] = cidrBlockProp
 	}
+	useServiceNetworkingProp, err := expandTPUNodeUseServiceNetworking(d.Get("use_service_networking"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("use_service_networking"); !isEmptyValue(reflect.ValueOf(useServiceNetworkingProp)) && (ok || !reflect.DeepEqual(v, useServiceNetworkingProp)) {
+		obj["useServiceNetworking"] = useServiceNetworkingProp
+	}
 	schedulingConfigProp, err := expandTPUNodeSchedulingConfig(d.Get("scheduling_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -151,6 +188,10 @@ func expandTPUNodeNetwork(v interface{}, d TerraformResourceData, config *Config
 }
 
 func expandTPUNodeCidrBlock(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTPUNodeUseServiceNetworking(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
