@@ -15,6 +15,7 @@
 package google
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"reflect"
@@ -23,7 +24,7 @@ import (
 )
 
 // Whether the IP CIDR change shrinks the block.
-func isShrinkageIpCidr(old, new, _ interface{}) bool {
+func isShrinkageIpCidr(_ context.Context, old, new, _ interface{}) bool {
 	_, oldCidr, oldErr := net.ParseCIDR(old.(string))
 	_, newCidr, newErr := net.ParseCIDR(new.(string))
 

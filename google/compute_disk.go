@@ -15,6 +15,7 @@
 package google
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"reflect"
@@ -24,7 +25,7 @@ import (
 )
 
 // Is the new disk size smaller than the old one?
-func isDiskShrinkage(old, new, _ interface{}) bool {
+func isDiskShrinkage(_ context.Context, old, new, _ interface{}) bool {
 	// It's okay to remove size entirely.
 	if old == nil || new == nil {
 		return false

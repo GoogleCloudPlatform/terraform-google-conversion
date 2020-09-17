@@ -15,6 +15,7 @@
 package google
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"reflect"
@@ -87,7 +88,7 @@ func validateInternalBackendServiceBackends(backends []interface{}, d *schema.Re
 	return nil
 }
 
-func customDiffRegionBackendService(d *schema.ResourceDiff, meta interface{}) error {
+func customDiffRegionBackendService(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
 	v, ok := d.GetOk("backend")
 	if !ok {
 		return nil

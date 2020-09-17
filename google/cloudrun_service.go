@@ -15,13 +15,14 @@
 package google
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func revisionNameCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
+func revisionNameCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
 	autogen := diff.Get("autogenerate_revision_name").(bool)
 	if autogen && diff.HasChange("template.0.metadata.0.name") {
 		return fmt.Errorf("google_cloud_run_service: `template.metadata.name` cannot be set while `autogenerate_revision_name` is true. Please remove the field or set `autogenerate_revision_name` to false.")

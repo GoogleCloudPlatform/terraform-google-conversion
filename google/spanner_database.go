@@ -15,6 +15,7 @@
 package google
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 
@@ -48,7 +49,7 @@ func resourceSpannerDBDdlCustomDiffFunc(diff TerraformResourceDiff) error {
 	return nil
 }
 
-func resourceSpannerDBDdlCustomDiff(diff *schema.ResourceDiff, meta interface{}) error {
+func resourceSpannerDBDdlCustomDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
 	// separate func to allow unit testing
 	return resourceSpannerDBDdlCustomDiffFunc(diff)
 }
