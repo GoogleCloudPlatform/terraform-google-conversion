@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -37,7 +36,7 @@ func resourceSourceRepoRepositoryPubSubConfigsHash(v interface{}) int {
 		buf.WriteString(fmt.Sprintf("%s-", v.(string)))
 	}
 
-	return hashcode.String(buf.String())
+	return hashcode(buf.String())
 }
 
 func GetSourceRepoRepositoryCaiObject(d TerraformResourceData, config *Config) (Asset, error) {

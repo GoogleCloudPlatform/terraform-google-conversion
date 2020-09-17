@@ -15,6 +15,7 @@
 package google
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"time"
@@ -22,7 +23,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func stepTimeoutCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
+func stepTimeoutCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
 	buildList := diff.Get("build").([]interface{})
 	if len(buildList) == 0 || buildList[0] == nil {
 		return nil

@@ -16,12 +16,12 @@ package google
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"reflect"
 	"sort"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -41,7 +41,7 @@ func resourceComputeFirewallRuleHash(v interface{}) int {
 		}
 	}
 
-	return hashcode.String(buf.String())
+	return hashcode(buf.String())
 }
 
 func compareCaseInsensitive(k, old, new string, d *schema.ResourceData) bool {
@@ -58,7 +58,7 @@ func diffSuppressEnableLogging(k, old, new string, d *schema.ResourceData) bool 
 	return false
 }
 
-func resourceComputeFirewallEnableLoggingCustomizeDiff(diff *schema.ResourceDiff, v interface{}) error {
+func resourceComputeFirewallEnableLoggingCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
 	enableLogging, enableExists := diff.GetOkExists("enable_logging")
 	if !enableExists {
 		return nil

@@ -15,13 +15,14 @@
 package google
 
 import (
+	"context"
 	"log"
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func customDiffDeploymentManagerDeployment(d *schema.ResourceDiff, meta interface{}) error {
+func customDiffDeploymentManagerDeployment(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
 	if preview := d.Get("preview").(bool); preview {
 		log.Printf("[WARN] Deployment preview set to true - Terraform will treat Deployment as recreate-only")
 
