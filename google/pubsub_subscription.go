@@ -158,7 +158,9 @@ func expandPubsubSubscriptionTopic(v interface{}, d TerraformResourceData, confi
 	} else {
 		// If no full topic given, we expand it to a full topic on the same project
 		fullTopic := fmt.Sprintf("projects/%s/topics/%s", project, topic)
-		d.Set("topic", fullTopic)
+		if err := d.Set("topic", fullTopic); err != nil {
+			return nil, fmt.Errorf("Error setting topic: %s", err)
+		}
 		return fullTopic, nil
 	}
 }
