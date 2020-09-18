@@ -14,7 +14,10 @@
 
 package google
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//bigtable.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
@@ -63,7 +66,9 @@ func GetBigtableAppProfileApiObject(d TerraformResourceData, config *Config) (ma
 
 func resourceBigtableAppProfileEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// Instance is a URL parameter only, so replace self-link/path with resource name only.
-	d.Set("instance", GetResourceNameFromSelfLink(d.Get("instance").(string)))
+	if err := d.Set("instance", GetResourceNameFromSelfLink(d.Get("instance").(string))); err != nil {
+		return nil, fmt.Errorf("Error setting instance: %s", err)
+	}
 	return obj, nil
 }
 

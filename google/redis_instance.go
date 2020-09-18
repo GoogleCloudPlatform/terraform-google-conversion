@@ -14,7 +14,10 @@
 
 package google
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}")
@@ -121,7 +124,9 @@ func resourceRedisInstanceEncoder(d TerraformResourceData, meta interface{}, obj
 	if err != nil {
 		return nil, err
 	}
-	d.Set("region", region)
+	if err := d.Set("region", region); err != nil {
+		return nil, fmt.Errorf("Error setting region: %s", err)
+	}
 	return obj, nil
 }
 

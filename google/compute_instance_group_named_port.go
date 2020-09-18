@@ -14,7 +14,10 @@
 
 package google
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceGroups/{{group}}")
@@ -62,9 +65,15 @@ func resourceComputeInstanceGroupNamedPortEncoder(d TerraformResourceData, meta 
 		return nil, err
 	}
 
-	d.Set("group", ig.Name)
-	d.Set("zone", ig.Zone)
-	d.Set("project", ig.Project)
+	if err := d.Set("group", ig.Name); err != nil {
+		return nil, fmt.Errorf("Error setting group: %s", err)
+	}
+	if err := d.Set("zone", ig.Zone); err != nil {
+		return nil, fmt.Errorf("Error setting zone: %s", err)
+	}
+	if err := d.Set("project", ig.Project); err != nil {
+		return nil, fmt.Errorf("Error setting project: %s", err)
+	}
 
 	return obj, nil
 }
