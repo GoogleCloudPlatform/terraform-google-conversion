@@ -327,6 +327,12 @@ func resourceComputeDiskEncoder(d TerraformResourceData, meta interface{}, obj m
 	if err != nil {
 		return nil, err
 	}
+
+	userAgent, err := generateUserAgentString(d, config.userAgent)
+	if err != nil {
+		return nil, err
+	}
+
 	if v, ok := d.GetOk("type"); ok {
 		log.Printf("[DEBUG] Loading disk type: %s", v.(string))
 		diskType, err := readDiskType(config, d, v.(string))
@@ -341,7 +347,7 @@ func resourceComputeDiskEncoder(d TerraformResourceData, meta interface{}, obj m
 
 	if v, ok := d.GetOk("image"); ok {
 		log.Printf("[DEBUG] Resolving image name: %s", v.(string))
-		imageUrl, err := resolveImage(config, project, v.(string))
+		imageUrl, err := resolveImage(config, project, v.(string), userAgent)
 		if err != nil {
 			return nil, fmt.Errorf(
 				"Error resolving image name '%s': %s",
