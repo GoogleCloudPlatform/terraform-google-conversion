@@ -18,9 +18,10 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"regexp"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // Both oidc and oauth headers cannot be set
@@ -70,6 +71,25 @@ func authHeaderDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	}
 
 	return false
+}
+
+func validateHttpHeaders() schema.SchemaValidateFunc {
+	return func(i interface{}, k string) (s []string, es []error) {
+		headers := i.(map[string]interface{})
+		if _, ok := headers["Content-Length"]; ok {
+			es = append(es, fmt.Errorf("Cannot set the Content-Length header on %s", k))
+			return
+		}
+		r := regexp.MustCompile(`(X-Google-|X-AppEngine-).*`)
+		for key := range headers {
+			if r.MatchString(key) {
+				es = append(es, fmt.Errorf("Cannot set the %s header on %s", key, k))
+				return
+			}
+		}
+
+		return
+	}
 }
 
 func GetCloudSchedulerJobCaiObject(d TerraformResourceData, config *Config) (Asset, error) {

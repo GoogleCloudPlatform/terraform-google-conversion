@@ -21,7 +21,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 // compareTpuNodeSchedulingConfig diff suppresses for the default
@@ -69,24 +69,6 @@ func tpuNodeCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, meta int
 		}
 	}
 	return nil
-}
-func validateHttpHeaders() schema.SchemaValidateFunc {
-	return func(i interface{}, k string) (s []string, es []error) {
-		headers := i.(map[string]interface{})
-		if _, ok := headers["Content-Length"]; ok {
-			es = append(es, fmt.Errorf("Cannot set the Content-Length header on %s", k))
-			return
-		}
-		r := regexp.MustCompile(`(X-Google-|X-AppEngine-).*`)
-		for key := range headers {
-			if r.MatchString(key) {
-				es = append(es, fmt.Errorf("Cannot set the %s header on %s", key, k))
-				return
-			}
-		}
-
-		return
-	}
 }
 
 func GetTPUNodeCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
