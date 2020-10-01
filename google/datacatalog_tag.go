@@ -62,6 +62,26 @@ func GetDataCatalogTagApiObject(d TerraformResourceData, config *Config) (map[st
 		obj["column"] = columnProp
 	}
 
+	return resourceDataCatalogTagEncoder(d, config, obj)
+}
+
+func resourceDataCatalogTagEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	if obj["fields"] != nil {
+		// isEmptyValue() does not work for a boolean as it shows
+		// false when it is 'empty'. Filter boolValue here based on
+		// the rule api does not take more than 1 'value'
+		fields := obj["fields"].(map[string]interface{})
+		for _, elements := range fields {
+			values := elements.(map[string]interface{})
+			if len(values) > 1 {
+				for val := range values {
+					if val == "boolValue" {
+						delete(values, "boolValue")
+					}
+				}
+			}
+		}
+	}
 	return obj, nil
 }
 
@@ -109,7 +129,7 @@ func expandDataCatalogTagFields(v interface{}, d TerraformResourceData, config *
 		transformedBoolValue, err := expandDataCatalogTagFieldsBoolValue(original["bool_value"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedBoolValue); val.IsValid() && !isEmptyValue(val) {
+		} else {
 			transformed["boolValue"] = transformedBoolValue
 		}
 
