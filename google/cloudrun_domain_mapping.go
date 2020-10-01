@@ -14,7 +14,29 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+	"strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+)
+
+const domainMappingGoogleProvidedLabel = "cloud.googleapis.com/location"
+
+func domainMappingLabelDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	// Suppress diffs for the label provided by Google
+	if strings.Contains(k, domainMappingGoogleProvidedLabel) && new == "" {
+		return true
+	}
+
+	// Let diff be determined by labels (above)
+	if strings.Contains(k, "labels.%") {
+		return true
+	}
+
+	// For other keys, don't suppress diff.
+	return false
+}
 
 func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/domains.cloudrun.com/namespaces/{{project}}/domainmappings/{{name}}")
