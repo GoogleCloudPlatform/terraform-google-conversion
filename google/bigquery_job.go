@@ -25,7 +25,7 @@ var (
 )
 
 func GetBigQueryJobCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/jobs/{{job_id}}")
+	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/jobs/{{job_id}}?location={{location}}")
 	if err != nil {
 		return Asset{}, err
 	}
