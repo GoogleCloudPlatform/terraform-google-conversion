@@ -121,12 +121,23 @@ func expandDNSPolicyAlternativeNameServerConfigTargetNameServers(v interface{}, 
 			transformed["ipv4Address"] = transformedIpv4Address
 		}
 
+		transformedForwardingPath, err := expandDNSPolicyAlternativeNameServerConfigTargetNameServersForwardingPath(original["forwarding_path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedForwardingPath); val.IsValid() && !isEmptyValue(val) {
+			transformed["forwardingPath"] = transformedForwardingPath
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
 }
 
 func expandDNSPolicyAlternativeNameServerConfigTargetNameServersIpv4Address(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDNSPolicyAlternativeNameServerConfigTargetNameServersForwardingPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
