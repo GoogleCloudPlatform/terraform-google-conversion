@@ -15,10 +15,37 @@
 package google
 
 import (
+	"bytes"
+	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
+
+var accessApprovalCloudProductMapping = map[string]string{
+	"appengine.googleapis.com": "App Engine",
+	"bigquery.googleapis.com":  "BigQuery",
+	"bigtable.googleapis.com":  "Cloud Bigtable",
+	"cloudkms.googleapis.com":  "Cloud Key Management Service",
+	"compute.googleapis.com":   "Compute Engine",
+	"dataflow.googleapis.com":  "Cloud Dataflow",
+	"iam.googleapis.com":       "Cloud Identity and Access Management",
+	"pubsub.googleapis.com":    "Cloud Pub/Sub",
+	"storage.googleapis.com":   "Cloud Storage",
+}
+
+func accessApprovalEnrolledServicesHash(v interface{}) int {
+	var buf bytes.Buffer
+	m := v.(map[string]interface{})
+	cp := m["cloud_product"].(string)
+	if n, ok := accessApprovalCloudProductMapping[cp]; ok {
+		cp = n
+	}
+	buf.WriteString(fmt.Sprintf("%s-", strings.ToLower(cp))) // ToLower just in case
+	buf.WriteString(fmt.Sprintf("%s-", strings.ToLower(m["enrollment_level"].(string))))
+	return hashcode(buf.String())
+}
 
 func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//accessapproval.googleapis.com/folders/{{folder_id}}/accessApprovalSettings")
