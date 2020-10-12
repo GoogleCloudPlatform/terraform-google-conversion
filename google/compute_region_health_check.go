@@ -51,7 +51,7 @@ func GetComputeRegionHealthCheckApiObject(d TerraformResourceData, config *Confi
 	descriptionProp, err := expandComputeRegionHealthCheckDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); ok || !reflect.DeepEqual(v, descriptionProp) {
 		obj["description"] = descriptionProp
 	}
 	healthyThresholdProp, err := expandComputeRegionHealthCheckHealthyThreshold(d.Get("healthy_threshold"), d, config)
