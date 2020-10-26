@@ -67,6 +67,12 @@ func GetCloudAssetFolderFeedApiObject(d TerraformResourceData, config *Config) (
 	} else if v, ok := d.GetOkExists("feed_output_config"); !isEmptyValue(reflect.ValueOf(feedOutputConfigProp)) && (ok || !reflect.DeepEqual(v, feedOutputConfigProp)) {
 		obj["feedOutputConfig"] = feedOutputConfigProp
 	}
+	conditionProp, err := expandCloudAssetFolderFeedCondition(d.Get("condition"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("condition"); !isEmptyValue(reflect.ValueOf(conditionProp)) && (ok || !reflect.DeepEqual(v, conditionProp)) {
+		obj["condition"] = conditionProp
+	}
 
 	return resourceCloudAssetFolderFeedEncoder(d, config, obj)
 }
@@ -135,5 +141,61 @@ func expandCloudAssetFolderFeedFeedOutputConfigPubsubDestination(v interface{}, 
 }
 
 func expandCloudAssetFolderFeedFeedOutputConfigPubsubDestinationTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudAssetFolderFeedCondition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpression, err := expandCloudAssetFolderFeedConditionExpression(original["expression"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpression); val.IsValid() && !isEmptyValue(val) {
+		transformed["expression"] = transformedExpression
+	}
+
+	transformedTitle, err := expandCloudAssetFolderFeedConditionTitle(original["title"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !isEmptyValue(val) {
+		transformed["title"] = transformedTitle
+	}
+
+	transformedDescription, err := expandCloudAssetFolderFeedConditionDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !isEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedLocation, err := expandCloudAssetFolderFeedConditionLocation(original["location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !isEmptyValue(val) {
+		transformed["location"] = transformedLocation
+	}
+
+	return transformed, nil
+}
+
+func expandCloudAssetFolderFeedConditionExpression(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudAssetFolderFeedConditionTitle(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudAssetFolderFeedConditionDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudAssetFolderFeedConditionLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
