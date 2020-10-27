@@ -1311,7 +1311,7 @@ func expandOSConfigPatchDeploymentRolloutDisruptionBudget(v interface{}, d Terra
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedPercentage); val.IsValid() && !isEmptyValue(val) {
-		transformed["percentage"] = transformedPercentage
+		transformed["percent"] = transformedPercentage
 	}
 
 	return transformed, nil
