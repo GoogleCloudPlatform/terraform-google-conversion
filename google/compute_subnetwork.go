@@ -102,6 +102,12 @@ func GetComputeSubnetworkApiObject(d TerraformResourceData, config *Config) (map
 	} else if v, ok := d.GetOkExists("private_ip_google_access"); !isEmptyValue(reflect.ValueOf(privateIpGoogleAccessProp)) && (ok || !reflect.DeepEqual(v, privateIpGoogleAccessProp)) {
 		obj["privateIpGoogleAccess"] = privateIpGoogleAccessProp
 	}
+	privateIpv6GoogleAccessProp, err := expandComputeSubnetworkPrivateIpv6GoogleAccess(d.Get("private_ipv6_google_access"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("private_ipv6_google_access"); !isEmptyValue(reflect.ValueOf(privateIpv6GoogleAccessProp)) && (ok || !reflect.DeepEqual(v, privateIpv6GoogleAccessProp)) {
+		obj["privateIpv6GoogleAccess"] = privateIpv6GoogleAccessProp
+	}
 	regionProp, err := expandComputeSubnetworkRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -176,6 +182,10 @@ func expandComputeSubnetworkSecondaryIpRangeIpCidrRange(v interface{}, d Terrafo
 }
 
 func expandComputeSubnetworkPrivateIpGoogleAccess(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkPrivateIpv6GoogleAccess(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
