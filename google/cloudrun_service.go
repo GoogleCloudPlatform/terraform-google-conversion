@@ -18,6 +18,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
@@ -28,6 +29,23 @@ func revisionNameCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v i
 		return fmt.Errorf("google_cloud_run_service: `template.metadata.name` cannot be set while `autogenerate_revision_name` is true. Please remove the field or set `autogenerate_revision_name` to false.")
 	}
 	return nil
+}
+
+const cloudRunGoogleProvidedAnnotation = "serving.knative.dev"
+
+func cloudrunAnnotationDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	// Suppress diffs for the annotations provided by Google
+	if strings.Contains(k, cloudRunGoogleProvidedAnnotation) && new == "" {
+		return true
+	}
+
+	// Let diff be determined by annotations (above)
+	if strings.Contains(k, "annotations.%") {
+		return true
+	}
+
+	// For other keys, don't suppress diff.
+	return false
 }
 
 func GetCloudRunServiceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
