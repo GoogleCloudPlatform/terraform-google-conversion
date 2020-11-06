@@ -1,5 +1,4 @@
-// <% autogen_exception -%>
-
+//
 package google
 
 import (
@@ -118,12 +117,6 @@ func expandScheduling(v interface{}) (*computeBeta.Scheduling, error) {
 		}
 	}
 
-<% unless version == 'ga' -%>
-	if v, ok := original["min_node_cpus"]; ok {
-		scheduling.MinNodeCpus = int64(v.(int))
-	}
-<% end -%>
-
 	return scheduling, nil
 }
 
@@ -131,9 +124,6 @@ func flattenScheduling(resp *computeBeta.Scheduling) []map[string]interface{} {
 	schedulingMap := map[string]interface{}{
 		"on_host_maintenance": resp.OnHostMaintenance,
 		"preemptible":         resp.Preemptible,
-<% unless version == 'ga' -%>
-		"min_node_cpus":       resp.MinNodeCpus,
-<% end -%>
 	}
 
 	if resp.AutomaticRestart != nil {
@@ -330,30 +320,6 @@ func expandShieldedVmConfigs(d TerraformResourceData) *computeBeta.ShieldedInsta
 	}
 }
 
-<% unless version == 'ga' -%>
-func expandConfidentialInstanceConfig(d TerraformResourceData) *computeBeta.ConfidentialInstanceConfig {
-	if _, ok := d.GetOk("confidential_instance_config"); !ok {
-		return nil
-	}
-
-	prefix := "confidential_instance_config.0"
-	return &computeBeta.ConfidentialInstanceConfig{
-		EnableConfidentialCompute:     d.Get(prefix + ".enable_confidential_compute").(bool),
-		ForceSendFields:              []string{"EnableSecureBoot"},
-	}
-}
-
-func flattenConfidentialInstanceConfig(ConfidentialInstanceConfig *computeBeta.ConfidentialInstanceConfig) []map[string]bool {
-	if ConfidentialInstanceConfig == nil {
-		return nil
-	}
-
-	return []map[string]bool{{
-		"enable_confidential_compute":          ConfidentialInstanceConfig.EnableConfidentialCompute,
-	}}
-}
-<% end -%>
-
 func flattenShieldedVmConfig(shieldedVmConfig *computeBeta.ShieldedInstanceConfig) []map[string]bool {
 	if shieldedVmConfig == nil {
 		return nil
@@ -408,12 +374,6 @@ func schedulingHasChange(d *schema.ResourceData) bool {
 	if oScheduling["on_host_maintenance"] != newScheduling["on_host_maintenance"] {
 		return true
 	}
-
-<% unless version == 'ga' -%>
-	if oScheduling["min_node_cpus"] != newScheduling["min_node_cpus"] {
-		return true
-	}
-<% end -%>
 
 	return reflect.DeepEqual(newNa, originalNa)
 }
