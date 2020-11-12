@@ -10,6 +10,7 @@ import (
 
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"google.golang.org/api/googleapi"
 )
 
@@ -21,6 +22,7 @@ type TerraformResourceData interface {
 	Set(string, interface{}) error
 	SetId(string)
 	Id() string
+	GetProviderMeta(interface{}) error
 }
 
 type TerraformResourceDiff interface {
