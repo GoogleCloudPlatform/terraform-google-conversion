@@ -20,7 +20,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // Fields in "backends" that are not allowed for non-managed backend services
