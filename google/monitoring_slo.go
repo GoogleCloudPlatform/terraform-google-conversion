@@ -19,7 +19,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func validateMonitoringSloGoal(v interface{}, k string) (warnings []string, errors []error) {

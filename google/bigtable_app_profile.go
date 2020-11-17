@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	"google.golang.org/api/bigtableadmin/v2"
 )
 
 func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) (Asset, error) {

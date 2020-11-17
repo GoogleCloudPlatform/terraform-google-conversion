@@ -20,19 +20,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
-
-func resourceSecretManagerSecretVersionUpdate(d *schema.ResourceData, meta interface{}) error {
-	config := meta.(*Config)
-
-	_, err := expandSecretManagerSecretVersionEnabled(d.Get("enabled"), d, config)
-	if err != nil {
-		return err
-	}
-
-	return resourceSecretManagerSecretVersionRead(d, meta)
-}
 
 func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//secretmanager.googleapis.com/{{name}}")
