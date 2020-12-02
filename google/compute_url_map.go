@@ -15,8 +15,8 @@
 package google
 
 import (
-	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -109,7 +109,35 @@ func GetComputeUrlMapApiObject(d TerraformResourceData, config *Config) (map[str
 }
 
 func expandComputeUrlMapDefaultService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
+	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
+	if err != nil {
+		return "", err
+	}
+
+	return f.RelativeLink(), nil
 }
 
 func expandComputeUrlMapDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -390,7 +418,35 @@ func expandComputeUrlMapPathMatcher(v interface{}, d TerraformResourceData, conf
 }
 
 func expandComputeUrlMapPathMatcherDefaultService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
+	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
+	if err != nil {
+		return "", err
+	}
+
+	return f.RelativeLink(), nil
 }
 
 func expandComputeUrlMapPathMatcherDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -589,7 +645,35 @@ func expandComputeUrlMapPathMatcherPathRule(v interface{}, d TerraformResourceDa
 }
 
 func expandComputeUrlMapPathMatcherPathRuleService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
+	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
+	if err != nil {
+		return "", err
+	}
+
+	return f.RelativeLink(), nil
 }
 
 func expandComputeUrlMapPathMatcherPathRulePaths(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -902,10 +986,34 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy(v inte
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
@@ -1089,10 +1197,34 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServices(v 
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
@@ -1384,10 +1516,34 @@ func expandComputeUrlMapPathMatcherRouteRulesPriority(v interface{}, d Terraform
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
@@ -2182,10 +2338,34 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicy(v in
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
@@ -2369,10 +2549,34 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices(
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
@@ -2778,10 +2982,34 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServices(v i
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
@@ -3096,10 +3324,34 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicy(v inter
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
@@ -3383,7 +3635,35 @@ func expandComputeUrlMapTestPath(v interface{}, d TerraformResourceData, config 
 }
 
 func expandComputeUrlMapTestService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
+	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
+	if err != nil {
+		return "", err
+	}
+
+	return f.RelativeLink(), nil
 }
 
 func expandComputeUrlMapDefaultUrlRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
@@ -3562,10 +3842,34 @@ func expandComputeUrlMapDefaultRouteActionWeightedBackendServices(v interface{},
 }
 
 func expandComputeUrlMapDefaultRouteActionWeightedBackendServicesBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
@@ -3880,10 +4184,34 @@ func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicy(v interface{}, d T
 }
 
 func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicyBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	// This method returns a full self link from whatever the input is.
+	if v == nil || v.(string) == "" {
+		// It does not try to construct anything from empty.
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		// Anything that starts with a URL scheme is assumed to be a self link worth using.
+		return v, nil
+	} else if strings.HasPrefix(v.(string), "projects/") {
+		// If the self link references a project, we'll just stuck the compute prefix on it
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		if err != nil {
+			return "", err
+		}
+		return url, nil
+	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
+		// For regional or zonal resources which include their region or zone, just put the project in front.
+		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		if err != nil {
+			return nil, err
+		}
+		return url + v.(string), nil
+	}
+	// Anything else is assumed to be a reference to a global backend service.
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
-		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+		return "", err
 	}
+
 	return f.RelativeLink(), nil
 }
 
