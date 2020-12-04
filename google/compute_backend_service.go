@@ -227,12 +227,6 @@ func GetComputeBackendServiceApiObject(d TerraformResourceData, config *Config) 
 	} else if v, ok := d.GetOkExists("custom_request_headers"); !isEmptyValue(reflect.ValueOf(customRequestHeadersProp)) && (ok || !reflect.DeepEqual(v, customRequestHeadersProp)) {
 		obj["customRequestHeaders"] = customRequestHeadersProp
 	}
-	customResponseHeadersProp, err := expandComputeBackendServiceCustomResponseHeaders(d.Get("custom_response_headers"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("custom_response_headers"); !isEmptyValue(reflect.ValueOf(customResponseHeadersProp)) && (ok || !reflect.DeepEqual(v, customResponseHeadersProp)) {
-		obj["customResponseHeaders"] = customResponseHeadersProp
-	}
 	fingerprintProp, err := expandComputeBackendServiceFingerprint(d.Get("fingerprint"), d, config)
 	if err != nil {
 		return nil, err
@@ -806,11 +800,6 @@ func expandComputeBackendServiceConnectionDrainingConnectionDrainingTimeoutSec(v
 }
 
 func expandComputeBackendServiceCustomRequestHeaders(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
-	return v, nil
-}
-
-func expandComputeBackendServiceCustomResponseHeaders(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
