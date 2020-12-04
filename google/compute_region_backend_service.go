@@ -157,6 +157,12 @@ func GetComputeRegionBackendServiceApiObject(d TerraformResourceData, config *Co
 	} else if v, ok := d.GetOkExists("consistent_hash"); !isEmptyValue(reflect.ValueOf(consistentHashProp)) && (ok || !reflect.DeepEqual(v, consistentHashProp)) {
 		obj["consistentHash"] = consistentHashProp
 	}
+	cdnPolicyProp, err := expandComputeRegionBackendServiceCdnPolicy(d.Get("cdn_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cdn_policy"); !isEmptyValue(reflect.ValueOf(cdnPolicyProp)) && (ok || !reflect.DeepEqual(v, cdnPolicyProp)) {
+		obj["cdnPolicy"] = cdnPolicyProp
+	}
 	connectionDrainingProp, err := expandComputeRegionBackendServiceConnectionDraining(nil, d, config)
 	if err != nil {
 		return nil, err
@@ -174,6 +180,12 @@ func GetComputeRegionBackendServiceApiObject(d TerraformResourceData, config *Co
 		return nil, err
 	} else if v, ok := d.GetOkExists("failover_policy"); !isEmptyValue(reflect.ValueOf(failoverPolicyProp)) && (ok || !reflect.DeepEqual(v, failoverPolicyProp)) {
 		obj["failoverPolicy"] = failoverPolicyProp
+	}
+	enableCDNProp, err := expandComputeRegionBackendServiceEnableCDN(d.Get("enable_cdn"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_cdn"); !isEmptyValue(reflect.ValueOf(enableCDNProp)) && (ok || !reflect.DeepEqual(v, enableCDNProp)) {
+		obj["enableCDN"] = enableCDNProp
 	}
 	fingerprintProp, err := expandComputeRegionBackendServiceFingerprint(d.Get("fingerprint"), d, config)
 	if err != nil {
@@ -630,6 +642,105 @@ func expandComputeRegionBackendServiceConsistentHashMinimumRingSize(v interface{
 	return v, nil
 }
 
+func expandComputeRegionBackendServiceCdnPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCacheKeyPolicy, err := expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicy(original["cache_key_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCacheKeyPolicy); val.IsValid() && !isEmptyValue(val) {
+		transformed["cacheKeyPolicy"] = transformedCacheKeyPolicy
+	}
+
+	transformedSignedUrlCacheMaxAgeSec, err := expandComputeRegionBackendServiceCdnPolicySignedUrlCacheMaxAgeSec(original["signed_url_cache_max_age_sec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSignedUrlCacheMaxAgeSec); val.IsValid() && !isEmptyValue(val) {
+		transformed["signedUrlCacheMaxAgeSec"] = transformedSignedUrlCacheMaxAgeSec
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIncludeHost, err := expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyIncludeHost(original["include_host"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["includeHost"] = transformedIncludeHost
+	}
+
+	transformedIncludeProtocol, err := expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyIncludeProtocol(original["include_protocol"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["includeProtocol"] = transformedIncludeProtocol
+	}
+
+	transformedIncludeQueryString, err := expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyIncludeQueryString(original["include_query_string"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["includeQueryString"] = transformedIncludeQueryString
+	}
+
+	transformedQueryStringBlacklist, err := expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyQueryStringBlacklist(original["query_string_blacklist"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["queryStringBlacklist"] = transformedQueryStringBlacklist
+	}
+
+	transformedQueryStringWhitelist, err := expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyQueryStringWhitelist(original["query_string_whitelist"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["queryStringWhitelist"] = transformedQueryStringWhitelist
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyIncludeHost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyIncludeProtocol(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyIncludeQueryString(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyQueryStringBlacklist(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyQueryStringWhitelist(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicySignedUrlCacheMaxAgeSec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeRegionBackendServiceConnectionDraining(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	transformed := make(map[string]interface{})
 	transformedConnectionDrainingTimeoutSec, err := expandComputeRegionBackendServiceConnectionDrainingConnectionDrainingTimeoutSec(d.Get("connection_draining_timeout_sec"), d, config)
@@ -692,6 +803,10 @@ func expandComputeRegionBackendServiceFailoverPolicyDropTrafficIfUnhealthy(v int
 }
 
 func expandComputeRegionBackendServiceFailoverPolicyFailoverRatio(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceEnableCDN(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
