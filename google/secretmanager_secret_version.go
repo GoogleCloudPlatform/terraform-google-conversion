@@ -19,8 +19,6 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
@@ -82,7 +80,7 @@ func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceD
 	parts := strings.Split(name, "/")
 	project := parts[1]
 
-	userAgent, err := generateUserAgentString(d.(*schema.ResourceData), config.userAgent)
+	userAgent, err := generateUserAgentString(d, config.userAgent)
 	if err != nil {
 		return nil, err
 	}
