@@ -14,7 +14,20 @@
 
 package google
 
-import "reflect"
+import (
+	"log"
+	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+func suppressOmittedMaxDuration(_, old, new string, _ *schema.ResourceData) bool {
+	if old == "" && new == "0s" {
+		log.Printf("[INFO] max retry is 0s and api omitted field, suppressing diff")
+		return true
+	}
+	return false
+}
 
 func GetCloudTasksQueueCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//cloudtasks.googleapis.com/projects/{{project}}/locations/{{location}}/queues/{{name}}")
