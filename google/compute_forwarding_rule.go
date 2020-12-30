@@ -45,6 +45,12 @@ func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *Config) 
 
 func GetComputeForwardingRuleApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	isMirroringCollectorProp, err := expandComputeForwardingRuleIsMirroringCollector(d.Get("is_mirroring_collector"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("is_mirroring_collector"); !isEmptyValue(reflect.ValueOf(isMirroringCollectorProp)) && (ok || !reflect.DeepEqual(v, isMirroringCollectorProp)) {
+		obj["isMirroringCollector"] = isMirroringCollectorProp
+	}
 	descriptionProp, err := expandComputeForwardingRuleDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -143,6 +149,10 @@ func GetComputeForwardingRuleApiObject(d TerraformResourceData, config *Config) 
 	}
 
 	return obj, nil
+}
+
+func expandComputeForwardingRuleIsMirroringCollector(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeForwardingRuleDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
