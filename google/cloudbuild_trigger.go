@@ -137,6 +137,12 @@ func GetCloudBuildTriggerApiObject(d TerraformResourceData, config *Config) (map
 	} else if v, ok := d.GetOkExists("trigger_template"); !isEmptyValue(reflect.ValueOf(triggerTemplateProp)) && (ok || !reflect.DeepEqual(v, triggerTemplateProp)) {
 		obj["triggerTemplate"] = triggerTemplateProp
 	}
+	githubProp, err := expandCloudBuildTriggerGithub(d.Get("github"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("github"); !isEmptyValue(reflect.ValueOf(githubProp)) && (ok || !reflect.DeepEqual(v, githubProp)) {
+		obj["github"] = githubProp
+	}
 	buildProp, err := expandCloudBuildTriggerBuild(d.Get("build"), d, config)
 	if err != nil {
 		return nil, err
@@ -272,6 +278,144 @@ func expandCloudBuildTriggerTriggerTemplateTagName(v interface{}, d TerraformRes
 }
 
 func expandCloudBuildTriggerTriggerTemplateCommitSha(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGithub(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOwner, err := expandCloudBuildTriggerGithubOwner(original["owner"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOwner); val.IsValid() && !isEmptyValue(val) {
+		transformed["owner"] = transformedOwner
+	}
+
+	transformedName, err := expandCloudBuildTriggerGithubName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedPullRequest, err := expandCloudBuildTriggerGithubPullRequest(original["pull_request"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPullRequest); val.IsValid() && !isEmptyValue(val) {
+		transformed["pullRequest"] = transformedPullRequest
+	}
+
+	transformedPush, err := expandCloudBuildTriggerGithubPush(original["push"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPush); val.IsValid() && !isEmptyValue(val) {
+		transformed["push"] = transformedPush
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerGithubOwner(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGithubName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGithubPullRequest(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBranch, err := expandCloudBuildTriggerGithubPullRequestBranch(original["branch"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBranch); val.IsValid() && !isEmptyValue(val) {
+		transformed["branch"] = transformedBranch
+	}
+
+	transformedCommentControl, err := expandCloudBuildTriggerGithubPullRequestCommentControl(original["comment_control"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCommentControl); val.IsValid() && !isEmptyValue(val) {
+		transformed["commentControl"] = transformedCommentControl
+	}
+
+	transformedInvertRegex, err := expandCloudBuildTriggerGithubPullRequestInvertRegex(original["invert_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInvertRegex); val.IsValid() && !isEmptyValue(val) {
+		transformed["invertRegex"] = transformedInvertRegex
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerGithubPullRequestBranch(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGithubPullRequestCommentControl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGithubPullRequestInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGithubPush(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedInvertRegex, err := expandCloudBuildTriggerGithubPushInvertRegex(original["invert_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInvertRegex); val.IsValid() && !isEmptyValue(val) {
+		transformed["invertRegex"] = transformedInvertRegex
+	}
+
+	transformedBranch, err := expandCloudBuildTriggerGithubPushBranch(original["branch"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBranch); val.IsValid() && !isEmptyValue(val) {
+		transformed["branch"] = transformedBranch
+	}
+
+	transformedTag, err := expandCloudBuildTriggerGithubPushTag(original["tag"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !isEmptyValue(val) {
+		transformed["tag"] = transformedTag
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerGithubPushInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGithubPushBranch(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGithubPushTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
