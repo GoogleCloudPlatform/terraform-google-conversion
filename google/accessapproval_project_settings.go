@@ -21,7 +21,7 @@ import (
 )
 
 func GetAccessApprovalProjectSettingsCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
-	name, err := assetName(d, config, "//accessapproval.googleapis.com/projects/{{project}}/accessApprovalSettings")
+	name, err := assetName(d, config, "//accessapproval.googleapis.com/projects/{{project_id}}/accessApprovalSettings")
 	if err != nil {
 		return Asset{}, err
 	}
@@ -54,6 +54,12 @@ func GetAccessApprovalProjectSettingsApiObject(d TerraformResourceData, config *
 		return nil, err
 	} else if v, ok := d.GetOkExists("enrolled_services"); !isEmptyValue(reflect.ValueOf(enrolledServicesProp)) && (ok || !reflect.DeepEqual(v, enrolledServicesProp)) {
 		obj["enrolledServices"] = enrolledServicesProp
+	}
+	projectProp, err := expandAccessApprovalProjectSettingsProject(d.Get("project"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("project"); !isEmptyValue(reflect.ValueOf(projectProp)) && (ok || !reflect.DeepEqual(v, projectProp)) {
+		obj["project"] = projectProp
 	}
 
 	return obj, nil
@@ -99,5 +105,9 @@ func expandAccessApprovalProjectSettingsEnrolledServicesCloudProduct(v interface
 }
 
 func expandAccessApprovalProjectSettingsEnrolledServicesEnrollmentLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessApprovalProjectSettingsProject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
