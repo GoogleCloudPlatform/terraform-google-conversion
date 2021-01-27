@@ -30,6 +30,13 @@ func validateMonitoringSloGoal(v interface{}, k string) (warnings []string, erro
 	return
 }
 
+func validateAvailabilitySli(v interface{}, key string) (ws []string, errs []error) {
+	if v.(bool) == false {
+		errs = append(errs, fmt.Errorf("%q must be set to true, got: %v", key, v))
+	}
+	return
+}
+
 func GetMonitoringSloCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
@@ -97,6 +104,15 @@ func resourceMonitoringSloEncoder(d TerraformResourceData, meta interface{}, obj
 	// Name/Service Level Objective ID is a query parameter and cannot
 	// be given in data
 	delete(obj, "sloId")
+	Sli := obj["serviceLevelIndicator"].(map[string]interface{})
+	if basicSli, ok := Sli["basicSli"].(map[string]interface{}); ok {
+		//Removing the dummy `enabled` attribute
+		if availability, ok := basicSli["availability"]; ok {
+			transAvailability := availability.(map[string]interface{})
+			delete(transAvailability, "enabled")
+			basicSli["availability"] = transAvailability
+		}
+	}
 	return obj, nil
 }
 
@@ -189,6 +205,13 @@ func expandMonitoringSloServiceLevelIndicatorBasicSli(v interface{}, d Terraform
 		transformed["latency"] = transformedLatency
 	}
 
+	transformedAvailability, err := expandMonitoringSloServiceLevelIndicatorBasicSliAvailability(original["availability"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAvailability); val.IsValid() && !isEmptyValue(val) {
+		transformed["availability"] = transformedAvailability
+	}
+
 	return transformed, nil
 }
 
@@ -227,6 +250,29 @@ func expandMonitoringSloServiceLevelIndicatorBasicSliLatency(v interface{}, d Te
 }
 
 func expandMonitoringSloServiceLevelIndicatorBasicSliLatencyThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorBasicSliAvailability(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandMonitoringSloServiceLevelIndicatorBasicSliAvailabilityEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !isEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorBasicSliAvailabilityEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
