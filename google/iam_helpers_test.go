@@ -1,8 +1,9 @@
 package google
 
 import (
-	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMergeBindings(t *testing.T) {
@@ -151,26 +152,16 @@ func TestMergeBindings(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			assertEqual(t,
+			assert.EqualValues(t,
 				c.expectedAdditive,
 				mergeAdditiveBindings(c.existing, c.incoming),
 				"mergeAdditiveBindings",
 			)
-			assertEqual(t,
+			assert.EqualValues(t,
 				c.expectedAuthoritative,
 				mergeAuthoritativeBindings(c.existing, c.incoming),
 				"mergeAuthoritativeBindings",
 			)
 		})
-	}
-}
-
-// assertEqual compares two values by converting them to strings.
-func assertEqual(t *testing.T, exp, got interface{}, name string) {
-	expS, gotS := fmt.Sprintf("%+v", exp),
-		fmt.Sprintf("%+v", got)
-
-	if expS != gotS {
-		t.Errorf("%s: expected %s, got %s", name, expS, gotS)
 	}
 }

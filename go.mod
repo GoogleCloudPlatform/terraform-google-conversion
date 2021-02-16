@@ -7,6 +7,7 @@ require (
 	github.com/hashicorp/go-cleanhttp v0.5.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.3.0
 	github.com/mitchellh/go-homedir v1.1.0
+	github.com/stretchr/testify v1.7.0
 	golang.org/x/mod v0.4.1 // indirect
 	golang.org/x/oauth2 v0.0.0-20201208152858-08078c50e5b5
 	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
