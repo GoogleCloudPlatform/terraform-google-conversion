@@ -113,6 +113,20 @@ func resourceMonitoringSloEncoder(d TerraformResourceData, meta interface{}, obj
 			basicSli["availability"] = transAvailability
 		}
 	}
+
+	if windowBasedSli, ok := Sli["windowsBased"].(map[string]interface{}); ok {
+		if goodTotalRatioThreshold, ok := windowBasedSli["goodTotalRatioThreshold"].(map[string]interface{}); ok {
+			if basicSli, ok := goodTotalRatioThreshold["basicSliPerformance"].(map[string]interface{}); ok {
+				//Removing the dummy `enabled` attribute
+				if availability, ok := basicSli["availability"]; ok {
+					transAvailability := availability.(map[string]interface{})
+					delete(transAvailability, "enabled")
+					basicSli["availability"] = transAvailability
+				}
+			}
+		}
+	}
+
 	return obj, nil
 }
 
@@ -675,6 +689,13 @@ func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresh
 		transformed["latency"] = transformedLatency
 	}
 
+	transformedAvailability, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceAvailability(original["availability"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAvailability); val.IsValid() && !isEmptyValue(val) {
+		transformed["availability"] = transformedAvailability
+	}
+
 	return transformed, nil
 }
 
@@ -713,6 +734,29 @@ func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresh
 }
 
 func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceLatencyThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceAvailability(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceAvailabilityEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !isEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringSloServiceLevelIndicatorWindowsBasedSliGoodTotalRatioThresholdBasicSliPerformanceAvailabilityEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
