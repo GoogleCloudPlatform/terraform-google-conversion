@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetCloudIdentityGroupMembershipCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetCloudIdentityGroupMembershipCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudidentity.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetCloudIdentityGroupMembershipApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "cloudidentity.googleapis.com/GroupMembership",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetCloudIdentityGroupMembershipCaiObject(d TerraformResourceData, config *C
 				DiscoveryName:        "GroupMembership",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

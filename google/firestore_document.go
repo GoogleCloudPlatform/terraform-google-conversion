@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetFirestoreDocumentApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "firestore.googleapis.com/Document",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Document",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

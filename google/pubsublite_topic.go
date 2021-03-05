@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetPubsubLiteTopicCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetPubsubLiteTopicCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/topics/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetPubsubLiteTopicApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "pubsublite.googleapis.com/Topic",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetPubsubLiteTopicCaiObject(d TerraformResourceData, config *Config) (Asset
 				DiscoveryName:        "Topic",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetDataprocAutoscalingPolicyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDataprocAutoscalingPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dataproc.googleapis.com/projects/{{project}}/locations/{{location}}/autoscalingPolicies/{{policy_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDataprocAutoscalingPolicyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "dataproc.googleapis.com/AutoscalingPolicy",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetDataprocAutoscalingPolicyCaiObject(d TerraformResourceData, config *Conf
 				DiscoveryName:        "AutoscalingPolicy",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -40,13 +40,13 @@ func resourceComputeRouterCustomDiff(_ context.Context, diff *schema.ResourceDif
 	return nil
 }
 
-func GetComputeRouterCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeRouterCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/routers/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeRouterApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/Router",
 			Resource: &AssetResource{
@@ -55,9 +55,9 @@ func GetComputeRouterCaiObject(d TerraformResourceData, config *Config) (Asset, 
 				DiscoveryName:        "Router",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

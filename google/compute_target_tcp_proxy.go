@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeTargetTcpProxyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeTargetTcpProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetTcpProxies/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeTargetTcpProxyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/TargetTcpProxy",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeTargetTcpProxyCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "TargetTcpProxy",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

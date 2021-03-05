@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetAccessApprovalProjectSettingsCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAccessApprovalProjectSettingsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accessapproval.googleapis.com/projects/{{project_id}}/accessApprovalSettings")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAccessApprovalProjectSettingsApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "accessapproval.googleapis.com/ProjectSettings",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetAccessApprovalProjectSettingsCaiObject(d TerraformResourceData, config *
 				DiscoveryName:        "ProjectSettings",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

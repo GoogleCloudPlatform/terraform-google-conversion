@@ -20,13 +20,13 @@ import (
 	"strings"
 )
 
-func GetCloudAssetProjectFeedCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetCloudAssetProjectFeedCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudasset.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetCloudAssetProjectFeedApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "cloudasset.googleapis.com/ProjectFeed",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetCloudAssetProjectFeedCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "ProjectFeed",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

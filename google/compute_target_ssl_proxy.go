@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeTargetSslProxyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeTargetSslProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetSslProxies/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeTargetSslProxyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/TargetSslProxy",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeTargetSslProxyCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "TargetSslProxy",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

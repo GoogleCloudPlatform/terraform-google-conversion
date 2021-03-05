@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetAppEngineApplicationUrlDispatchRulesCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAppEngineApplicationUrlDispatchRulesCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAppEngineApplicationUrlDispatchRulesApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "appengine.googleapis.com/ApplicationUrlDispatchRules",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetAppEngineApplicationUrlDispatchRulesCaiObject(d TerraformResourceData, c
 				DiscoveryName:        "ApplicationUrlDispatchRules",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

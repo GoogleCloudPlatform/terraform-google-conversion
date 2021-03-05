@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetDataCatalogEntryCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDataCatalogEntryCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDataCatalogEntryApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "datacatalog.googleapis.com/Entry",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetDataCatalogEntryCaiObject(d TerraformResourceData, config *Config) (Asse
 				DiscoveryName:        "Entry",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

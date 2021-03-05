@@ -24,13 +24,13 @@ var (
 	bigqueryTableRegexp   = regexp.MustCompile("projects/(.+)/datasets/(.+)/tables/(.+)")
 )
 
-func GetBigQueryJobCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetBigQueryJobCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/jobs/{{job_id}}?location={{location}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetBigQueryJobApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "bigquery.googleapis.com/Job",
 			Resource: &AssetResource{
@@ -39,9 +39,9 @@ func GetBigQueryJobCaiObject(d TerraformResourceData, config *Config) (Asset, er
 				DiscoveryName:        "Job",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

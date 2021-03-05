@@ -20,13 +20,13 @@ import (
 	"regexp"
 )
 
-func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/subscriptions/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetPubsubLiteSubscriptionApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "pubsublite.googleapis.com/Subscription",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *Config)
 				DiscoveryName:        "Subscription",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

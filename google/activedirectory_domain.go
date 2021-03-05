@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//activedirectory.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetActiveDirectoryDomainApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "activedirectory.googleapis.com/Domain",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "Domain",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

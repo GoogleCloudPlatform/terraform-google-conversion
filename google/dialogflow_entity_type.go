@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetDialogflowEntityTypeCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDialogflowEntityTypeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDialogflowEntityTypeApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "dialogflow.googleapis.com/EntityType",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetDialogflowEntityTypeCaiObject(d TerraformResourceData, config *Config) (
 				DiscoveryName:        "EntityType",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

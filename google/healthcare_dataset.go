@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetHealthcareDatasetCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetHealthcareDatasetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/projects/{{project}}/locations/{{location}}/datasets/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetHealthcareDatasetApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "healthcare.googleapis.com/Dataset",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetHealthcareDatasetCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Dataset",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

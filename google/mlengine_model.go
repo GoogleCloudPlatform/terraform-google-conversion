@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetMLEngineModelCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetMLEngineModelCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//mlengine.googleapis.com/projects/{{project}}/models/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetMLEngineModelApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "mlengine.googleapis.com/Model",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetMLEngineModelCaiObject(d TerraformResourceData, config *Config) (Asset, 
 				DiscoveryName:        "Model",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

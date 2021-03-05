@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetDataCatalogTagCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDataCatalogTagCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{parent}}/tags")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDataCatalogTagApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "datacatalog.googleapis.com/Tag",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetDataCatalogTagCaiObject(d TerraformResourceData, config *Config) (Asset,
 				DiscoveryName:        "Tag",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeRegionTargetHttpProxyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeRegionTargetHttpProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/targetHttpProxies/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeRegionTargetHttpProxyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/RegionTargetHttpProxy",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeRegionTargetHttpProxyCaiObject(d TerraformResourceData, config *C
 				DiscoveryName:        "RegionTargetHttpProxy",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceGroups/{{group}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeInstanceGroupNamedPortApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/InstanceGroupNamedPort",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *
 				DiscoveryName:        "InstanceGroupNamedPort",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

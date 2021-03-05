@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetFilestoreInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetFilestoreInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//filestore.googleapis.com/projects/{{project}}/locations/{{zone}}/instances/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetFilestoreInstanceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "filestore.googleapis.com/Instance",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetFilestoreInstanceCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Instance",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

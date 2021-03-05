@@ -22,13 +22,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-func GetSpannerInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetSpannerInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//spanner.googleapis.com/projects/{{project}}/instances/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetSpannerInstanceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "spanner.googleapis.com/Instance",
 			Resource: &AssetResource{
@@ -37,9 +37,9 @@ func GetSpannerInstanceCaiObject(d TerraformResourceData, config *Config) (Asset
 				DiscoveryName:        "Instance",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

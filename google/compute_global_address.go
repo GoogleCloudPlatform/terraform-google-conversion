@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeGlobalAddressCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeGlobalAddressCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/addresses/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeGlobalAddressApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/GlobalAddress",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeGlobalAddressCaiObject(d TerraformResourceData, config *Config) (
 				DiscoveryName:        "GlobalAddress",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

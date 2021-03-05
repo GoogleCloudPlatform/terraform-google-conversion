@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identityplatform.googleapis.com/projects/{{project}}/defaultSupportedIdpConfigs/{{idp_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetIdentityPlatformDefaultSupportedIdpConfigApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "identityplatform.googleapis.com/DefaultSupportedIdpConfig",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceDa
 				DiscoveryName:        "DefaultSupportedIdpConfig",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -21,13 +21,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/sslCertificates/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeSslCertificateApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/SslCertificate",
 			Resource: &AssetResource{
@@ -36,9 +36,9 @@ func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "SslCertificate",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetSQLDatabaseCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetSQLDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//sql.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetSQLDatabaseApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "sql.googleapis.com/Database",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetSQLDatabaseCaiObject(d TerraformResourceData, config *Config) (Asset, er
 				DiscoveryName:        "Database",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

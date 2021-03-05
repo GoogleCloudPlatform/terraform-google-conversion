@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetComputeHttpsHealthCheckCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeHttpsHealthCheckCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/httpsHealthChecks/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeHttpsHealthCheckApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/HttpsHealthCheck",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetComputeHttpsHealthCheckCaiObject(d TerraformResourceData, config *Config
 				DiscoveryName:        "HttpsHealthCheck",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

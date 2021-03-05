@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeReservationCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeReservationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/reservations/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeReservationApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/Reservation",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeReservationCaiObject(d TerraformResourceData, config *Config) (As
 				DiscoveryName:        "Reservation",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

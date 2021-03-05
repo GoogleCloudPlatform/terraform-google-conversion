@@ -125,13 +125,13 @@ func getVpnTunnelLink(config *Config, project, region, tunnel, userAgent string)
 
 }
 
-func GetComputeVpnTunnelCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeVpnTunnelCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/vpnTunnels/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeVpnTunnelApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/VpnTunnel",
 			Resource: &AssetResource{
@@ -140,9 +140,9 @@ func GetComputeVpnTunnelCaiObject(d TerraformResourceData, config *Config) (Asse
 				DiscoveryName:        "VpnTunnel",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

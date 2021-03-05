@@ -21,13 +21,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetDNSPolicyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDNSPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dns.googleapis.com/projects/{{project}}/policies/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDNSPolicyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "dns.googleapis.com/Policy",
 			Resource: &AssetResource{
@@ -36,9 +36,9 @@ func GetDNSPolicyCaiObject(d TerraformResourceData, config *Config) (Asset, erro
 				DiscoveryName:        "Policy",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

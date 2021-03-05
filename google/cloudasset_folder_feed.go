@@ -20,13 +20,13 @@ import (
 	"strings"
 )
 
-func GetCloudAssetFolderFeedCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetCloudAssetFolderFeedCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudasset.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetCloudAssetFolderFeedApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "cloudasset.googleapis.com/FolderFeed",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetCloudAssetFolderFeedCaiObject(d TerraformResourceData, config *Config) (
 				DiscoveryName:        "FolderFeed",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

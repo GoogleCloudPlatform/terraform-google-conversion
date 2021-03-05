@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetDialogflowAgentCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDialogflowAgentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/projects/{{project}}/agent")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDialogflowAgentApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "dialogflow.googleapis.com/Agent",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetDialogflowAgentCaiObject(d TerraformResourceData, config *Config) (Asset
 				DiscoveryName:        "Agent",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

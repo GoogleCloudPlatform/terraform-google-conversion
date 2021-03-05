@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetBigqueryReservationReservationCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetBigqueryReservationReservationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/reservations/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetBigqueryReservationReservationApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "bigqueryreservation.googleapis.com/Reservation",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetBigqueryReservationReservationCaiObject(d TerraformResourceData, config 
 				DiscoveryName:        "Reservation",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

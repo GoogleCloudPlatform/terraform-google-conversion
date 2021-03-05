@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//storage.googleapis.com/projects/{{project}}/hmacKeys/{{access_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetStorageHmacKeyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "storage.googleapis.com/HmacKey",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *Config) (Asset,
 				DiscoveryName:        "HmacKey",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

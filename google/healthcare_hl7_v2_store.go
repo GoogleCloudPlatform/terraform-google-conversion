@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetHealthcareHl7V2StoreCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetHealthcareHl7V2StoreCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/{{dataset}}/hl7V2Stores/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetHealthcareHl7V2StoreApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "healthcare.googleapis.com/Hl7V2Store",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetHealthcareHl7V2StoreCaiObject(d TerraformResourceData, config *Config) (
 				DiscoveryName:        "Hl7V2Store",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

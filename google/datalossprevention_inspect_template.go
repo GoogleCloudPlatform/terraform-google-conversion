@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetDataLossPreventionInspectTemplateCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDataLossPreventionInspectTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datalossprevention.googleapis.com/{{parent}}/inspectTemplates/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDataLossPreventionInspectTemplateApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "datalossprevention.googleapis.com/InspectTemplate",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetDataLossPreventionInspectTemplateCaiObject(d TerraformResourceData, conf
 				DiscoveryName:        "InspectTemplate",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

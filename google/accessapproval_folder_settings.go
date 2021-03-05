@@ -47,13 +47,13 @@ func accessApprovalEnrolledServicesHash(v interface{}) int {
 	return hashcode(buf.String())
 }
 
-func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accessapproval.googleapis.com/folders/{{folder_id}}/accessApprovalSettings")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAccessApprovalFolderSettingsApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "accessapproval.googleapis.com/FolderSettings",
 			Resource: &AssetResource{
@@ -62,9 +62,9 @@ func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *C
 				DiscoveryName:        "FolderSettings",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

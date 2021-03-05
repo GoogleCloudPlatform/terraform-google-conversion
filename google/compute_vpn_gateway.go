@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeVpnGatewayCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeVpnGatewayCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/targetVpnGateways/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeVpnGatewayApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/VpnGateway",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeVpnGatewayCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "VpnGateway",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -265,13 +265,13 @@ func validateCloudIotDeviceRegistrySubfolderMatch(v interface{}, k string) (warn
 	return
 }
 
-func GetCloudIotDeviceRegistryCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetCloudIotDeviceRegistryCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudiot.googleapis.com/projects/{{project}}/locations/{{region}}/registries/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetCloudIotDeviceRegistryApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "cloudiot.googleapis.com/DeviceRegistry",
 			Resource: &AssetResource{
@@ -280,9 +280,9 @@ func GetCloudIotDeviceRegistryCaiObject(d TerraformResourceData, config *Config)
 				DiscoveryName:        "DeviceRegistry",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

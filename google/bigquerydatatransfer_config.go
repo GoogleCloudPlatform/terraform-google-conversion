@@ -35,13 +35,13 @@ func sensitiveParamCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v
 	return nil
 }
 
-func GetBigqueryDataTransferConfigCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetBigqueryDataTransferConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquerydatatransfer.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetBigqueryDataTransferConfigApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "bigquerydatatransfer.googleapis.com/Config",
 			Resource: &AssetResource{
@@ -50,9 +50,9 @@ func GetBigqueryDataTransferConfigCaiObject(d TerraformResourceData, config *Con
 				DiscoveryName:        "Config",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

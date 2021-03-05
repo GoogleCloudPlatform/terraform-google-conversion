@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetDataCatalogEntryGroupCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDataCatalogEntryGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDataCatalogEntryGroupApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "datacatalog.googleapis.com/EntryGroup",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetDataCatalogEntryGroupCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "EntryGroup",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

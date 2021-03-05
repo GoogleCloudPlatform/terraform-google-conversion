@@ -37,13 +37,13 @@ func validateAvailabilitySli(v interface{}, key string) (ws []string, errs []err
 	return
 }
 
-func GetMonitoringSloCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetMonitoringSloCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetMonitoringSloApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "monitoring.googleapis.com/Slo",
 			Resource: &AssetResource{
@@ -52,9 +52,9 @@ func GetMonitoringSloCaiObject(d TerraformResourceData, config *Config) (Asset, 
 				DiscoveryName:        "Slo",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

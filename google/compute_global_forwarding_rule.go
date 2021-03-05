@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetComputeGlobalForwardingRuleCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeGlobalForwardingRuleCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/forwardingRules/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeGlobalForwardingRuleApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/GlobalForwardingRule",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetComputeGlobalForwardingRuleCaiObject(d TerraformResourceData, config *Co
 				DiscoveryName:        "GlobalForwardingRule",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

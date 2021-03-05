@@ -21,13 +21,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetComputeResourcePolicyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeResourcePolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/resourcePolicies/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeResourcePolicyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/ResourcePolicy",
 			Resource: &AssetResource{
@@ -36,9 +36,9 @@ func GetComputeResourcePolicyCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "ResourcePolicy",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

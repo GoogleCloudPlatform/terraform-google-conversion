@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetRedisInstanceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "redis.googleapis.com/Instance",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, 
 				DiscoveryName:        "Instance",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

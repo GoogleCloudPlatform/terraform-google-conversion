@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datalossprevention.googleapis.com/{{parent}}/storedInfoTypes/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDataLossPreventionStoredInfoTypeApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "datalossprevention.googleapis.com/StoredInfoType",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, confi
 				DiscoveryName:        "StoredInfoType",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

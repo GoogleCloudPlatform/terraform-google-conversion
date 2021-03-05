@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetIapBrandCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetIapBrandCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iap.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetIapBrandApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "iap.googleapis.com/Brand",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetIapBrandCaiObject(d TerraformResourceData, config *Config) (Asset, error
 				DiscoveryName:        "Brand",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

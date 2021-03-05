@@ -66,13 +66,13 @@ func cloudrunLabelDiffSuppress(k, old, new string, d *schema.ResourceData) bool 
 	return false
 }
 
-func GetCloudRunServiceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetCloudRunServiceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/serving.knative.dev/namespaces/{{project}}/services/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetCloudRunServiceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "cloudrun.googleapis.com/Service",
 			Resource: &AssetResource{
@@ -81,9 +81,9 @@ func GetCloudRunServiceCaiObject(d TerraformResourceData, config *Config) (Asset
 				DiscoveryName:        "Service",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

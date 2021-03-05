@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetSecretManagerSecretCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetSecretManagerSecretCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//secretmanager.googleapis.com/projects/{{project}}/secrets/{{secret_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetSecretManagerSecretApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "secretmanager.googleapis.com/Secret",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetSecretManagerSecretCaiObject(d TerraformResourceData, config *Config) (A
 				DiscoveryName:        "Secret",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

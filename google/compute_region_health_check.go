@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeRegionHealthCheckCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeRegionHealthCheckCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/healthChecks/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeRegionHealthCheckApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/RegionHealthCheck",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeRegionHealthCheckCaiObject(d TerraformResourceData, config *Confi
 				DiscoveryName:        "RegionHealthCheck",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -20,13 +20,13 @@ import (
 	"strings"
 )
 
-func GetComputeTargetInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeTargetInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/targetInstances/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeTargetInstanceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/TargetInstance",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetComputeTargetInstanceCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "TargetInstance",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetAccessContextManagerServicePerimeterCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAccessContextManagerServicePerimeterCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAccessContextManagerServicePerimeterApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "accesscontextmanager.googleapis.com/ServicePerimeter",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetAccessContextManagerServicePerimeterCaiObject(d TerraformResourceData, c
 				DiscoveryName:        "ServicePerimeter",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

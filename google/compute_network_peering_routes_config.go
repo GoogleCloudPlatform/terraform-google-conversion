@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetComputeNetworkPeeringRoutesConfigCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeNetworkPeeringRoutesConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networks/{{network}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeNetworkPeeringRoutesConfigApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/NetworkPeeringRoutesConfig",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetComputeNetworkPeeringRoutesConfigCaiObject(d TerraformResourceData, conf
 				DiscoveryName:        "NetworkPeeringRoutesConfig",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

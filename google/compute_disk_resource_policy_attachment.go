@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{disk}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeDiskResourcePolicyAttachmentApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/DiskResourcePolicyAttachment",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, co
 				DiscoveryName:        "DiskResourcePolicyAttachment",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

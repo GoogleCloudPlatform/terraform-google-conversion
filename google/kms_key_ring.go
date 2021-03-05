@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetKMSKeyRingCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetKMSKeyRingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//kms.googleapis.com/projects/{{project}}/locations/{{location}}/keyRings/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetKMSKeyRingApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "kms.googleapis.com/KeyRing",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetKMSKeyRingCaiObject(d TerraformResourceData, config *Config) (Asset, err
 				DiscoveryName:        "KeyRing",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

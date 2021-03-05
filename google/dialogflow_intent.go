@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetDialogflowIntentCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDialogflowIntentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDialogflowIntentApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "dialogflow.googleapis.com/Intent",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetDialogflowIntentCaiObject(d TerraformResourceData, config *Config) (Asse
 				DiscoveryName:        "Intent",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

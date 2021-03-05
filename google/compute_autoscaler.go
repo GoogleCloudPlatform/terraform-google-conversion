@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeAutoscalerCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeAutoscalerCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/autoscalers/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeAutoscalerApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/Autoscaler",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeAutoscalerCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Autoscaler",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 
