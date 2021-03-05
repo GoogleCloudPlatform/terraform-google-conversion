@@ -44,13 +44,13 @@ func isShrinkageIpCidr(_ context.Context, old, new, _ interface{}) bool {
 	return true
 }
 
-func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeSubnetworkApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/Subnetwork",
 			Resource: &AssetResource{
@@ -59,9 +59,9 @@ func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Subnetwork",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

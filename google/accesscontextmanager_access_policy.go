@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetAccessContextManagerAccessPolicyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAccessContextManagerAccessPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/accessPolicies/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAccessContextManagerAccessPolicyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "accesscontextmanager.googleapis.com/AccessPolicy",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetAccessContextManagerAccessPolicyCaiObject(d TerraformResourceData, confi
 				DiscoveryName:        "AccessPolicy",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

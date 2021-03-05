@@ -20,13 +20,13 @@ import (
 	"time"
 )
 
-func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//kms.googleapis.com/{{key_ring}}/cryptoKeys/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetKMSCryptoKeyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "kms.googleapis.com/CryptoKey",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *Config) (Asset, e
 				DiscoveryName:        "CryptoKey",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetAppEngineFlexibleAppVersionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAppEngineFlexibleAppVersionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}/versions/{{version_id}}?view=FULL")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAppEngineFlexibleAppVersionApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "appengine.googleapis.com/FlexibleAppVersion",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetAppEngineFlexibleAppVersionCaiObject(d TerraformResourceData, config *Co
 				DiscoveryName:        "FlexibleAppVersion",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

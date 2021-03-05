@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetVPCAccessConnectorCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetVPCAccessConnectorCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//vpcaccess.googleapis.com/projects/{{project}}/locations/{{region}}/connectors/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetVPCAccessConnectorApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "vpcaccess.googleapis.com/Connector",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetVPCAccessConnectorCaiObject(d TerraformResourceData, config *Config) (As
 				DiscoveryName:        "Connector",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

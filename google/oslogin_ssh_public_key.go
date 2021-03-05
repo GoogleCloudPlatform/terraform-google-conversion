@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetOSLoginSSHPublicKeyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetOSLoginSSHPublicKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//oslogin.googleapis.com/users/{{user}}/sshPublicKeys/{{fingerprint}}/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetOSLoginSSHPublicKeyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "oslogin.googleapis.com/SSHPublicKey",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetOSLoginSSHPublicKeyCaiObject(d TerraformResourceData, config *Config) (A
 				DiscoveryName:        "SSHPublicKey",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

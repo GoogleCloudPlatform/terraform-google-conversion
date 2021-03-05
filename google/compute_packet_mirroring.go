@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputePacketMirroringCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputePacketMirroringCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/packetMirrorings/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputePacketMirroringApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/PacketMirroring",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputePacketMirroringCaiObject(d TerraformResourceData, config *Config)
 				DiscoveryName:        "PacketMirroring",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

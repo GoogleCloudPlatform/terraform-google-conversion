@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetCloudIotDeviceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetCloudIotDeviceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudiot.googleapis.com/{{registry}}/devices/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetCloudIotDeviceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "cloudiot.googleapis.com/Device",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetCloudIotDeviceCaiObject(d TerraformResourceData, config *Config) (Asset,
 				DiscoveryName:        "Device",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetApigeeInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetApigeeInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{org_id}}/instances/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetApigeeInstanceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "apigee.googleapis.com/Instance",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetApigeeInstanceCaiObject(d TerraformResourceData, config *Config) (Asset,
 				DiscoveryName:        "Instance",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

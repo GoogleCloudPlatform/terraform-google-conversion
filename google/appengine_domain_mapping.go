@@ -34,13 +34,13 @@ func sslSettingsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	return false
 }
 
-func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/domainMappings/{{domain_name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAppEngineDomainMappingApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "appengine.googleapis.com/DomainMapping",
 			Resource: &AssetResource{
@@ -49,9 +49,9 @@ func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *Config)
 				DiscoveryName:        "DomainMapping",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

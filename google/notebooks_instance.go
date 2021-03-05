@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetNotebooksInstanceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetNotebooksInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetNotebooksInstanceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "notebooks.googleapis.com/Instance",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetNotebooksInstanceCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Instance",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

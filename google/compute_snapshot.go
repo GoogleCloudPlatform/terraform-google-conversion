@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeSnapshotCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeSnapshotCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/snapshots/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeSnapshotApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/Snapshot",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeSnapshotCaiObject(d TerraformResourceData, config *Config) (Asset
 				DiscoveryName:        "Snapshot",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

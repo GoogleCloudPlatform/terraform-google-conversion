@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetContainerAnalysisNoteCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetContainerAnalysisNoteCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//containeranalysis.googleapis.com/projects/{{project}}/notes/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetContainerAnalysisNoteApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "containeranalysis.googleapis.com/Note",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetContainerAnalysisNoteCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "Note",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

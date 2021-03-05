@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetNetworkManagementConnectivityTestCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetNetworkManagementConnectivityTestCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//networkmanagement.googleapis.com/projects/{{project}}/locations/global/connectivityTests/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetNetworkManagementConnectivityTestApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "networkmanagement.googleapis.com/ConnectivityTest",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetNetworkManagementConnectivityTestCaiObject(d TerraformResourceData, conf
 				DiscoveryName:        "ConnectivityTest",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

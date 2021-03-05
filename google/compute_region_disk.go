@@ -20,13 +20,13 @@ import (
 	"reflect"
 )
 
-func GetComputeRegionDiskCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeRegionDiskCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/disks/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeRegionDiskApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/RegionDisk",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetComputeRegionDiskCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "RegionDisk",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

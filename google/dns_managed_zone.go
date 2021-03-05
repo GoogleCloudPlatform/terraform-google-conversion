@@ -21,13 +21,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetDNSManagedZoneCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDNSManagedZoneCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDNSManagedZoneApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "dns.googleapis.com/ManagedZone",
 			Resource: &AssetResource{
@@ -36,9 +36,9 @@ func GetDNSManagedZoneCaiObject(d TerraformResourceData, config *Config) (Asset,
 				DiscoveryName:        "ManagedZone",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

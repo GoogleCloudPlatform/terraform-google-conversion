@@ -38,13 +38,13 @@ func domainMappingLabelDiffSuppress(k, old, new string, d *schema.ResourceData) 
 	return false
 }
 
-func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/domains.cloudrun.com/namespaces/{{project}}/domainmappings/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetCloudRunDomainMappingApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "cloudrun.googleapis.com/DomainMapping",
 			Resource: &AssetResource{
@@ -53,9 +53,9 @@ func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "DomainMapping",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

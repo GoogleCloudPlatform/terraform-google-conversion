@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetGameServicesGameServerDeploymentRolloutCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetGameServicesGameServerDeploymentRolloutCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/global/gameServerDeployments/{{deployment_id}}/rollout")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetGameServicesGameServerDeploymentRolloutApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "gameservices.googleapis.com/GameServerDeploymentRollout",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetGameServicesGameServerDeploymentRolloutCaiObject(d TerraformResourceData
 				DiscoveryName:        "GameServerDeploymentRollout",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

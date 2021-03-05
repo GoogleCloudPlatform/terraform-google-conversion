@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetComputeTargetGrpcProxyCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeTargetGrpcProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetGrpcProxies/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeTargetGrpcProxyApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/TargetGrpcProxy",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetComputeTargetGrpcProxyCaiObject(d TerraformResourceData, config *Config)
 				DiscoveryName:        "TargetGrpcProxy",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

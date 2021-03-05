@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeNodeTemplateCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeNodeTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/nodeTemplates/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeNodeTemplateApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/NodeTemplate",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeNodeTemplateCaiObject(d TerraformResourceData, config *Config) (A
 				DiscoveryName:        "NodeTemplate",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

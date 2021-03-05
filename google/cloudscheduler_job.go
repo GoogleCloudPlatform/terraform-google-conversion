@@ -92,13 +92,13 @@ func validateHttpHeaders() schema.SchemaValidateFunc {
 	}
 }
 
-func GetCloudSchedulerJobCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetCloudSchedulerJobCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudscheduler.googleapis.com/projects/{{project}}/locations/{{region}}/jobs/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetCloudSchedulerJobApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "cloudscheduler.googleapis.com/Job",
 			Resource: &AssetResource{
@@ -107,9 +107,9 @@ func GetCloudSchedulerJobCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Job",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

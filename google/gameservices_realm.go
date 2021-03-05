@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetGameServicesRealmCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetGameServicesRealmCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/realms/{{realm_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetGameServicesRealmApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "gameservices.googleapis.com/Realm",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetGameServicesRealmCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Realm",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

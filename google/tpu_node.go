@@ -71,13 +71,13 @@ func tpuNodeCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, meta int
 	return nil
 }
 
-func GetTPUNodeCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetTPUNodeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//tpu.googleapis.com/projects/{{project}}/locations/{{zone}}/nodes/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetTPUNodeApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "tpu.googleapis.com/Node",
 			Resource: &AssetResource{
@@ -86,9 +86,9 @@ func GetTPUNodeCaiObject(d TerraformResourceData, config *Config) (Asset, error)
 				DiscoveryName:        "Node",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

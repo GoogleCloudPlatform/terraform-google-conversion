@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetDatastoreIndexCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDatastoreIndexCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datastore.googleapis.com/projects/{{project}}/indexes/{{index_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDatastoreIndexApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "datastore.googleapis.com/Index",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetDatastoreIndexCaiObject(d TerraformResourceData, config *Config) (Asset,
 				DiscoveryName:        "Index",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

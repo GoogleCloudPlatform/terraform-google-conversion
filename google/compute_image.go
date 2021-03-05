@@ -21,13 +21,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetComputeImageCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeImageCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/images/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeImageApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/Image",
 			Resource: &AssetResource{
@@ -36,9 +36,9 @@ func GetComputeImageCaiObject(d TerraformResourceData, config *Config) (Asset, e
 				DiscoveryName:        "Image",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

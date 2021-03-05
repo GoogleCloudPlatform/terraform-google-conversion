@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeNodeGroupCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeNodeGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/nodeGroups/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeNodeGroupApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/NodeGroup",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeNodeGroupCaiObject(d TerraformResourceData, config *Config) (Asse
 				DiscoveryName:        "NodeGroup",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

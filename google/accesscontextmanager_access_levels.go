@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetAccessContextManagerAccessLevelsCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAccessContextManagerAccessLevelsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/{{parent}}/accessLevels")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAccessContextManagerAccessLevelsApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "accesscontextmanager.googleapis.com/AccessLevels",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetAccessContextManagerAccessLevelsCaiObject(d TerraformResourceData, confi
 				DiscoveryName:        "AccessLevels",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

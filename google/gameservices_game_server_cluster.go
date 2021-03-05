@@ -31,13 +31,13 @@ func suppressSuffixDiff(_, old, new string, _ *schema.ResourceData) bool {
 	return false
 }
 
-func GetGameServicesGameServerClusterCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetGameServicesGameServerClusterCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/realms/{{realm_id}}/gameServerClusters/{{cluster_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetGameServicesGameServerClusterApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "gameservices.googleapis.com/GameServerCluster",
 			Resource: &AssetResource{
@@ -46,9 +46,9 @@ func GetGameServicesGameServerClusterCaiObject(d TerraformResourceData, config *
 				DiscoveryName:        "GameServerCluster",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

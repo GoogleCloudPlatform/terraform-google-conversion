@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetPubsubTopicCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetPubsubTopicCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/topics/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetPubsubTopicApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "pubsub.googleapis.com/Topic",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetPubsubTopicCaiObject(d TerraformResourceData, config *Config) (Asset, er
 				DiscoveryName:        "Topic",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

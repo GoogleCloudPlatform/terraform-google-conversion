@@ -39,13 +39,13 @@ func resourceSourceRepoRepositoryPubSubConfigsHash(v interface{}) int {
 	return hashcode(buf.String())
 }
 
-func GetSourceRepoRepositoryCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetSourceRepoRepositoryCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//sourcerepo.googleapis.com/projects/{{project}}/repos/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetSourceRepoRepositoryApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "sourcerepo.googleapis.com/Repository",
 			Resource: &AssetResource{
@@ -54,9 +54,9 @@ func GetSourceRepoRepositoryCaiObject(d TerraformResourceData, config *Config) (
 				DiscoveryName:        "Repository",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

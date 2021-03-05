@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetMonitoringGroupCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetMonitoringGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetMonitoringGroupApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "monitoring.googleapis.com/Group",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetMonitoringGroupCaiObject(d TerraformResourceData, config *Config) (Asset
 				DiscoveryName:        "Group",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

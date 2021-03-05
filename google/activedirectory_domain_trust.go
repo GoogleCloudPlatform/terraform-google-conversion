@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetActiveDirectoryDomainTrustCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetActiveDirectoryDomainTrustCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//activedirectory.googleapis.com/projects/{{project}}/locations/global/domains/{{domain}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetActiveDirectoryDomainTrustApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "activedirectory.googleapis.com/DomainTrust",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetActiveDirectoryDomainTrustCaiObject(d TerraformResourceData, config *Con
 				DiscoveryName:        "DomainTrust",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

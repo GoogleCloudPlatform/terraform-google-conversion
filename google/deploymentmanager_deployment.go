@@ -47,13 +47,13 @@ func customDiffDeploymentManagerDeployment(_ context.Context, d *schema.Resource
 	return nil
 }
 
-func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//deploymentmanager.googleapis.com/projects/{{project}}/global/deployments/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetDeploymentManagerDeploymentApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "deploymentmanager.googleapis.com/Deployment",
 			Resource: &AssetResource{
@@ -62,9 +62,9 @@ func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *Co
 				DiscoveryName:        "Deployment",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

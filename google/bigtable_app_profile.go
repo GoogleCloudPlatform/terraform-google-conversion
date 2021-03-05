@@ -21,13 +21,13 @@ import (
 	"google.golang.org/api/bigtableadmin/v2"
 )
 
-func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigtable.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetBigtableAppProfileApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "bigtable.googleapis.com/AppProfile",
 			Resource: &AssetResource{
@@ -36,9 +36,9 @@ func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) (As
 				DiscoveryName:        "AppProfile",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

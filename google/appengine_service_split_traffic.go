@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetAppEngineServiceSplitTrafficCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetAppEngineServiceSplitTrafficCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetAppEngineServiceSplitTrafficApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "appengine.googleapis.com/ServiceSplitTraffic",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetAppEngineServiceSplitTrafficCaiObject(d TerraformResourceData, config *C
 				DiscoveryName:        "ServiceSplitTraffic",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetFirestoreIndexCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetFirestoreIndexCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetFirestoreIndexApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "firestore.googleapis.com/Index",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetFirestoreIndexCaiObject(d TerraformResourceData, config *Config) (Asset,
 				DiscoveryName:        "Index",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -21,13 +21,13 @@ import (
 	"strings"
 )
 
-func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//secretmanager.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetSecretManagerSecretVersionApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "secretmanager.googleapis.com/SecretVersion",
 			Resource: &AssetResource{
@@ -36,9 +36,9 @@ func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Con
 				DiscoveryName:        "SecretVersion",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//resourcemanager.googleapis.com/liens?parent={{parent}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetResourceManagerLienApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "resourcemanager.googleapis.com/Lien",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) (A
 				DiscoveryName:        "Lien",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

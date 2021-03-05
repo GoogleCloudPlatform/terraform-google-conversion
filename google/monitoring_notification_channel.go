@@ -35,13 +35,13 @@ func sensitiveLabelCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v
 	return nil
 }
 
-func GetMonitoringNotificationChannelCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetMonitoringNotificationChannelCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetMonitoringNotificationChannelApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "monitoring.googleapis.com/NotificationChannel",
 			Resource: &AssetResource{
@@ -50,9 +50,9 @@ func GetMonitoringNotificationChannelCaiObject(d TerraformResourceData, config *
 				DiscoveryName:        "NotificationChannel",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

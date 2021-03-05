@@ -107,13 +107,13 @@ func portDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	return false
 }
 
-func GetComputeHealthCheckCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeHealthCheckCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/healthChecks/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeHealthCheckApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/HealthCheck",
 			Resource: &AssetResource{
@@ -122,9 +122,9 @@ func GetComputeHealthCheckCaiObject(d TerraformResourceData, config *Config) (As
 				DiscoveryName:        "HealthCheck",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

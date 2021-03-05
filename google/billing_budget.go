@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//billing.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetBillingBudgetApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "billing.googleapis.com/Budget",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) (Asset, 
 				DiscoveryName:        "Budget",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

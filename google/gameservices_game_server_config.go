@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetGameServicesGameServerConfigCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetGameServicesGameServerConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/gameServerDeployments/{{deployment_id}}/configs/{{config_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetGameServicesGameServerConfigApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "gameservices.googleapis.com/GameServerConfig",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetGameServicesGameServerConfigCaiObject(d TerraformResourceData, config *C
 				DiscoveryName:        "GameServerConfig",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

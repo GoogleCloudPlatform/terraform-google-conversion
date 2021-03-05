@@ -20,13 +20,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetLoggingMetricCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetLoggingMetricCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//logging.googleapis.com/projects/{{project}}/metrics/{{%name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetLoggingMetricApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "logging.googleapis.com/Metric",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetLoggingMetricCaiObject(d TerraformResourceData, config *Config) (Asset, 
 				DiscoveryName:        "Metric",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetMonitoringServiceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetMonitoringServiceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetMonitoringServiceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "monitoring.googleapis.com/Service",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetMonitoringServiceCaiObject(d TerraformResourceData, config *Config) (Ass
 				DiscoveryName:        "Service",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

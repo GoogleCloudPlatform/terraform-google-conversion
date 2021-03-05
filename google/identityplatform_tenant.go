@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetIdentityPlatformTenantCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetIdentityPlatformTenantCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identityplatform.googleapis.com/projects/{{project}}/tenants/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetIdentityPlatformTenantApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "identityplatform.googleapis.com/Tenant",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetIdentityPlatformTenantCaiObject(d TerraformResourceData, config *Config)
 				DiscoveryName:        "Tenant",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

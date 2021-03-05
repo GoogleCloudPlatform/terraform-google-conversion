@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeInterconnectAttachmentCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeInterconnectAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/interconnectAttachments/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeInterconnectAttachmentApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/InterconnectAttachment",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeInterconnectAttachmentCaiObject(d TerraformResourceData, config *
 				DiscoveryName:        "InterconnectAttachment",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

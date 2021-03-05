@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetComputeExternalVpnGatewayCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeExternalVpnGatewayCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/externalVpnGateways/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeExternalVpnGatewayApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/ExternalVpnGateway",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetComputeExternalVpnGatewayCaiObject(d TerraformResourceData, config *Conf
 				DiscoveryName:        "ExternalVpnGateway",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

@@ -21,13 +21,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func GetComputeUrlMapCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeUrlMapCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/urlMaps/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeUrlMapApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/UrlMap",
 			Resource: &AssetResource{
@@ -36,9 +36,9 @@ func GetComputeUrlMapCaiObject(d TerraformResourceData, config *Config) (Asset, 
 				DiscoveryName:        "UrlMap",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

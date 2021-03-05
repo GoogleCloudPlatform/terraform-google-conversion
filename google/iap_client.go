@@ -16,13 +16,13 @@ package google
 
 import "reflect"
 
-func GetIapClientCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetIapClientCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iap.googleapis.com/{{brand}}/identityAwareProxyClients/{{client_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetIapClientApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "iap.googleapis.com/Client",
 			Resource: &AssetResource{
@@ -31,9 +31,9 @@ func GetIapClientCaiObject(d TerraformResourceData, config *Config) (Asset, erro
 				DiscoveryName:        "Client",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

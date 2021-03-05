@@ -20,13 +20,13 @@ import (
 	"regexp"
 )
 
-func GetBinaryAuthorizationAttestorCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetBinaryAuthorizationAttestorCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//binaryauthorization.googleapis.com/projects/{{project}}/attestors/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetBinaryAuthorizationAttestorApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "binaryauthorization.googleapis.com/Attestor",
 			Resource: &AssetResource{
@@ -35,9 +35,9 @@ func GetBinaryAuthorizationAttestorCaiObject(d TerraformResourceData, config *Co
 				DiscoveryName:        "Attestor",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

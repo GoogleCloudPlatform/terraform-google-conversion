@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetComputeNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/networkEndpointGroups/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeNetworkEndpointGroupApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/NetworkEndpointGroup",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetComputeNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Co
 				DiscoveryName:        "NetworkEndpointGroup",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

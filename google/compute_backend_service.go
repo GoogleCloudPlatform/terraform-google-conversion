@@ -162,13 +162,13 @@ func resourceGoogleComputeBackendServiceBackendHash(v interface{}) int {
 	return hashcode(buf.String())
 }
 
-func GetComputeBackendServiceCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetComputeBackendServiceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/backendServices/{{name}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetComputeBackendServiceApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "compute.googleapis.com/BackendService",
 			Resource: &AssetResource{
@@ -177,9 +177,9 @@ func GetComputeBackendServiceCaiObject(d TerraformResourceData, config *Config) 
 				DiscoveryName:        "BackendService",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

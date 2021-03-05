@@ -48,13 +48,13 @@ func validateDefaultTableExpirationMs(v interface{}, k string) (ws []string, err
 	return
 }
 
-func GetBigQueryDatasetCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetBigQueryDatasetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetBigQueryDatasetApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "bigquery.googleapis.com/Dataset",
 			Resource: &AssetResource{
@@ -63,9 +63,9 @@ func GetBigQueryDatasetCaiObject(d TerraformResourceData, config *Config) (Asset
 				DiscoveryName:        "Dataset",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 

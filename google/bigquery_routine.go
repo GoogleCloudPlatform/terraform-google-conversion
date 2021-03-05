@@ -19,13 +19,13 @@ import (
 	"reflect"
 )
 
-func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *Config) (Asset, error) {
+func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}/routines/{{routine_id}}")
 	if err != nil {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 	if obj, err := GetBigQueryRoutineApiObject(d, config); err == nil {
-		return Asset{
+		return []Asset{{
 			Name: name,
 			Type: "bigquery.googleapis.com/Routine",
 			Resource: &AssetResource{
@@ -34,9 +34,9 @@ func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *Config) (Asset
 				DiscoveryName:        "Routine",
 				Data:                 obj,
 			},
-		}, nil
+		}}, nil
 	} else {
-		return Asset{}, err
+		return []Asset{}, err
 	}
 }
 
