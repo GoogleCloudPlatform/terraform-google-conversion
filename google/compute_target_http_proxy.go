@@ -60,6 +60,12 @@ func GetComputeTargetHttpProxyApiObject(d TerraformResourceData, config *Config)
 	} else if v, ok := d.GetOkExists("url_map"); !isEmptyValue(reflect.ValueOf(urlMapProp)) && (ok || !reflect.DeepEqual(v, urlMapProp)) {
 		obj["urlMap"] = urlMapProp
 	}
+	proxyBindProp, err := expandComputeTargetHttpProxyProxyBind(d.Get("proxy_bind"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("proxy_bind"); !isEmptyValue(reflect.ValueOf(proxyBindProp)) && (ok || !reflect.DeepEqual(v, proxyBindProp)) {
+		obj["proxyBind"] = proxyBindProp
+	}
 
 	return obj, nil
 }
@@ -78,4 +84,8 @@ func expandComputeTargetHttpProxyUrlMap(v interface{}, d TerraformResourceData, 
 		return nil, fmt.Errorf("Invalid value for url_map: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeTargetHttpProxyProxyBind(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
