@@ -199,6 +199,20 @@ func expandAccessContextManagerServicePerimetersServicePerimetersStatus(v interf
 		transformed["vpcAccessibleServices"] = transformedVPCAccessibleServices
 	}
 
+	transformedIngressPolicies, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPolicies(original["ingress_policies"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIngressPolicies); val.IsValid() && !isEmptyValue(val) {
+		transformed["ingressPolicies"] = transformedIngressPolicies
+	}
+
+	transformedEgressPolicies, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPolicies(original["egress_policies"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEgressPolicies); val.IsValid() && !isEmptyValue(val) {
+		transformed["egressPolicies"] = transformedEgressPolicies
+	}
+
 	return transformed, nil
 }
 
@@ -250,6 +264,376 @@ func expandAccessContextManagerServicePerimetersServicePerimetersStatusVPCAccess
 	return v, nil
 }
 
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPolicies(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIngressFrom, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFrom(original["ingress_from"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIngressFrom); val.IsValid() && !isEmptyValue(val) {
+			transformed["ingressFrom"] = transformedIngressFrom
+		}
+
+		transformedIngressTo, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressTo(original["ingress_to"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIngressTo); val.IsValid() && !isEmptyValue(val) {
+			transformed["ingressTo"] = transformedIngressTo
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFrom(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdentityType, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromIdentityType(original["identity_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentityType); val.IsValid() && !isEmptyValue(val) {
+		transformed["identityType"] = transformedIdentityType
+	}
+
+	transformedIdentities, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromIdentities(original["identities"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentities); val.IsValid() && !isEmptyValue(val) {
+		transformed["identities"] = transformedIdentities
+	}
+
+	transformedSources, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromSources(original["sources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSources); val.IsValid() && !isEmptyValue(val) {
+		transformed["sources"] = transformedSources
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromIdentityType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromIdentities(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromSources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAccessLevel, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromSourcesAccessLevel(original["access_level"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAccessLevel); val.IsValid() && !isEmptyValue(val) {
+			transformed["accessLevel"] = transformedAccessLevel
+		}
+
+		transformedResource, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromSourcesResource(original["resource"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedResource); val.IsValid() && !isEmptyValue(val) {
+			transformed["resource"] = transformedResource
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromSourcesAccessLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromSourcesResource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressTo(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResources, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToResources(original["resources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResources); val.IsValid() && !isEmptyValue(val) {
+		transformed["resources"] = transformedResources
+	}
+
+	transformedOperations, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperations(original["operations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOperations); val.IsValid() && !isEmptyValue(val) {
+		transformed["operations"] = transformedOperations
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToResources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedServiceName, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperationsServiceName(original["service_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServiceName); val.IsValid() && !isEmptyValue(val) {
+			transformed["serviceName"] = transformedServiceName
+		}
+
+		transformedMethodSelectors, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperationsMethodSelectors(original["method_selectors"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethodSelectors); val.IsValid() && !isEmptyValue(val) {
+			transformed["methodSelectors"] = transformedMethodSelectors
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperationsServiceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperationsMethodSelectors(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedMethod, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperationsMethodSelectorsMethod(original["method"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethod); val.IsValid() && !isEmptyValue(val) {
+			transformed["method"] = transformedMethod
+		}
+
+		transformedPermission, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperationsMethodSelectorsPermission(original["permission"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPermission); val.IsValid() && !isEmptyValue(val) {
+			transformed["permission"] = transformedPermission
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperationsMethodSelectorsMethod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToOperationsMethodSelectorsPermission(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPolicies(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedEgressFrom, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressFrom(original["egress_from"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEgressFrom); val.IsValid() && !isEmptyValue(val) {
+			transformed["egressFrom"] = transformedEgressFrom
+		}
+
+		transformedEgressTo, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressTo(original["egress_to"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEgressTo); val.IsValid() && !isEmptyValue(val) {
+			transformed["egressTo"] = transformedEgressTo
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressFrom(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdentityType, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressFromIdentityType(original["identity_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentityType); val.IsValid() && !isEmptyValue(val) {
+		transformed["identityType"] = transformedIdentityType
+	}
+
+	transformedIdentities, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressFromIdentities(original["identities"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentities); val.IsValid() && !isEmptyValue(val) {
+		transformed["identities"] = transformedIdentities
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressFromIdentityType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressFromIdentities(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressTo(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResources, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToResources(original["resources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResources); val.IsValid() && !isEmptyValue(val) {
+		transformed["resources"] = transformedResources
+	}
+
+	transformedOperations, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperations(original["operations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOperations); val.IsValid() && !isEmptyValue(val) {
+		transformed["operations"] = transformedOperations
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToResources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedServiceName, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperationsServiceName(original["service_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServiceName); val.IsValid() && !isEmptyValue(val) {
+			transformed["serviceName"] = transformedServiceName
+		}
+
+		transformedMethodSelectors, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperationsMethodSelectors(original["method_selectors"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethodSelectors); val.IsValid() && !isEmptyValue(val) {
+			transformed["methodSelectors"] = transformedMethodSelectors
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperationsServiceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperationsMethodSelectors(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedMethod, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperationsMethodSelectorsMethod(original["method"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethod); val.IsValid() && !isEmptyValue(val) {
+			transformed["method"] = transformedMethod
+		}
+
+		transformedPermission, err := expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperationsMethodSelectorsPermission(original["permission"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPermission); val.IsValid() && !isEmptyValue(val) {
+			transformed["permission"] = transformedPermission
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperationsMethodSelectorsMethod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToOperationsMethodSelectorsPermission(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandAccessContextManagerServicePerimetersServicePerimetersSpec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -285,6 +669,20 @@ func expandAccessContextManagerServicePerimetersServicePerimetersSpec(v interfac
 		return nil, err
 	} else if val := reflect.ValueOf(transformedVPCAccessibleServices); val.IsValid() && !isEmptyValue(val) {
 		transformed["vpcAccessibleServices"] = transformedVPCAccessibleServices
+	}
+
+	transformedIngressPolicies, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPolicies(original["ingress_policies"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIngressPolicies); val.IsValid() && !isEmptyValue(val) {
+		transformed["ingressPolicies"] = transformedIngressPolicies
+	}
+
+	transformedEgressPolicies, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPolicies(original["egress_policies"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEgressPolicies); val.IsValid() && !isEmptyValue(val) {
+		transformed["egressPolicies"] = transformedEgressPolicies
 	}
 
 	return transformed, nil
@@ -333,6 +731,376 @@ func expandAccessContextManagerServicePerimetersServicePerimetersSpecVPCAccessib
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecVPCAccessibleServicesAllowedServices(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPolicies(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIngressFrom, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFrom(original["ingress_from"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIngressFrom); val.IsValid() && !isEmptyValue(val) {
+			transformed["ingressFrom"] = transformedIngressFrom
+		}
+
+		transformedIngressTo, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressTo(original["ingress_to"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIngressTo); val.IsValid() && !isEmptyValue(val) {
+			transformed["ingressTo"] = transformedIngressTo
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFrom(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdentityType, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromIdentityType(original["identity_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentityType); val.IsValid() && !isEmptyValue(val) {
+		transformed["identityType"] = transformedIdentityType
+	}
+
+	transformedIdentities, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromIdentities(original["identities"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentities); val.IsValid() && !isEmptyValue(val) {
+		transformed["identities"] = transformedIdentities
+	}
+
+	transformedSources, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromSources(original["sources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSources); val.IsValid() && !isEmptyValue(val) {
+		transformed["sources"] = transformedSources
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromIdentityType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromIdentities(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromSources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAccessLevel, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromSourcesAccessLevel(original["access_level"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAccessLevel); val.IsValid() && !isEmptyValue(val) {
+			transformed["accessLevel"] = transformedAccessLevel
+		}
+
+		transformedResource, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromSourcesResource(original["resource"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedResource); val.IsValid() && !isEmptyValue(val) {
+			transformed["resource"] = transformedResource
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromSourcesAccessLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromSourcesResource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressTo(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResources, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToResources(original["resources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResources); val.IsValid() && !isEmptyValue(val) {
+		transformed["resources"] = transformedResources
+	}
+
+	transformedOperations, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperations(original["operations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOperations); val.IsValid() && !isEmptyValue(val) {
+		transformed["operations"] = transformedOperations
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToResources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedServiceName, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperationsServiceName(original["service_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServiceName); val.IsValid() && !isEmptyValue(val) {
+			transformed["serviceName"] = transformedServiceName
+		}
+
+		transformedMethodSelectors, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperationsMethodSelectors(original["method_selectors"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethodSelectors); val.IsValid() && !isEmptyValue(val) {
+			transformed["methodSelectors"] = transformedMethodSelectors
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperationsServiceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperationsMethodSelectors(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedMethod, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperationsMethodSelectorsMethod(original["method"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethod); val.IsValid() && !isEmptyValue(val) {
+			transformed["method"] = transformedMethod
+		}
+
+		transformedPermission, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperationsMethodSelectorsPermission(original["permission"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPermission); val.IsValid() && !isEmptyValue(val) {
+			transformed["permission"] = transformedPermission
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperationsMethodSelectorsMethod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToOperationsMethodSelectorsPermission(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPolicies(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedEgressFrom, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressFrom(original["egress_from"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEgressFrom); val.IsValid() && !isEmptyValue(val) {
+			transformed["egressFrom"] = transformedEgressFrom
+		}
+
+		transformedEgressTo, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressTo(original["egress_to"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEgressTo); val.IsValid() && !isEmptyValue(val) {
+			transformed["egressTo"] = transformedEgressTo
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressFrom(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdentityType, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressFromIdentityType(original["identity_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentityType); val.IsValid() && !isEmptyValue(val) {
+		transformed["identityType"] = transformedIdentityType
+	}
+
+	transformedIdentities, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressFromIdentities(original["identities"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentities); val.IsValid() && !isEmptyValue(val) {
+		transformed["identities"] = transformedIdentities
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressFromIdentityType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressFromIdentities(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressTo(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResources, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToResources(original["resources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResources); val.IsValid() && !isEmptyValue(val) {
+		transformed["resources"] = transformedResources
+	}
+
+	transformedOperations, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperations(original["operations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOperations); val.IsValid() && !isEmptyValue(val) {
+		transformed["operations"] = transformedOperations
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToResources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedServiceName, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperationsServiceName(original["service_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServiceName); val.IsValid() && !isEmptyValue(val) {
+			transformed["serviceName"] = transformedServiceName
+		}
+
+		transformedMethodSelectors, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperationsMethodSelectors(original["method_selectors"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethodSelectors); val.IsValid() && !isEmptyValue(val) {
+			transformed["methodSelectors"] = transformedMethodSelectors
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperationsServiceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperationsMethodSelectors(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedMethod, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperationsMethodSelectorsMethod(original["method"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethod); val.IsValid() && !isEmptyValue(val) {
+			transformed["method"] = transformedMethod
+		}
+
+		transformedPermission, err := expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperationsMethodSelectorsPermission(original["permission"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPermission); val.IsValid() && !isEmptyValue(val) {
+			transformed["permission"] = transformedPermission
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperationsMethodSelectorsMethod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToOperationsMethodSelectorsPermission(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
