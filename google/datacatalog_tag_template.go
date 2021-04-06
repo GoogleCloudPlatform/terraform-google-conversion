@@ -86,6 +86,13 @@ func expandDataCatalogTagTemplateFields(v interface{}, d TerraformResourceData, 
 			transformed["displayName"] = transformedDisplayName
 		}
 
+		transformedDescription, err := expandDataCatalogTagTemplateFieldsDescription(original["description"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !isEmptyValue(val) {
+			transformed["description"] = transformedDescription
+		}
+
 		transformedType, err := expandDataCatalogTagTemplateFieldsType(original["type"], d, config)
 		if err != nil {
 			return nil, err
@@ -121,6 +128,10 @@ func expandDataCatalogTagTemplateFieldsName(v interface{}, d TerraformResourceDa
 }
 
 func expandDataCatalogTagTemplateFieldsDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataCatalogTagTemplateFieldsDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
