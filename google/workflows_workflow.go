@@ -22,7 +22,7 @@ import (
 )
 
 func GetWorkflowsWorkflowCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//workflows.googleapis.com/{{name}}")
+	name, err := assetName(d, config, "//workflows.googleapis.com/projects/{{project}}/locations/{{region}}/workflows/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
