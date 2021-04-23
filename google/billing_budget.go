@@ -17,7 +17,7 @@ package google
 import "reflect"
 
 func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//billing.googleapis.com/{{name}}")
+	name, err := assetName(d, config, "//billing.googleapis.com/billingAccounts/{{billing_account}}/budgets/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
