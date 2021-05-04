@@ -278,6 +278,13 @@ func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyOsConstrain
 			transformed["minimumVersion"] = transformedMinimumVersion
 		}
 
+		transformedRequireVerifiedChromeOs, err := expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyOsConstraintsRequireVerifiedChromeOs(original["require_verified_chrome_os"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequireVerifiedChromeOs); val.IsValid() && !isEmptyValue(val) {
+			transformed["requireVerifiedChromeOs"] = transformedRequireVerifiedChromeOs
+		}
+
 		transformedOsType, err := expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyOsConstraintsOsType(original["os_type"], d, config)
 		if err != nil {
 			return nil, err
@@ -291,6 +298,10 @@ func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyOsConstrain
 }
 
 func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyOsConstraintsMinimumVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyOsConstraintsRequireVerifiedChromeOs(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
