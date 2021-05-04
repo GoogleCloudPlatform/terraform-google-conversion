@@ -16,11 +16,48 @@ package google
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
+
+func deleteSpannerBackups(d *schema.ResourceData, config *Config, res map[string]interface{}, userAgent string, billingProject string) error {
+	var v interface{}
+	var ok bool
+
+	v, ok = res["backups"]
+	if !ok || v == nil {
+		return nil
+	}
+
+	// Iterate over the list and delete each backup.
+	for _, itemRaw := range v.([]interface{}) {
+		if itemRaw == nil {
+			continue
+		}
+		item := itemRaw.(map[string]interface{})
+
+		backupName := item["name"].(string)
+
+		log.Printf("[DEBUG] Found backups for resource %q: %#v)", d.Id(), item)
+
+		path := "{{SpannerBasePath}}" + backupName
+
+		url, err := replaceVars(d, config, path)
+		if err != nil {
+			return err
+		}
+
+		_, err = sendRequest(config, "DELETE", billingProject, url, userAgent, nil)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
 
 func GetSpannerInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//spanner.googleapis.com/projects/{{project}}/instances/{{name}}")
