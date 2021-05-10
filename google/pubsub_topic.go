@@ -63,6 +63,12 @@ func GetPubsubTopicApiObject(d TerraformResourceData, config *Config) (map[strin
 	} else if v, ok := d.GetOkExists("message_storage_policy"); !isEmptyValue(reflect.ValueOf(messageStoragePolicyProp)) && (ok || !reflect.DeepEqual(v, messageStoragePolicyProp)) {
 		obj["messageStoragePolicy"] = messageStoragePolicyProp
 	}
+	schemaSettingsProp, err := expandPubsubTopicSchemaSettings(d.Get("schema_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("schema_settings"); !isEmptyValue(reflect.ValueOf(schemaSettingsProp)) && (ok || !reflect.DeepEqual(v, schemaSettingsProp)) {
+		obj["schemaSettings"] = schemaSettingsProp
+	}
 
 	return resourcePubsubTopicEncoder(d, config, obj)
 }
@@ -111,5 +117,39 @@ func expandPubsubTopicMessageStoragePolicy(v interface{}, d TerraformResourceDat
 }
 
 func expandPubsubTopicMessageStoragePolicyAllowedPersistenceRegions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicSchemaSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSchema, err := expandPubsubTopicSchemaSettingsSchema(original["schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchema); val.IsValid() && !isEmptyValue(val) {
+		transformed["schema"] = transformedSchema
+	}
+
+	transformedEncoding, err := expandPubsubTopicSchemaSettingsEncoding(original["encoding"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncoding); val.IsValid() && !isEmptyValue(val) {
+		transformed["encoding"] = transformedEncoding
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicSchemaSettingsSchema(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicSchemaSettingsEncoding(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
