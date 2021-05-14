@@ -60,6 +60,12 @@ func GetComputeHaVpnGatewayApiObject(d TerraformResourceData, config *Config) (m
 	} else if v, ok := d.GetOkExists("network"); !isEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
+	vpnInterfacesProp, err := expandComputeHaVpnGatewayVpnInterfaces(d.Get("vpn_interfaces"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("vpn_interfaces"); !isEmptyValue(reflect.ValueOf(vpnInterfacesProp)) && (ok || !reflect.DeepEqual(v, vpnInterfacesProp)) {
+		obj["vpnInterfaces"] = vpnInterfacesProp
+	}
 	regionProp, err := expandComputeHaVpnGatewayRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -84,6 +90,43 @@ func expandComputeHaVpnGatewayNetwork(v interface{}, d TerraformResourceData, co
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeHaVpnGatewayVpnInterfaces(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedId, err := expandComputeHaVpnGatewayVpnInterfacesId(original["id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedId); val.IsValid() && !isEmptyValue(val) {
+			transformed["id"] = transformedId
+		}
+
+		transformedIpAddress, err := expandComputeHaVpnGatewayVpnInterfacesIpAddress(original["ip_address"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpAddress); val.IsValid() && !isEmptyValue(val) {
+			transformed["ipAddress"] = transformedIpAddress
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeHaVpnGatewayVpnInterfacesId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHaVpnGatewayVpnInterfacesIpAddress(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeHaVpnGatewayRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
