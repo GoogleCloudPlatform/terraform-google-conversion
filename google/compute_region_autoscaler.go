@@ -248,10 +248,21 @@ func expandComputeRegionAutoscalerAutoscalingPolicyCpuUtilization(v interface{},
 		transformed["utilizationTarget"] = transformedTarget
 	}
 
+	transformedPredictiveMethod, err := expandComputeRegionAutoscalerAutoscalingPolicyCpuUtilizationPredictiveMethod(original["predictive_method"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPredictiveMethod); val.IsValid() && !isEmptyValue(val) {
+		transformed["predictiveMethod"] = transformedPredictiveMethod
+	}
+
 	return transformed, nil
 }
 
 func expandComputeRegionAutoscalerAutoscalingPolicyCpuUtilizationTarget(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionAutoscalerAutoscalingPolicyCpuUtilizationPredictiveMethod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
