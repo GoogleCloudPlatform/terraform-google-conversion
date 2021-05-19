@@ -303,6 +303,12 @@ func GetComputeDiskApiObject(d TerraformResourceData, config *Config) (map[strin
 	} else if v, ok := d.GetOkExists("image"); !isEmptyValue(reflect.ValueOf(sourceImageProp)) && (ok || !reflect.DeepEqual(v, sourceImageProp)) {
 		obj["sourceImage"] = sourceImageProp
 	}
+	provisionedIopsProp, err := expandComputeDiskProvisionedIops(d.Get("provisioned_iops"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("provisioned_iops"); !isEmptyValue(reflect.ValueOf(provisionedIopsProp)) && (ok || !reflect.DeepEqual(v, provisionedIopsProp)) {
+		obj["provisionedIops"] = provisionedIopsProp
+	}
 	zoneProp, err := expandComputeDiskZone(d.Get("zone"), d, config)
 	if err != nil {
 		return nil, err
@@ -418,6 +424,10 @@ func expandComputeDiskType(v interface{}, d TerraformResourceData, config *Confi
 }
 
 func expandComputeDiskImage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeDiskProvisionedIops(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
