@@ -116,6 +116,13 @@ func expandComputeHaVpnGatewayVpnInterfaces(v interface{}, d TerraformResourceDa
 			transformed["ipAddress"] = transformedIpAddress
 		}
 
+		transformedInterconnectAttachment, err := expandComputeHaVpnGatewayVpnInterfacesInterconnectAttachment(original["interconnect_attachment"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedInterconnectAttachment); val.IsValid() && !isEmptyValue(val) {
+			transformed["interconnectAttachment"] = transformedInterconnectAttachment
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -127,6 +134,14 @@ func expandComputeHaVpnGatewayVpnInterfacesId(v interface{}, d TerraformResource
 
 func expandComputeHaVpnGatewayVpnInterfacesIpAddress(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeHaVpnGatewayVpnInterfacesInterconnectAttachment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	f, err := parseRegionalFieldValue("interconnectAttachments", v.(string), "project", "region", "zone", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for interconnect_attachment: %s", err)
+	}
+	return f.RelativeLink(), nil
 }
 
 func expandComputeHaVpnGatewayRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
