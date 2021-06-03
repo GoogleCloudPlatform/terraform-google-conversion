@@ -84,6 +84,18 @@ func GetComputeAddressApiObject(d TerraformResourceData, config *Config) (map[st
 	} else if v, ok := d.GetOkExists("subnetwork"); !isEmptyValue(reflect.ValueOf(subnetworkProp)) && (ok || !reflect.DeepEqual(v, subnetworkProp)) {
 		obj["subnetwork"] = subnetworkProp
 	}
+	networkProp, err := expandComputeAddressNetwork(d.Get("network"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network"); !isEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
+		obj["network"] = networkProp
+	}
+	prefixLengthProp, err := expandComputeAddressPrefixLength(d.Get("prefix_length"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("prefix_length"); !isEmptyValue(reflect.ValueOf(prefixLengthProp)) && (ok || !reflect.DeepEqual(v, prefixLengthProp)) {
+		obj["prefixLength"] = prefixLengthProp
+	}
 	regionProp, err := expandComputeAddressRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -124,6 +136,18 @@ func expandComputeAddressSubnetwork(v interface{}, d TerraformResourceData, conf
 		return nil, fmt.Errorf("Invalid value for subnetwork: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeAddressNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for network: %s", err)
+	}
+	return f.RelativeLink(), nil
+}
+
+func expandComputeAddressPrefixLength(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeAddressRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
