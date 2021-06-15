@@ -51,6 +51,12 @@ func GetComputeBackendBucketApiObject(d TerraformResourceData, config *Config) (
 	} else if v, ok := d.GetOkExists("cdn_policy"); !isEmptyValue(reflect.ValueOf(cdnPolicyProp)) && (ok || !reflect.DeepEqual(v, cdnPolicyProp)) {
 		obj["cdnPolicy"] = cdnPolicyProp
 	}
+	customResponseHeadersProp, err := expandComputeBackendBucketCustomResponseHeaders(d.Get("custom_response_headers"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_response_headers"); !isEmptyValue(reflect.ValueOf(customResponseHeadersProp)) && (ok || !reflect.DeepEqual(v, customResponseHeadersProp)) {
+		obj["customResponseHeaders"] = customResponseHeadersProp
+	}
 	descriptionProp, err := expandComputeBackendBucketDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -97,6 +103,10 @@ func expandComputeBackendBucketCdnPolicy(v interface{}, d TerraformResourceData,
 }
 
 func expandComputeBackendBucketCdnPolicySignedUrlCacheMaxAgeSec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendBucketCustomResponseHeaders(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
