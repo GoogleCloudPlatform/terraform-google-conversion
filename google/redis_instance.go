@@ -15,9 +15,42 @@
 package google
 
 import (
+	"context"
 	"fmt"
 	"reflect"
+	"regexp"
+	"strconv"
 )
+
+// Is the new redis version less than the old one?
+func isRedisVersionDecreasing(_ context.Context, old, new, _ interface{}) bool {
+	return isRedisVersionDecreasingFunc(old, new)
+}
+
+// separate function for unit testing
+func isRedisVersionDecreasingFunc(old, new interface{}) bool {
+	if old == nil || new == nil {
+		return false
+	}
+	re := regexp.MustCompile(`REDIS_(\d+)_(\d+)`)
+	oldParsed := re.FindSubmatch([]byte(old.(string)))
+	newParsed := re.FindSubmatch([]byte(new.(string)))
+
+	if oldParsed == nil || newParsed == nil {
+		return false
+	}
+
+	oldVersion, err := strconv.ParseFloat(fmt.Sprintf("%s.%s", oldParsed[1], oldParsed[2]), 32)
+	if err != nil {
+		return false
+	}
+	newVersion, err := strconv.ParseFloat(fmt.Sprintf("%s.%s", newParsed[1], newParsed[2]), 32)
+	if err != nil {
+		return false
+	}
+
+	return newVersion < oldVersion
+}
 
 func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}")
@@ -120,6 +153,12 @@ func GetRedisInstanceApiObject(d TerraformResourceData, config *Config) (map[str
 	} else if v, ok := d.GetOkExists("tier"); !isEmptyValue(reflect.ValueOf(tierProp)) && (ok || !reflect.DeepEqual(v, tierProp)) {
 		obj["tier"] = tierProp
 	}
+	transitEncryptionModeProp, err := expandRedisInstanceTransitEncryptionMode(d.Get("transit_encryption_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("transit_encryption_mode"); !isEmptyValue(reflect.ValueOf(transitEncryptionModeProp)) && (ok || !reflect.DeepEqual(v, transitEncryptionModeProp)) {
+		obj["transitEncryptionMode"] = transitEncryptionModeProp
+	}
 
 	return resourceRedisInstanceEncoder(d, config, obj)
 }
@@ -203,5 +242,9 @@ func expandRedisInstanceReservedIpRange(v interface{}, d TerraformResourceData, 
 }
 
 func expandRedisInstanceTier(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisInstanceTransitEncryptionMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
