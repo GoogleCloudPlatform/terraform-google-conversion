@@ -16,40 +16,40 @@ package google
 
 import "fmt"
 
-func GetStorageBucketIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	return newStorageBucketIamAsset(d, config, expandIamPolicyBindings)
+func GetIapTunnelInstanceIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+	return newIapTunnelInstanceIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetStorageBucketIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	return newStorageBucketIamAsset(d, config, expandIamRoleBindings)
+func GetIapTunnelInstanceIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+	return newIapTunnelInstanceIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetStorageBucketIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	return newStorageBucketIamAsset(d, config, expandIamMemberBindings)
+func GetIapTunnelInstanceIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+	return newIapTunnelInstanceIamAsset(d, config, expandIamMemberBindings)
 }
 
-func MergeStorageBucketIamPolicy(existing, incoming Asset) Asset {
+func MergeIapTunnelInstanceIamPolicy(existing, incoming Asset) Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeStorageBucketIamBinding(existing, incoming Asset) Asset {
+func MergeIapTunnelInstanceIamBinding(existing, incoming Asset) Asset {
 	return mergeIamAssets(existing, incoming, mergeAuthoritativeBindings)
 }
 
-func MergeStorageBucketIamBindingDelete(existing, incoming Asset) Asset {
+func MergeIapTunnelInstanceIamBindingDelete(existing, incoming Asset) Asset {
 	return mergeDeleteIamAssets(existing, incoming, mergeDeleteAuthoritativeBindings)
 }
 
-func MergeStorageBucketIamMember(existing, incoming Asset) Asset {
+func MergeIapTunnelInstanceIamMember(existing, incoming Asset) Asset {
 	return mergeIamAssets(existing, incoming, mergeAdditiveBindings)
 }
 
-func MergeStorageBucketIamMemberDelete(existing, incoming Asset) Asset {
+func MergeIapTunnelInstanceIamMemberDelete(existing, incoming Asset) Asset {
 	return mergeDeleteIamAssets(existing, incoming, mergeDeleteAdditiveBindings)
 }
 
-func newStorageBucketIamAsset(
+func newIapTunnelInstanceIamAsset(
 	d TerraformResourceData,
 	config *Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
@@ -59,31 +59,31 @@ func newStorageBucketIamAsset(
 		return []Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := assetName(d, config, "//storage.googleapis.com/{{bucket}}")
+	name, err := assetName(d, config, "//iap.googleapis.com/{{tunnelinstance}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 
 	return []Asset{{
 		Name: name,
-		Type: "storage.googleapis.com/Bucket",
+		Type: "iap.googleapis.com/TunnelInstance",
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchStorageBucketIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchIapTunnelInstanceIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
 	// Check if the identity field returns a value
-	if _, ok := d.GetOk("{{bucket}}"); !ok {
+	if _, ok := d.GetOk("{{tunnelinstance}}"); !ok {
 		return Asset{}, ErrEmptyIdentityField
 	}
 
 	return fetchIamPolicy(
-		StorageBucketIamUpdaterProducer,
+		IapTunnelInstanceIamUpdaterProducer,
 		d,
 		config,
-		"//storage.googleapis.com/{{bucket}}",
-		"storage.googleapis.com/Bucket",
+		"//iap.googleapis.com/{{tunnelinstance}}",
+		"iap.googleapis.com/TunnelInstance",
 	)
 }

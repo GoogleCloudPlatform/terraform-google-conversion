@@ -16,40 +16,40 @@ package google
 
 import "fmt"
 
-func GetStorageBucketIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	return newStorageBucketIamAsset(d, config, expandIamPolicyBindings)
+func GetTagsTagKeyIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+	return newTagsTagKeyIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetStorageBucketIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	return newStorageBucketIamAsset(d, config, expandIamRoleBindings)
+func GetTagsTagKeyIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+	return newTagsTagKeyIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetStorageBucketIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	return newStorageBucketIamAsset(d, config, expandIamMemberBindings)
+func GetTagsTagKeyIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+	return newTagsTagKeyIamAsset(d, config, expandIamMemberBindings)
 }
 
-func MergeStorageBucketIamPolicy(existing, incoming Asset) Asset {
+func MergeTagsTagKeyIamPolicy(existing, incoming Asset) Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeStorageBucketIamBinding(existing, incoming Asset) Asset {
+func MergeTagsTagKeyIamBinding(existing, incoming Asset) Asset {
 	return mergeIamAssets(existing, incoming, mergeAuthoritativeBindings)
 }
 
-func MergeStorageBucketIamBindingDelete(existing, incoming Asset) Asset {
+func MergeTagsTagKeyIamBindingDelete(existing, incoming Asset) Asset {
 	return mergeDeleteIamAssets(existing, incoming, mergeDeleteAuthoritativeBindings)
 }
 
-func MergeStorageBucketIamMember(existing, incoming Asset) Asset {
+func MergeTagsTagKeyIamMember(existing, incoming Asset) Asset {
 	return mergeIamAssets(existing, incoming, mergeAdditiveBindings)
 }
 
-func MergeStorageBucketIamMemberDelete(existing, incoming Asset) Asset {
+func MergeTagsTagKeyIamMemberDelete(existing, incoming Asset) Asset {
 	return mergeDeleteIamAssets(existing, incoming, mergeDeleteAdditiveBindings)
 }
 
-func newStorageBucketIamAsset(
+func newTagsTagKeyIamAsset(
 	d TerraformResourceData,
 	config *Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
@@ -59,31 +59,31 @@ func newStorageBucketIamAsset(
 		return []Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := assetName(d, config, "//storage.googleapis.com/{{bucket}}")
+	name, err := assetName(d, config, "//tags.googleapis.com/{{tagkey}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 
 	return []Asset{{
 		Name: name,
-		Type: "storage.googleapis.com/Bucket",
+		Type: "tags.googleapis.com/TagKey",
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchStorageBucketIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchTagsTagKeyIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
 	// Check if the identity field returns a value
-	if _, ok := d.GetOk("{{bucket}}"); !ok {
+	if _, ok := d.GetOk("{{tagkey}}"); !ok {
 		return Asset{}, ErrEmptyIdentityField
 	}
 
 	return fetchIamPolicy(
-		StorageBucketIamUpdaterProducer,
+		TagsTagKeyIamUpdaterProducer,
 		d,
 		config,
-		"//storage.googleapis.com/{{bucket}}",
-		"storage.googleapis.com/Bucket",
+		"//tags.googleapis.com/{{tagkey}}",
+		"tags.googleapis.com/TagKey",
 	)
 }
