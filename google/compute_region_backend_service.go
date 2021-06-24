@@ -665,6 +665,55 @@ func expandComputeRegionBackendServiceCdnPolicy(v interface{}, d TerraformResour
 		transformed["signedUrlCacheMaxAgeSec"] = transformedSignedUrlCacheMaxAgeSec
 	}
 
+	transformedDefaultTtl, err := expandComputeRegionBackendServiceCdnPolicyDefaultTtl(original["default_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultTtl); val.IsValid() && !isEmptyValue(val) {
+		transformed["defaultTtl"] = transformedDefaultTtl
+	}
+
+	transformedMaxTtl, err := expandComputeRegionBackendServiceCdnPolicyMaxTtl(original["max_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxTtl); val.IsValid() && !isEmptyValue(val) {
+		transformed["maxTtl"] = transformedMaxTtl
+	}
+
+	transformedClientTtl, err := expandComputeRegionBackendServiceCdnPolicyClientTtl(original["client_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientTtl); val.IsValid() && !isEmptyValue(val) {
+		transformed["clientTtl"] = transformedClientTtl
+	}
+
+	transformedNegativeCaching, err := expandComputeRegionBackendServiceCdnPolicyNegativeCaching(original["negative_caching"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["negativeCaching"] = transformedNegativeCaching
+	}
+
+	transformedNegativeCachingPolicy, err := expandComputeRegionBackendServiceCdnPolicyNegativeCachingPolicy(original["negative_caching_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNegativeCachingPolicy); val.IsValid() && !isEmptyValue(val) {
+		transformed["negativeCachingPolicy"] = transformedNegativeCachingPolicy
+	}
+
+	transformedCacheMode, err := expandComputeRegionBackendServiceCdnPolicyCacheMode(original["cache_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCacheMode); val.IsValid() && !isEmptyValue(val) {
+		transformed["cacheMode"] = transformedCacheMode
+	}
+
+	transformedServeWhileStale, err := expandComputeRegionBackendServiceCdnPolicyServeWhileStale(original["serve_while_stale"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["serveWhileStale"] = transformedServeWhileStale
+	}
+
 	return transformed, nil
 }
 
@@ -738,6 +787,56 @@ func expandComputeRegionBackendServiceCdnPolicyCacheKeyPolicyQueryStringWhitelis
 }
 
 func expandComputeRegionBackendServiceCdnPolicySignedUrlCacheMaxAgeSec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyDefaultTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyMaxTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyClientTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyNegativeCaching(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyNegativeCachingPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCode, err := expandComputeRegionBackendServiceCdnPolicyNegativeCachingPolicyCode(original["code"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCode); val.IsValid() && !isEmptyValue(val) {
+			transformed["code"] = transformedCode
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyNegativeCachingPolicyCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyCacheMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyServeWhileStale(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
