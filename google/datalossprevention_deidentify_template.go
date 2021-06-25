@@ -184,6 +184,13 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransform
 		transformed["replaceConfig"] = transformedReplaceConfig
 	}
 
+	transformedReplaceWithInfoTypeConfig, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceWithInfoTypeConfig(original["replace_with_info_type_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReplaceWithInfoTypeConfig); val.IsValid() && !isEmptyValue(val) {
+		transformed["replaceWithInfoTypeConfig"] = transformedReplaceWithInfoTypeConfig
+	}
+
 	transformedCharacterMaskConfig, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationCharacterMaskConfig(original["character_mask_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -404,6 +411,14 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransform
 
 func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceConfigNewValueDayOfWeekValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceWithInfoTypeConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	if v == nil || !v.(bool) {
+		return nil, nil
+	}
+
+	return struct{}{}, nil
 }
 
 func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationCharacterMaskConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
