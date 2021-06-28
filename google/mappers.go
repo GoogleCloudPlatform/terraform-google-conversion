@@ -131,28 +131,6 @@ func Mappers() map[string][]Mapper {
 				Fetch:             FetchCloudFunctionsCloudFunctionIamPolicy,
 			},
 		},
-		"google_cloud_run_service_iam_policy": {
-			{
-				Convert:           GetCloudRunServiceIamPolicyCaiObject,
-				MergeCreateUpdate: MergeCloudRunServiceIamPolicy,
-			},
-		},
-		"google_cloud_run_service_iam_binding": {
-			{
-				Convert:           GetCloudRunServiceIamBindingCaiObject,
-				MergeCreateUpdate: MergeCloudRunServiceIamBinding,
-				MergeDelete:       MergeCloudRunServiceIamBindingDelete,
-				Fetch:             FetchCloudRunServiceIamPolicy,
-			},
-		},
-		"google_cloud_run_service_iam_member": {
-			{
-				Convert:           GetCloudRunServiceIamMemberCaiObject,
-				MergeCreateUpdate: MergeCloudRunServiceIamMember,
-				MergeDelete:       MergeCloudRunServiceIamMemberDelete,
-				Fetch:             FetchCloudRunServiceIamPolicy,
-			},
-		},
 		"google_compute_disk_iam_policy": {
 			{
 				Convert:           GetComputeDiskIamPolicyCaiObject,
@@ -351,116 +329,6 @@ func Mappers() map[string][]Mapper {
 				Fetch:             FetchIapWebIamPolicy,
 			},
 		},
-		"google_iap_web_type_compute_iam_policy": {
-			{
-				Convert:           GetIapWebTypeComputeIamPolicyCaiObject,
-				MergeCreateUpdate: MergeIapWebTypeComputeIamPolicy,
-			},
-		},
-		"google_iap_web_type_compute_iam_binding": {
-			{
-				Convert:           GetIapWebTypeComputeIamBindingCaiObject,
-				MergeCreateUpdate: MergeIapWebTypeComputeIamBinding,
-				MergeDelete:       MergeIapWebTypeComputeIamBindingDelete,
-				Fetch:             FetchIapWebTypeComputeIamPolicy,
-			},
-		},
-		"google_iap_web_type_compute_iam_member": {
-			{
-				Convert:           GetIapWebTypeComputeIamMemberCaiObject,
-				MergeCreateUpdate: MergeIapWebTypeComputeIamMember,
-				MergeDelete:       MergeIapWebTypeComputeIamMemberDelete,
-				Fetch:             FetchIapWebTypeComputeIamPolicy,
-			},
-		},
-		"google_iap_web_type_app_engine_iam_policy": {
-			{
-				Convert:           GetIapWebTypeAppEngineIamPolicyCaiObject,
-				MergeCreateUpdate: MergeIapWebTypeAppEngineIamPolicy,
-			},
-		},
-		"google_iap_web_type_app_engine_iam_binding": {
-			{
-				Convert:           GetIapWebTypeAppEngineIamBindingCaiObject,
-				MergeCreateUpdate: MergeIapWebTypeAppEngineIamBinding,
-				MergeDelete:       MergeIapWebTypeAppEngineIamBindingDelete,
-				Fetch:             FetchIapWebTypeAppEngineIamPolicy,
-			},
-		},
-		"google_iap_web_type_app_engine_iam_member": {
-			{
-				Convert:           GetIapWebTypeAppEngineIamMemberCaiObject,
-				MergeCreateUpdate: MergeIapWebTypeAppEngineIamMember,
-				MergeDelete:       MergeIapWebTypeAppEngineIamMemberDelete,
-				Fetch:             FetchIapWebTypeAppEngineIamPolicy,
-			},
-		},
-		"google_iap_app_engine_version_iam_policy": {
-			{
-				Convert:           GetIapAppEngineVersionIamPolicyCaiObject,
-				MergeCreateUpdate: MergeIapAppEngineVersionIamPolicy,
-			},
-		},
-		"google_iap_app_engine_version_iam_binding": {
-			{
-				Convert:           GetIapAppEngineVersionIamBindingCaiObject,
-				MergeCreateUpdate: MergeIapAppEngineVersionIamBinding,
-				MergeDelete:       MergeIapAppEngineVersionIamBindingDelete,
-				Fetch:             FetchIapAppEngineVersionIamPolicy,
-			},
-		},
-		"google_iap_app_engine_version_iam_member": {
-			{
-				Convert:           GetIapAppEngineVersionIamMemberCaiObject,
-				MergeCreateUpdate: MergeIapAppEngineVersionIamMember,
-				MergeDelete:       MergeIapAppEngineVersionIamMemberDelete,
-				Fetch:             FetchIapAppEngineVersionIamPolicy,
-			},
-		},
-		"google_iap_app_engine_service_iam_policy": {
-			{
-				Convert:           GetIapAppEngineServiceIamPolicyCaiObject,
-				MergeCreateUpdate: MergeIapAppEngineServiceIamPolicy,
-			},
-		},
-		"google_iap_app_engine_service_iam_binding": {
-			{
-				Convert:           GetIapAppEngineServiceIamBindingCaiObject,
-				MergeCreateUpdate: MergeIapAppEngineServiceIamBinding,
-				MergeDelete:       MergeIapAppEngineServiceIamBindingDelete,
-				Fetch:             FetchIapAppEngineServiceIamPolicy,
-			},
-		},
-		"google_iap_app_engine_service_iam_member": {
-			{
-				Convert:           GetIapAppEngineServiceIamMemberCaiObject,
-				MergeCreateUpdate: MergeIapAppEngineServiceIamMember,
-				MergeDelete:       MergeIapAppEngineServiceIamMemberDelete,
-				Fetch:             FetchIapAppEngineServiceIamPolicy,
-			},
-		},
-		"google_iap_web_backend_service_iam_policy": {
-			{
-				Convert:           GetIapWebBackendServiceIamPolicyCaiObject,
-				MergeCreateUpdate: MergeIapWebBackendServiceIamPolicy,
-			},
-		},
-		"google_iap_web_backend_service_iam_binding": {
-			{
-				Convert:           GetIapWebBackendServiceIamBindingCaiObject,
-				MergeCreateUpdate: MergeIapWebBackendServiceIamBinding,
-				MergeDelete:       MergeIapWebBackendServiceIamBindingDelete,
-				Fetch:             FetchIapWebBackendServiceIamPolicy,
-			},
-		},
-		"google_iap_web_backend_service_iam_member": {
-			{
-				Convert:           GetIapWebBackendServiceIamMemberCaiObject,
-				MergeCreateUpdate: MergeIapWebBackendServiceIamMember,
-				MergeDelete:       MergeIapWebBackendServiceIamMemberDelete,
-				Fetch:             FetchIapWebBackendServiceIamPolicy,
-			},
-		},
 		"google_iap_tunnel_instance_iam_policy": {
 			{
 				Convert:           GetIapTunnelInstanceIamPolicyCaiObject,
@@ -549,28 +417,6 @@ func Mappers() map[string][]Mapper {
 				Fetch:             FetchPubsubTopicIamPolicy,
 			},
 		},
-		"google_runtimeconfig_config_iam_policy": {
-			{
-				Convert:           GetRuntimeConfigConfigIamPolicyCaiObject,
-				MergeCreateUpdate: MergeRuntimeConfigConfigIamPolicy,
-			},
-		},
-		"google_runtimeconfig_config_iam_binding": {
-			{
-				Convert:           GetRuntimeConfigConfigIamBindingCaiObject,
-				MergeCreateUpdate: MergeRuntimeConfigConfigIamBinding,
-				MergeDelete:       MergeRuntimeConfigConfigIamBindingDelete,
-				Fetch:             FetchRuntimeConfigConfigIamPolicy,
-			},
-		},
-		"google_runtimeconfig_config_iam_member": {
-			{
-				Convert:           GetRuntimeConfigConfigIamMemberCaiObject,
-				MergeCreateUpdate: MergeRuntimeConfigConfigIamMember,
-				MergeDelete:       MergeRuntimeConfigConfigIamMemberDelete,
-				Fetch:             FetchRuntimeConfigConfigIamPolicy,
-			},
-		},
 		"google_secret_manager_secret_iam_policy": {
 			{
 				Convert:           GetSecretManagerSecretIamPolicyCaiObject,
@@ -615,28 +461,6 @@ func Mappers() map[string][]Mapper {
 				Fetch:             FetchServiceManagementServiceIamPolicy,
 			},
 		},
-		"google_sourcerepo_repository_iam_policy": {
-			{
-				Convert:           GetSourceRepoRepositoryIamPolicyCaiObject,
-				MergeCreateUpdate: MergeSourceRepoRepositoryIamPolicy,
-			},
-		},
-		"google_sourcerepo_repository_iam_binding": {
-			{
-				Convert:           GetSourceRepoRepositoryIamBindingCaiObject,
-				MergeCreateUpdate: MergeSourceRepoRepositoryIamBinding,
-				MergeDelete:       MergeSourceRepoRepositoryIamBindingDelete,
-				Fetch:             FetchSourceRepoRepositoryIamPolicy,
-			},
-		},
-		"google_sourcerepo_repository_iam_member": {
-			{
-				Convert:           GetSourceRepoRepositoryIamMemberCaiObject,
-				MergeCreateUpdate: MergeSourceRepoRepositoryIamMember,
-				MergeDelete:       MergeSourceRepoRepositoryIamMemberDelete,
-				Fetch:             FetchSourceRepoRepositoryIamPolicy,
-			},
-		},
 		"google_storage_bucket_iam_policy": {
 			{
 				Convert:           GetStorageBucketIamPolicyCaiObject,
@@ -657,50 +481,6 @@ func Mappers() map[string][]Mapper {
 				MergeCreateUpdate: MergeStorageBucketIamMember,
 				MergeDelete:       MergeStorageBucketIamMemberDelete,
 				Fetch:             FetchStorageBucketIamPolicy,
-			},
-		},
-		"google_tags_tag_key_iam_policy": {
-			{
-				Convert:           GetTagsTagKeyIamPolicyCaiObject,
-				MergeCreateUpdate: MergeTagsTagKeyIamPolicy,
-			},
-		},
-		"google_tags_tag_key_iam_binding": {
-			{
-				Convert:           GetTagsTagKeyIamBindingCaiObject,
-				MergeCreateUpdate: MergeTagsTagKeyIamBinding,
-				MergeDelete:       MergeTagsTagKeyIamBindingDelete,
-				Fetch:             FetchTagsTagKeyIamPolicy,
-			},
-		},
-		"google_tags_tag_key_iam_member": {
-			{
-				Convert:           GetTagsTagKeyIamMemberCaiObject,
-				MergeCreateUpdate: MergeTagsTagKeyIamMember,
-				MergeDelete:       MergeTagsTagKeyIamMemberDelete,
-				Fetch:             FetchTagsTagKeyIamPolicy,
-			},
-		},
-		"google_tags_tag_value_iam_policy": {
-			{
-				Convert:           GetTagsTagValueIamPolicyCaiObject,
-				MergeCreateUpdate: MergeTagsTagValueIamPolicy,
-			},
-		},
-		"google_tags_tag_value_iam_binding": {
-			{
-				Convert:           GetTagsTagValueIamBindingCaiObject,
-				MergeCreateUpdate: MergeTagsTagValueIamBinding,
-				MergeDelete:       MergeTagsTagValueIamBindingDelete,
-				Fetch:             FetchTagsTagValueIamPolicy,
-			},
-		},
-		"google_tags_tag_value_iam_member": {
-			{
-				Convert:           GetTagsTagValueIamMemberCaiObject,
-				MergeCreateUpdate: MergeTagsTagValueIamMember,
-				MergeDelete:       MergeTagsTagValueIamMemberDelete,
-				Fetch:             FetchTagsTagValueIamPolicy,
 			},
 		},
 		"google_project": {
