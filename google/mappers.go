@@ -395,6 +395,28 @@ func Mappers() map[string][]Mapper {
 				Fetch:             FetchNotebooksInstanceIamPolicy,
 			},
 		},
+		"google_privateca_ca_pool_iam_policy": {
+			{
+				Convert:           GetPrivatecaCaPoolIamPolicyCaiObject,
+				MergeCreateUpdate: MergePrivatecaCaPoolIamPolicy,
+			},
+		},
+		"google_privateca_ca_pool_iam_binding": {
+			{
+				Convert:           GetPrivatecaCaPoolIamBindingCaiObject,
+				MergeCreateUpdate: MergePrivatecaCaPoolIamBinding,
+				MergeDelete:       MergePrivatecaCaPoolIamBindingDelete,
+				Fetch:             FetchPrivatecaCaPoolIamPolicy,
+			},
+		},
+		"google_privateca_ca_pool_iam_member": {
+			{
+				Convert:           GetPrivatecaCaPoolIamMemberCaiObject,
+				MergeCreateUpdate: MergePrivatecaCaPoolIamMember,
+				MergeDelete:       MergePrivatecaCaPoolIamMemberDelete,
+				Fetch:             FetchPrivatecaCaPoolIamPolicy,
+			},
+		},
 		"google_pubsub_topic_iam_policy": {
 			{
 				Convert:           GetPubsubTopicIamPolicyCaiObject,
