@@ -437,10 +437,21 @@ func expandBigQueryJobConfigurationQueryDestinationEncryptionConfiguration(v int
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
+	transformedKmsKeyVersion, err := expandBigQueryJobConfigurationQueryDestinationEncryptionConfigurationKmsKeyVersion(original["kms_key_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyVersion); val.IsValid() && !isEmptyValue(val) {
+		transformed["kmsKeyVersion"] = transformedKmsKeyVersion
+	}
+
 	return transformed, nil
 }
 
 func expandBigQueryJobConfigurationQueryDestinationEncryptionConfigurationKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryJobConfigurationQueryDestinationEncryptionConfigurationKmsKeyVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -792,10 +803,21 @@ func expandBigQueryJobConfigurationLoadDestinationEncryptionConfiguration(v inte
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
+	transformedKmsKeyVersion, err := expandBigQueryJobConfigurationLoadDestinationEncryptionConfigurationKmsKeyVersion(original["kms_key_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyVersion); val.IsValid() && !isEmptyValue(val) {
+		transformed["kmsKeyVersion"] = transformedKmsKeyVersion
+	}
+
 	return transformed, nil
 }
 
 func expandBigQueryJobConfigurationLoadDestinationEncryptionConfigurationKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryJobConfigurationLoadDestinationEncryptionConfigurationKmsKeyVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -940,10 +962,21 @@ func expandBigQueryJobConfigurationCopyDestinationEncryptionConfiguration(v inte
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
+	transformedKmsKeyVersion, err := expandBigQueryJobConfigurationCopyDestinationEncryptionConfigurationKmsKeyVersion(original["kms_key_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyVersion); val.IsValid() && !isEmptyValue(val) {
+		transformed["kmsKeyVersion"] = transformedKmsKeyVersion
+	}
+
 	return transformed, nil
 }
 
 func expandBigQueryJobConfigurationCopyDestinationEncryptionConfigurationKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryJobConfigurationCopyDestinationEncryptionConfigurationKmsKeyVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
