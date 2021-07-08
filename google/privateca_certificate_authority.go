@@ -45,12 +45,6 @@ func GetPrivatecaCertificateAuthorityApiObject(d TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("type"); !isEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
-	tierProp, err := expandPrivatecaCertificateAuthorityTier(d.Get("tier"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("tier"); !isEmptyValue(reflect.ValueOf(tierProp)) && (ok || !reflect.DeepEqual(v, tierProp)) {
-		obj["tier"] = tierProp
-	}
 	configProp, err := expandPrivatecaCertificateAuthorityConfig(d.Get("config"), d, config)
 	if err != nil {
 		return nil, err
@@ -86,10 +80,6 @@ func GetPrivatecaCertificateAuthorityApiObject(d TerraformResourceData, config *
 }
 
 func expandPrivatecaCertificateAuthorityType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateAuthorityTier(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
