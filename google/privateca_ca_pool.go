@@ -254,14 +254,14 @@ func expandPrivatecaCaPoolIssuancePolicyIdentityConstraints(v interface{}, d Ter
 	transformedAllowSubjectPassthrough, err := expandPrivatecaCaPoolIssuancePolicyIdentityConstraintsAllowSubjectPassthrough(original["allow_subject_passthrough"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllowSubjectPassthrough); val.IsValid() && !isEmptyValue(val) {
+	} else {
 		transformed["allowSubjectPassthrough"] = transformedAllowSubjectPassthrough
 	}
 
 	transformedAllowSubjectAltNamesPassthrough, err := expandPrivatecaCaPoolIssuancePolicyIdentityConstraintsAllowSubjectAltNamesPassthrough(original["allow_subject_alt_names_passthrough"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllowSubjectAltNamesPassthrough); val.IsValid() && !isEmptyValue(val) {
+	} else {
 		transformed["allowSubjectAltNamesPassthrough"] = transformedAllowSubjectAltNamesPassthrough
 	}
 
