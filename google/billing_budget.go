@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
 
 func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//billing.googleapis.com/billingAccounts/{{billing_account}}/budgets/{{name}}")
@@ -132,6 +136,7 @@ func expandBillingBudgetBudgetFilter(v interface{}, d TerraformResourceData, con
 }
 
 func expandBillingBudgetBudgetFilterProjects(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
