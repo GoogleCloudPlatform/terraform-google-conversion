@@ -106,6 +106,12 @@ func GetSpannerInstanceApiObject(d TerraformResourceData, config *Config) (map[s
 	} else if v, ok := d.GetOkExists("num_nodes"); !isEmptyValue(reflect.ValueOf(nodeCountProp)) && (ok || !reflect.DeepEqual(v, nodeCountProp)) {
 		obj["nodeCount"] = nodeCountProp
 	}
+	processingUnitsProp, err := expandSpannerInstanceProcessingUnits(d.Get("processing_units"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("processing_units"); !isEmptyValue(reflect.ValueOf(processingUnitsProp)) && (ok || !reflect.DeepEqual(v, processingUnitsProp)) {
+		obj["processingUnits"] = processingUnitsProp
+	}
 	labelsProp, err := expandSpannerInstanceLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -117,6 +123,10 @@ func GetSpannerInstanceApiObject(d TerraformResourceData, config *Config) (map[s
 }
 
 func resourceSpannerInstanceEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// Temp Logic to accomodate processing_units and num_nodes
+	if obj["processingUnits"] == nil && obj["nodeCount"] == nil {
+		obj["nodeCount"] = 1
+	}
 	newObj := make(map[string]interface{})
 	newObj["instance"] = obj
 	if obj["name"] == nil {
@@ -154,6 +164,10 @@ func expandSpannerInstanceDisplayName(v interface{}, d TerraformResourceData, co
 }
 
 func expandSpannerInstanceNumNodes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceProcessingUnits(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
