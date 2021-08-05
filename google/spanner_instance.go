@@ -123,7 +123,7 @@ func GetSpannerInstanceApiObject(d TerraformResourceData, config *Config) (map[s
 }
 
 func resourceSpannerInstanceEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	// Temp Logic to accomodate processing_units and num_nodes
+	// Temp Logic to accommodate processing_units and num_nodes
 	if obj["processingUnits"] == nil && obj["nodeCount"] == nil {
 		obj["nodeCount"] = 1
 	}
