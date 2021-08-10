@@ -14,7 +14,22 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+	"strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+func suppressGkeHubEndpointSelfLinkDiff(_, old, new string, _ *schema.ResourceData) bool {
+	// The custom expander injects //container.googleapis.com/ if a selflink is supplied.
+	selfLink := strings.TrimPrefix(old, "//container.googleapis.com/")
+	if selfLink == new {
+		return true
+	}
+
+	return false
+}
 
 func GetGKEHubMembershipCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gkehub.googleapis.com/{{name}}")
@@ -111,7 +126,12 @@ func expandGKEHubMembershipEndpointGkeCluster(v interface{}, d TerraformResource
 }
 
 func expandGKEHubMembershipEndpointGkeClusterResourceLink(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
+	if strings.HasPrefix(v.(string), "//container.googleapis.com/") {
+		return v, nil
+	} else {
+		v = "//container.googleapis.com/" + v.(string)
+		return v, nil
+	}
 }
 
 func expandGKEHubMembershipAuthority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
