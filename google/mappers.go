@@ -65,6 +65,7 @@ func Mappers() map[string][]Mapper {
 		"google_kms_crypto_key":                 {{Convert: GetKMSCryptoKeyCaiObject}},
 		"google_kms_key_ring":                   {{Convert: GetKMSKeyRingCaiObject}},
 		"google_filestore_instance":             {{Convert: GetFilestoreInstanceCaiObject}},
+		"google_cloudfunctions_function":        {{Convert: GetCloudFunctionsFunctionCaiObject}},
 		"google_bigquery_table_iam_policy": {
 			{
 				Convert:           GetBigQueryTableIamPolicyCaiObject,
