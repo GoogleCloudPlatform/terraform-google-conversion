@@ -45,6 +45,12 @@ func GetPrivatecaCertificateApiObject(d TerraformResourceData, config *Config) (
 	} else if v, ok := d.GetOkExists("lifetime"); !isEmptyValue(reflect.ValueOf(lifetimeProp)) && (ok || !reflect.DeepEqual(v, lifetimeProp)) {
 		obj["lifetime"] = lifetimeProp
 	}
+	certificateTemplateProp, err := expandPrivatecaCertificateCertificateTemplate(d.Get("certificate_template"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("certificate_template"); !isEmptyValue(reflect.ValueOf(certificateTemplateProp)) && (ok || !reflect.DeepEqual(v, certificateTemplateProp)) {
+		obj["certificateTemplate"] = certificateTemplateProp
+	}
 	labelsProp, err := expandPrivatecaCertificateLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -68,6 +74,10 @@ func GetPrivatecaCertificateApiObject(d TerraformResourceData, config *Config) (
 }
 
 func expandPrivatecaCertificateLifetime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCertificateCertificateTemplate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
