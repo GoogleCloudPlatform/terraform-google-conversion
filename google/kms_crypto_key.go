@@ -67,6 +67,12 @@ func GetKMSCryptoKeyApiObject(d TerraformResourceData, config *Config) (map[stri
 	} else if v, ok := d.GetOkExists("version_template"); !isEmptyValue(reflect.ValueOf(versionTemplateProp)) && (ok || !reflect.DeepEqual(v, versionTemplateProp)) {
 		obj["versionTemplate"] = versionTemplateProp
 	}
+	destroyScheduledDurationProp, err := expandKMSCryptoKeyDestroyScheduledDuration(d.Get("destroy_scheduled_duration"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("destroy_scheduled_duration"); !isEmptyValue(reflect.ValueOf(destroyScheduledDurationProp)) && (ok || !reflect.DeepEqual(v, destroyScheduledDurationProp)) {
+		obj["destroyScheduledDuration"] = destroyScheduledDurationProp
+	}
 
 	return resourceKMSCryptoKeyEncoder(d, config, obj)
 }
@@ -144,5 +150,9 @@ func expandKMSCryptoKeyVersionTemplateAlgorithm(v interface{}, d TerraformResour
 }
 
 func expandKMSCryptoKeyVersionTemplateProtectionLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandKMSCryptoKeyDestroyScheduledDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
