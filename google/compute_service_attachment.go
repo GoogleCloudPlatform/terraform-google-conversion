@@ -54,6 +54,12 @@ func GetComputeServiceAttachmentApiObject(d TerraformResourceData, config *Confi
 	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	fingerprintProp, err := expandComputeServiceAttachmentFingerprint(d.Get("fingerprint"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("fingerprint"); !isEmptyValue(reflect.ValueOf(fingerprintProp)) && (ok || !reflect.DeepEqual(v, fingerprintProp)) {
+		obj["fingerprint"] = fingerprintProp
+	}
 	connectionPreferenceProp, err := expandComputeServiceAttachmentConnectionPreference(d.Get("connection_preference"), d, config)
 	if err != nil {
 		return nil, err
@@ -69,7 +75,7 @@ func GetComputeServiceAttachmentApiObject(d TerraformResourceData, config *Confi
 	natSubnetsProp, err := expandComputeServiceAttachmentNatSubnets(d.Get("nat_subnets"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("nat_subnets"); !isEmptyValue(reflect.ValueOf(natSubnetsProp)) && (ok || !reflect.DeepEqual(v, natSubnetsProp)) {
+	} else if v, ok := d.GetOkExists("nat_subnets"); ok || !reflect.DeepEqual(v, natSubnetsProp) {
 		obj["natSubnets"] = natSubnetsProp
 	}
 	enableProxyProtocolProp, err := expandComputeServiceAttachmentEnableProxyProtocol(d.Get("enable_proxy_protocol"), d, config)
@@ -81,13 +87,13 @@ func GetComputeServiceAttachmentApiObject(d TerraformResourceData, config *Confi
 	consumerRejectListsProp, err := expandComputeServiceAttachmentConsumerRejectLists(d.Get("consumer_reject_lists"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("consumer_reject_lists"); !isEmptyValue(reflect.ValueOf(consumerRejectListsProp)) && (ok || !reflect.DeepEqual(v, consumerRejectListsProp)) {
+	} else if v, ok := d.GetOkExists("consumer_reject_lists"); ok || !reflect.DeepEqual(v, consumerRejectListsProp) {
 		obj["consumerRejectLists"] = consumerRejectListsProp
 	}
 	consumerAcceptListsProp, err := expandComputeServiceAttachmentConsumerAcceptLists(d.Get("consumer_accept_lists"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("consumer_accept_lists"); !isEmptyValue(reflect.ValueOf(consumerAcceptListsProp)) && (ok || !reflect.DeepEqual(v, consumerAcceptListsProp)) {
+	} else if v, ok := d.GetOkExists("consumer_accept_lists"); ok || !reflect.DeepEqual(v, consumerAcceptListsProp) {
 		obj["consumerAcceptLists"] = consumerAcceptListsProp
 	}
 	regionProp, err := expandComputeServiceAttachmentRegion(d.Get("region"), d, config)
@@ -105,6 +111,10 @@ func expandComputeServiceAttachmentName(v interface{}, d TerraformResourceData, 
 }
 
 func expandComputeServiceAttachmentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeServiceAttachmentFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
