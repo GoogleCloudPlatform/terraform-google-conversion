@@ -199,6 +199,12 @@ func GetComputeRegionBackendServiceApiObject(d TerraformResourceData, config *Co
 	} else if v, ok := d.GetOkExists("health_checks"); !isEmptyValue(reflect.ValueOf(healthChecksProp)) && (ok || !reflect.DeepEqual(v, healthChecksProp)) {
 		obj["healthChecks"] = healthChecksProp
 	}
+	iapProp, err := expandComputeRegionBackendServiceIap(d.Get("iap"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("iap"); ok || !reflect.DeepEqual(v, iapProp) {
+		obj["iap"] = iapProp
+	}
 	loadBalancingSchemeProp, err := expandComputeRegionBackendServiceLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
 	if err != nil {
 		return nil, err
@@ -270,6 +276,26 @@ func GetComputeRegionBackendServiceApiObject(d TerraformResourceData, config *Co
 }
 
 func resourceComputeRegionBackendServiceEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// The RegionBackendService API's Update / PUT API is badly formed and behaves like
+	// a PATCH field for at least IAP. When sent a `null` `iap` field, the API
+	// doesn't disable an existing field. To work around this, we need to emulate
+	// the old Terraform behaviour of always sending the block (at both update and
+	// create), and force sending each subfield as empty when the block isn't
+	// present in config.
+
+	iapVal := obj["iap"]
+	if iapVal == nil {
+		data := map[string]interface{}{}
+		data["enabled"] = false
+		data["oauth2ClientId"] = ""
+		data["oauth2ClientSecret"] = ""
+		obj["iap"] = data
+	} else {
+		iap := iapVal.(map[string]interface{})
+		iap["enabled"] = true
+		obj["iap"] = iap
+	}
+
 	if d.Get("load_balancing_scheme").(string) == "INTERNAL_MANAGED" {
 		return obj, nil
 	}
@@ -915,6 +941,51 @@ func expandComputeRegionBackendServiceFingerprint(v interface{}, d TerraformReso
 
 func expandComputeRegionBackendServiceHealthChecks(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceIap(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOauth2ClientId, err := expandComputeRegionBackendServiceIapOauth2ClientId(original["oauth2_client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauth2ClientId); val.IsValid() && !isEmptyValue(val) {
+		transformed["oauth2ClientId"] = transformedOauth2ClientId
+	}
+
+	transformedOauth2ClientSecret, err := expandComputeRegionBackendServiceIapOauth2ClientSecret(original["oauth2_client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["oauth2ClientSecret"] = transformedOauth2ClientSecret
+	}
+
+	transformedOauth2ClientSecretSha256, err := expandComputeRegionBackendServiceIapOauth2ClientSecretSha256(original["oauth2_client_secret_sha256"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauth2ClientSecretSha256); val.IsValid() && !isEmptyValue(val) {
+		transformed["oauth2ClientSecretSha256"] = transformedOauth2ClientSecretSha256
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceIapOauth2ClientId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceIapOauth2ClientSecret(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceIapOauth2ClientSecretSha256(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
