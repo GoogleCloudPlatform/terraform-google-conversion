@@ -184,9 +184,5 @@ func expandComputeRouteNextHopVpnTunnel(v interface{}, d TerraformResourceData, 
 }
 
 func expandComputeRouteNextHopIlb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	f, err := parseRegionalFieldValue("forwardingRules", v.(string), "project", "region", "zone", d, config, true)
-	if err != nil {
-		return nil, fmt.Errorf("Invalid value for next_hop_ilb: %s", err)
-	}
-	return f.RelativeLink(), nil
+	return v, nil
 }
