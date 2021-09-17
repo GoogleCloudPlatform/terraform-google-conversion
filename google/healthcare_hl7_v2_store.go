@@ -110,6 +110,13 @@ func expandHealthcareHl7V2StoreParserConfig(v interface{}, d TerraformResourceDa
 		transformed["schema"] = transformedSchema
 	}
 
+	transformedVersion, err := expandHealthcareHl7V2StoreParserConfigVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !isEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
 	return transformed, nil
 }
 
@@ -131,6 +138,10 @@ func expandHealthcareHl7V2StoreParserConfigSchema(v interface{}, d TerraformReso
 		return nil, err
 	}
 	return m, nil
+}
+
+func expandHealthcareHl7V2StoreParserConfigVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandHealthcareHl7V2StoreLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
