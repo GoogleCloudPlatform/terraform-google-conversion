@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetDataLossPreventionDeidentifyTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//datalossprevention.googleapis.com/{{parent}}/deidentifyTemplates/{{name}}")
+	name, err := assetName(d, config, "//dlp.googleapis.com/{{parent}}/deidentifyTemplates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetDataLossPreventionDeidentifyTemplateApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "datalossprevention.googleapis.com/DeidentifyTemplate",
+			Type: "dlp.googleapis.com/DeidentifyTemplate",
 			Resource: &AssetResource{
 				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datalossprevention/v2/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dlp/v2/rest",
 				DiscoveryName:        "DeidentifyTemplate",
 				Data:                 obj,
 			},

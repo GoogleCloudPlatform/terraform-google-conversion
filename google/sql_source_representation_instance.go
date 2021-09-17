@@ -20,17 +20,17 @@ import (
 )
 
 func GetSQLSourceRepresentationInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//sql.googleapis.com/projects/{{project}}/instances/{{name}}")
+	name, err := assetName(d, config, "//sqladmin.googleapis.com/projects/{{project}}/instances/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetSQLSourceRepresentationInstanceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "sql.googleapis.com/SourceRepresentationInstance",
+			Type: "sqladmin.googleapis.com/SourceRepresentationInstance",
 			Resource: &AssetResource{
 				Version:              "v1beta4",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/sql/v1beta4/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta4/rest",
 				DiscoveryName:        "SourceRepresentationInstance",
 				Data:                 obj,
 			},

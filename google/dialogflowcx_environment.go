@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetDialogflowCXEnvironmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//dialogflowcx.googleapis.com/{{parent}}/environments/{{name}}")
+	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{parent}}/environments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetDialogflowCXEnvironmentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dialogflowcx.googleapis.com/Environment",
+			Type: "dialogflow.googleapis.com/Environment",
 			Resource: &AssetResource{
 				Version:              "v3",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflowcx/v3/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v3/rest",
 				DiscoveryName:        "Environment",
 				Data:                 obj,
 			},

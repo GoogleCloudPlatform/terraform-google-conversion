@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetMLEngineModelCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//mlengine.googleapis.com/projects/{{project}}/models/{{name}}")
+	name, err := assetName(d, config, "//ml.googleapis.com/projects/{{project}}/models/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetMLEngineModelApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "mlengine.googleapis.com/Model",
+			Type: "ml.googleapis.com/Model",
 			Resource: &AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/mlengine/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ml/v1/rest",
 				DiscoveryName:        "Model",
 				Data:                 obj,
 			},

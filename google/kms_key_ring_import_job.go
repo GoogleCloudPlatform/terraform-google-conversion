@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetKMSKeyRingImportJobCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//kms.googleapis.com/{{name}}")
+	name, err := assetName(d, config, "//cloudkms.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetKMSKeyRingImportJobApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "kms.googleapis.com/KeyRingImportJob",
+			Type: "cloudkms.googleapis.com/KeyRingImportJob",
 			Resource: &AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/kms/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudkms/v1/rest",
 				DiscoveryName:        "KeyRingImportJob",
 				Data:                 obj,
 			},

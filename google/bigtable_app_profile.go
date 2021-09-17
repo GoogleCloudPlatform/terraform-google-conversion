@@ -22,17 +22,17 @@ import (
 )
 
 func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//bigtable.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
+	name, err := assetName(d, config, "//bigtableadmin.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetBigtableAppProfileApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "bigtable.googleapis.com/AppProfile",
+			Type: "bigtableadmin.googleapis.com/AppProfile",
 			Resource: &AssetResource{
 				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigtable/v2/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigtableadmin/v2/rest",
 				DiscoveryName:        "AppProfile",
 				Data:                 obj,
 			},

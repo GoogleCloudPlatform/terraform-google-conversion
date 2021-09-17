@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetDialogflowCXAgentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//dialogflowcx.googleapis.com/projects/{{project}}/locations/{{location}}/agents/{{name}}")
+	name, err := assetName(d, config, "//dialogflow.googleapis.com/projects/{{project}}/locations/{{location}}/agents/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetDialogflowCXAgentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dialogflowcx.googleapis.com/Agent",
+			Type: "dialogflow.googleapis.com/Agent",
 			Resource: &AssetResource{
 				Version:              "v3",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflowcx/v3/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v3/rest",
 				DiscoveryName:        "Agent",
 				Data:                 obj,
 			},

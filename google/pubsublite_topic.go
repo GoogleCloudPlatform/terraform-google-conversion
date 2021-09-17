@@ -20,17 +20,17 @@ import (
 )
 
 func GetPubsubLiteTopicCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/topics/{{name}}")
+	name, err := assetName(d, config, "//{{region}}-pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/topics/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetPubsubLiteTopicApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "pubsublite.googleapis.com/Topic",
+			Type: "{{region}}-pubsublite.googleapis.com/Topic",
 			Resource: &AssetResource{
 				Version:              "admin",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/pubsublite/admin/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-pubsublite/admin/rest",
 				DiscoveryName:        "Topic",
 				Data:                 obj,
 			},

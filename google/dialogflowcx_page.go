@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetDialogflowCXPageCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//dialogflowcx.googleapis.com/{{parent}}/pages/{{name}}")
+	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{parent}}/pages/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetDialogflowCXPageApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dialogflowcx.googleapis.com/Page",
+			Type: "dialogflow.googleapis.com/Page",
 			Resource: &AssetResource{
 				Version:              "v3",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflowcx/v3/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v3/rest",
 				DiscoveryName:        "Page",
 				Data:                 obj,
 			},

@@ -21,17 +21,17 @@ import (
 )
 
 func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//activedirectory.googleapis.com/{{name}}")
+	name, err := assetName(d, config, "//managedidentities.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetActiveDirectoryDomainApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "activedirectory.googleapis.com/Domain",
+			Type: "managedidentities.googleapis.com/Domain",
 			Resource: &AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/activedirectory/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/managedidentities/v1/rest",
 				DiscoveryName:        "Domain",
 				Data:                 obj,
 			},

@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetIdentityPlatformOauthIdpConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//identityplatform.googleapis.com/projects/{{project}}/oauthIdpConfigs/{{name}}")
+	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/oauthIdpConfigs/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetIdentityPlatformOauthIdpConfigApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "identityplatform.googleapis.com/OauthIdpConfig",
+			Type: "identitytoolkit.googleapis.com/OauthIdpConfig",
 			Resource: &AssetResource{
 				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identityplatform/v2/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v2/rest",
 				DiscoveryName:        "OauthIdpConfig",
 				Data:                 obj,
 			},

@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetIdentityPlatformTenantCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//identityplatform.googleapis.com/projects/{{project}}/tenants/{{name}}")
+	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/tenants/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetIdentityPlatformTenantApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "identityplatform.googleapis.com/Tenant",
+			Type: "identitytoolkit.googleapis.com/Tenant",
 			Resource: &AssetResource{
 				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identityplatform/v2/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v2/rest",
 				DiscoveryName:        "Tenant",
 				Data:                 obj,
 			},
