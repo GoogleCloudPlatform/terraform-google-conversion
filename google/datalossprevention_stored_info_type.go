@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//datalossprevention.googleapis.com/{{parent}}/storedInfoTypes/{{name}}")
+	name, err := assetName(d, config, "//dlp.googleapis.com/{{parent}}/storedInfoTypes/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetDataLossPreventionStoredInfoTypeApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "datalossprevention.googleapis.com/StoredInfoType",
+			Type: "dlp.googleapis.com/StoredInfoType",
 			Resource: &AssetResource{
 				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datalossprevention/v2/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dlp/v2/rest",
 				DiscoveryName:        "StoredInfoType",
 				Data:                 obj,
 			},

@@ -44,17 +44,17 @@ func domainMappingLabelDiffSuppress(k, old, new string, d *schema.ResourceData) 
 }
 
 func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//cloudrun.googleapis.com/apis/domains.cloudrun.com/namespaces/{{project}}/domainmappings/{{name}}")
+	name, err := assetName(d, config, "//{{location}}-run.googleapis.com/apis/domains.cloudrun.com/namespaces/{{project}}/domainmappings/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetCloudRunDomainMappingApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudrun.googleapis.com/DomainMapping",
+			Type: "{{location}}-run.googleapis.com/DomainMapping",
 			Resource: &AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudrun/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{location}}-run/v1/rest",
 				DiscoveryName:        "DomainMapping",
 				Data:                 obj,
 			},

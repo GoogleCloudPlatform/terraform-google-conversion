@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetTagsTagBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//tags.googleapis.com/tagBindings/?parent={{parent}}&pageSize=300")
+	name, err := assetName(d, config, "//cloudresourcemanager.googleapis.com/tagBindings/?parent={{parent}}&pageSize=300")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetTagsTagBindingApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "tags.googleapis.com/TagBinding",
+			Type: "cloudresourcemanager.googleapis.com/TagBinding",
 			Resource: &AssetResource{
 				Version:              "v3",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/tags/v3/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudresourcemanager/v3/rest",
 				DiscoveryName:        "TagBinding",
 				Data:                 obj,
 			},

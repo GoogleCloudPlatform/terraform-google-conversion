@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetIdentityPlatformInboundSamlConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//identityplatform.googleapis.com/projects/{{project}}/inboundSamlConfigs/{{name}}")
+	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/inboundSamlConfigs/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetIdentityPlatformInboundSamlConfigApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "identityplatform.googleapis.com/InboundSamlConfig",
+			Type: "identitytoolkit.googleapis.com/InboundSamlConfig",
 			Resource: &AssetResource{
 				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identityplatform/v2/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v2/rest",
 				DiscoveryName:        "InboundSamlConfig",
 				Data:                 obj,
 			},

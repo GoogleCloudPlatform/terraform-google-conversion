@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//resourcemanager.googleapis.com/liens?parent={{parent}}")
+	name, err := assetName(d, config, "//cloudresourcemanager.googleapis.com/liens?parent={{parent}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetResourceManagerLienApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "resourcemanager.googleapis.com/Lien",
+			Type: "cloudresourcemanager.googleapis.com/Lien",
 			Resource: &AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/resourcemanager/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudresourcemanager/v1/rest",
 				DiscoveryName:        "Lien",
 				Data:                 obj,
 			},

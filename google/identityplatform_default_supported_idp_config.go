@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//identityplatform.googleapis.com/projects/{{project}}/defaultSupportedIdpConfigs/{{idp_id}}")
+	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/defaultSupportedIdpConfigs/{{idp_id}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetIdentityPlatformDefaultSupportedIdpConfigApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "identityplatform.googleapis.com/DefaultSupportedIdpConfig",
+			Type: "identitytoolkit.googleapis.com/DefaultSupportedIdpConfig",
 			Resource: &AssetResource{
 				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identityplatform/v2/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v2/rest",
 				DiscoveryName:        "DefaultSupportedIdpConfig",
 				Data:                 obj,
 			},

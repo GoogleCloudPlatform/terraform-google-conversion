@@ -21,17 +21,17 @@ import (
 )
 
 func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/subscriptions/{{name}}")
+	name, err := assetName(d, config, "//{{region}}-pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/subscriptions/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetPubsubLiteSubscriptionApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "pubsublite.googleapis.com/Subscription",
+			Type: "{{region}}-pubsublite.googleapis.com/Subscription",
 			Resource: &AssetResource{
 				Version:              "admin",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/pubsublite/admin/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-pubsublite/admin/rest",
 				DiscoveryName:        "Subscription",
 				Data:                 obj,
 			},

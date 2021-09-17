@@ -21,17 +21,17 @@ import (
 )
 
 func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//kms.googleapis.com/{{key_ring}}/cryptoKeys/{{name}}")
+	name, err := assetName(d, config, "//cloudkms.googleapis.com/{{key_ring}}/cryptoKeys/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetKMSCryptoKeyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "kms.googleapis.com/CryptoKey",
+			Type: "cloudkms.googleapis.com/CryptoKey",
 			Resource: &AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/kms/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudkms/v1/rest",
 				DiscoveryName:        "CryptoKey",
 				Data:                 obj,
 			},

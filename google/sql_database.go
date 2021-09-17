@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetSQLDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//sql.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}")
+	name, err := assetName(d, config, "//sqladmin.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetSQLDatabaseApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "sql.googleapis.com/Database",
+			Type: "sqladmin.googleapis.com/Database",
 			Resource: &AssetResource{
 				Version:              "v1beta4",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/sql/v1beta4/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta4/rest",
 				DiscoveryName:        "Database",
 				Data:                 obj,
 			},

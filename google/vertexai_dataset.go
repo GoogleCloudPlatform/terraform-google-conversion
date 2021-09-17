@@ -17,17 +17,17 @@ package google
 import "reflect"
 
 func GetVertexAIDatasetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//vertexai.googleapis.com/{{name}}")
+	name, err := assetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetVertexAIDatasetApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "vertexai.googleapis.com/Dataset",
+			Type: "{{region}}-aiplatform.googleapis.com/Dataset",
 			Resource: &AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/vertexai/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1/rest",
 				DiscoveryName:        "Dataset",
 				Data:                 obj,
 			},

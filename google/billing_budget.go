@@ -21,17 +21,17 @@ import (
 )
 
 func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//billing.googleapis.com/billingAccounts/{{billing_account}}/budgets/{{name}}")
+	name, err := assetName(d, config, "//billingbudgets.googleapis.com/billingAccounts/{{billing_account}}/budgets/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
 	if obj, err := GetBillingBudgetApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "billing.googleapis.com/Budget",
+			Type: "billingbudgets.googleapis.com/Budget",
 			Resource: &AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/billing/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/billingbudgets/v1/rest",
 				DiscoveryName:        "Budget",
 				Data:                 obj,
 			},
