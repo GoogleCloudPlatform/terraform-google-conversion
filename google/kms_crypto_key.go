@@ -73,6 +73,12 @@ func GetKMSCryptoKeyApiObject(d TerraformResourceData, config *Config) (map[stri
 	} else if v, ok := d.GetOkExists("destroy_scheduled_duration"); !isEmptyValue(reflect.ValueOf(destroyScheduledDurationProp)) && (ok || !reflect.DeepEqual(v, destroyScheduledDurationProp)) {
 		obj["destroyScheduledDuration"] = destroyScheduledDurationProp
 	}
+	importOnlyProp, err := expandKMSCryptoKeyImportOnly(d.Get("import_only"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("import_only"); !isEmptyValue(reflect.ValueOf(importOnlyProp)) && (ok || !reflect.DeepEqual(v, importOnlyProp)) {
+		obj["importOnly"] = importOnlyProp
+	}
 
 	return resourceKMSCryptoKeyEncoder(d, config, obj)
 }
@@ -154,5 +160,9 @@ func expandKMSCryptoKeyVersionTemplateProtectionLevel(v interface{}, d Terraform
 }
 
 func expandKMSCryptoKeyDestroyScheduledDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandKMSCryptoKeyImportOnly(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
