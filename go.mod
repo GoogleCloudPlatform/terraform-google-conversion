@@ -9,9 +9,12 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.3.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/stretchr/testify v1.7.0
-	golang.org/x/oauth2 v0.0.0-20210427180440-81ed05c6b58c
-	google.golang.org/api v0.46.0
-	google.golang.org/grpc v1.37.0
+	golang.org/x/mod v0.5.1 // indirect
+	golang.org/x/oauth2 v0.0.0-20210819190943-2bc19b11175f
+	golang.org/x/sys v0.0.0-20210923061019-b8560ed6a9b7 // indirect
+	golang.org/x/tools v0.1.6 // indirect
+	google.golang.org/api v0.56.0
+	google.golang.org/grpc v1.40.0
 )
 
 go 1.16
