@@ -110,6 +110,15 @@ func customDiffRegionBackendService(_ context.Context, d *schema.ResourceDiff, m
 	}
 }
 
+const ComputeRegionBackendServiceAssetType string = "compute.googleapis.com/RegionBackendService"
+
+func resourceConverterComputeRegionBackendService() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeRegionBackendServiceAssetType,
+		Convert:   GetComputeRegionBackendServiceCaiObject,
+	}
+}
+
 func GetComputeRegionBackendServiceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/backendServices/{{name}}")
 	if err != nil {
@@ -118,7 +127,7 @@ func GetComputeRegionBackendServiceCaiObject(d TerraformResourceData, config *Co
 	if obj, err := GetComputeRegionBackendServiceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/RegionBackendService",
+			Type: ComputeRegionBackendServiceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

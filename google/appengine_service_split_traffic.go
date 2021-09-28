@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const AppEngineServiceSplitTrafficAssetType string = "appengine.googleapis.com/ServiceSplitTraffic"
+
+func resourceConverterAppEngineServiceSplitTraffic() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AppEngineServiceSplitTrafficAssetType,
+		Convert:   GetAppEngineServiceSplitTrafficCaiObject,
+	}
+}
+
 func GetAppEngineServiceSplitTrafficCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetAppEngineServiceSplitTrafficCaiObject(d TerraformResourceData, config *C
 	if obj, err := GetAppEngineServiceSplitTrafficApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "appengine.googleapis.com/ServiceSplitTraffic",
+			Type: AppEngineServiceSplitTrafficAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",

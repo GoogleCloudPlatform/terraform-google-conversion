@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const BigqueryReservationReservationAssetType string = "bigqueryreservation.googleapis.com/Reservation"
+
+func resourceConverterBigqueryReservationReservation() ResourceConverter {
+	return ResourceConverter{
+		AssetType: BigqueryReservationReservationAssetType,
+		Convert:   GetBigqueryReservationReservationCaiObject,
+	}
+}
+
 func GetBigqueryReservationReservationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/reservations/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetBigqueryReservationReservationCaiObject(d TerraformResourceData, config 
 	if obj, err := GetBigqueryReservationReservationApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "bigqueryreservation.googleapis.com/Reservation",
+			Type: BigqueryReservationReservationAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigqueryreservation/v1/rest",

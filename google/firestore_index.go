@@ -59,6 +59,15 @@ func firestoreIFieldsDiffSuppress(k, old, new string, d *schema.ResourceData) bo
 	return firestoreIFieldsDiffSuppressFunc(k, old, new, d)
 }
 
+const FirestoreIndexAssetType string = "firestore.googleapis.com/Index"
+
+func resourceConverterFirestoreIndex() ResourceConverter {
+	return ResourceConverter{
+		AssetType: FirestoreIndexAssetType,
+		Convert:   GetFirestoreIndexCaiObject,
+	}
+}
+
 func GetFirestoreIndexCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
@@ -67,7 +76,7 @@ func GetFirestoreIndexCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	if obj, err := GetFirestoreIndexApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "firestore.googleapis.com/Index",
+			Type: FirestoreIndexAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/firestore/v1/rest",

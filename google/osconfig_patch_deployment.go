@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const OSConfigPatchDeploymentAssetType string = "osconfig.googleapis.com/PatchDeployment"
+
+func resourceConverterOSConfigPatchDeployment() ResourceConverter {
+	return ResourceConverter{
+		AssetType: OSConfigPatchDeploymentAssetType,
+		Convert:   GetOSConfigPatchDeploymentCaiObject,
+	}
+}
+
 func GetOSConfigPatchDeploymentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//osconfig.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetOSConfigPatchDeploymentCaiObject(d TerraformResourceData, config *Config
 	if obj, err := GetOSConfigPatchDeploymentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "osconfig.googleapis.com/PatchDeployment",
+			Type: OSConfigPatchDeploymentAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/osconfig/v1/rest",

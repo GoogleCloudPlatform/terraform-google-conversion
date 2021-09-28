@@ -52,6 +52,15 @@ func isRedisVersionDecreasingFunc(old, new interface{}) bool {
 	return newVersion < oldVersion
 }
 
+const RedisInstanceAssetType string = "redis.googleapis.com/Instance"
+
+func resourceConverterRedisInstance() ResourceConverter {
+	return ResourceConverter{
+		AssetType: RedisInstanceAssetType,
+		Convert:   GetRedisInstanceCaiObject,
+	}
+}
+
 func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}")
 	if err != nil {
@@ -60,7 +69,7 @@ func GetRedisInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	if obj, err := GetRedisInstanceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "redis.googleapis.com/Instance",
+			Type: RedisInstanceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/redis/v1/rest",

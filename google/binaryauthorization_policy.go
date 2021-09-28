@@ -37,6 +37,15 @@ func defaultBinaryAuthorizationPolicy(project string) map[string]interface{} {
 	}
 }
 
+const BinaryAuthorizationPolicyAssetType string = "binaryauthorization.googleapis.com/Policy"
+
+func resourceConverterBinaryAuthorizationPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType: BinaryAuthorizationPolicyAssetType,
+		Convert:   GetBinaryAuthorizationPolicyCaiObject,
+	}
+}
+
 func GetBinaryAuthorizationPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//binaryauthorization.googleapis.com/projects/{{project}}/policy")
 	if err != nil {
@@ -45,7 +54,7 @@ func GetBinaryAuthorizationPolicyCaiObject(d TerraformResourceData, config *Conf
 	if obj, err := GetBinaryAuthorizationPolicyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "binaryauthorization.googleapis.com/Policy",
+			Type: BinaryAuthorizationPolicyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/binaryauthorization/v1/rest",

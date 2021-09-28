@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeDiskResourcePolicyAttachmentAssetType string = "compute.googleapis.com/DiskResourcePolicyAttachment"
+
+func resourceConverterComputeDiskResourcePolicyAttachment() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeDiskResourcePolicyAttachmentAssetType,
+		Convert:   GetComputeDiskResourcePolicyAttachmentCaiObject,
+	}
+}
+
 func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{disk}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, co
 	if obj, err := GetComputeDiskResourcePolicyAttachmentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/DiskResourcePolicyAttachment",
+			Type: ComputeDiskResourcePolicyAttachmentAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

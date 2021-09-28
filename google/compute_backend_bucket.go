@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ComputeBackendBucketAssetType string = "compute.googleapis.com/BackendBucket"
+
+func resourceConverterComputeBackendBucket() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeBackendBucketAssetType,
+		Convert:   GetComputeBackendBucketCaiObject,
+	}
+}
+
 func GetComputeBackendBucketCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/backendBuckets/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetComputeBackendBucketCaiObject(d TerraformResourceData, config *Config) (
 	if obj, err := GetComputeBackendBucketApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/BackendBucket",
+			Type: ComputeBackendBucketAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

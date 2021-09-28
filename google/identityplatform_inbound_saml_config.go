@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const IdentityPlatformInboundSamlConfigAssetType string = "identitytoolkit.googleapis.com/InboundSamlConfig"
+
+func resourceConverterIdentityPlatformInboundSamlConfig() ResourceConverter {
+	return ResourceConverter{
+		AssetType: IdentityPlatformInboundSamlConfigAssetType,
+		Convert:   GetIdentityPlatformInboundSamlConfigCaiObject,
+	}
+}
+
 func GetIdentityPlatformInboundSamlConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/inboundSamlConfigs/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetIdentityPlatformInboundSamlConfigCaiObject(d TerraformResourceData, conf
 	if obj, err := GetIdentityPlatformInboundSamlConfigApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "identitytoolkit.googleapis.com/InboundSamlConfig",
+			Type: IdentityPlatformInboundSamlConfigAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v2/rest",

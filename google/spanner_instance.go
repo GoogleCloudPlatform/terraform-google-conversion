@@ -59,6 +59,15 @@ func deleteSpannerBackups(d *schema.ResourceData, config *Config, res map[string
 	return nil
 }
 
+const SpannerInstanceAssetType string = "spanner.googleapis.com/Instance"
+
+func resourceConverterSpannerInstance() ResourceConverter {
+	return ResourceConverter{
+		AssetType: SpannerInstanceAssetType,
+		Convert:   GetSpannerInstanceCaiObject,
+	}
+}
+
 func GetSpannerInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//spanner.googleapis.com/projects/{{project}}/instances/{{name}}")
 	if err != nil {
@@ -67,7 +76,7 @@ func GetSpannerInstanceCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetSpannerInstanceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "spanner.googleapis.com/Instance",
+			Type: SpannerInstanceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/spanner/v1/rest",

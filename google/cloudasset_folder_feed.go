@@ -20,6 +20,15 @@ import (
 	"strings"
 )
 
+const CloudAssetFolderFeedAssetType string = "cloudasset.googleapis.com/FolderFeed"
+
+func resourceConverterCloudAssetFolderFeed() ResourceConverter {
+	return ResourceConverter{
+		AssetType: CloudAssetFolderFeedAssetType,
+		Convert:   GetCloudAssetFolderFeedCaiObject,
+	}
+}
+
 func GetCloudAssetFolderFeedCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudasset.googleapis.com/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetCloudAssetFolderFeedCaiObject(d TerraformResourceData, config *Config) (
 	if obj, err := GetCloudAssetFolderFeedApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudasset.googleapis.com/FolderFeed",
+			Type: CloudAssetFolderFeedAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudasset/v1/rest",

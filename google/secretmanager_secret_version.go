@@ -21,6 +21,15 @@ import (
 	"strings"
 )
 
+const SecretManagerSecretVersionAssetType string = "secretmanager.googleapis.com/SecretVersion"
+
+func resourceConverterSecretManagerSecretVersion() ResourceConverter {
+	return ResourceConverter{
+		AssetType: SecretManagerSecretVersionAssetType,
+		Convert:   GetSecretManagerSecretVersionCaiObject,
+	}
+}
+
 func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//secretmanager.googleapis.com/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Con
 	if obj, err := GetSecretManagerSecretVersionApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "secretmanager.googleapis.com/SecretVersion",
+			Type: SecretManagerSecretVersionAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/secretmanager/v1/rest",

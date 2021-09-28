@@ -37,6 +37,15 @@ func validateAvailabilitySli(v interface{}, key string) (ws []string, errs []err
 	return
 }
 
+const MonitoringSloAssetType string = "monitoring.googleapis.com/Slo"
+
+func resourceConverterMonitoringSlo() ResourceConverter {
+	return ResourceConverter{
+		AssetType: MonitoringSloAssetType,
+		Convert:   GetMonitoringSloCaiObject,
+	}
+}
+
 func GetMonitoringSloCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
@@ -45,7 +54,7 @@ func GetMonitoringSloCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	if obj, err := GetMonitoringSloApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "monitoring.googleapis.com/Slo",
+			Type: MonitoringSloAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",

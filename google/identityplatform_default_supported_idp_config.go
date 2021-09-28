@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const IdentityPlatformDefaultSupportedIdpConfigAssetType string = "identitytoolkit.googleapis.com/DefaultSupportedIdpConfig"
+
+func resourceConverterIdentityPlatformDefaultSupportedIdpConfig() ResourceConverter {
+	return ResourceConverter{
+		AssetType: IdentityPlatformDefaultSupportedIdpConfigAssetType,
+		Convert:   GetIdentityPlatformDefaultSupportedIdpConfigCaiObject,
+	}
+}
+
 func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/defaultSupportedIdpConfigs/{{idp_id}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceDa
 	if obj, err := GetIdentityPlatformDefaultSupportedIdpConfigApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "identitytoolkit.googleapis.com/DefaultSupportedIdpConfig",
+			Type: IdentityPlatformDefaultSupportedIdpConfigAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v2/rest",

@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeRegionTargetHttpProxyAssetType string = "compute.googleapis.com/RegionTargetHttpProxy"
+
+func resourceConverterComputeRegionTargetHttpProxy() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeRegionTargetHttpProxyAssetType,
+		Convert:   GetComputeRegionTargetHttpProxyCaiObject,
+	}
+}
+
 func GetComputeRegionTargetHttpProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/targetHttpProxies/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeRegionTargetHttpProxyCaiObject(d TerraformResourceData, config *C
 	if obj, err := GetComputeRegionTargetHttpProxyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/RegionTargetHttpProxy",
+			Type: ComputeRegionTargetHttpProxyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

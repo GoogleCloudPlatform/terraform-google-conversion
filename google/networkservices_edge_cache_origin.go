@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const NetworkServicesEdgeCacheOriginAssetType string = "networkservices.googleapis.com/EdgeCacheOrigin"
+
+func resourceConverterNetworkServicesEdgeCacheOrigin() ResourceConverter {
+	return ResourceConverter{
+		AssetType: NetworkServicesEdgeCacheOriginAssetType,
+		Convert:   GetNetworkServicesEdgeCacheOriginCaiObject,
+	}
+}
+
 func GetNetworkServicesEdgeCacheOriginCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/edgeCacheOrigins/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetNetworkServicesEdgeCacheOriginCaiObject(d TerraformResourceData, config 
 	if obj, err := GetNetworkServicesEdgeCacheOriginApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "networkservices.googleapis.com/EdgeCacheOrigin",
+			Type: NetworkServicesEdgeCacheOriginAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkservices/v1/rest",

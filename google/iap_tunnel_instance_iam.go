@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const IapTunnelInstanceIAMAssetType string = "iap.googleapis.com/TunnelInstance"
+
+func resourceConverterIapTunnelInstanceIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         IapTunnelInstanceIAMAssetType,
+		Convert:           GetIapTunnelInstanceIamPolicyCaiObject,
+		MergeCreateUpdate: MergeIapTunnelInstanceIamPolicy,
+	}
+}
+
+func resourceConverterIapTunnelInstanceIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         IapTunnelInstanceIAMAssetType,
+		Convert:           GetIapTunnelInstanceIamBindingCaiObject,
+		FetchFullResource: FetchIapTunnelInstanceIamPolicy,
+		MergeCreateUpdate: MergeIapTunnelInstanceIamBinding,
+		MergeDelete:       MergeIapTunnelInstanceIamBindingDelete,
+	}
+}
+
+func resourceConverterIapTunnelInstanceIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         IapTunnelInstanceIAMAssetType,
+		Convert:           GetIapTunnelInstanceIamMemberCaiObject,
+		FetchFullResource: FetchIapTunnelInstanceIamPolicy,
+		MergeCreateUpdate: MergeIapTunnelInstanceIamMember,
+		MergeDelete:       MergeIapTunnelInstanceIamMemberDelete,
+	}
+}
+
 func GetIapTunnelInstanceIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newIapTunnelInstanceIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newIapTunnelInstanceIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "iap.googleapis.com/TunnelInstance",
+		Type: IapTunnelInstanceIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchIapTunnelInstanceIamPolicy(d TerraformResourceData, config *Config) (A
 		d,
 		config,
 		"//iap.googleapis.com/{{tunnelinstance}}",
-		"iap.googleapis.com/TunnelInstance",
+		IapTunnelInstanceIAMAssetType,
 	)
 }

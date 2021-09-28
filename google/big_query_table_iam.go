@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const BigQueryTableIAMAssetType string = "bigquery.googleapis.com/Table"
+
+func resourceConverterBigQueryTableIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         BigQueryTableIAMAssetType,
+		Convert:           GetBigQueryTableIamPolicyCaiObject,
+		MergeCreateUpdate: MergeBigQueryTableIamPolicy,
+	}
+}
+
+func resourceConverterBigQueryTableIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         BigQueryTableIAMAssetType,
+		Convert:           GetBigQueryTableIamBindingCaiObject,
+		FetchFullResource: FetchBigQueryTableIamPolicy,
+		MergeCreateUpdate: MergeBigQueryTableIamBinding,
+		MergeDelete:       MergeBigQueryTableIamBindingDelete,
+	}
+}
+
+func resourceConverterBigQueryTableIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         BigQueryTableIAMAssetType,
+		Convert:           GetBigQueryTableIamMemberCaiObject,
+		FetchFullResource: FetchBigQueryTableIamPolicy,
+		MergeCreateUpdate: MergeBigQueryTableIamMember,
+		MergeDelete:       MergeBigQueryTableIamMemberDelete,
+	}
+}
+
 func GetBigQueryTableIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newBigQueryTableIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newBigQueryTableIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "bigquery.googleapis.com/Table",
+		Type: BigQueryTableIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchBigQueryTableIamPolicy(d TerraformResourceData, config *Config) (Asset
 		d,
 		config,
 		"//bigquery.googleapis.com/{{table}}",
-		"bigquery.googleapis.com/Table",
+		BigQueryTableIAMAssetType,
 	)
 }

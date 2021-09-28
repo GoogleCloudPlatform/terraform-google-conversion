@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ActiveDirectoryDomainTrustAssetType string = "managedidentities.googleapis.com/DomainTrust"
+
+func resourceConverterActiveDirectoryDomainTrust() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ActiveDirectoryDomainTrustAssetType,
+		Convert:   GetActiveDirectoryDomainTrustCaiObject,
+	}
+}
+
 func GetActiveDirectoryDomainTrustCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//managedidentities.googleapis.com/projects/{{project}}/locations/global/domains/{{domain}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetActiveDirectoryDomainTrustCaiObject(d TerraformResourceData, config *Con
 	if obj, err := GetActiveDirectoryDomainTrustApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "managedidentities.googleapis.com/DomainTrust",
+			Type: ActiveDirectoryDomainTrustAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/managedidentities/v1/rest",

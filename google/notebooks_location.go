@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const NotebooksLocationAssetType string = "notebooks.googleapis.com/Location"
+
+func resourceConverterNotebooksLocation() ResourceConverter {
+	return ResourceConverter{
+		AssetType: NotebooksLocationAssetType,
+		Convert:   GetNotebooksLocationCaiObject,
+	}
+}
+
 func GetNotebooksLocationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetNotebooksLocationCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetNotebooksLocationApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "notebooks.googleapis.com/Location",
+			Type: NotebooksLocationAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/notebooks/v1/rest",

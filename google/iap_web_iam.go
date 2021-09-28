@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const IapWebIAMAssetType string = "iap.googleapis.com/Web"
+
+func resourceConverterIapWebIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         IapWebIAMAssetType,
+		Convert:           GetIapWebIamPolicyCaiObject,
+		MergeCreateUpdate: MergeIapWebIamPolicy,
+	}
+}
+
+func resourceConverterIapWebIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         IapWebIAMAssetType,
+		Convert:           GetIapWebIamBindingCaiObject,
+		FetchFullResource: FetchIapWebIamPolicy,
+		MergeCreateUpdate: MergeIapWebIamBinding,
+		MergeDelete:       MergeIapWebIamBindingDelete,
+	}
+}
+
+func resourceConverterIapWebIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         IapWebIAMAssetType,
+		Convert:           GetIapWebIamMemberCaiObject,
+		FetchFullResource: FetchIapWebIamPolicy,
+		MergeCreateUpdate: MergeIapWebIamMember,
+		MergeDelete:       MergeIapWebIamMemberDelete,
+	}
+}
+
 func GetIapWebIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newIapWebIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newIapWebIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "iap.googleapis.com/Web",
+		Type: IapWebIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchIapWebIamPolicy(d TerraformResourceData, config *Config) (Asset, error
 		d,
 		config,
 		"//iap.googleapis.com/{{web}}",
-		"iap.googleapis.com/Web",
+		IapWebIAMAssetType,
 	)
 }

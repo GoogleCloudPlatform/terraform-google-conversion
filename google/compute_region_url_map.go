@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ComputeRegionUrlMapAssetType string = "compute.googleapis.com/RegionUrlMap"
+
+func resourceConverterComputeRegionUrlMap() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeRegionUrlMapAssetType,
+		Convert:   GetComputeRegionUrlMapCaiObject,
+	}
+}
+
 func GetComputeRegionUrlMapCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/urlMaps/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetComputeRegionUrlMapCaiObject(d TerraformResourceData, config *Config) ([
 	if obj, err := GetComputeRegionUrlMapApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/RegionUrlMap",
+			Type: ComputeRegionUrlMapAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

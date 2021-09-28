@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ComputeGlobalNetworkEndpointGroupAssetType string = "compute.googleapis.com/GlobalNetworkEndpointGroup"
+
+func resourceConverterComputeGlobalNetworkEndpointGroup() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeGlobalNetworkEndpointGroupAssetType,
+		Convert:   GetComputeGlobalNetworkEndpointGroupCaiObject,
+	}
+}
+
 func GetComputeGlobalNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networkEndpointGroups/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetComputeGlobalNetworkEndpointGroupCaiObject(d TerraformResourceData, conf
 	if obj, err := GetComputeGlobalNetworkEndpointGroupApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/GlobalNetworkEndpointGroup",
+			Type: ComputeGlobalNetworkEndpointGroupAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

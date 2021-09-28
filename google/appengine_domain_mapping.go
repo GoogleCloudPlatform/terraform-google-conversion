@@ -34,6 +34,15 @@ func sslSettingsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	return false
 }
 
+const AppEngineDomainMappingAssetType string = "appengine.googleapis.com/DomainMapping"
+
+func resourceConverterAppEngineDomainMapping() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AppEngineDomainMappingAssetType,
+		Convert:   GetAppEngineDomainMappingCaiObject,
+	}
+}
+
 func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/domainMappings/{{domain_name}}")
 	if err != nil {
@@ -42,7 +51,7 @@ func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *Config)
 	if obj, err := GetAppEngineDomainMappingApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "appengine.googleapis.com/DomainMapping",
+			Type: AppEngineDomainMappingAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",

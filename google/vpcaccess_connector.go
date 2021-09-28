@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const VPCAccessConnectorAssetType string = "vpcaccess.googleapis.com/Connector"
+
+func resourceConverterVPCAccessConnector() ResourceConverter {
+	return ResourceConverter{
+		AssetType: VPCAccessConnectorAssetType,
+		Convert:   GetVPCAccessConnectorCaiObject,
+	}
+}
+
 func GetVPCAccessConnectorCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//vpcaccess.googleapis.com/projects/{{project}}/locations/{{region}}/connectors/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetVPCAccessConnectorCaiObject(d TerraformResourceData, config *Config) ([]
 	if obj, err := GetVPCAccessConnectorApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "vpcaccess.googleapis.com/Connector",
+			Type: VPCAccessConnectorAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/vpcaccess/v1/rest",

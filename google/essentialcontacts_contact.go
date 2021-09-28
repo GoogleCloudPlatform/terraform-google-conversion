@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const EssentialContactsContactAssetType string = "essentialcontacts.googleapis.com/Contact"
+
+func resourceConverterEssentialContactsContact() ResourceConverter {
+	return ResourceConverter{
+		AssetType: EssentialContactsContactAssetType,
+		Convert:   GetEssentialContactsContactCaiObject,
+	}
+}
+
 func GetEssentialContactsContactCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//essentialcontacts.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetEssentialContactsContactCaiObject(d TerraformResourceData, config *Confi
 	if obj, err := GetEssentialContactsContactApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "essentialcontacts.googleapis.com/Contact",
+			Type: EssentialContactsContactAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/essentialcontacts/v1/rest",

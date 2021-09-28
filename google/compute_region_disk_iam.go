@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const ComputeRegionDiskIAMAssetType string = "compute.googleapis.com/RegionDisk"
+
+func resourceConverterComputeRegionDiskIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeRegionDiskIAMAssetType,
+		Convert:           GetComputeRegionDiskIamPolicyCaiObject,
+		MergeCreateUpdate: MergeComputeRegionDiskIamPolicy,
+	}
+}
+
+func resourceConverterComputeRegionDiskIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeRegionDiskIAMAssetType,
+		Convert:           GetComputeRegionDiskIamBindingCaiObject,
+		FetchFullResource: FetchComputeRegionDiskIamPolicy,
+		MergeCreateUpdate: MergeComputeRegionDiskIamBinding,
+		MergeDelete:       MergeComputeRegionDiskIamBindingDelete,
+	}
+}
+
+func resourceConverterComputeRegionDiskIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeRegionDiskIAMAssetType,
+		Convert:           GetComputeRegionDiskIamMemberCaiObject,
+		FetchFullResource: FetchComputeRegionDiskIamPolicy,
+		MergeCreateUpdate: MergeComputeRegionDiskIamMember,
+		MergeDelete:       MergeComputeRegionDiskIamMemberDelete,
+	}
+}
+
 func GetComputeRegionDiskIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newComputeRegionDiskIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newComputeRegionDiskIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "compute.googleapis.com/RegionDisk",
+		Type: ComputeRegionDiskIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchComputeRegionDiskIamPolicy(d TerraformResourceData, config *Config) (A
 		d,
 		config,
 		"//compute.googleapis.com/{{regiondisk}}",
-		"compute.googleapis.com/RegionDisk",
+		ComputeRegionDiskIAMAssetType,
 	)
 }

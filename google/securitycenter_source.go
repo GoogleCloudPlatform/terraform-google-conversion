@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const SecurityCenterSourceAssetType string = "securitycenter.googleapis.com/Source"
+
+func resourceConverterSecurityCenterSource() ResourceConverter {
+	return ResourceConverter{
+		AssetType: SecurityCenterSourceAssetType,
+		Convert:   GetSecurityCenterSourceCaiObject,
+	}
+}
+
 func GetSecurityCenterSourceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//securitycenter.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetSecurityCenterSourceCaiObject(d TerraformResourceData, config *Config) (
 	if obj, err := GetSecurityCenterSourceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "securitycenter.googleapis.com/Source",
+			Type: SecurityCenterSourceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/securitycenter/v1/rest",

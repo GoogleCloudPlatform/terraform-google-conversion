@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ComputeImageAssetType string = "compute.googleapis.com/Image"
+
+func resourceConverterComputeImage() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeImageAssetType,
+		Convert:   GetComputeImageCaiObject,
+	}
+}
+
 func GetComputeImageCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/images/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetComputeImageCaiObject(d TerraformResourceData, config *Config) ([]Asset,
 	if obj, err := GetComputeImageApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Image",
+			Type: ComputeImageAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

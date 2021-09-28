@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const BigQueryRoutineAssetType string = "bigquery.googleapis.com/Routine"
+
+func resourceConverterBigQueryRoutine() ResourceConverter {
+	return ResourceConverter{
+		AssetType: BigQueryRoutineAssetType,
+		Convert:   GetBigQueryRoutineCaiObject,
+	}
+}
+
 func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}/routines/{{routine_id}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetBigQueryRoutineApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "bigquery.googleapis.com/Routine",
+			Type: BigQueryRoutineAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest",

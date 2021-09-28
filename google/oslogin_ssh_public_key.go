@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const OSLoginSSHPublicKeyAssetType string = "oslogin.googleapis.com/SSHPublicKey"
+
+func resourceConverterOSLoginSSHPublicKey() ResourceConverter {
+	return ResourceConverter{
+		AssetType: OSLoginSSHPublicKeyAssetType,
+		Convert:   GetOSLoginSSHPublicKeyCaiObject,
+	}
+}
+
 func GetOSLoginSSHPublicKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//oslogin.googleapis.com/users/{{user}}/sshPublicKeys/{{fingerprint}}/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetOSLoginSSHPublicKeyCaiObject(d TerraformResourceData, config *Config) ([
 	if obj, err := GetOSLoginSSHPublicKeyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "oslogin.googleapis.com/SSHPublicKey",
+			Type: OSLoginSSHPublicKeyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/oslogin/v1/rest",

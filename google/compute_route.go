@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ComputeRouteAssetType string = "compute.googleapis.com/Route"
+
+func resourceConverterComputeRoute() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeRouteAssetType,
+		Convert:   GetComputeRouteCaiObject,
+	}
+}
+
 func GetComputeRouteCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/routes/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetComputeRouteCaiObject(d TerraformResourceData, config *Config) ([]Asset,
 	if obj, err := GetComputeRouteApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Route",
+			Type: ComputeRouteAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

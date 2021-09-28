@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const HealthcareHl7V2StoreAssetType string = "healthcare.googleapis.com/Hl7V2Store"
+
+func resourceConverterHealthcareHl7V2Store() ResourceConverter {
+	return ResourceConverter{
+		AssetType: HealthcareHl7V2StoreAssetType,
+		Convert:   GetHealthcareHl7V2StoreCaiObject,
+	}
+}
+
 func GetHealthcareHl7V2StoreCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/{{dataset}}/hl7V2Stores/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetHealthcareHl7V2StoreCaiObject(d TerraformResourceData, config *Config) (
 	if obj, err := GetHealthcareHl7V2StoreApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "healthcare.googleapis.com/Hl7V2Store",
+			Type: HealthcareHl7V2StoreAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1/rest",

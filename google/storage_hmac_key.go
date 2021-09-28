@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const StorageHmacKeyAssetType string = "storage.googleapis.com/HmacKey"
+
+func resourceConverterStorageHmacKey() ResourceConverter {
+	return ResourceConverter{
+		AssetType: StorageHmacKeyAssetType,
+		Convert:   GetStorageHmacKeyCaiObject,
+	}
+}
+
 func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//storage.googleapis.com/projects/{{project}}/hmacKeys/{{access_id}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	if obj, err := GetStorageHmacKeyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "storage.googleapis.com/HmacKey",
+			Type: StorageHmacKeyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/storage/v1/rest",

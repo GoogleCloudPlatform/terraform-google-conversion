@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ComputeExternalVpnGatewayAssetType string = "compute.googleapis.com/ExternalVpnGateway"
+
+func resourceConverterComputeExternalVpnGateway() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeExternalVpnGatewayAssetType,
+		Convert:   GetComputeExternalVpnGatewayCaiObject,
+	}
+}
+
 func GetComputeExternalVpnGatewayCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/externalVpnGateways/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetComputeExternalVpnGatewayCaiObject(d TerraformResourceData, config *Conf
 	if obj, err := GetComputeExternalVpnGatewayApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/ExternalVpnGateway",
+			Type: ComputeExternalVpnGatewayAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

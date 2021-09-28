@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const DataLossPreventionDeidentifyTemplateAssetType string = "dlp.googleapis.com/DeidentifyTemplate"
+
+func resourceConverterDataLossPreventionDeidentifyTemplate() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DataLossPreventionDeidentifyTemplateAssetType,
+		Convert:   GetDataLossPreventionDeidentifyTemplateCaiObject,
+	}
+}
+
 func GetDataLossPreventionDeidentifyTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dlp.googleapis.com/{{parent}}/deidentifyTemplates/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetDataLossPreventionDeidentifyTemplateCaiObject(d TerraformResourceData, c
 	if obj, err := GetDataLossPreventionDeidentifyTemplateApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dlp.googleapis.com/DeidentifyTemplate",
+			Type: DataLossPreventionDeidentifyTemplateAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dlp/v2/rest",

@@ -38,6 +38,15 @@ func NotebooksInstanceLabelDiffSuppress(k, old, new string, d *schema.ResourceDa
 	return false
 }
 
+const NotebooksInstanceAssetType string = "notebooks.googleapis.com/Instance"
+
+func resourceConverterNotebooksInstance() ResourceConverter {
+	return ResourceConverter{
+		AssetType: NotebooksInstanceAssetType,
+		Convert:   GetNotebooksInstanceCaiObject,
+	}
+}
+
 func GetNotebooksInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}")
 	if err != nil {
@@ -46,7 +55,7 @@ func GetNotebooksInstanceCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetNotebooksInstanceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "notebooks.googleapis.com/Instance",
+			Type: NotebooksInstanceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/notebooks/v1/rest",

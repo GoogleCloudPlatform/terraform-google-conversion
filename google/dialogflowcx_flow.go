@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const DialogflowCXFlowAssetType string = "dialogflow.googleapis.com/Flow"
+
+func resourceConverterDialogflowCXFlow() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DialogflowCXFlowAssetType,
+		Convert:   GetDialogflowCXFlowCaiObject,
+	}
+}
+
 func GetDialogflowCXFlowCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{parent}}/flows/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetDialogflowCXFlowCaiObject(d TerraformResourceData, config *Config) ([]As
 	if obj, err := GetDialogflowCXFlowApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dialogflow.googleapis.com/Flow",
+			Type: DialogflowCXFlowAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v3/rest",

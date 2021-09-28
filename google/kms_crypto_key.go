@@ -20,6 +20,15 @@ import (
 	"time"
 )
 
+const KMSCryptoKeyAssetType string = "cloudkms.googleapis.com/CryptoKey"
+
+func resourceConverterKMSCryptoKey() ResourceConverter {
+	return ResourceConverter{
+		AssetType: KMSCryptoKeyAssetType,
+		Convert:   GetKMSCryptoKeyCaiObject,
+	}
+}
+
 func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudkms.googleapis.com/{{key_ring}}/cryptoKeys/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset,
 	if obj, err := GetKMSCryptoKeyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudkms.googleapis.com/CryptoKey",
+			Type: KMSCryptoKeyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudkms/v1/rest",

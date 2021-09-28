@@ -29,6 +29,15 @@ func suppressOmittedMaxDuration(_, old, new string, _ *schema.ResourceData) bool
 	return false
 }
 
+const CloudTasksQueueAssetType string = "cloudtasks.googleapis.com/Queue"
+
+func resourceConverterCloudTasksQueue() ResourceConverter {
+	return ResourceConverter{
+		AssetType: CloudTasksQueueAssetType,
+		Convert:   GetCloudTasksQueueCaiObject,
+	}
+}
+
 func GetCloudTasksQueueCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudtasks.googleapis.com/projects/{{project}}/locations/{{location}}/queues/{{name}}")
 	if err != nil {
@@ -37,7 +46,7 @@ func GetCloudTasksQueueCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetCloudTasksQueueApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudtasks.googleapis.com/Queue",
+			Type: CloudTasksQueueAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudtasks/v2/rest",

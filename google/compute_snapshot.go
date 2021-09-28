@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeSnapshotAssetType string = "compute.googleapis.com/Snapshot"
+
+func resourceConverterComputeSnapshot() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeSnapshotAssetType,
+		Convert:   GetComputeSnapshotCaiObject,
+	}
+}
+
 func GetComputeSnapshotCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/snapshots/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeSnapshotCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetComputeSnapshotApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Snapshot",
+			Type: ComputeSnapshotAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

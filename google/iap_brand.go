@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const IapBrandAssetType string = "iap.googleapis.com/Brand"
+
+func resourceConverterIapBrand() ResourceConverter {
+	return ResourceConverter{
+		AssetType: IapBrandAssetType,
+		Convert:   GetIapBrandCaiObject,
+	}
+}
+
 func GetIapBrandCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iap.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetIapBrandCaiObject(d TerraformResourceData, config *Config) ([]Asset, err
 	if obj, err := GetIapBrandApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "iap.googleapis.com/Brand",
+			Type: IapBrandAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/iap/v1/rest",

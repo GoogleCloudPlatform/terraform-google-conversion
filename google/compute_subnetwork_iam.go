@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const ComputeSubnetworkIAMAssetType string = "compute.googleapis.com/Subnetwork"
+
+func resourceConverterComputeSubnetworkIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeSubnetworkIAMAssetType,
+		Convert:           GetComputeSubnetworkIamPolicyCaiObject,
+		MergeCreateUpdate: MergeComputeSubnetworkIamPolicy,
+	}
+}
+
+func resourceConverterComputeSubnetworkIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeSubnetworkIAMAssetType,
+		Convert:           GetComputeSubnetworkIamBindingCaiObject,
+		FetchFullResource: FetchComputeSubnetworkIamPolicy,
+		MergeCreateUpdate: MergeComputeSubnetworkIamBinding,
+		MergeDelete:       MergeComputeSubnetworkIamBindingDelete,
+	}
+}
+
+func resourceConverterComputeSubnetworkIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeSubnetworkIAMAssetType,
+		Convert:           GetComputeSubnetworkIamMemberCaiObject,
+		FetchFullResource: FetchComputeSubnetworkIamPolicy,
+		MergeCreateUpdate: MergeComputeSubnetworkIamMember,
+		MergeDelete:       MergeComputeSubnetworkIamMemberDelete,
+	}
+}
+
 func GetComputeSubnetworkIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newComputeSubnetworkIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newComputeSubnetworkIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "compute.googleapis.com/Subnetwork",
+		Type: ComputeSubnetworkIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchComputeSubnetworkIamPolicy(d TerraformResourceData, config *Config) (A
 		d,
 		config,
 		"//compute.googleapis.com/{{subnetwork}}",
-		"compute.googleapis.com/Subnetwork",
+		ComputeSubnetworkIAMAssetType,
 	)
 }

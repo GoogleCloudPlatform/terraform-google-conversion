@@ -20,6 +20,15 @@ import (
 	"regexp"
 )
 
+const PubsubLiteSubscriptionAssetType string = "{{region}}-pubsublite.googleapis.com/Subscription"
+
+func resourceConverterPubsubLiteSubscription() ResourceConverter {
+	return ResourceConverter{
+		AssetType: PubsubLiteSubscriptionAssetType,
+		Convert:   GetPubsubLiteSubscriptionCaiObject,
+	}
+}
+
 func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{region}}-pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/subscriptions/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *Config)
 	if obj, err := GetPubsubLiteSubscriptionApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "{{region}}-pubsublite.googleapis.com/Subscription",
+			Type: PubsubLiteSubscriptionAssetType,
 			Resource: &AssetResource{
 				Version:              "admin",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-pubsublite/admin/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const DialogflowCXPageAssetType string = "dialogflow.googleapis.com/Page"
+
+func resourceConverterDialogflowCXPage() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DialogflowCXPageAssetType,
+		Convert:   GetDialogflowCXPageCaiObject,
+	}
+}
+
 func GetDialogflowCXPageCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{parent}}/pages/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetDialogflowCXPageCaiObject(d TerraformResourceData, config *Config) ([]As
 	if obj, err := GetDialogflowCXPageApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dialogflow.googleapis.com/Page",
+			Type: DialogflowCXPageAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v3/rest",

@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const AccessContextManagerAccessLevelsAssetType string = "accesscontextmanager.googleapis.com/AccessLevels"
+
+func resourceConverterAccessContextManagerAccessLevels() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AccessContextManagerAccessLevelsAssetType,
+		Convert:   GetAccessContextManagerAccessLevelsCaiObject,
+	}
+}
+
 func GetAccessContextManagerAccessLevelsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/{{parent}}/accessLevels")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetAccessContextManagerAccessLevelsCaiObject(d TerraformResourceData, confi
 	if obj, err := GetAccessContextManagerAccessLevelsApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "accesscontextmanager.googleapis.com/AccessLevels",
+			Type: AccessContextManagerAccessLevelsAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accesscontextmanager/v1/rest",

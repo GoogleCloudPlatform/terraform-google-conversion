@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
+const ComputeSslCertificateAssetType string = "compute.googleapis.com/SslCertificate"
+
+func resourceConverterComputeSslCertificate() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeSslCertificateAssetType,
+		Convert:   GetComputeSslCertificateCaiObject,
+	}
+}
+
 func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/sslCertificates/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetComputeSslCertificateApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/SslCertificate",
+			Type: ComputeSslCertificateAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

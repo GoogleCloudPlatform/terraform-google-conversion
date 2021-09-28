@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const AppEngineServiceNetworkSettingsAssetType string = "appengine.googleapis.com/ServiceNetworkSettings"
+
+func resourceConverterAppEngineServiceNetworkSettings() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AppEngineServiceNetworkSettingsAssetType,
+		Convert:   GetAppEngineServiceNetworkSettingsCaiObject,
+	}
+}
+
 func GetAppEngineServiceNetworkSettingsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetAppEngineServiceNetworkSettingsCaiObject(d TerraformResourceData, config
 	if obj, err := GetAppEngineServiceNetworkSettingsApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "appengine.googleapis.com/ServiceNetworkSettings",
+			Type: AppEngineServiceNetworkSettingsAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",

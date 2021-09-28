@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
+const WorkflowsWorkflowAssetType string = "workflows.googleapis.com/Workflow"
+
+func resourceConverterWorkflowsWorkflow() ResourceConverter {
+	return ResourceConverter{
+		AssetType: WorkflowsWorkflowAssetType,
+		Convert:   GetWorkflowsWorkflowCaiObject,
+	}
+}
+
 func GetWorkflowsWorkflowCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//workflows.googleapis.com/projects/{{project}}/locations/{{region}}/workflows/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetWorkflowsWorkflowCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetWorkflowsWorkflowApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "workflows.googleapis.com/Workflow",
+			Type: WorkflowsWorkflowAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/workflows/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const VertexAIDatasetAssetType string = "{{region}}-aiplatform.googleapis.com/Dataset"
+
+func resourceConverterVertexAIDataset() ResourceConverter {
+	return ResourceConverter{
+		AssetType: VertexAIDatasetAssetType,
+		Convert:   GetVertexAIDatasetCaiObject,
+	}
+}
+
 func GetVertexAIDatasetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetVertexAIDatasetCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetVertexAIDatasetApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "{{region}}-aiplatform.googleapis.com/Dataset",
+			Type: VertexAIDatasetAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1/rest",

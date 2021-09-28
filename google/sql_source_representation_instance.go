@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const SQLSourceRepresentationInstanceAssetType string = "sqladmin.googleapis.com/SourceRepresentationInstance"
+
+func resourceConverterSQLSourceRepresentationInstance() ResourceConverter {
+	return ResourceConverter{
+		AssetType: SQLSourceRepresentationInstanceAssetType,
+		Convert:   GetSQLSourceRepresentationInstanceCaiObject,
+	}
+}
+
 func GetSQLSourceRepresentationInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//sqladmin.googleapis.com/projects/{{project}}/instances/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetSQLSourceRepresentationInstanceCaiObject(d TerraformResourceData, config
 	if obj, err := GetSQLSourceRepresentationInstanceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "sqladmin.googleapis.com/SourceRepresentationInstance",
+			Type: SQLSourceRepresentationInstanceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1beta4",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta4/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const MLEngineModelAssetType string = "ml.googleapis.com/Model"
+
+func resourceConverterMLEngineModel() ResourceConverter {
+	return ResourceConverter{
+		AssetType: MLEngineModelAssetType,
+		Convert:   GetMLEngineModelCaiObject,
+	}
+}
+
 func GetMLEngineModelCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//ml.googleapis.com/projects/{{project}}/models/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetMLEngineModelCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	if obj, err := GetMLEngineModelApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "ml.googleapis.com/Model",
+			Type: MLEngineModelAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ml/v1/rest",

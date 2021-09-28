@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const DialogflowCXIntentAssetType string = "dialogflow.googleapis.com/Intent"
+
+func resourceConverterDialogflowCXIntent() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DialogflowCXIntentAssetType,
+		Convert:   GetDialogflowCXIntentCaiObject,
+	}
+}
+
 func GetDialogflowCXIntentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{parent}}/intents/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetDialogflowCXIntentCaiObject(d TerraformResourceData, config *Config) ([]
 	if obj, err := GetDialogflowCXIntentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dialogflow.googleapis.com/Intent",
+			Type: DialogflowCXIntentAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v3/rest",

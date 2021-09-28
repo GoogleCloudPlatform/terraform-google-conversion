@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const PrivatecaCaPoolAssetType string = "privateca.googleapis.com/CaPool"
+
+func resourceConverterPrivatecaCaPool() ResourceConverter {
+	return ResourceConverter{
+		AssetType: PrivatecaCaPoolAssetType,
+		Convert:   GetPrivatecaCaPoolCaiObject,
+	}
+}
+
 func GetPrivatecaCaPoolCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//privateca.googleapis.com/projects/{{project}}/locations/{{location}}/caPools/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetPrivatecaCaPoolCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetPrivatecaCaPoolApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "privateca.googleapis.com/CaPool",
+			Type: PrivatecaCaPoolAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/privateca/v1/rest",

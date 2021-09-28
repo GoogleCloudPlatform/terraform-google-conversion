@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const NetworkServicesEdgeCacheKeysetAssetType string = "networkservices.googleapis.com/EdgeCacheKeyset"
+
+func resourceConverterNetworkServicesEdgeCacheKeyset() ResourceConverter {
+	return ResourceConverter{
+		AssetType: NetworkServicesEdgeCacheKeysetAssetType,
+		Convert:   GetNetworkServicesEdgeCacheKeysetCaiObject,
+	}
+}
+
 func GetNetworkServicesEdgeCacheKeysetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/edgeCacheKeysets/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetNetworkServicesEdgeCacheKeysetCaiObject(d TerraformResourceData, config 
 	if obj, err := GetNetworkServicesEdgeCacheKeysetApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "networkservices.googleapis.com/EdgeCacheKeyset",
+			Type: NetworkServicesEdgeCacheKeysetAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkservices/v1/rest",

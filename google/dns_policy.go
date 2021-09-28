@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const DNSPolicyAssetType string = "dns.googleapis.com/Policy"
+
+func resourceConverterDNSPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DNSPolicyAssetType,
+		Convert:   GetDNSPolicyCaiObject,
+	}
+}
+
 func GetDNSPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dns.googleapis.com/projects/{{project}}/policies/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetDNSPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, er
 	if obj, err := GetDNSPolicyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dns.googleapis.com/Policy",
+			Type: DNSPolicyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1/rest",

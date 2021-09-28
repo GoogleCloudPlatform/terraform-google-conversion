@@ -31,6 +31,15 @@ func suppressGkeHubEndpointSelfLinkDiff(_, old, new string, _ *schema.ResourceDa
 	return false
 }
 
+const GKEHubMembershipAssetType string = "gkehub.googleapis.com/Membership"
+
+func resourceConverterGKEHubMembership() ResourceConverter {
+	return ResourceConverter{
+		AssetType: GKEHubMembershipAssetType,
+		Convert:   GetGKEHubMembershipCaiObject,
+	}
+}
+
 func GetGKEHubMembershipCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gkehub.googleapis.com/{{name}}")
 	if err != nil {
@@ -39,7 +48,7 @@ func GetGKEHubMembershipCaiObject(d TerraformResourceData, config *Config) ([]As
 	if obj, err := GetGKEHubMembershipApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "gkehub.googleapis.com/Membership",
+			Type: GKEHubMembershipAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gkehub/v1/rest",

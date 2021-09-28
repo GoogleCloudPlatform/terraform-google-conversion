@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ContainerAnalysisNoteAssetType string = "containeranalysis.googleapis.com/Note"
+
+func resourceConverterContainerAnalysisNote() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ContainerAnalysisNoteAssetType,
+		Convert:   GetContainerAnalysisNoteCaiObject,
+	}
+}
+
 func GetContainerAnalysisNoteCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//containeranalysis.googleapis.com/projects/{{project}}/notes/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetContainerAnalysisNoteCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetContainerAnalysisNoteApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "containeranalysis.googleapis.com/Note",
+			Type: ContainerAnalysisNoteAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/containeranalysis/v1/rest",

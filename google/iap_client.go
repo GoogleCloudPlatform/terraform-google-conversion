@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const IapClientAssetType string = "iap.googleapis.com/Client"
+
+func resourceConverterIapClient() ResourceConverter {
+	return ResourceConverter{
+		AssetType: IapClientAssetType,
+		Convert:   GetIapClientCaiObject,
+	}
+}
+
 func GetIapClientCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iap.googleapis.com/{{brand}}/identityAwareProxyClients/{{client_id}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetIapClientCaiObject(d TerraformResourceData, config *Config) ([]Asset, er
 	if obj, err := GetIapClientApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "iap.googleapis.com/Client",
+			Type: IapClientAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/iap/v1/rest",

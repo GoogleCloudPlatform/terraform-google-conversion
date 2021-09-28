@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeReservationAssetType string = "compute.googleapis.com/Reservation"
+
+func resourceConverterComputeReservation() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeReservationAssetType,
+		Convert:   GetComputeReservationCaiObject,
+	}
+}
+
 func GetComputeReservationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/reservations/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeReservationCaiObject(d TerraformResourceData, config *Config) ([]
 	if obj, err := GetComputeReservationApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Reservation",
+			Type: ComputeReservationAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

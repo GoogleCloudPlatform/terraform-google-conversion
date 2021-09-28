@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ComputeHttpHealthCheckAssetType string = "compute.googleapis.com/HttpHealthCheck"
+
+func resourceConverterComputeHttpHealthCheck() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeHttpHealthCheckAssetType,
+		Convert:   GetComputeHttpHealthCheckCaiObject,
+	}
+}
+
 func GetComputeHttpHealthCheckCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/httpHealthChecks/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetComputeHttpHealthCheckCaiObject(d TerraformResourceData, config *Config)
 	if obj, err := GetComputeHttpHealthCheckApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/HttpHealthCheck",
+			Type: ComputeHttpHealthCheckAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

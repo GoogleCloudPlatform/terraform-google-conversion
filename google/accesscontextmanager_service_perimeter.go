@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const AccessContextManagerServicePerimeterAssetType string = "accesscontextmanager.googleapis.com/ServicePerimeter"
+
+func resourceConverterAccessContextManagerServicePerimeter() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AccessContextManagerServicePerimeterAssetType,
+		Convert:   GetAccessContextManagerServicePerimeterCaiObject,
+	}
+}
+
 func GetAccessContextManagerServicePerimeterCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetAccessContextManagerServicePerimeterCaiObject(d TerraformResourceData, c
 	if obj, err := GetAccessContextManagerServicePerimeterApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "accesscontextmanager.googleapis.com/ServicePerimeter",
+			Type: AccessContextManagerServicePerimeterAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accesscontextmanager/v1/rest",

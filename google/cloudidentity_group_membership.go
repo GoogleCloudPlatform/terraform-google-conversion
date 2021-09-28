@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const CloudIdentityGroupMembershipAssetType string = "cloudidentity.googleapis.com/GroupMembership"
+
+func resourceConverterCloudIdentityGroupMembership() ResourceConverter {
+	return ResourceConverter{
+		AssetType: CloudIdentityGroupMembershipAssetType,
+		Convert:   GetCloudIdentityGroupMembershipCaiObject,
+	}
+}
+
 func GetCloudIdentityGroupMembershipCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudidentity.googleapis.com/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetCloudIdentityGroupMembershipCaiObject(d TerraformResourceData, config *C
 	if obj, err := GetCloudIdentityGroupMembershipApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudidentity.googleapis.com/GroupMembership",
+			Type: CloudIdentityGroupMembershipAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudidentity/v1/rest",

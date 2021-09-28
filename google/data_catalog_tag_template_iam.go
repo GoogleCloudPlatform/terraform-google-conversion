@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const DataCatalogTagTemplateIAMAssetType string = "datacatalog.googleapis.com/TagTemplate"
+
+func resourceConverterDataCatalogTagTemplateIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         DataCatalogTagTemplateIAMAssetType,
+		Convert:           GetDataCatalogTagTemplateIamPolicyCaiObject,
+		MergeCreateUpdate: MergeDataCatalogTagTemplateIamPolicy,
+	}
+}
+
+func resourceConverterDataCatalogTagTemplateIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         DataCatalogTagTemplateIAMAssetType,
+		Convert:           GetDataCatalogTagTemplateIamBindingCaiObject,
+		FetchFullResource: FetchDataCatalogTagTemplateIamPolicy,
+		MergeCreateUpdate: MergeDataCatalogTagTemplateIamBinding,
+		MergeDelete:       MergeDataCatalogTagTemplateIamBindingDelete,
+	}
+}
+
+func resourceConverterDataCatalogTagTemplateIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         DataCatalogTagTemplateIAMAssetType,
+		Convert:           GetDataCatalogTagTemplateIamMemberCaiObject,
+		FetchFullResource: FetchDataCatalogTagTemplateIamPolicy,
+		MergeCreateUpdate: MergeDataCatalogTagTemplateIamMember,
+		MergeDelete:       MergeDataCatalogTagTemplateIamMemberDelete,
+	}
+}
+
 func GetDataCatalogTagTemplateIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newDataCatalogTagTemplateIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newDataCatalogTagTemplateIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "datacatalog.googleapis.com/TagTemplate",
+		Type: DataCatalogTagTemplateIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchDataCatalogTagTemplateIamPolicy(d TerraformResourceData, config *Confi
 		d,
 		config,
 		"//datacatalog.googleapis.com/{{tagtemplate}}",
-		"datacatalog.googleapis.com/TagTemplate",
+		DataCatalogTagTemplateIAMAssetType,
 	)
 }

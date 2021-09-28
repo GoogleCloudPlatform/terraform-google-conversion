@@ -24,6 +24,15 @@ var (
 	bigqueryTableRegexp   = regexp.MustCompile("projects/(.+)/datasets/(.+)/tables/(.+)")
 )
 
+const BigQueryJobAssetType string = "bigquery.googleapis.com/Job"
+
+func resourceConverterBigQueryJob() ResourceConverter {
+	return ResourceConverter{
+		AssetType: BigQueryJobAssetType,
+		Convert:   GetBigQueryJobCaiObject,
+	}
+}
+
 func GetBigQueryJobCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/jobs/{{job_id}}?location={{location}}")
 	if err != nil {
@@ -32,7 +41,7 @@ func GetBigQueryJobCaiObject(d TerraformResourceData, config *Config) ([]Asset, 
 	if obj, err := GetBigQueryJobApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "bigquery.googleapis.com/Job",
+			Type: BigQueryJobAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest",

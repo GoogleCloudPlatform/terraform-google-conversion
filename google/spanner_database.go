@@ -54,6 +54,15 @@ func resourceSpannerDBDdlCustomDiff(_ context.Context, diff *schema.ResourceDiff
 	return resourceSpannerDBDdlCustomDiffFunc(diff)
 }
 
+const SpannerDatabaseAssetType string = "spanner.googleapis.com/Database"
+
+func resourceConverterSpannerDatabase() ResourceConverter {
+	return ResourceConverter{
+		AssetType: SpannerDatabaseAssetType,
+		Convert:   GetSpannerDatabaseCaiObject,
+	}
+}
+
 func GetSpannerDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//spanner.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}")
 	if err != nil {
@@ -62,7 +71,7 @@ func GetSpannerDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetSpannerDatabaseApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "spanner.googleapis.com/Database",
+			Type: SpannerDatabaseAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/spanner/v1/rest",

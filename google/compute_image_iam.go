@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const ComputeImageIAMAssetType string = "compute.googleapis.com/Image"
+
+func resourceConverterComputeImageIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeImageIAMAssetType,
+		Convert:           GetComputeImageIamPolicyCaiObject,
+		MergeCreateUpdate: MergeComputeImageIamPolicy,
+	}
+}
+
+func resourceConverterComputeImageIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeImageIAMAssetType,
+		Convert:           GetComputeImageIamBindingCaiObject,
+		FetchFullResource: FetchComputeImageIamPolicy,
+		MergeCreateUpdate: MergeComputeImageIamBinding,
+		MergeDelete:       MergeComputeImageIamBindingDelete,
+	}
+}
+
+func resourceConverterComputeImageIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeImageIAMAssetType,
+		Convert:           GetComputeImageIamMemberCaiObject,
+		FetchFullResource: FetchComputeImageIamPolicy,
+		MergeCreateUpdate: MergeComputeImageIamMember,
+		MergeDelete:       MergeComputeImageIamMemberDelete,
+	}
+}
+
 func GetComputeImageIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newComputeImageIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newComputeImageIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "compute.googleapis.com/Image",
+		Type: ComputeImageIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchComputeImageIamPolicy(d TerraformResourceData, config *Config) (Asset,
 		d,
 		config,
 		"//compute.googleapis.com/{{image}}",
-		"compute.googleapis.com/Image",
+		ComputeImageIAMAssetType,
 	)
 }

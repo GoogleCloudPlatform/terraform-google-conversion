@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const LoggingMetricAssetType string = "logging.googleapis.com/Metric"
+
+func resourceConverterLoggingMetric() ResourceConverter {
+	return ResourceConverter{
+		AssetType: LoggingMetricAssetType,
+		Convert:   GetLoggingMetricCaiObject,
+	}
+}
+
 func GetLoggingMetricCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//logging.googleapis.com/projects/{{project}}/metrics/{{%name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetLoggingMetricCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	if obj, err := GetLoggingMetricApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "logging.googleapis.com/Metric",
+			Type: LoggingMetricAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/logging/v2/rest",

@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeServiceAttachmentAssetType string = "compute.googleapis.com/ServiceAttachment"
+
+func resourceConverterComputeServiceAttachment() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeServiceAttachmentAssetType,
+		Convert:   GetComputeServiceAttachmentCaiObject,
+	}
+}
+
 func GetComputeServiceAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/serviceAttachments/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeServiceAttachmentCaiObject(d TerraformResourceData, config *Confi
 	if obj, err := GetComputeServiceAttachmentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/ServiceAttachment",
+			Type: ComputeServiceAttachmentAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

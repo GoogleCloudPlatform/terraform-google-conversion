@@ -20,6 +20,15 @@ import (
 	"strings"
 )
 
+const CloudAssetProjectFeedAssetType string = "cloudasset.googleapis.com/ProjectFeed"
+
+func resourceConverterCloudAssetProjectFeed() ResourceConverter {
+	return ResourceConverter{
+		AssetType: CloudAssetProjectFeedAssetType,
+		Convert:   GetCloudAssetProjectFeedCaiObject,
+	}
+}
+
 func GetCloudAssetProjectFeedCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudasset.googleapis.com/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetCloudAssetProjectFeedCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetCloudAssetProjectFeedApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudasset.googleapis.com/ProjectFeed",
+			Type: CloudAssetProjectFeedAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudasset/v1/rest",

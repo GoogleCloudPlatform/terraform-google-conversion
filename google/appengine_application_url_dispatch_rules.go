@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const AppEngineApplicationUrlDispatchRulesAssetType string = "appengine.googleapis.com/ApplicationUrlDispatchRules"
+
+func resourceConverterAppEngineApplicationUrlDispatchRules() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AppEngineApplicationUrlDispatchRulesAssetType,
+		Convert:   GetAppEngineApplicationUrlDispatchRulesCaiObject,
+	}
+}
+
 func GetAppEngineApplicationUrlDispatchRulesCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetAppEngineApplicationUrlDispatchRulesCaiObject(d TerraformResourceData, c
 	if obj, err := GetAppEngineApplicationUrlDispatchRulesApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "appengine.googleapis.com/ApplicationUrlDispatchRules",
+			Type: AppEngineApplicationUrlDispatchRulesAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",

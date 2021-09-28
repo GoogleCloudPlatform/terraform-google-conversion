@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const PubsubTopicIAMAssetType string = "pubsub.googleapis.com/Topic"
+
+func resourceConverterPubsubTopicIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         PubsubTopicIAMAssetType,
+		Convert:           GetPubsubTopicIamPolicyCaiObject,
+		MergeCreateUpdate: MergePubsubTopicIamPolicy,
+	}
+}
+
+func resourceConverterPubsubTopicIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         PubsubTopicIAMAssetType,
+		Convert:           GetPubsubTopicIamBindingCaiObject,
+		FetchFullResource: FetchPubsubTopicIamPolicy,
+		MergeCreateUpdate: MergePubsubTopicIamBinding,
+		MergeDelete:       MergePubsubTopicIamBindingDelete,
+	}
+}
+
+func resourceConverterPubsubTopicIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         PubsubTopicIAMAssetType,
+		Convert:           GetPubsubTopicIamMemberCaiObject,
+		FetchFullResource: FetchPubsubTopicIamPolicy,
+		MergeCreateUpdate: MergePubsubTopicIamMember,
+		MergeDelete:       MergePubsubTopicIamMemberDelete,
+	}
+}
+
 func GetPubsubTopicIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newPubsubTopicIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newPubsubTopicIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "pubsub.googleapis.com/Topic",
+		Type: PubsubTopicIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchPubsubTopicIamPolicy(d TerraformResourceData, config *Config) (Asset, 
 		d,
 		config,
 		"//pubsub.googleapis.com/{{topic}}",
-		"pubsub.googleapis.com/Topic",
+		PubsubTopicIAMAssetType,
 	)
 }

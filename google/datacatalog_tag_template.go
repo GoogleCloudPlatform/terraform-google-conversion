@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const DataCatalogTagTemplateAssetType string = "datacatalog.googleapis.com/TagTemplate"
+
+func resourceConverterDataCatalogTagTemplate() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DataCatalogTagTemplateAssetType,
+		Convert:   GetDataCatalogTagTemplateCaiObject,
+	}
+}
+
 func GetDataCatalogTagTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetDataCatalogTagTemplateCaiObject(d TerraformResourceData, config *Config)
 	if obj, err := GetDataCatalogTagTemplateApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "datacatalog.googleapis.com/TagTemplate",
+			Type: DataCatalogTagTemplateAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datacatalog/v1/rest",

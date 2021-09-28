@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ResourceManagerLienAssetType string = "cloudresourcemanager.googleapis.com/Lien"
+
+func resourceConverterResourceManagerLien() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ResourceManagerLienAssetType,
+		Convert:   GetResourceManagerLienCaiObject,
+	}
+}
+
 func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudresourcemanager.googleapis.com/liens?parent={{parent}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) ([
 	if obj, err := GetResourceManagerLienApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudresourcemanager.googleapis.com/Lien",
+			Type: ResourceManagerLienAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudresourcemanager/v1/rest",

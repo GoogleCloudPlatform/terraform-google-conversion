@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const MemcacheInstanceAssetType string = "memcache.googleapis.com/Instance"
+
+func resourceConverterMemcacheInstance() ResourceConverter {
+	return ResourceConverter{
+		AssetType: MemcacheInstanceAssetType,
+		Convert:   GetMemcacheInstanceCaiObject,
+	}
+}
+
 func GetMemcacheInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//memcache.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetMemcacheInstanceCaiObject(d TerraformResourceData, config *Config) ([]As
 	if obj, err := GetMemcacheInstanceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "memcache.googleapis.com/Instance",
+			Type: MemcacheInstanceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/memcache/v1/rest",
