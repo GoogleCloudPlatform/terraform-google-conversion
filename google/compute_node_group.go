@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeNodeGroupAssetType string = "compute.googleapis.com/NodeGroup"
+
+func resourceConverterComputeNodeGroup() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeNodeGroupAssetType,
+		Convert:   GetComputeNodeGroupCaiObject,
+	}
+}
+
 func GetComputeNodeGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/nodeGroups/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeNodeGroupCaiObject(d TerraformResourceData, config *Config) ([]As
 	if obj, err := GetComputeNodeGroupApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/NodeGroup",
+			Type: ComputeNodeGroupAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

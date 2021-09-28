@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const PubsubTopicAssetType string = "pubsub.googleapis.com/Topic"
+
+func resourceConverterPubsubTopic() ResourceConverter {
+	return ResourceConverter{
+		AssetType: PubsubTopicAssetType,
+		Convert:   GetPubsubTopicCaiObject,
+	}
+}
+
 func GetPubsubTopicCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/topics/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetPubsubTopicCaiObject(d TerraformResourceData, config *Config) ([]Asset, 
 	if obj, err := GetPubsubTopicApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "pubsub.googleapis.com/Topic",
+			Type: PubsubTopicAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/pubsub/v1/rest",

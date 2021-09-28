@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const MonitoringMetricDescriptorAssetType string = "monitoring.googleapis.com/MetricDescriptor"
+
+func resourceConverterMonitoringMetricDescriptor() ResourceConverter {
+	return ResourceConverter{
+		AssetType: MonitoringMetricDescriptorAssetType,
+		Convert:   GetMonitoringMetricDescriptorCaiObject,
+	}
+}
+
 func GetMonitoringMetricDescriptorCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetMonitoringMetricDescriptorCaiObject(d TerraformResourceData, config *Con
 	if obj, err := GetMonitoringMetricDescriptorApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "monitoring.googleapis.com/MetricDescriptor",
+			Type: MonitoringMetricDescriptorAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",

@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const BinaryAuthorizationAttestorIAMAssetType string = "binaryauthorization.googleapis.com/Attestor"
+
+func resourceConverterBinaryAuthorizationAttestorIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         BinaryAuthorizationAttestorIAMAssetType,
+		Convert:           GetBinaryAuthorizationAttestorIamPolicyCaiObject,
+		MergeCreateUpdate: MergeBinaryAuthorizationAttestorIamPolicy,
+	}
+}
+
+func resourceConverterBinaryAuthorizationAttestorIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         BinaryAuthorizationAttestorIAMAssetType,
+		Convert:           GetBinaryAuthorizationAttestorIamBindingCaiObject,
+		FetchFullResource: FetchBinaryAuthorizationAttestorIamPolicy,
+		MergeCreateUpdate: MergeBinaryAuthorizationAttestorIamBinding,
+		MergeDelete:       MergeBinaryAuthorizationAttestorIamBindingDelete,
+	}
+}
+
+func resourceConverterBinaryAuthorizationAttestorIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         BinaryAuthorizationAttestorIAMAssetType,
+		Convert:           GetBinaryAuthorizationAttestorIamMemberCaiObject,
+		FetchFullResource: FetchBinaryAuthorizationAttestorIamPolicy,
+		MergeCreateUpdate: MergeBinaryAuthorizationAttestorIamMember,
+		MergeDelete:       MergeBinaryAuthorizationAttestorIamMemberDelete,
+	}
+}
+
 func GetBinaryAuthorizationAttestorIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newBinaryAuthorizationAttestorIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newBinaryAuthorizationAttestorIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "binaryauthorization.googleapis.com/Attestor",
+		Type: BinaryAuthorizationAttestorIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchBinaryAuthorizationAttestorIamPolicy(d TerraformResourceData, config *
 		d,
 		config,
 		"//binaryauthorization.googleapis.com/{{attestor}}",
-		"binaryauthorization.googleapis.com/Attestor",
+		BinaryAuthorizationAttestorIAMAssetType,
 	)
 }

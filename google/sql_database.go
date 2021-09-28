@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const SQLDatabaseAssetType string = "sqladmin.googleapis.com/Database"
+
+func resourceConverterSQLDatabase() ResourceConverter {
+	return ResourceConverter{
+		AssetType: SQLDatabaseAssetType,
+		Convert:   GetSQLDatabaseCaiObject,
+	}
+}
+
 func GetSQLDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//sqladmin.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetSQLDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, 
 	if obj, err := GetSQLDatabaseApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "sqladmin.googleapis.com/Database",
+			Type: SQLDatabaseAssetType,
 			Resource: &AssetResource{
 				Version:              "v1beta4",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta4/rest",

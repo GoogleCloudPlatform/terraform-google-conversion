@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const DataLossPreventionStoredInfoTypeAssetType string = "dlp.googleapis.com/StoredInfoType"
+
+func resourceConverterDataLossPreventionStoredInfoType() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DataLossPreventionStoredInfoTypeAssetType,
+		Convert:   GetDataLossPreventionStoredInfoTypeCaiObject,
+	}
+}
+
 func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dlp.googleapis.com/{{parent}}/storedInfoTypes/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, confi
 	if obj, err := GetDataLossPreventionStoredInfoTypeApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dlp.googleapis.com/StoredInfoType",
+			Type: DataLossPreventionStoredInfoTypeAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dlp/v2/rest",

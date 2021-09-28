@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const FirestoreDocumentAssetType string = "firestore.googleapis.com/Document"
+
+func resourceConverterFirestoreDocument() ResourceConverter {
+	return ResourceConverter{
+		AssetType: FirestoreDocumentAssetType,
+		Convert:   GetFirestoreDocumentCaiObject,
+	}
+}
+
 func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetFirestoreDocumentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "firestore.googleapis.com/Document",
+			Type: FirestoreDocumentAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/firestore/v1/rest",

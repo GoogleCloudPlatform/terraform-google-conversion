@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const PrivatecaCertificateAssetType string = "privateca.googleapis.com/Certificate"
+
+func resourceConverterPrivatecaCertificate() ResourceConverter {
+	return ResourceConverter{
+		AssetType: PrivatecaCertificateAssetType,
+		Convert:   GetPrivatecaCertificateCaiObject,
+	}
+}
+
 func GetPrivatecaCertificateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//privateca.googleapis.com/projects/{{project}}/locations/{{location}}/caPools/{{pool}}/certificates/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetPrivatecaCertificateCaiObject(d TerraformResourceData, config *Config) (
 	if obj, err := GetPrivatecaCertificateApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "privateca.googleapis.com/Certificate",
+			Type: PrivatecaCertificateAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/privateca/v1/rest",

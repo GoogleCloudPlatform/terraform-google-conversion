@@ -44,6 +44,15 @@ func isShrinkageIpCidr(_ context.Context, old, new, _ interface{}) bool {
 	return true
 }
 
+const ComputeSubnetworkAssetType string = "compute.googleapis.com/Subnetwork"
+
+func resourceConverterComputeSubnetwork() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeSubnetworkAssetType,
+		Convert:   GetComputeSubnetworkCaiObject,
+	}
+}
+
 func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{name}}")
 	if err != nil {
@@ -52,7 +61,7 @@ func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetComputeSubnetworkApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Subnetwork",
+			Type: ComputeSubnetworkAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

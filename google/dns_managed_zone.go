@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const DNSManagedZoneAssetType string = "dns.googleapis.com/ManagedZone"
+
+func resourceConverterDNSManagedZone() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DNSManagedZoneAssetType,
+		Convert:   GetDNSManagedZoneCaiObject,
+	}
+}
+
 func GetDNSManagedZoneCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetDNSManagedZoneCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	if obj, err := GetDNSManagedZoneApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dns.googleapis.com/ManagedZone",
+			Type: DNSManagedZoneAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const HealthcareDicomStoreAssetType string = "healthcare.googleapis.com/DicomStore"
+
+func resourceConverterHealthcareDicomStore() ResourceConverter {
+	return ResourceConverter{
+		AssetType: HealthcareDicomStoreAssetType,
+		Convert:   GetHealthcareDicomStoreCaiObject,
+	}
+}
+
 func GetHealthcareDicomStoreCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/{{dataset}}/dicomStores/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetHealthcareDicomStoreCaiObject(d TerraformResourceData, config *Config) (
 	if obj, err := GetHealthcareDicomStoreApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "healthcare.googleapis.com/DicomStore",
+			Type: HealthcareDicomStoreAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const AppEngineFirewallRuleAssetType string = "appengine.googleapis.com/FirewallRule"
+
+func resourceConverterAppEngineFirewallRule() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AppEngineFirewallRuleAssetType,
+		Convert:   GetAppEngineFirewallRuleCaiObject,
+	}
+}
+
 func GetAppEngineFirewallRuleCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/firewall/ingressRules/{{priority}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetAppEngineFirewallRuleCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetAppEngineFirewallRuleApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "appengine.googleapis.com/FirewallRule",
+			Type: AppEngineFirewallRuleAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",

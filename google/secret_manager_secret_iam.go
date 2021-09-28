@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const SecretManagerSecretIAMAssetType string = "secretmanager.googleapis.com/Secret"
+
+func resourceConverterSecretManagerSecretIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         SecretManagerSecretIAMAssetType,
+		Convert:           GetSecretManagerSecretIamPolicyCaiObject,
+		MergeCreateUpdate: MergeSecretManagerSecretIamPolicy,
+	}
+}
+
+func resourceConverterSecretManagerSecretIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         SecretManagerSecretIAMAssetType,
+		Convert:           GetSecretManagerSecretIamBindingCaiObject,
+		FetchFullResource: FetchSecretManagerSecretIamPolicy,
+		MergeCreateUpdate: MergeSecretManagerSecretIamBinding,
+		MergeDelete:       MergeSecretManagerSecretIamBindingDelete,
+	}
+}
+
+func resourceConverterSecretManagerSecretIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         SecretManagerSecretIAMAssetType,
+		Convert:           GetSecretManagerSecretIamMemberCaiObject,
+		FetchFullResource: FetchSecretManagerSecretIamPolicy,
+		MergeCreateUpdate: MergeSecretManagerSecretIamMember,
+		MergeDelete:       MergeSecretManagerSecretIamMemberDelete,
+	}
+}
+
 func GetSecretManagerSecretIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newSecretManagerSecretIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newSecretManagerSecretIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "secretmanager.googleapis.com/Secret",
+		Type: SecretManagerSecretIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchSecretManagerSecretIamPolicy(d TerraformResourceData, config *Config) 
 		d,
 		config,
 		"//secretmanager.googleapis.com/{{secret}}",
-		"secretmanager.googleapis.com/Secret",
+		SecretManagerSecretIAMAssetType,
 	)
 }

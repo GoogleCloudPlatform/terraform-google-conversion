@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeInterconnectAttachmentAssetType string = "compute.googleapis.com/InterconnectAttachment"
+
+func resourceConverterComputeInterconnectAttachment() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeInterconnectAttachmentAssetType,
+		Convert:   GetComputeInterconnectAttachmentCaiObject,
+	}
+}
+
 func GetComputeInterconnectAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/interconnectAttachments/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeInterconnectAttachmentCaiObject(d TerraformResourceData, config *
 	if obj, err := GetComputeInterconnectAttachmentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/InterconnectAttachment",
+			Type: ComputeInterconnectAttachmentAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

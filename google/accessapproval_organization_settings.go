@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const AccessApprovalOrganizationSettingsAssetType string = "accessapproval.googleapis.com/OrganizationSettings"
+
+func resourceConverterAccessApprovalOrganizationSettings() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AccessApprovalOrganizationSettingsAssetType,
+		Convert:   GetAccessApprovalOrganizationSettingsCaiObject,
+	}
+}
+
 func GetAccessApprovalOrganizationSettingsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accessapproval.googleapis.com/organizations/{{organization_id}}/accessApprovalSettings")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetAccessApprovalOrganizationSettingsCaiObject(d TerraformResourceData, con
 	if obj, err := GetAccessApprovalOrganizationSettingsApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "accessapproval.googleapis.com/OrganizationSettings",
+			Type: AccessApprovalOrganizationSettingsAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accessapproval/v1/rest",

@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ComputeResourcePolicyAssetType string = "compute.googleapis.com/ResourcePolicy"
+
+func resourceConverterComputeResourcePolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeResourcePolicyAssetType,
+		Convert:   GetComputeResourcePolicyCaiObject,
+	}
+}
+
 func GetComputeResourcePolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/resourcePolicies/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetComputeResourcePolicyCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetComputeResourcePolicyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/ResourcePolicy",
+			Type: ComputeResourcePolicyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

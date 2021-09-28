@@ -232,6 +232,15 @@ func suppressWindowsFamilyDiff(imageName, familyName string) bool {
 	return strings.Contains(updatedImageName, updatedFamilyString)
 }
 
+const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
+
+func resourceConverterComputeDisk() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeDiskAssetType,
+		Convert:   GetComputeDiskCaiObject,
+	}
+}
+
 func GetComputeDiskCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{name}}")
 	if err != nil {
@@ -240,7 +249,7 @@ func GetComputeDiskCaiObject(d TerraformResourceData, config *Config) ([]Asset, 
 	if obj, err := GetComputeDiskApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Disk",
+			Type: ComputeDiskAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

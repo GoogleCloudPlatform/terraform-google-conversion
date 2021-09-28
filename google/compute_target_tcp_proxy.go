@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeTargetTcpProxyAssetType string = "compute.googleapis.com/TargetTcpProxy"
+
+func resourceConverterComputeTargetTcpProxy() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeTargetTcpProxyAssetType,
+		Convert:   GetComputeTargetTcpProxyCaiObject,
+	}
+}
+
 func GetComputeTargetTcpProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetTcpProxies/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeTargetTcpProxyCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetComputeTargetTcpProxyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/TargetTcpProxy",
+			Type: ComputeTargetTcpProxyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

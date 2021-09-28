@@ -21,6 +21,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ComputeAutoscalerAssetType string = "compute.googleapis.com/Autoscaler"
+
+func resourceConverterComputeAutoscaler() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeAutoscalerAssetType,
+		Convert:   GetComputeAutoscalerCaiObject,
+	}
+}
+
 func GetComputeAutoscalerCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/autoscalers/{{name}}")
 	if err != nil {
@@ -29,7 +38,7 @@ func GetComputeAutoscalerCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetComputeAutoscalerApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Autoscaler",
+			Type: ComputeAutoscalerAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const TagsTagBindingAssetType string = "cloudresourcemanager.googleapis.com/TagBinding"
+
+func resourceConverterTagsTagBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType: TagsTagBindingAssetType,
+		Convert:   GetTagsTagBindingCaiObject,
+	}
+}
+
 func GetTagsTagBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudresourcemanager.googleapis.com/tagBindings/?parent={{parent}}&pageSize=300")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetTagsTagBindingCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	if obj, err := GetTagsTagBindingApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudresourcemanager.googleapis.com/TagBinding",
+			Type: TagsTagBindingAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudresourcemanager/v3/rest",

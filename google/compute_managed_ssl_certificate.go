@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ComputeManagedSslCertificateAssetType string = "compute.googleapis.com/ManagedSslCertificate"
+
+func resourceConverterComputeManagedSslCertificate() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeManagedSslCertificateAssetType,
+		Convert:   GetComputeManagedSslCertificateCaiObject,
+	}
+}
+
 func GetComputeManagedSslCertificateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/sslCertificates/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetComputeManagedSslCertificateCaiObject(d TerraformResourceData, config *C
 	if obj, err := GetComputeManagedSslCertificateApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/ManagedSslCertificate",
+			Type: ComputeManagedSslCertificateAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

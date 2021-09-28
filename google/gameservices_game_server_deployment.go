@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const GameServicesGameServerDeploymentAssetType string = "gameservices.googleapis.com/GameServerDeployment"
+
+func resourceConverterGameServicesGameServerDeployment() ResourceConverter {
+	return ResourceConverter{
+		AssetType: GameServicesGameServerDeploymentAssetType,
+		Convert:   GetGameServicesGameServerDeploymentCaiObject,
+	}
+}
+
 func GetGameServicesGameServerDeploymentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/gameServerDeployments/{{deployment_id}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetGameServicesGameServerDeploymentCaiObject(d TerraformResourceData, confi
 	if obj, err := GetGameServicesGameServerDeploymentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "gameservices.googleapis.com/GameServerDeployment",
+			Type: GameServicesGameServerDeploymentAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gameservices/v1/rest",

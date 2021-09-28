@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const CloudIdentityGroupAssetType string = "cloudidentity.googleapis.com/Group"
+
+func resourceConverterCloudIdentityGroup() ResourceConverter {
+	return ResourceConverter{
+		AssetType: CloudIdentityGroupAssetType,
+		Convert:   GetCloudIdentityGroupCaiObject,
+	}
+}
+
 func GetCloudIdentityGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudidentity.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetCloudIdentityGroupCaiObject(d TerraformResourceData, config *Config) ([]
 	if obj, err := GetCloudIdentityGroupApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudidentity.googleapis.com/Group",
+			Type: CloudIdentityGroupAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudidentity/v1/rest",

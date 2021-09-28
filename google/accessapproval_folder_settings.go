@@ -47,6 +47,15 @@ func accessApprovalEnrolledServicesHash(v interface{}) int {
 	return hashcode(buf.String())
 }
 
+const AccessApprovalFolderSettingsAssetType string = "accessapproval.googleapis.com/FolderSettings"
+
+func resourceConverterAccessApprovalFolderSettings() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AccessApprovalFolderSettingsAssetType,
+		Convert:   GetAccessApprovalFolderSettingsCaiObject,
+	}
+}
+
 func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accessapproval.googleapis.com/folders/{{folder_id}}/accessApprovalSettings")
 	if err != nil {
@@ -55,7 +64,7 @@ func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *C
 	if obj, err := GetAccessApprovalFolderSettingsApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "accessapproval.googleapis.com/FolderSettings",
+			Type: AccessApprovalFolderSettingsAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accessapproval/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const MonitoringGroupAssetType string = "monitoring.googleapis.com/Group"
+
+func resourceConverterMonitoringGroup() ResourceConverter {
+	return ResourceConverter{
+		AssetType: MonitoringGroupAssetType,
+		Convert:   GetMonitoringGroupCaiObject,
+	}
+}
+
 func GetMonitoringGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetMonitoringGroupCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetMonitoringGroupApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "monitoring.googleapis.com/Group",
+			Type: MonitoringGroupAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",

@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const DataCatalogEntryGroupIAMAssetType string = "datacatalog.googleapis.com/EntryGroup"
+
+func resourceConverterDataCatalogEntryGroupIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         DataCatalogEntryGroupIAMAssetType,
+		Convert:           GetDataCatalogEntryGroupIamPolicyCaiObject,
+		MergeCreateUpdate: MergeDataCatalogEntryGroupIamPolicy,
+	}
+}
+
+func resourceConverterDataCatalogEntryGroupIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         DataCatalogEntryGroupIAMAssetType,
+		Convert:           GetDataCatalogEntryGroupIamBindingCaiObject,
+		FetchFullResource: FetchDataCatalogEntryGroupIamPolicy,
+		MergeCreateUpdate: MergeDataCatalogEntryGroupIamBinding,
+		MergeDelete:       MergeDataCatalogEntryGroupIamBindingDelete,
+	}
+}
+
+func resourceConverterDataCatalogEntryGroupIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         DataCatalogEntryGroupIAMAssetType,
+		Convert:           GetDataCatalogEntryGroupIamMemberCaiObject,
+		FetchFullResource: FetchDataCatalogEntryGroupIamPolicy,
+		MergeCreateUpdate: MergeDataCatalogEntryGroupIamMember,
+		MergeDelete:       MergeDataCatalogEntryGroupIamMemberDelete,
+	}
+}
+
 func GetDataCatalogEntryGroupIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newDataCatalogEntryGroupIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newDataCatalogEntryGroupIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "datacatalog.googleapis.com/EntryGroup",
+		Type: DataCatalogEntryGroupIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchDataCatalogEntryGroupIamPolicy(d TerraformResourceData, config *Config
 		d,
 		config,
 		"//datacatalog.googleapis.com/{{entrygroup}}",
-		"datacatalog.googleapis.com/EntryGroup",
+		DataCatalogEntryGroupIAMAssetType,
 	)
 }

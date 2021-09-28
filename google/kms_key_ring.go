@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const KMSKeyRingAssetType string = "cloudkms.googleapis.com/KeyRing"
+
+func resourceConverterKMSKeyRing() ResourceConverter {
+	return ResourceConverter{
+		AssetType: KMSKeyRingAssetType,
+		Convert:   GetKMSKeyRingCaiObject,
+	}
+}
+
 func GetKMSKeyRingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudkms.googleapis.com/projects/{{project}}/locations/{{location}}/keyRings/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetKMSKeyRingCaiObject(d TerraformResourceData, config *Config) ([]Asset, e
 	if obj, err := GetKMSKeyRingApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudkms.googleapis.com/KeyRing",
+			Type: KMSKeyRingAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudkms/v1/rest",

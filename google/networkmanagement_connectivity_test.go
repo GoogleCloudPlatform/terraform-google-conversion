@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const NetworkManagementConnectivityTestAssetType string = "networkmanagement.googleapis.com/ConnectivityTest"
+
+func resourceConverterNetworkManagementConnectivityTest() ResourceConverter {
+	return ResourceConverter{
+		AssetType: NetworkManagementConnectivityTestAssetType,
+		Convert:   GetNetworkManagementConnectivityTestCaiObject,
+	}
+}
+
 func GetNetworkManagementConnectivityTestCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//networkmanagement.googleapis.com/projects/{{project}}/locations/global/connectivityTests/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetNetworkManagementConnectivityTestCaiObject(d TerraformResourceData, conf
 	if obj, err := GetNetworkManagementConnectivityTestApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "networkmanagement.googleapis.com/ConnectivityTest",
+			Type: NetworkManagementConnectivityTestAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkmanagement/v1/rest",

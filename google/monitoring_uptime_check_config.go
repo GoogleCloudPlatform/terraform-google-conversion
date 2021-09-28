@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const MonitoringUptimeCheckConfigAssetType string = "monitoring.googleapis.com/UptimeCheckConfig"
+
+func resourceConverterMonitoringUptimeCheckConfig() ResourceConverter {
+	return ResourceConverter{
+		AssetType: MonitoringUptimeCheckConfigAssetType,
+		Convert:   GetMonitoringUptimeCheckConfigCaiObject,
+	}
+}
+
 func GetMonitoringUptimeCheckConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetMonitoringUptimeCheckConfigCaiObject(d TerraformResourceData, config *Co
 	if obj, err := GetMonitoringUptimeCheckConfigApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "monitoring.googleapis.com/UptimeCheckConfig",
+			Type: MonitoringUptimeCheckConfigAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",

@@ -20,6 +20,15 @@ import (
 	"strings"
 )
 
+const ComputeTargetInstanceAssetType string = "compute.googleapis.com/TargetInstance"
+
+func resourceConverterComputeTargetInstance() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeTargetInstanceAssetType,
+		Convert:   GetComputeTargetInstanceCaiObject,
+	}
+}
+
 func GetComputeTargetInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/targetInstances/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetComputeTargetInstanceCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetComputeTargetInstanceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/TargetInstance",
+			Type: ComputeTargetInstanceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

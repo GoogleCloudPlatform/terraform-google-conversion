@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const DataCatalogEntryAssetType string = "datacatalog.googleapis.com/Entry"
+
+func resourceConverterDataCatalogEntry() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DataCatalogEntryAssetType,
+		Convert:   GetDataCatalogEntryCaiObject,
+	}
+}
+
 func GetDataCatalogEntryCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetDataCatalogEntryCaiObject(d TerraformResourceData, config *Config) ([]As
 	if obj, err := GetDataCatalogEntryApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "datacatalog.googleapis.com/Entry",
+			Type: DataCatalogEntryAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datacatalog/v1/rest",

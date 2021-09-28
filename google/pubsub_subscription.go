@@ -35,6 +35,15 @@ func comparePubsubSubscriptionExpirationPolicy(_, old, new string, _ *schema.Res
 	return trimmedNew == trimmedOld
 }
 
+const PubsubSubscriptionAssetType string = "pubsub.googleapis.com/Subscription"
+
+func resourceConverterPubsubSubscription() ResourceConverter {
+	return ResourceConverter{
+		AssetType: PubsubSubscriptionAssetType,
+		Convert:   GetPubsubSubscriptionCaiObject,
+	}
+}
+
 func GetPubsubSubscriptionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/subscriptions/{{name}}")
 	if err != nil {
@@ -43,7 +52,7 @@ func GetPubsubSubscriptionCaiObject(d TerraformResourceData, config *Config) ([]
 	if obj, err := GetPubsubSubscriptionApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "pubsub.googleapis.com/Subscription",
+			Type: PubsubSubscriptionAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/pubsub/v1/rest",

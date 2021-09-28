@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const ComputeInstanceIAMAssetType string = "compute.googleapis.com/Instance"
+
+func resourceConverterComputeInstanceIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeInstanceIAMAssetType,
+		Convert:           GetComputeInstanceIamPolicyCaiObject,
+		MergeCreateUpdate: MergeComputeInstanceIamPolicy,
+	}
+}
+
+func resourceConverterComputeInstanceIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeInstanceIAMAssetType,
+		Convert:           GetComputeInstanceIamBindingCaiObject,
+		FetchFullResource: FetchComputeInstanceIamPolicy,
+		MergeCreateUpdate: MergeComputeInstanceIamBinding,
+		MergeDelete:       MergeComputeInstanceIamBindingDelete,
+	}
+}
+
+func resourceConverterComputeInstanceIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeInstanceIAMAssetType,
+		Convert:           GetComputeInstanceIamMemberCaiObject,
+		FetchFullResource: FetchComputeInstanceIamPolicy,
+		MergeCreateUpdate: MergeComputeInstanceIamMember,
+		MergeDelete:       MergeComputeInstanceIamMemberDelete,
+	}
+}
+
 func GetComputeInstanceIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newComputeInstanceIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newComputeInstanceIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "compute.googleapis.com/Instance",
+		Type: ComputeInstanceIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchComputeInstanceIamPolicy(d TerraformResourceData, config *Config) (Ass
 		d,
 		config,
 		"//compute.googleapis.com/{{instance}}",
-		"compute.googleapis.com/Instance",
+		ComputeInstanceIAMAssetType,
 	)
 }

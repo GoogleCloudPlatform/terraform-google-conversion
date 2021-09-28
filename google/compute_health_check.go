@@ -107,6 +107,15 @@ func portDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	return false
 }
 
+const ComputeHealthCheckAssetType string = "compute.googleapis.com/HealthCheck"
+
+func resourceConverterComputeHealthCheck() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeHealthCheckAssetType,
+		Convert:   GetComputeHealthCheckCaiObject,
+	}
+}
+
 func GetComputeHealthCheckCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/healthChecks/{{name}}")
 	if err != nil {
@@ -115,7 +124,7 @@ func GetComputeHealthCheckCaiObject(d TerraformResourceData, config *Config) ([]
 	if obj, err := GetComputeHealthCheckApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/HealthCheck",
+			Type: ComputeHealthCheckAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

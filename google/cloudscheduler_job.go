@@ -92,6 +92,15 @@ func validateHttpHeaders() schema.SchemaValidateFunc {
 	}
 }
 
+const CloudSchedulerJobAssetType string = "cloudscheduler.googleapis.com/Job"
+
+func resourceConverterCloudSchedulerJob() ResourceConverter {
+	return ResourceConverter{
+		AssetType: CloudSchedulerJobAssetType,
+		Convert:   GetCloudSchedulerJobCaiObject,
+	}
+}
+
 func GetCloudSchedulerJobCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudscheduler.googleapis.com/projects/{{project}}/locations/{{region}}/jobs/{{name}}")
 	if err != nil {
@@ -100,7 +109,7 @@ func GetCloudSchedulerJobCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetCloudSchedulerJobApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudscheduler.googleapis.com/Job",
+			Type: CloudSchedulerJobAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudscheduler/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const GameServicesRealmAssetType string = "gameservices.googleapis.com/Realm"
+
+func resourceConverterGameServicesRealm() ResourceConverter {
+	return ResourceConverter{
+		AssetType: GameServicesRealmAssetType,
+		Convert:   GetGameServicesRealmCaiObject,
+	}
+}
+
 func GetGameServicesRealmCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/realms/{{realm_id}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetGameServicesRealmCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetGameServicesRealmApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "gameservices.googleapis.com/Realm",
+			Type: GameServicesRealmAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gameservices/v1/rest",

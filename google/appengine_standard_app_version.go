@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const AppEngineStandardAppVersionAssetType string = "appengine.googleapis.com/StandardAppVersion"
+
+func resourceConverterAppEngineStandardAppVersion() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AppEngineStandardAppVersionAssetType,
+		Convert:   GetAppEngineStandardAppVersionCaiObject,
+	}
+}
+
 func GetAppEngineStandardAppVersionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}/versions/{{version_id}}?view=FULL")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetAppEngineStandardAppVersionCaiObject(d TerraformResourceData, config *Co
 	if obj, err := GetAppEngineStandardAppVersionApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "appengine.googleapis.com/StandardAppVersion",
+			Type: AppEngineStandardAppVersionAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",

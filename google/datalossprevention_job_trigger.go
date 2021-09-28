@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const DataLossPreventionJobTriggerAssetType string = "dlp.googleapis.com/JobTrigger"
+
+func resourceConverterDataLossPreventionJobTrigger() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DataLossPreventionJobTriggerAssetType,
+		Convert:   GetDataLossPreventionJobTriggerCaiObject,
+	}
+}
+
 func GetDataLossPreventionJobTriggerCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dlp.googleapis.com/{{parent}}/jobTriggers/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetDataLossPreventionJobTriggerCaiObject(d TerraformResourceData, config *C
 	if obj, err := GetDataLossPreventionJobTriggerApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dlp.googleapis.com/JobTrigger",
+			Type: DataLossPreventionJobTriggerAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dlp/v2/rest",

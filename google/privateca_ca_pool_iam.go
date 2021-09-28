@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const PrivatecaCaPoolIAMAssetType string = "privateca.googleapis.com/CaPool"
+
+func resourceConverterPrivatecaCaPoolIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         PrivatecaCaPoolIAMAssetType,
+		Convert:           GetPrivatecaCaPoolIamPolicyCaiObject,
+		MergeCreateUpdate: MergePrivatecaCaPoolIamPolicy,
+	}
+}
+
+func resourceConverterPrivatecaCaPoolIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         PrivatecaCaPoolIAMAssetType,
+		Convert:           GetPrivatecaCaPoolIamBindingCaiObject,
+		FetchFullResource: FetchPrivatecaCaPoolIamPolicy,
+		MergeCreateUpdate: MergePrivatecaCaPoolIamBinding,
+		MergeDelete:       MergePrivatecaCaPoolIamBindingDelete,
+	}
+}
+
+func resourceConverterPrivatecaCaPoolIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         PrivatecaCaPoolIAMAssetType,
+		Convert:           GetPrivatecaCaPoolIamMemberCaiObject,
+		FetchFullResource: FetchPrivatecaCaPoolIamPolicy,
+		MergeCreateUpdate: MergePrivatecaCaPoolIamMember,
+		MergeDelete:       MergePrivatecaCaPoolIamMemberDelete,
+	}
+}
+
 func GetPrivatecaCaPoolIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newPrivatecaCaPoolIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newPrivatecaCaPoolIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "privateca.googleapis.com/CaPool",
+		Type: PrivatecaCaPoolIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchPrivatecaCaPoolIamPolicy(d TerraformResourceData, config *Config) (Ass
 		d,
 		config,
 		"//privateca.googleapis.com/{{capool}}",
-		"privateca.googleapis.com/CaPool",
+		PrivatecaCaPoolIAMAssetType,
 	)
 }

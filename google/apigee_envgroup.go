@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ApigeeEnvgroupAssetType string = "apigee.googleapis.com/Envgroup"
+
+func resourceConverterApigeeEnvgroup() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ApigeeEnvgroupAssetType,
+		Convert:   GetApigeeEnvgroupCaiObject,
+	}
+}
+
 func GetApigeeEnvgroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{org_id}}/envgroups/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetApigeeEnvgroupCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	if obj, err := GetApigeeEnvgroupApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "apigee.googleapis.com/Envgroup",
+			Type: ApigeeEnvgroupAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/apigee/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ApigeeOrganizationAssetType string = "apigee.googleapis.com/Organization"
+
+func resourceConverterApigeeOrganization() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ApigeeOrganizationAssetType,
+		Convert:   GetApigeeOrganizationCaiObject,
+	}
+}
+
 func GetApigeeOrganizationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/organizations/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetApigeeOrganizationCaiObject(d TerraformResourceData, config *Config) ([]
 	if obj, err := GetApigeeOrganizationApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "apigee.googleapis.com/Organization",
+			Type: ApigeeOrganizationAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/apigee/v1/rest",

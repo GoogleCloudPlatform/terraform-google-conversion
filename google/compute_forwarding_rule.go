@@ -22,6 +22,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ComputeForwardingRuleAssetType string = "compute.googleapis.com/ForwardingRule"
+
+func resourceConverterComputeForwardingRule() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeForwardingRuleAssetType,
+		Convert:   GetComputeForwardingRuleCaiObject,
+	}
+}
+
 func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/forwardingRules/{{name}}")
 	if err != nil {
@@ -30,7 +39,7 @@ func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetComputeForwardingRuleApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/ForwardingRule",
+			Type: ComputeForwardingRuleAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

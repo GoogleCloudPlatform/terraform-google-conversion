@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const ServiceManagementServiceIAMAssetType string = "servicemanagement.googleapis.com/Service"
+
+func resourceConverterServiceManagementServiceIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ServiceManagementServiceIAMAssetType,
+		Convert:           GetServiceManagementServiceIamPolicyCaiObject,
+		MergeCreateUpdate: MergeServiceManagementServiceIamPolicy,
+	}
+}
+
+func resourceConverterServiceManagementServiceIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ServiceManagementServiceIAMAssetType,
+		Convert:           GetServiceManagementServiceIamBindingCaiObject,
+		FetchFullResource: FetchServiceManagementServiceIamPolicy,
+		MergeCreateUpdate: MergeServiceManagementServiceIamBinding,
+		MergeDelete:       MergeServiceManagementServiceIamBindingDelete,
+	}
+}
+
+func resourceConverterServiceManagementServiceIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ServiceManagementServiceIAMAssetType,
+		Convert:           GetServiceManagementServiceIamMemberCaiObject,
+		FetchFullResource: FetchServiceManagementServiceIamPolicy,
+		MergeCreateUpdate: MergeServiceManagementServiceIamMember,
+		MergeDelete:       MergeServiceManagementServiceIamMemberDelete,
+	}
+}
+
 func GetServiceManagementServiceIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newServiceManagementServiceIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newServiceManagementServiceIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "servicemanagement.googleapis.com/Service",
+		Type: ServiceManagementServiceIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchServiceManagementServiceIamPolicy(d TerraformResourceData, config *Con
 		d,
 		config,
 		"//servicemanagement.googleapis.com/{{service}}",
-		"servicemanagement.googleapis.com/Service",
+		ServiceManagementServiceIAMAssetType,
 	)
 }

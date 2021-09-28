@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const NotebooksInstanceIAMAssetType string = "notebooks.googleapis.com/Instance"
+
+func resourceConverterNotebooksInstanceIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         NotebooksInstanceIAMAssetType,
+		Convert:           GetNotebooksInstanceIamPolicyCaiObject,
+		MergeCreateUpdate: MergeNotebooksInstanceIamPolicy,
+	}
+}
+
+func resourceConverterNotebooksInstanceIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         NotebooksInstanceIAMAssetType,
+		Convert:           GetNotebooksInstanceIamBindingCaiObject,
+		FetchFullResource: FetchNotebooksInstanceIamPolicy,
+		MergeCreateUpdate: MergeNotebooksInstanceIamBinding,
+		MergeDelete:       MergeNotebooksInstanceIamBindingDelete,
+	}
+}
+
+func resourceConverterNotebooksInstanceIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         NotebooksInstanceIAMAssetType,
+		Convert:           GetNotebooksInstanceIamMemberCaiObject,
+		FetchFullResource: FetchNotebooksInstanceIamPolicy,
+		MergeCreateUpdate: MergeNotebooksInstanceIamMember,
+		MergeDelete:       MergeNotebooksInstanceIamMemberDelete,
+	}
+}
+
 func GetNotebooksInstanceIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newNotebooksInstanceIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newNotebooksInstanceIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "notebooks.googleapis.com/Instance",
+		Type: NotebooksInstanceIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchNotebooksInstanceIamPolicy(d TerraformResourceData, config *Config) (A
 		d,
 		config,
 		"//notebooks.googleapis.com/{{instance}}",
-		"notebooks.googleapis.com/Instance",
+		NotebooksInstanceIAMAssetType,
 	)
 }

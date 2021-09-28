@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const MonitoringAlertPolicyAssetType string = "monitoring.googleapis.com/AlertPolicy"
+
+func resourceConverterMonitoringAlertPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType: MonitoringAlertPolicyAssetType,
+		Convert:   GetMonitoringAlertPolicyCaiObject,
+	}
+}
+
 func GetMonitoringAlertPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetMonitoringAlertPolicyCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetMonitoringAlertPolicyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "monitoring.googleapis.com/AlertPolicy",
+			Type: MonitoringAlertPolicyAssetType,
 			Resource: &AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",

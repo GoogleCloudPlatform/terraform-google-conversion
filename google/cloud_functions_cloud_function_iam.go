@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const CloudFunctionsCloudFunctionIAMAssetType string = "cloudfunctions.googleapis.com/CloudFunction"
+
+func resourceConverterCloudFunctionsCloudFunctionIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         CloudFunctionsCloudFunctionIAMAssetType,
+		Convert:           GetCloudFunctionsCloudFunctionIamPolicyCaiObject,
+		MergeCreateUpdate: MergeCloudFunctionsCloudFunctionIamPolicy,
+	}
+}
+
+func resourceConverterCloudFunctionsCloudFunctionIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         CloudFunctionsCloudFunctionIAMAssetType,
+		Convert:           GetCloudFunctionsCloudFunctionIamBindingCaiObject,
+		FetchFullResource: FetchCloudFunctionsCloudFunctionIamPolicy,
+		MergeCreateUpdate: MergeCloudFunctionsCloudFunctionIamBinding,
+		MergeDelete:       MergeCloudFunctionsCloudFunctionIamBindingDelete,
+	}
+}
+
+func resourceConverterCloudFunctionsCloudFunctionIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         CloudFunctionsCloudFunctionIAMAssetType,
+		Convert:           GetCloudFunctionsCloudFunctionIamMemberCaiObject,
+		FetchFullResource: FetchCloudFunctionsCloudFunctionIamPolicy,
+		MergeCreateUpdate: MergeCloudFunctionsCloudFunctionIamMember,
+		MergeDelete:       MergeCloudFunctionsCloudFunctionIamMemberDelete,
+	}
+}
+
 func GetCloudFunctionsCloudFunctionIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newCloudFunctionsCloudFunctionIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newCloudFunctionsCloudFunctionIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "cloudfunctions.googleapis.com/CloudFunction",
+		Type: CloudFunctionsCloudFunctionIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchCloudFunctionsCloudFunctionIamPolicy(d TerraformResourceData, config *
 		d,
 		config,
 		"//cloudfunctions.googleapis.com/{{cloudfunction}}",
-		"cloudfunctions.googleapis.com/CloudFunction",
+		CloudFunctionsCloudFunctionIAMAssetType,
 	)
 }

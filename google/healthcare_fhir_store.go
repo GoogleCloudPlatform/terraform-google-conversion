@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const HealthcareFhirStoreAssetType string = "healthcare.googleapis.com/FhirStore"
+
+func resourceConverterHealthcareFhirStore() ResourceConverter {
+	return ResourceConverter{
+		AssetType: HealthcareFhirStoreAssetType,
+		Convert:   GetHealthcareFhirStoreCaiObject,
+	}
+}
+
 func GetHealthcareFhirStoreCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/{{dataset}}/fhirStores/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetHealthcareFhirStoreCaiObject(d TerraformResourceData, config *Config) ([
 	if obj, err := GetHealthcareFhirStoreApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "healthcare.googleapis.com/FhirStore",
+			Type: HealthcareFhirStoreAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const HealthcareDatasetAssetType string = "healthcare.googleapis.com/Dataset"
+
+func resourceConverterHealthcareDataset() ResourceConverter {
+	return ResourceConverter{
+		AssetType: HealthcareDatasetAssetType,
+		Convert:   GetHealthcareDatasetCaiObject,
+	}
+}
+
 func GetHealthcareDatasetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/projects/{{project}}/locations/{{location}}/datasets/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetHealthcareDatasetCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetHealthcareDatasetApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "healthcare.googleapis.com/Dataset",
+			Type: HealthcareDatasetAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1/rest",

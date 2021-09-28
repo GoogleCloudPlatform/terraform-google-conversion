@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const StorageBucketIAMAssetType string = "storage.googleapis.com/Bucket"
+
+func resourceConverterStorageBucketIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         StorageBucketIAMAssetType,
+		Convert:           GetStorageBucketIamPolicyCaiObject,
+		MergeCreateUpdate: MergeStorageBucketIamPolicy,
+	}
+}
+
+func resourceConverterStorageBucketIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         StorageBucketIAMAssetType,
+		Convert:           GetStorageBucketIamBindingCaiObject,
+		FetchFullResource: FetchStorageBucketIamPolicy,
+		MergeCreateUpdate: MergeStorageBucketIamBinding,
+		MergeDelete:       MergeStorageBucketIamBindingDelete,
+	}
+}
+
+func resourceConverterStorageBucketIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         StorageBucketIAMAssetType,
+		Convert:           GetStorageBucketIamMemberCaiObject,
+		FetchFullResource: FetchStorageBucketIamPolicy,
+		MergeCreateUpdate: MergeStorageBucketIamMember,
+		MergeDelete:       MergeStorageBucketIamMemberDelete,
+	}
+}
+
 func GetStorageBucketIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newStorageBucketIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newStorageBucketIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "storage.googleapis.com/Bucket",
+		Type: StorageBucketIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchStorageBucketIamPolicy(d TerraformResourceData, config *Config) (Asset
 		d,
 		config,
 		"//storage.googleapis.com/{{bucket}}",
-		"storage.googleapis.com/Bucket",
+		StorageBucketIAMAssetType,
 	)
 }

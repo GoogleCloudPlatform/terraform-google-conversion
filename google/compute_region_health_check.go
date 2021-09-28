@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeRegionHealthCheckAssetType string = "compute.googleapis.com/RegionHealthCheck"
+
+func resourceConverterComputeRegionHealthCheck() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeRegionHealthCheckAssetType,
+		Convert:   GetComputeRegionHealthCheckCaiObject,
+	}
+}
+
 func GetComputeRegionHealthCheckCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/healthChecks/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeRegionHealthCheckCaiObject(d TerraformResourceData, config *Confi
 	if obj, err := GetComputeRegionHealthCheckApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/RegionHealthCheck",
+			Type: ComputeRegionHealthCheckAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

@@ -72,6 +72,15 @@ func resourceComputeFirewallEnableLoggingCustomizeDiff(_ context.Context, diff *
 	return nil
 }
 
+const ComputeFirewallAssetType string = "compute.googleapis.com/Firewall"
+
+func resourceConverterComputeFirewall() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeFirewallAssetType,
+		Convert:   GetComputeFirewallCaiObject,
+	}
+}
+
 func GetComputeFirewallCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/firewalls/{{name}}")
 	if err != nil {
@@ -80,7 +89,7 @@ func GetComputeFirewallCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	if obj, err := GetComputeFirewallApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Firewall",
+			Type: ComputeFirewallAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

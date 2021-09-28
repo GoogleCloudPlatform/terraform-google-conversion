@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const DatastoreIndexAssetType string = "datastore.googleapis.com/Index"
+
+func resourceConverterDatastoreIndex() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DatastoreIndexAssetType,
+		Convert:   GetDatastoreIndexCaiObject,
+	}
+}
+
 func GetDatastoreIndexCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datastore.googleapis.com/projects/{{project}}/indexes/{{index_id}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetDatastoreIndexCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	if obj, err := GetDatastoreIndexApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "datastore.googleapis.com/Index",
+			Type: DatastoreIndexAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datastore/v1/rest",

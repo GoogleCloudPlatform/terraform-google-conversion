@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeTargetSslProxyAssetType string = "compute.googleapis.com/TargetSslProxy"
+
+func resourceConverterComputeTargetSslProxy() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeTargetSslProxyAssetType,
+		Convert:   GetComputeTargetSslProxyCaiObject,
+	}
+}
+
 func GetComputeTargetSslProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetSslProxies/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeTargetSslProxyCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetComputeTargetSslProxyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/TargetSslProxy",
+			Type: ComputeTargetSslProxyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

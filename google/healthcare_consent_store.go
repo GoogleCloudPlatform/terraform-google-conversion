@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const HealthcareConsentStoreAssetType string = "healthcare.googleapis.com/ConsentStore"
+
+func resourceConverterHealthcareConsentStore() ResourceConverter {
+	return ResourceConverter{
+		AssetType: HealthcareConsentStoreAssetType,
+		Convert:   GetHealthcareConsentStoreCaiObject,
+	}
+}
+
 func GetHealthcareConsentStoreCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/{{dataset}}/consentStores/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetHealthcareConsentStoreCaiObject(d TerraformResourceData, config *Config)
 	if obj, err := GetHealthcareConsentStoreApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "healthcare.googleapis.com/ConsentStore",
+			Type: HealthcareConsentStoreAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1/rest",

@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const DataLossPreventionInspectTemplateAssetType string = "dlp.googleapis.com/InspectTemplate"
+
+func resourceConverterDataLossPreventionInspectTemplate() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DataLossPreventionInspectTemplateAssetType,
+		Convert:   GetDataLossPreventionInspectTemplateCaiObject,
+	}
+}
+
 func GetDataLossPreventionInspectTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dlp.googleapis.com/{{parent}}/inspectTemplates/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetDataLossPreventionInspectTemplateCaiObject(d TerraformResourceData, conf
 	if obj, err := GetDataLossPreventionInspectTemplateApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "dlp.googleapis.com/InspectTemplate",
+			Type: DataLossPreventionInspectTemplateAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dlp/v2/rest",

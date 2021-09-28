@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const AccessContextManagerAccessLevelAssetType string = "accesscontextmanager.googleapis.com/AccessLevel"
+
+func resourceConverterAccessContextManagerAccessLevel() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AccessContextManagerAccessLevelAssetType,
+		Convert:   GetAccessContextManagerAccessLevelCaiObject,
+	}
+}
+
 func GetAccessContextManagerAccessLevelCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetAccessContextManagerAccessLevelCaiObject(d TerraformResourceData, config
 	if obj, err := GetAccessContextManagerAccessLevelApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "accesscontextmanager.googleapis.com/AccessLevel",
+			Type: AccessContextManagerAccessLevelAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accesscontextmanager/v1/rest",

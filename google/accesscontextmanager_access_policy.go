@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const AccessContextManagerAccessPolicyAssetType string = "accesscontextmanager.googleapis.com/AccessPolicy"
+
+func resourceConverterAccessContextManagerAccessPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType: AccessContextManagerAccessPolicyAssetType,
+		Convert:   GetAccessContextManagerAccessPolicyCaiObject,
+	}
+}
+
 func GetAccessContextManagerAccessPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/accessPolicies/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetAccessContextManagerAccessPolicyCaiObject(d TerraformResourceData, confi
 	if obj, err := GetAccessContextManagerAccessPolicyApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "accesscontextmanager.googleapis.com/AccessPolicy",
+			Type: AccessContextManagerAccessPolicyAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accesscontextmanager/v1/rest",

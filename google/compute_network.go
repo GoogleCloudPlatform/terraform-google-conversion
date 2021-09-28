@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ComputeNetworkAssetType string = "compute.googleapis.com/Network"
+
+func resourceConverterComputeNetwork() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeNetworkAssetType,
+		Convert:   GetComputeNetworkCaiObject,
+	}
+}
+
 func GetComputeNetworkCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networks/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetComputeNetworkCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	if obj, err := GetComputeNetworkApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Network",
+			Type: ComputeNetworkAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

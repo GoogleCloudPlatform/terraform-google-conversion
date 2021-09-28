@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const SecurityCenterNotificationConfigAssetType string = "securitycenter.googleapis.com/NotificationConfig"
+
+func resourceConverterSecurityCenterNotificationConfig() ResourceConverter {
+	return ResourceConverter{
+		AssetType: SecurityCenterNotificationConfigAssetType,
+		Convert:   GetSecurityCenterNotificationConfigCaiObject,
+	}
+}
+
 func GetSecurityCenterNotificationConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//securitycenter.googleapis.com/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetSecurityCenterNotificationConfigCaiObject(d TerraformResourceData, confi
 	if obj, err := GetSecurityCenterNotificationConfigApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "securitycenter.googleapis.com/NotificationConfig",
+			Type: SecurityCenterNotificationConfigAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/securitycenter/v1/rest",

@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeInstanceGroupNamedPortAssetType string = "compute.googleapis.com/InstanceGroupNamedPort"
+
+func resourceConverterComputeInstanceGroupNamedPort() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeInstanceGroupNamedPortAssetType,
+		Convert:   GetComputeInstanceGroupNamedPortCaiObject,
+	}
+}
+
 func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceGroups/{{group}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *
 	if obj, err := GetComputeInstanceGroupNamedPortApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/InstanceGroupNamedPort",
+			Type: ComputeInstanceGroupNamedPortAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

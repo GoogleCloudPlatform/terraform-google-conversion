@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ApigeeInstanceAttachmentAssetType string = "apigee.googleapis.com/InstanceAttachment"
+
+func resourceConverterApigeeInstanceAttachment() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ApigeeInstanceAttachmentAssetType,
+		Convert:   GetApigeeInstanceAttachmentCaiObject,
+	}
+}
+
 func GetApigeeInstanceAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{instance_id}}/attachments/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetApigeeInstanceAttachmentCaiObject(d TerraformResourceData, config *Confi
 	if obj, err := GetApigeeInstanceAttachmentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "apigee.googleapis.com/InstanceAttachment",
+			Type: ApigeeInstanceAttachmentAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/apigee/v1/rest",

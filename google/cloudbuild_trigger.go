@@ -60,6 +60,15 @@ func stepTimeoutCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v in
 	return nil
 }
 
+const CloudBuildTriggerAssetType string = "cloudbuild.googleapis.com/Trigger"
+
+func resourceConverterCloudBuildTrigger() ResourceConverter {
+	return ResourceConverter{
+		AssetType: CloudBuildTriggerAssetType,
+		Convert:   GetCloudBuildTriggerCaiObject,
+	}
+}
+
 func GetCloudBuildTriggerCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudbuild.googleapis.com/projects/{{project}}/triggers/{{trigger_id}}")
 	if err != nil {
@@ -68,7 +77,7 @@ func GetCloudBuildTriggerCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetCloudBuildTriggerApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "cloudbuild.googleapis.com/Trigger",
+			Type: CloudBuildTriggerAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudbuild/v1/rest",

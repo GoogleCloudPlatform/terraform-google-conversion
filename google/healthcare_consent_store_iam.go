@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const HealthcareConsentStoreIAMAssetType string = "healthcare.googleapis.com/ConsentStore"
+
+func resourceConverterHealthcareConsentStoreIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         HealthcareConsentStoreIAMAssetType,
+		Convert:           GetHealthcareConsentStoreIamPolicyCaiObject,
+		MergeCreateUpdate: MergeHealthcareConsentStoreIamPolicy,
+	}
+}
+
+func resourceConverterHealthcareConsentStoreIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         HealthcareConsentStoreIAMAssetType,
+		Convert:           GetHealthcareConsentStoreIamBindingCaiObject,
+		FetchFullResource: FetchHealthcareConsentStoreIamPolicy,
+		MergeCreateUpdate: MergeHealthcareConsentStoreIamBinding,
+		MergeDelete:       MergeHealthcareConsentStoreIamBindingDelete,
+	}
+}
+
+func resourceConverterHealthcareConsentStoreIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         HealthcareConsentStoreIAMAssetType,
+		Convert:           GetHealthcareConsentStoreIamMemberCaiObject,
+		FetchFullResource: FetchHealthcareConsentStoreIamPolicy,
+		MergeCreateUpdate: MergeHealthcareConsentStoreIamMember,
+		MergeDelete:       MergeHealthcareConsentStoreIamMemberDelete,
+	}
+}
+
 func GetHealthcareConsentStoreIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newHealthcareConsentStoreIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newHealthcareConsentStoreIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "healthcare.googleapis.com/ConsentStore",
+		Type: HealthcareConsentStoreIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchHealthcareConsentStoreIamPolicy(d TerraformResourceData, config *Confi
 		d,
 		config,
 		"//healthcare.googleapis.com/{{consentstore}}",
-		"healthcare.googleapis.com/ConsentStore",
+		HealthcareConsentStoreIAMAssetType,
 	)
 }

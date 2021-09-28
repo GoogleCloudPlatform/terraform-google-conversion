@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const BillingBudgetAssetType string = "billingbudgets.googleapis.com/Budget"
+
+func resourceConverterBillingBudget() ResourceConverter {
+	return ResourceConverter{
+		AssetType: BillingBudgetAssetType,
+		Convert:   GetBillingBudgetCaiObject,
+	}
+}
+
 func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//billingbudgets.googleapis.com/billingAccounts/{{billing_account}}/budgets/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	if obj, err := GetBillingBudgetApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "billingbudgets.googleapis.com/Budget",
+			Type: BillingBudgetAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/billingbudgets/v1/rest",

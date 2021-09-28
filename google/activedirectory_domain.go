@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ActiveDirectoryDomainAssetType string = "managedidentities.googleapis.com/Domain"
+
+func resourceConverterActiveDirectoryDomain() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ActiveDirectoryDomainAssetType,
+		Convert:   GetActiveDirectoryDomainCaiObject,
+	}
+}
+
 func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//managedidentities.googleapis.com/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *Config) 
 	if obj, err := GetActiveDirectoryDomainApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "managedidentities.googleapis.com/Domain",
+			Type: ActiveDirectoryDomainAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/managedidentities/v1/rest",

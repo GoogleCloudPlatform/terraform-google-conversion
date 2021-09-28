@@ -50,6 +50,15 @@ func compareSignatureAlgorithm(_, old, new string, _ *schema.ResourceData) bool 
 	return false
 }
 
+const BinaryAuthorizationAttestorAssetType string = "binaryauthorization.googleapis.com/Attestor"
+
+func resourceConverterBinaryAuthorizationAttestor() ResourceConverter {
+	return ResourceConverter{
+		AssetType: BinaryAuthorizationAttestorAssetType,
+		Convert:   GetBinaryAuthorizationAttestorCaiObject,
+	}
+}
+
 func GetBinaryAuthorizationAttestorCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//binaryauthorization.googleapis.com/projects/{{project}}/attestors/{{name}}")
 	if err != nil {
@@ -58,7 +67,7 @@ func GetBinaryAuthorizationAttestorCaiObject(d TerraformResourceData, config *Co
 	if obj, err := GetBinaryAuthorizationAttestorApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "binaryauthorization.googleapis.com/Attestor",
+			Type: BinaryAuthorizationAttestorAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/binaryauthorization/v1/rest",

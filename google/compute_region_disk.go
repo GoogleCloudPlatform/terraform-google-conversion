@@ -20,6 +20,15 @@ import (
 	"reflect"
 )
 
+const ComputeRegionDiskAssetType string = "compute.googleapis.com/RegionDisk"
+
+func resourceConverterComputeRegionDisk() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeRegionDiskAssetType,
+		Convert:   GetComputeRegionDiskCaiObject,
+	}
+}
+
 func GetComputeRegionDiskCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/disks/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetComputeRegionDiskCaiObject(d TerraformResourceData, config *Config) ([]A
 	if obj, err := GetComputeRegionDiskApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/RegionDisk",
+			Type: ComputeRegionDiskAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

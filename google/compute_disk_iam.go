@@ -16,6 +16,37 @@ package google
 
 import "fmt"
 
+// Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
+const ComputeDiskIAMAssetType string = "compute.googleapis.com/Disk"
+
+func resourceConverterComputeDiskIamPolicy() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeDiskIAMAssetType,
+		Convert:           GetComputeDiskIamPolicyCaiObject,
+		MergeCreateUpdate: MergeComputeDiskIamPolicy,
+	}
+}
+
+func resourceConverterComputeDiskIamBinding() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeDiskIAMAssetType,
+		Convert:           GetComputeDiskIamBindingCaiObject,
+		FetchFullResource: FetchComputeDiskIamPolicy,
+		MergeCreateUpdate: MergeComputeDiskIamBinding,
+		MergeDelete:       MergeComputeDiskIamBindingDelete,
+	}
+}
+
+func resourceConverterComputeDiskIamMember() ResourceConverter {
+	return ResourceConverter{
+		AssetType:         ComputeDiskIAMAssetType,
+		Convert:           GetComputeDiskIamMemberCaiObject,
+		FetchFullResource: FetchComputeDiskIamPolicy,
+		MergeCreateUpdate: MergeComputeDiskIamMember,
+		MergeDelete:       MergeComputeDiskIamMemberDelete,
+	}
+}
+
 func GetComputeDiskIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	return newComputeDiskIamAsset(d, config, expandIamPolicyBindings)
 }
@@ -66,7 +97,7 @@ func newComputeDiskIamAsset(
 
 	return []Asset{{
 		Name: name,
-		Type: "compute.googleapis.com/Disk",
+		Type: ComputeDiskIAMAssetType,
 		IAMPolicy: &IAMPolicy{
 			Bindings: bindings,
 		},
@@ -84,6 +115,6 @@ func FetchComputeDiskIamPolicy(d TerraformResourceData, config *Config) (Asset, 
 		d,
 		config,
 		"//compute.googleapis.com/{{disk}}",
-		"compute.googleapis.com/Disk",
+		ComputeDiskIAMAssetType,
 	)
 }

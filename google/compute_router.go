@@ -40,6 +40,15 @@ func resourceComputeRouterCustomDiff(_ context.Context, diff *schema.ResourceDif
 	return nil
 }
 
+const ComputeRouterAssetType string = "compute.googleapis.com/Router"
+
+func resourceConverterComputeRouter() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeRouterAssetType,
+		Convert:   GetComputeRouterCaiObject,
+	}
+}
+
 func GetComputeRouterCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/routers/{{name}}")
 	if err != nil {
@@ -48,7 +57,7 @@ func GetComputeRouterCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	if obj, err := GetComputeRouterApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/Router",
+			Type: ComputeRouterAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

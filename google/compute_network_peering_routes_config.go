@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const ComputeNetworkPeeringRoutesConfigAssetType string = "compute.googleapis.com/NetworkPeeringRoutesConfig"
+
+func resourceConverterComputeNetworkPeeringRoutesConfig() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeNetworkPeeringRoutesConfigAssetType,
+		Convert:   GetComputeNetworkPeeringRoutesConfigCaiObject,
+	}
+}
+
 func GetComputeNetworkPeeringRoutesConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networks/{{network}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetComputeNetworkPeeringRoutesConfigCaiObject(d TerraformResourceData, conf
 	if obj, err := GetComputeNetworkPeeringRoutesConfigApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/NetworkPeeringRoutesConfig",
+			Type: ComputeNetworkPeeringRoutesConfigAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

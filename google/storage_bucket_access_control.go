@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const StorageBucketAccessControlAssetType string = "storage.googleapis.com/BucketAccessControl"
+
+func resourceConverterStorageBucketAccessControl() ResourceConverter {
+	return ResourceConverter{
+		AssetType: StorageBucketAccessControlAssetType,
+		Convert:   GetStorageBucketAccessControlCaiObject,
+	}
+}
+
 func GetStorageBucketAccessControlCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//storage.googleapis.com/b/{{bucket}}/acl/{{entity}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetStorageBucketAccessControlCaiObject(d TerraformResourceData, config *Con
 	if obj, err := GetStorageBucketAccessControlApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "storage.googleapis.com/BucketAccessControl",
+			Type: StorageBucketAccessControlAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/storage/v1/rest",

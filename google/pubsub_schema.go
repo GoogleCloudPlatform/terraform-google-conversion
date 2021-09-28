@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const PubsubSchemaAssetType string = "pubsub.googleapis.com/Schema"
+
+func resourceConverterPubsubSchema() ResourceConverter {
+	return ResourceConverter{
+		AssetType: PubsubSchemaAssetType,
+		Convert:   GetPubsubSchemaCaiObject,
+	}
+}
+
 func GetPubsubSchemaCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/schemas/{{name}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetPubsubSchemaCaiObject(d TerraformResourceData, config *Config) ([]Asset,
 	if obj, err := GetPubsubSchemaApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "pubsub.googleapis.com/Schema",
+			Type: PubsubSchemaAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/pubsub/v1/rest",

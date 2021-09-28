@@ -20,6 +20,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const ContainerAnalysisOccurrenceAssetType string = "containeranalysis.googleapis.com/Occurrence"
+
+func resourceConverterContainerAnalysisOccurrence() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ContainerAnalysisOccurrenceAssetType,
+		Convert:   GetContainerAnalysisOccurrenceCaiObject,
+	}
+}
+
 func GetContainerAnalysisOccurrenceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//containeranalysis.googleapis.com/projects/{{project}}/occurrences/{{name}}")
 	if err != nil {
@@ -28,7 +37,7 @@ func GetContainerAnalysisOccurrenceCaiObject(d TerraformResourceData, config *Co
 	if obj, err := GetContainerAnalysisOccurrenceApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "containeranalysis.googleapis.com/Occurrence",
+			Type: ContainerAnalysisOccurrenceAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/containeranalysis/v1/rest",

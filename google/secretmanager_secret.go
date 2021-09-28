@@ -16,6 +16,15 @@ package google
 
 import "reflect"
 
+const SecretManagerSecretAssetType string = "secretmanager.googleapis.com/Secret"
+
+func resourceConverterSecretManagerSecret() ResourceConverter {
+	return ResourceConverter{
+		AssetType: SecretManagerSecretAssetType,
+		Convert:   GetSecretManagerSecretCaiObject,
+	}
+}
+
 func GetSecretManagerSecretCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//secretmanager.googleapis.com/projects/{{project}}/secrets/{{secret_id}}")
 	if err != nil {
@@ -24,7 +33,7 @@ func GetSecretManagerSecretCaiObject(d TerraformResourceData, config *Config) ([
 	if obj, err := GetSecretManagerSecretApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "secretmanager.googleapis.com/Secret",
+			Type: SecretManagerSecretAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/secretmanager/v1/rest",

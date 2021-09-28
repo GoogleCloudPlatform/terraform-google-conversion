@@ -47,6 +47,15 @@ func customDiffDeploymentManagerDeployment(_ context.Context, d *schema.Resource
 	return nil
 }
 
+const DeploymentManagerDeploymentAssetType string = "www.googleapis.com/Deployment"
+
+func resourceConverterDeploymentManagerDeployment() ResourceConverter {
+	return ResourceConverter{
+		AssetType: DeploymentManagerDeploymentAssetType,
+		Convert:   GetDeploymentManagerDeploymentCaiObject,
+	}
+}
+
 func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//www.googleapis.com/projects/{{project}}/global/deployments/{{name}}")
 	if err != nil {
@@ -55,7 +64,7 @@ func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *Co
 	if obj, err := GetDeploymentManagerDeploymentApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "www.googleapis.com/Deployment",
+			Type: DeploymentManagerDeploymentAssetType,
 			Resource: &AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/www/v2/rest",

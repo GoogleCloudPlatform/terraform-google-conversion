@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeNetworkEndpointGroupAssetType string = "compute.googleapis.com/NetworkEndpointGroup"
+
+func resourceConverterComputeNetworkEndpointGroup() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeNetworkEndpointGroupAssetType,
+		Convert:   GetComputeNetworkEndpointGroupCaiObject,
+	}
+}
+
 func GetComputeNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/networkEndpointGroups/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Co
 	if obj, err := GetComputeNetworkEndpointGroupApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/NetworkEndpointGroup",
+			Type: ComputeNetworkEndpointGroupAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

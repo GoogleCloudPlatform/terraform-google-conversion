@@ -19,6 +19,15 @@ import (
 	"reflect"
 )
 
+const ComputeNodeTemplateAssetType string = "compute.googleapis.com/NodeTemplate"
+
+func resourceConverterComputeNodeTemplate() ResourceConverter {
+	return ResourceConverter{
+		AssetType: ComputeNodeTemplateAssetType,
+		Convert:   GetComputeNodeTemplateCaiObject,
+	}
+}
+
 func GetComputeNodeTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/nodeTemplates/{{name}}")
 	if err != nil {
@@ -27,7 +36,7 @@ func GetComputeNodeTemplateCaiObject(d TerraformResourceData, config *Config) ([
 	if obj, err := GetComputeNodeTemplateApiObject(d, config); err == nil {
 		return []Asset{{
 			Name: name,
-			Type: "compute.googleapis.com/NodeTemplate",
+			Type: ComputeNodeTemplateAssetType,
 			Resource: &AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
