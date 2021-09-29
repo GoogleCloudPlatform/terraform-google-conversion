@@ -142,6 +142,18 @@ func GetComputeSubnetworkApiObject(d TerraformResourceData, config *Config) (map
 	} else if v, ok := d.GetOkExists("log_config"); ok || !reflect.DeepEqual(v, logConfigProp) {
 		obj["logConfig"] = logConfigProp
 	}
+	stackTypeProp, err := expandComputeSubnetworkStackType(d.Get("stack_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("stack_type"); !isEmptyValue(reflect.ValueOf(stackTypeProp)) && (ok || !reflect.DeepEqual(v, stackTypeProp)) {
+		obj["stackType"] = stackTypeProp
+	}
+	ipv6AccessTypeProp, err := expandComputeSubnetworkIpv6AccessType(d.Get("ipv6_access_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ipv6_access_type"); !isEmptyValue(reflect.ValueOf(ipv6AccessTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6AccessTypeProp)) {
+		obj["ipv6AccessType"] = ipv6AccessTypeProp
+	}
 
 	return obj, nil
 }
@@ -256,4 +268,12 @@ func expandComputeSubnetworkLogConfig(v interface{}, d TerraformResourceData, co
 	transformed["metadataFields"] = original["metadata_fields"].(*schema.Set).List()
 
 	return transformed, nil
+}
+
+func expandComputeSubnetworkStackType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkIpv6AccessType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
