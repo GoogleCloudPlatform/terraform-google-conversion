@@ -256,12 +256,6 @@ func GetComputeRegionBackendServiceApiObject(d TerraformResourceData, config *Co
 	} else if v, ok := d.GetOkExists("session_affinity"); !isEmptyValue(reflect.ValueOf(sessionAffinityProp)) && (ok || !reflect.DeepEqual(v, sessionAffinityProp)) {
 		obj["sessionAffinity"] = sessionAffinityProp
 	}
-	connectionTrackingPolicyProp, err := expandComputeRegionBackendServiceConnectionTrackingPolicy(d.Get("connection_tracking_policy"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("connection_tracking_policy"); !isEmptyValue(reflect.ValueOf(connectionTrackingPolicyProp)) && (ok || !reflect.DeepEqual(v, connectionTrackingPolicyProp)) {
-		obj["connectionTrackingPolicy"] = connectionTrackingPolicyProp
-	}
 	timeoutSecProp, err := expandComputeRegionBackendServiceTimeoutSec(d.Get("timeout_sec"), d, config)
 	if err != nil {
 		return nil, err
@@ -1218,51 +1212,6 @@ func expandComputeRegionBackendServiceProtocol(v interface{}, d TerraformResourc
 }
 
 func expandComputeRegionBackendServiceSessionAffinity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeRegionBackendServiceConnectionTrackingPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedIdleTimeoutSec, err := expandComputeRegionBackendServiceConnectionTrackingPolicyIdleTimeoutSec(original["idle_timeout_sec"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedIdleTimeoutSec); val.IsValid() && !isEmptyValue(val) {
-		transformed["idleTimeoutSec"] = transformedIdleTimeoutSec
-	}
-
-	transformedTrackingMode, err := expandComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(original["tracking_mode"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedTrackingMode); val.IsValid() && !isEmptyValue(val) {
-		transformed["trackingMode"] = transformedTrackingMode
-	}
-
-	transformedConnectionPersistenceOnUnhealthyBackends, err := expandComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(original["connection_persistence_on_unhealthy_backends"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedConnectionPersistenceOnUnhealthyBackends); val.IsValid() && !isEmptyValue(val) {
-		transformed["connectionPersistenceOnUnhealthyBackends"] = transformedConnectionPersistenceOnUnhealthyBackends
-	}
-
-	return transformed, nil
-}
-
-func expandComputeRegionBackendServiceConnectionTrackingPolicyIdleTimeoutSec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
