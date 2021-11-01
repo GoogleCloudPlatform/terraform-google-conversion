@@ -1,3 +1,5 @@
+_Note: terraform-google-conversion is archived and read-only. This conversion code is now generated directly into https://github.com/GoogleCloudPlatform/terraform-validator_
+
 # Terraform Google Inventory Mapper
 
 This is a Golang library which provides functions to map a Terraform
