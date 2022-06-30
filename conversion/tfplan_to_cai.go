@@ -16,12 +16,11 @@ import (
 // Single struct for options so that adding new options does not require
 // updating function signatures all along the pipe
 type TFPlanToCAIOptions struct {
-	Context          *context.Context
 	ConvertUnchanged bool
 	ErrorLogger      *zap.Logger
 	Offline          bool
 	DefaultProject   string
-	// TODO: 
+	// TODO:
 	// DefaultRegion    string
 	// DefaultZone      string
 	// UserAgent for all requests (if online)
@@ -33,17 +32,11 @@ type TFPlanToCAIOptions struct {
 	AncestryCache map[string]string
 }
 
-type TFPlanToCAIFunc func(jsonPlan []byte, o *TFPlanToCAIOptions) ([]Asset, error)
+type TFPlanToCAIFunc func(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([]Asset, error)
 
-func TFPlanToCAI(jsonPlan []byte, o *TFPlanToCAIOptions) ([]Asset, error) {
+func TFPlanToCAI(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([]Asset, error) {
 	// Creates ancestry manager and converter internally; they are
 	// implementation details private to this package.
-	var ctx context.Context
-	if o.Context == nil {
-		ctx = context.Background()
-	} else {
-		ctx = *o.Context
-	}
 
 	errorLogger := o.ErrorLogger
 	if errorLogger == nil {
