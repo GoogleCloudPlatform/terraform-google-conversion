@@ -59,5 +59,6 @@ func (c *Converter) CAIToHCL(assets []*hcl.Asset, options *CAIToHCLOptions) ([]b
 		}
 		hclBytes = append(hclBytes, []byte(ret)...)
 	}
+	fmt.Println(string(hclBytes))
 	return hclBytes, nil
 }

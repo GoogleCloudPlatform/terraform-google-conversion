@@ -15,8 +15,15 @@ resource "google_compute_instance" "test1" {
     auto_delete             = true
     device_name             = "test-device_name"
     disk_encryption_key_raw = "test-disk_encryption_key_raw"
-    mode                    = "READ_WRITE"
-    source                  = "test-source"
+
+    initialize_params {
+      image = "projects/debian-cloud/global/images/debian-9"
+      size  = 42
+      type  = "pd-standard"
+    }
+
+    mode   = "READ_WRITE"
+    source = "projects/test-project/zones/us-central1-a/disks/test-source"
   }
 
   can_ip_forward      = true
@@ -25,12 +32,12 @@ resource "google_compute_instance" "test1" {
 
   guest_accelerator {
     count = 42
-    type  = "test-guest_accelerator-type1"
+    type  = "projects/test-project/zones/us-central1-a/acceleratorTypes/test-guest_accelerator-type1"
   }
 
   guest_accelerator {
     count = 42
-    type  = "test-guest_accelerator-type2"
+    type  = "projects/test-project/zones/us-central1-a/acceleratorTypes/test-guest_accelerator-type2"
   }
 
   hostname = "test-hostname"
@@ -66,7 +73,7 @@ resource "google_compute_instance" "test1" {
       subnetwork_range_name = "test-subnetwork_range_name"
     }
 
-    network     = "default"
+    network     = "projects/test-project/global/networks/default"
     network_ip  = "test-network_ip"
     queue_count = 0
   }
@@ -92,7 +99,7 @@ resource "google_compute_instance" "test1" {
 
   service_account {
     email  = "test-email"
-    scopes = ["cloud-platform"]
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 
   shielded_instance_config {
@@ -117,7 +124,7 @@ resource "google_compute_instance" "test2" {
   name                = "test2"
 
   network_interface {
-    network     = "default"
+    network     = "projects/test-project/global/networks/default"
     queue_count = 0
   }
 
