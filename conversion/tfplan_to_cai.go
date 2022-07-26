@@ -10,7 +10,6 @@ import (
 	resources "github.com/GoogleCloudPlatform/terraform-validator/converters/google/resources"
 	"github.com/GoogleCloudPlatform/terraform-validator/tfplan"
 	"go.uber.org/zap"
-	"google.golang.org/api/cloudresourcemanager/v3"
 )
 
 // Single struct for options so that adding new options does not require
@@ -54,14 +53,7 @@ func TFPlanToCAI(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([
 		return nil, fmt.Errorf("building config: %w", err)
 	}
 
-	var resourceManager *cloudresourcemanager.Service
-	if !o.Offline {
-		// This will create a resource manager client that uses the same
-		// underlying client and the same user agent that the cfg uses to
-		// ensure consistent API access.
-		resourceManager = cfg.NewResourceManagerV3Client(cfg.UserAgent())
-	}
-	ancestryManager, err := ancestrymanager.New(resourceManager, o.AncestryCache, errorLogger)
+	ancestryManager, err := ancestrymanager.New(cfg, o.Offline, o.AncestryCache, errorLogger)
 	if err != nil {
 		return nil, fmt.Errorf("building ancestry manager: %w", err)
 	}
