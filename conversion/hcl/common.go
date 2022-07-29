@@ -1,20 +1,25 @@
 package hcl
 
 import (
-	tfvResource "github.com/GoogleCloudPlatform/terraform-validator/converters/google/resources"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/model"
+
+	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-type Asset tfvResource.Asset
+// ConvertFunc converts an Asset type into a map[string]interface{} struct.
+type ConvertFunc func(asset *model.Asset) (string, map[string]interface{}, error)
 
-type ConvertFunc func(asset *Asset) (string, map[string]interface{}, error)
-
+// Converter for individual resource.
 type Converter struct {
 	TFResourceName string
 	Convert        ConvertFunc
+	Resource       *tfschema.Resource
 }
 
+// Converters returns a map of resource converters.
+// The map key is the CAI Asset type.
 func Converters() map[string]*Converter {
 	return map[string]*Converter{
-		tfvResource.ComputeInstanceAssetType: NewComputeInstanceConverter(),
+		ComputeInstanceAssetType: NewComputeInstanceConverter(),
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/model"
 	"github.com/GoogleCloudPlatform/terraform-validator/ancestrymanager"
 	"github.com/GoogleCloudPlatform/terraform-validator/converters/google"
 	resources "github.com/GoogleCloudPlatform/terraform-validator/converters/google/resources"
@@ -31,9 +32,9 @@ type TFPlanToCAIOptions struct {
 	AncestryCache map[string]string
 }
 
-type TFPlanToCAIFunc func(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([]Asset, error)
+type TFPlanToCAIFunc func(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([]model.Asset, error)
 
-func TFPlanToCAI(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([]Asset, error) {
+func TFPlanToCAI(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([]model.Asset, error) {
 	// Creates ancestry manager and converter internally; they are
 	// implementation details private to this package.
 

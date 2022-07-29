@@ -111,6 +111,7 @@ resource "google_compute_instance" "test1" {
   tags = ["bar", "foo"]
   zone = "us-central1-a"
 }
+
 resource "google_compute_instance" "test2" {
   boot_disk {
     auto_delete       = true

@@ -1,9 +1,11 @@
-package conversion
+package caitest
 
 import (
 	"context"
 	"io/ioutil"
 	"testing"
+
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/conversion"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -11,8 +13,8 @@ import (
 func TestTFPlanToCAI_noPlanJSON(t *testing.T) {
 	ctx := context.Background()
 	jsonPlan := []byte{}
-	options := &TFPlanToCAIOptions{}
-	assets, err := TFPlanToCAI(ctx, jsonPlan, options)
+	options := &conversion.TFPlanToCAIOptions{}
+	assets, err := conversion.TFPlanToCAI(ctx, jsonPlan, options)
 	assert.Empty(t, assets)
 	assert.Error(t, err)
 }
@@ -24,8 +26,8 @@ func TestTFPlanToCAI_noResourceChanges(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error parsing %s: %s", f, err)
 	}
-	options := &TFPlanToCAIOptions{}
-	assets, err := TFPlanToCAI(ctx, jsonPlan, options)
+	options := &conversion.TFPlanToCAIOptions{}
+	assets, err := conversion.TFPlanToCAI(ctx, jsonPlan, options)
 	assert.Empty(t, assets)
 	assert.Empty(t, err)
 }

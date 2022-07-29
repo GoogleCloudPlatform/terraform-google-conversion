@@ -1,4 +1,4 @@
-package conversion
+package hcltest
 
 import (
 	"encoding/json"
@@ -6,12 +6,14 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/conversion/hcl"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/conversion"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/model"
+
 	"github.com/google/go-cmp/cmp"
-	tpg "github.com/hashicorp/terraform-provider-google/google"
+	"go.uber.org/zap"
 )
 
-func TestReadPlannedAssetsCoverage(t *testing.T) {
+func TestComputeInstanceToHCL(t *testing.T) {
 	cases := []struct {
 		name string
 	}{
@@ -33,16 +35,14 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 				t.Fatalf("cannot open %s, got: %s", expectedTFFilePath, err)
 			}
 
-			var assets []*hcl.Asset
+			var assets []*model.Asset
 			if err := json.Unmarshal(assetPayload, &assets); err != nil {
 				t.Fatalf("cannot unmarshal: %s", err)
 			}
 
-			c := &Converter{
-				provider: tpg.Provider(),
-			}
-
-			got, err := c.CAIToHCL(assets, nil)
+			got, err := conversion.CAIToHCL(assets, &conversion.CAIToHCLOptions{
+				ErrorLogger: zap.NewNop(),
+			})
 			if err != nil {
 				t.Fatal(err)
 			}
