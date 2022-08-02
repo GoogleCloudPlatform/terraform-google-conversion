@@ -44,7 +44,10 @@ func CAIToHCL(assets []*model.Asset, options *CAIToHCLOptions) ([]byte, error) {
 
 		block := rootBody.AppendNewBlock("resource", []string{converter.TFResourceName, id})
 
-		val := mapToCtyValWithSchema(data, converter.Resource.Schema)
+		val, err := mapToCtyValWithSchema(data, converter.Resource.Schema)
+		if err != nil {
+			return nil, err
+		}
 		if err := hclWriteBlock(val, block.Body()); err != nil {
 			return nil, err
 		}
@@ -106,20 +109,20 @@ func hclWriteBlock(val cty.Value, body *hclwrite.Body) error {
 	return nil
 }
 
-func mapToCtyValWithSchema(m map[string]interface{}, s map[string]*schema.Schema) cty.Value {
+func mapToCtyValWithSchema(m map[string]interface{}, s map[string]*schema.Schema) (cty.Value, error) {
 	b, err := json.Marshal(&m)
 	if err != nil {
-		panic(fmt.Errorf("error marshaling map as JSON: %v", err))
+		return cty.NilVal, fmt.Errorf("error marshaling map as JSON: %v", err)
 	}
 	ty, err := hashicorpCtyTypeToZclconfCtyType(schema.InternalMap(s).CoreConfigSchema().ImpliedType())
 	if err != nil {
-		panic(fmt.Errorf("error casting type: %v", err))
+		return cty.NilVal, fmt.Errorf("error casting type: %v", err)
 	}
 	ret, err := ctyjson.Unmarshal(b, ty)
 	if err != nil {
-		panic(fmt.Errorf("error unmarshaling JSON as cty.Value: %v", err))
+		return cty.NilVal, fmt.Errorf("error unmarshaling JSON as cty.Value: %v", err)
 	}
-	return ret
+	return ret, nil
 }
 
 func hashicorpCtyTypeToZclconfCtyType(t hashicorpcty.Type) (cty.Type, error) {
