@@ -12,7 +12,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func TestComputeInstanceToHCL(t *testing.T) {
+func TestConvertComputeInstance(t *testing.T) {
 	cases := []struct {
 		name string
 	}{
@@ -38,7 +38,7 @@ func TestComputeInstanceToHCL(t *testing.T) {
 				t.Fatalf("cannot unmarshal: %s", err)
 			}
 
-			got, err := CAIToHCL(assets, &CAIToHCLOptions{
+			got, err := Convert(assets, &Options{
 				ErrorLogger: zap.NewNop(),
 			})
 			if err != nil {

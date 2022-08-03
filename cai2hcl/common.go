@@ -2,6 +2,7 @@ package cai2hcl
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
+
 	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 

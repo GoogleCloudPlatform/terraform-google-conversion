@@ -16,14 +16,14 @@ import (
 	"go.uber.org/zap"
 )
 
-// CAIToHCLOptions is a struct for options so that adding new options does not
-// require updating function signatures all along the pipe
-type CAIToHCLOptions struct {
+// Options is a struct for options so that adding new options does not
+// require updating function signatures all along the pipe.
+type Options struct {
 	ErrorLogger *zap.Logger
 }
 
-// CAIToHCL converts Asset into HCL.
-func CAIToHCL(assets []*caiasset.Asset, options *CAIToHCLOptions) ([]byte, error) {
+// Convert converts Asset into HCL.
+func Convert(assets []*caiasset.Asset, options *Options) ([]byte, error) {
 	if options == nil || options.ErrorLogger == nil {
 		return nil, fmt.Errorf("logger is not initialized")
 	}
