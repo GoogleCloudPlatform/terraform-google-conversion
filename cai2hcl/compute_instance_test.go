@@ -1,4 +1,4 @@
-package hcltest
+package cai2hcl
 
 import (
 	"encoding/json"
@@ -6,8 +6,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/conversion"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/model"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
 	"github.com/google/go-cmp/cmp"
 	"go.uber.org/zap"
@@ -20,7 +19,6 @@ func TestComputeInstanceToHCL(t *testing.T) {
 		{name: "full_compute_instance"},
 	}
 	for i := range cases {
-		// Allocate a variable to make sure test can run in parallel.
 		c := cases[i]
 		t.Run(c.name, func(t *testing.T) {
 			t.Parallel()
@@ -35,12 +33,12 @@ func TestComputeInstanceToHCL(t *testing.T) {
 				t.Fatalf("cannot open %s, got: %s", expectedTFFilePath, err)
 			}
 
-			var assets []*model.Asset
+			var assets []*caiasset.Asset
 			if err := json.Unmarshal(assetPayload, &assets); err != nil {
 				t.Fatalf("cannot unmarshal: %s", err)
 			}
 
-			got, err := conversion.CAIToHCL(assets, &conversion.CAIToHCLOptions{
+			got, err := CAIToHCL(assets, &CAIToHCLOptions{
 				ErrorLogger: zap.NewNop(),
 			})
 			if err != nil {

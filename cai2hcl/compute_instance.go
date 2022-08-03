@@ -1,9 +1,10 @@
-package hcl
+package cai2hcl
 
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/model"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
+
 	tpg "github.com/hashicorp/terraform-provider-google/google"
 	"google.golang.org/api/compute/v1"
 )
@@ -20,7 +21,7 @@ func NewComputeInstanceConverter() *Converter {
 	}
 }
 
-func convertComputeInstance(asset *model.Asset) (string, map[string]interface{}, error) {
+func convertComputeInstance(asset *caiasset.Asset) (string, map[string]interface{}, error) {
 	if asset == nil || asset.Resource == nil || asset.Resource.Data == nil {
 		return "", nil, fmt.Errorf("asset does not provide enough data for conversion")
 	}

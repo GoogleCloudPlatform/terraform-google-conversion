@@ -1,4 +1,4 @@
-package model
+package caiasset
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-validator/converters/google"

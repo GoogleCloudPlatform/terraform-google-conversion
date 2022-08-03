@@ -1,11 +1,11 @@
-package conversion
+// Package cai2hcl converts CAI assets to hcl bytes.
+package cai2hcl
 
 import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/conversion/hcl"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/model"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
 	hashicorpcty "github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/hcl/hcl/printer"
@@ -23,14 +23,14 @@ type CAIToHCLOptions struct {
 }
 
 // CAIToHCL converts Asset into HCL.
-func CAIToHCL(assets []*model.Asset, options *CAIToHCLOptions) ([]byte, error) {
+func CAIToHCL(assets []*caiasset.Asset, options *CAIToHCLOptions) ([]byte, error) {
 	if options == nil || options.ErrorLogger == nil {
 		return nil, fmt.Errorf("logger is not initialized")
 	}
 	f := hclwrite.NewFile()
 	rootBody := f.Body()
 	for _, asset := range assets {
-		converter, ok := hcl.Converters()[asset.Type]
+		converter, ok := Converters()[asset.Type]
 		if !ok {
 			options.ErrorLogger.Warn(fmt.Sprintf("type %s is not supported", asset.Type))
 			continue

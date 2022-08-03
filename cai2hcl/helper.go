@@ -1,4 +1,4 @@
-package hcl
+package cai2hcl
 
 import (
 	"encoding/json"

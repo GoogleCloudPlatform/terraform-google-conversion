@@ -1,13 +1,12 @@
-package hcl
+package cai2hcl
 
 import (
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/model"
-
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // ConvertFunc converts an Asset type into a map[string]interface{} struct.
-type ConvertFunc func(asset *model.Asset) (string, map[string]interface{}, error)
+type ConvertFunc func(asset *caiasset.Asset) (string, map[string]interface{}, error)
 
 // Converter for individual resource.
 type Converter struct {
