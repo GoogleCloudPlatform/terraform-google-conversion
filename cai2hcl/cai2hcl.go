@@ -68,8 +68,6 @@ func hclWriteBlock(val cty.Value, body *hclwrite.Body) error {
 	it := val.ElementIterator()
 	for it.Next() {
 		objKey, objVal := it.Element()
-		// TODO: remove
-		// fmt.Println(objKey.AsString(), objVal.Type().FriendlyName(), objVal.Type().HasDynamicTypes())
 		if objVal.IsNull() {
 			continue
 		}
@@ -81,8 +79,6 @@ func hclWriteBlock(val cty.Value, body *hclwrite.Body) error {
 				return err
 			}
 		case objValType.IsCollectionType():
-			// TODO: remove
-			// fmt.Printf("key = %s, collection type = %s, length = %d\n", objKey.AsString(), objValType.FriendlyName(), objVal.LengthInt())
 			if objVal.LengthInt() == 0 {
 				continue
 			}
