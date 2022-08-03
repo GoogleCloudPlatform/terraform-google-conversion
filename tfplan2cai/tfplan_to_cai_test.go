@@ -1,4 +1,5 @@
-package conversion
+// Package tfplan2cai converts tfplan to CAI assets.
+package tfplan2cai
 
 import (
 	"context"
@@ -8,24 +9,24 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTFPlanToCAI_noPlanJSON(t *testing.T) {
+func TestConvert_noPlanJSON(t *testing.T) {
 	ctx := context.Background()
 	jsonPlan := []byte{}
-	options := &TFPlanToCAIOptions{}
-	assets, err := TFPlanToCAI(ctx, jsonPlan, options)
+	options := &Options{}
+	assets, err := Convert(ctx, jsonPlan, options)
 	assert.Empty(t, assets)
 	assert.Error(t, err)
 }
 
-func TestTFPlanToCAI_noResourceChanges(t *testing.T) {
+func TestConvert_noResourceChanges(t *testing.T) {
 	ctx := context.Background()
 	f := "../testdata/empty-0.13.7.tfplan.json"
 	jsonPlan, err := ioutil.ReadFile(f)
 	if err != nil {
 		t.Fatalf("Error parsing %s: %s", f, err)
 	}
-	options := &TFPlanToCAIOptions{}
-	assets, err := TFPlanToCAI(ctx, jsonPlan, options)
+	options := &Options{}
+	assets, err := Convert(ctx, jsonPlan, options)
 	assert.Empty(t, assets)
 	assert.Empty(t, err)
 }

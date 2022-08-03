@@ -1,9 +1,11 @@
-package conversion
+package tfplan2cai
 
 import (
 	"context"
 	"fmt"
 	"net/http"
+
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
 	"github.com/GoogleCloudPlatform/terraform-validator/ancestrymanager"
 	"github.com/GoogleCloudPlatform/terraform-validator/converters/google"
@@ -12,9 +14,8 @@ import (
 	"go.uber.org/zap"
 )
 
-// Single struct for options so that adding new options does not require
-// updating function signatures all along the pipe
-type TFPlanToCAIOptions struct {
+// Options struct to avoid updating function signatures all along the pipe.
+type Options struct {
 	ConvertUnchanged bool
 	ErrorLogger      *zap.Logger
 	Offline          bool
@@ -31,9 +32,8 @@ type TFPlanToCAIOptions struct {
 	AncestryCache map[string]string
 }
 
-type TFPlanToCAIFunc func(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([]Asset, error)
-
-func TFPlanToCAI(ctx context.Context, jsonPlan []byte, o *TFPlanToCAIOptions) ([]Asset, error) {
+// Convert converts terraform json plan to CAI Assets.
+func Convert(ctx context.Context, jsonPlan []byte, o *Options) ([]caiasset.Asset, error) {
 	// Creates ancestry manager and converter internally; they are
 	// implementation details private to this package.
 
