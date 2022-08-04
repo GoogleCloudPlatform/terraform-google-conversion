@@ -17,6 +17,7 @@ func TestConvertComputeInstance(t *testing.T) {
 		name string
 	}{
 		{name: "full_compute_instance"},
+		{name: "compute_instance_iam"},
 	}
 	for i := range cases {
 		c := cases[i]

@@ -1,33 +1,71 @@
 package cai2hcl
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
+	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	tpg "github.com/hashicorp/terraform-provider-google/google"
+	"github.com/zclconf/go-cty/cty"
 	"google.golang.org/api/compute/v1"
 )
 
 // ComputeInstanceAssetType is the CAI asset type name for compute instance.
 const ComputeInstanceAssetType string = "compute.googleapis.com/Instance"
 
+// ComputeInstanceConverter for compute instance resource.
+type ComputeInstanceConverter struct {
+	Resource *tfschema.Resource
+}
+
 // NewComputeInstanceConverter returns an HCL converter for compute instance.
-func NewComputeInstanceConverter() *Converter {
-	return &Converter{
-		TFResourceName: "google_compute_instance",
-		Convert:        convertComputeInstance,
-		Resource:       tpg.Provider().ResourcesMap["google_compute_instance"],
+func NewComputeInstanceConverter() *ComputeInstanceConverter {
+	return &ComputeInstanceConverter{
+		Resource: tpg.Provider().ResourcesMap["google_compute_instance"],
 	}
 }
 
-func convertComputeInstance(asset *caiasset.Asset) (string, map[string]interface{}, error) {
+// TFResourceType returns terraform resource type.
+func (c *ComputeInstanceConverter) TFResourceType() string {
+	return "google_compute_instance"
+}
+
+// ConvertIAM converts asset IAM policy.
+func (c *ComputeInstanceConverter) ConvertIAM(asset *caiasset.Asset) (string, cty.Value, error) {
+	if asset == nil || asset.IAMPolicy == nil {
+		return "", cty.NilVal, fmt.Errorf("asset does not provide enough data for conversion")
+	}
+
+	zone := parseFieldValue(asset.Name, "zones")
+	instanceName := parseFieldValue(asset.Name, "instances")
+	project := parseFieldValue(asset.Name, "projects")
+
+	policyData, err := json.Marshal(asset.IAMPolicy)
+	if err != nil {
+		return "", cty.NilVal, err
+	}
+
+	return instanceName + "_iam_policy",
+		cty.ObjectVal(
+			map[string]cty.Value{
+				"zone":          cty.StringVal(zone),
+				"instance_name": cty.StringVal(instanceName),
+				"project":       cty.StringVal(project),
+				"policy_data":   cty.StringVal(string(policyData)),
+			},
+		), nil
+}
+
+// Convert converts asset resource data.
+func (c *ComputeInstanceConverter) Convert(asset *caiasset.Asset) (string, cty.Value, error) {
 	if asset == nil || asset.Resource == nil || asset.Resource.Data == nil {
-		return "", nil, fmt.Errorf("asset does not provide enough data for conversion")
+		return "", cty.NilVal, fmt.Errorf("asset does not provide enough data for conversion")
 	}
 	var instance *compute.Instance
 	if err := decodeJSON(asset.Resource.Data, &instance); err != nil {
-		return "", nil, err
+		return "", cty.NilVal, err
 	}
 
 	bootDisks, scratchDisks, attachedDisks := convertDisks(instance.Disks)
@@ -60,7 +98,12 @@ func convertComputeInstance(asset *caiasset.Asset) (string, map[string]interface
 	}
 	hclData["zone"] = instance.Zone
 
-	return instance.Name, hclData, nil
+	val, err := mapToCtyValWithSchema(hclData, c.Resource.Schema)
+	if err != nil {
+		return "", cty.NilVal, err
+	}
+
+	return instance.Name, val, nil
 }
 
 func convertDisks(disks []*compute.AttachedDisk) (bootDisks []map[string]interface{}, scratchDisks []map[string]interface{}, attachedDisks []map[string]interface{}) {
