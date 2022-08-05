@@ -8,10 +8,8 @@ import (
 
 // Converter interface for resources.
 type Converter interface {
-	// Convert converts an Asset into a cty.Value with its ID.
-	Convert(asset *caiasset.Asset) (string, cty.Value, error)
-	// ConvertIAM converts an Asset's iam policy into a cty.Value with its ID.
-	ConvertIAM(asset *caiasset.Asset) (string, cty.Value, error)
+	// Convert converts an Asset into ID, and cty.Value.
+	Convert(asset ...*caiasset.Asset) (id string, data cty.Value, iam cty.Value, err error)
 	// TFResourceType returns terraform resource type.
 	TFResourceType() string
 }
@@ -21,5 +19,6 @@ type Converter interface {
 func Converters() map[string]Converter {
 	return map[string]Converter{
 		ComputeInstanceAssetType: NewComputeInstanceConverter(),
+		ProjectAssetType:         NewProjectConverter(),
 	}
 }

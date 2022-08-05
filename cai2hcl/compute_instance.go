@@ -33,9 +33,13 @@ func (c *ComputeInstanceConverter) TFResourceType() string {
 }
 
 // ConvertIAM converts asset IAM policy.
-func (c *ComputeInstanceConverter) ConvertIAM(asset *caiasset.Asset) (string, cty.Value, error) {
-	if asset == nil || asset.IAMPolicy == nil {
-		return "", cty.NilVal, fmt.Errorf("asset does not provide enough data for conversion")
+func (c *ComputeInstanceConverter) convertIAM(asset *caiasset.Asset) (cty.Value, error) {
+	if asset == nil {
+		return cty.NilVal, fmt.Errorf("asset does not provide enough data for conversion")
+	}
+
+	if asset.IAMPolicy == nil {
+		return cty.NilVal, nil
 	}
 
 	zone := parseFieldValue(asset.Name, "zones")
@@ -44,28 +48,46 @@ func (c *ComputeInstanceConverter) ConvertIAM(asset *caiasset.Asset) (string, ct
 
 	policyData, err := json.Marshal(asset.IAMPolicy)
 	if err != nil {
-		return "", cty.NilVal, err
+		return cty.NilVal, err
 	}
 
-	return instanceName + "_iam_policy",
-		cty.ObjectVal(
-			map[string]cty.Value{
-				"zone":          cty.StringVal(zone),
-				"instance_name": cty.StringVal(instanceName),
-				"project":       cty.StringVal(project),
-				"policy_data":   cty.StringVal(string(policyData)),
-			},
-		), nil
+	return cty.ObjectVal(
+		map[string]cty.Value{
+			"zone":          cty.StringVal(zone),
+			"instance_name": cty.StringVal(instanceName),
+			"project":       cty.StringVal(project),
+			"policy_data":   cty.StringVal(string(policyData)),
+		},
+	), nil
 }
 
 // Convert converts asset resource data.
-func (c *ComputeInstanceConverter) Convert(asset *caiasset.Asset) (string, cty.Value, error) {
-	if asset == nil || asset.Resource == nil || asset.Resource.Data == nil {
-		return "", cty.NilVal, fmt.Errorf("asset does not provide enough data for conversion")
+func (c *ComputeInstanceConverter) Convert(assets ...*caiasset.Asset) (string, cty.Value, cty.Value, error) {
+	if len(assets) == 0 || assets[0] == nil {
+		return "", cty.NilVal, cty.NilVal, fmt.Errorf("asset does not provide enough data for conversion")
 	}
+	asset := assets[0]
+	id := parseFieldValue(asset.Name, "instances")
+	val, err := c.convertResourceData(asset)
+	if err != nil {
+		return "", cty.NilVal, cty.NilVal, err
+	}
+	iamVal, err := c.convertIAM(asset)
+	if err != nil {
+		return "", cty.NilVal, cty.NilVal, err
+	}
+	return id, val, iamVal, nil
+}
+
+func (c *ComputeInstanceConverter) convertResourceData(asset *caiasset.Asset) (cty.Value, error) {
+	if asset.Resource == nil || asset.Resource.Data == nil {
+		return cty.NilVal, nil
+
+	}
+
 	var instance *compute.Instance
 	if err := decodeJSON(asset.Resource.Data, &instance); err != nil {
-		return "", cty.NilVal, err
+		return cty.NilVal, err
 	}
 
 	bootDisks, scratchDisks, attachedDisks := convertDisks(instance.Disks)
@@ -98,12 +120,7 @@ func (c *ComputeInstanceConverter) Convert(asset *caiasset.Asset) (string, cty.V
 	}
 	hclData["zone"] = instance.Zone
 
-	val, err := mapToCtyValWithSchema(hclData, c.Resource.Schema)
-	if err != nil {
-		return "", cty.NilVal, err
-	}
-
-	return instance.Name, val, nil
+	return mapToCtyValWithSchema(hclData, c.Resource.Schema)
 }
 
 func convertDisks(disks []*compute.AttachedDisk) (bootDisks []map[string]interface{}, scratchDisks []map[string]interface{}, attachedDisks []map[string]interface{}) {
