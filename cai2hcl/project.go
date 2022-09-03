@@ -8,7 +8,6 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
 	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	tpg "github.com/hashicorp/terraform-provider-google/google"
 	"github.com/zclconf/go-cty/cty"
 	"google.golang.org/api/cloudresourcemanager/v1"
 )
@@ -16,81 +15,86 @@ import (
 // ProjectAssetType is the CAI asset type name for project.
 const ProjectAssetType string = "cloudresourcemanager.googleapis.com/Project"
 
+// ProjectAssetType is the CAI asset type name for project.
+const ProjectBillingAssetType string = "cloudbilling.googleapis.com/ProjectBillingInfo"
+
 // ProjectConverter for compute project resource.
 type ProjectConverter struct {
-	Resource *tfschema.Resource
+	name     string
+	schema   map[string]*tfschema.Schema
+	billings map[string]string
 }
 
 // NewProjectConverter returns an HCL converter for compute project.
 func NewProjectConverter() *ProjectConverter {
 	return &ProjectConverter{
-		Resource: tpg.Provider().ResourcesMap["google_project"],
+		name:     "google_project",
+		schema:   schemaProvider.ResourcesMap["google_project"].Schema,
+		billings: make(map[string]string),
 	}
-}
-
-// TFResourceType returns terraform resource type.
-func (c *ProjectConverter) TFResourceType() string {
-	return "google_project"
 }
 
 // Convert converts asset resource data.
-func (c *ProjectConverter) Convert(assets ...*caiasset.Asset) (id string, data cty.Value, iam cty.Value, err error) {
-	if len(assets) == 0 || assets[0] == nil {
-		return "", cty.NilVal, cty.NilVal, fmt.Errorf("asset does not provide enough data for conversion")
-	}
-
-	id = parseFieldValue(assets[0].Name, "projects")
-	var projectAsset *caiasset.Asset
-	var billingAsset *caiasset.Asset
+func (c *ProjectConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBlock, error) {
+	// process billing info
 	for _, asset := range assets {
+		if asset == nil {
+			continue
+		}
 		if asset.Type == "cloudbilling.googleapis.com/ProjectBillingInfo" {
-			billingAsset = asset
-		} else {
-			projectAsset = asset
+			project := parseFieldValue(asset.Name, "projects")
+			projectAssetName := fmt.Sprintf("//cloudresourcemanager.googleapis.com/projects/%s", project)
+			c.billings[projectAssetName] = c.convertBilling(asset)
 		}
 	}
 
-	hclData, err := c.convertResourceData(projectAsset)
-	if err != nil {
-		return "", cty.NilVal, cty.NilVal, err
-	}
-	var val cty.Value
-	if hclData != nil {
-		billingAccount := c.convertBilling(billingAsset)
-		hclData["billing_account"] = billingAccount
-		val, err = mapToCtyValWithSchema(hclData, c.Resource.Schema)
-		if err != nil {
-			return "", cty.NilVal, cty.NilVal, err
+	var blocks []*HCLResourceBlock
+	for _, asset := range assets {
+		if asset == nil {
+			continue
+		}
+		if asset.Type == "cloudbilling.googleapis.com/ProjectBillingInfo" {
+			continue
+		}
+		if asset.IAMPolicy != nil {
+			iamBlock, err := c.convertIAM(asset)
+			if err != nil {
+				return nil, err
+			}
+			blocks = append(blocks, iamBlock)
+		}
+		if asset.Resource != nil && asset.Resource.Data != nil {
+			block, err := c.convertResourceData(asset)
+			if err != nil {
+				return nil, err
+			}
+			blocks = append(blocks, block)
 		}
 	}
-
-	iamVal, err := c.convertIAM(projectAsset)
-	if err != nil {
-		return "", cty.NilVal, cty.NilVal, err
-	}
-
-	return id, val, iamVal, nil
+	return blocks, nil
 }
 
-func (c *ProjectConverter) convertIAM(asset *caiasset.Asset) (cty.Value, error) {
-	if asset == nil {
-		return cty.NilVal, fmt.Errorf("asset does not provide enough data for conversion")
-	}
+func (c *ProjectConverter) convertIAM(asset *caiasset.Asset) (*HCLResourceBlock, error) {
 	if asset.IAMPolicy == nil {
-		return cty.NilVal, nil
+		return nil, fmt.Errorf("asset IAM policy is nil")
 	}
+
 	project := parseFieldValue(asset.Name, "projects")
 	policyData, err := json.Marshal(asset.IAMPolicy)
 	if err != nil {
-		return cty.NilVal, err
+		return nil, err
 	}
 
-	return cty.ObjectVal(
-		map[string]cty.Value{
+	return &HCLResourceBlock{
+		Labels: []string{
+			c.name + "_iam_policy",
+			project + "_iam_policy",
+		},
+		Value: cty.ObjectVal(map[string]cty.Value{
 			"project":     cty.StringVal(project),
 			"policy_data": cty.StringVal(string(policyData)),
-		},
-	), nil
+		}),
+	}, nil
 }
 
 func (c *ProjectConverter) convertBilling(asset *caiasset.Asset) string {
@@ -100,12 +104,9 @@ func (c *ProjectConverter) convertBilling(asset *caiasset.Asset) string {
 	return ""
 }
 
-func (c *ProjectConverter) convertResourceData(asset *caiasset.Asset) (map[string]interface{}, error) {
-	if asset == nil {
-		return nil, fmt.Errorf("asset does not provide enough data for conversion")
-	}
-	if asset.Resource == nil || asset.Resource.Data == nil {
-		return nil, nil
+func (c *ProjectConverter) convertResourceData(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+	if asset == nil || asset.Resource == nil || asset.Resource.Data == nil {
+		return nil, fmt.Errorf("asset resource data is nil")
 	}
 	var project *cloudresourcemanager.Project
 	if err := decodeJSON(asset.Resource.Data, &project); err != nil {
@@ -122,5 +123,16 @@ func (c *ProjectConverter) convertResourceData(asset *caiasset.Asset) (map[strin
 		hclData["org_id"] = parseFieldValue(asset.Resource.Parent, "organizations")
 	}
 
-	return hclData, nil
+	if billingAccount, ok := c.billings[asset.Name]; ok {
+		hclData["billing_account"] = billingAccount
+	}
+
+	ctyVal, err := mapToCtyValWithSchema(hclData, c.schema)
+	if err != nil {
+		return nil, err
+	}
+	return &HCLResourceBlock{
+		Labels: []string{c.name, project.ProjectId},
+		Value:  ctyVal,
+	}, nil
 }

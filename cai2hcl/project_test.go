@@ -40,7 +40,7 @@ func TestConvertProject(t *testing.T) {
 			}
 
 			got, err := Convert(assets, &Options{
-				ErrorLogger: zap.NewExample(),
+				ErrorLogger: zap.NewNop(),
 			})
 			if err != nil {
 				t.Fatal(err)
