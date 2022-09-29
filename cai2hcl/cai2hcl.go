@@ -21,7 +21,11 @@ type Options struct {
 // Convert converts Asset into HCL.
 func Convert(assets []*caiasset.Asset, options *Options) ([]byte, error) {
 	if options == nil || options.ErrorLogger == nil {
-		return nil, fmt.Errorf("logger is not initialized")
+		logger, err := zap.NewDevelopment()
+		if err != nil {
+			return nil, fmt.Errorf("error initiating logger: %w", err)
+		}
+		options.ErrorLogger = logger
 	}
 
 	// Group resources from the same tf resource type for convert.
