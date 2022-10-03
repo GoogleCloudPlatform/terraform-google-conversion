@@ -12,12 +12,12 @@ import (
 	"go.uber.org/zap"
 )
 
-func TestConvertComputeInstance(t *testing.T) {
+func TestConvertProject(t *testing.T) {
 	cases := []struct {
 		name string
 	}{
-		{name: "full_compute_instance"},
-		{name: "compute_instance_iam"},
+		{name: "project_create"},
+		{name: "project_iam"},
 	}
 	for i := range cases {
 		c := cases[i]
