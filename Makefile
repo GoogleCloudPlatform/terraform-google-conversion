@@ -4,6 +4,6 @@ test:
 test-integration:
 	go version
 	terraform --version
-	TEST_PROJECT=${TEST_PROJECT} go test ./e2etest
+	go test ./e2etest
 
 .PHONY: test

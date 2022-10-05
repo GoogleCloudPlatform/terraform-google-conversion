@@ -8,7 +8,7 @@ jobs:
   test:
     name: unit test and e2e test
     runs-on: ubuntu-latest
-    # Add "id-token" with the intended permissions.
+    # Add "id-token" with the intended permissions for gcp auth.
     permissions:
       contents: "read"
       id-token: "write"
@@ -29,6 +29,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.3.1
+          # disable terraform_wrapper to avoid running node.
           terraform_wrapper: false
       - name: Terraform version
         run: terraform --version
@@ -37,7 +38,6 @@ jobs:
         with:
           workload_identity_provider: "${{ secrets.WIF_PROVIDER }}" # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
           service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}" # e.g. - my-service-account@my-project.iam.gserviceaccount.com
-      # Generates an execution plan for Terraform
       - name: E2E Test
         run: |
-          TEST_PROJECT=${{ secrets.TEST_PROJECT}} TEST_ORG_ID=${{ secrets.TEST_ORG_ID}} TEST_ANCESTRY=${{ secrets.TEST_ANCESTRY}} TEST_FOLDER_ID=${{ secrets.TEST_FOLDER_ID}} make test-integration
+          TEST_PROJECT=ciris-project TEST_ORG_ID=${{ secrets.TEST_ORG_ID}} TEST_ANCESTRY=${{ secrets.TEST_ANCESTRY}} TEST_FOLDER_ID=${{ secrets.TEST_FOLDER_ID}} make test-integration
