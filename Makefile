@@ -4,6 +4,6 @@ test:
 test-integration:
 	go version
 	terraform --version
-	TEST_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS} TEST_PROJECT=${PROJECT_ID} go test ./e2etest
+	TEST_PROJECT=${TEST_PROJECT} go test ./e2etest
 
 .PHONY: test
