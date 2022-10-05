@@ -1,6 +1,6 @@
 module github.com/GoogleCloudPlatform/terraform-google-conversion/v2
 
-go 1.17
+go 1.18
 
 require (
 	github.com/GoogleCloudPlatform/terraform-validator v0.16.1
