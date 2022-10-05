@@ -25,7 +25,7 @@ func TestConvert_noResourceChanges(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error parsing %s: %s", f, err)
 	}
-	options := &Options{}
+	options := &Options{Offline: true}
 	assets, err := Convert(ctx, jsonPlan, options)
 	assert.Empty(t, assets)
 	assert.Empty(t, err)
