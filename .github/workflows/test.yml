@@ -40,4 +40,4 @@ jobs:
       # Generates an execution plan for Terraform
       - name: E2E Test
         run: |
-          TEST_PROJECT=${{ secrets.TEST_PROJECT}} make test-integration
+          TEST_PROJECT=${{ secrets.TEST_PROJECT}} TEST_ORG_ID=${{ secrets.TEST_ORG_ID}} TEST_ANCESTRY=${{ secrets.TEST_ANCESTRY}} TEST_FOLDER_ID=${{ secrets.TEST_FOLDER_ID}} make test-integration
