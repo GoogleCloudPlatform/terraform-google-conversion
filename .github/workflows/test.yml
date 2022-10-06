@@ -6,7 +6,7 @@ on:
     branches: [main]
 jobs:
   test:
-    name: unit test and e2e test
+    name: unit test and integration test
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions for gcp auth.
     permissions:
@@ -38,6 +38,6 @@ jobs:
         with:
           workload_identity_provider: "${{ secrets.WIF_PROVIDER }}" # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
           service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}" # e.g. - my-service-account@my-project.iam.gserviceaccount.com
-      - name: E2E Test
+      - name: Integration test
         run: |
-          TEST_PROJECT=ciris-project TEST_ORG_ID=${{ secrets.TEST_ORG_ID}} TEST_ANCESTRY=${{ secrets.TEST_ANCESTRY}} TEST_FOLDER_ID=${{ secrets.TEST_FOLDER_ID}} make test-integration
+          TEST_PROJECT=${{ secrets.TEST_PROJECT_ID}} TEST_ORG_ID=${{ secrets.TEST_ORG_ID}} TEST_ANCESTRY=${{ secrets.TEST_ANCESTRY}} TEST_FOLDER_ID=${{ secrets.TEST_FOLDER_ID}} make test-integration

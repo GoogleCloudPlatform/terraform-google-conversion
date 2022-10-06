@@ -72,75 +72,60 @@ func initTestData() *testData {
 	}
 }
 
-func TestE2E(t *testing.T) {
-	if testing.Short() {
-		t.Skip("skipping integration test in short mode.")
-		return
+func roundtripTest(t *testing.T, name string, tmpDir string, data *testData) {
+	dir, err := ioutil.TempDir(tmpDir, "terraform")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(dir)
+
+	// tf file for credential and versions
+	generateHeaderFile(t, filepath.Join(dir, "header.tf"), data)
+
+	// fill template to generate the tf file
+	generateTestFiles(t, "../testdata", dir, name+".tf", data)
+
+	// terraform init + terraform plan
+	terraformWorkflow(t, dir, name)
+
+	// convert from tf json plan to assets
+	tfJSONPlanPath := filepath.Join(dir, name+".tfplan.json")
+	jsonPlan, err := ioutil.ReadFile(tfJSONPlanPath)
+	if err != nil {
+		t.Fatalf("cannot read %q, got: %s", tfJSONPlanPath, err)
+	}
+	gotAssets, err := tfplan2cai.Convert(context.Background(),
+		jsonPlan,
+		&tfplan2cai.Options{
+			DefaultProject: data.Provider["project"],
+		},
+	)
+	if err != nil {
+		t.Fatalf("tfplan2cai.Convert() = %s, want = nil", err)
 	}
 
-	tfFiles := []string{
-		"full_compute_instance",
+	// convert from assets to hcl
+	var assetsInput []*google.Asset
+	for ix := range gotAssets {
+		assetsInput = append(assetsInput, &gotAssets[ix])
 	}
-	tmpDir := os.TempDir()
-	data := initTestData()
+	gotTFPlanBytes, err := cai2hcl.Convert(assetsInput, &cai2hcl.Options{})
+	if err != nil {
+		t.Fatalf("cai2hcl.Convert() = %s, want = nil", err)
+	}
 
-	for _, name := range tfFiles {
-		t.Run(name, func(t *testing.T) {
-			dir, err := ioutil.TempDir(tmpDir, "terraform")
-			if err != nil {
-				t.Fatal(err)
-			}
-			defer os.RemoveAll(dir)
-
-			// tf file for credential and versions
-			generateHeaderFile(t, filepath.Join(dir, "header.tf"), data)
-
-			// fill template to generate the tf file
-			generateTestFiles(t, "../testdata", dir, name+".tf", data)
-
-			// terraform init + terraform plan
-			terraformWorkflow(t, dir, name)
-
-			// convert from tf json plan to assets
-			tfJSONPlanPath := filepath.Join(dir, name+".tfplan.json")
-			jsonPlan, err := ioutil.ReadFile(tfJSONPlanPath)
-			if err != nil {
-				t.Fatalf("cannot read %q, got: %s", tfJSONPlanPath, err)
-			}
-			gotAssets, err := tfplan2cai.Convert(context.Background(),
-				jsonPlan,
-				&tfplan2cai.Options{
-					DefaultProject: data.Provider["project"],
-				},
-			)
-			if err != nil {
-				t.Fatalf("tfplan2cai.Convert() = %s, want = nil", err)
-			}
-
-			// convert from assets to hcl
-			var assetsInput []*google.Asset
-			for ix := range gotAssets {
-				assetsInput = append(assetsInput, &gotAssets[ix])
-			}
-			gotTFPlanBytes, err := cai2hcl.Convert(assetsInput, &cai2hcl.Options{})
-			if err != nil {
-				t.Fatalf("cai2hcl.Convert() = %s, want = nil", err)
-			}
-
-			// compare results
-			tfFilePath := filepath.Join(dir, name+".tf")
-			tfBytes, err := ioutil.ReadFile(tfFilePath)
-			if err != nil {
-				t.Fatalf("Error parsing %s: %s", tfFilePath, err)
-			}
-			wantTFPlanBytes, err := printer.Format(tfBytes)
-			if err != nil {
-				t.Fatalf("Error format %s: %s", tfFilePath, err)
-			}
-			if diff := cmp.Diff(string(wantTFPlanBytes), string(gotTFPlanBytes)); diff != "" {
-				t.Fatalf("want = %v, got = %v, diff = %s", string(wantTFPlanBytes), string(gotTFPlanBytes), diff)
-			}
-		})
+	// compare results
+	tfFilePath := filepath.Join(dir, name+".tf")
+	tfBytes, err := ioutil.ReadFile(tfFilePath)
+	if err != nil {
+		t.Fatalf("Error parsing %s: %s", tfFilePath, err)
+	}
+	wantTFPlanBytes, err := printer.Format(tfBytes)
+	if err != nil {
+		t.Fatalf("Error format %s: %s", tfFilePath, err)
+	}
+	if diff := cmp.Diff(string(wantTFPlanBytes), string(gotTFPlanBytes)); diff != "" {
+		t.Fatalf("want = %v, got = %v, diff = %s", string(wantTFPlanBytes), string(gotTFPlanBytes), diff)
 	}
 }
 
