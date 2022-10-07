@@ -40,4 +40,4 @@ jobs:
           service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}" # e.g. - my-service-account@my-project.iam.gserviceaccount.com
       - name: Integration test
         run: |
-          TEST_PROJECT=${{ secrets.TEST_PROJECT_ID}} TEST_ORG_ID=${{ secrets.TEST_ORG_ID}} TEST_ANCESTRY=${{ secrets.TEST_ANCESTRY}} TEST_FOLDER_ID=${{ secrets.TEST_FOLDER_ID}} make test-integration
+          TEST_PROJECT=${{ secrets.TEST_PROJECT}} TEST_ORG_ID=${{ secrets.TEST_ORG_ID}} TEST_ANCESTRY=${{ secrets.TEST_ANCESTRY}} TEST_FOLDER_ID=${{ secrets.TEST_FOLDER_ID}} make test-integration
