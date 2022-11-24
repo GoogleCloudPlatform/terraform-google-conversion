@@ -8,3 +8,6 @@ import (
 // In the long run, this will be defined in this package; for now,
 // re-export the Asset type from terraform-validator.
 type Asset = google.Asset
+
+// AssetResource represents a CAI AssetResource.
+type AssetResource = google.AssetResource
