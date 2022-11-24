@@ -20,9 +20,8 @@ type Options struct {
 	ErrorLogger      *zap.Logger
 	Offline          bool
 	DefaultProject   string
-	// TODO:
-	// DefaultRegion    string
-	// DefaultZone      string
+	DefaultRegion    string
+	DefaultZone      string
 	// UserAgent for all requests (if online)
 	UserAgent string
 	// HTTPClient for all requests (if online)
@@ -48,7 +47,7 @@ func Convert(ctx context.Context, jsonPlan []byte, o *Options) ([]caiasset.Asset
 
 	// contents of newConverter
 	// Set up config and ancestry manager using the same http client and user agent
-	cfg, err := resources.NewConfig(ctx, o.DefaultProject, o.Offline, o.UserAgent, o.HTTPClient)
+	cfg, err := resources.NewConfig(ctx, o.DefaultProject, o.DefaultZone, o.DefaultRegion, o.Offline, o.UserAgent, o.HTTPClient)
 	if err != nil {
 		return nil, fmt.Errorf("building config: %w", err)
 	}
