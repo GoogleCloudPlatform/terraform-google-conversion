@@ -6,11 +6,10 @@ import (
 	"net/http"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
-
-	"github.com/GoogleCloudPlatform/terraform-validator/ancestrymanager"
-	"github.com/GoogleCloudPlatform/terraform-validator/converters/google"
-	resources "github.com/GoogleCloudPlatform/terraform-validator/converters/google/resources"
-	"github.com/GoogleCloudPlatform/terraform-validator/tfplan"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/ancestrymanager"
+	convert "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google"
+	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfplan"
 	"go.uber.org/zap"
 )
 
@@ -57,7 +56,7 @@ func Convert(ctx context.Context, jsonPlan []byte, o *Options) ([]caiasset.Asset
 		return nil, fmt.Errorf("building ancestry manager: %w", err)
 	}
 
-	converter := google.NewConverter(cfg, ancestryManager, o.Offline, o.ConvertUnchanged, errorLogger)
+	converter := convert.NewConverter(cfg, ancestryManager, o.Offline, o.ConvertUnchanged, errorLogger)
 
 	// ReadResourceChanges
 	changes, err := tfplan.ReadResourceChanges(jsonPlan)

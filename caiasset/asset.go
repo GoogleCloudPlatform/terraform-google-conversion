@@ -1,13 +1,95 @@
 package caiasset
 
 import (
-	"github.com/GoogleCloudPlatform/terraform-validator/converters/google"
+	"fmt"
+	"strings"
+	"time"
 )
 
-// Asset represents a CAI Asset.
-// In the long run, this will be defined in this package; for now,
-// re-export the Asset type from terraform-validator.
-type Asset = google.Asset
+// Asset is the CAI representation of a resource.
+type Asset struct {
+	// The name, in a peculiar format: `\\<api>.googleapis.com/<self_link>`
+	Name string `json:"name"`
+	// The type name in `google.<api>.<resourcename>` format.
+	Type      string         `json:"asset_type"`
+	Resource  *AssetResource `json:"resource,omitempty"`
+	IAMPolicy *IAMPolicy     `json:"iam_policy,omitempty"`
+	OrgPolicy []*OrgPolicy   `json:"org_policy,omitempty"`
+	Ancestors []string       `json:"ancestors"`
+}
 
-// AssetResource represents a CAI AssetResource.
-type AssetResource = google.AssetResource
+// IAMPolicy is the representation of a Cloud IAM policy set on a cloud resource.
+type IAMPolicy struct {
+	Bindings []IAMBinding `json:"bindings"`
+}
+
+// IAMBinding binds a role to a set of members.
+type IAMBinding struct {
+	Role    string   `json:"role"`
+	Members []string `json:"members"`
+}
+
+// AssetResource is nested within the Asset type.
+type AssetResource struct {
+	Version              string                 `json:"version"`
+	DiscoveryDocumentURI string                 `json:"discovery_document_uri"`
+	DiscoveryName        string                 `json:"discovery_name"`
+	Parent               string                 `json:"parent"`
+	Data                 map[string]interface{} `json:"data"`
+}
+
+// OrgPolicy is for managing organization policies.
+type OrgPolicy struct {
+	Constraint     string          `json:"constraint,omitempty"`
+	ListPolicy     *ListPolicy     `json:"list_policy,omitempty"`
+	BooleanPolicy  *BooleanPolicy  `json:"boolean_policy,omitempty"`
+	RestoreDefault *RestoreDefault `json:"restore_default,omitempty"`
+	UpdateTime     *Timestamp      `json:"update_time,omitempty"`
+}
+
+type Timestamp struct {
+	Seconds int64 `json:"seconds,omitempty"`
+	Nanos   int64 `json:"nanos,omitempty"`
+}
+
+func (t Timestamp) MarshalJSON() ([]byte, error) {
+	return []byte(`"` + time.Unix(0, t.Nanos).UTC().Format(time.RFC3339Nano) + `"`), nil
+}
+
+func (t *Timestamp) UnmarshalJSON(b []byte) error {
+	p, err := time.Parse(time.RFC3339Nano, strings.Trim(string(b), `"`))
+	if err != nil {
+		return fmt.Errorf("bad Timestamp: %v", err)
+	}
+	t.Seconds = p.Unix()
+	t.Nanos = p.UnixNano()
+	return nil
+}
+
+// ListPolicyAllValues is used to set `Policies` that apply to all possible
+// configuration values rather than specific values in `allowed_values` or
+// `denied_values`.
+type ListPolicyAllValues int32
+
+// ListPolicy can define specific values and subtrees of Cloud Resource
+// Manager resource hierarchy (`Organizations`, `Folders`, `Projects`) that
+// are allowed or denied by setting the `allowed_values` and `denied_values`
+// fields.
+type ListPolicy struct {
+	AllowedValues     []string            `json:"allowed_values,omitempty"`
+	DeniedValues      []string            `json:"denied_values,omitempty"`
+	AllValues         ListPolicyAllValues `json:"all_values,omitempty"`
+	SuggestedValue    string              `json:"suggested_value,omitempty"`
+	InheritFromParent bool                `json:"inherit_from_parent,omitempty"`
+}
+
+// BooleanPolicy If `true`, then the `Policy` is enforced. If `false`,
+// then any configuration is acceptable.
+type BooleanPolicy struct {
+	Enforced bool `json:"enforced,omitempty"`
+}
+
+// RestoreDefault determines if the default values of the `Constraints` are active for the
+// resources.
+type RestoreDefault struct {
+}
