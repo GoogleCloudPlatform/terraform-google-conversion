@@ -1,0 +1,43 @@
+name: Test
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    name: unit test and integration test
+    runs-on: ubuntu-latest
+    # Add "id-token" with the intended permissions for gcp auth.
+    permissions:
+      contents: "read"
+      id-token: "write"
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v3
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: "go.mod"
+      - name: Get dependencies
+        run: |
+          go mod download
+      - name: Test
+        run: |
+          make test
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.1
+          # disable terraform_wrapper to avoid running node.
+          terraform_wrapper: false
+      - name: Terraform version
+        run: terraform --version
+      - name: Authenticate to Google Cloud
+        uses: "google-github-actions/auth@v0.4.0"
+        with:
+          workload_identity_provider: "${{ secrets.WIF_PROVIDER }}" # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+          service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}" # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+      - name: Integration test
+        run: |
+          TEST_PROJECT=${{ secrets.TEST_PROJECT}} TEST_ORG_ID=${{ secrets.TEST_ORG_ID}} TEST_ANCESTRY=${{ secrets.TEST_ANCESTRY}} TEST_FOLDER_ID=${{ secrets.TEST_FOLDER_ID}} make test-integration
