@@ -1,0 +1,37 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# See cloud-foundation-cicd project
+
+timeout: 3600s
+steps:
+  - id: test-integration
+    name: "gcr.io/graphite-docker-images/terraform-validator-builder"
+    entrypoint: /bin/sh
+    args:
+      [
+        "-c",
+        "mv /terraform/$_TERRAFORM_VERSION /bin/terraform && /usr/bin/make test-integration",
+      ]
+    env:
+      - TEST_PROJECT=$_TEST_PROJECT
+      - TEST_FOLDER_ID=$_TEST_FOLDER
+      - TEST_ANCESTRY=$_TEST_ANCESTRY
+      - TEST_ORG_ID=$_TEST_ORG
+      - TERRAFORM_VERSION=$_TERRAFORM_VERSION
+tags:
+  - "ci"
+  - "integration"
+options:
+  machineType: "N1_HIGHCPU_8"
