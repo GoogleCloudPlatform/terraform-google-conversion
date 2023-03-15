@@ -10,7 +10,6 @@ import (
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai"
 	"github.com/stretchr/testify/require"
-
 	"go.uber.org/zap/zaptest"
 )
 
@@ -59,6 +58,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_compute_snapshot"},
 		{name: "example_compute_ssl_policy"},
 		{name: "example_compute_subnetwork"},
+		{name: "example_compute_target_https_proxy"},
 		{name: "example_compute_target_ssl_proxy"},
 		{name: "example_container_cluster"},
 		{name: "example_dns_managed_zone"},
@@ -77,6 +77,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_kms_key_ring_iam_binding"},
 		{name: "example_kms_key_ring_iam_member"},
 		{name: "example_kms_key_ring_iam_policy"},
+		{name: "example_logging_metric"},
 		{name: "example_monitoring_notification_channel"},
 		{name: "example_organization_iam_binding"},
 		{name: "example_organization_iam_custom_role"},
@@ -102,6 +103,8 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_secret_manager_secret_iam_binding"},
 		{name: "example_secret_manager_secret_iam_member"},
 		{name: "example_secret_manager_secret_iam_policy"},
+		{name: "example_service_account"},
+		{name: "example_service_account_update"},
 		{name: "example_spanner_database"},
 		{name: "example_spanner_database_iam_binding"},
 		{name: "example_spanner_database_iam_member"},
@@ -148,6 +151,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 			ancestryCache := map[string]string{
 				data.Provider["project"]: data.Ancestry,
 			}
+
 			jsonPlan, err := ioutil.ReadFile(planfile)
 			if err != nil {
 				t.Fatalf("Error parsing %s: %s", f, err)
@@ -225,7 +229,6 @@ func TestReadPlannedAssetsCoverage_WithoutDefaultProject(t *testing.T) {
 			if err != nil {
 				t.Fatalf("ReadPlannedAssets(%s, %s, \"\", \"\", %s, %t): %v", planfile, data.Provider["project"], ancestryCache, true, err)
 			}
-
 			expectedAssets := normalizeAssets(t, want, true)
 			actualAssets := normalizeAssets(t, got, true)
 			require.ElementsMatch(t, actualAssets, expectedAssets)
