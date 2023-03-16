@@ -155,6 +155,13 @@ func expandBigqueryConnectionConnectionCloudSql(v interface{}, d TerraformResour
 		transformed["type"] = transformedType
 	}
 
+	transformedServiceAccountId, err := expandBigqueryConnectionConnectionCloudSqlServiceAccountId(original["service_account_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountId); val.IsValid() && !isEmptyValue(val) {
+		transformed["serviceAccountId"] = transformedServiceAccountId
+	}
+
 	return transformed, nil
 }
 
@@ -201,6 +208,10 @@ func expandBigqueryConnectionConnectionCloudSqlCredentialPassword(v interface{},
 }
 
 func expandBigqueryConnectionConnectionCloudSqlType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionCloudSqlServiceAccountId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -294,11 +305,25 @@ func expandBigqueryConnectionConnectionAzure(v interface{}, d TerraformResourceD
 		transformed["customerTenantId"] = transformedCustomerTenantId
 	}
 
+	transformedFederatedApplicationClientId, err := expandBigqueryConnectionConnectionAzureFederatedApplicationClientId(original["federated_application_client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFederatedApplicationClientId); val.IsValid() && !isEmptyValue(val) {
+		transformed["federatedApplicationClientId"] = transformedFederatedApplicationClientId
+	}
+
 	transformedRedirectUri, err := expandBigqueryConnectionConnectionAzureRedirectUri(original["redirect_uri"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedRedirectUri); val.IsValid() && !isEmptyValue(val) {
 		transformed["redirectUri"] = transformedRedirectUri
+	}
+
+	transformedIdentity, err := expandBigqueryConnectionConnectionAzureIdentity(original["identity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !isEmptyValue(val) {
+		transformed["identity"] = transformedIdentity
 	}
 
 	return transformed, nil
@@ -320,7 +345,15 @@ func expandBigqueryConnectionConnectionAzureCustomerTenantId(v interface{}, d Te
 	return v, nil
 }
 
+func expandBigqueryConnectionConnectionAzureFederatedApplicationClientId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandBigqueryConnectionConnectionAzureRedirectUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionAzureIdentity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -347,6 +380,13 @@ func expandBigqueryConnectionConnectionCloudSpanner(v interface{}, d TerraformRe
 		transformed["useParallelism"] = transformedUseParallelism
 	}
 
+	transformedUseServerlessAnalytics, err := expandBigqueryConnectionConnectionCloudSpannerUseServerlessAnalytics(original["use_serverless_analytics"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseServerlessAnalytics); val.IsValid() && !isEmptyValue(val) {
+		transformed["useServerlessAnalytics"] = transformedUseServerlessAnalytics
+	}
+
 	return transformed, nil
 }
 
@@ -355,6 +395,10 @@ func expandBigqueryConnectionConnectionCloudSpannerDatabase(v interface{}, d Ter
 }
 
 func expandBigqueryConnectionConnectionCloudSpannerUseParallelism(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionCloudSpannerUseServerlessAnalytics(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 

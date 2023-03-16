@@ -8,7 +8,7 @@ import (
 // NewTestConfig create a config using the http test server.
 func NewTestConfig(server *httptest.Server) *Config {
 	cfg := &Config{}
-	cfg.client = server.Client()
+	cfg.Client = server.Client()
 	configureTestBasePaths(cfg, server.URL)
 	return cfg
 }
@@ -21,6 +21,7 @@ func configureTestBasePaths(c *Config, url string) {
 	c.AccessApprovalBasePath = url
 	c.AccessContextManagerBasePath = url
 	c.ActiveDirectoryBasePath = url
+	c.AlloydbBasePath = url
 	c.ApigeeBasePath = url
 	c.AppEngineBasePath = url
 	c.ArtifactRegistryBasePath = url
@@ -28,6 +29,7 @@ func configureTestBasePaths(c *Config, url string) {
 	c.BigQueryBasePath = url
 	c.BigqueryAnalyticsHubBasePath = url
 	c.BigqueryConnectionBasePath = url
+	c.BigqueryDatapolicyBasePath = url
 	c.BigqueryDataTransferBasePath = url
 	c.BigqueryReservationBasePath = url
 	c.BigtableBasePath = url
@@ -67,6 +69,7 @@ func configureTestBasePaths(c *Config, url string) {
 	c.GKEBackupBasePath = url
 	c.GKEHubBasePath = url
 	c.HealthcareBasePath = url
+	c.IAM2BasePath = url
 	c.IAMBetaBasePath = url
 	c.IAMWorkforcePoolBasePath = url
 	c.IapBasePath = url

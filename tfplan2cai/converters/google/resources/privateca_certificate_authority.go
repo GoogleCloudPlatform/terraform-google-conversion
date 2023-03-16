@@ -42,7 +42,7 @@ func resourcePrivateCaCACustomDiff(_ context.Context, diff *schema.ResourceDiff,
 	return nil
 }
 
-func isNewResource(diff *schema.ResourceDiff) bool {
+func isNewResource(diff TerraformResourceDiff) bool {
 	name := diff.Get("name")
 	return name.(string) == ""
 }
@@ -200,6 +200,11 @@ func expandPrivatecaCertificateAuthorityConfigX509Config(v interface{}, d Terraf
 	}
 	transformed["additionalExtensions"] = addExts
 
+	nameConstraints, err := expandPrivatecaCertificateConfigX509ConfigNameConstraints(original["name_constraints"], d, config)
+	if err != nil {
+		return nil, err
+	}
+	transformed["nameConstraints"] = nameConstraints
 	return transformed, nil
 }
 
