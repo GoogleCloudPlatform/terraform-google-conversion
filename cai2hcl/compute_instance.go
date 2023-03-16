@@ -116,9 +116,10 @@ func (c *ComputeInstanceConverter) convertResourceData(asset *caiasset.Asset) (*
 	hclData["metadata"] = convertMetadata(instance.Metadata)
 
 	if instance.Zone == "" {
-		instance.Zone = parseFieldValue(asset.Name, "zones")
+		hclData["zone"] = parseFieldValue(asset.Name, "zones")
+	} else {
+		hclData["zone"] = parseFieldValue(instance.Zone, "zones")
 	}
-	hclData["zone"] = instance.Zone
 
 	ctyVal, err := mapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

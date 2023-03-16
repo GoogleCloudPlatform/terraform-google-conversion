@@ -135,7 +135,8 @@
             "bar",
             "foo"
           ]
-        }
+        },
+        "zone": "projects/test-project/zones/us-central1-a"
       }
     }
   },
