@@ -1,5 +1,8 @@
 TERRAFORM_VERSION=0.12.31
 
+build:
+	go build ./...
+
 test:
 	GO111MODULE=on go test -short ./...
 
