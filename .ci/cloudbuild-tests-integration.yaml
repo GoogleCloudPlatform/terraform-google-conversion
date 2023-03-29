@@ -17,7 +17,7 @@
 timeout: 3600s
 steps:
   - id: test-integration
-    name: "gcr.io/graphite-docker-images/terraform-validator-builder"
+    name: "gcr.io/graphite-docker-images/terraform-validator-tester-integration"
     entrypoint: /bin/sh
     args:
       [
