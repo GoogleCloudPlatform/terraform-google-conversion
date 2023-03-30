@@ -54,34 +54,6 @@ type Asset struct {
 	Ancestors      []string `json:"ancestors"`
 }
 
-// ListPolicyAllValues is used to set `Policies` that apply to all possible
-// configuration values rather than specific values in `allowed_values` or
-// `denied_values`.
-type ListPolicyAllValues int32
-
-// ListPolicy can define specific values and subtrees of Cloud Resource
-// Manager resource hierarchy (`Organizations`, `Folders`, `Projects`) that
-// are allowed or denied by setting the `allowed_values` and `denied_values`
-// fields.
-type ListPolicy struct {
-	AllowedValues     []string            `json:"allowed_values,omitempty"`
-	DeniedValues      []string            `json:"denied_values,omitempty"`
-	AllValues         ListPolicyAllValues `json:"all_values,omitempty"`
-	SuggestedValue    string              `json:"suggested_value,omitempty"`
-	InheritFromParent bool                `json:"inherit_from_parent,omitempty"`
-}
-
-// BooleanPolicy If `true`, then the `Policy` is enforced. If `false`,
-// then any configuration is acceptable.
-type BooleanPolicy struct {
-	Enforced bool `json:"enforced,omitempty"`
-}
-
-// RestoreDefault determines if the default values of the `Constraints` are active for the
-// resources.
-type RestoreDefault struct {
-}
-
 // NewConverter is a factory function for Converter.
 func NewConverter(cfg *resources.Config, ancestryManager ancestrymanager.AncestryManager, offline bool, convertUnchanged bool, errorLogger *zap.Logger) *Converter {
 	return &Converter{
