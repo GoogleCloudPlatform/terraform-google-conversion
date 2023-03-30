@@ -22,10 +22,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/GoogleCloudPlatform/terraform-validator/ancestrymanager"
-	resources "github.com/GoogleCloudPlatform/terraform-validator/converters/google/resources"
-	"github.com/GoogleCloudPlatform/terraform-validator/tfdata"
-	"github.com/GoogleCloudPlatform/terraform-validator/tfplan"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/ancestrymanager"
+	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfdata"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfplan"
 
 	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,101 +40,18 @@ var ErrDuplicateAsset = errors.New("duplicate asset")
 // Asset contains the resource data and metadata in the same format as
 // Google CAI (Cloud Asset Inventory).
 type Asset struct {
-	Name          string           `json:"name"`
-	Type          string           `json:"asset_type"`
-	Resource      *AssetResource   `json:"resource,omitempty"`
-	IAMPolicy     *IAMPolicy       `json:"iam_policy,omitempty"`
-	OrgPolicy     []*OrgPolicy     `json:"org_policy,omitempty"`
-	V2OrgPolicies []*V2OrgPolicies `json:"v2_org_policies,omitempty"`
+	Name          string                    `json:"name"`
+	Type          string                    `json:"asset_type"`
+	Resource      *caiasset.AssetResource   `json:"resource,omitempty"`
+	IAMPolicy     *caiasset.IAMPolicy       `json:"iam_policy,omitempty"`
+	OrgPolicy     []*caiasset.OrgPolicy     `json:"org_policy,omitempty"`
+	V2OrgPolicies []*caiasset.V2OrgPolicies `json:"v2_org_policies,omitempty"`
 
 	// Store the converter's version of the asset to allow for merges which
 	// operate on this type. When matching json tags land in the conversions
 	// library, this could be nested to avoid the duplication of fields.
 	converterAsset resources.Asset
 	Ancestors      []string `json:"ancestors"`
-}
-
-// IAMPolicy is the representation of a Cloud IAM policy set on a cloud resource.
-type IAMPolicy struct {
-	Bindings []IAMBinding `json:"bindings"`
-}
-
-// IAMBinding binds a role to a set of members.
-type IAMBinding struct {
-	Role    string   `json:"role"`
-	Members []string `json:"members"`
-}
-
-// AssetResource is nested within the Asset type.
-type AssetResource struct {
-	Version              string                 `json:"version"`
-	DiscoveryDocumentURI string                 `json:"discovery_document_uri"`
-	DiscoveryName        string                 `json:"discovery_name"`
-	Parent               string                 `json:"parent"`
-	Data                 map[string]interface{} `json:"data"`
-}
-
-// OrgPolicy is for managing organization policies.
-type OrgPolicy struct {
-	Constraint     string          `json:"constraint,omitempty"`
-	ListPolicy     *ListPolicy     `json:"list_policy,omitempty"`
-	BooleanPolicy  *BooleanPolicy  `json:"boolean_policy,omitempty"`
-	RestoreDefault *RestoreDefault `json:"restore_default,omitempty"`
-	UpdateTime     *Timestamp      `json:"update_time,omitempty"`
-}
-
-// V2OrgPolicies is the represtation of V2OrgPolicies
-type V2OrgPolicies struct {
-	Name       string      `json:"name"`
-	PolicySpec *PolicySpec `json:"spec,omitempty"`
-}
-
-// Spec is the representation of Spec for Custom Org Policy
-type PolicySpec struct {
-	Etag              string        `json:"etag,omitempty"`
-	UpdateTime        *Timestamp    `json:"update_time,omitempty"`
-	PolicyRules       []*PolicyRule `json:"rules,omitempty"`
-	InheritFromParent bool          `json:"inherit_from_parent,omitempty"`
-	Reset             bool          `json:"reset,omitempty"`
-}
-
-type PolicyRule struct {
-	Values    *StringValues `json:"values,omitempty"`
-	AllowAll  bool          `json:"allow_all,omitempty"`
-	DenyAll   bool          `json:"deny_all,omitempty"`
-	Enforce   bool          `json:"enforce,omitempty"`
-	Condition *Expr         `json:"condition,omitempty"`
-}
-
-type StringValues struct {
-	AllowedValues []string `json:"allowed_values,omitempty"`
-	DeniedValues  []string `json:"denied_values,omitempty"`
-}
-
-type Expr struct {
-	Expression  string `json:"expression,omitempty"`
-	Title       string `json:"title,omitempty"`
-	Description string `json:"description,omitempty"`
-	Location    string `json:"location,omitempty"`
-}
-
-type Timestamp struct {
-	Seconds int64 `json:"seconds,omitempty"`
-	Nanos   int64 `json:"nanos,omitempty"`
-}
-
-func (t Timestamp) MarshalJSON() ([]byte, error) {
-	return []byte(`"` + time.Unix(0, t.Nanos).UTC().Format(time.RFC3339Nano) + `"`), nil
-}
-
-func (t *Timestamp) UnmarshalJSON(b []byte) error {
-	p, err := time.Parse(time.RFC3339Nano, strings.Trim(string(b), `"`))
-	if err != nil {
-		return fmt.Errorf("bad Timestamp: %v", err)
-	}
-	t.Seconds = p.Unix()
-	t.Nanos = p.UnixNano()
-	return nil
 }
 
 // ListPolicyAllValues is used to set `Policies` that apply to all possible
@@ -172,7 +90,7 @@ func NewConverter(cfg *resources.Config, ancestryManager ancestrymanager.Ancestr
 		offline:          offline,
 		cfg:              cfg,
 		ancestryManager:  ancestryManager,
-		assets:           make(map[string]Asset),
+		assets:           make(map[string]caiasset.Asset),
 		convertUnchanged: convertUnchanged,
 		errorLogger:      errorLogger,
 	}
@@ -194,7 +112,7 @@ type Converter struct {
 	ancestryManager ancestrymanager.AncestryManager
 
 	// Map of converted assets (key = asset.Type + asset.Name)
-	assets map[string]Asset
+	assets map[string]caiasset.Asset
 
 	// When set, Converter will convert ResourceChanges with no-op "actions".
 	convertUnchanged bool
@@ -374,15 +292,15 @@ func (c *Converter) addCreateOrUpdateOrNoop(rc *tfjson.ResourceChange) error {
 	return nil
 }
 
-type byName []Asset
+type byName []caiasset.Asset
 
 func (s byName) Len() int           { return len(s) }
 func (s byName) Less(i, j int) bool { return s[i].Name < s[j].Name }
 func (s byName) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
 
 // Assets lists all converted assets previously added by calls to AddResource.
-func (c *Converter) Assets() []Asset {
-	list := make([]Asset, 0, len(c.assets))
+func (c *Converter) Assets() []caiasset.Asset {
+	list := make([]caiasset.Asset, 0, len(c.assets))
 	for _, a := range c.assets {
 		list = append(list, a)
 	}
@@ -391,15 +309,15 @@ func (c *Converter) Assets() []Asset {
 }
 
 // augmentAsset adds data to an asset that is not set by the conversion library.
-func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *resources.Config, cai resources.Asset) (Asset, error) {
+func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *resources.Config, cai resources.Asset) (caiasset.Asset, error) {
 	ancestors, parent, err := c.ancestryManager.Ancestors(cfg, tfData, &cai)
 	if err != nil {
-		return Asset{}, fmt.Errorf("getting resource ancestry or parent failed: %w", err)
+		return caiasset.Asset{}, fmt.Errorf("getting resource ancestry or parent failed: %w", err)
 	}
 
-	var resource *AssetResource
+	var resource *caiasset.AssetResource
 	if cai.Resource != nil {
-		resource = &AssetResource{
+		resource = &caiasset.AssetResource{
 			Version:              cai.Resource.Version,
 			DiscoveryDocumentURI: cai.Resource.DiscoveryDocumentURI,
 			DiscoveryName:        cai.Resource.DiscoveryName,
@@ -408,48 +326,48 @@ func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *re
 		}
 	}
 
-	var policy *IAMPolicy
+	var policy *caiasset.IAMPolicy
 	if cai.IAMPolicy != nil {
-		policy = &IAMPolicy{}
+		policy = &caiasset.IAMPolicy{}
 		for _, b := range cai.IAMPolicy.Bindings {
-			policy.Bindings = append(policy.Bindings, IAMBinding{
+			policy.Bindings = append(policy.Bindings, caiasset.IAMBinding{
 				Role:    b.Role,
 				Members: b.Members,
 			})
 		}
 	}
 
-	var orgPolicy []*OrgPolicy
+	var orgPolicy []*caiasset.OrgPolicy
 	if cai.OrgPolicy != nil {
 		for _, o := range cai.OrgPolicy {
-			var listPolicy *ListPolicy
-			var booleanPolicy *BooleanPolicy
-			var restoreDefault *RestoreDefault
+			var listPolicy *caiasset.ListPolicy
+			var booleanPolicy *caiasset.BooleanPolicy
+			var restoreDefault *caiasset.RestoreDefault
 			if o.ListPolicy != nil {
-				listPolicy = &ListPolicy{
+				listPolicy = &caiasset.ListPolicy{
 					AllowedValues:     o.ListPolicy.AllowedValues,
-					AllValues:         ListPolicyAllValues(o.ListPolicy.AllValues),
+					AllValues:         caiasset.ListPolicyAllValues(o.ListPolicy.AllValues),
 					DeniedValues:      o.ListPolicy.DeniedValues,
 					SuggestedValue:    o.ListPolicy.SuggestedValue,
 					InheritFromParent: o.ListPolicy.InheritFromParent,
 				}
 			}
 			if o.BooleanPolicy != nil {
-				booleanPolicy = &BooleanPolicy{
+				booleanPolicy = &caiasset.BooleanPolicy{
 					Enforced: o.BooleanPolicy.Enforced,
 				}
 			}
 			if o.RestoreDefault != nil {
-				restoreDefault = &RestoreDefault{}
+				restoreDefault = &caiasset.RestoreDefault{}
 			}
 			//As time is not information in terraform resource data, time is fixed for testing purposes
 			fixedTime := time.Date(2021, time.April, 14, 15, 16, 17, 0, time.UTC)
-			orgPolicy = append(orgPolicy, &OrgPolicy{
+			orgPolicy = append(orgPolicy, &caiasset.OrgPolicy{
 				Constraint:     o.Constraint,
 				ListPolicy:     listPolicy,
 				BooleanPolicy:  booleanPolicy,
 				RestoreDefault: restoreDefault,
-				UpdateTime: &Timestamp{
+				UpdateTime: &caiasset.Timestamp{
 					Seconds: int64(fixedTime.Unix()),
 					Nanos:   int64(fixedTime.UnixNano()),
 				},
@@ -457,33 +375,33 @@ func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *re
 		}
 	}
 
-	var v2OrgPolicies []*V2OrgPolicies
+	var v2OrgPolicies []*caiasset.V2OrgPolicies
 	if cai.V2OrgPolicies != nil {
 		for _, o2 := range cai.V2OrgPolicies {
-			var spec *PolicySpec
+			var spec *caiasset.PolicySpec
 			if o2.PolicySpec != nil {
 
-				var rules []*PolicyRule
+				var rules []*caiasset.PolicyRule
 				if o2.PolicySpec.PolicyRules != nil {
 					for _, rule := range o2.PolicySpec.PolicyRules {
-						var values *StringValues
+						var values *caiasset.StringValues
 						if rule.Values != nil {
-							values = &StringValues{
+							values = &caiasset.StringValues{
 								AllowedValues: rule.Values.AllowedValues,
 								DeniedValues:  rule.Values.DeniedValues,
 							}
 						}
 
-						var condition *Expr
+						var condition *caiasset.Expr
 						if rule.Condition != nil {
-							condition = &Expr{
+							condition = &caiasset.Expr{
 								Expression:  rule.Condition.Expression,
 								Title:       rule.Condition.Title,
 								Description: rule.Condition.Description,
 								Location:    rule.Condition.Location,
 							}
 						}
-						rules = append(rules, &PolicyRule{
+						rules = append(rules, &caiasset.PolicyRule{
 							Values:    values,
 							AllowAll:  rule.AllowAll,
 							DenyAll:   rule.DenyAll,
@@ -494,9 +412,9 @@ func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *re
 				}
 
 				fixedTime := time.Date(2021, time.April, 14, 15, 16, 17, 0, time.UTC)
-				spec = &PolicySpec{
+				spec = &caiasset.PolicySpec{
 					Etag: o2.PolicySpec.Etag,
-					UpdateTime: &Timestamp{
+					UpdateTime: &caiasset.Timestamp{
 						Seconds: int64(fixedTime.Unix()),
 						Nanos:   int64(fixedTime.UnixNano()),
 					},
@@ -507,14 +425,14 @@ func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *re
 
 			}
 
-			v2OrgPolicies = append(v2OrgPolicies, &V2OrgPolicies{
+			v2OrgPolicies = append(v2OrgPolicies, &caiasset.V2OrgPolicies{
 				Name:       o2.Name,
 				PolicySpec: spec,
 			})
 		}
 	}
 
-	return Asset{
+	return caiasset.Asset{
 		Name:           cai.Name,
 		Type:           cai.Type,
 		Resource:       resource,

@@ -11,11 +11,12 @@ type Asset struct {
 	// The name, in a peculiar format: `\\<api>.googleapis.com/<self_link>`
 	Name string `json:"name"`
 	// The type name in `google.<api>.<resourcename>` format.
-	Type      string         `json:"asset_type"`
-	Resource  *AssetResource `json:"resource,omitempty"`
-	IAMPolicy *IAMPolicy     `json:"iam_policy,omitempty"`
-	OrgPolicy []*OrgPolicy   `json:"org_policy,omitempty"`
-	Ancestors []string       `json:"ancestors"`
+	Type          string           `json:"asset_type"`
+	Resource      *AssetResource   `json:"resource,omitempty"`
+	IAMPolicy     *IAMPolicy       `json:"iam_policy,omitempty"`
+	OrgPolicy     []*OrgPolicy     `json:"org_policy,omitempty"`
+	V2OrgPolicies []*V2OrgPolicies `json:"v2_org_policies,omitempty"`
+	Ancestors     []string         `json:"ancestors"`
 }
 
 // IAMPolicy is the representation of a Cloud IAM policy set on a cloud resource.
@@ -45,6 +46,41 @@ type OrgPolicy struct {
 	BooleanPolicy  *BooleanPolicy  `json:"boolean_policy,omitempty"`
 	RestoreDefault *RestoreDefault `json:"restore_default,omitempty"`
 	UpdateTime     *Timestamp      `json:"update_time,omitempty"`
+}
+
+// V2OrgPolicies is the represtation of V2OrgPolicies
+type V2OrgPolicies struct {
+	Name       string      `json:"name"`
+	PolicySpec *PolicySpec `json:"spec,omitempty"`
+}
+
+// Spec is the representation of Spec for Custom Org Policy
+type PolicySpec struct {
+	Etag              string        `json:"etag,omitempty"`
+	UpdateTime        *Timestamp    `json:"update_time,omitempty"`
+	PolicyRules       []*PolicyRule `json:"rules,omitempty"`
+	InheritFromParent bool          `json:"inherit_from_parent,omitempty"`
+	Reset             bool          `json:"reset,omitempty"`
+}
+
+type PolicyRule struct {
+	Values    *StringValues `json:"values,omitempty"`
+	AllowAll  bool          `json:"allow_all,omitempty"`
+	DenyAll   bool          `json:"deny_all,omitempty"`
+	Enforce   bool          `json:"enforce,omitempty"`
+	Condition *Expr         `json:"condition,omitempty"`
+}
+
+type StringValues struct {
+	AllowedValues []string `json:"allowed_values,omitempty"`
+	DeniedValues  []string `json:"denied_values,omitempty"`
+}
+
+type Expr struct {
+	Expression  string `json:"expression,omitempty"`
+	Title       string `json:"title,omitempty"`
+	Description string `json:"description,omitempty"`
+	Location    string `json:"location,omitempty"`
 }
 
 type Timestamp struct {
