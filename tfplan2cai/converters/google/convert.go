@@ -90,7 +90,7 @@ func NewConverter(cfg *resources.Config, ancestryManager ancestrymanager.Ancestr
 		offline:          offline,
 		cfg:              cfg,
 		ancestryManager:  ancestryManager,
-		assets:           make(map[string]caiasset.Asset),
+		assets:           make(map[string]Asset),
 		convertUnchanged: convertUnchanged,
 		errorLogger:      errorLogger,
 	}
@@ -112,7 +112,7 @@ type Converter struct {
 	ancestryManager ancestrymanager.AncestryManager
 
 	// Map of converted assets (key = asset.Type + asset.Name)
-	assets map[string]caiasset.Asset
+	assets map[string]Asset
 
 	// When set, Converter will convert ResourceChanges with no-op "actions".
 	convertUnchanged bool
@@ -302,17 +302,25 @@ func (s byName) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
 func (c *Converter) Assets() []caiasset.Asset {
 	list := make([]caiasset.Asset, 0, len(c.assets))
 	for _, a := range c.assets {
-		list = append(list, a)
+		list = append(list, caiasset.Asset{
+			Name:      a.Name,
+			Type:      a.Type,
+			Resource:  a.Resource,
+			IAMPolicy: a.IAMPolicy,
+			OrgPolicy: a.OrgPolicy,
+			V2OrgPolicies: a.V2OrgPolicies,
+			Ancestors: a.Ancestors,
+		})
 	}
 	sort.Sort(byName(list))
 	return list
 }
 
 // augmentAsset adds data to an asset that is not set by the conversion library.
-func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *resources.Config, cai resources.Asset) (caiasset.Asset, error) {
+func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *resources.Config, cai resources.Asset) (Asset, error) {
 	ancestors, parent, err := c.ancestryManager.Ancestors(cfg, tfData, &cai)
 	if err != nil {
-		return caiasset.Asset{}, fmt.Errorf("getting resource ancestry or parent failed: %w", err)
+		return Asset{}, fmt.Errorf("getting resource ancestry or parent failed: %w", err)
 	}
 
 	var resource *caiasset.AssetResource
@@ -432,7 +440,7 @@ func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *re
 		}
 	}
 
-	return caiasset.Asset{
+	return Asset{
 		Name:           cai.Name,
 		Type:           cai.Type,
 		Resource:       resource,
