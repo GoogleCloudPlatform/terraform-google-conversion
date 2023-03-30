@@ -40,11 +40,13 @@ var ErrDuplicateAsset = errors.New("duplicate asset")
 // Asset contains the resource data and metadata in the same format as
 // Google CAI (Cloud Asset Inventory).
 type Asset struct {
-	Name      string                  `json:"name"`
-	Type      string                  `json:"asset_type"`
-	Resource  *caiasset.AssetResource `json:"resource,omitempty"`
-	IAMPolicy *caiasset.IAMPolicy     `json:"iam_policy,omitempty"`
-	OrgPolicy []*caiasset.OrgPolicy   `json:"org_policy,omitempty"`
+	Name          string                    `json:"name"`
+	Type          string                    `json:"asset_type"`
+	Resource      *caiasset.AssetResource   `json:"resource,omitempty"`
+	IAMPolicy     *caiasset.IAMPolicy       `json:"iam_policy,omitempty"`
+	OrgPolicy     []*caiasset.OrgPolicy     `json:"org_policy,omitempty"`
+	V2OrgPolicies []*caiasset.V2OrgPolicies `json:"v2_org_policies,omitempty"`
+
 	// Store the converter's version of the asset to allow for merges which
 	// operate on this type. When matching json tags land in the conversions
 	// library, this could be nested to avoid the duplication of fields.
@@ -273,12 +275,13 @@ func (c *Converter) Assets() []caiasset.Asset {
 	list := make([]caiasset.Asset, 0, len(c.assets))
 	for _, a := range c.assets {
 		list = append(list, caiasset.Asset{
-			Name:      a.Name,
-			Type:      a.Type,
-			Resource:  a.Resource,
-			IAMPolicy: a.IAMPolicy,
-			OrgPolicy: a.OrgPolicy,
-			Ancestors: a.Ancestors,
+			Name:          a.Name,
+			Type:          a.Type,
+			Resource:      a.Resource,
+			IAMPolicy:     a.IAMPolicy,
+			OrgPolicy:     a.OrgPolicy,
+			V2OrgPolicies: a.V2OrgPolicies,
+			Ancestors:     a.Ancestors,
 		})
 	}
 	sort.Sort(byName(list))
@@ -352,12 +355,70 @@ func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *re
 		}
 	}
 
+	var v2OrgPolicies []*caiasset.V2OrgPolicies
+	if cai.V2OrgPolicies != nil {
+		for _, o2 := range cai.V2OrgPolicies {
+			var spec *caiasset.PolicySpec
+			if o2.PolicySpec != nil {
+
+				var rules []*caiasset.PolicyRule
+				if o2.PolicySpec.PolicyRules != nil {
+					for _, rule := range o2.PolicySpec.PolicyRules {
+						var values *caiasset.StringValues
+						if rule.Values != nil {
+							values = &caiasset.StringValues{
+								AllowedValues: rule.Values.AllowedValues,
+								DeniedValues:  rule.Values.DeniedValues,
+							}
+						}
+
+						var condition *caiasset.Expr
+						if rule.Condition != nil {
+							condition = &caiasset.Expr{
+								Expression:  rule.Condition.Expression,
+								Title:       rule.Condition.Title,
+								Description: rule.Condition.Description,
+								Location:    rule.Condition.Location,
+							}
+						}
+						rules = append(rules, &caiasset.PolicyRule{
+							Values:    values,
+							AllowAll:  rule.AllowAll,
+							DenyAll:   rule.DenyAll,
+							Enforce:   rule.Enforce,
+							Condition: condition,
+						})
+					}
+				}
+
+				fixedTime := time.Date(2021, time.April, 14, 15, 16, 17, 0, time.UTC)
+				spec = &caiasset.PolicySpec{
+					Etag: o2.PolicySpec.Etag,
+					UpdateTime: &caiasset.Timestamp{
+						Seconds: int64(fixedTime.Unix()),
+						Nanos:   int64(fixedTime.UnixNano()),
+					},
+					PolicyRules:       rules,
+					InheritFromParent: o2.PolicySpec.InheritFromParent,
+					Reset:             o2.PolicySpec.Reset,
+				}
+
+			}
+
+			v2OrgPolicies = append(v2OrgPolicies, &caiasset.V2OrgPolicies{
+				Name:       o2.Name,
+				PolicySpec: spec,
+			})
+		}
+	}
+
 	return Asset{
 		Name:           cai.Name,
 		Type:           cai.Type,
 		Resource:       resource,
 		IAMPolicy:      policy,
 		OrgPolicy:      orgPolicy,
+		V2OrgPolicies:  v2OrgPolicies,
 		converterAsset: cai,
 		Ancestors:      ancestors,
 	}, nil
