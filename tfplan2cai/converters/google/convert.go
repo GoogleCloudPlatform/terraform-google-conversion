@@ -275,13 +275,13 @@ func (c *Converter) Assets() []caiasset.Asset {
 	list := make([]caiasset.Asset, 0, len(c.assets))
 	for _, a := range c.assets {
 		list = append(list, caiasset.Asset{
-			Name:      a.Name,
-			Type:      a.Type,
-			Resource:  a.Resource,
-			IAMPolicy: a.IAMPolicy,
-			OrgPolicy: a.OrgPolicy,
+			Name:          a.Name,
+			Type:          a.Type,
+			Resource:      a.Resource,
+			IAMPolicy:     a.IAMPolicy,
+			OrgPolicy:     a.OrgPolicy,
 			V2OrgPolicies: a.V2OrgPolicies,
-			Ancestors: a.Ancestors,
+			Ancestors:     a.Ancestors,
 		})
 	}
 	sort.Sort(byName(list))
