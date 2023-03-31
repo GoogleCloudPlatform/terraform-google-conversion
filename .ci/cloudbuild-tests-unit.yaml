@@ -17,7 +17,7 @@
 timeout: 1800s
 steps:
   - id: test
-    name: "gcr.io/cloud-builders/go:1.19"
+    name: "gcr.io/cloud-builders/go:1.18"
     entrypoint: /usr/bin/make
     args: ["test"]
 tags:
