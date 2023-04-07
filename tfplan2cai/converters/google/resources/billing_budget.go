@@ -20,7 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-// Check to see if a specified value in the config exists and suppress diffs if so. Otherwise run emptyOrDefaultStringSuppress.
+// Check to see if a specified value in the config exists and suppress diffs if so. Otherwise run EmptyOrDefaultStringSuppress.
 
 func checkValAndDefaultStringSuppress(defaultVal string, checkVal string) schema.SchemaDiffSuppressFunc {
 	return func(k, old, new string, d *schema.ResourceData) bool {

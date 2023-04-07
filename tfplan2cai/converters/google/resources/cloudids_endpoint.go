@@ -83,7 +83,7 @@ func GetCloudIdsEndpointApiObject(d TerraformResourceData, config *Config) (map[
 }
 
 func expandCloudIdsEndpointName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/locations/{{location}}/endpoints/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/endpoints/{{name}}")
 }
 
 func expandCloudIdsEndpointNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

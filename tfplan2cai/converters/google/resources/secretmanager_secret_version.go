@@ -75,7 +75,7 @@ func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceD
 		return "", nil
 	}
 
-	url, err := replaceVars(d, config, "{{SecretManagerBasePath}}{{name}}")
+	url, err := ReplaceVars(d, config, "{{SecretManagerBasePath}}{{name}}")
 	if err != nil {
 		return nil, err
 	}

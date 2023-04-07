@@ -23,7 +23,7 @@ import (
 
 const workloadIdentityPoolProviderIdRegexp = `^[0-9a-z-]+$`
 
-func validateWorkloadIdentityPoolProviderId(v interface{}, k string) (ws []string, errors []error) {
+func ValidateWorkloadIdentityPoolProviderId(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 
 	if strings.HasPrefix(value, "gcp-") {

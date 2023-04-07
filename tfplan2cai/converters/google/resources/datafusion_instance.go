@@ -182,7 +182,7 @@ func GetDataFusionInstanceApiObject(d TerraformResourceData, config *Config) (ma
 }
 
 func expandDataFusionInstanceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/locations/{{region}}/instances/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/locations/{{region}}/instances/{{name}}")
 }
 
 func expandDataFusionInstanceDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

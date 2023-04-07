@@ -192,14 +192,14 @@ func expandComputeForwardingRuleBackendService(v interface{}, d TerraformResourc
 		return v, nil
 	} else if strings.HasPrefix(v.(string), "projects/") {
 		// If the self link references a project, we'll just stuck the compute prefix on it
-		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		url, err := ReplaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
 		if err != nil {
 			return "", err
 		}
 		return url, nil
 	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
 		// For regional or zonal resources which include their region or zone, just put the project in front.
-		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		url, err := ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
 		if err != nil {
 			return nil, err
 		}
@@ -208,7 +208,7 @@ func expandComputeForwardingRuleBackendService(v interface{}, d TerraformResourc
 	// Anything else is assumed to be a regional resource, with a partial link that begins with the resource name.
 	// This isn't very likely - it's a last-ditch effort to extract something useful here.  We can do a better job
 	// as soon as MultiResourceRefs are working since we'll know the types that this field is supposed to point to.
-	url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/regions/{{region}}/")
+	url, err := ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/regions/{{region}}/")
 	if err != nil {
 		return nil, err
 	}
@@ -257,14 +257,14 @@ func expandComputeForwardingRuleTarget(v interface{}, d TerraformResourceData, c
 		return v, nil
 	} else if strings.HasPrefix(v.(string), "projects/") {
 		// If the self link references a project, we'll just stuck the compute prefix on it
-		url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		url, err := ReplaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
 		if err != nil {
 			return "", err
 		}
 		return url, nil
 	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
 		// For regional or zonal resources which include their region or zone, just put the project in front.
-		url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		url, err := ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
 		if err != nil {
 			return nil, err
 		}
@@ -273,7 +273,7 @@ func expandComputeForwardingRuleTarget(v interface{}, d TerraformResourceData, c
 	// Anything else is assumed to be a regional resource, with a partial link that begins with the resource name.
 	// This isn't very likely - it's a last-ditch effort to extract something useful here.  We can do a better job
 	// as soon as MultiResourceRefs are working since we'll know the types that this field is supposed to point to.
-	url, err := replaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/regions/{{region}}/")
+	url, err := ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/regions/{{region}}/")
 	if err != nil {
 		return nil, err
 	}

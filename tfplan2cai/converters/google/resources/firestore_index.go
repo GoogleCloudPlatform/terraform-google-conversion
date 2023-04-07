@@ -27,7 +27,7 @@ import (
  * end of the fields list if not present. We are suppressing
  * this server generated field.
  */
-func firestoreIFieldsDiffSuppressFunc(k, old, new string, d TerraformResourceDataChange) bool {
+func FirestoreIFieldsDiffSuppressFunc(k, old, new string, d TerraformResourceDataChange) bool {
 	kLength := "fields.#"
 	oldLength, newLength := d.GetChange(kLength)
 	oldInt, ok := oldLength.(int)
@@ -56,7 +56,7 @@ func firestoreIFieldsDiffSuppressFunc(k, old, new string, d TerraformResourceDat
 }
 
 func firestoreIFieldsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
-	return firestoreIFieldsDiffSuppressFunc(k, old, new, d)
+	return FirestoreIFieldsDiffSuppressFunc(k, old, new, d)
 }
 
 const FirestoreIndexAssetType string = "firestore.googleapis.com/Index"

@@ -243,7 +243,7 @@ func flattenCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(v inter
 	return v
 }
 
-func validateCloudIotDeviceRegistryID(v interface{}, k string) (warnings []string, errors []error) {
+func ValidateCloudIotDeviceRegistryID(v interface{}, k string) (warnings []string, errors []error) {
 	value := v.(string)
 	if strings.HasPrefix(value, "goog") {
 		errors = append(errors, fmt.Errorf(

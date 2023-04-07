@@ -89,7 +89,7 @@ func GetFirestoreDatabaseApiObject(d TerraformResourceData, config *Config) (map
 }
 
 func expandFirestoreDatabaseName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/databases/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/databases/{{name}}")
 }
 
 func expandFirestoreDatabaseLocationId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
