@@ -195,7 +195,7 @@ func expandDNSPolicyNetworksNetworkUrl(v interface{}, d TerraformResourceData, c
 	} else if strings.HasPrefix(v.(string), "https://") {
 		return v, nil
 	}
-	url, err := replaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+	url, err := ReplaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
 	if err != nil {
 		return "", err
 	}

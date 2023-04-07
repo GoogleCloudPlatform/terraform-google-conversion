@@ -22,7 +22,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func compareSignatureAlgorithm(_, old, new string, _ *schema.ResourceData) bool {
+func CompareSignatureAlgorithm(_, old, new string, _ *schema.ResourceData) bool {
 	// See https://cloud.google.com/binary-authorization/docs/reference/rest/v1/projects.attestors#signaturealgorithm
 	normalizedAlgorithms := map[string]string{
 		"ECDSA_P256_SHA256":   "ECDSA_P256_SHA256",
@@ -105,7 +105,7 @@ func GetBinaryAuthorizationAttestorApiObject(d TerraformResourceData, config *Co
 }
 
 func expandBinaryAuthorizationAttestorName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/attestors/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/attestors/{{name}}")
 }
 
 func expandBinaryAuthorizationAttestorDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

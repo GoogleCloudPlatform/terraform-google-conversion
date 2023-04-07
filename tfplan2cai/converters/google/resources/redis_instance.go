@@ -288,7 +288,7 @@ func expandRedisInstanceLocationId(v interface{}, d TerraformResourceData, confi
 }
 
 func expandRedisInstanceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/locations/{{region}}/instances/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/locations/{{region}}/instances/{{name}}")
 }
 
 func expandRedisInstancePersistenceConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

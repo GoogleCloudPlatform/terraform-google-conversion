@@ -161,7 +161,7 @@ func resourcePubsubSubscriptionEncoder(d TerraformResourceData, meta interface{}
 }
 
 func expandPubsubSubscriptionName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/subscriptions/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/subscriptions/{{name}}")
 }
 
 func expandPubsubSubscriptionTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

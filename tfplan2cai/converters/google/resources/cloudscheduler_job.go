@@ -194,7 +194,7 @@ func resourceCloudSchedulerJobEncoder(d TerraformResourceData, meta interface{},
 }
 
 func expandCloudSchedulerJobName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/locations/{{region}}/jobs/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/locations/{{region}}/jobs/{{name}}")
 }
 
 func expandCloudSchedulerJobDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

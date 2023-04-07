@@ -16,7 +16,7 @@ require (
 	github.com/hashicorp/terraform-json v0.14.0
 	github.com/hashicorp/terraform-plugin-framework v1.1.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0
-	github.com/hashicorp/terraform-provider-google v1.20.1-0.20230407191817-ff1bd2dffd49
+	github.com/hashicorp/terraform-provider-google v1.20.1-0.20230407210938-22089a4c98e7
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.8.1
@@ -36,7 +36,7 @@ require (
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v0.12.0 // indirect
 	cloud.google.com/go/longrunning v0.4.1 // indirect
-	github.com/GoogleCloudPlatform/declarative-resource-client-library v1.34.0 // indirect
+	github.com/GoogleCloudPlatform/declarative-resource-client-library v1.37.0 // indirect
 	github.com/agext/levenshtein v1.2.2 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/benbjohnson/clock v1.1.0 // indirect

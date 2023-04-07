@@ -37,7 +37,7 @@ func sensitiveParamCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v
 
 // This customizeDiff is to use ForceNew for params fields data_path_template and
 // destination_table_name_template only if the value of "data_source_id" is "google_cloud_storage".
-func paramsCustomizeDiffFunc(diff TerraformResourceDiff) error {
+func ParamsCustomizeDiffFunc(diff TerraformResourceDiff) error {
 	old, new := diff.GetChange("params")
 	dsId := diff.Get("data_source_id").(string)
 	oldParams := old.(map[string]interface{})
@@ -66,7 +66,7 @@ func paramsCustomizeDiffFunc(diff TerraformResourceDiff) error {
 }
 
 func paramsCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
-	return paramsCustomizeDiffFunc(diff)
+	return ParamsCustomizeDiffFunc(diff)
 }
 
 const BigqueryDataTransferConfigAssetType string = "bigquerydatatransfer.googleapis.com/Config"

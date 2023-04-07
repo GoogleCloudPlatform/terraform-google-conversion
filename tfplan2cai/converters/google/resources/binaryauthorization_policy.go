@@ -22,7 +22,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func defaultBinaryAuthorizationPolicy(project string) map[string]interface{} {
+func DefaultBinaryAuthorizationPolicy(project string) map[string]interface{} {
 	return map[string]interface{}{
 		"name": fmt.Sprintf("projects/%s/policy", project),
 		"admissionWhitelistPatterns": []interface{}{

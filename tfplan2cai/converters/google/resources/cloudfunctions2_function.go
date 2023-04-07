@@ -93,7 +93,7 @@ func GetCloudfunctions2functionApiObject(d TerraformResourceData, config *Config
 }
 
 func expandCloudfunctions2functionName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/locations/{{location}}/functions/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/functions/{{name}}")
 }
 
 func expandCloudfunctions2functionDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

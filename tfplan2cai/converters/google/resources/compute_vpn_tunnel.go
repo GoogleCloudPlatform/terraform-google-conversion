@@ -327,7 +327,7 @@ func expandComputeVpnTunnelRouter(v interface{}, d TerraformResourceData, config
 		return nil, fmt.Errorf("Invalid value for router: %s", err)
 	}
 
-	url, err := replaceVars(d, config, "{{ComputeBasePath}}"+f.RelativeLink())
+	url, err := ReplaceVars(d, config, "{{ComputeBasePath}}"+f.RelativeLink())
 	if err != nil {
 		return nil, err
 	}

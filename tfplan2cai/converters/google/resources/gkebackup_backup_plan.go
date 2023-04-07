@@ -101,7 +101,7 @@ func GetGKEBackupBackupPlanApiObject(d TerraformResourceData, config *Config) (m
 }
 
 func expandGKEBackupBackupPlanName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/locations/{{location}}/backupPlans/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/backupPlans/{{name}}")
 }
 
 func expandGKEBackupBackupPlanDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

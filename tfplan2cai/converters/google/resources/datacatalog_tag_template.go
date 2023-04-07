@@ -25,7 +25,7 @@ import (
 // Use it to delete TagTemplate Field
 func deleteTagTemplateField(d *schema.ResourceData, config *Config, name, billingProject, userAgent string) error {
 
-	url_delete, err := replaceVars(d, config, "{{DataCatalogBasePath}}{{name}}/fields/"+name+"?force={{force_delete}}")
+	url_delete, err := ReplaceVars(d, config, "{{DataCatalogBasePath}}{{name}}/fields/"+name+"?force={{force_delete}}")
 	if err != nil {
 		return err
 	}
@@ -42,12 +42,12 @@ func deleteTagTemplateField(d *schema.ResourceData, config *Config, name, billin
 // Use it to create TagTemplate Field
 func createTagTemplateField(d *schema.ResourceData, config *Config, body map[string]interface{}, name, billingProject, userAgent string) error {
 
-	url_create, err := replaceVars(d, config, "{{DataCatalogBasePath}}{{name}}/fields")
+	url_create, err := ReplaceVars(d, config, "{{DataCatalogBasePath}}{{name}}/fields")
 	if err != nil {
 		return err
 	}
 
-	url_create, err = addQueryParams(url_create, map[string]string{"tagTemplateFieldId": name})
+	url_create, err = AddQueryParams(url_create, map[string]string{"tagTemplateFieldId": name})
 	if err != nil {
 		return err
 	}

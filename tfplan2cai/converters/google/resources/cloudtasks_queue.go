@@ -96,7 +96,7 @@ func GetCloudTasksQueueApiObject(d TerraformResourceData, config *Config) (map[s
 }
 
 func expandCloudTasksQueueName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
-	return replaceVars(d, config, "projects/{{project}}/locations/{{location}}/queues/{{name}}")
+	return ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/queues/{{name}}")
 }
 
 func expandCloudTasksQueueAppEngineRoutingOverride(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {

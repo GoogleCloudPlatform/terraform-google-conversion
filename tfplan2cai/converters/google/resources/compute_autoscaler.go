@@ -448,7 +448,7 @@ func expandComputeAutoscalerTarget(v interface{}, d TerraformResourceData, confi
 		return nil, fmt.Errorf("Invalid value for target: %s", err)
 	}
 
-	url, err := replaceVars(d, config, "{{ComputeBasePath}}"+f.RelativeLink())
+	url, err := ReplaceVars(d, config, "{{ComputeBasePath}}"+f.RelativeLink())
 	if err != nil {
 		return nil, err
 	}
