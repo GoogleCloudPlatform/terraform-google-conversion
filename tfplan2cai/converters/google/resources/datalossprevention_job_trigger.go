@@ -697,6 +697,20 @@ func expandDataLossPreventionJobTriggerInspectJobActions(v interface{}, d Terraf
 			transformed["publishFindingsToCloudDataCatalog"] = transformedPublishFindingsToCloudDataCatalog
 		}
 
+		transformedJobNotificationEmails, err := expandDataLossPreventionJobTriggerInspectJobActionsJobNotificationEmails(original["job_notification_emails"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["jobNotificationEmails"] = transformedJobNotificationEmails
+		}
+
+		transformedDeidentify, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentify(original["deidentify"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDeidentify); val.IsValid() && !isEmptyValue(val) {
+			transformed["deidentify"] = transformedDeidentify
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -847,4 +861,176 @@ func expandDataLossPreventionJobTriggerInspectJobActionsPublishFindingsToCloudDa
 	transformed := make(map[string]interface{})
 
 	return transformed, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsJobNotificationEmails(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentify(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCloudStorageOutput, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyCloudStorageOutput(original["cloud_storage_output"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudStorageOutput); val.IsValid() && !isEmptyValue(val) {
+		transformed["cloudStorageOutput"] = transformedCloudStorageOutput
+	}
+
+	transformedFileTypesToTransform, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyFileTypesToTransform(original["file_types_to_transform"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFileTypesToTransform); val.IsValid() && !isEmptyValue(val) {
+		transformed["fileTypesToTransform"] = transformedFileTypesToTransform
+	}
+
+	transformedTransformationConfig, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationConfig(original["transformation_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTransformationConfig); val.IsValid() && !isEmptyValue(val) {
+		transformed["transformationConfig"] = transformedTransformationConfig
+	}
+
+	transformedTransformationDetailsStorageConfig, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfig(original["transformation_details_storage_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTransformationDetailsStorageConfig); val.IsValid() && !isEmptyValue(val) {
+		transformed["transformationDetailsStorageConfig"] = transformedTransformationDetailsStorageConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyCloudStorageOutput(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyFileTypesToTransform(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDeidentifyTemplate, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationConfigDeidentifyTemplate(original["deidentify_template"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDeidentifyTemplate); val.IsValid() && !isEmptyValue(val) {
+		transformed["deidentifyTemplate"] = transformedDeidentifyTemplate
+	}
+
+	transformedStructuredDeidentifyTemplate, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationConfigStructuredDeidentifyTemplate(original["structured_deidentify_template"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStructuredDeidentifyTemplate); val.IsValid() && !isEmptyValue(val) {
+		transformed["structuredDeidentifyTemplate"] = transformedStructuredDeidentifyTemplate
+	}
+
+	transformedImageRedactTemplate, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationConfigImageRedactTemplate(original["image_redact_template"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedImageRedactTemplate); val.IsValid() && !isEmptyValue(val) {
+		transformed["imageRedactTemplate"] = transformedImageRedactTemplate
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationConfigDeidentifyTemplate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationConfigStructuredDeidentifyTemplate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationConfigImageRedactTemplate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTable, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTable(original["table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !isEmptyValue(val) {
+		transformed["table"] = transformedTable
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTable(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDatasetId, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTableDatasetId(original["dataset_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !isEmptyValue(val) {
+		transformed["datasetId"] = transformedDatasetId
+	}
+
+	transformedProjectId, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTableProjectId(original["project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+		transformed["projectId"] = transformedProjectId
+	}
+
+	transformedTableId, err := expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTableTableId(original["table_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTableId); val.IsValid() && !isEmptyValue(val) {
+		transformed["tableId"] = transformedTableId
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTableDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTableProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTableTableId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
 }
