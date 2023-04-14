@@ -191,6 +191,13 @@ func expandIAMWorkforcePoolWorkforcePoolProviderOidc(v interface{}, d TerraformR
 		transformed["clientId"] = transformedClientId
 	}
 
+	transformedWebSsoConfig, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfig(original["web_sso_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebSsoConfig); val.IsValid() && !isEmptyValue(val) {
+		transformed["webSsoConfig"] = transformedWebSsoConfig
+	}
+
 	return transformed, nil
 }
 
@@ -199,5 +206,39 @@ func expandIAMWorkforcePoolWorkforcePoolProviderOidcIssuerUri(v interface{}, d T
 }
 
 func expandIAMWorkforcePoolWorkforcePoolProviderOidcClientId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResponseType, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigResponseType(original["response_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponseType); val.IsValid() && !isEmptyValue(val) {
+		transformed["responseType"] = transformedResponseType
+	}
+
+	transformedAssertionClaimsBehavior, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigAssertionClaimsBehavior(original["assertion_claims_behavior"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAssertionClaimsBehavior); val.IsValid() && !isEmptyValue(val) {
+		transformed["assertionClaimsBehavior"] = transformedAssertionClaimsBehavior
+	}
+
+	return transformed, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigResponseType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigAssertionClaimsBehavior(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
