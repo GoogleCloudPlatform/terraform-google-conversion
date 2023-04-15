@@ -4,12 +4,11 @@ import (
 	"testing"
 )
 
-func TestConvertProject(t *testing.T) {
+func TestConvertComputeForwardingRule(t *testing.T) {
 	cases := []struct {
 		name string
 	}{
-		{name: "project_create"},
-		{name: "project_iam"},
+		{name: "full_compute_forwarding_rule"},
 	}
 	for i := range cases {
 		c := cases[i]
