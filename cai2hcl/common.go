@@ -20,15 +20,17 @@ type HCLResourceBlock struct {
 
 // converterNames map key is the CAI Asset type, value is the TF resource name.
 var converterNames = map[string]string{
-	ComputeInstanceAssetType: "google_compute_instance",
-	ProjectAssetType:         "google_project",
-	ProjectBillingAssetType:  "google_project",
+	ComputeInstanceAssetType:       "google_compute_instance",
+	ComputeForwardingRuleAssetType: "google_compute_forwarding_rule",
+	ProjectAssetType:               "google_project",
+	ProjectBillingAssetType:        "google_project",
 }
 
 // converterMap initializes converters by their TF resource name.
 var converterMap = map[string]Converter{
-	"google_compute_instance": NewComputeInstanceConverter(),
-	"google_project":          NewProjectConverter(),
+	"google_compute_instance":        NewComputeInstanceConverter(),
+	"google_compute_forwarding_rule": NewComputeForwardingRuleConverter(),
+	"google_project":                 NewProjectConverter(),
 }
 
 // schemaProvider has schemas for all resources.
