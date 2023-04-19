@@ -13,7 +13,7 @@ test-integration:
 
 test-go-licenses:
 	cd .. && go version && go install github.com/google/go-licenses@latest
-	$$(go env GOPATH)/bin/go-licenses check ./...
+	$$(go env GOPATH)/bin/go-licenses check ./... --ignore github.com/dnaeon/go-vcr
 
 build-docker:
 	docker build --build-arg TERRAFORM_VERSION=$(TERRAFORM_VERSION) -f ./Dockerfile -t terraform-google-conversion .
