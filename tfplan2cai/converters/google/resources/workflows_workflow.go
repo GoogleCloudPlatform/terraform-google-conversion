@@ -83,6 +83,12 @@ func GetWorkflowsWorkflowApiObject(d TerraformResourceData, config *Config) (map
 	} else if v, ok := d.GetOkExists("source_contents"); !isEmptyValue(reflect.ValueOf(sourceContentsProp)) && (ok || !reflect.DeepEqual(v, sourceContentsProp)) {
 		obj["sourceContents"] = sourceContentsProp
 	}
+	cryptoKeyNameProp, err := expandWorkflowsWorkflowCryptoKeyName(d.Get("crypto_key_name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("crypto_key_name"); !isEmptyValue(reflect.ValueOf(cryptoKeyNameProp)) && (ok || !reflect.DeepEqual(v, cryptoKeyNameProp)) {
+		obj["cryptoKeyName"] = cryptoKeyNameProp
+	}
 
 	return resourceWorkflowsWorkflowEncoder(d, config, obj)
 }
@@ -128,5 +134,9 @@ func expandWorkflowsWorkflowServiceAccount(v interface{}, d TerraformResourceDat
 }
 
 func expandWorkflowsWorkflowSourceContents(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkflowsWorkflowCryptoKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
