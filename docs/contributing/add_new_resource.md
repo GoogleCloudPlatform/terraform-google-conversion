@@ -1,16 +1,8 @@
 # Adding support for converting a new resource from tfplan to CAI asset
 
-terraform-google-conversion evolves from terraform-validator. Hence, the name terraform-validator shows up in various places.
+**Note**: terraform-google-conversion evolves from terraform-validator. Hence, the name terraform-validator shows up in various places.
 
-## terraform-google-conversion vs config-validator
-
-At its core, terraform-google-conversion is a thin layer on top of [config-validator](https://github.com/GoogleCloudPlatform/config-validator), a shared library that takes in a [policy library](https://github.com/GoogleCloudPlatform/policy-library) and a set of [CAI assets](https://cloud.google.com/asset-inventory/docs/overview) and reports back any violations of the specified policies.
-
-terraform-google-conversion consumes a Terraform plan and uses it to build CAI Assets, which then get run through config-validator. These built Assets only exist locally, in memory.
-
-### Adding a new constraint template
-
-If an existing [bundle](https://github.com/GoogleCloudPlatform/policy-library/blob/master/docs/index.md#policy-bundles) (for example, [CIS v1.1](https://github.com/GoogleCloudPlatform/policy-library/blob/master/docs/bundles/cis-v1.1.md)) doesn't support a check you need, please consider contributing a [new constraint template](https://github.com/GoogleCloudPlatform/policy-library/blob/master/docs/constraint_template_authoring.md) to the policy-library repository.
+terraform-google-conversion consumes a Terraform plan and uses it to build CAI Assets. These built Assets only exist locally, in memory.
 
 ### Getting a terraform resource name from a GCP resource name
 
@@ -40,7 +32,7 @@ Note that you may need to create an actual resource in GCP if the asset you woul
 
 A resource is "supported" by terraform-google-conversion if it has an entry in [`tfplan2cai/converters/google/resources/resource_converters.go`](https://github.com/GoogleCloudPlatform/terraform-google-conversion/blob/main/tfplan2cai/converters/google/resources/resource_converters.go). For example, you could search resource_converters.go for [`google_compute_disk`](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk) to see if that resource is supported.
 
-Adding support for a resource has four steps:
+Adding support for a resource has 3 steps:
 
 1. Make changes to [Magic Modules](https://github.com/GoogleCloudPlatform/magic-modules) to add or modify resource conversion code.
 2. Add tests for the new resource into [Magic Modules](https://github.com/GoogleCloudPlatform/magic-modules).
@@ -239,7 +231,7 @@ Terraform google conversion tests require setting up a few files in [`testdata/t
 - example_product_resource.json
   - The results of running [`terraform-google-conversion convert example_product_resource.tfplan.json`](./index.md#convert-command)
 
-It's easiest to set up a [test project](https://cloud.google.com/docs/terraform/policy-validation/validate-policies) to create the initial versions of these files. The idea is to use the terraform-google-conversion binary to invoke a convert operation, and replace the strings specific to your test project in the generated files. The followings are typical steps that you can take:
+It's easiest to set up a [test project](https://cloud.google.com/docs/terraform/policy-validation/validate-policies) to create the initial versions of these files. The idea is to use the terraform-google-conversion binary to invoke a convert operation, and replace the strings specific to your test project in the generated files. The following are typical steps that you can take:
 
 1. Run `make build` to compile the terraform-google-conversion binary.
 2. Create `example_product_resource.tf`, where the content is the resource that you would like to test, and place it in a new folder.
