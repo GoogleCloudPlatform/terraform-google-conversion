@@ -281,6 +281,13 @@ func expandCloudRunV2ServiceTemplate(v interface{}, d TerraformResourceData, con
 		transformed["maxInstanceRequestConcurrency"] = transformedMaxInstanceRequestConcurrency
 	}
 
+	transformedSessionAffinity, err := expandCloudRunV2ServiceTemplateSessionAffinity(original["session_affinity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSessionAffinity); val.IsValid() && !isEmptyValue(val) {
+		transformed["sessionAffinity"] = transformedSessionAffinity
+	}
+
 	return transformed, nil
 }
 
@@ -1325,6 +1332,10 @@ func expandCloudRunV2ServiceTemplateEncryptionKey(v interface{}, d TerraformReso
 }
 
 func expandCloudRunV2ServiceTemplateMaxInstanceRequestConcurrency(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateSessionAffinity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
