@@ -621,6 +621,13 @@ func expandCloudRunV2ServiceTemplateContainersResources(v interface{}, d Terrafo
 		transformed["cpuIdle"] = transformedCpuIdle
 	}
 
+	transformedStartupCpuBoost, err := expandCloudRunV2ServiceTemplateContainersResourcesStartupCpuBoost(original["startup_cpu_boost"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStartupCpuBoost); val.IsValid() && !isEmptyValue(val) {
+		transformed["startupCpuBoost"] = transformedStartupCpuBoost
+	}
+
 	return transformed, nil
 }
 
@@ -636,6 +643,10 @@ func expandCloudRunV2ServiceTemplateContainersResourcesLimits(v interface{}, d T
 }
 
 func expandCloudRunV2ServiceTemplateContainersResourcesCpuIdle(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateContainersResourcesStartupCpuBoost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
 	return v, nil
 }
 
