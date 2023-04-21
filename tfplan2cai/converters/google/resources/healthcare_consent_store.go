@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const HealthcareConsentStoreAssetType string = "healthcare.googleapis.com/ConsentStore"
 
@@ -25,7 +29,7 @@ func resourceConverterHealthcareConsentStore() ResourceConverter {
 	}
 }
 
-func GetHealthcareConsentStoreCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetHealthcareConsentStoreCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/{{dataset}}/consentStores/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetHealthcareConsentStoreCaiObject(d TerraformResourceData, config *Config)
 	}
 }
 
-func GetHealthcareConsentStoreApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetHealthcareConsentStoreApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	defaultConsentTtlProp, err := expandHealthcareConsentStoreDefaultConsentTtl(d.Get("default_consent_ttl"), d, config)
 	if err != nil {
@@ -70,15 +74,15 @@ func GetHealthcareConsentStoreApiObject(d TerraformResourceData, config *Config)
 	return obj, nil
 }
 
-func expandHealthcareConsentStoreDefaultConsentTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandHealthcareConsentStoreDefaultConsentTtl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandHealthcareConsentStoreEnableConsentCreateOnUpdate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandHealthcareConsentStoreEnableConsentCreateOnUpdate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandHealthcareConsentStoreLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandHealthcareConsentStoreLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeRegionNetworkEndpointGroupAssetType string = "compute.googleapis.com/RegionNetworkEndpointGroup"
@@ -28,7 +30,7 @@ func resourceConverterComputeRegionNetworkEndpointGroup() ResourceConverter {
 	}
 }
 
-func GetComputeRegionNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionNetworkEndpointGroupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/networkEndpointGroups/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeRegionNetworkEndpointGroupCaiObject(d TerraformResourceData, conf
 	}
 }
 
-func GetComputeRegionNetworkEndpointGroupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeRegionNetworkEndpointGroupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeRegionNetworkEndpointGroupName(d.Get("name"), d, config)
 	if err != nil {
@@ -115,23 +117,23 @@ func GetComputeRegionNetworkEndpointGroupApiObject(d TerraformResourceData, conf
 	return obj, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupNetworkEndpointType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupNetworkEndpointType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupPscTargetService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupPscTargetService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
@@ -139,7 +141,7 @@ func expandComputeRegionNetworkEndpointGroupNetwork(v interface{}, d TerraformRe
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRegionNetworkEndpointGroupSubnetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupSubnetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("subnetworks", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for subnetwork: %s", err)
@@ -147,7 +149,7 @@ func expandComputeRegionNetworkEndpointGroupSubnetwork(v interface{}, d Terrafor
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRegionNetworkEndpointGroupCloudRun(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupCloudRun(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -180,19 +182,19 @@ func expandComputeRegionNetworkEndpointGroupCloudRun(v interface{}, d TerraformR
 	return transformed, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupCloudRunService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupCloudRunService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupCloudRunTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupCloudRunTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupCloudRunUrlMask(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupCloudRunUrlMask(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupAppEngine(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupAppEngine(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -230,19 +232,19 @@ func expandComputeRegionNetworkEndpointGroupAppEngine(v interface{}, d Terraform
 	return transformed, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupAppEngineService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupAppEngineService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupAppEngineVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupAppEngineVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupAppEngineUrlMask(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupAppEngineUrlMask(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupCloudFunction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupCloudFunction(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -268,15 +270,15 @@ func expandComputeRegionNetworkEndpointGroupCloudFunction(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupCloudFunctionFunction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupCloudFunctionFunction(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupCloudFunctionUrlMask(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupCloudFunctionUrlMask(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionNetworkEndpointGroupRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionNetworkEndpointGroupRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)

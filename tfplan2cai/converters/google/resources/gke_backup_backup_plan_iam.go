@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const GKEBackupBackupPlanIAMAssetType string = "gkebackup.googleapis.com/BackupPlan"
@@ -47,15 +51,15 @@ func resourceConverterGKEBackupBackupPlanIamMember() ResourceConverter {
 	}
 }
 
-func GetGKEBackupBackupPlanIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetGKEBackupBackupPlanIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newGKEBackupBackupPlanIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetGKEBackupBackupPlanIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetGKEBackupBackupPlanIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newGKEBackupBackupPlanIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetGKEBackupBackupPlanIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetGKEBackupBackupPlanIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newGKEBackupBackupPlanIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeGKEBackupBackupPlanIamMemberDelete(existing, incoming Asset) Asset {
 
 func newGKEBackupBackupPlanIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newGKEBackupBackupPlanIamAsset(
 	}}, nil
 }
 
-func FetchGKEBackupBackupPlanIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchGKEBackupBackupPlanIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

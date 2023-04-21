@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ComputeImageIAMAssetType string = "compute.googleapis.com/Image"
@@ -47,15 +51,15 @@ func resourceConverterComputeImageIamMember() ResourceConverter {
 	}
 }
 
-func GetComputeImageIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeImageIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeImageIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetComputeImageIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeImageIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeImageIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetComputeImageIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeImageIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeImageIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeComputeImageIamMemberDelete(existing, incoming Asset) Asset {
 
 func newComputeImageIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newComputeImageIamAsset(
 	}}, nil
 }
 
-func FetchComputeImageIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchComputeImageIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("image"); !ok {
 		return Asset{}, ErrEmptyIdentityField

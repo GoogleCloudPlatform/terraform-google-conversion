@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const SQLSourceRepresentationInstanceAssetType string = "sqladmin.googleapis.com/SourceRepresentationInstance"
@@ -28,7 +30,7 @@ func resourceConverterSQLSourceRepresentationInstance() ResourceConverter {
 	}
 }
 
-func GetSQLSourceRepresentationInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetSQLSourceRepresentationInstanceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//sqladmin.googleapis.com/projects/{{project}}/instances/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetSQLSourceRepresentationInstanceCaiObject(d TerraformResourceData, config
 	}
 }
 
-func GetSQLSourceRepresentationInstanceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetSQLSourceRepresentationInstanceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandSQLSourceRepresentationInstanceName(d.Get("name"), d, config)
 	if err != nil {
@@ -87,19 +89,19 @@ func resourceSQLSourceRepresentationInstanceEncoder(d TerraformResourceData, met
 	return obj, nil
 }
 
-func expandSQLSourceRepresentationInstanceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceDatabaseVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceDatabaseVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfiguration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfiguration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	transformed := make(map[string]interface{})
 	transformedHost, err := expandSQLSourceRepresentationInstanceOnPremisesConfigurationHost(d.Get("host"), d, config)
 	if err != nil {
@@ -160,34 +162,34 @@ func expandSQLSourceRepresentationInstanceOnPremisesConfiguration(v interface{},
 	return transformed, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfigurationHost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfigurationHost(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfigurationPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfigurationPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfigurationUsername(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfigurationUsername(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfigurationPassword(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfigurationPassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfigurationDumpFilePath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfigurationDumpFilePath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfigurationCaCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfigurationCaCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfigurationClientCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfigurationClientCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLSourceRepresentationInstanceOnPremisesConfigurationClientKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLSourceRepresentationInstanceOnPremisesConfigurationClientKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

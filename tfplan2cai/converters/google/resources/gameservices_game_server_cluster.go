@@ -20,6 +20,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func suppressSuffixDiff(_, old, new string, _ *schema.ResourceData) bool {
@@ -40,7 +42,7 @@ func resourceConverterGameServicesGameServerCluster() ResourceConverter {
 	}
 }
 
-func GetGameServicesGameServerClusterCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetGameServicesGameServerClusterCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/realms/{{realm_id}}/gameServerClusters/{{cluster_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -61,7 +63,7 @@ func GetGameServicesGameServerClusterCaiObject(d TerraformResourceData, config *
 	}
 }
 
-func GetGameServicesGameServerClusterApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetGameServicesGameServerClusterApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandGameServicesGameServerClusterLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -85,7 +87,7 @@ func GetGameServicesGameServerClusterApiObject(d TerraformResourceData, config *
 	return obj, nil
 }
 
-func expandGameServicesGameServerClusterLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandGameServicesGameServerClusterLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -96,7 +98,7 @@ func expandGameServicesGameServerClusterLabels(v interface{}, d TerraformResourc
 	return m, nil
 }
 
-func expandGameServicesGameServerClusterConnectionInfo(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerClusterConnectionInfo(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -122,7 +124,7 @@ func expandGameServicesGameServerClusterConnectionInfo(v interface{}, d Terrafor
 	return transformed, nil
 }
 
-func expandGameServicesGameServerClusterConnectionInfoGkeClusterReference(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerClusterConnectionInfoGkeClusterReference(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -141,14 +143,14 @@ func expandGameServicesGameServerClusterConnectionInfoGkeClusterReference(v inte
 	return transformed, nil
 }
 
-func expandGameServicesGameServerClusterConnectionInfoGkeClusterReferenceCluster(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerClusterConnectionInfoGkeClusterReferenceCluster(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerClusterConnectionInfoNamespace(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerClusterConnectionInfoNamespace(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerClusterDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerClusterDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

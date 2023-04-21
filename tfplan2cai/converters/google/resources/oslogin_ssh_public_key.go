@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const OSLoginSSHPublicKeyAssetType string = "oslogin.googleapis.com/SSHPublicKey"
 
@@ -25,7 +29,7 @@ func resourceConverterOSLoginSSHPublicKey() ResourceConverter {
 	}
 }
 
-func GetOSLoginSSHPublicKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetOSLoginSSHPublicKeyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//oslogin.googleapis.com/users/{{user}}/sshPublicKeys/{{fingerprint}}/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetOSLoginSSHPublicKeyCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetOSLoginSSHPublicKeyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetOSLoginSSHPublicKeyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	keyProp, err := expandOSLoginSSHPublicKeyKey(d.Get("key"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetOSLoginSSHPublicKeyApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandOSLoginSSHPublicKeyKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSLoginSSHPublicKeyKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSLoginSSHPublicKeyExpirationTimeUsec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSLoginSSHPublicKeyExpirationTimeUsec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ComputeGlobalNetworkEndpointGroupAssetType string = "compute.googleapis.com/GlobalNetworkEndpointGroup"
 
@@ -25,7 +29,7 @@ func resourceConverterComputeGlobalNetworkEndpointGroup() ResourceConverter {
 	}
 }
 
-func GetComputeGlobalNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeGlobalNetworkEndpointGroupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networkEndpointGroups/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetComputeGlobalNetworkEndpointGroupCaiObject(d TerraformResourceData, conf
 	}
 }
 
-func GetComputeGlobalNetworkEndpointGroupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeGlobalNetworkEndpointGroupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeGlobalNetworkEndpointGroupName(d.Get("name"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetComputeGlobalNetworkEndpointGroupApiObject(d TerraformResourceData, conf
 	return obj, nil
 }
 
-func expandComputeGlobalNetworkEndpointGroupName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeGlobalNetworkEndpointGroupName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeGlobalNetworkEndpointGroupDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeGlobalNetworkEndpointGroupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeGlobalNetworkEndpointGroupNetworkEndpointType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeGlobalNetworkEndpointGroupNetworkEndpointType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeGlobalNetworkEndpointGroupDefaultPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeGlobalNetworkEndpointGroupDefaultPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

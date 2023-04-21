@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ContainerAnalysisNoteAssetType string = "containeranalysis.googleapis.com/Note"
@@ -29,7 +31,7 @@ func resourceConverterContainerAnalysisNote() ResourceConverter {
 	}
 }
 
-func GetContainerAnalysisNoteCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetContainerAnalysisNoteCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//containeranalysis.googleapis.com/projects/{{project}}/notes/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetContainerAnalysisNoteCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetContainerAnalysisNoteApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetContainerAnalysisNoteApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandContainerAnalysisNoteName(d.Get("name"), d, config)
 	if err != nil {
@@ -106,19 +108,19 @@ func resourceContainerAnalysisNoteEncoder(d TerraformResourceData, meta interfac
 	return obj, nil
 }
 
-func expandContainerAnalysisNoteName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisNoteShortDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteShortDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisNoteLongDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteLongDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisNoteRelatedUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteRelatedUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -148,24 +150,24 @@ func expandContainerAnalysisNoteRelatedUrl(v interface{}, d TerraformResourceDat
 	return req, nil
 }
 
-func expandContainerAnalysisNoteRelatedUrlUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteRelatedUrlUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisNoteRelatedUrlLabel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteRelatedUrlLabel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisNoteExpirationTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteExpirationTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisNoteRelatedNoteNames(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteRelatedNoteNames(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandContainerAnalysisNoteAttestationAuthority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteAttestationAuthority(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -184,7 +186,7 @@ func expandContainerAnalysisNoteAttestationAuthority(v interface{}, d TerraformR
 	return transformed, nil
 }
 
-func expandContainerAnalysisNoteAttestationAuthorityHint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteAttestationAuthorityHint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -203,6 +205,6 @@ func expandContainerAnalysisNoteAttestationAuthorityHint(v interface{}, d Terraf
 	return transformed, nil
 }
 
-func expandContainerAnalysisNoteAttestationAuthorityHintHumanReadableName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisNoteAttestationAuthorityHintHumanReadableName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

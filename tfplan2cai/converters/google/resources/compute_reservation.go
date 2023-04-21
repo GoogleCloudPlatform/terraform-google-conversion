@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeReservationAssetType string = "compute.googleapis.com/Reservation"
@@ -30,7 +32,7 @@ func resourceConverterComputeReservation() ResourceConverter {
 	}
 }
 
-func GetComputeReservationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeReservationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/reservations/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetComputeReservationCaiObject(d TerraformResourceData, config *Config) ([]
 	}
 }
 
-func GetComputeReservationApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeReservationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeReservationDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -93,19 +95,19 @@ func GetComputeReservationApiObject(d TerraformResourceData, config *Config) (ma
 	return obj, nil
 }
 
-func expandComputeReservationDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationRequired(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationRequired(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationShareSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationShareSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -131,11 +133,11 @@ func expandComputeReservationShareSettings(v interface{}, d TerraformResourceDat
 	return transformed, nil
 }
 
-func expandComputeReservationShareSettingsShareType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationShareSettingsShareType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationShareSettingsProjectMap(v interface{}, d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func expandComputeReservationShareSettingsProjectMap(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	if v == nil {
 		return map[string]interface{}{}, nil
 	}
@@ -160,11 +162,11 @@ func expandComputeReservationShareSettingsProjectMap(v interface{}, d TerraformR
 	return m, nil
 }
 
-func expandComputeReservationShareSettingsProjectMapProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationShareSettingsProjectMapProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -197,15 +199,15 @@ func expandComputeReservationSpecificReservation(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandComputeReservationSpecificReservationCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInUseCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInUseCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstanceProperties(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstanceProperties(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -245,15 +247,15 @@ func expandComputeReservationSpecificReservationInstanceProperties(v interface{}
 	return transformed, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesMachineType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesMachineType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesMinCpuPlatform(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesMinCpuPlatform(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerators(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerators(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -282,15 +284,15 @@ func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerat
 	return req, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -319,15 +321,15 @@ func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v in
 	return req, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsInterface(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsInterface(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsDiskSizeGb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsDiskSizeGb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeReservationZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)

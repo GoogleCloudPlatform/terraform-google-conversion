@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ApigeeEnvironmentIAMAssetType string = "apigee.googleapis.com/Environment"
@@ -47,15 +51,15 @@ func resourceConverterApigeeEnvironmentIamMember() ResourceConverter {
 	}
 }
 
-func GetApigeeEnvironmentIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeEnvironmentIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newApigeeEnvironmentIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetApigeeEnvironmentIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeEnvironmentIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newApigeeEnvironmentIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetApigeeEnvironmentIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeEnvironmentIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newApigeeEnvironmentIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeApigeeEnvironmentIamMemberDelete(existing, incoming Asset) Asset {
 
 func newApigeeEnvironmentIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newApigeeEnvironmentIamAsset(
 	}}, nil
 }
 
-func FetchApigeeEnvironmentIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchApigeeEnvironmentIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("org_id"); !ok {
 		return Asset{}, ErrEmptyIdentityField

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const AccessContextManagerAccessPolicyAssetType string = "accesscontextmanager.googleapis.com/AccessPolicy"
 
@@ -25,7 +29,7 @@ func resourceConverterAccessContextManagerAccessPolicy() ResourceConverter {
 	}
 }
 
-func GetAccessContextManagerAccessPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetAccessContextManagerAccessPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/accessPolicies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetAccessContextManagerAccessPolicyCaiObject(d TerraformResourceData, confi
 	}
 }
 
-func GetAccessContextManagerAccessPolicyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetAccessContextManagerAccessPolicyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	parentProp, err := expandAccessContextManagerAccessPolicyParent(d.Get("parent"), d, config)
 	if err != nil {
@@ -70,14 +74,14 @@ func GetAccessContextManagerAccessPolicyApiObject(d TerraformResourceData, confi
 	return obj, nil
 }
 
-func expandAccessContextManagerAccessPolicyParent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessContextManagerAccessPolicyParent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessContextManagerAccessPolicyTitle(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessContextManagerAccessPolicyTitle(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessContextManagerAccessPolicyScopes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessContextManagerAccessPolicyScopes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

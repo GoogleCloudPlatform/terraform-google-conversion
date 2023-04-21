@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeAddonsConfigAssetType string = "apigee.googleapis.com/AddonsConfig"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeAddonsConfig() ResourceConverter {
 	}
 }
 
-func GetApigeeAddonsConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeAddonsConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/organizations/{{org}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeAddonsConfigCaiObject(d TerraformResourceData, config *Config) ([]
 	}
 }
 
-func GetApigeeAddonsConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeAddonsConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	addonsConfigProp, err := expandApigeeAddonsConfigAddonsConfig(d.Get("addons_config"), d, config)
 	if err != nil {
@@ -58,7 +62,7 @@ func GetApigeeAddonsConfigApiObject(d TerraformResourceData, config *Config) (ma
 	return obj, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -105,7 +109,7 @@ func expandApigeeAddonsConfigAddonsConfig(v interface{}, d TerraformResourceData
 	return transformed, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigAdvancedApiOpsConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigAdvancedApiOpsConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -124,11 +128,11 @@ func expandApigeeAddonsConfigAddonsConfigAdvancedApiOpsConfig(v interface{}, d T
 	return transformed, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigAdvancedApiOpsConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigAdvancedApiOpsConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigIntegrationConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigIntegrationConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -147,11 +151,11 @@ func expandApigeeAddonsConfigAddonsConfigIntegrationConfig(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigIntegrationConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigIntegrationConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigMonetizationConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigMonetizationConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -170,11 +174,11 @@ func expandApigeeAddonsConfigAddonsConfigMonetizationConfig(v interface{}, d Ter
 	return transformed, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigMonetizationConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigMonetizationConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigApiSecurityConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigApiSecurityConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -200,15 +204,15 @@ func expandApigeeAddonsConfigAddonsConfigApiSecurityConfig(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigApiSecurityConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigApiSecurityConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigApiSecurityConfigExpiresAt(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigApiSecurityConfigExpiresAt(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigConnectorsPlatformConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigConnectorsPlatformConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -234,10 +238,10 @@ func expandApigeeAddonsConfigAddonsConfigConnectorsPlatformConfig(v interface{},
 	return transformed, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigConnectorsPlatformConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigConnectorsPlatformConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeAddonsConfigAddonsConfigConnectorsPlatformConfigExpiresAt(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeAddonsConfigAddonsConfigConnectorsPlatformConfigExpiresAt(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

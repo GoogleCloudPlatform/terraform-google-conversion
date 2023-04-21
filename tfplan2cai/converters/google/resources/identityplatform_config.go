@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const IdentityPlatformConfigAssetType string = "identitytoolkit.googleapis.com/Config"
 
@@ -25,7 +29,7 @@ func resourceConverterIdentityPlatformConfig() ResourceConverter {
 	}
 }
 
-func GetIdentityPlatformConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIdentityPlatformConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/config")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetIdentityPlatformConfigCaiObject(d TerraformResourceData, config *Config)
 	}
 }
 
-func GetIdentityPlatformConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIdentityPlatformConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	autodeleteAnonymousUsersProp, err := expandIdentityPlatformConfigAutodeleteAnonymousUsers(d.Get("autodelete_anonymous_users"), d, config)
 	if err != nil {
@@ -58,6 +62,6 @@ func GetIdentityPlatformConfigApiObject(d TerraformResourceData, config *Config)
 	return obj, nil
 }
 
-func expandIdentityPlatformConfigAutodeleteAnonymousUsers(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformConfigAutodeleteAnonymousUsers(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

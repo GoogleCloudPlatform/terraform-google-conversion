@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const BigQueryTableIAMAssetType string = "bigquery.googleapis.com/Table"
@@ -47,15 +51,15 @@ func resourceConverterBigQueryTableIamMember() ResourceConverter {
 	}
 }
 
-func GetBigQueryTableIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigQueryTableIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigQueryTableIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetBigQueryTableIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigQueryTableIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigQueryTableIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetBigQueryTableIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigQueryTableIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigQueryTableIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeBigQueryTableIamMemberDelete(existing, incoming Asset) Asset {
 
 func newBigQueryTableIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newBigQueryTableIamAsset(
 	}}, nil
 }
 
-func FetchBigQueryTableIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchBigQueryTableIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("dataset_id"); !ok {
 		return Asset{}, ErrEmptyIdentityField

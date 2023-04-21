@@ -11,6 +11,7 @@ import (
 
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfdata"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 
 	"github.com/google/go-cmp/cmp"
 	provider "github.com/hashicorp/terraform-provider-google/google"
@@ -74,7 +75,7 @@ func TestGetAncestors(t *testing.T) {
 		name             string
 		data             resources.TerraformResourceData
 		asset            *resources.Asset
-		cfg              *resources.Config
+		cfg              *transport_tpg.Config
 		want             []string
 		wantParent       string
 		wantOnlineError  bool
@@ -153,7 +154,7 @@ func TestGetAncestors(t *testing.T) {
 			asset: &resources.Asset{
 				Type: "cloudresourcemanager.googleapis.com/Project",
 			},
-			cfg: &resources.Config{
+			cfg: &transport_tpg.Config{
 				Project: ownerProject,
 			},
 			want:       []string{"projects/foo", "folders/bar", "organizations/qux"},
@@ -503,7 +504,7 @@ func TestGetAncestors(t *testing.T) {
 		for _, offline := range []bool{true, false} {
 			t.Run(fmt.Sprintf("%s offline = %t", c.name, offline), func(t *testing.T) {
 				if c.cfg == nil {
-					c.cfg = &resources.Config{}
+					c.cfg = &transport_tpg.Config{}
 				}
 				ancestryManager := &manager{
 					errorLogger:   zap.NewExample(),
@@ -766,7 +767,7 @@ func TestGetAncestors_Folder(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			cfg := &resources.Config{
+			cfg := &transport_tpg.Config{
 				Project: "foo",
 			}
 			ancestryManager := &manager{
@@ -1282,7 +1283,7 @@ func TestUnknownProject(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			cfg := &resources.Config{}
+			cfg := &transport_tpg.Config{}
 			ancestryManager := &manager{
 				errorLogger:       zap.NewExample(),
 				ancestorCache:     make(map[string][]string),
@@ -1317,14 +1318,14 @@ func TestGetProjectFromResource(t *testing.T) {
 	cases := []struct {
 		name   string
 		asset  *resources.Asset
-		config *resources.Config
+		config *transport_tpg.Config
 		d      resources.TerraformResourceData
 		resp   *storage.Bucket
 		want   string
 	}{
 		{
 			name: "bucket - from cai resource",
-			config: &resources.Config{
+			config: &transport_tpg.Config{
 				Project: "test-project",
 			},
 			d: tfdata.NewFakeResourceData(
@@ -1349,7 +1350,7 @@ func TestGetProjectFromResource(t *testing.T) {
 		},
 		{
 			name:   "bucket - from storage API",
-			config: &resources.Config{Project: "test-project"},
+			config: &transport_tpg.Config{Project: "test-project"},
 			d: tfdata.NewFakeResourceData(
 				"google_storage_bucket_iam_member",
 				p.ResourcesMap["google_storage_bucket_iam_member"].Schema,
@@ -1367,7 +1368,7 @@ func TestGetProjectFromResource(t *testing.T) {
 		},
 		{
 			name:   "bucket - from provider config",
-			config: &resources.Config{Project: "test-project"},
+			config: &transport_tpg.Config{Project: "test-project"},
 			d: tfdata.NewFakeResourceData(
 				"google_storage_bucket_iam_member",
 				p.ResourcesMap["google_storage_bucket_iam_member"].Schema,

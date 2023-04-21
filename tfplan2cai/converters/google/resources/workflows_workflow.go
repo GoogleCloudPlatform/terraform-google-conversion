@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const WorkflowsWorkflowAssetType string = "workflows.googleapis.com/Workflow"
@@ -30,7 +32,7 @@ func resourceConverterWorkflowsWorkflow() ResourceConverter {
 	}
 }
 
-func GetWorkflowsWorkflowCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetWorkflowsWorkflowCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//workflows.googleapis.com/projects/{{project}}/locations/{{region}}/workflows/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetWorkflowsWorkflowCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetWorkflowsWorkflowApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetWorkflowsWorkflowApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandWorkflowsWorkflowName(d.Get("name"), d, config)
 	if err != nil {
@@ -110,15 +112,15 @@ func resourceWorkflowsWorkflowEncoder(d TerraformResourceData, meta interface{},
 	return obj, nil
 }
 
-func expandWorkflowsWorkflowName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandWorkflowsWorkflowName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandWorkflowsWorkflowDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandWorkflowsWorkflowDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandWorkflowsWorkflowLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandWorkflowsWorkflowLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -129,14 +131,14 @@ func expandWorkflowsWorkflowLabels(v interface{}, d TerraformResourceData, confi
 	return m, nil
 }
 
-func expandWorkflowsWorkflowServiceAccount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandWorkflowsWorkflowServiceAccount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandWorkflowsWorkflowSourceContents(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandWorkflowsWorkflowSourceContents(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandWorkflowsWorkflowCryptoKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandWorkflowsWorkflowCryptoKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

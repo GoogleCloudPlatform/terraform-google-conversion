@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const GameServicesGameServerConfigAssetType string = "gameservices.googleapis.com/GameServerConfig"
 
@@ -25,7 +29,7 @@ func resourceConverterGameServicesGameServerConfig() ResourceConverter {
 	}
 }
 
-func GetGameServicesGameServerConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetGameServicesGameServerConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/gameServerDeployments/{{deployment_id}}/configs/{{config_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetGameServicesGameServerConfigCaiObject(d TerraformResourceData, config *C
 	}
 }
 
-func GetGameServicesGameServerConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetGameServicesGameServerConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandGameServicesGameServerConfigDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -76,11 +80,11 @@ func GetGameServicesGameServerConfigApiObject(d TerraformResourceData, config *C
 	return obj, nil
 }
 
-func expandGameServicesGameServerConfigDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerConfigLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandGameServicesGameServerConfigLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -91,7 +95,7 @@ func expandGameServicesGameServerConfigLabels(v interface{}, d TerraformResource
 	return m, nil
 }
 
-func expandGameServicesGameServerConfigFleetConfigs(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigFleetConfigs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -120,15 +124,15 @@ func expandGameServicesGameServerConfigFleetConfigs(v interface{}, d TerraformRe
 	return req, nil
 }
 
-func expandGameServicesGameServerConfigFleetConfigsFleetSpec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigFleetConfigsFleetSpec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerConfigFleetConfigsName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigFleetConfigsName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigs(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -171,15 +175,15 @@ func expandGameServicesGameServerConfigScalingConfigs(v interface{}, d Terraform
 	return req, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigsName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsFleetAutoscalerSpec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigsFleetAutoscalerSpec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsSelectors(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigsSelectors(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -201,7 +205,7 @@ func expandGameServicesGameServerConfigScalingConfigsSelectors(v interface{}, d 
 	return req, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsSelectorsLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandGameServicesGameServerConfigScalingConfigsSelectorsLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -212,7 +216,7 @@ func expandGameServicesGameServerConfigScalingConfigsSelectorsLabels(v interface
 	return m, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsSchedules(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigsSchedules(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -255,18 +259,18 @@ func expandGameServicesGameServerConfigScalingConfigsSchedules(v interface{}, d 
 	return req, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsSchedulesStartTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigsSchedulesStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsSchedulesEndTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigsSchedulesEndTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsSchedulesCronJobDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigsSchedulesCronJobDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerConfigScalingConfigsSchedulesCronSpec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerConfigScalingConfigsSchedulesCronSpec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

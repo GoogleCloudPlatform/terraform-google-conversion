@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const HealthcareConsentStoreIAMAssetType string = "healthcare.googleapis.com/ConsentStore"
@@ -47,15 +51,15 @@ func resourceConverterHealthcareConsentStoreIamMember() ResourceConverter {
 	}
 }
 
-func GetHealthcareConsentStoreIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetHealthcareConsentStoreIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newHealthcareConsentStoreIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetHealthcareConsentStoreIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetHealthcareConsentStoreIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newHealthcareConsentStoreIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetHealthcareConsentStoreIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetHealthcareConsentStoreIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newHealthcareConsentStoreIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeHealthcareConsentStoreIamMemberDelete(existing, incoming Asset) Asset 
 
 func newHealthcareConsentStoreIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newHealthcareConsentStoreIamAsset(
 	}}, nil
 }
 
-func FetchHealthcareConsentStoreIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchHealthcareConsentStoreIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("dataset"); !ok {
 		return Asset{}, ErrEmptyIdentityField

@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const BigqueryDatapolicyDataPolicyIAMAssetType string = "bigquerydatapolicy.googleapis.com/DataPolicy"
@@ -47,15 +51,15 @@ func resourceConverterBigqueryDatapolicyDataPolicyIamMember() ResourceConverter 
 	}
 }
 
-func GetBigqueryDatapolicyDataPolicyIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryDatapolicyDataPolicyIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigqueryDatapolicyDataPolicyIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetBigqueryDatapolicyDataPolicyIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryDatapolicyDataPolicyIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigqueryDatapolicyDataPolicyIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetBigqueryDatapolicyDataPolicyIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryDatapolicyDataPolicyIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigqueryDatapolicyDataPolicyIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeBigqueryDatapolicyDataPolicyIamMemberDelete(existing, incoming Asset) 
 
 func newBigqueryDatapolicyDataPolicyIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newBigqueryDatapolicyDataPolicyIamAsset(
 	}}, nil
 }
 
-func FetchBigqueryDatapolicyDataPolicyIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchBigqueryDatapolicyDataPolicyIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

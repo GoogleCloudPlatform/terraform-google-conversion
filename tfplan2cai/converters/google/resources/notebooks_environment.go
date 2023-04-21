@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const NotebooksEnvironmentAssetType string = "notebooks.googleapis.com/Environment"
 
@@ -25,7 +29,7 @@ func resourceConverterNotebooksEnvironment() ResourceConverter {
 	}
 }
 
-func GetNotebooksEnvironmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetNotebooksEnvironmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/environments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetNotebooksEnvironmentCaiObject(d TerraformResourceData, config *Config) (
 	}
 }
 
-func GetNotebooksEnvironmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetNotebooksEnvironmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandNotebooksEnvironmentDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -82,19 +86,19 @@ func GetNotebooksEnvironmentApiObject(d TerraformResourceData, config *Config) (
 	return obj, nil
 }
 
-func expandNotebooksEnvironmentDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksEnvironmentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksEnvironmentPostStartupScript(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentPostStartupScript(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksEnvironmentVmImage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentVmImage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -127,19 +131,19 @@ func expandNotebooksEnvironmentVmImage(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandNotebooksEnvironmentVmImageProject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentVmImageProject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksEnvironmentVmImageImageName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentVmImageImageName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksEnvironmentVmImageImageFamily(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentVmImageImageFamily(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksEnvironmentContainerImage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentContainerImage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -165,10 +169,10 @@ func expandNotebooksEnvironmentContainerImage(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandNotebooksEnvironmentContainerImageRepository(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentContainerImageRepository(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksEnvironmentContainerImageTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksEnvironmentContainerImageTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

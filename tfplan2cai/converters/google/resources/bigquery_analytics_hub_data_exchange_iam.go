@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const BigqueryAnalyticsHubDataExchangeIAMAssetType string = "analyticshub.googleapis.com/DataExchange"
@@ -47,15 +51,15 @@ func resourceConverterBigqueryAnalyticsHubDataExchangeIamMember() ResourceConver
 	}
 }
 
-func GetBigqueryAnalyticsHubDataExchangeIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryAnalyticsHubDataExchangeIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigqueryAnalyticsHubDataExchangeIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetBigqueryAnalyticsHubDataExchangeIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryAnalyticsHubDataExchangeIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigqueryAnalyticsHubDataExchangeIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetBigqueryAnalyticsHubDataExchangeIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryAnalyticsHubDataExchangeIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBigqueryAnalyticsHubDataExchangeIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeBigqueryAnalyticsHubDataExchangeIamMemberDelete(existing, incoming Ass
 
 func newBigqueryAnalyticsHubDataExchangeIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newBigqueryAnalyticsHubDataExchangeIamAsset(
 	}}, nil
 }
 
-func FetchBigqueryAnalyticsHubDataExchangeIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchBigqueryAnalyticsHubDataExchangeIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

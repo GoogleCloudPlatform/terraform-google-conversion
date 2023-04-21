@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const SecurityCenterMuteConfigAssetType string = "securitycenter.googleapis.com/MuteConfig"
 
@@ -25,7 +29,7 @@ func resourceConverterSecurityCenterMuteConfig() ResourceConverter {
 	}
 }
 
-func GetSecurityCenterMuteConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetSecurityCenterMuteConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//securitycenter.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetSecurityCenterMuteConfigCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetSecurityCenterMuteConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetSecurityCenterMuteConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandSecurityCenterMuteConfigDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetSecurityCenterMuteConfigApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandSecurityCenterMuteConfigDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecurityCenterMuteConfigDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityCenterMuteConfigFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecurityCenterMuteConfigFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

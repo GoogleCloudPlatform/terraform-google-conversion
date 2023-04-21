@@ -12,6 +12,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/ancestrymanager"
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfdata"
 	tfjson "github.com/hashicorp/terraform-json"
 	provider "github.com/hashicorp/terraform-provider-google/google"
@@ -596,13 +597,13 @@ func TestConvertWrapper(t *testing.T) {
 		values,
 	)
 
-	panicConvertFunc := resources.ConvertFunc(func(d resources.TerraformResourceData, config *resources.Config) ([]resources.Asset, error) {
+	panicConvertFunc := resources.ConvertFunc(func(d resources.TerraformResourceData, config *transport_tpg.Config) ([]resources.Asset, error) {
 		// should panic
 		_ = d.Get("abc").(string)
 		return nil, nil
 	})
 
-	convertFunc := resources.ConvertFunc(func(d resources.TerraformResourceData, config *resources.Config) ([]resources.Asset, error) {
+	convertFunc := resources.ConvertFunc(func(d resources.TerraformResourceData, config *transport_tpg.Config) ([]resources.Asset, error) {
 		_ = d.Get("name").(string)
 		return nil, nil
 	})
@@ -611,7 +612,7 @@ func TestConvertWrapper(t *testing.T) {
 		name       string
 		converter  resources.ResourceConverter
 		rd         resources.TerraformResourceData
-		cfg        *resources.Config
+		cfg        *transport_tpg.Config
 		wantErr    bool
 		wantErrMsg string
 	}{

@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeRegionTargetTcpProxyAssetType string = "compute.googleapis.com/RegionTargetTcpProxy"
@@ -28,7 +30,7 @@ func resourceConverterComputeRegionTargetTcpProxy() ResourceConverter {
 	}
 }
 
-func GetComputeRegionTargetTcpProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionTargetTcpProxyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/targetTcpProxies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeRegionTargetTcpProxyCaiObject(d TerraformResourceData, config *Co
 	}
 }
 
-func GetComputeRegionTargetTcpProxyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeRegionTargetTcpProxyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeRegionTargetTcpProxyDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -91,19 +93,19 @@ func GetComputeRegionTargetTcpProxyApiObject(d TerraformResourceData, config *Co
 	return obj, nil
 }
 
-func expandComputeRegionTargetTcpProxyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetTcpProxyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionTargetTcpProxyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetTcpProxyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionTargetTcpProxyProxyHeader(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetTcpProxyProxyHeader(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionTargetTcpProxyBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetTcpProxyBackendService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("backendServices", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
@@ -111,11 +113,11 @@ func expandComputeRegionTargetTcpProxyBackendService(v interface{}, d TerraformR
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRegionTargetTcpProxyProxyBind(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetTcpProxyProxyBind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionTargetTcpProxyRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetTcpProxyRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)

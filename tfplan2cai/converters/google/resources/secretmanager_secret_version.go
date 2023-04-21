@@ -19,6 +19,8 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const SecretManagerSecretVersionAssetType string = "secretmanager.googleapis.com/SecretVersion"
@@ -30,7 +32,7 @@ func resourceConverterSecretManagerSecretVersion() ResourceConverter {
 	}
 }
 
-func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//secretmanager.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *Con
 	}
 }
 
-func GetSecretManagerSecretVersionApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetSecretManagerSecretVersionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	stateProp, err := expandSecretManagerSecretVersionEnabled(d.Get("enabled"), d, config)
 	if err != nil {
@@ -69,7 +71,7 @@ func GetSecretManagerSecretVersionApiObject(d TerraformResourceData, config *Con
 	return obj, nil
 }
 
-func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	name := d.Get("name").(string)
 	if name == "" {
 		return "", nil
@@ -102,7 +104,7 @@ func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceD
 	return nil, nil
 }
 
-func expandSecretManagerSecretVersionPayload(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretVersionPayload(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	transformed := make(map[string]interface{})
 	transformedSecretData, err := expandSecretManagerSecretVersionPayloadSecretData(d.Get("secret_data"), d, config)
 	if err != nil {
@@ -114,7 +116,7 @@ func expandSecretManagerSecretVersionPayload(v interface{}, d TerraformResourceD
 	return transformed, nil
 }
 
-func expandSecretManagerSecretVersionPayloadSecretData(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretVersionPayloadSecretData(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
 	}

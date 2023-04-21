@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeTargetTcpProxyAssetType string = "compute.googleapis.com/TargetTcpProxy"
@@ -28,7 +30,7 @@ func resourceConverterComputeTargetTcpProxy() ResourceConverter {
 	}
 }
 
-func GetComputeTargetTcpProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeTargetTcpProxyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetTcpProxies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeTargetTcpProxyCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetComputeTargetTcpProxyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeTargetTcpProxyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeTargetTcpProxyDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -85,19 +87,19 @@ func GetComputeTargetTcpProxyApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandComputeTargetTcpProxyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetTcpProxyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetTcpProxyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetTcpProxyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetTcpProxyProxyHeader(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetTcpProxyProxyHeader(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetTcpProxyBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetTcpProxyBackendService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
@@ -105,6 +107,6 @@ func expandComputeTargetTcpProxyBackendService(v interface{}, d TerraformResourc
 	return f.RelativeLink(), nil
 }
 
-func expandComputeTargetTcpProxyProxyBind(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetTcpProxyProxyBind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

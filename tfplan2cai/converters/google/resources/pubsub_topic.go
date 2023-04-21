@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const PubsubTopicAssetType string = "pubsub.googleapis.com/Topic"
 
@@ -25,7 +29,7 @@ func resourceConverterPubsubTopic() ResourceConverter {
 	}
 }
 
-func GetPubsubTopicCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetPubsubTopicCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/topics/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetPubsubTopicCaiObject(d TerraformResourceData, config *Config) ([]Asset, 
 	}
 }
 
-func GetPubsubTopicApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetPubsubTopicApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandPubsubTopicName(d.Get("name"), d, config)
 	if err != nil {
@@ -93,15 +97,15 @@ func resourcePubsubTopicEncoder(d TerraformResourceData, meta interface{}, obj m
 	return obj, nil
 }
 
-func expandPubsubTopicName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubTopicName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return GetResourceNameFromSelfLink(v.(string)), nil
 }
 
-func expandPubsubTopicKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubTopicKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubTopicLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandPubsubTopicLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -112,7 +116,7 @@ func expandPubsubTopicLabels(v interface{}, d TerraformResourceData, config *Con
 	return m, nil
 }
 
-func expandPubsubTopicMessageStoragePolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubTopicMessageStoragePolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -131,11 +135,11 @@ func expandPubsubTopicMessageStoragePolicy(v interface{}, d TerraformResourceDat
 	return transformed, nil
 }
 
-func expandPubsubTopicMessageStoragePolicyAllowedPersistenceRegions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubTopicMessageStoragePolicyAllowedPersistenceRegions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubTopicSchemaSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubTopicSchemaSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -161,14 +165,14 @@ func expandPubsubTopicSchemaSettings(v interface{}, d TerraformResourceData, con
 	return transformed, nil
 }
 
-func expandPubsubTopicSchemaSettingsSchema(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubTopicSchemaSettingsSchema(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubTopicSchemaSettingsEncoding(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubTopicSchemaSettingsEncoding(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubTopicMessageRetentionDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubTopicMessageRetentionDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DatabaseMigrationServiceConnectionProfileAssetType string = "datamigration.googleapis.com/ConnectionProfile"
 
@@ -25,7 +29,7 @@ func resourceConverterDatabaseMigrationServiceConnectionProfile() ResourceConver
 	}
 }
 
-func GetDatabaseMigrationServiceConnectionProfileCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDatabaseMigrationServiceConnectionProfileCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datamigration.googleapis.com/projects/{{project}}/locations/{{location}}/connectionProfiles/{{connection_profile_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDatabaseMigrationServiceConnectionProfileCaiObject(d TerraformResourceDa
 	}
 }
 
-func GetDatabaseMigrationServiceConnectionProfileApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDatabaseMigrationServiceConnectionProfileApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDatabaseMigrationServiceConnectionProfileDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -88,11 +92,11 @@ func GetDatabaseMigrationServiceConnectionProfileApiObject(d TerraformResourceDa
 	return obj, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDatabaseMigrationServiceConnectionProfileLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -103,7 +107,7 @@ func expandDatabaseMigrationServiceConnectionProfileLabels(v interface{}, d Terr
 	return m, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysql(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysql(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -164,27 +168,27 @@ func expandDatabaseMigrationServiceConnectionProfileMysql(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlHost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlHost(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlUsername(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlUsername(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlPassword(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlPassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlPasswordSet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlPasswordSet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlSsl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlSsl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -224,27 +228,27 @@ func expandDatabaseMigrationServiceConnectionProfileMysqlSsl(v interface{}, d Te
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlSslType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlSslType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlSslClientKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlSslClientKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlSslClientCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlSslClientCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlSslCaCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlSslCaCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileMysqlCloudSqlId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileMysqlCloudSqlId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresql(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresql(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -312,27 +316,27 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresql(v interface{}, d 
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlHost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlHost(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlUsername(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlUsername(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlPassword(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlPassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlPasswordSet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlPasswordSet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlSsl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlSsl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -372,31 +376,31 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresqlSsl(v interface{},
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslClientKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslClientKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslClientCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslClientCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslCaCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslCaCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlCloudSqlId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlCloudSqlId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfilePostgresqlNetworkArchitecture(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlNetworkArchitecture(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsql(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsql(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -436,11 +440,11 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsql(v interface{}, d Te
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlCloudSqlId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlCloudSqlId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -564,11 +568,11 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettings(v interface
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDatabaseVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDatabaseVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsUserLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsUserLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -579,19 +583,19 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsUserLabels(v
 	return m, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsTier(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsTier(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsStorageAutoResizeLimit(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsStorageAutoResizeLimit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsActivationPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsActivationPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -631,19 +635,19 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfig(v i
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigEnableIpv4(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigEnableIpv4(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigPrivateNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigPrivateNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigRequireSsl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigRequireSsl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworks(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworks(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -686,27 +690,27 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuth
 	return req, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworksValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworksValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworksLabel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworksLabel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworksExpireTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworksExpireTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworksTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworksTtl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsAutoStorageIncrease(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsAutoStorageIncrease(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDatabaseFlags(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDatabaseFlags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -717,47 +721,47 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDatabaseFlag
 	return m, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDataDiskType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDataDiskType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDataDiskSizeGb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsDataDiskSizeGb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsSourceId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsSourceId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsRootPassword(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsRootPassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsRootPasswordSet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsRootPasswordSet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsCollation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsCollation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsCmekKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsCmekKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlPrivateIp(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlPrivateIp(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileCloudsqlPublicIp(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlPublicIp(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -783,11 +787,11 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydb(v interface{}, d Ter
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbClusterId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbClusterId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -827,7 +831,7 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettings(v interface{
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUser(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUser(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -860,23 +864,23 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUser(v
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUserUser(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUserUser(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUserPassword(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUserPassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUserPasswordSet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUserPasswordSet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsVpcNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsVpcNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -887,7 +891,7 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsLabels(v inte
 	return m, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -934,11 +938,11 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstan
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsMachineConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsMachineConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -957,11 +961,11 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstan
 	return transformed, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsMachineConfigCpuCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsMachineConfigCpuCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsDatabaseFlags(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsDatabaseFlags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -972,7 +976,7 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstan
 	return m, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -983,6 +987,6 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstan
 	return m, nil
 }
 
-func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsPrivateIp(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsPrivateIp(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

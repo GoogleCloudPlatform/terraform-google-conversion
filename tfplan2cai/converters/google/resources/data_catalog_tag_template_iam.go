@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataCatalogTagTemplateIAMAssetType string = "datacatalog.googleapis.com/TagTemplate"
@@ -47,15 +51,15 @@ func resourceConverterDataCatalogTagTemplateIamMember() ResourceConverter {
 	}
 }
 
-func GetDataCatalogTagTemplateIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogTagTemplateIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogTagTemplateIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetDataCatalogTagTemplateIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogTagTemplateIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogTagTemplateIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetDataCatalogTagTemplateIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogTagTemplateIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogTagTemplateIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeDataCatalogTagTemplateIamMemberDelete(existing, incoming Asset) Asset 
 
 func newDataCatalogTagTemplateIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newDataCatalogTagTemplateIamAsset(
 	}}, nil
 }
 
-func FetchDataCatalogTagTemplateIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchDataCatalogTagTemplateIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
 		return Asset{}, ErrEmptyIdentityField

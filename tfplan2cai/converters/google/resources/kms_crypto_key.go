@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"reflect"
 	"time"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const KMSCryptoKeyAssetType string = "cloudkms.googleapis.com/CryptoKey"
@@ -29,7 +31,7 @@ func resourceConverterKMSCryptoKey() ResourceConverter {
 	}
 }
 
-func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudkms.googleapis.com/{{key_ring}}/cryptoKeys/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetKMSCryptoKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset,
 	}
 }
 
-func GetKMSCryptoKeyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetKMSCryptoKeyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandKMSCryptoKeyLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -115,7 +117,7 @@ func resourceKMSCryptoKeyEncoder(d TerraformResourceData, meta interface{}, obj 
 	return obj, nil
 }
 
-func expandKMSCryptoKeyLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandKMSCryptoKeyLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -126,15 +128,15 @@ func expandKMSCryptoKeyLabels(v interface{}, d TerraformResourceData, config *Co
 	return m, nil
 }
 
-func expandKMSCryptoKeyPurpose(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSCryptoKeyPurpose(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandKMSCryptoKeyRotationPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSCryptoKeyRotationPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandKMSCryptoKeyVersionTemplate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSCryptoKeyVersionTemplate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -160,18 +162,18 @@ func expandKMSCryptoKeyVersionTemplate(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandKMSCryptoKeyVersionTemplateAlgorithm(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSCryptoKeyVersionTemplateAlgorithm(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandKMSCryptoKeyVersionTemplateProtectionLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSCryptoKeyVersionTemplateProtectionLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandKMSCryptoKeyDestroyScheduledDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSCryptoKeyDestroyScheduledDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandKMSCryptoKeyImportOnly(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSCryptoKeyImportOnly(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

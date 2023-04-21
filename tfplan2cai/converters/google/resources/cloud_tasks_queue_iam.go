@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const CloudTasksQueueIAMAssetType string = "cloudtasks.googleapis.com/Queue"
@@ -47,15 +51,15 @@ func resourceConverterCloudTasksQueueIamMember() ResourceConverter {
 	}
 }
 
-func GetCloudTasksQueueIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudTasksQueueIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudTasksQueueIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetCloudTasksQueueIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudTasksQueueIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudTasksQueueIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetCloudTasksQueueIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudTasksQueueIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudTasksQueueIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeCloudTasksQueueIamMemberDelete(existing, incoming Asset) Asset {
 
 func newCloudTasksQueueIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newCloudTasksQueueIamAsset(
 	}}, nil
 }
 
-func FetchCloudTasksQueueIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchCloudTasksQueueIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

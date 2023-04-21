@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DataCatalogPolicyTagAssetType string = "datacatalog.googleapis.com/PolicyTag"
 
@@ -25,7 +29,7 @@ func resourceConverterDataCatalogPolicyTag() ResourceConverter {
 	}
 }
 
-func GetDataCatalogPolicyTagCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogPolicyTagCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDataCatalogPolicyTagCaiObject(d TerraformResourceData, config *Config) (
 	}
 }
 
-func GetDataCatalogPolicyTagApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDataCatalogPolicyTagApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDataCatalogPolicyTagDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -70,14 +74,14 @@ func GetDataCatalogPolicyTagApiObject(d TerraformResourceData, config *Config) (
 	return obj, nil
 }
 
-func expandDataCatalogPolicyTagDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogPolicyTagDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogPolicyTagDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogPolicyTagDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogPolicyTagParentPolicyTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogPolicyTagParentPolicyTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeSyncAuthorizationAssetType string = "apigee.googleapis.com/SyncAuthorization"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeSyncAuthorization() ResourceConverter {
 	}
 }
 
-func GetApigeeSyncAuthorizationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeSyncAuthorizationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/organizations/{{name}}:getSyncAuthorization")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeSyncAuthorizationCaiObject(d TerraformResourceData, config *Config
 	}
 }
 
-func GetApigeeSyncAuthorizationApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeSyncAuthorizationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	identitiesProp, err := expandApigeeSyncAuthorizationIdentities(d.Get("identities"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetApigeeSyncAuthorizationApiObject(d TerraformResourceData, config *Config
 	return obj, nil
 }
 
-func expandApigeeSyncAuthorizationIdentities(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeSyncAuthorizationIdentities(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeSyncAuthorizationEtag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeSyncAuthorizationEtag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

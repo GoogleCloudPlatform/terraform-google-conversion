@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ResourceManagerLienAssetType string = "cloudresourcemanager.googleapis.com/Lien"
 
@@ -25,7 +29,7 @@ func resourceConverterResourceManagerLien() ResourceConverter {
 	}
 }
 
-func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetResourceManagerLienCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudresourcemanager.googleapis.com/liens?parent={{parent}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetResourceManagerLienCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetResourceManagerLienApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetResourceManagerLienApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	reasonProp, err := expandResourceManagerLienReason(d.Get("reason"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetResourceManagerLienApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandResourceManagerLienReason(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandResourceManagerLienReason(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandResourceManagerLienOrigin(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandResourceManagerLienOrigin(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandResourceManagerLienParent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandResourceManagerLienParent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandResourceManagerLienRestrictions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandResourceManagerLienRestrictions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

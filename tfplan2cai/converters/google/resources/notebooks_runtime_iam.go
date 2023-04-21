@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const NotebooksRuntimeIAMAssetType string = "notebooks.googleapis.com/Runtime"
@@ -47,15 +51,15 @@ func resourceConverterNotebooksRuntimeIamMember() ResourceConverter {
 	}
 }
 
-func GetNotebooksRuntimeIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetNotebooksRuntimeIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newNotebooksRuntimeIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetNotebooksRuntimeIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetNotebooksRuntimeIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newNotebooksRuntimeIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetNotebooksRuntimeIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetNotebooksRuntimeIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newNotebooksRuntimeIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeNotebooksRuntimeIamMemberDelete(existing, incoming Asset) Asset {
 
 func newNotebooksRuntimeIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newNotebooksRuntimeIamAsset(
 	}}, nil
 }
 
-func FetchNotebooksRuntimeIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchNotebooksRuntimeIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

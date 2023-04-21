@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const Cloudfunctions2functionIAMAssetType string = "cloudfunctions.googleapis.com/function"
@@ -47,15 +51,15 @@ func resourceConverterCloudfunctions2functionIamMember() ResourceConverter {
 	}
 }
 
-func GetCloudfunctions2functionIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudfunctions2functionIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudfunctions2functionIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetCloudfunctions2functionIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudfunctions2functionIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudfunctions2functionIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetCloudfunctions2functionIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudfunctions2functionIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudfunctions2functionIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeCloudfunctions2functionIamMemberDelete(existing, incoming Asset) Asset
 
 func newCloudfunctions2functionIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newCloudfunctions2functionIamAsset(
 	}}, nil
 }
 
-func FetchCloudfunctions2functionIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchCloudfunctions2functionIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

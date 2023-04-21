@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DatastreamPrivateConnectionAssetType string = "datastream.googleapis.com/PrivateConnection"
 
@@ -25,7 +29,7 @@ func resourceConverterDatastreamPrivateConnection() ResourceConverter {
 	}
 }
 
-func GetDatastreamPrivateConnectionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDatastreamPrivateConnectionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/privateConnections/{{private_connection_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDatastreamPrivateConnectionCaiObject(d TerraformResourceData, config *Co
 	}
 }
 
-func GetDatastreamPrivateConnectionApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDatastreamPrivateConnectionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandDatastreamPrivateConnectionLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -70,7 +74,7 @@ func GetDatastreamPrivateConnectionApiObject(d TerraformResourceData, config *Co
 	return obj, nil
 }
 
-func expandDatastreamPrivateConnectionLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDatastreamPrivateConnectionLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -81,11 +85,11 @@ func expandDatastreamPrivateConnectionLabels(v interface{}, d TerraformResourceD
 	return m, nil
 }
 
-func expandDatastreamPrivateConnectionDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatastreamPrivateConnectionDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatastreamPrivateConnectionVpcPeeringConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatastreamPrivateConnectionVpcPeeringConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -111,10 +115,10 @@ func expandDatastreamPrivateConnectionVpcPeeringConfig(v interface{}, d Terrafor
 	return transformed, nil
 }
 
-func expandDatastreamPrivateConnectionVpcPeeringConfigVpc(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatastreamPrivateConnectionVpcPeeringConfigVpc(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatastreamPrivateConnectionVpcPeeringConfigSubnet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDatastreamPrivateConnectionVpcPeeringConfigSubnet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const LoggingMetricAssetType string = "logging.googleapis.com/Metric"
@@ -29,7 +31,7 @@ func resourceConverterLoggingMetric() ResourceConverter {
 	}
 }
 
-func GetLoggingMetricCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetLoggingMetricCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//logging.googleapis.com/projects/{{project}}/metrics/{{%name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetLoggingMetricCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	}
 }
 
-func GetLoggingMetricApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetLoggingMetricApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandLoggingMetricName(d.Get("name"), d, config)
 	if err != nil {
@@ -110,27 +112,27 @@ func GetLoggingMetricApiObject(d TerraformResourceData, config *Config) (map[str
 	return obj, nil
 }
 
-func expandLoggingMetricName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricDisabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricDisabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptor(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -177,19 +179,19 @@ func expandLoggingMetricMetricDescriptor(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandLoggingMetricMetricDescriptorUnit(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorUnit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorValueType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorValueType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorMetricKind(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorMetricKind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorLabels(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -226,23 +228,23 @@ func expandLoggingMetricMetricDescriptorLabels(v interface{}, d TerraformResourc
 	return req, nil
 }
 
-func expandLoggingMetricMetricDescriptorLabelsKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorLabelsKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorLabelsDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorLabelsDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorLabelsValueType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorLabelsValueType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricLabelExtractors(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandLoggingMetricLabelExtractors(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -253,11 +255,11 @@ func expandLoggingMetricLabelExtractors(v interface{}, d TerraformResourceData, 
 	return m, nil
 }
 
-func expandLoggingMetricValueExtractor(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricValueExtractor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -290,7 +292,7 @@ func expandLoggingMetricBucketOptions(v interface{}, d TerraformResourceData, co
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsLinearBuckets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsLinearBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -323,19 +325,19 @@ func expandLoggingMetricBucketOptionsLinearBuckets(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsLinearBucketsNumFiniteBuckets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsLinearBucketsNumFiniteBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsLinearBucketsWidth(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsLinearBucketsWidth(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsLinearBucketsOffset(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsLinearBucketsOffset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExponentialBuckets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExponentialBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -368,19 +370,19 @@ func expandLoggingMetricBucketOptionsExponentialBuckets(v interface{}, d Terrafo
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsExponentialBucketsNumFiniteBuckets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExponentialBucketsNumFiniteBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExponentialBucketsGrowthFactor(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExponentialBucketsGrowthFactor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExponentialBucketsScale(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExponentialBucketsScale(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExplicitBuckets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExplicitBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -399,6 +401,6 @@ func expandLoggingMetricBucketOptionsExplicitBuckets(v interface{}, d TerraformR
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsExplicitBucketsBounds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExplicitBucketsBounds(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

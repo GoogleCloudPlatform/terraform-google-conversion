@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const KMSKeyRingImportJobAssetType string = "cloudkms.googleapis.com/KeyRingImportJob"
 
@@ -25,7 +29,7 @@ func resourceConverterKMSKeyRingImportJob() ResourceConverter {
 	}
 }
 
-func GetKMSKeyRingImportJobCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetKMSKeyRingImportJobCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudkms.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetKMSKeyRingImportJobCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetKMSKeyRingImportJobApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetKMSKeyRingImportJobApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	importMethodProp, err := expandKMSKeyRingImportJobImportMethod(d.Get("import_method"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetKMSKeyRingImportJobApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandKMSKeyRingImportJobImportMethod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSKeyRingImportJobImportMethod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandKMSKeyRingImportJobProtectionLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSKeyRingImportJobProtectionLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

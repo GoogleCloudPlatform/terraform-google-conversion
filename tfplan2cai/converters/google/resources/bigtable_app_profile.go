@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"google.golang.org/api/bigtableadmin/v2"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const BigtableAppProfileAssetType string = "bigtableadmin.googleapis.com/AppProfile"
@@ -30,7 +32,7 @@ func resourceConverterBigtableAppProfile() ResourceConverter {
 	}
 }
 
-func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigtableadmin.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *Config) ([]
 	}
 }
 
-func GetBigtableAppProfileApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigtableAppProfileApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandBigtableAppProfileDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -83,11 +85,11 @@ func resourceBigtableAppProfileEncoder(d TerraformResourceData, meta interface{}
 	return obj, nil
 }
 
-func expandBigtableAppProfileDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigtableAppProfileDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigtableAppProfileMultiClusterRoutingUseAny(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigtableAppProfileMultiClusterRoutingUseAny(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil || !v.(bool) {
 		return nil, nil
 	}
@@ -103,7 +105,7 @@ func expandBigtableAppProfileMultiClusterRoutingUseAny(v interface{}, d Terrafor
 	return obj, nil
 }
 
-func expandBigtableAppProfileSingleClusterRouting(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigtableAppProfileSingleClusterRouting(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -129,10 +131,10 @@ func expandBigtableAppProfileSingleClusterRouting(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandBigtableAppProfileSingleClusterRoutingClusterId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigtableAppProfileSingleClusterRoutingClusterId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigtableAppProfileSingleClusterRoutingAllowTransactionalWrites(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigtableAppProfileSingleClusterRoutingAllowTransactionalWrites(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

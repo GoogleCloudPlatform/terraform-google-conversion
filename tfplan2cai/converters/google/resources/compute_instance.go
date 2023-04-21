@@ -16,6 +16,8 @@ import (
 	"google.golang.org/api/googleapi"
 
 	"google.golang.org/api/compute/v1"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeInstanceAssetType string = "compute.googleapis.com/Instance"
@@ -27,7 +29,7 @@ func resourceConverterComputeInstance() ResourceConverter {
 	}
 }
 
-func GetComputeInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeInstanceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instances/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -48,7 +50,7 @@ func GetComputeInstanceCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetComputeInstanceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeInstanceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	project, err := getProject(d, config)
 	if err != nil {
 		return nil, err
@@ -62,7 +64,7 @@ func GetComputeInstanceApiObject(d TerraformResourceData, config *Config) (map[s
 	return jsonMap(instance)
 }
 
-func expandComputeInstance(project string, d TerraformResourceData, config *Config) (*compute.Instance, error) {
+func expandComputeInstance(project string, d TerraformResourceData, config *transport_tpg.Config) (*compute.Instance, error) {
 	// Get the machine type
 	var machineTypeUrl string
 	if mt, ok := d.GetOk("machine_type"); ok {
@@ -165,7 +167,7 @@ func expandComputeInstance(project string, d TerraformResourceData, config *Conf
 }
 
 func expandAttachedDisk(diskConfig map[string]interface{}, d TerraformResourceData, meta interface{}) (*compute.AttachedDisk, error) {
-	config := meta.(*Config)
+	config := meta.(*transport_tpg.Config)
 
 	s := diskConfig["source"].(string)
 	var sourceLink string
@@ -220,7 +222,7 @@ func expandAttachedDisk(diskConfig map[string]interface{}, d TerraformResourceDa
 
 // See comment on expandInstanceTemplateGuestAccelerators regarding why this
 // code is duplicated.
-func expandInstanceGuestAccelerators(d TerraformResourceData, config *Config) ([]*compute.AcceleratorConfig, error) {
+func expandInstanceGuestAccelerators(d TerraformResourceData, config *transport_tpg.Config) ([]*compute.AcceleratorConfig, error) {
 	configs, ok := d.GetOk("guest_accelerator")
 	if !ok {
 		return nil, nil
@@ -245,7 +247,7 @@ func expandInstanceGuestAccelerators(d TerraformResourceData, config *Config) ([
 	return guestAccelerators, nil
 }
 
-func expandBootDisk(d TerraformResourceData, config *Config, project string) (*compute.AttachedDisk, error) {
+func expandBootDisk(d TerraformResourceData, config *transport_tpg.Config, project string) (*compute.AttachedDisk, error) {
 	userAgent, err := generateUserAgentString(d, config.UserAgent)
 	if err != nil {
 		return nil, err
@@ -322,7 +324,7 @@ func expandBootDisk(d TerraformResourceData, config *Config, project string) (*c
 	return disk, nil
 }
 
-func expandScratchDisks(d TerraformResourceData, config *Config, project string) ([]*compute.AttachedDisk, error) {
+func expandScratchDisks(d TerraformResourceData, config *transport_tpg.Config, project string) ([]*compute.AttachedDisk, error) {
 	diskType, err := readDiskType(config, d, "local-ssd")
 	if err != nil {
 		return nil, fmt.Errorf("Error loading disk type 'local-ssd': %s", err)

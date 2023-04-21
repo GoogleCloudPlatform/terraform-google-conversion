@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const AlloydbInstanceAssetType string = "alloydb.googleapis.com/Instance"
 
@@ -25,7 +29,7 @@ func resourceConverterAlloydbInstance() ResourceConverter {
 	}
 }
 
-func GetAlloydbInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetAlloydbInstanceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//alloydb.googleapis.com/{{cluster}}/instances/{{instance_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetAlloydbInstanceCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetAlloydbInstanceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetAlloydbInstanceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandAlloydbInstanceLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -106,7 +110,7 @@ func GetAlloydbInstanceApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandAlloydbInstanceLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandAlloydbInstanceLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -117,7 +121,7 @@ func expandAlloydbInstanceLabels(v interface{}, d TerraformResourceData, config 
 	return m, nil
 }
 
-func expandAlloydbInstanceAnnotations(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandAlloydbInstanceAnnotations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -128,15 +132,15 @@ func expandAlloydbInstanceAnnotations(v interface{}, d TerraformResourceData, co
 	return m, nil
 }
 
-func expandAlloydbInstanceDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbInstanceDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceGceZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbInstanceGceZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceDatabaseFlags(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandAlloydbInstanceDatabaseFlags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -147,15 +151,15 @@ func expandAlloydbInstanceDatabaseFlags(v interface{}, d TerraformResourceData, 
 	return m, nil
 }
 
-func expandAlloydbInstanceAvailabilityType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbInstanceAvailabilityType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceInstanceType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbInstanceInstanceType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceReadPoolConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbInstanceReadPoolConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -174,11 +178,11 @@ func expandAlloydbInstanceReadPoolConfig(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandAlloydbInstanceReadPoolConfigNodeCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbInstanceReadPoolConfigNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceMachineConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbInstanceMachineConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -197,6 +201,6 @@ func expandAlloydbInstanceMachineConfig(v interface{}, d TerraformResourceData, 
 	return transformed, nil
 }
 
-func expandAlloydbInstanceMachineConfigCpuCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbInstanceMachineConfigCpuCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

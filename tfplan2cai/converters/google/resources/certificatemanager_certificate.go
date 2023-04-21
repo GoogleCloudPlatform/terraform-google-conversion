@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func certManagerDefaultScopeDiffSuppress(_, old, new string, diff *schema.ResourceData) bool {
@@ -36,7 +38,7 @@ func resourceConverterCertificateManagerCertificate() ResourceConverter {
 	}
 }
 
-func GetCertificateManagerCertificateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCertificateManagerCertificateCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//certificatemanager.googleapis.com/projects/{{project}}/locations/global/certificates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -57,7 +59,7 @@ func GetCertificateManagerCertificateCaiObject(d TerraformResourceData, config *
 	}
 }
 
-func GetCertificateManagerCertificateApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCertificateManagerCertificateApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandCertificateManagerCertificateDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -93,11 +95,11 @@ func GetCertificateManagerCertificateApiObject(d TerraformResourceData, config *
 	return obj, nil
 }
 
-func expandCertificateManagerCertificateDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCertificateManagerCertificateLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -108,11 +110,11 @@ func expandCertificateManagerCertificateLabels(v interface{}, d TerraformResourc
 	return m, nil
 }
 
-func expandCertificateManagerCertificateScope(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateScope(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateSelfManaged(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManaged(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -152,23 +154,23 @@ func expandCertificateManagerCertificateSelfManaged(v interface{}, d TerraformRe
 	return transformed, nil
 }
 
-func expandCertificateManagerCertificateSelfManagedCertificatePem(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManagedCertificatePem(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateSelfManagedPrivateKeyPem(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManagedPrivateKeyPem(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateSelfManagedPemCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManagedPemCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateSelfManagedPemPrivateKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManagedPemPrivateKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManaged(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManaged(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -215,19 +217,19 @@ func expandCertificateManagerCertificateManaged(v interface{}, d TerraformResour
 	return transformed, nil
 }
 
-func expandCertificateManagerCertificateManagedDomains(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedDomains(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedDnsAuthorizations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedDnsAuthorizations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedState(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedProvisioningIssue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedProvisioningIssue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -253,15 +255,15 @@ func expandCertificateManagerCertificateManagedProvisioningIssue(v interface{}, 
 	return transformed, nil
 }
 
-func expandCertificateManagerCertificateManagedProvisioningIssueReason(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedProvisioningIssueReason(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedProvisioningIssueDetails(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedProvisioningIssueDetails(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfo(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfo(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -304,18 +306,18 @@ func expandCertificateManagerCertificateManagedAuthorizationAttemptInfo(v interf
 	return req, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDomain(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDomain(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoState(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoFailureReason(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoFailureReason(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDetails(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDetails(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

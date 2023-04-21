@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const BigqueryAnalyticsHubDataExchangeAssetType string = "analyticshub.googleapis.com/DataExchange"
 
@@ -25,7 +29,7 @@ func resourceConverterBigqueryAnalyticsHubDataExchange() ResourceConverter {
 	}
 }
 
-func GetBigqueryAnalyticsHubDataExchangeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryAnalyticsHubDataExchangeCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//analyticshub.googleapis.com/projects/{{project}}/locations/{{location}}/dataExchanges/{{data_exchange_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetBigqueryAnalyticsHubDataExchangeCaiObject(d TerraformResourceData, confi
 	}
 }
 
-func GetBigqueryAnalyticsHubDataExchangeApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigqueryAnalyticsHubDataExchangeApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandBigqueryAnalyticsHubDataExchangeDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -82,22 +86,22 @@ func GetBigqueryAnalyticsHubDataExchangeApiObject(d TerraformResourceData, confi
 	return obj, nil
 }
 
-func expandBigqueryAnalyticsHubDataExchangeDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubDataExchangeDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubDataExchangeDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubDataExchangeDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubDataExchangePrimaryContact(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubDataExchangePrimaryContact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubDataExchangeDocumentation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubDataExchangeDocumentation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubDataExchangeIcon(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubDataExchangeIcon(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

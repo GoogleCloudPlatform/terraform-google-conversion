@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // Check to see if a specified value in the config exists and suppress diffs if so. Otherwise run EmptyOrDefaultStringSuppress.
@@ -40,7 +42,7 @@ func resourceConverterBillingBudget() ResourceConverter {
 	}
 }
 
-func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBillingBudgetCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//billingbudgets.googleapis.com/billingAccounts/{{billing_account}}/budgets/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -61,7 +63,7 @@ func GetBillingBudgetCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	}
 }
 
-func GetBillingBudgetApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBillingBudgetApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandBillingBudgetDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -97,11 +99,11 @@ func GetBillingBudgetApiObject(d TerraformResourceData, config *Config) (map[str
 	return obj, nil
 }
 
-func expandBillingBudgetDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -169,28 +171,28 @@ func expandBillingBudgetBudgetFilter(v interface{}, d TerraformResourceData, con
 	return transformed, nil
 }
 
-func expandBillingBudgetBudgetFilterProjects(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterProjects(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterCreditTypesTreatment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCreditTypesTreatment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterServices(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterServices(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterCreditTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCreditTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterSubaccounts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterSubaccounts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterLabels(v interface{}, d TerraformResourceData, config *Config) (map[string][]string, error) {
+func expandBillingBudgetBudgetFilterLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string][]string, error) {
 	if v == nil {
 		return map[string][]string{}, nil
 	}
@@ -201,11 +203,11 @@ func expandBillingBudgetBudgetFilterLabels(v interface{}, d TerraformResourceDat
 	return m, nil
 }
 
-func expandBillingBudgetBudgetFilterCalendarPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCalendarPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -231,7 +233,7 @@ func expandBillingBudgetBudgetFilterCustomPeriod(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriodStartDate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriodStartDate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -264,19 +266,19 @@ func expandBillingBudgetBudgetFilterCustomPeriodStartDate(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriodStartDateYear(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriodStartDateYear(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriodStartDateMonth(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriodStartDateMonth(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriodStartDateDay(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriodStartDateDay(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriodEndDate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriodEndDate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -309,19 +311,19 @@ func expandBillingBudgetBudgetFilterCustomPeriodEndDate(v interface{}, d Terrafo
 	return transformed, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriodEndDateYear(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriodEndDateYear(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriodEndDateMonth(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriodEndDateMonth(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetBudgetFilterCustomPeriodEndDateDay(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetBudgetFilterCustomPeriodEndDateDay(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetAmount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAmount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -347,7 +349,7 @@ func expandBillingBudgetAmount(v interface{}, d TerraformResourceData, config *C
 	return transformed, nil
 }
 
-func expandBillingBudgetAmountSpecifiedAmount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAmountSpecifiedAmount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -380,19 +382,19 @@ func expandBillingBudgetAmountSpecifiedAmount(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandBillingBudgetAmountSpecifiedAmountCurrencyCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAmountSpecifiedAmountCurrencyCode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetAmountSpecifiedAmountUnits(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAmountSpecifiedAmountUnits(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetAmountSpecifiedAmountNanos(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAmountSpecifiedAmountNanos(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetAmountLastPeriodAmount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAmountLastPeriodAmount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil || !v.(bool) {
 		return nil, nil
 	}
@@ -400,7 +402,7 @@ func expandBillingBudgetAmountLastPeriodAmount(v interface{}, d TerraformResourc
 	return struct{}{}, nil
 }
 
-func expandBillingBudgetThresholdRules(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetThresholdRules(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -429,15 +431,15 @@ func expandBillingBudgetThresholdRules(v interface{}, d TerraformResourceData, c
 	return req, nil
 }
 
-func expandBillingBudgetThresholdRulesThresholdPercent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetThresholdRulesThresholdPercent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetThresholdRulesSpendBasis(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetThresholdRulesSpendBasis(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetAllUpdatesRule(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAllUpdatesRule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -477,18 +479,18 @@ func expandBillingBudgetAllUpdatesRule(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandBillingBudgetAllUpdatesRulePubsubTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAllUpdatesRulePubsubTopic(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetAllUpdatesRuleSchemaVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAllUpdatesRuleSchemaVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetAllUpdatesRuleMonitoringNotificationChannels(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAllUpdatesRuleMonitoringNotificationChannels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBillingBudgetAllUpdatesRuleDisableDefaultIamRecipients(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBillingBudgetAllUpdatesRuleDisableDefaultIamRecipients(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

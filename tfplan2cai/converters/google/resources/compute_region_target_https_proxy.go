@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeRegionTargetHttpsProxyAssetType string = "compute.googleapis.com/RegionTargetHttpsProxy"
@@ -28,7 +30,7 @@ func resourceConverterComputeRegionTargetHttpsProxy() ResourceConverter {
 	}
 }
 
-func GetComputeRegionTargetHttpsProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionTargetHttpsProxyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/targetHttpsProxies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeRegionTargetHttpsProxyCaiObject(d TerraformResourceData, config *
 	}
 }
 
-func GetComputeRegionTargetHttpsProxyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeRegionTargetHttpsProxyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeRegionTargetHttpsProxyDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -85,15 +87,15 @@ func GetComputeRegionTargetHttpsProxyApiObject(d TerraformResourceData, config *
 	return obj, nil
 }
 
-func expandComputeRegionTargetHttpsProxyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetHttpsProxyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionTargetHttpsProxyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetHttpsProxyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionTargetHttpsProxySslCertificates(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetHttpsProxySslCertificates(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -109,7 +111,7 @@ func expandComputeRegionTargetHttpsProxySslCertificates(v interface{}, d Terrafo
 	return req, nil
 }
 
-func expandComputeRegionTargetHttpsProxyUrlMap(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetHttpsProxyUrlMap(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("urlMaps", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for url_map: %s", err)
@@ -117,7 +119,7 @@ func expandComputeRegionTargetHttpsProxyUrlMap(v interface{}, d TerraformResourc
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRegionTargetHttpsProxyRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionTargetHttpsProxyRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)

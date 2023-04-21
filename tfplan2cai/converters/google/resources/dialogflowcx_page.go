@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DialogflowCXPageAssetType string = "{{location}}-dialogflow.googleapis.com/Page"
 
@@ -25,7 +29,7 @@ func resourceConverterDialogflowCXPage() ResourceConverter {
 	}
 }
 
-func GetDialogflowCXPageCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDialogflowCXPageCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/pages/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDialogflowCXPageCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetDialogflowCXPageApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDialogflowCXPageApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowCXPageDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -94,11 +98,11 @@ func GetDialogflowCXPageApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandDialogflowCXPageDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEntryFulfillment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEntryFulfillment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -138,7 +142,7 @@ func expandDialogflowCXPageEntryFulfillment(v interface{}, d TerraformResourceDa
 	return transformed, nil
 }
 
-func expandDialogflowCXPageEntryFulfillmentMessages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEntryFulfillmentMessages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -160,7 +164,7 @@ func expandDialogflowCXPageEntryFulfillmentMessages(v interface{}, d TerraformRe
 	return req, nil
 }
 
-func expandDialogflowCXPageEntryFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEntryFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -186,27 +190,27 @@ func expandDialogflowCXPageEntryFulfillmentMessagesText(v interface{}, d Terrafo
 	return transformed, nil
 }
 
-func expandDialogflowCXPageEntryFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEntryFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEntryFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEntryFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEntryFulfillmentWebhook(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEntryFulfillmentWebhook(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEntryFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEntryFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEntryFulfillmentTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEntryFulfillmentTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageForm(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageForm(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -225,7 +229,7 @@ func expandDialogflowCXPageForm(v interface{}, d TerraformResourceData, config *
 	return transformed, nil
 }
 
-func expandDialogflowCXPageFormParameters(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParameters(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -282,23 +286,23 @@ func expandDialogflowCXPageFormParameters(v interface{}, d TerraformResourceData
 	return req, nil
 }
 
-func expandDialogflowCXPageFormParametersDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersRequired(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersRequired(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersEntityType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersEntityType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersIsList(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersIsList(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehavior(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehavior(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -317,7 +321,7 @@ func expandDialogflowCXPageFormParametersFillBehavior(v interface{}, d Terraform
 	return transformed, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -357,7 +361,7 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillment(v 
 	return transformed, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -379,7 +383,7 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMes
 	return req, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -405,35 +409,35 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMes
 	return transformed, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentWebhook(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentWebhook(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageFormParametersRedact(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageFormParametersRedact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRouteGroups(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRouteGroups(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -490,19 +494,19 @@ func expandDialogflowCXPageTransitionRoutes(v interface{}, d TerraformResourceDa
 	return req, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesIntent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesIntent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesCondition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesCondition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTriggerFulfillment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -542,7 +546,7 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillment(v interface{}, d T
 	return transformed, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -564,7 +568,7 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessages(v interfac
 	return req, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -590,35 +594,35 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesText(v inte
 	return transformed, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTargetPage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTargetPage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageTransitionRoutesTargetFlow(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageTransitionRoutesTargetFlow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlers(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlers(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -668,15 +672,15 @@ func expandDialogflowCXPageEventHandlers(v interface{}, d TerraformResourceData,
 	return req, nil
 }
 
-func expandDialogflowCXPageEventHandlersName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlersEvent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersEvent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlersTriggerFulfillment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTriggerFulfillment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -716,7 +720,7 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillment(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -738,7 +742,7 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessages(v interface{}
 	return req, nil
 }
 
-func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -764,34 +768,34 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesText(v interfa
 	return transformed, nil
 }
 
-func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlersTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlersTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlersTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlersTargetPage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTargetPage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageEventHandlersTargetFlow(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageEventHandlersTargetFlow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXPageLanguageCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXPageLanguageCode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

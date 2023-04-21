@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const VPCAccessConnectorAssetType string = "vpcaccess.googleapis.com/Connector"
 
@@ -25,7 +29,7 @@ func resourceConverterVPCAccessConnector() ResourceConverter {
 	}
 }
 
-func GetVPCAccessConnectorCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVPCAccessConnectorCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//vpcaccess.googleapis.com/projects/{{project}}/locations/{{region}}/connectors/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetVPCAccessConnectorCaiObject(d TerraformResourceData, config *Config) ([]
 	}
 }
 
-func GetVPCAccessConnectorApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetVPCAccessConnectorApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandVPCAccessConnectorName(d.Get("name"), d, config)
 	if err != nil {
@@ -111,39 +115,39 @@ func resourceVPCAccessConnectorEncoder(d TerraformResourceData, meta interface{}
 	return obj, nil
 }
 
-func expandVPCAccessConnectorName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVPCAccessConnectorNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return GetResourceNameFromSelfLink(v.(string)), nil
 }
 
-func expandVPCAccessConnectorIpCidrRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorIpCidrRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVPCAccessConnectorMachineType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorMachineType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVPCAccessConnectorMinThroughput(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorMinThroughput(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVPCAccessConnectorMinInstances(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorMinInstances(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVPCAccessConnectorMaxInstances(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorMaxInstances(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVPCAccessConnectorMaxThroughput(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorMaxThroughput(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVPCAccessConnectorSubnet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorSubnet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -169,10 +173,10 @@ func expandVPCAccessConnectorSubnet(v interface{}, d TerraformResourceData, conf
 	return transformed, nil
 }
 
-func expandVPCAccessConnectorSubnetName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorSubnetName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVPCAccessConnectorSubnetProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVPCAccessConnectorSubnetProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const NotebooksLocationAssetType string = "notebooks.googleapis.com/Location"
 
@@ -25,7 +29,7 @@ func resourceConverterNotebooksLocation() ResourceConverter {
 	}
 }
 
-func GetNotebooksLocationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetNotebooksLocationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetNotebooksLocationCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetNotebooksLocationApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetNotebooksLocationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandNotebooksLocationName(d.Get("name"), d, config)
 	if err != nil {
@@ -58,6 +62,6 @@ func GetNotebooksLocationApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandNotebooksLocationName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksLocationName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

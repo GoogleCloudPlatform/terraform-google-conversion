@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeNodeTemplateAssetType string = "compute.googleapis.com/NodeTemplate"
@@ -28,7 +30,7 @@ func resourceConverterComputeNodeTemplate() ResourceConverter {
 	}
 }
 
-func GetComputeNodeTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeNodeTemplateCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/nodeTemplates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeNodeTemplateCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetComputeNodeTemplateApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeNodeTemplateApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeNodeTemplateDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -103,15 +105,15 @@ func GetComputeNodeTemplateApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandComputeNodeTemplateDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeTemplateName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeTemplateNodeAffinityLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandComputeNodeTemplateNodeAffinityLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -122,11 +124,11 @@ func expandComputeNodeTemplateNodeAffinityLabels(v interface{}, d TerraformResou
 	return m, nil
 }
 
-func expandComputeNodeTemplateNodeType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateNodeType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeTemplateNodeTypeFlexibility(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateNodeTypeFlexibility(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -159,19 +161,19 @@ func expandComputeNodeTemplateNodeTypeFlexibility(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandComputeNodeTemplateNodeTypeFlexibilityCpus(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateNodeTypeFlexibilityCpus(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeTemplateNodeTypeFlexibilityMemory(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateNodeTypeFlexibilityMemory(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeTemplateNodeTypeFlexibilityLocalSsd(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateNodeTypeFlexibilityLocalSsd(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeTemplateServerBinding(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateServerBinding(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -190,15 +192,15 @@ func expandComputeNodeTemplateServerBinding(v interface{}, d TerraformResourceDa
 	return transformed, nil
 }
 
-func expandComputeNodeTemplateServerBindingType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateServerBindingType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeTemplateCpuOvercommitType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateCpuOvercommitType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeTemplateRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeTemplateRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)

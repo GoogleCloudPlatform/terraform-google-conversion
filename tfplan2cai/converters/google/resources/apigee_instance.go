@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // Supress diffs when the lists of project have the same number of entries to handle the case that
@@ -55,7 +57,7 @@ func resourceConverterApigeeInstance() ResourceConverter {
 	}
 }
 
-func GetApigeeInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeInstanceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{org_id}}/instances/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -76,7 +78,7 @@ func GetApigeeInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	}
 }
 
-func GetApigeeInstanceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeInstanceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandApigeeInstanceName(d.Get("name"), d, config)
 	if err != nil {
@@ -130,34 +132,34 @@ func GetApigeeInstanceApiObject(d TerraformResourceData, config *Config) (map[st
 	return obj, nil
 }
 
-func expandApigeeInstanceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstanceName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeInstanceLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstanceLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeInstancePeeringCidrRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstancePeeringCidrRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeInstanceIpRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstanceIpRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeInstanceDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstanceDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeInstanceDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstanceDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeInstanceDiskEncryptionKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstanceDiskEncryptionKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeInstanceConsumerAcceptList(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstanceConsumerAcceptList(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DataprocMetastoreServiceAssetType string = "metastore.googleapis.com/Service"
 
@@ -25,7 +29,7 @@ func resourceConverterDataprocMetastoreService() ResourceConverter {
 	}
 }
 
-func GetDataprocMetastoreServiceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataprocMetastoreServiceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//metastore.googleapis.com/projects/{{project}}/locations/{{location}}/services/{{service_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDataprocMetastoreServiceCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetDataprocMetastoreServiceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDataprocMetastoreServiceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandDataprocMetastoreServiceLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -118,7 +122,7 @@ func GetDataprocMetastoreServiceApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandDataprocMetastoreServiceLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDataprocMetastoreServiceLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -129,19 +133,19 @@ func expandDataprocMetastoreServiceLabels(v interface{}, d TerraformResourceData
 	return m, nil
 }
 
-func expandDataprocMetastoreServiceNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServicePort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServicePort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceTier(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceTier(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceMaintenanceWindow(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceMaintenanceWindow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -167,15 +171,15 @@ func expandDataprocMetastoreServiceMaintenanceWindow(v interface{}, d TerraformR
 	return transformed, nil
 }
 
-func expandDataprocMetastoreServiceMaintenanceWindowHourOfDay(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceMaintenanceWindowHourOfDay(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceMaintenanceWindowDayOfWeek(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceMaintenanceWindowDayOfWeek(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceEncryptionConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceEncryptionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -194,11 +198,11 @@ func expandDataprocMetastoreServiceEncryptionConfig(v interface{}, d TerraformRe
 	return transformed, nil
 }
 
-func expandDataprocMetastoreServiceEncryptionConfigKmsKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceEncryptionConfigKmsKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceHiveMetastoreConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceHiveMetastoreConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -231,11 +235,11 @@ func expandDataprocMetastoreServiceHiveMetastoreConfig(v interface{}, d Terrafor
 	return transformed, nil
 }
 
-func expandDataprocMetastoreServiceHiveMetastoreConfigVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceHiveMetastoreConfigVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceHiveMetastoreConfigConfigOverrides(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDataprocMetastoreServiceHiveMetastoreConfigConfigOverrides(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -246,7 +250,7 @@ func expandDataprocMetastoreServiceHiveMetastoreConfigConfigOverrides(v interfac
 	return m, nil
 }
 
-func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -279,7 +283,7 @@ func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfig(v interface
 	return transformed, nil
 }
 
-func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigKeytab(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigKeytab(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -298,19 +302,19 @@ func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigKeytab(v int
 	return transformed, nil
 }
 
-func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigKeytabCloudSecret(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigKeytabCloudSecret(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigPrincipal(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigPrincipal(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigKrb5ConfigGcsUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigKrb5ConfigGcsUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceNetworkConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceNetworkConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -329,7 +333,7 @@ func expandDataprocMetastoreServiceNetworkConfig(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandDataprocMetastoreServiceNetworkConfigConsumers(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceNetworkConfigConsumers(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -358,23 +362,23 @@ func expandDataprocMetastoreServiceNetworkConfigConsumers(v interface{}, d Terra
 	return req, nil
 }
 
-func expandDataprocMetastoreServiceNetworkConfigConsumersEndpointUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceNetworkConfigConsumersEndpointUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceNetworkConfigConsumersSubnetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceNetworkConfigConsumersSubnetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceDatabaseType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceDatabaseType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceReleaseChannel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceReleaseChannel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataprocMetastoreServiceTelemetryConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceTelemetryConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -393,6 +397,6 @@ func expandDataprocMetastoreServiceTelemetryConfig(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandDataprocMetastoreServiceTelemetryConfigLogFormat(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataprocMetastoreServiceTelemetryConfigLogFormat(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

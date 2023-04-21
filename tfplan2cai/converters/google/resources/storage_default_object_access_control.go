@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const StorageDefaultObjectAccessControlAssetType string = "storage.googleapis.com/DefaultObjectAccessControl"
 
@@ -25,7 +29,7 @@ func resourceConverterStorageDefaultObjectAccessControl() ResourceConverter {
 	}
 }
 
-func GetStorageDefaultObjectAccessControlCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetStorageDefaultObjectAccessControlCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//storage.googleapis.com/b/{{bucket}}/defaultObjectAcl/{{entity}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetStorageDefaultObjectAccessControlCaiObject(d TerraformResourceData, conf
 	}
 }
 
-func GetStorageDefaultObjectAccessControlApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetStorageDefaultObjectAccessControlApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	bucketProp, err := expandStorageDefaultObjectAccessControlBucket(d.Get("bucket"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetStorageDefaultObjectAccessControlApiObject(d TerraformResourceData, conf
 	return obj, nil
 }
 
-func expandStorageDefaultObjectAccessControlBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageDefaultObjectAccessControlBucket(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandStorageDefaultObjectAccessControlEntity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageDefaultObjectAccessControlEntity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandStorageDefaultObjectAccessControlObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageDefaultObjectAccessControlObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandStorageDefaultObjectAccessControlRole(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageDefaultObjectAccessControlRole(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

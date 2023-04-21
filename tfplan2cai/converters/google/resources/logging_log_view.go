@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const LoggingLogViewAssetType string = "logging.googleapis.com/LogView"
@@ -28,7 +30,7 @@ func resourceConverterLoggingLogView() ResourceConverter {
 	}
 }
 
-func GetLoggingLogViewCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetLoggingLogViewCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//logging.googleapis.com/{{parent}}/locations/{{location}}/buckets/{{bucket}}/views/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetLoggingLogViewCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	}
 }
 
-func GetLoggingLogViewApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetLoggingLogViewApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandLoggingLogViewName(d.Get("name"), d, config)
 	if err != nil {
@@ -98,14 +100,14 @@ func resourceLoggingLogViewEncoder(d TerraformResourceData, meta interface{}, ob
 	return obj, nil
 }
 
-func expandLoggingLogViewName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingLogViewName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingLogViewDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingLogViewDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingLogViewFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandLoggingLogViewFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

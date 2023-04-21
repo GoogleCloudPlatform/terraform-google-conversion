@@ -17,6 +17,8 @@ package google
 import (
 	"encoding/json"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const BigQueryRoutineAssetType string = "bigquery.googleapis.com/Routine"
@@ -28,7 +30,7 @@ func resourceConverterBigQueryRoutine() ResourceConverter {
 	}
 }
 
-func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}/routines/{{routine_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetBigQueryRoutineApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigQueryRoutineApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	routineReferenceProp, err := expandBigQueryRoutineRoutineReference(nil, d, config)
 	if err != nil {
@@ -115,7 +117,7 @@ func GetBigQueryRoutineApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandBigQueryRoutineRoutineReference(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineRoutineReference(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 
 	transformed := make(map[string]interface{})
 	transformed["datasetId"] = d.Get("dataset_id")
@@ -126,15 +128,15 @@ func expandBigQueryRoutineRoutineReference(v interface{}, d TerraformResourceDat
 	return transformed, nil
 }
 
-func expandBigQueryRoutineRoutineType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineRoutineType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineLanguage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineLanguage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineArguments(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineArguments(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -177,19 +179,19 @@ func expandBigQueryRoutineArguments(v interface{}, d TerraformResourceData, conf
 	return req, nil
 }
 
-func expandBigQueryRoutineArgumentsName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineArgumentsName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineArgumentsArgumentKind(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineArgumentsArgumentKind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineArgumentsMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineArgumentsMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineArgumentsDataType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineArgumentsDataType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil
@@ -201,7 +203,7 @@ func expandBigQueryRoutineArgumentsDataType(v interface{}, d TerraformResourceDa
 	return m, nil
 }
 
-func expandBigQueryRoutineReturnType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineReturnType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil
@@ -213,7 +215,7 @@ func expandBigQueryRoutineReturnType(v interface{}, d TerraformResourceData, con
 	return m, nil
 }
 
-func expandBigQueryRoutineReturnTableType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineReturnTableType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil
@@ -225,18 +227,18 @@ func expandBigQueryRoutineReturnTableType(v interface{}, d TerraformResourceData
 	return m, nil
 }
 
-func expandBigQueryRoutineImportedLibraries(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineImportedLibraries(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineDefinitionBody(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineDefinitionBody(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineDeterminismLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryRoutineDeterminismLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

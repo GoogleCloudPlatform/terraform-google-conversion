@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeNodeGroupAssetType string = "compute.googleapis.com/NodeGroup"
@@ -30,7 +32,7 @@ func resourceConverterComputeNodeGroup() ResourceConverter {
 	}
 }
 
-func GetComputeNodeGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeNodeGroupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/nodeGroups/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetComputeNodeGroupCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetComputeNodeGroupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeNodeGroupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeNodeGroupDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -111,15 +113,15 @@ func GetComputeNodeGroupApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandComputeNodeGroupDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupNodeTemplate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupNodeTemplate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("nodeTemplates", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for node_template: %s", err)
@@ -127,15 +129,15 @@ func expandComputeNodeGroupNodeTemplate(v interface{}, d TerraformResourceData, 
 	return f.RelativeLink(), nil
 }
 
-func expandComputeNodeGroupSize(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupSize(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupMaintenancePolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupMaintenancePolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupMaintenanceWindow(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupMaintenanceWindow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -154,11 +156,11 @@ func expandComputeNodeGroupMaintenanceWindow(v interface{}, d TerraformResourceD
 	return transformed, nil
 }
 
-func expandComputeNodeGroupMaintenanceWindowStartTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupMaintenanceWindowStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupAutoscalingPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupAutoscalingPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -191,19 +193,19 @@ func expandComputeNodeGroupAutoscalingPolicy(v interface{}, d TerraformResourceD
 	return transformed, nil
 }
 
-func expandComputeNodeGroupAutoscalingPolicyMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupAutoscalingPolicyMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupAutoscalingPolicyMinNodes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupAutoscalingPolicyMinNodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupAutoscalingPolicyMaxNodes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupAutoscalingPolicyMaxNodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupShareSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupShareSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -229,11 +231,11 @@ func expandComputeNodeGroupShareSettings(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandComputeNodeGroupShareSettingsShareType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupShareSettingsShareType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupShareSettingsProjectMap(v interface{}, d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func expandComputeNodeGroupShareSettingsProjectMap(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	if v == nil {
 		return map[string]interface{}{}, nil
 	}
@@ -258,11 +260,11 @@ func expandComputeNodeGroupShareSettingsProjectMap(v interface{}, d TerraformRes
 	return m, nil
 }
 
-func expandComputeNodeGroupShareSettingsProjectMapProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupShareSettingsProjectMapProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNodeGroupZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNodeGroupZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)

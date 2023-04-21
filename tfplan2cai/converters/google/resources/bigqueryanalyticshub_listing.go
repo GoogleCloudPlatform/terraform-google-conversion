@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const BigqueryAnalyticsHubListingAssetType string = "analyticshub.googleapis.com/Listing"
 
@@ -25,7 +29,7 @@ func resourceConverterBigqueryAnalyticsHubListing() ResourceConverter {
 	}
 }
 
-func GetBigqueryAnalyticsHubListingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryAnalyticsHubListingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//analyticshub.googleapis.com/projects/{{project}}/locations/{{location}}/dataExchanges/{{data_exchange_id}}/listings/{{listing_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetBigqueryAnalyticsHubListingCaiObject(d TerraformResourceData, config *Co
 	}
 }
 
-func GetBigqueryAnalyticsHubListingApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigqueryAnalyticsHubListingApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandBigqueryAnalyticsHubListingDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -112,31 +116,31 @@ func GetBigqueryAnalyticsHubListingApiObject(d TerraformResourceData, config *Co
 	return obj, nil
 }
 
-func expandBigqueryAnalyticsHubListingDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingPrimaryContact(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingPrimaryContact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingDocumentation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDocumentation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingIcon(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingIcon(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingRequestAccess(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingRequestAccess(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingDataProvider(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDataProvider(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -162,15 +166,15 @@ func expandBigqueryAnalyticsHubListingDataProvider(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandBigqueryAnalyticsHubListingDataProviderName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDataProviderName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingDataProviderPrimaryContact(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDataProviderPrimaryContact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingPublisher(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingPublisher(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -196,19 +200,19 @@ func expandBigqueryAnalyticsHubListingPublisher(v interface{}, d TerraformResour
 	return transformed, nil
 }
 
-func expandBigqueryAnalyticsHubListingPublisherName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingPublisherName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingPublisherPrimaryContact(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingPublisherPrimaryContact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingCategories(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingCategories(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingBigqueryDataset(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingBigqueryDataset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -227,6 +231,6 @@ func expandBigqueryAnalyticsHubListingBigqueryDataset(v interface{}, d Terraform
 	return transformed, nil
 }
 
-func expandBigqueryAnalyticsHubListingBigqueryDatasetDataset(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingBigqueryDatasetDataset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

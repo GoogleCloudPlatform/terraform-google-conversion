@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const TagsTagBindingAssetType string = "cloudresourcemanager.googleapis.com/TagBinding"
 
@@ -25,7 +29,7 @@ func resourceConverterTagsTagBinding() ResourceConverter {
 	}
 }
 
-func GetTagsTagBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetTagsTagBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudresourcemanager.googleapis.com/tagBindings/?parent={{parent}}&pageSize=300")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetTagsTagBindingCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	}
 }
 
-func GetTagsTagBindingApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetTagsTagBindingApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	parentProp, err := expandTagsTagBindingParent(d.Get("parent"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetTagsTagBindingApiObject(d TerraformResourceData, config *Config) (map[st
 	return obj, nil
 }
 
-func expandTagsTagBindingParent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTagsTagBindingParent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTagsTagBindingTagValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTagsTagBindingTagValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

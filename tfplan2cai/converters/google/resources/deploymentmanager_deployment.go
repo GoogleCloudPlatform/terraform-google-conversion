@@ -20,6 +20,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func customDiffDeploymentManagerDeployment(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
@@ -56,7 +58,7 @@ func resourceConverterDeploymentManagerDeployment() ResourceConverter {
 	}
 }
 
-func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//www.googleapis.com/projects/{{project}}/global/deployments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -77,7 +79,7 @@ func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *Co
 	}
 }
 
-func GetDeploymentManagerDeploymentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDeploymentManagerDeploymentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandDeploymentManagerDeploymentName(d.Get("name"), d, config)
 	if err != nil {
@@ -107,15 +109,15 @@ func GetDeploymentManagerDeploymentApiObject(d TerraformResourceData, config *Co
 	return obj, nil
 }
 
-func expandDeploymentManagerDeploymentName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentLabels(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -145,15 +147,15 @@ func expandDeploymentManagerDeploymentLabels(v interface{}, d TerraformResourceD
 	return req, nil
 }
 
-func expandDeploymentManagerDeploymentLabelsKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentLabelsKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentLabelsValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentLabelsValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentTarget(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTarget(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -179,7 +181,7 @@ func expandDeploymentManagerDeploymentTarget(v interface{}, d TerraformResourceD
 	return transformed, nil
 }
 
-func expandDeploymentManagerDeploymentTargetConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -198,11 +200,11 @@ func expandDeploymentManagerDeploymentTargetConfig(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandDeploymentManagerDeploymentTargetConfigContent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetConfigContent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentTargetImports(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetImports(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -231,10 +233,10 @@ func expandDeploymentManagerDeploymentTargetImports(v interface{}, d TerraformRe
 	return req, nil
 }
 
-func expandDeploymentManagerDeploymentTargetImportsContent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetImportsContent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentTargetImportsName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetImportsName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

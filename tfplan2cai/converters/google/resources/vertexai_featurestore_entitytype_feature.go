@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const VertexAIFeaturestoreEntitytypeFeatureAssetType string = "{{region}}-aiplatform.googleapis.com/FeaturestoreEntitytypeFeature"
 
@@ -25,7 +29,7 @@ func resourceConverterVertexAIFeaturestoreEntitytypeFeature() ResourceConverter 
 	}
 }
 
-func GetVertexAIFeaturestoreEntitytypeFeatureCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreEntitytypeFeatureCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{entitytype}}/features/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetVertexAIFeaturestoreEntitytypeFeatureCaiObject(d TerraformResourceData, 
 	}
 }
 
-func GetVertexAIFeaturestoreEntitytypeFeatureApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetVertexAIFeaturestoreEntitytypeFeatureApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandVertexAIFeaturestoreEntitytypeFeatureLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -70,7 +74,7 @@ func GetVertexAIFeaturestoreEntitytypeFeatureApiObject(d TerraformResourceData, 
 	return obj, nil
 }
 
-func expandVertexAIFeaturestoreEntitytypeFeatureLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandVertexAIFeaturestoreEntitytypeFeatureLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -81,10 +85,10 @@ func expandVertexAIFeaturestoreEntitytypeFeatureLabels(v interface{}, d Terrafor
 	return m, nil
 }
 
-func expandVertexAIFeaturestoreEntitytypeFeatureDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIFeaturestoreEntitytypeFeatureDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIFeaturestoreEntitytypeFeatureValueType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIFeaturestoreEntitytypeFeatureValueType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const EssentialContactsContactAssetType string = "essentialcontacts.googleapis.com/Contact"
 
@@ -25,7 +29,7 @@ func resourceConverterEssentialContactsContact() ResourceConverter {
 	}
 }
 
-func GetEssentialContactsContactCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetEssentialContactsContactCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//essentialcontacts.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetEssentialContactsContactCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetEssentialContactsContactApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetEssentialContactsContactApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	emailProp, err := expandEssentialContactsContactEmail(d.Get("email"), d, config)
 	if err != nil {
@@ -70,14 +74,14 @@ func GetEssentialContactsContactApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandEssentialContactsContactEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandEssentialContactsContactEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandEssentialContactsContactNotificationCategorySubscriptions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandEssentialContactsContactNotificationCategorySubscriptions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandEssentialContactsContactLanguageTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandEssentialContactsContactLanguageTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
