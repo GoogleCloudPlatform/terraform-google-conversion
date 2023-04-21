@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DataCatalogTaxonomyAssetType string = "datacatalog.googleapis.com/Taxonomy"
 
@@ -25,7 +29,7 @@ func resourceConverterDataCatalogTaxonomy() ResourceConverter {
 	}
 }
 
-func GetDataCatalogTaxonomyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogTaxonomyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDataCatalogTaxonomyCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetDataCatalogTaxonomyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDataCatalogTaxonomyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDataCatalogTaxonomyDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -70,14 +74,14 @@ func GetDataCatalogTaxonomyApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandDataCatalogTaxonomyDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTaxonomyDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTaxonomyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTaxonomyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTaxonomyActivatedPolicyTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTaxonomyActivatedPolicyTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

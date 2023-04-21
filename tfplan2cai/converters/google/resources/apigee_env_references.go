@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeEnvReferencesAssetType string = "apigee.googleapis.com/EnvReferences"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeEnvReferences() ResourceConverter {
 	}
 }
 
-func GetApigeeEnvReferencesCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeEnvReferencesCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{env_id}}/references/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeEnvReferencesCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetApigeeEnvReferencesApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeEnvReferencesApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandApigeeEnvReferencesName(d.Get("name"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetApigeeEnvReferencesApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandApigeeEnvReferencesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvReferencesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvReferencesDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvReferencesDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvReferencesResourceType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvReferencesResourceType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvReferencesRefers(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvReferencesRefers(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeEnvKeystoreAssetType string = "apigee.googleapis.com/EnvKeystore"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeEnvKeystore() ResourceConverter {
 	}
 }
 
-func GetApigeeEnvKeystoreCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeEnvKeystoreCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{env_id}}/keystores/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeEnvKeystoreCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetApigeeEnvKeystoreApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeEnvKeystoreApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandApigeeEnvKeystoreName(d.Get("name"), d, config)
 	if err != nil {
@@ -58,6 +62,6 @@ func GetApigeeEnvKeystoreApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandApigeeEnvKeystoreName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvKeystoreName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

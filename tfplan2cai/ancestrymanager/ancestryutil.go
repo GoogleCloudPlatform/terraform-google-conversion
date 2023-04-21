@@ -7,6 +7,7 @@ import (
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
 	"github.com/hashicorp/errwrap"
 	"google.golang.org/api/googleapi"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // assetParent derives a resource's parent from its ancestors.
@@ -74,7 +75,7 @@ func sanitizeAncestryPath(s string) string {
 	return ret
 }
 
-func getProjectFromSchema(projectSchemaField string, d resources.TerraformResourceData, config *resources.Config) (string, error) {
+func getProjectFromSchema(projectSchemaField string, d resources.TerraformResourceData, config *transport_tpg.Config) (string, error) {
 	res, ok := d.GetOk(projectSchemaField)
 	if ok && projectSchemaField != "" {
 		return res.(string), nil

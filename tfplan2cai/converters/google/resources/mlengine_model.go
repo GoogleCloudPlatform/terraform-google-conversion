@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const MLEngineModelAssetType string = "ml.googleapis.com/Model"
 
@@ -25,7 +29,7 @@ func resourceConverterMLEngineModel() ResourceConverter {
 	}
 }
 
-func GetMLEngineModelCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetMLEngineModelCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//ml.googleapis.com/projects/{{project}}/models/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetMLEngineModelCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	}
 }
 
-func GetMLEngineModelApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetMLEngineModelApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandMLEngineModelName(d.Get("name"), d, config)
 	if err != nil {
@@ -94,15 +98,15 @@ func GetMLEngineModelApiObject(d TerraformResourceData, config *Config) (map[str
 	return obj, nil
 }
 
-func expandMLEngineModelName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMLEngineModelName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMLEngineModelDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMLEngineModelDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMLEngineModelDefaultVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMLEngineModelDefaultVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -121,23 +125,23 @@ func expandMLEngineModelDefaultVersion(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandMLEngineModelDefaultVersionName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMLEngineModelDefaultVersionName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMLEngineModelRegions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMLEngineModelRegions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMLEngineModelOnlinePredictionLogging(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMLEngineModelOnlinePredictionLogging(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMLEngineModelOnlinePredictionConsoleLogging(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMLEngineModelOnlinePredictionConsoleLogging(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMLEngineModelLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandMLEngineModelLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

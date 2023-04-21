@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const IapClientAssetType string = "iap.googleapis.com/Client"
 
@@ -25,7 +29,7 @@ func resourceConverterIapClient() ResourceConverter {
 	}
 }
 
-func GetIapClientCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIapClientCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iap.googleapis.com/{{brand}}/identityAwareProxyClients/{{client_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetIapClientCaiObject(d TerraformResourceData, config *Config) ([]Asset, er
 	}
 }
 
-func GetIapClientApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIapClientApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandIapClientDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -58,6 +62,6 @@ func GetIapClientApiObject(d TerraformResourceData, config *Config) (map[string]
 	return obj, nil
 }
 
-func expandIapClientDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIapClientDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -19,6 +19,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func suppressGkeHubEndpointSelfLinkDiff(_, old, new string, _ *schema.ResourceData) bool {
@@ -40,7 +42,7 @@ func resourceConverterGKEHubMembership() ResourceConverter {
 	}
 }
 
-func GetGKEHubMembershipCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetGKEHubMembershipCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gkehub.googleapis.com/projects/{{project}}/locations/global/memberships/{{membership_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -61,7 +63,7 @@ func GetGKEHubMembershipCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetGKEHubMembershipApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetGKEHubMembershipApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandGKEHubMembershipLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -85,7 +87,7 @@ func GetGKEHubMembershipApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandGKEHubMembershipLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandGKEHubMembershipLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -96,7 +98,7 @@ func expandGKEHubMembershipLabels(v interface{}, d TerraformResourceData, config
 	return m, nil
 }
 
-func expandGKEHubMembershipEndpoint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGKEHubMembershipEndpoint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -115,7 +117,7 @@ func expandGKEHubMembershipEndpoint(v interface{}, d TerraformResourceData, conf
 	return transformed, nil
 }
 
-func expandGKEHubMembershipEndpointGkeCluster(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGKEHubMembershipEndpointGkeCluster(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -134,7 +136,7 @@ func expandGKEHubMembershipEndpointGkeCluster(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandGKEHubMembershipEndpointGkeClusterResourceLink(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGKEHubMembershipEndpointGkeClusterResourceLink(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if strings.HasPrefix(v.(string), "//") {
 		return v, nil
 	} else {
@@ -143,7 +145,7 @@ func expandGKEHubMembershipEndpointGkeClusterResourceLink(v interface{}, d Terra
 	}
 }
 
-func expandGKEHubMembershipAuthority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGKEHubMembershipAuthority(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -162,6 +164,6 @@ func expandGKEHubMembershipAuthority(v interface{}, d TerraformResourceData, con
 	return transformed, nil
 }
 
-func expandGKEHubMembershipAuthorityIssuer(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGKEHubMembershipAuthorityIssuer(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

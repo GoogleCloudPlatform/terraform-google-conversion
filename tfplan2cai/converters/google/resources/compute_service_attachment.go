@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeServiceAttachmentAssetType string = "compute.googleapis.com/ServiceAttachment"
@@ -28,7 +30,7 @@ func resourceConverterComputeServiceAttachment() ResourceConverter {
 	}
 }
 
-func GetComputeServiceAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeServiceAttachmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/serviceAttachments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeServiceAttachmentCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetComputeServiceAttachmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeServiceAttachmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeServiceAttachmentName(d.Get("name"), d, config)
 	if err != nil {
@@ -121,23 +123,23 @@ func GetComputeServiceAttachmentApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandComputeServiceAttachmentName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentFingerprint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentConnectionPreference(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentConnectionPreference(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentTargetService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentTargetService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("forwardingRules", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for target_service: %s", err)
@@ -145,7 +147,7 @@ func expandComputeServiceAttachmentTargetService(v interface{}, d TerraformResou
 	return f.RelativeLink(), nil
 }
 
-func expandComputeServiceAttachmentNatSubnets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentNatSubnets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -161,19 +163,19 @@ func expandComputeServiceAttachmentNatSubnets(v interface{}, d TerraformResource
 	return req, nil
 }
 
-func expandComputeServiceAttachmentEnableProxyProtocol(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentEnableProxyProtocol(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentDomainNames(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentDomainNames(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentConsumerRejectLists(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentConsumerRejectLists(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentConsumerAcceptLists(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentConsumerAcceptLists(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -202,15 +204,15 @@ func expandComputeServiceAttachmentConsumerAcceptLists(v interface{}, d Terrafor
 	return req, nil
 }
 
-func expandComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentConsumerAcceptListsConnectionLimit(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentConsumerAcceptListsConnectionLimit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeServiceAttachmentRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeServiceAttachmentRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)

@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ComputeSnapshotIAMAssetType string = "compute.googleapis.com/Snapshot"
@@ -47,15 +51,15 @@ func resourceConverterComputeSnapshotIamMember() ResourceConverter {
 	}
 }
 
-func GetComputeSnapshotIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSnapshotIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeSnapshotIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetComputeSnapshotIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSnapshotIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeSnapshotIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetComputeSnapshotIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSnapshotIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeSnapshotIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeComputeSnapshotIamMemberDelete(existing, incoming Asset) Asset {
 
 func newComputeSnapshotIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newComputeSnapshotIamAsset(
 	}}, nil
 }
 
-func FetchComputeSnapshotIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchComputeSnapshotIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("name"); !ok {
 		return Asset{}, ErrEmptyIdentityField

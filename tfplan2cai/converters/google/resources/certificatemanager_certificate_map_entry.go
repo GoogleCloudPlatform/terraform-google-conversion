@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const CertificateManagerCertificateMapEntryAssetType string = "certificatemanager.googleapis.com/CertificateMapEntry"
 
@@ -25,7 +29,7 @@ func resourceConverterCertificateManagerCertificateMapEntry() ResourceConverter 
 	}
 }
 
-func GetCertificateManagerCertificateMapEntryCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCertificateManagerCertificateMapEntryCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//certificatemanager.googleapis.com/projects/{{project}}/locations/global/certificateMaps/{{map}}/certificateMapEntries/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetCertificateManagerCertificateMapEntryCaiObject(d TerraformResourceData, 
 	}
 }
 
-func GetCertificateManagerCertificateMapEntryApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCertificateManagerCertificateMapEntryApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandCertificateManagerCertificateMapEntryDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -88,11 +92,11 @@ func GetCertificateManagerCertificateMapEntryApiObject(d TerraformResourceData, 
 	return obj, nil
 }
 
-func expandCertificateManagerCertificateMapEntryDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapEntryLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCertificateManagerCertificateMapEntryLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -103,18 +107,18 @@ func expandCertificateManagerCertificateMapEntryLabels(v interface{}, d Terrafor
 	return m, nil
 }
 
-func expandCertificateManagerCertificateMapEntryCertificates(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryCertificates(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapEntryHostname(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryHostname(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapEntryMatcher(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryMatcher(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapEntryName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return GetResourceNameFromSelfLink(v.(string)), nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataprocAutoscalingPolicyIAMAssetType string = "dataproc.googleapis.com/AutoscalingPolicy"
@@ -47,15 +51,15 @@ func resourceConverterDataprocAutoscalingPolicyIamMember() ResourceConverter {
 	}
 }
 
-func GetDataprocAutoscalingPolicyIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataprocAutoscalingPolicyIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataprocAutoscalingPolicyIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetDataprocAutoscalingPolicyIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataprocAutoscalingPolicyIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataprocAutoscalingPolicyIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetDataprocAutoscalingPolicyIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataprocAutoscalingPolicyIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataprocAutoscalingPolicyIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeDataprocAutoscalingPolicyIamMemberDelete(existing, incoming Asset) Ass
 
 func newDataprocAutoscalingPolicyIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newDataprocAutoscalingPolicyIamAsset(
 	}}, nil
 }
 
-func FetchDataprocAutoscalingPolicyIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchDataprocAutoscalingPolicyIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

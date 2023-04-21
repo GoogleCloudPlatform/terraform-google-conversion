@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const CertificateManagerDnsAuthorizationAssetType string = "certificatemanager.googleapis.com/DnsAuthorization"
 
@@ -25,7 +29,7 @@ func resourceConverterCertificateManagerDnsAuthorization() ResourceConverter {
 	}
 }
 
-func GetCertificateManagerDnsAuthorizationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCertificateManagerDnsAuthorizationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//certificatemanager.googleapis.com/projects/{{project}}/locations/global/dnsAuthorizations/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetCertificateManagerDnsAuthorizationCaiObject(d TerraformResourceData, con
 	}
 }
 
-func GetCertificateManagerDnsAuthorizationApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCertificateManagerDnsAuthorizationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandCertificateManagerDnsAuthorizationDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -70,11 +74,11 @@ func GetCertificateManagerDnsAuthorizationApiObject(d TerraformResourceData, con
 	return obj, nil
 }
 
-func expandCertificateManagerDnsAuthorizationDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerDnsAuthorizationDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerDnsAuthorizationLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCertificateManagerDnsAuthorizationLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -85,6 +89,6 @@ func expandCertificateManagerDnsAuthorizationLabels(v interface{}, d TerraformRe
 	return m, nil
 }
 
-func expandCertificateManagerDnsAuthorizationDomain(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerDnsAuthorizationDomain(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const VertexAIDatasetAssetType string = "{{region}}-aiplatform.googleapis.com/Dataset"
 
@@ -25,7 +29,7 @@ func resourceConverterVertexAIDataset() ResourceConverter {
 	}
 }
 
-func GetVertexAIDatasetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIDatasetCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetVertexAIDatasetCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetVertexAIDatasetApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetVertexAIDatasetApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandVertexAIDatasetDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -76,11 +80,11 @@ func GetVertexAIDatasetApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandVertexAIDatasetDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIDatasetDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIDatasetLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandVertexAIDatasetLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -91,7 +95,7 @@ func expandVertexAIDatasetLabels(v interface{}, d TerraformResourceData, config 
 	return m, nil
 }
 
-func expandVertexAIDatasetEncryptionSpec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIDatasetEncryptionSpec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -110,10 +114,10 @@ func expandVertexAIDatasetEncryptionSpec(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandVertexAIDatasetEncryptionSpecKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIDatasetEncryptionSpecKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIDatasetMetadataSchemaUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIDatasetMetadataSchemaUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

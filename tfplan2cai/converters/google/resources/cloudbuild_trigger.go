@@ -21,6 +21,8 @@ import (
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func stepTimeoutCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
@@ -69,7 +71,7 @@ func resourceConverterCloudBuildTrigger() ResourceConverter {
 	}
 }
 
-func GetCloudBuildTriggerCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudBuildTriggerCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudbuild.googleapis.com/projects/{{project}}/locations/{{location}}/triggers/{{trigger_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -90,7 +92,7 @@ func GetCloudBuildTriggerCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetCloudBuildTriggerApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCloudBuildTriggerApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandCloudBuildTriggerName(d.Get("name"), d, config)
 	if err != nil {
@@ -216,23 +218,23 @@ func GetCloudBuildTriggerApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandCloudBuildTriggerName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerDisabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerDisabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerSubstitutions(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCloudBuildTriggerSubstitutions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -243,23 +245,23 @@ func expandCloudBuildTriggerSubstitutions(v interface{}, d TerraformResourceData
 	return m, nil
 }
 
-func expandCloudBuildTriggerServiceAccount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerServiceAccount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerIncludeBuildLogs(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerIncludeBuildLogs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerFilename(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerFilename(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGitFileSource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGitFileSource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -306,27 +308,27 @@ func expandCloudBuildTriggerGitFileSource(v interface{}, d TerraformResourceData
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerGitFileSourcePath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGitFileSourcePath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGitFileSourceUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGitFileSourceUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGitFileSourceRepoType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGitFileSourceRepoType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGitFileSourceRevision(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGitFileSourceRevision(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGitFileSourceGithubEnterpriseConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGitFileSourceGithubEnterpriseConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerSourceToBuild(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerSourceToBuild(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -366,31 +368,31 @@ func expandCloudBuildTriggerSourceToBuild(v interface{}, d TerraformResourceData
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerSourceToBuildUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerSourceToBuildUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerSourceToBuildRef(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerSourceToBuildRef(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerSourceToBuildRepoType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerSourceToBuildRepoType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerSourceToBuildGithubEnterpriseConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerSourceToBuildGithubEnterpriseConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerIgnoredFiles(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerIgnoredFiles(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerIncludedFiles(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerIncludedFiles(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerTriggerTemplate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTriggerTemplate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -451,35 +453,35 @@ func expandCloudBuildTriggerTriggerTemplate(v interface{}, d TerraformResourceDa
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerTriggerTemplateProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTriggerTemplateProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerTriggerTemplateRepoName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTriggerTemplateRepoName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerTriggerTemplateDir(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTriggerTemplateDir(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerTriggerTemplateInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTriggerTemplateInvertRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerTriggerTemplateBranchName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTriggerTemplateBranchName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerTriggerTemplateTagName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTriggerTemplateTagName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerTriggerTemplateCommitSha(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerTriggerTemplateCommitSha(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithub(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithub(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -526,15 +528,15 @@ func expandCloudBuildTriggerGithub(v interface{}, d TerraformResourceData, confi
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerGithubOwner(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubOwner(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithubName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithubPullRequest(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubPullRequest(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -567,19 +569,19 @@ func expandCloudBuildTriggerGithubPullRequest(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerGithubPullRequestBranch(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubPullRequestBranch(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithubPullRequestCommentControl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubPullRequestCommentControl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithubPullRequestInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubPullRequestInvertRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithubPush(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubPush(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -612,23 +614,23 @@ func expandCloudBuildTriggerGithubPush(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerGithubPushInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubPushInvertRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithubPushBranch(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubPushBranch(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithubPushTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubPushTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerGithubEnterpriseConfigResourceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerGithubEnterpriseConfigResourceName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -675,19 +677,19 @@ func expandCloudBuildTriggerBitbucketServerTriggerConfig(v interface{}, d Terraf
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigRepoSlug(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigRepoSlug(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigProjectKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigProjectKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigBitbucketServerConfigResource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigBitbucketServerConfigResource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequest(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequest(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -720,19 +722,19 @@ func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequest(v interface{
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequestBranch(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequestBranch(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequestCommentControl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequestCommentControl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequestInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequestInvertRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigPush(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigPush(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -765,19 +767,19 @@ func expandCloudBuildTriggerBitbucketServerTriggerConfigPush(v interface{}, d Te
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigPushInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigPushInvertRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigPushBranch(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigPushBranch(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBitbucketServerTriggerConfigPushTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBitbucketServerTriggerConfigPushTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerPubsubConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerPubsubConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -817,23 +819,23 @@ func expandCloudBuildTriggerPubsubConfig(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerPubsubConfigSubscription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerPubsubConfigSubscription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerPubsubConfigTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerPubsubConfigTopic(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerPubsubConfigServiceAccountEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerPubsubConfigServiceAccountEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerPubsubConfigState(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerPubsubConfigState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerWebhookConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerWebhookConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -859,15 +861,15 @@ func expandCloudBuildTriggerWebhookConfig(v interface{}, d TerraformResourceData
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerWebhookConfigSecret(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerWebhookConfigSecret(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerWebhookConfigState(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerWebhookConfigState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerApprovalConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerApprovalConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -886,11 +888,11 @@ func expandCloudBuildTriggerApprovalConfig(v interface{}, d TerraformResourceDat
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerApprovalConfigApprovalRequired(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerApprovalConfigApprovalRequired(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuild(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuild(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -986,7 +988,7 @@ func expandCloudBuildTriggerBuild(v interface{}, d TerraformResourceData, config
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildSource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1012,7 +1014,7 @@ func expandCloudBuildTriggerBuildSource(v interface{}, d TerraformResourceData, 
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildSourceStorageSource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceStorageSource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1045,19 +1047,19 @@ func expandCloudBuildTriggerBuildSourceStorageSource(v interface{}, d TerraformR
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildSourceStorageSourceBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceStorageSourceBucket(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceStorageSourceObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceStorageSourceObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceStorageSourceGeneration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceStorageSourceGeneration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceRepoSource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1125,23 +1127,23 @@ func expandCloudBuildTriggerBuildSourceRepoSource(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSourceProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceRepoSourceProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSourceRepoName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceRepoSourceRepoName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSourceDir(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceRepoSourceDir(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSourceInvertRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceRepoSourceInvertRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSourceSubstitutions(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCloudBuildTriggerBuildSourceRepoSourceSubstitutions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -1152,27 +1154,27 @@ func expandCloudBuildTriggerBuildSourceRepoSourceSubstitutions(v interface{}, d 
 	return m, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSourceBranchName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceRepoSourceBranchName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSourceTagName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceRepoSourceTagName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSourceRepoSourceCommitSha(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSourceRepoSourceCommitSha(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildTags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildImages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildImages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSubstitutions(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCloudBuildTriggerBuildSubstitutions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -1183,19 +1185,19 @@ func expandCloudBuildTriggerBuildSubstitutions(v interface{}, d TerraformResourc
 	return m, nil
 }
 
-func expandCloudBuildTriggerBuildQueueTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildQueueTtl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildLogsBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildLogsBucket(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildTimeout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildTimeout(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSecret(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSecret(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1224,11 +1226,11 @@ func expandCloudBuildTriggerBuildSecret(v interface{}, d TerraformResourceData, 
 	return req, nil
 }
 
-func expandCloudBuildTriggerBuildSecretKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildSecretKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildSecretSecretEnv(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCloudBuildTriggerBuildSecretSecretEnv(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -1239,7 +1241,7 @@ func expandCloudBuildTriggerBuildSecretSecretEnv(v interface{}, d TerraformResou
 	return m, nil
 }
 
-func expandCloudBuildTriggerBuildAvailableSecrets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildAvailableSecrets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1258,7 +1260,7 @@ func expandCloudBuildTriggerBuildAvailableSecrets(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildAvailableSecretsSecretManager(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildAvailableSecretsSecretManager(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1287,15 +1289,15 @@ func expandCloudBuildTriggerBuildAvailableSecretsSecretManager(v interface{}, d 
 	return req, nil
 }
 
-func expandCloudBuildTriggerBuildAvailableSecretsSecretManagerVersionName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildAvailableSecretsSecretManagerVersionName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildAvailableSecretsSecretManagerEnv(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildAvailableSecretsSecretManagerEnv(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStep(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStep(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1394,43 +1396,43 @@ func expandCloudBuildTriggerBuildStep(v interface{}, d TerraformResourceData, co
 	return req, nil
 }
 
-func expandCloudBuildTriggerBuildStepName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepArgs(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepArgs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepEnv(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepEnv(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepEntrypoint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepEntrypoint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepDir(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepDir(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepSecretEnv(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepSecretEnv(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepTimeout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepTimeout(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepTiming(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepTiming(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepVolumes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepVolumes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1459,23 +1461,23 @@ func expandCloudBuildTriggerBuildStepVolumes(v interface{}, d TerraformResourceD
 	return req, nil
 }
 
-func expandCloudBuildTriggerBuildStepVolumesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepVolumesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepVolumesPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepVolumesPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepWaitFor(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepWaitFor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildStepScript(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildStepScript(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildArtifacts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildArtifacts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1501,11 +1503,11 @@ func expandCloudBuildTriggerBuildArtifacts(v interface{}, d TerraformResourceDat
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildArtifactsImages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildArtifactsImages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildArtifactsObjects(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildArtifactsObjects(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1538,15 +1540,15 @@ func expandCloudBuildTriggerBuildArtifactsObjects(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildArtifactsObjectsLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildArtifactsObjectsLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildArtifactsObjectsPaths(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildArtifactsObjectsPaths(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildArtifactsObjectsTiming(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildArtifactsObjectsTiming(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1572,15 +1574,15 @@ func expandCloudBuildTriggerBuildArtifactsObjectsTiming(v interface{}, d Terrafo
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildArtifactsObjectsTimingStartTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildArtifactsObjectsTimingStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildArtifactsObjectsTimingEndTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildArtifactsObjectsTimingEndTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1676,51 +1678,51 @@ func expandCloudBuildTriggerBuildOptions(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsSourceProvenanceHash(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsSourceProvenanceHash(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsRequestedVerifyOption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsRequestedVerifyOption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsMachineType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsMachineType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsDiskSizeGb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsDiskSizeGb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsSubstitutionOption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsSubstitutionOption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsDynamicSubstitutions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsDynamicSubstitutions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsLogStreamingOption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsLogStreamingOption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsWorkerPool(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsWorkerPool(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsLogging(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsLogging(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsEnv(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsEnv(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsSecretEnv(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsSecretEnv(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsVolumes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsVolumes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1749,10 +1751,10 @@ func expandCloudBuildTriggerBuildOptionsVolumes(v interface{}, d TerraformResour
 	return req, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsVolumesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsVolumesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildTriggerBuildOptionsVolumesPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildTriggerBuildOptionsVolumesPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

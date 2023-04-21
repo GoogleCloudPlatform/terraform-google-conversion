@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"reflect"
 	"regexp"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const PubsubLiteSubscriptionAssetType string = "pubsublite.googleapis.com/Subscription"
@@ -29,7 +31,7 @@ func resourceConverterPubsubLiteSubscription() ResourceConverter {
 	}
 }
 
-func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/subscriptions/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *Config)
 	}
 }
 
-func GetPubsubLiteSubscriptionApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetPubsubLiteSubscriptionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	topicProp, err := expandPubsubLiteSubscriptionTopic(d.Get("topic"), d, config)
 	if err != nil {
@@ -69,7 +71,7 @@ func GetPubsubLiteSubscriptionApiObject(d TerraformResourceData, config *Config)
 }
 
 func resourcePubsubLiteSubscriptionEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	config := meta.(*Config)
+	config := meta.(*transport_tpg.Config)
 
 	zone, err := getZone(d, config)
 	if err != nil {
@@ -91,7 +93,7 @@ func resourcePubsubLiteSubscriptionEncoder(d TerraformResourceData, meta interfa
 	return obj, nil
 }
 
-func expandPubsubLiteSubscriptionTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubLiteSubscriptionTopic(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	project, err := getProject(d, config)
 	if err != nil {
 		return "", err
@@ -122,7 +124,7 @@ func expandPubsubLiteSubscriptionTopic(v interface{}, d TerraformResourceData, c
 	}
 }
 
-func expandPubsubLiteSubscriptionDeliveryConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubLiteSubscriptionDeliveryConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -141,6 +143,6 @@ func expandPubsubLiteSubscriptionDeliveryConfig(v interface{}, d TerraformResour
 	return transformed, nil
 }
 
-func expandPubsubLiteSubscriptionDeliveryConfigDeliveryRequirement(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubLiteSubscriptionDeliveryConfigDeliveryRequirement(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

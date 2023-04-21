@@ -21,6 +21,8 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // compareTpuNodeSchedulingConfig diff suppresses for the default
@@ -39,7 +41,7 @@ func compareTpuNodeSchedulingConfig(k, old, new string, d *schema.ResourceData) 
 
 func tpuNodeCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
 	old, new := diff.GetChange("network")
-	config := meta.(*Config)
+	config := meta.(*transport_tpg.Config)
 
 	networkLinkRegex := regexp.MustCompile("projects/(.+)/global/networks/(.+)")
 
@@ -79,7 +81,7 @@ func resourceConverterTPUNode() ResourceConverter {
 	}
 }
 
-func GetTPUNodeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetTPUNodeCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//tpu.googleapis.com/projects/{{project}}/locations/{{zone}}/nodes/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -100,7 +102,7 @@ func GetTPUNodeCaiObject(d TerraformResourceData, config *Config) ([]Asset, erro
 	}
 }
 
-func GetTPUNodeApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetTPUNodeApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandTPUNodeName(d.Get("name"), d, config)
 	if err != nil {
@@ -160,35 +162,35 @@ func GetTPUNodeApiObject(d TerraformResourceData, config *Config) (map[string]in
 	return obj, nil
 }
 
-func expandTPUNodeName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeAcceleratorType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeAcceleratorType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeTensorflowVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeTensorflowVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeCidrBlock(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeCidrBlock(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeUseServiceNetworking(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeUseServiceNetworking(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeSchedulingConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeSchedulingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -207,11 +209,11 @@ func expandTPUNodeSchedulingConfig(v interface{}, d TerraformResourceData, confi
 	return transformed, nil
 }
 
-func expandTPUNodeSchedulingConfigPreemptible(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandTPUNodeSchedulingConfigPreemptible(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandTPUNodeLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

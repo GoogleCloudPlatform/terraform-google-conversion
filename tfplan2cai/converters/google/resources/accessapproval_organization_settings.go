@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const AccessApprovalOrganizationSettingsAssetType string = "accessapproval.googleapis.com/OrganizationSettings"
@@ -29,7 +31,7 @@ func resourceConverterAccessApprovalOrganizationSettings() ResourceConverter {
 	}
 }
 
-func GetAccessApprovalOrganizationSettingsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetAccessApprovalOrganizationSettingsCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accessapproval.googleapis.com/organizations/{{organization_id}}/accessApprovalSettings")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetAccessApprovalOrganizationSettingsCaiObject(d TerraformResourceData, con
 	}
 }
 
-func GetAccessApprovalOrganizationSettingsApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetAccessApprovalOrganizationSettingsApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	notificationEmailsProp, err := expandAccessApprovalOrganizationSettingsNotificationEmails(d.Get("notification_emails"), d, config)
 	if err != nil {
@@ -74,12 +76,12 @@ func GetAccessApprovalOrganizationSettingsApiObject(d TerraformResourceData, con
 	return obj, nil
 }
 
-func expandAccessApprovalOrganizationSettingsNotificationEmails(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalOrganizationSettingsNotificationEmails(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandAccessApprovalOrganizationSettingsEnrolledServices(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalOrganizationSettingsEnrolledServices(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -109,14 +111,14 @@ func expandAccessApprovalOrganizationSettingsEnrolledServices(v interface{}, d T
 	return req, nil
 }
 
-func expandAccessApprovalOrganizationSettingsEnrolledServicesCloudProduct(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalOrganizationSettingsEnrolledServicesCloudProduct(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessApprovalOrganizationSettingsEnrolledServicesEnrollmentLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalOrganizationSettingsEnrolledServicesEnrollmentLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessApprovalOrganizationSettingsActiveKeyVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalOrganizationSettingsActiveKeyVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

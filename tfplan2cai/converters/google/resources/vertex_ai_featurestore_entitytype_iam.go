@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const VertexAIFeaturestoreEntitytypeIAMAssetType string = "{{region}}-aiplatform.googleapis.com/FeaturestoreEntitytype"
@@ -47,15 +51,15 @@ func resourceConverterVertexAIFeaturestoreEntitytypeIamMember() ResourceConverte
 	}
 }
 
-func GetVertexAIFeaturestoreEntitytypeIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreEntitytypeIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetVertexAIFeaturestoreEntitytypeIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreEntitytypeIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetVertexAIFeaturestoreEntitytypeIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreEntitytypeIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeVertexAIFeaturestoreEntitytypeIamMemberDelete(existing, incoming Asset
 
 func newVertexAIFeaturestoreEntitytypeIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newVertexAIFeaturestoreEntitytypeIamAsset(
 	}}, nil
 }
 
-func FetchVertexAIFeaturestoreEntitytypeIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchVertexAIFeaturestoreEntitytypeIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("featurestore"); !ok {
 		return Asset{}, ErrEmptyIdentityField

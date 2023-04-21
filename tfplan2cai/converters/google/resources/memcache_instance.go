@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const MemcacheInstanceAssetType string = "memcache.googleapis.com/Instance"
@@ -29,7 +31,7 @@ func resourceConverterMemcacheInstance() ResourceConverter {
 	}
 }
 
-func GetMemcacheInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetMemcacheInstanceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//memcache.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetMemcacheInstanceCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetMemcacheInstanceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetMemcacheInstanceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandMemcacheInstanceDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -110,11 +112,11 @@ func GetMemcacheInstanceApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandMemcacheInstanceDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandMemcacheInstanceLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -125,24 +127,24 @@ func expandMemcacheInstanceLabels(v interface{}, d TerraformResourceData, config
 	return m, nil
 }
 
-func expandMemcacheInstanceZones(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceZones(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandMemcacheInstanceAuthorizedNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceAuthorizedNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceNodeCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMemcacheVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMemcacheVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceNodeConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceNodeConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -168,15 +170,15 @@ func expandMemcacheInstanceNodeConfig(v interface{}, d TerraformResourceData, co
 	return transformed, nil
 }
 
-func expandMemcacheInstanceNodeConfigCpuCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceNodeConfigCpuCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceNodeConfigMemorySizeMb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceNodeConfigMemorySizeMb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMemcacheParameters(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMemcacheParameters(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -202,11 +204,11 @@ func expandMemcacheInstanceMemcacheParameters(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandMemcacheInstanceMemcacheParametersId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMemcacheParametersId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMemcacheParametersParams(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandMemcacheInstanceMemcacheParametersParams(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -217,7 +219,7 @@ func expandMemcacheInstanceMemcacheParametersParams(v interface{}, d TerraformRe
 	return m, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -257,19 +259,19 @@ func expandMemcacheInstanceMaintenancePolicy(v interface{}, d TerraformResourceD
 	return transformed, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyCreateTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyCreateTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyUpdateTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyUpdateTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindow(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -305,15 +307,15 @@ func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindow(v interface{
 	return req, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowDay(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowDay(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -358,18 +360,18 @@ func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTime(v i
 	return transformed, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeHours(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeHours(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeMinutes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeMinutes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeSeconds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeSeconds(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeNanos(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeNanos(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

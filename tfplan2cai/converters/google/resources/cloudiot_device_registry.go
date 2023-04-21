@@ -22,9 +22,11 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
-func expandCloudIotDeviceRegistryHTTPConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryHTTPConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
@@ -38,11 +40,11 @@ func expandCloudIotDeviceRegistryHTTPConfig(v interface{}, d TerraformResourceDa
 	return transformed, nil
 }
 
-func expandCloudIotDeviceRegistryHTTPEnabledState(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryHTTPEnabledState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryMqttConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryMqttConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
@@ -56,11 +58,11 @@ func expandCloudIotDeviceRegistryMqttConfig(v interface{}, d TerraformResourceDa
 	return transformed, nil
 }
 
-func expandCloudIotDeviceRegistryMqttEnabledState(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryMqttEnabledState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
@@ -74,11 +76,11 @@ func expandCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d Terraf
 	return transformed, nil
 }
 
-func expandCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryCredentials(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryCredentials(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 
@@ -102,7 +104,7 @@ func expandCloudIotDeviceRegistryCredentials(v interface{}, d TerraformResourceD
 	return req, nil
 }
 
-func expandCloudIotDeviceRegistryCredentialsPublicKeyCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryCredentialsPublicKeyCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
@@ -123,15 +125,15 @@ func expandCloudIotDeviceRegistryCredentialsPublicKeyCertificate(v interface{}, 
 	return transformed, nil
 }
 
-func expandCloudIotDeviceRegistryPublicKeyCertificateFormat(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryPublicKeyCertificateFormat(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryPublicKeyCertificateCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryPublicKeyCertificateCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func flattenCloudIotDeviceRegistryCredentials(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryCredentials(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	log.Printf("[DEBUG] Flattening device resitry credentials: %q", d.Id())
 	if v == nil {
 		log.Printf("[DEBUG] The credentials array is nil: %q", d.Id())
@@ -155,7 +157,7 @@ func flattenCloudIotDeviceRegistryCredentials(v interface{}, d *schema.ResourceD
 	return transformed
 }
 
-func flattenCloudIotDeviceRegistryCredentialsPublicKeyCertificate(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryCredentialsPublicKeyCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	log.Printf("[DEBUG] Flattening device resitry credentials public key certificate: %q", d.Id())
 	if v == nil {
 		log.Printf("[DEBUG] The public key certificate is nil: %q", d.Id())
@@ -177,15 +179,15 @@ func flattenCloudIotDeviceRegistryCredentialsPublicKeyCertificate(v interface{},
 	return transformed
 }
 
-func flattenCloudIotDeviceRegistryPublicKeyCertificateFormat(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryPublicKeyCertificateFormat(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
-func flattenCloudIotDeviceRegistryPublicKeyCertificateCertificate(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryPublicKeyCertificateCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
-func flattenCloudIotDeviceRegistryHTTPConfig(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryHTTPConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v
 	}
@@ -199,11 +201,11 @@ func flattenCloudIotDeviceRegistryHTTPConfig(v interface{}, d *schema.ResourceDa
 	return transformed
 }
 
-func flattenCloudIotDeviceRegistryHTTPConfigHTTPEnabledState(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryHTTPConfigHTTPEnabledState(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
-func flattenCloudIotDeviceRegistryMqttConfig(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryMqttConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v
 	}
@@ -217,11 +219,11 @@ func flattenCloudIotDeviceRegistryMqttConfig(v interface{}, d *schema.ResourceDa
 	return transformed
 }
 
-func flattenCloudIotDeviceRegistryMqttConfigMqttEnabledState(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryMqttConfigMqttEnabledState(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
-func flattenCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	log.Printf("[DEBUG] Flattening state notification config: %+v", v)
 	if v == nil {
 		return v
@@ -239,7 +241,7 @@ func flattenCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d *sche
 	return transformed
 }
 
-func flattenCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(v interface{}, d *schema.ResourceData, config *Config) interface{} {
+func flattenCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -274,7 +276,7 @@ func resourceConverterCloudIotDeviceRegistry() ResourceConverter {
 	}
 }
 
-func GetCloudIotDeviceRegistryCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudIotDeviceRegistryCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudiot.googleapis.com/projects/{{project}}/locations/{{region}}/registries/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -295,7 +297,7 @@ func GetCloudIotDeviceRegistryCaiObject(d TerraformResourceData, config *Config)
 	}
 }
 
-func GetCloudIotDeviceRegistryApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCloudIotDeviceRegistryApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	idProp, err := expandCloudIotDeviceRegistryName(d.Get("name"), d, config)
 	if err != nil {
@@ -320,7 +322,7 @@ func GetCloudIotDeviceRegistryApiObject(d TerraformResourceData, config *Config)
 }
 
 func resourceCloudIotDeviceRegistryEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	config := meta.(*Config)
+	config := meta.(*transport_tpg.Config)
 
 	log.Printf("[DEBUG] Resource data before encoding extra schema entries %q: %#v", d.Id(), obj)
 
@@ -365,11 +367,11 @@ func resourceCloudIotDeviceRegistryEncoder(d TerraformResourceData, meta interfa
 	return obj, nil
 }
 
-func expandCloudIotDeviceRegistryName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryEventNotificationConfigs(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryEventNotificationConfigs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -398,14 +400,14 @@ func expandCloudIotDeviceRegistryEventNotificationConfigs(v interface{}, d Terra
 	return req, nil
 }
 
-func expandCloudIotDeviceRegistryEventNotificationConfigsSubfolderMatches(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryEventNotificationConfigsSubfolderMatches(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryEventNotificationConfigsPubsubTopicName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryEventNotificationConfigsPubsubTopicName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryLogLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryLogLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

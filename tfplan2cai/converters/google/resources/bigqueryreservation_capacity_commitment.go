@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const BigqueryReservationCapacityCommitmentAssetType string = "bigqueryreservation.googleapis.com/CapacityCommitment"
 
@@ -25,7 +29,7 @@ func resourceConverterBigqueryReservationCapacityCommitment() ResourceConverter 
 	}
 }
 
-func GetBigqueryReservationCapacityCommitmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryReservationCapacityCommitmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/capacityCommitments/{{capacity_commitment_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetBigqueryReservationCapacityCommitmentCaiObject(d TerraformResourceData, 
 	}
 }
 
-func GetBigqueryReservationCapacityCommitmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigqueryReservationCapacityCommitmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	slotCountProp, err := expandBigqueryReservationCapacityCommitmentSlotCount(d.Get("slot_count"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetBigqueryReservationCapacityCommitmentApiObject(d TerraformResourceData, 
 	return obj, nil
 }
 
-func expandBigqueryReservationCapacityCommitmentSlotCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationCapacityCommitmentSlotCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationCapacityCommitmentPlan(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationCapacityCommitmentPlan(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationCapacityCommitmentRenewalPlan(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationCapacityCommitmentRenewalPlan(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationCapacityCommitmentEdition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationCapacityCommitmentEdition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

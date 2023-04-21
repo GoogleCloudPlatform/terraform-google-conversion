@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DocumentAIProcessorAssetType string = "{{location}}-documentai.googleapis.com/Processor"
 
@@ -25,7 +29,7 @@ func resourceConverterDocumentAIProcessor() ResourceConverter {
 	}
 }
 
-func GetDocumentAIProcessorCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDocumentAIProcessorCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-documentai.googleapis.com/projects/{{project}}/locations/{{location}}/processors/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDocumentAIProcessorCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetDocumentAIProcessorApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDocumentAIProcessorApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	typeProp, err := expandDocumentAIProcessorType(d.Get("type"), d, config)
 	if err != nil {
@@ -70,14 +74,14 @@ func GetDocumentAIProcessorApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandDocumentAIProcessorType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDocumentAIProcessorType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDocumentAIProcessorDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDocumentAIProcessorDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDocumentAIProcessorKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDocumentAIProcessorKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

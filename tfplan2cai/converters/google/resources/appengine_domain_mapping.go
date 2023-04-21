@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func sslSettingsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
@@ -43,7 +45,7 @@ func resourceConverterAppEngineDomainMapping() ResourceConverter {
 	}
 }
 
-func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/domainMappings/{{domain_name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -64,7 +66,7 @@ func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *Config)
 	}
 }
 
-func GetAppEngineDomainMappingApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetAppEngineDomainMappingApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	sslSettingsProp, err := expandAppEngineDomainMappingSslSettings(d.Get("ssl_settings"), d, config)
 	if err != nil {
@@ -82,7 +84,7 @@ func GetAppEngineDomainMappingApiObject(d TerraformResourceData, config *Config)
 	return obj, nil
 }
 
-func expandAppEngineDomainMappingSslSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineDomainMappingSslSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -115,18 +117,18 @@ func expandAppEngineDomainMappingSslSettings(v interface{}, d TerraformResourceD
 	return transformed, nil
 }
 
-func expandAppEngineDomainMappingSslSettingsCertificateId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineDomainMappingSslSettingsCertificateId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineDomainMappingSslSettingsSslManagementType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineDomainMappingSslSettingsSslManagementType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineDomainMappingSslSettingsPendingManagedCertificateId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineDomainMappingSslSettingsPendingManagedCertificateId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineDomainMappingDomainName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineDomainMappingDomainName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

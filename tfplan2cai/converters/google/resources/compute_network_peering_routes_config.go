@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ComputeNetworkPeeringRoutesConfigAssetType string = "compute.googleapis.com/NetworkPeeringRoutesConfig"
 
@@ -25,7 +29,7 @@ func resourceConverterComputeNetworkPeeringRoutesConfig() ResourceConverter {
 	}
 }
 
-func GetComputeNetworkPeeringRoutesConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeNetworkPeeringRoutesConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networks/{{network}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetComputeNetworkPeeringRoutesConfigCaiObject(d TerraformResourceData, conf
 	}
 }
 
-func GetComputeNetworkPeeringRoutesConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeNetworkPeeringRoutesConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeNetworkPeeringRoutesConfigPeering(d.Get("peering"), d, config)
 	if err != nil {
@@ -78,14 +82,14 @@ func resourceComputeNetworkPeeringRoutesConfigEncoder(d TerraformResourceData, m
 	return newObj, nil
 }
 
-func expandComputeNetworkPeeringRoutesConfigPeering(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkPeeringRoutesConfigPeering(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkPeeringRoutesConfigExportCustomRoutes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkPeeringRoutesConfigExportCustomRoutes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkPeeringRoutesConfigImportCustomRoutes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkPeeringRoutesConfigImportCustomRoutes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

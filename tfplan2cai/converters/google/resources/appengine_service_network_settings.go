@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const AppEngineServiceNetworkSettingsAssetType string = "appengine.googleapis.com/ServiceNetworkSettings"
 
@@ -25,7 +29,7 @@ func resourceConverterAppEngineServiceNetworkSettings() ResourceConverter {
 	}
 }
 
-func GetAppEngineServiceNetworkSettingsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetAppEngineServiceNetworkSettingsCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetAppEngineServiceNetworkSettingsCaiObject(d TerraformResourceData, config
 	}
 }
 
-func GetAppEngineServiceNetworkSettingsApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetAppEngineServiceNetworkSettingsApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	idProp, err := expandAppEngineServiceNetworkSettingsService(d.Get("service"), d, config)
 	if err != nil {
@@ -64,11 +68,11 @@ func GetAppEngineServiceNetworkSettingsApiObject(d TerraformResourceData, config
 	return obj, nil
 }
 
-func expandAppEngineServiceNetworkSettingsService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineServiceNetworkSettingsService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineServiceNetworkSettingsNetworkSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineServiceNetworkSettingsNetworkSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -87,6 +91,6 @@ func expandAppEngineServiceNetworkSettingsNetworkSettings(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandAppEngineServiceNetworkSettingsNetworkSettingsIngressTrafficAllowed(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineServiceNetworkSettingsNetworkSettingsIngressTrafficAllowed(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

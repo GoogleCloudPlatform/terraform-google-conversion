@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeRegionCommitmentAssetType string = "compute.googleapis.com/RegionCommitment"
@@ -28,7 +30,7 @@ func resourceConverterComputeRegionCommitment() ResourceConverter {
 	}
 }
 
-func GetComputeRegionCommitmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionCommitmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/commitments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeRegionCommitmentCaiObject(d TerraformResourceData, config *Config
 	}
 }
 
-func GetComputeRegionCommitmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeRegionCommitmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeRegionCommitmentName(d.Get("name"), d, config)
 	if err != nil {
@@ -109,19 +111,19 @@ func GetComputeRegionCommitmentApiObject(d TerraformResourceData, config *Config
 	return obj, nil
 }
 
-func expandComputeRegionCommitmentName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentPlan(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentPlan(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentResources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentResources(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -157,27 +159,27 @@ func expandComputeRegionCommitmentResources(v interface{}, d TerraformResourceDa
 	return req, nil
 }
 
-func expandComputeRegionCommitmentResourcesType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentResourcesType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentResourcesAmount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentResourcesAmount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentResourcesAcceleratorType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentResourcesAcceleratorType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentCategory(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentCategory(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentLicenseResource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentLicenseResource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -210,23 +212,23 @@ func expandComputeRegionCommitmentLicenseResource(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandComputeRegionCommitmentLicenseResourceLicense(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentLicenseResourceLicense(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentLicenseResourceAmount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentLicenseResourceAmount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentLicenseResourceCoresPerLicense(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentLicenseResourceCoresPerLicense(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentAutoRenew(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentAutoRenew(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionCommitmentRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)

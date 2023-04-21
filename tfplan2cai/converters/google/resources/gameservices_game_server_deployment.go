@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const GameServicesGameServerDeploymentAssetType string = "gameservices.googleapis.com/GameServerDeployment"
 
@@ -25,7 +29,7 @@ func resourceConverterGameServicesGameServerDeployment() ResourceConverter {
 	}
 }
 
-func GetGameServicesGameServerDeploymentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetGameServicesGameServerDeploymentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/gameServerDeployments/{{deployment_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetGameServicesGameServerDeploymentCaiObject(d TerraformResourceData, confi
 	}
 }
 
-func GetGameServicesGameServerDeploymentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetGameServicesGameServerDeploymentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandGameServicesGameServerDeploymentDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -64,11 +68,11 @@ func GetGameServicesGameServerDeploymentApiObject(d TerraformResourceData, confi
 	return obj, nil
 }
 
-func expandGameServicesGameServerDeploymentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandGameServicesGameServerDeploymentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerDeploymentLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandGameServicesGameServerDeploymentLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

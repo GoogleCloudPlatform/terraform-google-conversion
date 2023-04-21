@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const HealthcareDicomStoreAssetType string = "healthcare.googleapis.com/DicomStore"
 
@@ -25,7 +29,7 @@ func resourceConverterHealthcareDicomStore() ResourceConverter {
 	}
 }
 
-func GetHealthcareDicomStoreCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetHealthcareDicomStoreCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/{{dataset}}/dicomStores/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetHealthcareDicomStoreCaiObject(d TerraformResourceData, config *Config) (
 	}
 }
 
-func GetHealthcareDicomStoreApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetHealthcareDicomStoreApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandHealthcareDicomStoreName(d.Get("name"), d, config)
 	if err != nil {
@@ -70,11 +74,11 @@ func GetHealthcareDicomStoreApiObject(d TerraformResourceData, config *Config) (
 	return obj, nil
 }
 
-func expandHealthcareDicomStoreName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandHealthcareDicomStoreName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandHealthcareDicomStoreLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandHealthcareDicomStoreLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -85,7 +89,7 @@ func expandHealthcareDicomStoreLabels(v interface{}, d TerraformResourceData, co
 	return m, nil
 }
 
-func expandHealthcareDicomStoreNotificationConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandHealthcareDicomStoreNotificationConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -104,6 +108,6 @@ func expandHealthcareDicomStoreNotificationConfig(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandHealthcareDicomStoreNotificationConfigPubsubTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandHealthcareDicomStoreNotificationConfigPubsubTopic(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

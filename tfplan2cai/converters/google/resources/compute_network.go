@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ComputeNetworkAssetType string = "compute.googleapis.com/Network"
 
@@ -25,7 +29,7 @@ func resourceConverterComputeNetwork() ResourceConverter {
 	}
 }
 
-func GetComputeNetworkCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeNetworkCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networks/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetComputeNetworkCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	}
 }
 
-func GetComputeNetworkApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeNetworkApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeNetworkDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -100,19 +104,19 @@ func GetComputeNetworkApiObject(d TerraformResourceData, config *Config) (map[st
 	return obj, nil
 }
 
-func expandComputeNetworkDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkAutoCreateSubnetworks(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkAutoCreateSubnetworks(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkRoutingConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkRoutingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	transformed := make(map[string]interface{})
 	transformedRoutingMode, err := expandComputeNetworkRoutingConfigRoutingMode(d.Get("routing_mode"), d, config)
 	if err != nil {
@@ -124,22 +128,22 @@ func expandComputeNetworkRoutingConfig(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandComputeNetworkRoutingConfigRoutingMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkRoutingConfigRoutingMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkMtu(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkMtu(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkEnableUlaInternalIpv6(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkEnableUlaInternalIpv6(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkInternalIpv6Range(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkInternalIpv6Range(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkNetworkFirewallPolicyEnforcementOrder(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkNetworkFirewallPolicyEnforcementOrder(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

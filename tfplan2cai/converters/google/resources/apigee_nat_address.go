@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeNatAddressAssetType string = "apigee.googleapis.com/NatAddress"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeNatAddress() ResourceConverter {
 	}
 }
 
-func GetApigeeNatAddressCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeNatAddressCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{instance_id}}/natAddresses/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeNatAddressCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetApigeeNatAddressApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeNatAddressApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandApigeeNatAddressName(d.Get("name"), d, config)
 	if err != nil {
@@ -58,6 +62,6 @@ func GetApigeeNatAddressApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandApigeeNatAddressName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeNatAddressName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

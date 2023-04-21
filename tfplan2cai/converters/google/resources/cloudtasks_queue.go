@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func suppressOmittedMaxDuration(_, old, new string, _ *schema.ResourceData) bool {
@@ -38,7 +40,7 @@ func resourceConverterCloudTasksQueue() ResourceConverter {
 	}
 }
 
-func GetCloudTasksQueueCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudTasksQueueCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudtasks.googleapis.com/projects/{{project}}/locations/{{location}}/queues/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -59,7 +61,7 @@ func GetCloudTasksQueueCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetCloudTasksQueueApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCloudTasksQueueApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandCloudTasksQueueName(d.Get("name"), d, config)
 	if err != nil {
@@ -95,11 +97,11 @@ func GetCloudTasksQueueApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandCloudTasksQueueName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/queues/{{name}}")
 }
 
-func expandCloudTasksQueueAppEngineRoutingOverride(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueAppEngineRoutingOverride(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -139,23 +141,23 @@ func expandCloudTasksQueueAppEngineRoutingOverride(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandCloudTasksQueueAppEngineRoutingOverrideService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueAppEngineRoutingOverrideService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueAppEngineRoutingOverrideVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueAppEngineRoutingOverrideVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueAppEngineRoutingOverrideInstance(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueAppEngineRoutingOverrideInstance(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueAppEngineRoutingOverrideHost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueAppEngineRoutingOverrideHost(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueRateLimits(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRateLimits(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -188,19 +190,19 @@ func expandCloudTasksQueueRateLimits(v interface{}, d TerraformResourceData, con
 	return transformed, nil
 }
 
-func expandCloudTasksQueueRateLimitsMaxDispatchesPerSecond(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRateLimitsMaxDispatchesPerSecond(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueRateLimitsMaxConcurrentDispatches(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRateLimitsMaxConcurrentDispatches(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueRateLimitsMaxBurstSize(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRateLimitsMaxBurstSize(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueRetryConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRetryConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -247,27 +249,27 @@ func expandCloudTasksQueueRetryConfig(v interface{}, d TerraformResourceData, co
 	return transformed, nil
 }
 
-func expandCloudTasksQueueRetryConfigMaxAttempts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRetryConfigMaxAttempts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueRetryConfigMaxRetryDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRetryConfigMaxRetryDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueRetryConfigMinBackoff(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRetryConfigMinBackoff(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueRetryConfigMaxBackoff(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRetryConfigMaxBackoff(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueRetryConfigMaxDoublings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueRetryConfigMaxDoublings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudTasksQueueStackdriverLoggingConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueStackdriverLoggingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -286,6 +288,6 @@ func expandCloudTasksQueueStackdriverLoggingConfig(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandCloudTasksQueueStackdriverLoggingConfigSamplingRatio(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudTasksQueueStackdriverLoggingConfigSamplingRatio(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

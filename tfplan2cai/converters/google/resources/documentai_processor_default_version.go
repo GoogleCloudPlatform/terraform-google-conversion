@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DocumentAIProcessorDefaultVersionAssetType string = "{{location}}-documentai.googleapis.com/ProcessorDefaultVersion"
 
@@ -25,7 +29,7 @@ func resourceConverterDocumentAIProcessorDefaultVersion() ResourceConverter {
 	}
 }
 
-func GetDocumentAIProcessorDefaultVersionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDocumentAIProcessorDefaultVersionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-documentai.googleapis.com/{{processor}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDocumentAIProcessorDefaultVersionCaiObject(d TerraformResourceData, conf
 	}
 }
 
-func GetDocumentAIProcessorDefaultVersionApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDocumentAIProcessorDefaultVersionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	defaultProcessorVersionProp, err := expandDocumentAIProcessorDefaultVersionVersion(d.Get("version"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetDocumentAIProcessorDefaultVersionApiObject(d TerraformResourceData, conf
 	return obj, nil
 }
 
-func expandDocumentAIProcessorDefaultVersionVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDocumentAIProcessorDefaultVersionVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDocumentAIProcessorDefaultVersionProcessor(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDocumentAIProcessorDefaultVersionProcessor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

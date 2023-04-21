@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const StorageTransferAgentPoolAssetType string = "storagetransfer.googleapis.com/AgentPool"
 
@@ -25,7 +29,7 @@ func resourceConverterStorageTransferAgentPool() ResourceConverter {
 	}
 }
 
-func GetStorageTransferAgentPoolCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetStorageTransferAgentPoolCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//storagetransfer.googleapis.com/projects/{{project}}/agentPools/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetStorageTransferAgentPoolCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetStorageTransferAgentPoolApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetStorageTransferAgentPoolApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandStorageTransferAgentPoolDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -64,11 +68,11 @@ func GetStorageTransferAgentPoolApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandStorageTransferAgentPoolDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageTransferAgentPoolDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandStorageTransferAgentPoolBandwidthLimit(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageTransferAgentPoolBandwidthLimit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -87,6 +91,6 @@ func expandStorageTransferAgentPoolBandwidthLimit(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandStorageTransferAgentPoolBandwidthLimitLimitMbps(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageTransferAgentPoolBandwidthLimitLimitMbps(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

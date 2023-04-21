@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataCatalogPolicyTagIAMAssetType string = "datacatalog.googleapis.com/PolicyTag"
@@ -47,15 +51,15 @@ func resourceConverterDataCatalogPolicyTagIamMember() ResourceConverter {
 	}
 }
 
-func GetDataCatalogPolicyTagIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogPolicyTagIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogPolicyTagIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetDataCatalogPolicyTagIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogPolicyTagIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogPolicyTagIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetDataCatalogPolicyTagIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogPolicyTagIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogPolicyTagIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeDataCatalogPolicyTagIamMemberDelete(existing, incoming Asset) Asset {
 
 func newDataCatalogPolicyTagIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newDataCatalogPolicyTagIamAsset(
 	}}, nil
 }
 
-func FetchDataCatalogPolicyTagIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchDataCatalogPolicyTagIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("policy_tag"); !ok {
 		return Asset{}, ErrEmptyIdentityField

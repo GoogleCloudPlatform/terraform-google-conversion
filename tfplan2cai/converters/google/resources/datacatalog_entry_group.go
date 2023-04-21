@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DataCatalogEntryGroupAssetType string = "datacatalog.googleapis.com/EntryGroup"
 
@@ -25,7 +29,7 @@ func resourceConverterDataCatalogEntryGroup() ResourceConverter {
 	}
 }
 
-func GetDataCatalogEntryGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogEntryGroupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDataCatalogEntryGroupCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetDataCatalogEntryGroupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDataCatalogEntryGroupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDataCatalogEntryGroupDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetDataCatalogEntryGroupApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandDataCatalogEntryGroupDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogEntryGroupDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogEntryGroupDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogEntryGroupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

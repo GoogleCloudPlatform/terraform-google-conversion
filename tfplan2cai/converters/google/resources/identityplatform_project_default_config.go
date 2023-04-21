@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const IdentityPlatformProjectDefaultConfigAssetType string = "identitytoolkit.googleapis.com/ProjectDefaultConfig"
 
@@ -25,7 +29,7 @@ func resourceConverterIdentityPlatformProjectDefaultConfig() ResourceConverter {
 	}
 }
 
-func GetIdentityPlatformProjectDefaultConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIdentityPlatformProjectDefaultConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/config")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetIdentityPlatformProjectDefaultConfigCaiObject(d TerraformResourceData, c
 	}
 }
 
-func GetIdentityPlatformProjectDefaultConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIdentityPlatformProjectDefaultConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	signInProp, err := expandIdentityPlatformProjectDefaultConfigSignIn(d.Get("sign_in"), d, config)
 	if err != nil {
@@ -58,7 +62,7 @@ func GetIdentityPlatformProjectDefaultConfigApiObject(d TerraformResourceData, c
 	return obj, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignIn(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignIn(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -105,7 +109,7 @@ func expandIdentityPlatformProjectDefaultConfigSignIn(v interface{}, d Terraform
 	return transformed, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -131,15 +135,15 @@ func expandIdentityPlatformProjectDefaultConfigSignInEmail(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInEmailEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInEmailEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInEmailPasswordRequired(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInEmailPasswordRequired(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInPhoneNumber(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInPhoneNumber(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -165,11 +169,11 @@ func expandIdentityPlatformProjectDefaultConfigSignInPhoneNumber(v interface{}, 
 	return transformed, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInPhoneNumberEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInPhoneNumberEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInPhoneNumberTestPhoneNumbers(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInPhoneNumberTestPhoneNumbers(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -180,7 +184,7 @@ func expandIdentityPlatformProjectDefaultConfigSignInPhoneNumberTestPhoneNumbers
 	return m, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInAnonymous(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInAnonymous(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -199,15 +203,15 @@ func expandIdentityPlatformProjectDefaultConfigSignInAnonymous(v interface{}, d 
 	return transformed, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInAnonymousEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInAnonymousEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInAllowDuplicateEmails(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInAllowDuplicateEmails(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInHashConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInHashConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -254,22 +258,22 @@ func expandIdentityPlatformProjectDefaultConfigSignInHashConfig(v interface{}, d
 	return transformed, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInHashConfigAlgorithm(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInHashConfigAlgorithm(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInHashConfigSignerKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInHashConfigSignerKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInHashConfigSaltSeparator(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInHashConfigSaltSeparator(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInHashConfigRounds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInHashConfigRounds(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformProjectDefaultConfigSignInHashConfigMemoryCost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformProjectDefaultConfigSignInHashConfigMemoryCost(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

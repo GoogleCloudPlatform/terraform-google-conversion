@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ComputePublicAdvertisedPrefixAssetType string = "compute.googleapis.com/PublicAdvertisedPrefix"
 
@@ -25,7 +29,7 @@ func resourceConverterComputePublicAdvertisedPrefix() ResourceConverter {
 	}
 }
 
-func GetComputePublicAdvertisedPrefixCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputePublicAdvertisedPrefixCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/publicAdvertisedPrefixes/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetComputePublicAdvertisedPrefixCaiObject(d TerraformResourceData, config *
 	}
 }
 
-func GetComputePublicAdvertisedPrefixApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputePublicAdvertisedPrefixApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputePublicAdvertisedPrefixDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetComputePublicAdvertisedPrefixApiObject(d TerraformResourceData, config *
 	return obj, nil
 }
 
-func expandComputePublicAdvertisedPrefixDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePublicAdvertisedPrefixDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePublicAdvertisedPrefixName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePublicAdvertisedPrefixName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePublicAdvertisedPrefixDnsVerificationIp(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePublicAdvertisedPrefixDnsVerificationIp(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePublicAdvertisedPrefixIpCidrRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePublicAdvertisedPrefixIpCidrRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

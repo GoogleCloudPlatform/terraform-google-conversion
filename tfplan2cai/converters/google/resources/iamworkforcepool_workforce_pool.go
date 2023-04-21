@@ -19,6 +19,8 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const workforcePoolIdRegexp = `^[a-z][a-z0-9-]{4,61}[a-z0-9]$`
@@ -51,7 +53,7 @@ func resourceConverterIAMWorkforcePoolWorkforcePool() ResourceConverter {
 	}
 }
 
-func GetIAMWorkforcePoolWorkforcePoolCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIAMWorkforcePoolWorkforcePoolCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iam.googleapis.com/locations/{{location}}/workforcePools/{{workforce_pool_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -72,7 +74,7 @@ func GetIAMWorkforcePoolWorkforcePoolCaiObject(d TerraformResourceData, config *
 	}
 }
 
-func GetIAMWorkforcePoolWorkforcePoolApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIAMWorkforcePoolWorkforcePoolApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	parentProp, err := expandIAMWorkforcePoolWorkforcePoolParent(d.Get("parent"), d, config)
 	if err != nil {
@@ -108,22 +110,22 @@ func GetIAMWorkforcePoolWorkforcePoolApiObject(d TerraformResourceData, config *
 	return obj, nil
 }
 
-func expandIAMWorkforcePoolWorkforcePoolParent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMWorkforcePoolWorkforcePoolParent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMWorkforcePoolWorkforcePoolDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMWorkforcePoolWorkforcePoolDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMWorkforcePoolWorkforcePoolDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMWorkforcePoolWorkforcePoolDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMWorkforcePoolWorkforcePoolDisabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMWorkforcePoolWorkforcePoolDisabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMWorkforcePoolWorkforcePoolSessionDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMWorkforcePoolWorkforcePoolSessionDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

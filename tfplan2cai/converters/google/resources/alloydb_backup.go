@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const AlloydbBackupAssetType string = "alloydb.googleapis.com/Backup"
 
@@ -25,7 +29,7 @@ func resourceConverterAlloydbBackup() ResourceConverter {
 	}
 }
 
-func GetAlloydbBackupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetAlloydbBackupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/backups/{{backup_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetAlloydbBackupCaiObject(d TerraformResourceData, config *Config) ([]Asset
 	}
 }
 
-func GetAlloydbBackupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetAlloydbBackupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	clusterNameProp, err := expandAlloydbBackupClusterName(d.Get("cluster_name"), d, config)
 	if err != nil {
@@ -76,11 +80,11 @@ func resourceAlloydbBackupEncoder(d TerraformResourceData, meta interface{}, obj
 	return obj, nil
 }
 
-func expandAlloydbBackupClusterName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbBackupClusterName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbBackupLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandAlloydbBackupLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -91,6 +95,6 @@ func expandAlloydbBackupLabels(v interface{}, d TerraformResourceData, config *C
 	return m, nil
 }
 
-func expandAlloydbBackupDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAlloydbBackupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

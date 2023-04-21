@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const CloudIdentityGroupMembershipAssetType string = "cloudidentity.googleapis.com/GroupMembership"
@@ -29,7 +31,7 @@ func resourceConverterCloudIdentityGroupMembership() ResourceConverter {
 	}
 }
 
-func GetCloudIdentityGroupMembershipCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudIdentityGroupMembershipCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudidentity.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetCloudIdentityGroupMembershipCaiObject(d TerraformResourceData, config *C
 	}
 }
 
-func GetCloudIdentityGroupMembershipApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCloudIdentityGroupMembershipApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	preferredMemberKeyProp, err := expandCloudIdentityGroupMembershipPreferredMemberKey(d.Get("preferred_member_key"), d, config)
 	if err != nil {
@@ -68,7 +70,7 @@ func GetCloudIdentityGroupMembershipApiObject(d TerraformResourceData, config *C
 	return obj, nil
 }
 
-func expandCloudIdentityGroupMembershipPreferredMemberKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupMembershipPreferredMemberKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -94,15 +96,15 @@ func expandCloudIdentityGroupMembershipPreferredMemberKey(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandCloudIdentityGroupMembershipPreferredMemberKeyId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupMembershipPreferredMemberKeyId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdentityGroupMembershipPreferredMemberKeyNamespace(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupMembershipPreferredMemberKeyNamespace(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdentityGroupMembershipRoles(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupMembershipRoles(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -125,6 +127,6 @@ func expandCloudIdentityGroupMembershipRoles(v interface{}, d TerraformResourceD
 	return req, nil
 }
 
-func expandCloudIdentityGroupMembershipRolesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupMembershipRolesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

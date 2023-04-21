@@ -20,6 +20,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 /*
@@ -68,7 +70,7 @@ func resourceConverterFirestoreIndex() ResourceConverter {
 	}
 }
 
-func GetFirestoreIndexCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetFirestoreIndexCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -89,7 +91,7 @@ func GetFirestoreIndexCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	}
 }
 
-func GetFirestoreIndexApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetFirestoreIndexApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	databaseProp, err := expandFirestoreIndexDatabase(d.Get("database"), d, config)
 	if err != nil {
@@ -129,19 +131,19 @@ func resourceFirestoreIndexEncoder(d TerraformResourceData, meta interface{}, ob
 	return obj, nil
 }
 
-func expandFirestoreIndexDatabase(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreIndexDatabase(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexCollection(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreIndexCollection(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexQueryScope(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreIndexQueryScope(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexFields(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreIndexFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -177,14 +179,14 @@ func expandFirestoreIndexFields(v interface{}, d TerraformResourceData, config *
 	return req, nil
 }
 
-func expandFirestoreIndexFieldsFieldPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreIndexFieldsFieldPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexFieldsOrder(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreIndexFieldsOrder(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexFieldsArrayConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreIndexFieldsArrayConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

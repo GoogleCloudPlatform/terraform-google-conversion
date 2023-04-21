@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const IapTunnelIAMAssetType string = "iap.googleapis.com/Tunnel"
@@ -47,15 +51,15 @@ func resourceConverterIapTunnelIamMember() ResourceConverter {
 	}
 }
 
-func GetIapTunnelIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIapTunnelIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newIapTunnelIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetIapTunnelIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIapTunnelIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newIapTunnelIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetIapTunnelIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIapTunnelIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newIapTunnelIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeIapTunnelIamMemberDelete(existing, incoming Asset) Asset {
 
 func newIapTunnelIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newIapTunnelIamAsset(
 	}}, nil
 }
 
-func FetchIapTunnelIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchIapTunnelIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 
 	return fetchIamPolicy(

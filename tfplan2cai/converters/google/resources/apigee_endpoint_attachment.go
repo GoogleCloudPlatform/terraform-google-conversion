@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeEndpointAttachmentAssetType string = "apigee.googleapis.com/EndpointAttachment"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeEndpointAttachment() ResourceConverter {
 	}
 }
 
-func GetApigeeEndpointAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeEndpointAttachmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{org_id}}/endpointAttachments/{{endpoint_attachment_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeEndpointAttachmentCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetApigeeEndpointAttachmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeEndpointAttachmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	locationProp, err := expandApigeeEndpointAttachmentLocation(d.Get("location"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetApigeeEndpointAttachmentApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandApigeeEndpointAttachmentLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEndpointAttachmentLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEndpointAttachmentServiceAttachment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEndpointAttachmentServiceAttachment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

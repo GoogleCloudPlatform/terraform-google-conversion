@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataprocMetastoreServiceIAMAssetType string = "metastore.googleapis.com/Service"
@@ -47,15 +51,15 @@ func resourceConverterDataprocMetastoreServiceIamMember() ResourceConverter {
 	}
 }
 
-func GetDataprocMetastoreServiceIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataprocMetastoreServiceIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataprocMetastoreServiceIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetDataprocMetastoreServiceIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataprocMetastoreServiceIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataprocMetastoreServiceIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetDataprocMetastoreServiceIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataprocMetastoreServiceIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataprocMetastoreServiceIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeDataprocMetastoreServiceIamMemberDelete(existing, incoming Asset) Asse
 
 func newDataprocMetastoreServiceIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newDataprocMetastoreServiceIamAsset(
 	}}, nil
 }
 
-func FetchDataprocMetastoreServiceIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchDataprocMetastoreServiceIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

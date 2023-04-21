@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const BigqueryReservationReservationAssetType string = "bigqueryreservation.googleapis.com/Reservation"
 
@@ -25,7 +29,7 @@ func resourceConverterBigqueryReservationReservation() ResourceConverter {
 	}
 }
 
-func GetBigqueryReservationReservationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryReservationReservationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/reservations/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetBigqueryReservationReservationCaiObject(d TerraformResourceData, config 
 	}
 }
 
-func GetBigqueryReservationReservationApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigqueryReservationReservationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	slotCapacityProp, err := expandBigqueryReservationReservationSlotCapacity(d.Get("slot_capacity"), d, config)
 	if err != nil {
@@ -88,27 +92,27 @@ func GetBigqueryReservationReservationApiObject(d TerraformResourceData, config 
 	return obj, nil
 }
 
-func expandBigqueryReservationReservationSlotCapacity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationReservationSlotCapacity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationReservationIgnoreIdleSlots(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationReservationIgnoreIdleSlots(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationReservationConcurrency(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationReservationConcurrency(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationReservationMultiRegionAuxiliary(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationReservationMultiRegionAuxiliary(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationReservationEdition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationReservationEdition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationReservationAutoscale(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationReservationAutoscale(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -134,10 +138,10 @@ func expandBigqueryReservationReservationAutoscale(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandBigqueryReservationReservationAutoscaleCurrentSlots(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationReservationAutoscaleCurrentSlots(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationReservationAutoscaleMaxSlots(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryReservationReservationAutoscaleMaxSlots(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

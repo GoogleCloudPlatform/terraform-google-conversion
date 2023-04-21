@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const IapBrandAssetType string = "iap.googleapis.com/Brand"
 
@@ -25,7 +29,7 @@ func resourceConverterIapBrand() ResourceConverter {
 	}
 }
 
-func GetIapBrandCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIapBrandCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iap.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetIapBrandCaiObject(d TerraformResourceData, config *Config) ([]Asset, err
 	}
 }
 
-func GetIapBrandApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIapBrandApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	supportEmailProp, err := expandIapBrandSupportEmail(d.Get("support_email"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetIapBrandApiObject(d TerraformResourceData, config *Config) (map[string]i
 	return obj, nil
 }
 
-func expandIapBrandSupportEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIapBrandSupportEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIapBrandApplicationTitle(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIapBrandApplicationTitle(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

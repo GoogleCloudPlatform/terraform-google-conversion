@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const OSConfigPatchDeploymentAssetType string = "osconfig.googleapis.com/PatchDeployment"
 
@@ -25,7 +29,7 @@ func resourceConverterOSConfigPatchDeployment() ResourceConverter {
 	}
 }
 
-func GetOSConfigPatchDeploymentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetOSConfigPatchDeploymentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//osconfig.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetOSConfigPatchDeploymentCaiObject(d TerraformResourceData, config *Config
 	}
 }
 
-func GetOSConfigPatchDeploymentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetOSConfigPatchDeploymentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandOSConfigPatchDeploymentDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -125,11 +129,11 @@ func resourceOSConfigPatchDeploymentEncoder(d TerraformResourceData, meta interf
 	return obj, nil
 }
 
-func expandOSConfigPatchDeploymentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentInstanceFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentInstanceFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -176,11 +180,11 @@ func expandOSConfigPatchDeploymentInstanceFilter(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentInstanceFilterAll(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentInstanceFilterAll(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentInstanceFilterGroupLabels(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentInstanceFilterGroupLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -202,7 +206,7 @@ func expandOSConfigPatchDeploymentInstanceFilterGroupLabels(v interface{}, d Ter
 	return req, nil
 }
 
-func expandOSConfigPatchDeploymentInstanceFilterGroupLabelsLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandOSConfigPatchDeploymentInstanceFilterGroupLabelsLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -213,19 +217,19 @@ func expandOSConfigPatchDeploymentInstanceFilterGroupLabelsLabels(v interface{},
 	return m, nil
 }
 
-func expandOSConfigPatchDeploymentInstanceFilterZones(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentInstanceFilterZones(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentInstanceFilterInstances(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentInstanceFilterInstances(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentInstanceFilterInstanceNamePrefixes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentInstanceFilterInstanceNamePrefixes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -300,15 +304,15 @@ func expandOSConfigPatchDeploymentPatchConfig(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigMigInstancesAllowed(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigMigInstancesAllowed(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigRebootConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigRebootConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigApt(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigApt(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -341,19 +345,19 @@ func expandOSConfigPatchDeploymentPatchConfigApt(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigAptType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigAptType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigAptExcludes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigAptExcludes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigAptExclusivePackages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigAptExclusivePackages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigYum(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigYum(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -393,23 +397,23 @@ func expandOSConfigPatchDeploymentPatchConfigYum(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigYumSecurity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigYumSecurity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigYumMinimal(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigYumMinimal(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigYumExcludes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigYumExcludes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigYumExclusivePackages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigYumExclusivePackages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigGoo(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigGoo(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -428,11 +432,11 @@ func expandOSConfigPatchDeploymentPatchConfigGoo(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigGooEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigGooEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigZypper(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigZypper(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -486,31 +490,31 @@ func expandOSConfigPatchDeploymentPatchConfigZypper(v interface{}, d TerraformRe
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigZypperWithOptional(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigZypperWithOptional(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigZypperWithUpdate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigZypperWithUpdate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigZypperCategories(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigZypperCategories(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigZypperSeverities(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigZypperSeverities(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigZypperExcludes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigZypperExcludes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigZypperExclusivePatches(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigZypperExclusivePatches(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigWindowsUpdate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigWindowsUpdate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -543,19 +547,19 @@ func expandOSConfigPatchDeploymentPatchConfigWindowsUpdate(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigWindowsUpdateClassifications(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigWindowsUpdateClassifications(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigWindowsUpdateExcludes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigWindowsUpdateExcludes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigWindowsUpdateExclusivePatches(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigWindowsUpdateExclusivePatches(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStep(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStep(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -581,7 +585,7 @@ func expandOSConfigPatchDeploymentPatchConfigPreStep(v interface{}, d TerraformR
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -621,19 +625,19 @@ func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfig(v interf
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigAllowedSuccessCodes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigAllowedSuccessCodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigInterpreter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigInterpreter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigLocalPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigLocalPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -666,19 +670,19 @@ func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObject
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObjectBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObjectBucket(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObjectObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObjectObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObjectGenerationNumber(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepLinuxExecStepConfigGcsObjectGenerationNumber(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -718,19 +722,19 @@ func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfig(v inte
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigAllowedSuccessCodes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigAllowedSuccessCodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigInterpreter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigInterpreter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigLocalPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigLocalPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -763,19 +767,19 @@ func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObje
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObjectBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObjectBucket(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObjectObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObjectObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObjectGenerationNumber(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPreStepWindowsExecStepConfigGcsObjectGenerationNumber(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStep(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStep(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -801,7 +805,7 @@ func expandOSConfigPatchDeploymentPatchConfigPostStep(v interface{}, d Terraform
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -841,19 +845,19 @@ func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfig(v inter
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigAllowedSuccessCodes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigAllowedSuccessCodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigInterpreter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigInterpreter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigLocalPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigLocalPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -886,19 +890,19 @@ func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObjec
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObjectBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObjectBucket(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObjectObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObjectObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObjectGenerationNumber(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepLinuxExecStepConfigGcsObjectGenerationNumber(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -938,19 +942,19 @@ func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfig(v int
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigAllowedSuccessCodes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigAllowedSuccessCodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigInterpreter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigInterpreter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigLocalPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigLocalPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -983,23 +987,23 @@ func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObj
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObjectBucket(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObjectBucket(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObjectObject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObjectObject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObjectGenerationNumber(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentPatchConfigPostStepWindowsExecStepConfigGcsObjectGenerationNumber(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentOneTimeSchedule(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentOneTimeSchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1018,11 +1022,11 @@ func expandOSConfigPatchDeploymentOneTimeSchedule(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentOneTimeScheduleExecuteTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentOneTimeScheduleExecuteTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringSchedule(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringSchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1090,7 +1094,7 @@ func expandOSConfigPatchDeploymentRecurringSchedule(v interface{}, d TerraformRe
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleTimeZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleTimeZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1116,23 +1120,23 @@ func expandOSConfigPatchDeploymentRecurringScheduleTimeZone(v interface{}, d Ter
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleTimeZoneId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleTimeZoneId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleTimeZoneVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleTimeZoneVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleStartTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleEndTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleEndTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDay(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDay(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1172,31 +1176,31 @@ func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDay(v interface{}, d Te
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDayHours(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDayHours(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDayMinutes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDayMinutes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDaySeconds(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDaySeconds(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDayNanos(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleTimeOfDayNanos(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleLastExecuteTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleLastExecuteTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleNextExecuteTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleNextExecuteTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleWeekly(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleWeekly(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1215,11 +1219,11 @@ func expandOSConfigPatchDeploymentRecurringScheduleWeekly(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleWeeklyDayOfWeek(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleWeeklyDayOfWeek(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleMonthly(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleMonthly(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1245,7 +1249,7 @@ func expandOSConfigPatchDeploymentRecurringScheduleMonthly(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonth(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonth(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1271,19 +1275,19 @@ func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonth(v inter
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthWeekOrdinal(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthWeekOrdinal(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthDayOfWeek(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthDayOfWeek(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRecurringScheduleMonthlyMonthDay(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRecurringScheduleMonthlyMonthDay(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRollout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRollout(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1309,11 +1313,11 @@ func expandOSConfigPatchDeploymentRollout(v interface{}, d TerraformResourceData
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentRolloutMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRolloutMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRolloutDisruptionBudget(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRolloutDisruptionBudget(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1339,10 +1343,10 @@ func expandOSConfigPatchDeploymentRolloutDisruptionBudget(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandOSConfigPatchDeploymentRolloutDisruptionBudgetFixed(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRolloutDisruptionBudgetFixed(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandOSConfigPatchDeploymentRolloutDisruptionBudgetPercentage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandOSConfigPatchDeploymentRolloutDisruptionBudgetPercentage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

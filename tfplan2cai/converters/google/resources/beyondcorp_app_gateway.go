@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const BeyondcorpAppGatewayAssetType string = "beyondcorp.googleapis.com/AppGateway"
 
@@ -25,7 +29,7 @@ func resourceConverterBeyondcorpAppGateway() ResourceConverter {
 	}
 }
 
-func GetBeyondcorpAppGatewayCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBeyondcorpAppGatewayCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//beyondcorp.googleapis.com/projects/{{project}}/locations/{{region}}/appGateways/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetBeyondcorpAppGatewayCaiObject(d TerraformResourceData, config *Config) (
 	}
 }
 
-func GetBeyondcorpAppGatewayApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBeyondcorpAppGatewayApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	typeProp, err := expandBeyondcorpAppGatewayType(d.Get("type"), d, config)
 	if err != nil {
@@ -76,19 +80,19 @@ func GetBeyondcorpAppGatewayApiObject(d TerraformResourceData, config *Config) (
 	return obj, nil
 }
 
-func expandBeyondcorpAppGatewayType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBeyondcorpAppGatewayType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBeyondcorpAppGatewayHostType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBeyondcorpAppGatewayHostType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBeyondcorpAppGatewayDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBeyondcorpAppGatewayDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBeyondcorpAppGatewayLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandBeyondcorpAppGatewayLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const CloudIdentityGroupAssetType string = "cloudidentity.googleapis.com/Group"
 
@@ -25,7 +29,7 @@ func resourceConverterCloudIdentityGroup() ResourceConverter {
 	}
 }
 
-func GetCloudIdentityGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudIdentityGroupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudidentity.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetCloudIdentityGroupCaiObject(d TerraformResourceData, config *Config) ([]
 	}
 }
 
-func GetCloudIdentityGroupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCloudIdentityGroupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	groupKeyProp, err := expandCloudIdentityGroupGroupKey(d.Get("group_key"), d, config)
 	if err != nil {
@@ -82,7 +86,7 @@ func GetCloudIdentityGroupApiObject(d TerraformResourceData, config *Config) (ma
 	return obj, nil
 }
 
-func expandCloudIdentityGroupGroupKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupGroupKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -108,27 +112,27 @@ func expandCloudIdentityGroupGroupKey(v interface{}, d TerraformResourceData, co
 	return transformed, nil
 }
 
-func expandCloudIdentityGroupGroupKeyId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupGroupKeyId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdentityGroupGroupKeyNamespace(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupGroupKeyNamespace(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdentityGroupParent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupParent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdentityGroupDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdentityGroupDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdentityGroupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdentityGroupLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCloudIdentityGroupLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

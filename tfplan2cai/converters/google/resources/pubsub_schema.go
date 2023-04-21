@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const PubsubSchemaAssetType string = "pubsub.googleapis.com/Schema"
 
@@ -25,7 +29,7 @@ func resourceConverterPubsubSchema() ResourceConverter {
 	}
 }
 
-func GetPubsubSchemaCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetPubsubSchemaCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/schemas/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetPubsubSchemaCaiObject(d TerraformResourceData, config *Config) ([]Asset,
 	}
 }
 
-func GetPubsubSchemaApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetPubsubSchemaApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	typeProp, err := expandPubsubSchemaType(d.Get("type"), d, config)
 	if err != nil {
@@ -70,14 +74,14 @@ func GetPubsubSchemaApiObject(d TerraformResourceData, config *Config) (map[stri
 	return obj, nil
 }
 
-func expandPubsubSchemaType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubSchemaType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubSchemaDefinition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubSchemaDefinition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubSchemaName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubSchemaName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return GetResourceNameFromSelfLink(v.(string)), nil
 }

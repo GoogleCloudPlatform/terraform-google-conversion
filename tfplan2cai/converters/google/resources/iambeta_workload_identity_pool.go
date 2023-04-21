@@ -19,6 +19,8 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const workloadIdentityPoolIdRegexp = `^[0-9a-z-]+$`
@@ -58,7 +60,7 @@ func resourceConverterIAMBetaWorkloadIdentityPool() ResourceConverter {
 	}
 }
 
-func GetIAMBetaWorkloadIdentityPoolCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIAMBetaWorkloadIdentityPoolCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iam.googleapis.com/projects/{{project}}/locations/global/workloadIdentityPools/{{workload_identity_pool_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -79,7 +81,7 @@ func GetIAMBetaWorkloadIdentityPoolCaiObject(d TerraformResourceData, config *Co
 	}
 }
 
-func GetIAMBetaWorkloadIdentityPoolApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIAMBetaWorkloadIdentityPoolApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandIAMBetaWorkloadIdentityPoolDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -103,14 +105,14 @@ func GetIAMBetaWorkloadIdentityPoolApiObject(d TerraformResourceData, config *Co
 	return obj, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolDisabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolDisabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const CloudIdsEndpointAssetType string = "ids.googleapis.com/Endpoint"
 
@@ -25,7 +29,7 @@ func resourceConverterCloudIdsEndpoint() ResourceConverter {
 	}
 }
 
-func GetCloudIdsEndpointCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudIdsEndpointCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//ids.googleapis.com/projects/{{project}}/locations/{{location}}/endpoints/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetCloudIdsEndpointCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetCloudIdsEndpointApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCloudIdsEndpointApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandCloudIdsEndpointName(d.Get("name"), d, config)
 	if err != nil {
@@ -82,22 +86,22 @@ func GetCloudIdsEndpointApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandCloudIdsEndpointName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdsEndpointName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/endpoints/{{name}}")
 }
 
-func expandCloudIdsEndpointNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdsEndpointNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdsEndpointDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdsEndpointDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdsEndpointSeverity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdsEndpointSeverity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIdsEndpointThreatExceptions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudIdsEndpointThreatExceptions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const IAM2AccessBoundaryPolicyAssetType string = "iam.googleapis.com/AccessBoundaryPolicy"
 
@@ -25,7 +29,7 @@ func resourceConverterIAM2AccessBoundaryPolicy() ResourceConverter {
 	}
 }
 
-func GetIAM2AccessBoundaryPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIAM2AccessBoundaryPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iam.googleapis.com/policies/{{parent}}/accessboundarypolicies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetIAM2AccessBoundaryPolicyCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetIAM2AccessBoundaryPolicyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIAM2AccessBoundaryPolicyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandIAM2AccessBoundaryPolicyDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -70,15 +74,15 @@ func GetIAM2AccessBoundaryPolicyApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandIAM2AccessBoundaryPolicyDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAM2AccessBoundaryPolicyEtag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyEtag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRules(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRules(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -107,11 +111,11 @@ func expandIAM2AccessBoundaryPolicyRules(v interface{}, d TerraformResourceData,
 	return req, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRule(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -144,15 +148,15 @@ func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRule(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailableResource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailableResource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailablePermissions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailablePermissions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityCondition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityCondition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -192,18 +196,18 @@ func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityCondition(
 	return transformed, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityConditionExpression(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityConditionExpression(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityConditionTitle(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityConditionTitle(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityConditionDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityConditionDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityConditionLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAM2AccessBoundaryPolicyRulesAccessBoundaryRuleAvailabilityConditionLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

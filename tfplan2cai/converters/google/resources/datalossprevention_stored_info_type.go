@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // This customizeDiff allows updating the dictionary, regex, and large_custom_dictionary fields, but
@@ -56,7 +58,7 @@ func resourceConverterDataLossPreventionStoredInfoType() ResourceConverter {
 	}
 }
 
-func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dlp.googleapis.com/{{parent}}/storedInfoTypes/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -77,7 +79,7 @@ func GetDataLossPreventionStoredInfoTypeCaiObject(d TerraformResourceData, confi
 	}
 }
 
-func GetDataLossPreventionStoredInfoTypeApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDataLossPreventionStoredInfoTypeApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandDataLossPreventionStoredInfoTypeDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -119,15 +121,15 @@ func resourceDataLossPreventionStoredInfoTypeEncoder(d TerraformResourceData, me
 	return newObj, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -153,15 +155,15 @@ func expandDataLossPreventionStoredInfoTypeRegex(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeRegexPattern(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeRegexPattern(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeRegexGroupIndexes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeRegexGroupIndexes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeDictionary(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeDictionary(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -187,7 +189,7 @@ func expandDataLossPreventionStoredInfoTypeDictionary(v interface{}, d Terraform
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeDictionaryWordList(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeDictionaryWordList(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -206,11 +208,11 @@ func expandDataLossPreventionStoredInfoTypeDictionaryWordList(v interface{}, d T
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeDictionaryWordListWords(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeDictionaryWordListWords(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeDictionaryCloudStoragePath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeDictionaryCloudStoragePath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -229,11 +231,11 @@ func expandDataLossPreventionStoredInfoTypeDictionaryCloudStoragePath(v interfac
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeDictionaryCloudStoragePathPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeDictionaryCloudStoragePathPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionary(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionary(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -266,7 +268,7 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionary(v interface{}, 
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryOutputPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryOutputPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -285,11 +287,11 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryOutputPath(v int
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryOutputPathPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryOutputPathPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryCloudStorageFileSet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryCloudStorageFileSet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -308,11 +310,11 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryCloudStorageFile
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryCloudStorageFileSetUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryCloudStorageFileSetUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryField(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryField(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -338,7 +340,7 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryField(v 
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTable(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTable(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -371,19 +373,19 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTab
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTableProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTableProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTableDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTableDatasetId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTableTableId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTableTableId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldField(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldField(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -402,6 +404,6 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldFie
 	return transformed, nil
 }
 
-func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldFieldName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldFieldName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

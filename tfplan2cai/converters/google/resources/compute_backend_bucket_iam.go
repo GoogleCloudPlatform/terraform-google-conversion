@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ComputeBackendBucketIAMAssetType string = "compute.googleapis.com/BackendBucket"
@@ -47,15 +51,15 @@ func resourceConverterComputeBackendBucketIamMember() ResourceConverter {
 	}
 }
 
-func GetComputeBackendBucketIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeBackendBucketIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeBackendBucketIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetComputeBackendBucketIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeBackendBucketIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeBackendBucketIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetComputeBackendBucketIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeBackendBucketIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeBackendBucketIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeComputeBackendBucketIamMemberDelete(existing, incoming Asset) Asset {
 
 func newComputeBackendBucketIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newComputeBackendBucketIamAsset(
 	}}, nil
 }
 
-func FetchComputeBackendBucketIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchComputeBackendBucketIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("name"); !ok {
 		return Asset{}, ErrEmptyIdentityField

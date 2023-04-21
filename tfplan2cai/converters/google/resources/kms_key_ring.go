@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const KMSKeyRingAssetType string = "cloudkms.googleapis.com/KeyRing"
 
@@ -25,7 +29,7 @@ func resourceConverterKMSKeyRing() ResourceConverter {
 	}
 }
 
-func GetKMSKeyRingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetKMSKeyRingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudkms.googleapis.com/projects/{{project}}/locations/{{location}}/keyRings/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetKMSKeyRingCaiObject(d TerraformResourceData, config *Config) ([]Asset, e
 	}
 }
 
-func GetKMSKeyRingApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetKMSKeyRingApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandKMSKeyRingName(d.Get("name"), d, config)
 	if err != nil {
@@ -68,10 +72,10 @@ func resourceKMSKeyRingEncoder(d TerraformResourceData, meta interface{}, obj ma
 	return nil, nil
 }
 
-func expandKMSKeyRingName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSKeyRingName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandKMSKeyRingLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSKeyRingLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

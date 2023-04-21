@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const AppEngineFirewallRuleAssetType string = "appengine.googleapis.com/FirewallRule"
 
@@ -25,7 +29,7 @@ func resourceConverterAppEngineFirewallRule() ResourceConverter {
 	}
 }
 
-func GetAppEngineFirewallRuleCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetAppEngineFirewallRuleCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/firewall/ingressRules/{{priority}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetAppEngineFirewallRuleCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetAppEngineFirewallRuleApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetAppEngineFirewallRuleApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandAppEngineFirewallRuleDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetAppEngineFirewallRuleApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandAppEngineFirewallRuleDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineFirewallRuleDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineFirewallRuleSourceRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineFirewallRuleSourceRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineFirewallRuleAction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineFirewallRuleAction(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineFirewallRulePriority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAppEngineFirewallRulePriority(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

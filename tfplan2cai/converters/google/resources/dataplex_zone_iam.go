@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataplexZoneIAMAssetType string = "dataplex.googleapis.com/Zone"
@@ -47,15 +51,15 @@ func resourceConverterDataplexZoneIamMember() ResourceConverter {
 	}
 }
 
-func GetDataplexZoneIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataplexZoneIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataplexZoneIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetDataplexZoneIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataplexZoneIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataplexZoneIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetDataplexZoneIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataplexZoneIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataplexZoneIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeDataplexZoneIamMemberDelete(existing, incoming Asset) Asset {
 
 func newDataplexZoneIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newDataplexZoneIamAsset(
 	}}, nil
 }
 
-func FetchDataplexZoneIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchDataplexZoneIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeEnvgroupAssetType string = "apigee.googleapis.com/Envgroup"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeEnvgroup() ResourceConverter {
 	}
 }
 
-func GetApigeeEnvgroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeEnvgroupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{org_id}}/envgroups/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeEnvgroupCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	}
 }
 
-func GetApigeeEnvgroupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeEnvgroupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandApigeeEnvgroupName(d.Get("name"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetApigeeEnvgroupApiObject(d TerraformResourceData, config *Config) (map[st
 	return obj, nil
 }
 
-func expandApigeeEnvgroupName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvgroupName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvgroupHostnames(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvgroupHostnames(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
