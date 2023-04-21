@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	transport_tpg "github.com/hashicorp/terraform-provider-google/google/transport"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 //These functions are used by both the `resource_container_node_pool` and `resource_container_cluster` for handling regional clusters

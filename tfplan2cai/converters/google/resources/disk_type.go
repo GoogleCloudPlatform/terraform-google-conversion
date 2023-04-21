@@ -1,6 +1,6 @@
 package google
 
-import transport_tpg "github.com/hashicorp/terraform-provider-google/google/transport"
+import transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 
 // readDiskType finds the disk type with the given name.
 func readDiskType(c *transport_tpg.Config, d TerraformResourceData, name string) (*ZonalFieldValue, error) {
