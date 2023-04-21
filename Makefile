@@ -21,4 +21,7 @@ build-docker:
 run-docker:
 	docker run -it -v `pwd`:/terraform-google-conversion -v ${GOOGLE_APPLICATION_CREDENTIALS}:/terraform-google-conversion/credentials.json --entrypoint=/bin/bash --env TEST_PROJECT=${PROJECT_ID} --env GOOGLE_APPLICATION_CREDENTIALS=/terraform-google-conversion/credentials.json terraform-google-conversion;
 
-.PHONY: test test-integration test-go-licenses build-docker run-docker
+release:
+	./release.sh ${VERSION}
+
+.PHONY: test test-integration test-go-licenses build-docker run-docker release
