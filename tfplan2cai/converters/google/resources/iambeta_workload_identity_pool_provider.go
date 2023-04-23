@@ -19,6 +19,8 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const workloadIdentityPoolProviderIdRegexp = `^[0-9a-z-]+$`
@@ -58,7 +60,7 @@ func resourceConverterIAMBetaWorkloadIdentityPoolProvider() ResourceConverter {
 	}
 }
 
-func GetIAMBetaWorkloadIdentityPoolProviderCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIAMBetaWorkloadIdentityPoolProviderCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iam.googleapis.com/projects/{{project}}/locations/global/workloadIdentityPools/{{workload_identity_pool_id}}/providers/{{workload_identity_pool_provider_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -79,7 +81,7 @@ func GetIAMBetaWorkloadIdentityPoolProviderCaiObject(d TerraformResourceData, co
 	}
 }
 
-func GetIAMBetaWorkloadIdentityPoolProviderApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIAMBetaWorkloadIdentityPoolProviderApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandIAMBetaWorkloadIdentityPoolProviderDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -127,19 +129,19 @@ func GetIAMBetaWorkloadIdentityPoolProviderApiObject(d TerraformResourceData, co
 	return obj, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderDisabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderDisabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderAttributeMapping(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderAttributeMapping(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -150,11 +152,11 @@ func expandIAMBetaWorkloadIdentityPoolProviderAttributeMapping(v interface{}, d 
 	return m, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderAttributeCondition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderAttributeCondition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderAws(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderAws(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -173,11 +175,11 @@ func expandIAMBetaWorkloadIdentityPoolProviderAws(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderAwsAccountId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderAwsAccountId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderOidc(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderOidc(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -203,10 +205,10 @@ func expandIAMBetaWorkloadIdentityPoolProviderOidc(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderOidcAllowedAudiences(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderOidcAllowedAudiences(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIAMBetaWorkloadIdentityPoolProviderOidcIssuerUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIAMBetaWorkloadIdentityPoolProviderOidcIssuerUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DNSManagedZoneIAMAssetType string = "dns.googleapis.com/ManagedZone"
@@ -47,15 +51,15 @@ func resourceConverterDNSManagedZoneIamMember() ResourceConverter {
 	}
 }
 
-func GetDNSManagedZoneIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDNSManagedZoneIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDNSManagedZoneIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetDNSManagedZoneIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDNSManagedZoneIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDNSManagedZoneIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetDNSManagedZoneIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDNSManagedZoneIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDNSManagedZoneIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeDNSManagedZoneIamMemberDelete(existing, incoming Asset) Asset {
 
 func newDNSManagedZoneIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newDNSManagedZoneIamAsset(
 	}}, nil
 }
 
-func FetchDNSManagedZoneIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchDNSManagedZoneIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("managed_zone"); !ok {
 		return Asset{}, ErrEmptyIdentityField

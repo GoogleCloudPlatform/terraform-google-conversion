@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const FilestoreSnapshotAssetType string = "file.googleapis.com/Snapshot"
 
@@ -25,7 +29,7 @@ func resourceConverterFilestoreSnapshot() ResourceConverter {
 	}
 }
 
-func GetFilestoreSnapshotCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetFilestoreSnapshotCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//file.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/snapshots/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetFilestoreSnapshotCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetFilestoreSnapshotApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetFilestoreSnapshotApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandFilestoreSnapshotDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -64,11 +68,11 @@ func GetFilestoreSnapshotApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandFilestoreSnapshotDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFilestoreSnapshotDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFilestoreSnapshotLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandFilestoreSnapshotLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

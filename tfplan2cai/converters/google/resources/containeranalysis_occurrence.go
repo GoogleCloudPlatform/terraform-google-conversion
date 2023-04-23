@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ContainerAnalysisOccurrenceAssetType string = "containeranalysis.googleapis.com/Occurrence"
@@ -29,7 +31,7 @@ func resourceConverterContainerAnalysisOccurrence() ResourceConverter {
 	}
 }
 
-func GetContainerAnalysisOccurrenceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetContainerAnalysisOccurrenceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//containeranalysis.googleapis.com/projects/{{project}}/occurrences/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetContainerAnalysisOccurrenceCaiObject(d TerraformResourceData, config *Co
 	}
 }
 
-func GetContainerAnalysisOccurrenceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetContainerAnalysisOccurrenceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	resourceUriProp, err := expandContainerAnalysisOccurrenceResourceUri(d.Get("resource_uri"), d, config)
 	if err != nil {
@@ -86,19 +88,19 @@ func resourceContainerAnalysisOccurrenceEncoder(d TerraformResourceData, meta in
 	return obj, nil
 }
 
-func expandContainerAnalysisOccurrenceResourceUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisOccurrenceResourceUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisOccurrenceNoteName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisOccurrenceNoteName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisOccurrenceRemediation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisOccurrenceRemediation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisOccurrenceAttestation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisOccurrenceAttestation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -124,11 +126,11 @@ func expandContainerAnalysisOccurrenceAttestation(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandContainerAnalysisOccurrenceAttestationSerializedPayload(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisOccurrenceAttestationSerializedPayload(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisOccurrenceAttestationSignatures(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisOccurrenceAttestationSignatures(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -158,10 +160,10 @@ func expandContainerAnalysisOccurrenceAttestationSignatures(v interface{}, d Ter
 	return req, nil
 }
 
-func expandContainerAnalysisOccurrenceAttestationSignaturesSignature(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisOccurrenceAttestationSignaturesSignature(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAnalysisOccurrenceAttestationSignaturesPublicKeyId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAnalysisOccurrenceAttestationSignaturesPublicKeyId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

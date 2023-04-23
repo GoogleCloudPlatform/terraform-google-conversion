@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const BinaryAuthorizationAttestorIAMAssetType string = "binaryauthorization.googleapis.com/Attestor"
@@ -47,15 +51,15 @@ func resourceConverterBinaryAuthorizationAttestorIamMember() ResourceConverter {
 	}
 }
 
-func GetBinaryAuthorizationAttestorIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBinaryAuthorizationAttestorIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBinaryAuthorizationAttestorIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetBinaryAuthorizationAttestorIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBinaryAuthorizationAttestorIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBinaryAuthorizationAttestorIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetBinaryAuthorizationAttestorIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBinaryAuthorizationAttestorIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newBinaryAuthorizationAttestorIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeBinaryAuthorizationAttestorIamMemberDelete(existing, incoming Asset) A
 
 func newBinaryAuthorizationAttestorIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newBinaryAuthorizationAttestorIamAsset(
 	}}, nil
 }
 
-func FetchBinaryAuthorizationAttestorIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchBinaryAuthorizationAttestorIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("attestor"); !ok {
 		return Asset{}, ErrEmptyIdentityField

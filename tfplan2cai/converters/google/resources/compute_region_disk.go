@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeRegionDiskAssetType string = "compute.googleapis.com/RegionDisk"
@@ -29,7 +31,7 @@ func resourceConverterComputeRegionDisk() ResourceConverter {
 	}
 }
 
-func GetComputeRegionDiskCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionDiskCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/disks/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetComputeRegionDiskCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetComputeRegionDiskApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeRegionDiskApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelFingerprintProp, err := expandComputeRegionDiskLabelFingerprint(d.Get("label_fingerprint"), d, config)
 	if err != nil {
@@ -135,7 +137,7 @@ func GetComputeRegionDiskApiObject(d TerraformResourceData, config *Config) (map
 }
 
 func resourceComputeRegionDiskEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	config := meta.(*Config)
+	config := meta.(*transport_tpg.Config)
 
 	project, err := getProject(d, config)
 	if err != nil {
@@ -175,15 +177,15 @@ func resourceComputeRegionDiskEncoder(d TerraformResourceData, meta interface{},
 	return obj, nil
 }
 
-func expandComputeRegionDiskLabelFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskLabelFingerprint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandComputeRegionDiskLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -194,19 +196,19 @@ func expandComputeRegionDiskLabels(v interface{}, d TerraformResourceData, confi
 	return m, nil
 }
 
-func expandComputeRegionDiskName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskSize(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskSize(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskPhysicalBlockSizeBytes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskPhysicalBlockSizeBytes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskReplicaZones(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskReplicaZones(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -222,7 +224,7 @@ func expandComputeRegionDiskReplicaZones(v interface{}, d TerraformResourceData,
 	return req, nil
 }
 
-func expandComputeRegionDiskType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("diskTypes", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for type: %s", err)
@@ -230,11 +232,11 @@ func expandComputeRegionDiskType(v interface{}, d TerraformResourceData, config 
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRegionDiskSourceDisk(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskSourceDisk(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
@@ -242,7 +244,7 @@ func expandComputeRegionDiskRegion(v interface{}, d TerraformResourceData, confi
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRegionDiskDiskEncryptionKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskDiskEncryptionKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -275,19 +277,19 @@ func expandComputeRegionDiskDiskEncryptionKey(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandComputeRegionDiskDiskEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskDiskEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskDiskEncryptionKeySha256(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskDiskEncryptionKeySha256(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskDiskEncryptionKeyKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskDiskEncryptionKeyKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskSnapshot(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskSnapshot(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("snapshots", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for snapshot: %s", err)
@@ -295,7 +297,7 @@ func expandComputeRegionDiskSnapshot(v interface{}, d TerraformResourceData, con
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRegionDiskSourceSnapshotEncryptionKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskSourceSnapshotEncryptionKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -321,10 +323,10 @@ func expandComputeRegionDiskSourceSnapshotEncryptionKey(v interface{}, d Terrafo
 	return transformed, nil
 }
 
-func expandComputeRegionDiskSourceSnapshotEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskSourceSnapshotEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionDiskSourceSnapshotEncryptionKeySha256(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionDiskSourceSnapshotEncryptionKeySha256(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

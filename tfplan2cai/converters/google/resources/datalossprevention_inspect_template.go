@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DataLossPreventionInspectTemplateAssetType string = "dlp.googleapis.com/InspectTemplate"
 
@@ -25,7 +29,7 @@ func resourceConverterDataLossPreventionInspectTemplate() ResourceConverter {
 	}
 }
 
-func GetDataLossPreventionInspectTemplateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataLossPreventionInspectTemplateCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dlp.googleapis.com/{{parent}}/inspectTemplates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDataLossPreventionInspectTemplateCaiObject(d TerraformResourceData, conf
 	}
 }
 
-func GetDataLossPreventionInspectTemplateApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDataLossPreventionInspectTemplateApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandDataLossPreventionInspectTemplateDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -76,15 +80,15 @@ func resourceDataLossPreventionInspectTemplateEncoder(d TerraformResourceData, m
 	return newObj, nil
 }
 
-func expandDataLossPreventionInspectTemplateDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -152,19 +156,19 @@ func expandDataLossPreventionInspectTemplateInspectConfig(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigExcludeInfoTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigExcludeInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigIncludeQuote(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigIncludeQuote(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigMinLikelihood(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigMinLikelihood(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigLimits(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigLimits(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -197,15 +201,15 @@ func expandDataLossPreventionInspectTemplateInspectConfigLimits(v interface{}, d
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerItem(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerItem(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerRequest(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerRequest(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInfoType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInfoType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -234,7 +238,7 @@ func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInf
 	return req, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInfoTypeInfoType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInfoTypeInfoType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -253,15 +257,15 @@ func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInf
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInfoTypeInfoTypeName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInfoTypeInfoTypeName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInfoTypeMaxFindings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigLimitsMaxFindingsPerInfoTypeMaxFindings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigInfoTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -290,19 +294,19 @@ func expandDataLossPreventionInspectTemplateInspectConfigInfoTypes(v interface{}
 	return req, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigInfoTypesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigInfoTypesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigInfoTypesVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigInfoTypesVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigContentOptions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigContentOptions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -331,7 +335,7 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSet(v interface{}, 
 	return req, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetInfoTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -353,11 +357,11 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetInfoTypes(v inte
 	return req, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetInfoTypesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetInfoTypesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRules(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRules(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -386,7 +390,7 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRules(v interfac
 	return req, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRule(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -419,7 +423,7 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRule
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleHotwordRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleHotwordRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -445,15 +449,15 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRule
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleHotwordRegexPattern(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleHotwordRegexPattern(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleHotwordRegexGroupIndexes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleHotwordRegexGroupIndexes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleProximity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleProximity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -479,15 +483,15 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRule
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleProximityWindowBefore(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleProximityWindowBefore(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleProximityWindowAfter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleProximityWindowAfter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleLikelihoodAdjustment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleLikelihoodAdjustment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -513,15 +517,15 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRule
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleLikelihoodAdjustmentFixedLikelihood(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleLikelihoodAdjustmentFixedLikelihood(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleLikelihoodAdjustmentRelativeLikelihood(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesHotwordRuleLikelihoodAdjustmentRelativeLikelihood(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRule(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -561,11 +565,11 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRu
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleMatchingType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleMatchingType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionary(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionary(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -591,7 +595,7 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRu
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionaryWordList(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionaryWordList(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -610,11 +614,11 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRu
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionaryWordListWords(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionaryWordListWords(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionaryCloudStoragePath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionaryCloudStoragePath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -633,11 +637,11 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRu
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionaryCloudStoragePathPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleDictionaryCloudStoragePathPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -663,15 +667,15 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRu
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleRegexPattern(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleRegexPattern(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleRegexGroupIndexes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleRegexGroupIndexes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleExcludeInfoTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleExcludeInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -690,7 +694,7 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRu
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleExcludeInfoTypesInfoTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleExcludeInfoTypesInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -712,11 +716,11 @@ func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRu
 	return req, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleExcludeInfoTypesInfoTypesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigRuleSetRulesExclusionRuleExcludeInfoTypesInfoTypesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -773,7 +777,7 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypes(v inter
 	return req, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesInfoType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesInfoType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -792,19 +796,19 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesInfoType
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesInfoTypeName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesInfoTypeName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesLikelihood(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesLikelihood(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesExclusionType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesExclusionType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesRegex(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesRegex(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -830,15 +834,15 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesRegex(v 
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesRegexPattern(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesRegexPattern(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesRegexGroupIndexes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesRegexGroupIndexes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionary(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionary(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -864,7 +868,7 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictiona
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionaryWordList(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionaryWordList(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -883,11 +887,11 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictiona
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionaryWordListWords(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionaryWordListWords(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionaryCloudStoragePath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionaryCloudStoragePath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -906,11 +910,11 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictiona
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionaryCloudStoragePathPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesDictionaryCloudStoragePathPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -929,6 +933,6 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredTy
 	return transformed, nil
 }
 
-func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredTypeName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredTypeName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

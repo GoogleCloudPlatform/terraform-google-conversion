@@ -21,6 +21,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 var accessApprovalCloudProductMapping = map[string]string{
@@ -56,7 +58,7 @@ func resourceConverterAccessApprovalFolderSettings() ResourceConverter {
 	}
 }
 
-func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accessapproval.googleapis.com/folders/{{folder_id}}/accessApprovalSettings")
 	if err != nil {
 		return []Asset{}, err
@@ -77,7 +79,7 @@ func GetAccessApprovalFolderSettingsCaiObject(d TerraformResourceData, config *C
 	}
 }
 
-func GetAccessApprovalFolderSettingsApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetAccessApprovalFolderSettingsApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	notificationEmailsProp, err := expandAccessApprovalFolderSettingsNotificationEmails(d.Get("notification_emails"), d, config)
 	if err != nil {
@@ -101,12 +103,12 @@ func GetAccessApprovalFolderSettingsApiObject(d TerraformResourceData, config *C
 	return obj, nil
 }
 
-func expandAccessApprovalFolderSettingsNotificationEmails(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalFolderSettingsNotificationEmails(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandAccessApprovalFolderSettingsEnrolledServices(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalFolderSettingsEnrolledServices(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -136,14 +138,14 @@ func expandAccessApprovalFolderSettingsEnrolledServices(v interface{}, d Terrafo
 	return req, nil
 }
 
-func expandAccessApprovalFolderSettingsEnrolledServicesCloudProduct(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalFolderSettingsEnrolledServicesCloudProduct(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessApprovalFolderSettingsEnrolledServicesEnrollmentLevel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalFolderSettingsEnrolledServicesEnrollmentLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessApprovalFolderSettingsActiveKeyVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandAccessApprovalFolderSettingsActiveKeyVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

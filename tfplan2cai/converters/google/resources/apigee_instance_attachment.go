@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeInstanceAttachmentAssetType string = "apigee.googleapis.com/InstanceAttachment"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeInstanceAttachment() ResourceConverter {
 	}
 }
 
-func GetApigeeInstanceAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeInstanceAttachmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{instance_id}}/attachments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeInstanceAttachmentCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetApigeeInstanceAttachmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeInstanceAttachmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	environmentProp, err := expandApigeeInstanceAttachmentEnvironment(d.Get("environment"), d, config)
 	if err != nil {
@@ -58,6 +62,6 @@ func GetApigeeInstanceAttachmentApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandApigeeInstanceAttachmentEnvironment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeInstanceAttachmentEnvironment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

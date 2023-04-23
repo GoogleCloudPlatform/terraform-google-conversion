@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const HealthcareDatasetAssetType string = "healthcare.googleapis.com/Dataset"
 
@@ -25,7 +29,7 @@ func resourceConverterHealthcareDataset() ResourceConverter {
 	}
 }
 
-func GetHealthcareDatasetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetHealthcareDatasetCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/projects/{{project}}/locations/{{location}}/datasets/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetHealthcareDatasetCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetHealthcareDatasetApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetHealthcareDatasetApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandHealthcareDatasetName(d.Get("name"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetHealthcareDatasetApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandHealthcareDatasetName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandHealthcareDatasetName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandHealthcareDatasetTimeZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandHealthcareDatasetTimeZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

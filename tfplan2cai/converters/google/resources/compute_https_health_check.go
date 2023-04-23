@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ComputeHttpsHealthCheckAssetType string = "compute.googleapis.com/HttpsHealthCheck"
 
@@ -25,7 +29,7 @@ func resourceConverterComputeHttpsHealthCheck() ResourceConverter {
 	}
 }
 
-func GetComputeHttpsHealthCheckCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeHttpsHealthCheckCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/httpsHealthChecks/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetComputeHttpsHealthCheckCaiObject(d TerraformResourceData, config *Config
 	}
 }
 
-func GetComputeHttpsHealthCheckApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeHttpsHealthCheckApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	checkIntervalSecProp, err := expandComputeHttpsHealthCheckCheckIntervalSec(d.Get("check_interval_sec"), d, config)
 	if err != nil {
@@ -106,38 +110,38 @@ func GetComputeHttpsHealthCheckApiObject(d TerraformResourceData, config *Config
 	return obj, nil
 }
 
-func expandComputeHttpsHealthCheckCheckIntervalSec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckCheckIntervalSec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeHttpsHealthCheckDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeHttpsHealthCheckHealthyThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckHealthyThreshold(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeHttpsHealthCheckHost(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckHost(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeHttpsHealthCheckName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeHttpsHealthCheckPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeHttpsHealthCheckRequestPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckRequestPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeHttpsHealthCheckTimeoutSec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckTimeoutSec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeHttpsHealthCheckUnhealthyThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeHttpsHealthCheckUnhealthyThreshold(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

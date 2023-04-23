@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeImageAssetType string = "compute.googleapis.com/Image"
@@ -30,7 +32,7 @@ func resourceConverterComputeImage() ResourceConverter {
 	}
 }
 
-func GetComputeImageCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeImageCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/images/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetComputeImageCaiObject(d TerraformResourceData, config *Config) ([]Asset,
 	}
 }
 
-func GetComputeImageApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeImageApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeImageDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -135,19 +137,19 @@ func GetComputeImageApiObject(d TerraformResourceData, config *Config) (map[stri
 	return obj, nil
 }
 
-func expandComputeImageDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageDiskSizeGb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageDiskSizeGb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageFamily(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageFamily(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageGuestOsFeatures(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageGuestOsFeatures(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -170,11 +172,11 @@ func expandComputeImageGuestOsFeatures(v interface{}, d TerraformResourceData, c
 	return req, nil
 }
 
-func expandComputeImageGuestOsFeaturesType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageGuestOsFeaturesType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageImageEncryptionKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageImageEncryptionKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -200,15 +202,15 @@ func expandComputeImageImageEncryptionKey(v interface{}, d TerraformResourceData
 	return transformed, nil
 }
 
-func expandComputeImageImageEncryptionKeyKmsKeySelfLink(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageImageEncryptionKeyKmsKeySelfLink(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandComputeImageLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -219,11 +221,11 @@ func expandComputeImageLabels(v interface{}, d TerraformResourceData, config *Co
 	return m, nil
 }
 
-func expandComputeImageLabelFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageLabelFingerprint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageLicenses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageLicenses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -239,11 +241,11 @@ func expandComputeImageLicenses(v interface{}, d TerraformResourceData, config *
 	return req, nil
 }
 
-func expandComputeImageName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageRawDisk(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageRawDisk(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -276,19 +278,19 @@ func expandComputeImageRawDisk(v interface{}, d TerraformResourceData, config *C
 	return transformed, nil
 }
 
-func expandComputeImageRawDiskContainerType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageRawDiskContainerType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageRawDiskSha1(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageRawDiskSha1(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageRawDiskSource(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageRawDiskSource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeImageSourceDisk(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageSourceDisk(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseZonalFieldValue("disks", v.(string), "project", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for source_disk: %s", err)
@@ -296,7 +298,7 @@ func expandComputeImageSourceDisk(v interface{}, d TerraformResourceData, config
 	return f.RelativeLink(), nil
 }
 
-func expandComputeImageSourceImage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageSourceImage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("images", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for source_image: %s", err)
@@ -304,7 +306,7 @@ func expandComputeImageSourceImage(v interface{}, d TerraformResourceData, confi
 	return f.RelativeLink(), nil
 }
 
-func expandComputeImageSourceSnapshot(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeImageSourceSnapshot(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("snapshots", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for source_snapshot: %s", err)

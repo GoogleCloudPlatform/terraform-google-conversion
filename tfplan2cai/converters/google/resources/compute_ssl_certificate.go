@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeSslCertificateAssetType string = "compute.googleapis.com/SslCertificate"
@@ -30,7 +32,7 @@ func resourceConverterComputeSslCertificate() ResourceConverter {
 	}
 }
 
-func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/sslCertificates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetComputeSslCertificateCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetComputeSslCertificateApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeSslCertificateApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	certificateProp, err := expandComputeSslCertificateCertificate(d.Get("certificate"), d, config)
 	if err != nil {
@@ -81,15 +83,15 @@ func GetComputeSslCertificateApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandComputeSslCertificateCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslCertificateCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSslCertificateDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslCertificateDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSslCertificateName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslCertificateName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	var certName string
 	if v, ok := d.GetOk("name"); ok {
 		certName = v.(string)
@@ -107,6 +109,6 @@ func expandComputeSslCertificateName(v interface{}, d TerraformResourceData, con
 	return certName, nil
 }
 
-func expandComputeSslCertificatePrivateKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslCertificatePrivateKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

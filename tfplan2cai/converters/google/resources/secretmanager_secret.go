@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const SecretManagerSecretAssetType string = "secretmanager.googleapis.com/Secret"
 
@@ -25,7 +29,7 @@ func resourceConverterSecretManagerSecret() ResourceConverter {
 	}
 }
 
-func GetSecretManagerSecretCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetSecretManagerSecretCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//secretmanager.googleapis.com/projects/{{project}}/secrets/{{secret_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetSecretManagerSecretCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetSecretManagerSecretApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetSecretManagerSecretApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandSecretManagerSecretLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -88,7 +92,7 @@ func GetSecretManagerSecretApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandSecretManagerSecretLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandSecretManagerSecretLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -99,7 +103,7 @@ func expandSecretManagerSecretLabels(v interface{}, d TerraformResourceData, con
 	return m, nil
 }
 
-func expandSecretManagerSecretReplication(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretReplication(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -125,7 +129,7 @@ func expandSecretManagerSecretReplication(v interface{}, d TerraformResourceData
 	return transformed, nil
 }
 
-func expandSecretManagerSecretReplicationAutomatic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretReplicationAutomatic(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil || !v.(bool) {
 		return nil, nil
 	}
@@ -133,7 +137,7 @@ func expandSecretManagerSecretReplicationAutomatic(v interface{}, d TerraformRes
 	return struct{}{}, nil
 }
 
-func expandSecretManagerSecretReplicationUserManaged(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretReplicationUserManaged(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -152,7 +156,7 @@ func expandSecretManagerSecretReplicationUserManaged(v interface{}, d TerraformR
 	return transformed, nil
 }
 
-func expandSecretManagerSecretReplicationUserManagedReplicas(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretReplicationUserManagedReplicas(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -181,11 +185,11 @@ func expandSecretManagerSecretReplicationUserManagedReplicas(v interface{}, d Te
 	return req, nil
 }
 
-func expandSecretManagerSecretReplicationUserManagedReplicasLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretReplicationUserManagedReplicasLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncryption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncryption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -204,11 +208,11 @@ func expandSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncry
 	return transformed, nil
 }
 
-func expandSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncryptionKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncryptionKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecretManagerSecretTopics(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretTopics(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -230,19 +234,19 @@ func expandSecretManagerSecretTopics(v interface{}, d TerraformResourceData, con
 	return req, nil
 }
 
-func expandSecretManagerSecretTopicsName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretTopicsName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecretManagerSecretExpireTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretExpireTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecretManagerSecretTtl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretTtl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecretManagerSecretRotation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretRotation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -268,10 +272,10 @@ func expandSecretManagerSecretRotation(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandSecretManagerSecretRotationNextRotationTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretRotationNextRotationTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecretManagerSecretRotationRotationPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecretManagerSecretRotationRotationPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

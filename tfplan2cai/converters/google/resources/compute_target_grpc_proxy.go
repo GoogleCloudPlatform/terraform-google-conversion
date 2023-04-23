@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ComputeTargetGrpcProxyAssetType string = "compute.googleapis.com/TargetGrpcProxy"
 
@@ -25,7 +29,7 @@ func resourceConverterComputeTargetGrpcProxy() ResourceConverter {
 	}
 }
 
-func GetComputeTargetGrpcProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeTargetGrpcProxyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetGrpcProxies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetComputeTargetGrpcProxyCaiObject(d TerraformResourceData, config *Config)
 	}
 }
 
-func GetComputeTargetGrpcProxyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeTargetGrpcProxyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeTargetGrpcProxyName(d.Get("name"), d, config)
 	if err != nil {
@@ -82,22 +86,22 @@ func GetComputeTargetGrpcProxyApiObject(d TerraformResourceData, config *Config)
 	return obj, nil
 }
 
-func expandComputeTargetGrpcProxyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetGrpcProxyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetGrpcProxyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetGrpcProxyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetGrpcProxyUrlMap(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetGrpcProxyUrlMap(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetGrpcProxyValidateForProxyless(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetGrpcProxyValidateForProxyless(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetGrpcProxyFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetGrpcProxyFingerprint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

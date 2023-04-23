@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const PubsubLiteReservationAssetType string = "pubsublite.googleapis.com/Reservation"
 
@@ -25,7 +29,7 @@ func resourceConverterPubsubLiteReservation() ResourceConverter {
 	}
 }
 
-func GetPubsubLiteReservationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetPubsubLiteReservationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{region}}/reservations/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetPubsubLiteReservationCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetPubsubLiteReservationApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetPubsubLiteReservationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	throughputCapacityProp, err := expandPubsubLiteReservationThroughputCapacity(d.Get("throughput_capacity"), d, config)
 	if err != nil {
@@ -58,6 +62,6 @@ func GetPubsubLiteReservationApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandPubsubLiteReservationThroughputCapacity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandPubsubLiteReservationThroughputCapacity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

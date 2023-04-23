@@ -22,6 +22,8 @@ import (
 
 	"github.com/apparentlymart/go-cidr/cidr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // Whether the IP CIDR change shrinks the block.
@@ -53,7 +55,7 @@ func resourceConverterComputeSubnetwork() ResourceConverter {
 	}
 }
 
-func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -74,7 +76,7 @@ func GetComputeSubnetworkCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetComputeSubnetworkApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeSubnetworkApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeSubnetworkDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -158,19 +160,19 @@ func GetComputeSubnetworkApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandComputeSubnetworkDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkIpCidrRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkIpCidrRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
@@ -178,15 +180,15 @@ func expandComputeSubnetworkNetwork(v interface{}, d TerraformResourceData, conf
 	return f.RelativeLink(), nil
 }
 
-func expandComputeSubnetworkPurpose(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkPurpose(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkRole(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkRole(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkSecondaryIpRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkSecondaryIpRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -215,23 +217,23 @@ func expandComputeSubnetworkSecondaryIpRange(v interface{}, d TerraformResourceD
 	return req, nil
 }
 
-func expandComputeSubnetworkSecondaryIpRangeRangeName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkSecondaryIpRangeRangeName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkSecondaryIpRangeIpCidrRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkSecondaryIpRangeIpCidrRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkPrivateIpGoogleAccess(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkPrivateIpGoogleAccess(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkPrivateIpv6GoogleAccess(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkPrivateIpv6GoogleAccess(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
@@ -239,7 +241,7 @@ func expandComputeSubnetworkRegion(v interface{}, d TerraformResourceData, confi
 	return f.RelativeLink(), nil
 }
 
-func expandComputeSubnetworkLogConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkLogConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	transformed := make(map[string]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -270,10 +272,10 @@ func expandComputeSubnetworkLogConfig(v interface{}, d TerraformResourceData, co
 	return transformed, nil
 }
 
-func expandComputeSubnetworkStackType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkStackType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSubnetworkIpv6AccessType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSubnetworkIpv6AccessType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

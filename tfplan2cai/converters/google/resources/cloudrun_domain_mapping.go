@@ -19,6 +19,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 var domainMappingGoogleProvidedLabels = []string{
@@ -52,7 +54,7 @@ func resourceConverterCloudRunDomainMapping() ResourceConverter {
 	}
 }
 
-func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/DomainMappings/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -73,7 +75,7 @@ func GetCloudRunDomainMappingCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetCloudRunDomainMappingApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCloudRunDomainMappingApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	specProp, err := expandCloudRunDomainMappingSpec(d.Get("spec"), d, config)
 	if err != nil {
@@ -102,7 +104,7 @@ func resourceCloudRunDomainMappingEncoder(d TerraformResourceData, meta interfac
 	return obj, nil
 }
 
-func expandCloudRunDomainMappingSpec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingSpec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -135,19 +137,19 @@ func expandCloudRunDomainMappingSpec(v interface{}, d TerraformResourceData, con
 	return transformed, nil
 }
 
-func expandCloudRunDomainMappingSpecForceOverride(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingSpecForceOverride(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudRunDomainMappingSpecRouteName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingSpecRouteName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return GetResourceNameFromSelfLink(v.(string)), nil
 }
 
-func expandCloudRunDomainMappingSpecCertificateMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingSpecCertificateMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudRunDomainMappingMetadata(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingMetadata(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -208,7 +210,7 @@ func expandCloudRunDomainMappingMetadata(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandCloudRunDomainMappingMetadataLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCloudRunDomainMappingMetadataLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -219,27 +221,27 @@ func expandCloudRunDomainMappingMetadataLabels(v interface{}, d TerraformResourc
 	return m, nil
 }
 
-func expandCloudRunDomainMappingMetadataGeneration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingMetadataGeneration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudRunDomainMappingMetadataResourceVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingMetadataResourceVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudRunDomainMappingMetadataSelfLink(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingMetadataSelfLink(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudRunDomainMappingMetadataUid(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingMetadataUid(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudRunDomainMappingMetadataNamespace(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudRunDomainMappingMetadataNamespace(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudRunDomainMappingMetadataAnnotations(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCloudRunDomainMappingMetadataAnnotations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ComputeSubnetworkIAMAssetType string = "compute.googleapis.com/Subnetwork"
@@ -47,15 +51,15 @@ func resourceConverterComputeSubnetworkIamMember() ResourceConverter {
 	}
 }
 
-func GetComputeSubnetworkIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSubnetworkIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeSubnetworkIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetComputeSubnetworkIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSubnetworkIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeSubnetworkIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetComputeSubnetworkIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSubnetworkIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeSubnetworkIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeComputeSubnetworkIamMemberDelete(existing, incoming Asset) Asset {
 
 func newComputeSubnetworkIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newComputeSubnetworkIamAsset(
 	}}, nil
 }
 
-func FetchComputeSubnetworkIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchComputeSubnetworkIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
 		return Asset{}, ErrEmptyIdentityField

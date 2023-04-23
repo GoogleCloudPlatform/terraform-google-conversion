@@ -1,4 +1,4 @@
-package google
+package transport
 
 import (
 	"bytes"
@@ -13,7 +13,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+
 	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
+
 	"github.com/hashicorp/go-cleanhttp"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -168,98 +172,99 @@ type Config struct {
 	PollInterval time.Duration
 
 	Client             *http.Client
-	context            context.Context
+	Context            context.Context
 	UserAgent          string
 	gRPCLoggingOptions []option.ClientOption
 
 	tokenSource oauth2.TokenSource
 
-	AccessApprovalBasePath       string
-	AccessContextManagerBasePath string
-	ActiveDirectoryBasePath      string
-	AlloydbBasePath              string
-	ApigeeBasePath               string
-	AppEngineBasePath            string
-	ArtifactRegistryBasePath     string
-	BeyondcorpBasePath           string
-	BigQueryBasePath             string
-	BigqueryAnalyticsHubBasePath string
-	BigqueryConnectionBasePath   string
-	BigqueryDatapolicyBasePath   string
-	BigqueryDataTransferBasePath string
-	BigqueryReservationBasePath  string
-	BigtableBasePath             string
-	BillingBasePath              string
-	BinaryAuthorizationBasePath  string
-	CertificateManagerBasePath   string
-	CloudAssetBasePath           string
-	CloudBuildBasePath           string
-	CloudFunctionsBasePath       string
-	Cloudfunctions2BasePath      string
-	CloudIdentityBasePath        string
-	CloudIdsBasePath             string
-	CloudIotBasePath             string
-	CloudRunBasePath             string
-	CloudRunV2BasePath           string
-	CloudSchedulerBasePath       string
-	CloudTasksBasePath           string
-	ComputeBasePath              string
-	ContainerAnalysisBasePath    string
-	ContainerAttachedBasePath    string
-	DataCatalogBasePath          string
-	DataFusionBasePath           string
-	DataLossPreventionBasePath   string
-	DataplexBasePath             string
-	DataprocBasePath             string
-	DataprocMetastoreBasePath    string
-	DatastoreBasePath            string
-	DatastreamBasePath           string
-	DeploymentManagerBasePath    string
-	DialogflowBasePath           string
-	DialogflowCXBasePath         string
-	DNSBasePath                  string
-	DocumentAIBasePath           string
-	EssentialContactsBasePath    string
-	FilestoreBasePath            string
-	FirestoreBasePath            string
-	GameServicesBasePath         string
-	GKEBackupBasePath            string
-	GKEHubBasePath               string
-	HealthcareBasePath           string
-	IAM2BasePath                 string
-	IAMBetaBasePath              string
-	IAMWorkforcePoolBasePath     string
-	IapBasePath                  string
-	IdentityPlatformBasePath     string
-	KMSBasePath                  string
-	LoggingBasePath              string
-	MemcacheBasePath             string
-	MLEngineBasePath             string
-	MonitoringBasePath           string
-	NetworkManagementBasePath    string
-	NetworkServicesBasePath      string
-	NotebooksBasePath            string
-	OSConfigBasePath             string
-	OSLoginBasePath              string
-	PrivatecaBasePath            string
-	PubsubBasePath               string
-	PubsubLiteBasePath           string
-	RedisBasePath                string
-	ResourceManagerBasePath      string
-	SecretManagerBasePath        string
-	SecurityCenterBasePath       string
-	ServiceManagementBasePath    string
-	ServiceUsageBasePath         string
-	SourceRepoBasePath           string
-	SpannerBasePath              string
-	SQLBasePath                  string
-	StorageBasePath              string
-	StorageTransferBasePath      string
-	TagsBasePath                 string
-	TPUBasePath                  string
-	VertexAIBasePath             string
-	VPCAccessBasePath            string
-	WorkflowsBasePath            string
+	AccessApprovalBasePath           string
+	AccessContextManagerBasePath     string
+	ActiveDirectoryBasePath          string
+	AlloydbBasePath                  string
+	ApigeeBasePath                   string
+	AppEngineBasePath                string
+	ArtifactRegistryBasePath         string
+	BeyondcorpBasePath               string
+	BigQueryBasePath                 string
+	BigqueryAnalyticsHubBasePath     string
+	BigqueryConnectionBasePath       string
+	BigqueryDatapolicyBasePath       string
+	BigqueryDataTransferBasePath     string
+	BigqueryReservationBasePath      string
+	BigtableBasePath                 string
+	BillingBasePath                  string
+	BinaryAuthorizationBasePath      string
+	CertificateManagerBasePath       string
+	CloudAssetBasePath               string
+	CloudBuildBasePath               string
+	CloudFunctionsBasePath           string
+	Cloudfunctions2BasePath          string
+	CloudIdentityBasePath            string
+	CloudIdsBasePath                 string
+	CloudIotBasePath                 string
+	CloudRunBasePath                 string
+	CloudRunV2BasePath               string
+	CloudSchedulerBasePath           string
+	CloudTasksBasePath               string
+	ComputeBasePath                  string
+	ContainerAnalysisBasePath        string
+	ContainerAttachedBasePath        string
+	DatabaseMigrationServiceBasePath string
+	DataCatalogBasePath              string
+	DataFusionBasePath               string
+	DataLossPreventionBasePath       string
+	DataplexBasePath                 string
+	DataprocBasePath                 string
+	DataprocMetastoreBasePath        string
+	DatastoreBasePath                string
+	DatastreamBasePath               string
+	DeploymentManagerBasePath        string
+	DialogflowBasePath               string
+	DialogflowCXBasePath             string
+	DNSBasePath                      string
+	DocumentAIBasePath               string
+	EssentialContactsBasePath        string
+	FilestoreBasePath                string
+	FirestoreBasePath                string
+	GameServicesBasePath             string
+	GKEBackupBasePath                string
+	GKEHubBasePath                   string
+	HealthcareBasePath               string
+	IAM2BasePath                     string
+	IAMBetaBasePath                  string
+	IAMWorkforcePoolBasePath         string
+	IapBasePath                      string
+	IdentityPlatformBasePath         string
+	KMSBasePath                      string
+	LoggingBasePath                  string
+	MemcacheBasePath                 string
+	MLEngineBasePath                 string
+	MonitoringBasePath               string
+	NetworkManagementBasePath        string
+	NetworkServicesBasePath          string
+	NotebooksBasePath                string
+	OSConfigBasePath                 string
+	OSLoginBasePath                  string
+	PrivatecaBasePath                string
+	PubsubBasePath                   string
+	PubsubLiteBasePath               string
+	RedisBasePath                    string
+	ResourceManagerBasePath          string
+	SecretManagerBasePath            string
+	SecurityCenterBasePath           string
+	ServiceManagementBasePath        string
+	ServiceUsageBasePath             string
+	SourceRepoBasePath               string
+	SpannerBasePath                  string
+	SQLBasePath                      string
+	StorageBasePath                  string
+	StorageTransferBasePath          string
+	TagsBasePath                     string
+	TPUBasePath                      string
+	VertexAIBasePath                 string
+	VPCAccessBasePath                string
+	WorkflowsBasePath                string
 
 	CloudBillingBasePath      string
 	ComposerBasePath          string
@@ -278,7 +283,7 @@ type Config struct {
 	ContainerAzureBasePath string
 
 	RequestBatcherServiceUsage *RequestBatcher
-	requestBatcherIam          *RequestBatcher
+	RequestBatcherIam          *RequestBatcher
 }
 
 const AccessApprovalBasePathKey = "AccessApproval"
@@ -313,6 +318,7 @@ const CloudTasksBasePathKey = "CloudTasks"
 const ComputeBasePathKey = "Compute"
 const ContainerAnalysisBasePathKey = "ContainerAnalysis"
 const ContainerAttachedBasePathKey = "ContainerAttached"
+const DatabaseMigrationServiceBasePathKey = "DatabaseMigrationService"
 const DataCatalogBasePathKey = "DataCatalog"
 const DataFusionBasePathKey = "DataFusion"
 const DataLossPreventionBasePathKey = "DataLossPrevention"
@@ -382,104 +388,105 @@ const TagsLocationBasePathKey = "TagsLocation"
 
 // Generated product base paths
 var DefaultBasePaths = map[string]string{
-	AccessApprovalBasePathKey:       "https://accessapproval.googleapis.com/v1/",
-	AccessContextManagerBasePathKey: "https://accesscontextmanager.googleapis.com/v1/",
-	ActiveDirectoryBasePathKey:      "https://managedidentities.googleapis.com/v1/",
-	AlloydbBasePathKey:              "https://alloydb.googleapis.com/v1/",
-	ApigeeBasePathKey:               "https://apigee.googleapis.com/v1/",
-	AppEngineBasePathKey:            "https://appengine.googleapis.com/v1/",
-	ArtifactRegistryBasePathKey:     "https://artifactregistry.googleapis.com/v1/",
-	BeyondcorpBasePathKey:           "https://beyondcorp.googleapis.com/v1/",
-	BigQueryBasePathKey:             "https://bigquery.googleapis.com/bigquery/v2/",
-	BigqueryAnalyticsHubBasePathKey: "https://analyticshub.googleapis.com/v1/",
-	BigqueryConnectionBasePathKey:   "https://bigqueryconnection.googleapis.com/v1/",
-	BigqueryDatapolicyBasePathKey:   "https://bigquerydatapolicy.googleapis.com/v1/",
-	BigqueryDataTransferBasePathKey: "https://bigquerydatatransfer.googleapis.com/v1/",
-	BigqueryReservationBasePathKey:  "https://bigqueryreservation.googleapis.com/v1/",
-	BigtableBasePathKey:             "https://bigtableadmin.googleapis.com/v2/",
-	BillingBasePathKey:              "https://billingbudgets.googleapis.com/v1/",
-	BinaryAuthorizationBasePathKey:  "https://binaryauthorization.googleapis.com/v1/",
-	CertificateManagerBasePathKey:   "https://certificatemanager.googleapis.com/v1/",
-	CloudAssetBasePathKey:           "https://cloudasset.googleapis.com/v1/",
-	CloudBuildBasePathKey:           "https://cloudbuild.googleapis.com/v1/",
-	CloudFunctionsBasePathKey:       "https://cloudfunctions.googleapis.com/v1/",
-	Cloudfunctions2BasePathKey:      "https://cloudfunctions.googleapis.com/v2/",
-	CloudIdentityBasePathKey:        "https://cloudidentity.googleapis.com/v1/",
-	CloudIdsBasePathKey:             "https://ids.googleapis.com/v1/",
-	CloudIotBasePathKey:             "https://cloudiot.googleapis.com/v1/",
-	CloudRunBasePathKey:             "https://{{location}}-run.googleapis.com/",
-	CloudRunV2BasePathKey:           "https://run.googleapis.com/v2/",
-	CloudSchedulerBasePathKey:       "https://cloudscheduler.googleapis.com/v1/",
-	CloudTasksBasePathKey:           "https://cloudtasks.googleapis.com/v2/",
-	ComputeBasePathKey:              "https://compute.googleapis.com/compute/v1/",
-	ContainerAnalysisBasePathKey:    "https://containeranalysis.googleapis.com/v1/",
-	ContainerAttachedBasePathKey:    "https://{{location}}-gkemulticloud.googleapis.com/v1/",
-	DataCatalogBasePathKey:          "https://datacatalog.googleapis.com/v1/",
-	DataFusionBasePathKey:           "https://datafusion.googleapis.com/v1/",
-	DataLossPreventionBasePathKey:   "https://dlp.googleapis.com/v2/",
-	DataplexBasePathKey:             "https://dataplex.googleapis.com/v1/",
-	DataprocBasePathKey:             "https://dataproc.googleapis.com/v1/",
-	DataprocMetastoreBasePathKey:    "https://metastore.googleapis.com/v1/",
-	DatastoreBasePathKey:            "https://datastore.googleapis.com/v1/",
-	DatastreamBasePathKey:           "https://datastream.googleapis.com/v1/",
-	DeploymentManagerBasePathKey:    "https://www.googleapis.com/deploymentmanager/v2/",
-	DialogflowBasePathKey:           "https://dialogflow.googleapis.com/v2/",
-	DialogflowCXBasePathKey:         "https://{{location}}-dialogflow.googleapis.com/v3/",
-	DNSBasePathKey:                  "https://dns.googleapis.com/dns/v1/",
-	DocumentAIBasePathKey:           "https://{{location}}-documentai.googleapis.com/v1/",
-	EssentialContactsBasePathKey:    "https://essentialcontacts.googleapis.com/v1/",
-	FilestoreBasePathKey:            "https://file.googleapis.com/v1/",
-	FirestoreBasePathKey:            "https://firestore.googleapis.com/v1/",
-	GameServicesBasePathKey:         "https://gameservices.googleapis.com/v1/",
-	GKEBackupBasePathKey:            "https://gkebackup.googleapis.com/v1/",
-	GKEHubBasePathKey:               "https://gkehub.googleapis.com/v1/",
-	HealthcareBasePathKey:           "https://healthcare.googleapis.com/v1/",
-	IAM2BasePathKey:                 "https://iam.googleapis.com/v2/",
-	IAMBetaBasePathKey:              "https://iam.googleapis.com/v1/",
-	IAMWorkforcePoolBasePathKey:     "https://iam.googleapis.com/v1/",
-	IapBasePathKey:                  "https://iap.googleapis.com/v1/",
-	IdentityPlatformBasePathKey:     "https://identitytoolkit.googleapis.com/v2/",
-	KMSBasePathKey:                  "https://cloudkms.googleapis.com/v1/",
-	LoggingBasePathKey:              "https://logging.googleapis.com/v2/",
-	MemcacheBasePathKey:             "https://memcache.googleapis.com/v1/",
-	MLEngineBasePathKey:             "https://ml.googleapis.com/v1/",
-	MonitoringBasePathKey:           "https://monitoring.googleapis.com/",
-	NetworkManagementBasePathKey:    "https://networkmanagement.googleapis.com/v1/",
-	NetworkServicesBasePathKey:      "https://networkservices.googleapis.com/v1/",
-	NotebooksBasePathKey:            "https://notebooks.googleapis.com/v1/",
-	OSConfigBasePathKey:             "https://osconfig.googleapis.com/v1/",
-	OSLoginBasePathKey:              "https://oslogin.googleapis.com/v1/",
-	PrivatecaBasePathKey:            "https://privateca.googleapis.com/v1/",
-	PubsubBasePathKey:               "https://pubsub.googleapis.com/v1/",
-	PubsubLiteBasePathKey:           "https://{{region}}-pubsublite.googleapis.com/v1/admin/",
-	RedisBasePathKey:                "https://redis.googleapis.com/v1/",
-	ResourceManagerBasePathKey:      "https://cloudresourcemanager.googleapis.com/v1/",
-	SecretManagerBasePathKey:        "https://secretmanager.googleapis.com/v1/",
-	SecurityCenterBasePathKey:       "https://securitycenter.googleapis.com/v1/",
-	ServiceManagementBasePathKey:    "https://servicemanagement.googleapis.com/v1/",
-	ServiceUsageBasePathKey:         "https://serviceusage.googleapis.com/v1/",
-	SourceRepoBasePathKey:           "https://sourcerepo.googleapis.com/v1/",
-	SpannerBasePathKey:              "https://spanner.googleapis.com/v1/",
-	SQLBasePathKey:                  "https://sqladmin.googleapis.com/sql/v1beta4/",
-	StorageBasePathKey:              "https://storage.googleapis.com/storage/v1/",
-	StorageTransferBasePathKey:      "https://storagetransfer.googleapis.com/v1/",
-	TagsBasePathKey:                 "https://cloudresourcemanager.googleapis.com/v3/",
-	TPUBasePathKey:                  "https://tpu.googleapis.com/v1/",
-	VertexAIBasePathKey:             "https://{{region}}-aiplatform.googleapis.com/v1/",
-	VPCAccessBasePathKey:            "https://vpcaccess.googleapis.com/v1/",
-	WorkflowsBasePathKey:            "https://workflows.googleapis.com/v1/",
-	CloudBillingBasePathKey:         "https://cloudbilling.googleapis.com/v1/",
-	ComposerBasePathKey:             "https://composer.googleapis.com/v1/",
-	ContainerBasePathKey:            "https://container.googleapis.com/v1/",
-	DataflowBasePathKey:             "https://dataflow.googleapis.com/v1b3/",
-	IAMBasePathKey:                  "https://iam.googleapis.com/v1/",
-	IamCredentialsBasePathKey:       "https://iamcredentials.googleapis.com/v1/",
-	ResourceManagerV3BasePathKey:    "https://cloudresourcemanager.googleapis.com/v3/",
-	ServiceNetworkingBasePathKey:    "https://servicenetworking.googleapis.com/v1/",
-	BigtableAdminBasePathKey:        "https://bigtableadmin.googleapis.com/v2/",
-	ContainerAwsBasePathKey:         "https://{{location}}-gkemulticloud.googleapis.com/v1/",
-	ContainerAzureBasePathKey:       "https://{{location}}-gkemulticloud.googleapis.com/v1/",
-	TagsLocationBasePathKey:         "https://{{location}}-cloudresourcemanager.googleapis.com/v3/",
+	AccessApprovalBasePathKey:           "https://accessapproval.googleapis.com/v1/",
+	AccessContextManagerBasePathKey:     "https://accesscontextmanager.googleapis.com/v1/",
+	ActiveDirectoryBasePathKey:          "https://managedidentities.googleapis.com/v1/",
+	AlloydbBasePathKey:                  "https://alloydb.googleapis.com/v1/",
+	ApigeeBasePathKey:                   "https://apigee.googleapis.com/v1/",
+	AppEngineBasePathKey:                "https://appengine.googleapis.com/v1/",
+	ArtifactRegistryBasePathKey:         "https://artifactregistry.googleapis.com/v1/",
+	BeyondcorpBasePathKey:               "https://beyondcorp.googleapis.com/v1/",
+	BigQueryBasePathKey:                 "https://bigquery.googleapis.com/bigquery/v2/",
+	BigqueryAnalyticsHubBasePathKey:     "https://analyticshub.googleapis.com/v1/",
+	BigqueryConnectionBasePathKey:       "https://bigqueryconnection.googleapis.com/v1/",
+	BigqueryDatapolicyBasePathKey:       "https://bigquerydatapolicy.googleapis.com/v1/",
+	BigqueryDataTransferBasePathKey:     "https://bigquerydatatransfer.googleapis.com/v1/",
+	BigqueryReservationBasePathKey:      "https://bigqueryreservation.googleapis.com/v1/",
+	BigtableBasePathKey:                 "https://bigtableadmin.googleapis.com/v2/",
+	BillingBasePathKey:                  "https://billingbudgets.googleapis.com/v1/",
+	BinaryAuthorizationBasePathKey:      "https://binaryauthorization.googleapis.com/v1/",
+	CertificateManagerBasePathKey:       "https://certificatemanager.googleapis.com/v1/",
+	CloudAssetBasePathKey:               "https://cloudasset.googleapis.com/v1/",
+	CloudBuildBasePathKey:               "https://cloudbuild.googleapis.com/v1/",
+	CloudFunctionsBasePathKey:           "https://cloudfunctions.googleapis.com/v1/",
+	Cloudfunctions2BasePathKey:          "https://cloudfunctions.googleapis.com/v2/",
+	CloudIdentityBasePathKey:            "https://cloudidentity.googleapis.com/v1/",
+	CloudIdsBasePathKey:                 "https://ids.googleapis.com/v1/",
+	CloudIotBasePathKey:                 "https://cloudiot.googleapis.com/v1/",
+	CloudRunBasePathKey:                 "https://{{location}}-run.googleapis.com/",
+	CloudRunV2BasePathKey:               "https://run.googleapis.com/v2/",
+	CloudSchedulerBasePathKey:           "https://cloudscheduler.googleapis.com/v1/",
+	CloudTasksBasePathKey:               "https://cloudtasks.googleapis.com/v2/",
+	ComputeBasePathKey:                  "https://compute.googleapis.com/compute/v1/",
+	ContainerAnalysisBasePathKey:        "https://containeranalysis.googleapis.com/v1/",
+	ContainerAttachedBasePathKey:        "https://{{location}}-gkemulticloud.googleapis.com/v1/",
+	DatabaseMigrationServiceBasePathKey: "https://datamigration.googleapis.com/v1/",
+	DataCatalogBasePathKey:              "https://datacatalog.googleapis.com/v1/",
+	DataFusionBasePathKey:               "https://datafusion.googleapis.com/v1/",
+	DataLossPreventionBasePathKey:       "https://dlp.googleapis.com/v2/",
+	DataplexBasePathKey:                 "https://dataplex.googleapis.com/v1/",
+	DataprocBasePathKey:                 "https://dataproc.googleapis.com/v1/",
+	DataprocMetastoreBasePathKey:        "https://metastore.googleapis.com/v1/",
+	DatastoreBasePathKey:                "https://datastore.googleapis.com/v1/",
+	DatastreamBasePathKey:               "https://datastream.googleapis.com/v1/",
+	DeploymentManagerBasePathKey:        "https://www.googleapis.com/deploymentmanager/v2/",
+	DialogflowBasePathKey:               "https://dialogflow.googleapis.com/v2/",
+	DialogflowCXBasePathKey:             "https://{{location}}-dialogflow.googleapis.com/v3/",
+	DNSBasePathKey:                      "https://dns.googleapis.com/dns/v1/",
+	DocumentAIBasePathKey:               "https://{{location}}-documentai.googleapis.com/v1/",
+	EssentialContactsBasePathKey:        "https://essentialcontacts.googleapis.com/v1/",
+	FilestoreBasePathKey:                "https://file.googleapis.com/v1/",
+	FirestoreBasePathKey:                "https://firestore.googleapis.com/v1/",
+	GameServicesBasePathKey:             "https://gameservices.googleapis.com/v1/",
+	GKEBackupBasePathKey:                "https://gkebackup.googleapis.com/v1/",
+	GKEHubBasePathKey:                   "https://gkehub.googleapis.com/v1/",
+	HealthcareBasePathKey:               "https://healthcare.googleapis.com/v1/",
+	IAM2BasePathKey:                     "https://iam.googleapis.com/v2/",
+	IAMBetaBasePathKey:                  "https://iam.googleapis.com/v1/",
+	IAMWorkforcePoolBasePathKey:         "https://iam.googleapis.com/v1/",
+	IapBasePathKey:                      "https://iap.googleapis.com/v1/",
+	IdentityPlatformBasePathKey:         "https://identitytoolkit.googleapis.com/v2/",
+	KMSBasePathKey:                      "https://cloudkms.googleapis.com/v1/",
+	LoggingBasePathKey:                  "https://logging.googleapis.com/v2/",
+	MemcacheBasePathKey:                 "https://memcache.googleapis.com/v1/",
+	MLEngineBasePathKey:                 "https://ml.googleapis.com/v1/",
+	MonitoringBasePathKey:               "https://monitoring.googleapis.com/",
+	NetworkManagementBasePathKey:        "https://networkmanagement.googleapis.com/v1/",
+	NetworkServicesBasePathKey:          "https://networkservices.googleapis.com/v1/",
+	NotebooksBasePathKey:                "https://notebooks.googleapis.com/v1/",
+	OSConfigBasePathKey:                 "https://osconfig.googleapis.com/v1/",
+	OSLoginBasePathKey:                  "https://oslogin.googleapis.com/v1/",
+	PrivatecaBasePathKey:                "https://privateca.googleapis.com/v1/",
+	PubsubBasePathKey:                   "https://pubsub.googleapis.com/v1/",
+	PubsubLiteBasePathKey:               "https://{{region}}-pubsublite.googleapis.com/v1/admin/",
+	RedisBasePathKey:                    "https://redis.googleapis.com/v1/",
+	ResourceManagerBasePathKey:          "https://cloudresourcemanager.googleapis.com/v1/",
+	SecretManagerBasePathKey:            "https://secretmanager.googleapis.com/v1/",
+	SecurityCenterBasePathKey:           "https://securitycenter.googleapis.com/v1/",
+	ServiceManagementBasePathKey:        "https://servicemanagement.googleapis.com/v1/",
+	ServiceUsageBasePathKey:             "https://serviceusage.googleapis.com/v1/",
+	SourceRepoBasePathKey:               "https://sourcerepo.googleapis.com/v1/",
+	SpannerBasePathKey:                  "https://spanner.googleapis.com/v1/",
+	SQLBasePathKey:                      "https://sqladmin.googleapis.com/sql/v1beta4/",
+	StorageBasePathKey:                  "https://storage.googleapis.com/storage/v1/",
+	StorageTransferBasePathKey:          "https://storagetransfer.googleapis.com/v1/",
+	TagsBasePathKey:                     "https://cloudresourcemanager.googleapis.com/v3/",
+	TPUBasePathKey:                      "https://tpu.googleapis.com/v1/",
+	VertexAIBasePathKey:                 "https://{{region}}-aiplatform.googleapis.com/v1/",
+	VPCAccessBasePathKey:                "https://vpcaccess.googleapis.com/v1/",
+	WorkflowsBasePathKey:                "https://workflows.googleapis.com/v1/",
+	CloudBillingBasePathKey:             "https://cloudbilling.googleapis.com/v1/",
+	ComposerBasePathKey:                 "https://composer.googleapis.com/v1/",
+	ContainerBasePathKey:                "https://container.googleapis.com/v1/",
+	DataflowBasePathKey:                 "https://dataflow.googleapis.com/v1b3/",
+	IAMBasePathKey:                      "https://iam.googleapis.com/v1/",
+	IamCredentialsBasePathKey:           "https://iamcredentials.googleapis.com/v1/",
+	ResourceManagerV3BasePathKey:        "https://cloudresourcemanager.googleapis.com/v3/",
+	ServiceNetworkingBasePathKey:        "https://servicenetworking.googleapis.com/v1/",
+	BigtableAdminBasePathKey:            "https://bigtableadmin.googleapis.com/v2/",
+	ContainerAwsBasePathKey:             "https://{{location}}-gkemulticloud.googleapis.com/v1/",
+	ContainerAzureBasePathKey:           "https://{{location}}-gkemulticloud.googleapis.com/v1/",
+	TagsLocationBasePathKey:             "https://{{location}}-cloudresourcemanager.googleapis.com/v3/",
 }
 
 var DefaultClientScopes = []string{
@@ -705,6 +712,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 		d.Set("container_attached_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_CONTAINER_ATTACHED_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[ContainerAttachedBasePathKey]))
+	}
+	if d.Get("database_migration_service_custom_endpoint") == "" {
+		d.Set("database_migration_service_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_DATABASE_MIGRATION_SERVICE_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[DatabaseMigrationServiceBasePathKey]))
 	}
 	if d.Get("data_catalog_custom_endpoint") == "" {
 		d.Set("data_catalog_custom_endpoint", MultiEnvDefault([]string{
@@ -1051,7 +1063,7 @@ func (c *Config) LoadAndValidate(ctx context.Context) error {
 		c.Scopes = DefaultClientScopes
 	}
 
-	c.context = ctx
+	c.Context = ctx
 
 	tokenSource, err := c.getTokenSource(c.Scopes, false)
 	if err != nil {
@@ -1085,7 +1097,7 @@ func (c *Config) LoadAndValidate(ctx context.Context) error {
 
 	// 4. Header Transport - outer wrapper to inject additional headers we want to apply
 	// before making requests
-	headerTransport := newTransportWithHeaders(retryTransport)
+	headerTransport := NewTransportWithHeaders(retryTransport)
 	if c.RequestReason != "" {
 		headerTransport.Set("X-Goog-Request-Reason", c.RequestReason)
 	}
@@ -1103,10 +1115,10 @@ func (c *Config) LoadAndValidate(ctx context.Context) error {
 	client.Timeout = c.synchronousTimeout()
 
 	c.Client = client
-	c.context = ctx
+	c.Context = ctx
 	c.Region = GetRegionFromRegionSelfLink(c.Region)
 	c.RequestBatcherServiceUsage = NewRequestBatcher("Service Usage", ctx, c.BatchingConfig)
-	c.requestBatcherIam = NewRequestBatcher("IAM", ctx, c.BatchingConfig)
+	c.RequestBatcherIam = NewRequestBatcher("IAM", ctx, c.BatchingConfig)
 	c.PollInterval = 10 * time.Second
 
 	// gRPC Logging setup
@@ -1176,7 +1188,7 @@ func (c *Config) logGoogleIdentities() error {
 		if err != nil {
 			return err
 		}
-		c.Client = oauth2.NewClient(c.context, tokenSource) // c.Client isn't initialised fully when this code is called.
+		c.Client = oauth2.NewClient(c.Context, tokenSource) // c.Client isn't initialised fully when this code is called.
 
 		email, err := GetCurrentUserEmail(c, c.UserAgent)
 		if err != nil {
@@ -1195,7 +1207,7 @@ func (c *Config) logGoogleIdentities() error {
 	if err != nil {
 		return err
 	}
-	c.Client = oauth2.NewClient(c.context, tokenSource) // c.Client isn't initialised fully when this code is called.
+	c.Client = oauth2.NewClient(c.Context, tokenSource) // c.Client isn't initialised fully when this code is called.
 
 	email, err := GetCurrentUserEmail(c, c.UserAgent)
 	if err != nil {
@@ -1210,7 +1222,7 @@ func (c *Config) logGoogleIdentities() error {
 	if err != nil {
 		return err
 	}
-	c.Client = oauth2.NewClient(c.context, tokenSource) // c.Client isn't initialised fully when this code is called.
+	c.Client = oauth2.NewClient(c.Context, tokenSource) // c.Client isn't initialised fully when this code is called.
 
 	return nil
 }
@@ -1233,7 +1245,7 @@ func (c *Config) getTokenSource(clientScopes []string, initialCredentialsOnly bo
 // the basePath value in the client library file.
 func (c *Config) NewComputeClient(userAgent string) *compute.Service {
 	log.Printf("[INFO] Instantiating GCE client for path %s", c.ComputeBasePath)
-	clientCompute, err := compute.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientCompute, err := compute.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client compute: %s", err)
 		return nil
@@ -1247,7 +1259,7 @@ func (c *Config) NewComputeClient(userAgent string) *compute.Service {
 func (c *Config) NewContainerClient(userAgent string) *container.Service {
 	containerClientBasePath := RemoveBasePathVersion(c.ContainerBasePath)
 	log.Printf("[INFO] Instantiating GKE client for path %s", containerClientBasePath)
-	clientContainer, err := container.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientContainer, err := container.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client container: %s", err)
 		return nil
@@ -1262,7 +1274,7 @@ func (c *Config) NewDnsClient(userAgent string) *dns.Service {
 	dnsClientBasePath := RemoveBasePathVersion(c.DNSBasePath)
 	dnsClientBasePath = strings.ReplaceAll(dnsClientBasePath, "/dns/", "")
 	log.Printf("[INFO] Instantiating Google Cloud DNS client for path %s", dnsClientBasePath)
-	clientDns, err := dns.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientDns, err := dns.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client dns: %s", err)
 		return nil
@@ -1288,13 +1300,13 @@ func (c *Config) NewKmsClientWithCtx(ctx context.Context, userAgent string) *clo
 }
 
 func (c *Config) NewKmsClient(userAgent string) *cloudkms.Service {
-	return c.NewKmsClientWithCtx(c.context, userAgent)
+	return c.NewKmsClientWithCtx(c.Context, userAgent)
 }
 
 func (c *Config) NewLoggingClient(userAgent string) *cloudlogging.Service {
 	loggingClientBasePath := RemoveBasePathVersion(c.LoggingBasePath)
 	log.Printf("[INFO] Instantiating Google Stackdriver Logging client for path %s", loggingClientBasePath)
-	clientLogging, err := cloudlogging.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientLogging, err := cloudlogging.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client logging: %s", err)
 		return nil
@@ -1308,7 +1320,7 @@ func (c *Config) NewLoggingClient(userAgent string) *cloudlogging.Service {
 func (c *Config) NewStorageClient(userAgent string) *storage.Service {
 	storageClientBasePath := c.StorageBasePath
 	log.Printf("[INFO] Instantiating Google Storage client for path %s", storageClientBasePath)
-	clientStorage, err := storage.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientStorage, err := storage.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client storage: %s", err)
 		return nil
@@ -1332,7 +1344,7 @@ func (c *Config) NewStorageClientWithTimeoutOverride(userAgent string, timeout t
 		Jar:           c.Client.Jar,
 		Timeout:       timeout,
 	}
-	clientStorage, err := storage.NewService(c.context, option.WithHTTPClient(httpClient))
+	clientStorage, err := storage.NewService(c.Context, option.WithHTTPClient(httpClient))
 	if err != nil {
 		log.Printf("[WARN] Error creating client storage: %s", err)
 		return nil
@@ -1346,7 +1358,7 @@ func (c *Config) NewStorageClientWithTimeoutOverride(userAgent string, timeout t
 func (c *Config) NewSqlAdminClient(userAgent string) *sqladmin.Service {
 	sqlClientBasePath := RemoveBasePathVersion(RemoveBasePathVersion(c.SQLBasePath))
 	log.Printf("[INFO] Instantiating Google SqlAdmin client for path %s", sqlClientBasePath)
-	clientSqlAdmin, err := sqladmin.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientSqlAdmin, err := sqladmin.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client storage: %s", err)
 		return nil
@@ -1361,7 +1373,7 @@ func (c *Config) NewPubsubClient(userAgent string) *pubsub.Service {
 	pubsubClientBasePath := RemoveBasePathVersion(c.PubsubBasePath)
 	log.Printf("[INFO] Instantiating Google Pubsub client for path %s", pubsubClientBasePath)
 	wrappedPubsubClient := ClientWithAdditionalRetries(c.Client, PubsubTopicProjectNotReady)
-	clientPubsub, err := pubsub.NewService(c.context, option.WithHTTPClient(wrappedPubsubClient))
+	clientPubsub, err := pubsub.NewService(c.Context, option.WithHTTPClient(wrappedPubsubClient))
 	if err != nil {
 		log.Printf("[WARN] Error creating client pubsub: %s", err)
 		return nil
@@ -1375,7 +1387,7 @@ func (c *Config) NewPubsubClient(userAgent string) *pubsub.Service {
 func (c *Config) NewDataflowClient(userAgent string) *dataflow.Service {
 	dataflowClientBasePath := RemoveBasePathVersion(c.DataflowBasePath)
 	log.Printf("[INFO] Instantiating Google Dataflow client for path %s", dataflowClientBasePath)
-	clientDataflow, err := dataflow.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientDataflow, err := dataflow.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client dataflow: %s", err)
 		return nil
@@ -1389,7 +1401,7 @@ func (c *Config) NewDataflowClient(userAgent string) *dataflow.Service {
 func (c *Config) NewResourceManagerClient(userAgent string) *cloudresourcemanager.Service {
 	resourceManagerBasePath := RemoveBasePathVersion(c.ResourceManagerBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud ResourceManager client for path %s", resourceManagerBasePath)
-	clientResourceManager, err := cloudresourcemanager.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientResourceManager, err := cloudresourcemanager.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client resource manager: %s", err)
 		return nil
@@ -1403,7 +1415,7 @@ func (c *Config) NewResourceManagerClient(userAgent string) *cloudresourcemanage
 func (c *Config) NewResourceManagerV3Client(userAgent string) *resourceManagerV3.Service {
 	resourceManagerV3BasePath := RemoveBasePathVersion(c.ResourceManagerV3BasePath)
 	log.Printf("[INFO] Instantiating Google Cloud ResourceManager V3 client for path %s", resourceManagerV3BasePath)
-	clientResourceManagerV3, err := resourceManagerV3.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientResourceManagerV3, err := resourceManagerV3.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client resource manager v3: %s", err)
 		return nil
@@ -1417,7 +1429,7 @@ func (c *Config) NewResourceManagerV3Client(userAgent string) *resourceManagerV3
 func (c *Config) NewIamClient(userAgent string) *iam.Service {
 	iamClientBasePath := RemoveBasePathVersion(c.IAMBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud IAM client for path %s", iamClientBasePath)
-	clientIAM, err := iam.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientIAM, err := iam.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client iam: %s", err)
 		return nil
@@ -1431,7 +1443,7 @@ func (c *Config) NewIamClient(userAgent string) *iam.Service {
 func (c *Config) NewIamCredentialsClient(userAgent string) *iamcredentials.Service {
 	iamCredentialsClientBasePath := RemoveBasePathVersion(c.IamCredentialsBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud IAMCredentials client for path %s", iamCredentialsClientBasePath)
-	clientIamCredentials, err := iamcredentials.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientIamCredentials, err := iamcredentials.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client iam credentials: %s", err)
 		return nil
@@ -1445,7 +1457,7 @@ func (c *Config) NewIamCredentialsClient(userAgent string) *iamcredentials.Servi
 func (c *Config) NewServiceManClient(userAgent string) *servicemanagement.APIService {
 	serviceManagementClientBasePath := RemoveBasePathVersion(c.ServiceManagementBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Service Management client for path %s", serviceManagementClientBasePath)
-	clientServiceMan, err := servicemanagement.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientServiceMan, err := servicemanagement.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client service management: %s", err)
 		return nil
@@ -1459,7 +1471,7 @@ func (c *Config) NewServiceManClient(userAgent string) *servicemanagement.APISer
 func (c *Config) NewServiceUsageClient(userAgent string) *serviceusage.Service {
 	serviceUsageClientBasePath := RemoveBasePathVersion(c.ServiceUsageBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Service Usage client for path %s", serviceUsageClientBasePath)
-	clientServiceUsage, err := serviceusage.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientServiceUsage, err := serviceusage.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client service usage: %s", err)
 		return nil
@@ -1473,7 +1485,7 @@ func (c *Config) NewServiceUsageClient(userAgent string) *serviceusage.Service {
 func (c *Config) NewBillingClient(userAgent string) *cloudbilling.APIService {
 	cloudBillingClientBasePath := RemoveBasePathVersion(c.CloudBillingBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Billing client for path %s", cloudBillingClientBasePath)
-	clientBilling, err := cloudbilling.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientBilling, err := cloudbilling.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client billing: %s", err)
 		return nil
@@ -1487,7 +1499,7 @@ func (c *Config) NewBillingClient(userAgent string) *cloudbilling.APIService {
 func (c *Config) NewBuildClient(userAgent string) *cloudbuild.Service {
 	cloudBuildClientBasePath := RemoveBasePathVersion(c.CloudBuildBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Build client for path %s", cloudBuildClientBasePath)
-	clientBuild, err := cloudbuild.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientBuild, err := cloudbuild.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client build: %s", err)
 		return nil
@@ -1501,7 +1513,7 @@ func (c *Config) NewBuildClient(userAgent string) *cloudbuild.Service {
 func (c *Config) NewCloudFunctionsClient(userAgent string) *cloudfunctions.Service {
 	cloudFunctionsClientBasePath := RemoveBasePathVersion(c.CloudFunctionsBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud CloudFunctions Client for path %s", cloudFunctionsClientBasePath)
-	clientCloudFunctions, err := cloudfunctions.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientCloudFunctions, err := cloudfunctions.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client cloud functions: %s", err)
 		return nil
@@ -1515,7 +1527,7 @@ func (c *Config) NewCloudFunctionsClient(userAgent string) *cloudfunctions.Servi
 func (c *Config) NewSourceRepoClient(userAgent string) *sourcerepo.Service {
 	sourceRepoClientBasePath := RemoveBasePathVersion(c.SourceRepoBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Source Repo client for path %s", sourceRepoClientBasePath)
-	clientSourceRepo, err := sourcerepo.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientSourceRepo, err := sourcerepo.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client source repo: %s", err)
 		return nil
@@ -1530,7 +1542,7 @@ func (c *Config) NewBigQueryClient(userAgent string) *bigquery.Service {
 	bigQueryClientBasePath := c.BigQueryBasePath
 	log.Printf("[INFO] Instantiating Google Cloud BigQuery client for path %s", bigQueryClientBasePath)
 	wrappedBigQueryClient := ClientWithAdditionalRetries(c.Client, IamMemberMissing)
-	clientBigQuery, err := bigquery.NewService(c.context, option.WithHTTPClient(wrappedBigQueryClient))
+	clientBigQuery, err := bigquery.NewService(c.Context, option.WithHTTPClient(wrappedBigQueryClient))
 	if err != nil {
 		log.Printf("[WARN] Error creating client big query: %s", err)
 		return nil
@@ -1544,7 +1556,7 @@ func (c *Config) NewBigQueryClient(userAgent string) *bigquery.Service {
 func (c *Config) NewSpannerClient(userAgent string) *spanner.Service {
 	spannerClientBasePath := RemoveBasePathVersion(c.SpannerBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Spanner client for path %s", spannerClientBasePath)
-	clientSpanner, err := spanner.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientSpanner, err := spanner.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client source repo: %s", err)
 		return nil
@@ -1558,7 +1570,7 @@ func (c *Config) NewSpannerClient(userAgent string) *spanner.Service {
 func (c *Config) NewDataprocClient(userAgent string) *dataproc.Service {
 	dataprocClientBasePath := RemoveBasePathVersion(c.DataprocBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Dataproc client for path %s", dataprocClientBasePath)
-	clientDataproc, err := dataproc.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientDataproc, err := dataproc.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client dataproc: %s", err)
 		return nil
@@ -1572,7 +1584,7 @@ func (c *Config) NewDataprocClient(userAgent string) *dataproc.Service {
 func (c *Config) NewCloudIoTClient(userAgent string) *cloudiot.Service {
 	cloudIoTClientBasePath := RemoveBasePathVersion(c.CloudIoTBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud IoT Core client for path %s", cloudIoTClientBasePath)
-	clientCloudIoT, err := cloudiot.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientCloudIoT, err := cloudiot.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client cloud iot: %s", err)
 		return nil
@@ -1586,7 +1598,7 @@ func (c *Config) NewCloudIoTClient(userAgent string) *cloudiot.Service {
 func (c *Config) NewAppEngineClient(userAgent string) *appengine.APIService {
 	appEngineClientBasePath := RemoveBasePathVersion(c.AppEngineBasePath)
 	log.Printf("[INFO] Instantiating App Engine client for path %s", appEngineClientBasePath)
-	clientAppEngine, err := appengine.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientAppEngine, err := appengine.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client appengine: %s", err)
 		return nil
@@ -1600,7 +1612,7 @@ func (c *Config) NewAppEngineClient(userAgent string) *appengine.APIService {
 func (c *Config) NewComposerClient(userAgent string) *composer.Service {
 	composerClientBasePath := RemoveBasePathVersion(c.ComposerBasePath)
 	log.Printf("[INFO] Instantiating Cloud Composer client for path %s", composerClientBasePath)
-	clientComposer, err := composer.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientComposer, err := composer.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client composer: %s", err)
 		return nil
@@ -1614,7 +1626,7 @@ func (c *Config) NewComposerClient(userAgent string) *composer.Service {
 func (c *Config) NewServiceNetworkingClient(userAgent string) *servicenetworking.APIService {
 	serviceNetworkingClientBasePath := RemoveBasePathVersion(c.ServiceNetworkingBasePath)
 	log.Printf("[INFO] Instantiating Service Networking client for path %s", serviceNetworkingClientBasePath)
-	clientServiceNetworking, err := servicenetworking.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientServiceNetworking, err := servicenetworking.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client service networking: %s", err)
 		return nil
@@ -1628,7 +1640,7 @@ func (c *Config) NewServiceNetworkingClient(userAgent string) *servicenetworking
 func (c *Config) NewStorageTransferClient(userAgent string) *storagetransfer.Service {
 	storageTransferClientBasePath := RemoveBasePathVersion(c.StorageTransferBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Storage Transfer client for path %s", storageTransferClientBasePath)
-	clientStorageTransfer, err := storagetransfer.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientStorageTransfer, err := storagetransfer.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client storage transfer: %s", err)
 		return nil
@@ -1642,7 +1654,7 @@ func (c *Config) NewStorageTransferClient(userAgent string) *storagetransfer.Ser
 func (c *Config) NewHealthcareClient(userAgent string) *healthcare.Service {
 	healthcareClientBasePath := RemoveBasePathVersion(c.HealthcareBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud Healthcare client for path %s", healthcareClientBasePath)
-	clientHealthcare, err := healthcare.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientHealthcare, err := healthcare.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client healthcare: %s", err)
 		return nil
@@ -1656,7 +1668,7 @@ func (c *Config) NewHealthcareClient(userAgent string) *healthcare.Service {
 func (c *Config) NewCloudIdentityClient(userAgent string) *cloudidentity.Service {
 	cloudidentityClientBasePath := RemoveBasePathVersion(c.CloudIdentityBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud CloudIdentity client for path %s", cloudidentityClientBasePath)
-	clientCloudIdentity, err := cloudidentity.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientCloudIdentity, err := cloudidentity.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client cloud identity: %s", err)
 		return nil
@@ -1687,7 +1699,7 @@ func (c *Config) BigTableClientFactory(userAgent string) *BigtableClientFactory 
 func (c *Config) NewBigTableProjectsInstancesClient(userAgent string) *bigtableadmin.ProjectsInstancesService {
 	bigtableAdminBasePath := RemoveBasePathVersion(c.BigtableAdminBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud BigtableAdmin for path %s", bigtableAdminBasePath)
-	clientBigtable, err := bigtableadmin.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientBigtable, err := bigtableadmin.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client big table projects instances: %s", err)
 		return nil
@@ -1702,7 +1714,7 @@ func (c *Config) NewBigTableProjectsInstancesClient(userAgent string) *bigtablea
 func (c *Config) NewBigTableProjectsInstancesTablesClient(userAgent string) *bigtableadmin.ProjectsInstancesTablesService {
 	bigtableAdminBasePath := RemoveBasePathVersion(c.BigtableAdminBasePath)
 	log.Printf("[INFO] Instantiating Google Cloud BigtableAdmin for path %s", bigtableAdminBasePath)
-	clientBigtable, err := bigtableadmin.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientBigtable, err := bigtableadmin.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client projects instances tables: %s", err)
 		return nil
@@ -1717,7 +1729,7 @@ func (c *Config) NewBigTableProjectsInstancesTablesClient(userAgent string) *big
 func (c *Config) NewCloudRunV2Client(userAgent string) *runadminv2.Service {
 	runAdminV2ClientBasePath := RemoveBasePathVersion(RemoveBasePathVersion(c.CloudRunV2BasePath))
 	log.Printf("[INFO] Instantiating Google Cloud Run Admin v2 client for path %s", runAdminV2ClientBasePath)
-	clientRunAdminV2, err := runadminv2.NewService(c.context, option.WithHTTPClient(c.Client))
+	clientRunAdminV2, err := runadminv2.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
 		log.Printf("[WARN] Error creating client run admin: %s", err)
 		return nil
@@ -1738,7 +1750,7 @@ type StaticTokenSource struct {
 // instead.
 func (c *Config) GetCredentials(clientScopes []string, initialCredentialsOnly bool) (googleoauth.Credentials, error) {
 	if c.AccessToken != "" {
-		contents, _, err := pathOrContents(c.AccessToken)
+		contents, _, err := PathOrContents(c.AccessToken)
 		if err != nil {
 			return googleoauth.Credentials{}, fmt.Errorf("Error loading access token: %s", err)
 		}
@@ -1761,7 +1773,7 @@ func (c *Config) GetCredentials(clientScopes []string, initialCredentialsOnly bo
 	}
 
 	if c.Credentials != "" {
-		contents, _, err := pathOrContents(c.Credentials)
+		contents, _, err := PathOrContents(c.Credentials)
 		if err != nil {
 			return googleoauth.Credentials{}, fmt.Errorf("error loading credentials: %s", err)
 		}
@@ -1775,7 +1787,7 @@ func (c *Config) GetCredentials(clientScopes []string, initialCredentialsOnly bo
 			return *creds, nil
 		}
 
-		creds, err := googleoauth.CredentialsFromJSON(c.context, []byte(contents), clientScopes...)
+		creds, err := googleoauth.CredentialsFromJSON(c.Context, []byte(contents), clientScopes...)
 		if err != nil {
 			return googleoauth.Credentials{}, fmt.Errorf("unable to parse credentials from '%s': %s", contents, err)
 		}
@@ -1850,6 +1862,7 @@ func ConfigureBasePaths(c *Config) {
 	c.ComputeBasePath = DefaultBasePaths[ComputeBasePathKey]
 	c.ContainerAnalysisBasePath = DefaultBasePaths[ContainerAnalysisBasePathKey]
 	c.ContainerAttachedBasePath = DefaultBasePaths[ContainerAttachedBasePathKey]
+	c.DatabaseMigrationServiceBasePath = DefaultBasePaths[DatabaseMigrationServiceBasePathKey]
 	c.DataCatalogBasePath = DefaultBasePaths[DataCatalogBasePathKey]
 	c.DataFusionBasePath = DefaultBasePaths[DataFusionBasePathKey]
 	c.DataLossPreventionBasePath = DefaultBasePaths[DataLossPreventionBasePathKey]
@@ -1946,4 +1959,33 @@ func MultiEnvSearch(ks []string) string {
 		}
 	}
 	return ""
+}
+
+// MultiEnvDefault is a helper function that returns the value of the first
+// environment variable in the given list that returns a non-empty value. If
+// none of the environment variables return a value, the default value is
+// returned.
+func MultiEnvDefault(ks []string, dv interface{}) interface{} {
+	for _, k := range ks {
+		if v := os.Getenv(k); v != "" {
+			return v
+		}
+	}
+	return dv
+}
+
+func CustomEndpointValidator() validator.String {
+	return stringvalidator.RegexMatches(regexp.MustCompile(`.*/[^/]+/$`), "")
+}
+
+// return the region a selfLink is referring to
+func GetRegionFromRegionSelfLink(selfLink string) string {
+	re := regexp.MustCompile("/compute/[a-zA-Z0-9]*/projects/[a-zA-Z0-9-]*/regions/([a-zA-Z0-9-]*)")
+	switch {
+	case re.MatchString(selfLink):
+		if res := re.FindStringSubmatch(selfLink); len(res) == 2 && res[1] != "" {
+			return res[1]
+		}
+	}
+	return selfLink
 }

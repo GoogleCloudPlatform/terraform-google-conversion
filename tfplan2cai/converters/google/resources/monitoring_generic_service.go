@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const MonitoringGenericServiceAssetType string = "monitoring.googleapis.com/GenericService"
 
@@ -25,7 +29,7 @@ func resourceConverterMonitoringGenericService() ResourceConverter {
 	}
 }
 
-func GetMonitoringGenericServiceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetMonitoringGenericServiceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/projects/{{project}}/services/{{service_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetMonitoringGenericServiceCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetMonitoringGenericServiceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetMonitoringGenericServiceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandMonitoringGenericServiceDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -70,11 +74,11 @@ func GetMonitoringGenericServiceApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandMonitoringGenericServiceDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringGenericServiceDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringGenericServiceUserLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandMonitoringGenericServiceUserLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -85,7 +89,7 @@ func expandMonitoringGenericServiceUserLabels(v interface{}, d TerraformResource
 	return m, nil
 }
 
-func expandMonitoringGenericServiceBasicService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringGenericServiceBasicService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -111,11 +115,11 @@ func expandMonitoringGenericServiceBasicService(v interface{}, d TerraformResour
 	return transformed, nil
 }
 
-func expandMonitoringGenericServiceBasicServiceServiceType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringGenericServiceBasicServiceServiceType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringGenericServiceBasicServiceServiceLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandMonitoringGenericServiceBasicServiceServiceLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

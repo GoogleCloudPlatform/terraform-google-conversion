@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DialogflowAgentAssetType string = "dialogflow.googleapis.com/Agent"
 
@@ -25,7 +29,7 @@ func resourceConverterDialogflowAgent() ResourceConverter {
 	}
 }
 
-func GetDialogflowAgentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDialogflowAgentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/projects/{{project}}/agent")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDialogflowAgentCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetDialogflowAgentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDialogflowAgentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowAgentDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -118,46 +122,46 @@ func GetDialogflowAgentApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandDialogflowAgentDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentDefaultLanguageCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentDefaultLanguageCode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentSupportedLanguageCodes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentSupportedLanguageCodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentTimeZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentTimeZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentAvatarUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentAvatarUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentEnableLogging(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentEnableLogging(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentMatchMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentMatchMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentClassificationThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentClassificationThreshold(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentApiVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentApiVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowAgentTier(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowAgentTier(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

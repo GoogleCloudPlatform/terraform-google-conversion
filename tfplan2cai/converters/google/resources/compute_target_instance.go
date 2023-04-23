@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeTargetInstanceAssetType string = "compute.googleapis.com/TargetInstance"
@@ -29,7 +31,7 @@ func resourceConverterComputeTargetInstance() ResourceConverter {
 	}
 }
 
-func GetComputeTargetInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeTargetInstanceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/targetInstances/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetComputeTargetInstanceCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetComputeTargetInstanceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeTargetInstanceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeTargetInstanceName(d.Get("name"), d, config)
 	if err != nil {
@@ -86,15 +88,15 @@ func GetComputeTargetInstanceApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandComputeTargetInstanceName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetInstanceName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetInstanceDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetInstanceDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetInstanceInstance(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetInstanceInstance(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	// This method returns a full self link from a partial self link.
 	if v == nil || v.(string) == "" {
 		// It does not try to construct anything from empty.
@@ -127,11 +129,11 @@ func expandComputeTargetInstanceInstance(v interface{}, d TerraformResourceData,
 	return url + v.(string), nil
 }
 
-func expandComputeTargetInstanceNatPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetInstanceNatPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetInstanceZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetInstanceZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)

@@ -17,6 +17,8 @@ package google
 import (
 	"encoding/json"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const FirestoreDocumentAssetType string = "firestore.googleapis.com/Document"
@@ -28,7 +30,7 @@ func resourceConverterFirestoreDocument() ResourceConverter {
 	}
 }
 
-func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetFirestoreDocumentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetFirestoreDocumentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	fieldsProp, err := expandFirestoreDocumentFields(d.Get("fields"), d, config)
 	if err != nil {
@@ -61,7 +63,7 @@ func GetFirestoreDocumentApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandFirestoreDocumentFields(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreDocumentFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil

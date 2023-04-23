@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const MonitoringMetricDescriptorAssetType string = "monitoring.googleapis.com/MetricDescriptor"
@@ -29,7 +31,7 @@ func resourceConverterMonitoringMetricDescriptor() ResourceConverter {
 	}
 }
 
-func GetMonitoringMetricDescriptorCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetMonitoringMetricDescriptorCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetMonitoringMetricDescriptorCaiObject(d TerraformResourceData, config *Con
 	}
 }
 
-func GetMonitoringMetricDescriptorApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetMonitoringMetricDescriptorApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	typeProp, err := expandMonitoringMetricDescriptorType(d.Get("type"), d, config)
 	if err != nil {
@@ -110,11 +112,11 @@ func GetMonitoringMetricDescriptorApiObject(d TerraformResourceData, config *Con
 	return obj, nil
 }
 
-func expandMonitoringMetricDescriptorType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorLabels(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -151,39 +153,39 @@ func expandMonitoringMetricDescriptorLabels(v interface{}, d TerraformResourceDa
 	return req, nil
 }
 
-func expandMonitoringMetricDescriptorLabelsKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorLabelsKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorLabelsValueType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorLabelsValueType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorLabelsDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorLabelsDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorMetricKind(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorMetricKind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorValueType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorValueType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorUnit(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorUnit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorMetadata(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorMetadata(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -209,14 +211,14 @@ func expandMonitoringMetricDescriptorMetadata(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandMonitoringMetricDescriptorMetadataSamplePeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorMetadataSamplePeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorMetadataIngestDelay(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorMetadataIngestDelay(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringMetricDescriptorLaunchStage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringMetricDescriptorLaunchStage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const SecurityCenterNotificationConfigAssetType string = "securitycenter.googleapis.com/NotificationConfig"
 
@@ -25,7 +29,7 @@ func resourceConverterSecurityCenterNotificationConfig() ResourceConverter {
 	}
 }
 
-func GetSecurityCenterNotificationConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetSecurityCenterNotificationConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//securitycenter.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetSecurityCenterNotificationConfigCaiObject(d TerraformResourceData, confi
 	}
 }
 
-func GetSecurityCenterNotificationConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetSecurityCenterNotificationConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandSecurityCenterNotificationConfigDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -70,15 +74,15 @@ func GetSecurityCenterNotificationConfigApiObject(d TerraformResourceData, confi
 	return obj, nil
 }
 
-func expandSecurityCenterNotificationConfigDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecurityCenterNotificationConfigDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityCenterNotificationConfigPubsubTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecurityCenterNotificationConfigPubsubTopic(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityCenterNotificationConfigStreamingConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecurityCenterNotificationConfigStreamingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -97,6 +101,6 @@ func expandSecurityCenterNotificationConfigStreamingConfig(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandSecurityCenterNotificationConfigStreamingConfigFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSecurityCenterNotificationConfigStreamingConfigFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

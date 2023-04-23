@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const NetworkServicesEdgeCacheOriginAssetType string = "networkservices.googleapis.com/EdgeCacheOrigin"
 
@@ -25,7 +29,7 @@ func resourceConverterNetworkServicesEdgeCacheOrigin() ResourceConverter {
 	}
 }
 
-func GetNetworkServicesEdgeCacheOriginCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetNetworkServicesEdgeCacheOriginCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/edgeCacheOrigins/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetNetworkServicesEdgeCacheOriginCaiObject(d TerraformResourceData, config 
 	}
 }
 
-func GetNetworkServicesEdgeCacheOriginApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetNetworkServicesEdgeCacheOriginApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandNetworkServicesEdgeCacheOriginDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -124,11 +128,11 @@ func GetNetworkServicesEdgeCacheOriginApiObject(d TerraformResourceData, config 
 	return obj, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandNetworkServicesEdgeCacheOriginLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -139,31 +143,31 @@ func expandNetworkServicesEdgeCacheOriginLabels(v interface{}, d TerraformResour
 	return m, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginAddress(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginAddress(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginProtocol(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginProtocol(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginMaxAttempts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginMaxAttempts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginFailoverOrigin(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginFailoverOrigin(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginRetryConditions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginRetryConditions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginTimeout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginTimeout(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -203,23 +207,23 @@ func expandNetworkServicesEdgeCacheOriginTimeout(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginTimeoutConnectTimeout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginTimeoutConnectTimeout(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginTimeoutMaxAttemptsTimeout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginTimeoutMaxAttemptsTimeout(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginTimeoutResponseTimeout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginTimeoutResponseTimeout(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginTimeoutReadTimeout(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginTimeoutReadTimeout(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginAwsV4Authentication(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginAwsV4Authentication(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -252,19 +256,19 @@ func expandNetworkServicesEdgeCacheOriginAwsV4Authentication(v interface{}, d Te
 	return transformed, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginAwsV4AuthenticationAccessKeyId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginAwsV4AuthenticationAccessKeyId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginAwsV4AuthenticationSecretAccessKeyVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginAwsV4AuthenticationSecretAccessKeyVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginAwsV4AuthenticationOriginRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginAwsV4AuthenticationOriginRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginOverrideAction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginOverrideAction(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -290,7 +294,7 @@ func expandNetworkServicesEdgeCacheOriginOriginOverrideAction(v interface{}, d T
 	return transformed, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginOverrideActionUrlRewrite(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginOverrideActionUrlRewrite(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -309,11 +313,11 @@ func expandNetworkServicesEdgeCacheOriginOriginOverrideActionUrlRewrite(v interf
 	return transformed, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginOverrideActionUrlRewriteHostRewrite(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginOverrideActionUrlRewriteHostRewrite(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderAction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderAction(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -332,7 +336,7 @@ func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderAction(v inte
 	return transformed, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequestHeadersToAdd(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequestHeadersToAdd(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -368,19 +372,19 @@ func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequest
 	return req, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequestHeadersToAddHeaderName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequestHeadersToAddHeaderName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequestHeadersToAddReplace(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginOverrideActionHeaderActionRequestHeadersToAddReplace(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginRedirect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginRedirect(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -399,6 +403,6 @@ func expandNetworkServicesEdgeCacheOriginOriginRedirect(v interface{}, d Terrafo
 	return transformed, nil
 }
 
-func expandNetworkServicesEdgeCacheOriginOriginRedirectRedirectConditions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheOriginOriginRedirectRedirectConditions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

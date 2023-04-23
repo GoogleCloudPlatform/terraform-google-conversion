@@ -20,6 +20,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 var sensitiveParams = []string{"secret_access_key"}
@@ -78,7 +80,7 @@ func resourceConverterBigqueryDataTransferConfig() ResourceConverter {
 	}
 }
 
-func GetBigqueryDataTransferConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryDataTransferConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquerydatatransfer.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -99,7 +101,7 @@ func GetBigqueryDataTransferConfigCaiObject(d TerraformResourceData, config *Con
 	}
 }
 
-func GetBigqueryDataTransferConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigqueryDataTransferConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandBigqueryDataTransferConfigDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -185,23 +187,23 @@ func resourceBigqueryDataTransferConfigEncoder(d TerraformResourceData, meta int
 	return obj, nil
 }
 
-func expandBigqueryDataTransferConfigDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigDestinationDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigDestinationDatasetId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigDataSourceId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigDataSourceId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigSchedule(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigSchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigScheduleOptions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigScheduleOptions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -234,19 +236,19 @@ func expandBigqueryDataTransferConfigScheduleOptions(v interface{}, d TerraformR
 	return transformed, nil
 }
 
-func expandBigqueryDataTransferConfigScheduleOptionsDisableAutoScheduling(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigScheduleOptionsDisableAutoScheduling(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigScheduleOptionsStartTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigScheduleOptionsStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigScheduleOptionsEndTime(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigScheduleOptionsEndTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigEmailPreferences(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigEmailPreferences(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -265,23 +267,23 @@ func expandBigqueryDataTransferConfigEmailPreferences(v interface{}, d Terraform
 	return transformed, nil
 }
 
-func expandBigqueryDataTransferConfigEmailPreferencesEnableFailureEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigEmailPreferencesEnableFailureEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigNotificationPubsubTopic(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigNotificationPubsubTopic(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigDataRefreshWindowDays(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigDataRefreshWindowDays(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigDisabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDataTransferConfigDisabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDataTransferConfigParams(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandBigqueryDataTransferConfigParams(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

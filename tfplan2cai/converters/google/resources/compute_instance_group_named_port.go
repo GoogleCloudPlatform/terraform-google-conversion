@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeInstanceGroupNamedPortAssetType string = "compute.googleapis.com/InstanceGroupNamedPort"
@@ -28,7 +30,7 @@ func resourceConverterComputeInstanceGroupNamedPort() ResourceConverter {
 	}
 }
 
-func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceGroups/{{group}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *
 	}
 }
 
-func GetComputeInstanceGroupNamedPortApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeInstanceGroupNamedPortApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeInstanceGroupNamedPortName(d.Get("name"), d, config)
 	if err != nil {
@@ -68,7 +70,7 @@ func GetComputeInstanceGroupNamedPortApiObject(d TerraformResourceData, config *
 }
 
 func resourceComputeInstanceGroupNamedPortEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	config := meta.(*Config)
+	config := meta.(*transport_tpg.Config)
 	ig, err := ParseInstanceGroupFieldValue(d.Get("group").(string), d, config)
 	if err != nil {
 		return nil, err
@@ -87,10 +89,10 @@ func resourceComputeInstanceGroupNamedPortEncoder(d TerraformResourceData, meta 
 	return obj, nil
 }
 
-func expandComputeInstanceGroupNamedPortName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeInstanceGroupNamedPortName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeInstanceGroupNamedPortPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeInstanceGroupNamedPortPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

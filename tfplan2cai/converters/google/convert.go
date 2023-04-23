@@ -25,6 +25,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/ancestrymanager"
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfdata"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfplan"
 
@@ -55,7 +56,7 @@ type Asset struct {
 }
 
 // NewConverter is a factory function for Converter.
-func NewConverter(cfg *resources.Config, ancestryManager ancestrymanager.AncestryManager, offline bool, convertUnchanged bool, errorLogger *zap.Logger) *Converter {
+func NewConverter(cfg *transport_tpg.Config, ancestryManager ancestrymanager.AncestryManager, offline bool, convertUnchanged bool, errorLogger *zap.Logger) *Converter {
 	return &Converter{
 		schema:           provider.Provider(),
 		converters:       resources.ResourceConverters(),
@@ -78,7 +79,7 @@ type Converter struct {
 	converters map[string][]resources.ResourceConverter
 
 	offline bool
-	cfg     *resources.Config
+	cfg     *transport_tpg.Config
 
 	// ancestryManager provides a manager to find the ancestry information for a project.
 	ancestryManager ancestrymanager.AncestryManager
@@ -289,7 +290,7 @@ func (c *Converter) Assets() []caiasset.Asset {
 }
 
 // augmentAsset adds data to an asset that is not set by the conversion library.
-func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *resources.Config, cai resources.Asset) (Asset, error) {
+func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *transport_tpg.Config, cai resources.Asset) (Asset, error) {
 	ancestors, parent, err := c.ancestryManager.Ancestors(cfg, tfData, &cai)
 	if err != nil {
 		return Asset{}, fmt.Errorf("getting resource ancestry or parent failed: %w", err)
@@ -424,7 +425,7 @@ func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *re
 	}, nil
 }
 
-func convertWrapper(conv resources.ResourceConverter, d resources.TerraformResourceData, config *resources.Config) (assets []resources.Asset, err error) {
+func convertWrapper(conv resources.ResourceConverter, d resources.TerraformResourceData, config *transport_tpg.Config) (assets []resources.Asset, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			switch v := r.(type) {

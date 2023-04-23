@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const FirestoreDatabaseAssetType string = "firestore.googleapis.com/Database"
 
@@ -25,7 +29,7 @@ func resourceConverterFirestoreDatabase() ResourceConverter {
 	}
 }
 
-func GetFirestoreDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetFirestoreDatabaseCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/projects/{{project}}/databases/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetFirestoreDatabaseCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetFirestoreDatabaseApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetFirestoreDatabaseApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandFirestoreDatabaseName(d.Get("name"), d, config)
 	if err != nil {
@@ -88,26 +92,26 @@ func GetFirestoreDatabaseApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandFirestoreDatabaseName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreDatabaseName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return ReplaceVars(d, config, "projects/{{project}}/databases/{{name}}")
 }
 
-func expandFirestoreDatabaseLocationId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreDatabaseLocationId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreDatabaseType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreDatabaseType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreDatabaseConcurrencyMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreDatabaseConcurrencyMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreDatabaseAppEngineIntegrationMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreDatabaseAppEngineIntegrationMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreDatabaseEtag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFirestoreDatabaseEtag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

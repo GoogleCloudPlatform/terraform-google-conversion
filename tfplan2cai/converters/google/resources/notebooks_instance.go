@@ -19,6 +19,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const notebooksInstanceGoogleProvidedLabel = "goog-caip-notebook"
@@ -47,7 +49,7 @@ func resourceConverterNotebooksInstance() ResourceConverter {
 	}
 }
 
-func GetNotebooksInstanceCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetNotebooksInstanceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -68,7 +70,7 @@ func GetNotebooksInstanceCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetNotebooksInstanceApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetNotebooksInstanceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	machineTypeProp, err := expandNotebooksInstanceMachineType(d.Get("machine_type"), d, config)
 	if err != nil {
@@ -236,27 +238,27 @@ func GetNotebooksInstanceApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandNotebooksInstanceMachineType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceMachineType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstancePostStartupScript(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstancePostStartupScript(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceInstanceOwners(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceInstanceOwners(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceServiceAccount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceServiceAccount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceServiceAccountScopes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceServiceAccountScopes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceAcceleratorConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceAcceleratorConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -282,15 +284,15 @@ func expandNotebooksInstanceAcceleratorConfig(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandNotebooksInstanceAcceleratorConfigType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceAcceleratorConfigType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceAcceleratorConfigCoreCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceAcceleratorConfigCoreCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceShieldedInstanceConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceShieldedInstanceConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -323,23 +325,23 @@ func expandNotebooksInstanceShieldedInstanceConfig(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandNotebooksInstanceShieldedInstanceConfigEnableIntegrityMonitoring(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceShieldedInstanceConfigEnableIntegrityMonitoring(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceShieldedInstanceConfigEnableSecureBoot(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceShieldedInstanceConfigEnableSecureBoot(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceShieldedInstanceConfigEnableVtpm(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceShieldedInstanceConfigEnableVtpm(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceNicType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceNicType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceReservationAffinity(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceReservationAffinity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -372,71 +374,71 @@ func expandNotebooksInstanceReservationAffinity(v interface{}, d TerraformResour
 	return transformed, nil
 }
 
-func expandNotebooksInstanceReservationAffinityConsumeReservationType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceReservationAffinityConsumeReservationType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceReservationAffinityKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceReservationAffinityKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceReservationAffinityValues(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceReservationAffinityValues(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceInstallGpuDriver(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceInstallGpuDriver(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceCustomGpuDriverPath(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceCustomGpuDriverPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceBootDiskType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceBootDiskType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceBootDiskSizeGb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceBootDiskSizeGb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceDataDiskType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceDataDiskType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceDataDiskSizeGb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceDataDiskSizeGb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceNoRemoveDataDisk(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceNoRemoveDataDisk(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceDiskEncryption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceDiskEncryption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceKmsKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceKmsKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceNoPublicIp(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceNoPublicIp(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceNoProxyAccess(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceNoProxyAccess(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceSubnet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceSubnet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandNotebooksInstanceLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -447,11 +449,11 @@ func expandNotebooksInstanceLabels(v interface{}, d TerraformResourceData, confi
 	return m, nil
 }
 
-func expandNotebooksInstanceTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceTags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceMetadata(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandNotebooksInstanceMetadata(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -462,7 +464,7 @@ func expandNotebooksInstanceMetadata(v interface{}, d TerraformResourceData, con
 	return m, nil
 }
 
-func expandNotebooksInstanceVmImage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceVmImage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -495,19 +497,19 @@ func expandNotebooksInstanceVmImage(v interface{}, d TerraformResourceData, conf
 	return transformed, nil
 }
 
-func expandNotebooksInstanceVmImageProject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceVmImageProject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceVmImageImageFamily(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceVmImageImageFamily(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceVmImageImageName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceVmImageImageName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceContainerImage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceContainerImage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -533,10 +535,10 @@ func expandNotebooksInstanceContainerImage(v interface{}, d TerraformResourceDat
 	return transformed, nil
 }
 
-func expandNotebooksInstanceContainerImageRepository(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceContainerImageRepository(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNotebooksInstanceContainerImageTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNotebooksInstanceContainerImageTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

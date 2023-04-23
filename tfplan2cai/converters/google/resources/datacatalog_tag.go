@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const DataCatalogTagAssetType string = "datacatalog.googleapis.com/Tag"
@@ -29,7 +31,7 @@ func resourceConverterDataCatalogTag() ResourceConverter {
 	}
 }
 
-func GetDataCatalogTagCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDataCatalogTagCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{parent}}/tags")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetDataCatalogTagCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	}
 }
 
-func GetDataCatalogTagApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDataCatalogTagApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	templateProp, err := expandDataCatalogTagTemplate(d.Get("template"), d, config)
 	if err != nil {
@@ -94,11 +96,11 @@ func resourceDataCatalogTagEncoder(d TerraformResourceData, meta interface{}, ob
 	return obj, nil
 }
 
-func expandDataCatalogTagTemplate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagTemplate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFields(v interface{}, d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func expandDataCatalogTagFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	if v == nil {
 		return map[string]interface{}{}, nil
 	}
@@ -165,31 +167,31 @@ func expandDataCatalogTagFields(v interface{}, d TerraformResourceData, config *
 	return m, nil
 }
 
-func expandDataCatalogTagFieldsDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagFieldsDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsOrder(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagFieldsOrder(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsDoubleValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagFieldsDoubleValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsStringValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagFieldsStringValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsBoolValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagFieldsBoolValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsTimestampValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagFieldsTimestampValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsEnumValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagFieldsEnumValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	// we flattened the original["enum_value"]["display_name"] object to be just original["enum_value"] so here,
 	// v is the value we want from the config
 	transformed := make(map[string]interface{})
@@ -200,6 +202,6 @@ func expandDataCatalogTagFieldsEnumValue(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandDataCatalogTagColumn(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDataCatalogTagColumn(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

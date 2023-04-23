@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const BigqueryDatapolicyDataPolicyAssetType string = "bigquerydatapolicy.googleapis.com/DataPolicy"
 
@@ -25,7 +29,7 @@ func resourceConverterBigqueryDatapolicyDataPolicy() ResourceConverter {
 	}
 }
 
-func GetBigqueryDatapolicyDataPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigqueryDatapolicyDataPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquerydatapolicy.googleapis.com/projects/{{project}}/locations/{{location}}/dataPolicies/{{data_policy_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetBigqueryDatapolicyDataPolicyCaiObject(d TerraformResourceData, config *C
 	}
 }
 
-func GetBigqueryDatapolicyDataPolicyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigqueryDatapolicyDataPolicyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	dataPolicyIdProp, err := expandBigqueryDatapolicyDataPolicyDataPolicyId(d.Get("data_policy_id"), d, config)
 	if err != nil {
@@ -76,19 +80,19 @@ func GetBigqueryDatapolicyDataPolicyApiObject(d TerraformResourceData, config *C
 	return obj, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyDataPolicyId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyDataPolicyId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyPolicyTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyPolicyTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyDataPolicyType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyDataPolicyType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyDataMaskingPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyDataMaskingPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -107,6 +111,6 @@ func expandBigqueryDatapolicyDataPolicyDataMaskingPolicy(v interface{}, d Terraf
 	return transformed, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyDataMaskingPolicyPredefinedExpression(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyDataMaskingPolicyPredefinedExpression(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

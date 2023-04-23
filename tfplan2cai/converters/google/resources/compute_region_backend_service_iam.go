@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ComputeRegionBackendServiceIAMAssetType string = "compute.googleapis.com/RegionBackendService"
@@ -47,15 +51,15 @@ func resourceConverterComputeRegionBackendServiceIamMember() ResourceConverter {
 	}
 }
 
-func GetComputeRegionBackendServiceIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionBackendServiceIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeRegionBackendServiceIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetComputeRegionBackendServiceIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionBackendServiceIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeRegionBackendServiceIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetComputeRegionBackendServiceIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionBackendServiceIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeRegionBackendServiceIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeComputeRegionBackendServiceIamMemberDelete(existing, incoming Asset) A
 
 func newComputeRegionBackendServiceIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newComputeRegionBackendServiceIamAsset(
 	}}, nil
 }
 
-func FetchComputeRegionBackendServiceIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchComputeRegionBackendServiceIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
 		return Asset{}, ErrEmptyIdentityField

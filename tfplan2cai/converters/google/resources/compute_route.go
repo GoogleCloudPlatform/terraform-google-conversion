@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeRouteAssetType string = "compute.googleapis.com/Route"
@@ -30,7 +32,7 @@ func resourceConverterComputeRoute() ResourceConverter {
 	}
 }
 
-func GetComputeRouteCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRouteCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/routes/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetComputeRouteCaiObject(d TerraformResourceData, config *Config) ([]Asset,
 	}
 }
 
-func GetComputeRouteApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeRouteApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	destRangeProp, err := expandComputeRouteDestRange(d.Get("dest_range"), d, config)
 	if err != nil {
@@ -123,19 +125,19 @@ func GetComputeRouteApiObject(d TerraformResourceData, config *Config) (map[stri
 	return obj, nil
 }
 
-func expandComputeRouteDestRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteDestRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouteDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouteName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouteNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
@@ -143,15 +145,15 @@ func expandComputeRouteNetwork(v interface{}, d TerraformResourceData, config *C
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRoutePriority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRoutePriority(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouteTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteTags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v.(*schema.Set).List(), nil
 }
 
-func expandComputeRouteNextHopGateway(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteNextHopGateway(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == "default-internet-gateway" {
 		return ReplaceVars(d, config, "projects/{{project}}/global/gateways/default-internet-gateway")
 	} else {
@@ -159,7 +161,7 @@ func expandComputeRouteNextHopGateway(v interface{}, d TerraformResourceData, co
 	}
 }
 
-func expandComputeRouteNextHopInstance(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteNextHopInstance(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == "" {
 		return v, nil
 	}
@@ -180,11 +182,11 @@ func expandComputeRouteNextHopInstance(v interface{}, d TerraformResourceData, c
 	return nextInstance.SelfLink, nil
 }
 
-func expandComputeRouteNextHopIp(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteNextHopIp(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouteNextHopVpnTunnel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteNextHopVpnTunnel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("vpnTunnels", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for next_hop_vpn_tunnel: %s", err)
@@ -192,6 +194,6 @@ func expandComputeRouteNextHopVpnTunnel(v interface{}, d TerraformResourceData, 
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRouteNextHopIlb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRouteNextHopIlb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

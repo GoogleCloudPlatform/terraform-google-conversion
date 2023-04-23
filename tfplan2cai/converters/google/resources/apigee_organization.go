@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeOrganizationAssetType string = "apigee.googleapis.com/Organization"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeOrganization() ResourceConverter {
 	}
 }
 
-func GetApigeeOrganizationCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeOrganizationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/organizations/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeOrganizationCaiObject(d TerraformResourceData, config *Config) ([]
 	}
 }
 
-func GetApigeeOrganizationApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeOrganizationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandApigeeOrganizationDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -105,35 +109,35 @@ func resourceApigeeOrganizationEncoder(d TerraformResourceData, meta interface{}
 	return obj, nil
 }
 
-func expandApigeeOrganizationDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeOrganizationDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeOrganizationAnalyticsRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationAnalyticsRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeOrganizationAuthorizedNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationAuthorizedNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeOrganizationRuntimeType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationRuntimeType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeOrganizationBillingType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationBillingType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeOrganizationRuntimeDatabaseEncryptionKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationRuntimeDatabaseEncryptionKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeOrganizationProperties(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationProperties(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -152,7 +156,7 @@ func expandApigeeOrganizationProperties(v interface{}, d TerraformResourceData, 
 	return transformed, nil
 }
 
-func expandApigeeOrganizationPropertiesProperty(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationPropertiesProperty(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -181,10 +185,10 @@ func expandApigeeOrganizationPropertiesProperty(v interface{}, d TerraformResour
 	return req, nil
 }
 
-func expandApigeeOrganizationPropertiesPropertyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationPropertiesPropertyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeOrganizationPropertiesPropertyValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeOrganizationPropertiesPropertyValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

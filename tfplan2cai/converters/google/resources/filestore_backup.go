@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const FilestoreBackupAssetType string = "file.googleapis.com/Backup"
 
@@ -25,7 +29,7 @@ func resourceConverterFilestoreBackup() ResourceConverter {
 	}
 }
 
-func GetFilestoreBackupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetFilestoreBackupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//file.googleapis.com/projects/{{project}}/locations/{{location}}/backups/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetFilestoreBackupCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetFilestoreBackupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetFilestoreBackupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandFilestoreBackupDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -76,11 +80,11 @@ func GetFilestoreBackupApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandFilestoreBackupDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFilestoreBackupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFilestoreBackupLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandFilestoreBackupLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -91,10 +95,10 @@ func expandFilestoreBackupLabels(v interface{}, d TerraformResourceData, config 
 	return m, nil
 }
 
-func expandFilestoreBackupSourceInstance(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFilestoreBackupSourceInstance(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFilestoreBackupSourceFileShare(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandFilestoreBackupSourceFileShare(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

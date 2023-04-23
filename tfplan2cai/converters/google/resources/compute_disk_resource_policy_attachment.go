@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeDiskResourcePolicyAttachmentAssetType string = "compute.googleapis.com/DiskResourcePolicyAttachment"
@@ -28,7 +30,7 @@ func resourceConverterComputeDiskResourcePolicyAttachment() ResourceConverter {
 	}
 }
 
-func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{disk}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, co
 	}
 }
 
-func GetComputeDiskResourcePolicyAttachmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeDiskResourcePolicyAttachmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeDiskResourcePolicyAttachmentName(d.Get("name"), d, config)
 	if err != nil {
@@ -62,7 +64,7 @@ func GetComputeDiskResourcePolicyAttachmentApiObject(d TerraformResourceData, co
 }
 
 func resourceComputeDiskResourcePolicyAttachmentEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	config := meta.(*Config)
+	config := meta.(*transport_tpg.Config)
 	project, err := getProject(d, config)
 	if err != nil {
 		return nil, err
@@ -90,6 +92,6 @@ func resourceComputeDiskResourcePolicyAttachmentEncoder(d TerraformResourceData,
 	return obj, nil
 }
 
-func expandComputeDiskResourcePolicyAttachmentName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeDiskResourcePolicyAttachmentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

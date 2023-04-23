@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const NetworkServicesEdgeCacheKeysetAssetType string = "networkservices.googleapis.com/EdgeCacheKeyset"
 
@@ -25,7 +29,7 @@ func resourceConverterNetworkServicesEdgeCacheKeyset() ResourceConverter {
 	}
 }
 
-func GetNetworkServicesEdgeCacheKeysetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetNetworkServicesEdgeCacheKeysetCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/edgeCacheKeysets/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetNetworkServicesEdgeCacheKeysetCaiObject(d TerraformResourceData, config 
 	}
 }
 
-func GetNetworkServicesEdgeCacheKeysetApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetNetworkServicesEdgeCacheKeysetApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandNetworkServicesEdgeCacheKeysetDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -76,11 +80,11 @@ func GetNetworkServicesEdgeCacheKeysetApiObject(d TerraformResourceData, config 
 	return obj, nil
 }
 
-func expandNetworkServicesEdgeCacheKeysetDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheKeysetDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheKeysetLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandNetworkServicesEdgeCacheKeysetLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -91,7 +95,7 @@ func expandNetworkServicesEdgeCacheKeysetLabels(v interface{}, d TerraformResour
 	return m, nil
 }
 
-func expandNetworkServicesEdgeCacheKeysetPublicKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheKeysetPublicKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -127,19 +131,19 @@ func expandNetworkServicesEdgeCacheKeysetPublicKey(v interface{}, d TerraformRes
 	return req, nil
 }
 
-func expandNetworkServicesEdgeCacheKeysetPublicKeyId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheKeysetPublicKeyId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheKeysetPublicKeyValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheKeysetPublicKeyValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheKeysetPublicKeyManaged(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheKeysetPublicKeyManaged(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetworkServicesEdgeCacheKeysetValidationSharedKeys(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheKeysetValidationSharedKeys(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -161,6 +165,6 @@ func expandNetworkServicesEdgeCacheKeysetValidationSharedKeys(v interface{}, d T
 	return req, nil
 }
 
-func expandNetworkServicesEdgeCacheKeysetValidationSharedKeysSecretVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandNetworkServicesEdgeCacheKeysetValidationSharedKeysSecretVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

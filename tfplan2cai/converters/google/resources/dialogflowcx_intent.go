@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DialogflowCXIntentAssetType string = "{{location}}-dialogflow.googleapis.com/Intent"
 
@@ -25,7 +29,7 @@ func resourceConverterDialogflowCXIntent() ResourceConverter {
 	}
 }
 
-func GetDialogflowCXIntentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDialogflowCXIntentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/intents/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDialogflowCXIntentCaiObject(d TerraformResourceData, config *Config) ([]
 	}
 }
 
-func GetDialogflowCXIntentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDialogflowCXIntentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowCXIntentDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -100,11 +104,11 @@ func GetDialogflowCXIntentApiObject(d TerraformResourceData, config *Config) (ma
 	return obj, nil
 }
 
-func expandDialogflowCXIntentDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentTrainingPhrases(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentTrainingPhrases(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -140,11 +144,11 @@ func expandDialogflowCXIntentTrainingPhrases(v interface{}, d TerraformResourceD
 	return req, nil
 }
 
-func expandDialogflowCXIntentTrainingPhrasesId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentTrainingPhrasesId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentTrainingPhrasesParts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentTrainingPhrasesParts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -173,19 +177,19 @@ func expandDialogflowCXIntentTrainingPhrasesParts(v interface{}, d TerraformReso
 	return req, nil
 }
 
-func expandDialogflowCXIntentTrainingPhrasesPartsText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentTrainingPhrasesPartsText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentTrainingPhrasesPartsParameterId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentTrainingPhrasesPartsParameterId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentTrainingPhrasesRepeatCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentTrainingPhrasesRepeatCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentParameters(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentParameters(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -228,31 +232,31 @@ func expandDialogflowCXIntentParameters(v interface{}, d TerraformResourceData, 
 	return req, nil
 }
 
-func expandDialogflowCXIntentParametersId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentParametersId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentParametersEntityType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentParametersEntityType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentParametersIsList(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentParametersIsList(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentParametersRedact(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentParametersRedact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentPriority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentPriority(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentIsFallback(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentIsFallback(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDialogflowCXIntentLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -263,10 +267,10 @@ func expandDialogflowCXIntentLabels(v interface{}, d TerraformResourceData, conf
 	return m, nil
 }
 
-func expandDialogflowCXIntentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXIntentLanguageCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXIntentLanguageCode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

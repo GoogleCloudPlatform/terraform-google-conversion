@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // API does not return a value for REDUCE_NONE
@@ -34,7 +36,7 @@ func resourceConverterMonitoringAlertPolicy() ResourceConverter {
 	}
 }
 
-func GetMonitoringAlertPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetMonitoringAlertPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -55,7 +57,7 @@ func GetMonitoringAlertPolicyCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetMonitoringAlertPolicyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetMonitoringAlertPolicyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandMonitoringAlertPolicyDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -109,19 +111,19 @@ func GetMonitoringAlertPolicyApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandMonitoringAlertPolicyDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyCombiner(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyCombiner(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditions(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -178,7 +180,7 @@ func expandMonitoringAlertPolicyConditions(v interface{}, d TerraformResourceDat
 	return req, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -218,7 +220,7 @@ func expandMonitoringAlertPolicyConditionsConditionAbsent(v interface{}, d Terra
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentAggregations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentAggregations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -261,23 +263,23 @@ func expandMonitoringAlertPolicyConditionsConditionAbsentAggregations(v interfac
 	return req, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentAggregationsPerSeriesAligner(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentAggregationsPerSeriesAligner(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentAggregationsGroupByFields(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentAggregationsGroupByFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentAggregationsAlignmentPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentAggregationsAlignmentPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentAggregationsCrossSeriesReducer(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentAggregationsCrossSeriesReducer(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentTrigger(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentTrigger(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -303,27 +305,27 @@ func expandMonitoringAlertPolicyConditionsConditionAbsentTrigger(v interface{}, 
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentTriggerPercent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentTriggerPercent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentTriggerCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentTriggerCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionAbsentFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionAbsentFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -363,15 +365,15 @@ func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguage(v int
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageQuery(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageQuery(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTrigger(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTrigger(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -397,19 +399,19 @@ func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTrigge
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTriggerPercent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTriggerPercent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTriggerCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTriggerCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageEvaluationMissingData(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageEvaluationMissingData(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThreshold(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -484,15 +486,15 @@ func expandMonitoringAlertPolicyConditionsConditionThreshold(v interface{}, d Te
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdThresholdValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdThresholdValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -535,31 +537,31 @@ func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregati
 	return req, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsPerSeriesAligner(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsPerSeriesAligner(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsGroupByFields(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsGroupByFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsAlignmentPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsAlignmentPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsCrossSeriesReducer(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsCrossSeriesReducer(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdDuration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdDuration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdComparison(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdComparison(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdTrigger(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdTrigger(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -585,15 +587,15 @@ func expandMonitoringAlertPolicyConditionsConditionThresholdTrigger(v interface{
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdTriggerPercent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdTriggerPercent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdTriggerCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdTriggerCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdAggregations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdAggregations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -636,35 +638,35 @@ func expandMonitoringAlertPolicyConditionsConditionThresholdAggregations(v inter
 	return req, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdAggregationsPerSeriesAligner(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdAggregationsPerSeriesAligner(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdAggregationsGroupByFields(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdAggregationsGroupByFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdAggregationsAlignmentPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdAggregationsAlignmentPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdAggregationsCrossSeriesReducer(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdAggregationsCrossSeriesReducer(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionThresholdEvaluationMissingData(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionThresholdEvaluationMissingData(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMatchedLog(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMatchedLog(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -690,11 +692,11 @@ func expandMonitoringAlertPolicyConditionsConditionMatchedLog(v interface{}, d T
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMatchedLogFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyConditionsConditionMatchedLogFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyConditionsConditionMatchedLogLabelExtractors(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandMonitoringAlertPolicyConditionsConditionMatchedLogLabelExtractors(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -705,11 +707,11 @@ func expandMonitoringAlertPolicyConditionsConditionMatchedLogLabelExtractors(v i
 	return m, nil
 }
 
-func expandMonitoringAlertPolicyNotificationChannels(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyNotificationChannels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyAlertStrategy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyAlertStrategy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -735,7 +737,7 @@ func expandMonitoringAlertPolicyAlertStrategy(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyAlertStrategyNotificationRateLimit(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyAlertStrategyNotificationRateLimit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -754,15 +756,15 @@ func expandMonitoringAlertPolicyAlertStrategyNotificationRateLimit(v interface{}
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyAlertStrategyNotificationRateLimitPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyAlertStrategyNotificationRateLimitPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyAlertStrategyAutoClose(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyAlertStrategyAutoClose(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyUserLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandMonitoringAlertPolicyUserLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -773,7 +775,7 @@ func expandMonitoringAlertPolicyUserLabels(v interface{}, d TerraformResourceDat
 	return m, nil
 }
 
-func expandMonitoringAlertPolicyDocumentation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyDocumentation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -799,10 +801,10 @@ func expandMonitoringAlertPolicyDocumentation(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandMonitoringAlertPolicyDocumentationContent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyDocumentationContent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringAlertPolicyDocumentationMimeType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringAlertPolicyDocumentationMimeType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

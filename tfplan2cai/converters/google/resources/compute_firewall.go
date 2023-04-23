@@ -23,6 +23,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func resourceComputeFirewallRuleHash(v interface{}) int {
@@ -139,7 +141,7 @@ func resourceConverterComputeFirewall() ResourceConverter {
 	}
 }
 
-func GetComputeFirewallCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeFirewallCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/firewalls/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -160,7 +162,7 @@ func GetComputeFirewallCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetComputeFirewallApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeFirewallApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	allowedProp, err := expandComputeFirewallAllow(d.Get("allow"), d, config)
 	if err != nil {
@@ -256,7 +258,7 @@ func GetComputeFirewallApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandComputeFirewallAllow(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallAllow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -286,15 +288,15 @@ func expandComputeFirewallAllow(v interface{}, d TerraformResourceData, config *
 	return req, nil
 }
 
-func expandComputeFirewallAllowProtocol(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallAllowProtocol(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallAllowPorts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallAllowPorts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallDeny(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallDeny(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -324,32 +326,32 @@ func expandComputeFirewallDeny(v interface{}, d TerraformResourceData, config *C
 	return req, nil
 }
 
-func expandComputeFirewallDenyProtocol(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallDenyProtocol(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallDenyPorts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallDenyPorts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallDestinationRanges(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallDestinationRanges(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandComputeFirewallDirection(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallDirection(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallDisabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallDisabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallLogConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallLogConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	transformed := make(map[string]interface{})
 
@@ -369,11 +371,11 @@ func expandComputeFirewallLogConfig(v interface{}, d TerraformResourceData, conf
 	return transformed, nil
 }
 
-func expandComputeFirewallName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
@@ -381,31 +383,31 @@ func expandComputeFirewallNetwork(v interface{}, d TerraformResourceData, config
 	return f.RelativeLink(), nil
 }
 
-func expandComputeFirewallPriority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallPriority(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeFirewallSourceRanges(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallSourceRanges(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandComputeFirewallSourceServiceAccounts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallSourceServiceAccounts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandComputeFirewallSourceTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallSourceTags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandComputeFirewallTargetServiceAccounts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallTargetServiceAccounts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandComputeFirewallTargetTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeFirewallTargetTags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }

@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DialogflowCXFlowAssetType string = "{{location}}-dialogflow.googleapis.com/Flow"
 
@@ -25,7 +29,7 @@ func resourceConverterDialogflowCXFlow() ResourceConverter {
 	}
 }
 
-func GetDialogflowCXFlowCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDialogflowCXFlowCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/flows/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDialogflowCXFlowCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetDialogflowCXFlowApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDialogflowCXFlowApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowCXFlowDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -94,15 +98,15 @@ func GetDialogflowCXFlowApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandDialogflowCXFlowDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -159,19 +163,19 @@ func expandDialogflowCXFlowTransitionRoutes(v interface{}, d TerraformResourceDa
 	return req, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesIntent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesIntent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesCondition(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesCondition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -211,7 +215,7 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(v interface{}, d T
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -233,7 +237,7 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(v interfac
 	return req, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -259,35 +263,35 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesText(v inte
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTargetPage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTargetPage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTargetFlow(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTargetFlow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlers(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlers(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -337,15 +341,15 @@ func expandDialogflowCXFlowEventHandlers(v interface{}, d TerraformResourceData,
 	return req, nil
 }
 
-func expandDialogflowCXFlowEventHandlersName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersEvent(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersEvent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -385,7 +389,7 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d Terr
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -407,7 +411,7 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(v interface{}
 	return req, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -433,39 +437,39 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesText(v interfa
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTargetPage(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTargetPage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTargetFlow(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTargetFlow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRouteGroups(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRouteGroups(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowNluSettings(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowNluSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -498,18 +502,18 @@ func expandDialogflowCXFlowNluSettings(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowNluSettingsModelType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowNluSettingsModelType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowNluSettingsClassificationThreshold(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowNluSettingsClassificationThreshold(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowNluSettingsModelTrainingMode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowNluSettingsModelTrainingMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowLanguageCode(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowCXFlowLanguageCode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

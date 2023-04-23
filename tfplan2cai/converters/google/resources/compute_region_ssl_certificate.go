@@ -19,6 +19,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeRegionSslCertificateAssetType string = "compute.googleapis.com/RegionSslCertificate"
@@ -30,7 +32,7 @@ func resourceConverterComputeRegionSslCertificate() ResourceConverter {
 	}
 }
 
-func GetComputeRegionSslCertificateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeRegionSslCertificateCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/sslCertificates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,7 +53,7 @@ func GetComputeRegionSslCertificateCaiObject(d TerraformResourceData, config *Co
 	}
 }
 
-func GetComputeRegionSslCertificateApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeRegionSslCertificateApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	certificateProp, err := expandComputeRegionSslCertificateCertificate(d.Get("certificate"), d, config)
 	if err != nil {
@@ -87,15 +89,15 @@ func GetComputeRegionSslCertificateApiObject(d TerraformResourceData, config *Co
 	return obj, nil
 }
 
-func expandComputeRegionSslCertificateCertificate(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionSslCertificateCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionSslCertificateDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionSslCertificateDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionSslCertificateName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionSslCertificateName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	var certName string
 	if v, ok := d.GetOk("name"); ok {
 		certName = v.(string)
@@ -113,11 +115,11 @@ func expandComputeRegionSslCertificateName(v interface{}, d TerraformResourceDat
 	return certName, nil
 }
 
-func expandComputeRegionSslCertificatePrivateKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionSslCertificatePrivateKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionSslCertificateRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeRegionSslCertificateRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)

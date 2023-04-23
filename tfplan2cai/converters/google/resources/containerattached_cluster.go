@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func suppressAttachedClustersLoggingConfigDiff(_, old, new string, d *schema.ResourceData) bool {
@@ -40,7 +42,7 @@ func resourceConverterContainerAttachedCluster() ResourceConverter {
 	}
 }
 
-func GetContainerAttachedClusterCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetContainerAttachedClusterCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-gkemulticloud.googleapis.com/projects/{{project}}/locations/{{location}}/attachedClusters/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -61,7 +63,7 @@ func GetContainerAttachedClusterCaiObject(d TerraformResourceData, config *Confi
 	}
 }
 
-func GetContainerAttachedClusterApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetContainerAttachedClusterApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandContainerAttachedClusterName(d.Get("name"), d, config)
 	if err != nil {
@@ -127,15 +129,15 @@ func GetContainerAttachedClusterApiObject(d TerraformResourceData, config *Confi
 	return obj, nil
 }
 
-func expandContainerAttachedClusterName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAttachedClusterDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAttachedClusterOidcConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterOidcConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -161,23 +163,23 @@ func expandContainerAttachedClusterOidcConfig(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandContainerAttachedClusterOidcConfigIssuerUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterOidcConfigIssuerUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAttachedClusterOidcConfigJwks(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterOidcConfigJwks(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAttachedClusterPlatformVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterPlatformVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAttachedClusterDistribution(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterDistribution(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAttachedClusterFleet(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterFleet(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -203,15 +205,15 @@ func expandContainerAttachedClusterFleet(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandContainerAttachedClusterFleetMembership(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterFleetMembership(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAttachedClusterFleetProject(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterFleetProject(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandContainerAttachedClusterAnnotations(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandContainerAttachedClusterAnnotations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -222,7 +224,7 @@ func expandContainerAttachedClusterAnnotations(v interface{}, d TerraformResourc
 	return m, nil
 }
 
-func expandContainerAttachedClusterLoggingConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterLoggingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		transformed := make(map[string]interface{})
@@ -242,7 +244,7 @@ func expandContainerAttachedClusterLoggingConfig(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandContainerAttachedClusterLoggingConfigComponentConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterLoggingConfigComponentConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -266,7 +268,7 @@ func expandContainerAttachedClusterLoggingConfigComponentConfig(v interface{}, d
 	return transformed, nil
 }
 
-func expandContainerAttachedClusterLoggingConfigComponentConfigEnableComponents(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterLoggingConfigComponentConfigEnableComponents(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -291,7 +293,7 @@ type attachedClusterUser struct {
 //	     "user2"
 //	   ]
 //	}
-func expandContainerAttachedClusterAuthorization(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterAuthorization(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -308,7 +310,7 @@ func expandContainerAttachedClusterAuthorization(v interface{}, d TerraformResou
 	return transformed, nil
 }
 
-func expandContainerAttachedClusterMonitoringConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterMonitoringConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -332,7 +334,7 @@ func expandContainerAttachedClusterMonitoringConfig(v interface{}, d TerraformRe
 	return transformed, nil
 }
 
-func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -356,6 +358,6 @@ func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfig(v int
 	return transformed, nil
 }
 
-func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

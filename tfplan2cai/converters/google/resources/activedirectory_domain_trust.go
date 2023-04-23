@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ActiveDirectoryDomainTrustAssetType string = "managedidentities.googleapis.com/DomainTrust"
@@ -29,7 +31,7 @@ func resourceConverterActiveDirectoryDomainTrust() ResourceConverter {
 	}
 }
 
-func GetActiveDirectoryDomainTrustCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetActiveDirectoryDomainTrustCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//managedidentities.googleapis.com/projects/{{project}}/locations/global/domains/{{domain}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetActiveDirectoryDomainTrustCaiObject(d TerraformResourceData, config *Con
 	}
 }
 
-func GetActiveDirectoryDomainTrustApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetActiveDirectoryDomainTrustApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	targetDomainNameProp, err := expandActiveDirectoryDomainTrustTargetDomainName(d.Get("target_domain_name"), d, config)
 	if err != nil {
@@ -100,27 +102,27 @@ func resourceActiveDirectoryDomainTrustEncoder(d TerraformResourceData, meta int
 	return wrappedReq, nil
 }
 
-func expandActiveDirectoryDomainTrustTargetDomainName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainTrustTargetDomainName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandActiveDirectoryDomainTrustTrustType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainTrustTrustType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandActiveDirectoryDomainTrustTrustDirection(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainTrustTrustDirection(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandActiveDirectoryDomainTrustSelectiveAuthentication(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainTrustSelectiveAuthentication(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandActiveDirectoryDomainTrustTargetDnsIpAddresses(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainTrustTargetDnsIpAddresses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandActiveDirectoryDomainTrustTrustHandshakeSecret(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainTrustTrustHandshakeSecret(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

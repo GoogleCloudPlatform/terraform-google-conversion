@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DialogflowEntityTypeAssetType string = "dialogflow.googleapis.com/EntityType"
 
@@ -25,7 +29,7 @@ func resourceConverterDialogflowEntityType() ResourceConverter {
 	}
 }
 
-func GetDialogflowEntityTypeCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDialogflowEntityTypeCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDialogflowEntityTypeCaiObject(d TerraformResourceData, config *Config) (
 	}
 }
 
-func GetDialogflowEntityTypeApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDialogflowEntityTypeApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowEntityTypeDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -76,19 +80,19 @@ func GetDialogflowEntityTypeApiObject(d TerraformResourceData, config *Config) (
 	return obj, nil
 }
 
-func expandDialogflowEntityTypeDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowEntityTypeDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowEntityTypeKind(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowEntityTypeKind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowEntityTypeEnableFuzzyExtraction(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowEntityTypeEnableFuzzyExtraction(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowEntityTypeEntities(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowEntityTypeEntities(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -117,10 +121,10 @@ func expandDialogflowEntityTypeEntities(v interface{}, d TerraformResourceData, 
 	return req, nil
 }
 
-func expandDialogflowEntityTypeEntitiesValue(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowEntityTypeEntitiesValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowEntityTypeEntitiesSynonyms(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowEntityTypeEntitiesSynonyms(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

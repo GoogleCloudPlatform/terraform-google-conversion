@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ApigeeEnvironmentAssetType string = "apigee.googleapis.com/Environment"
 
@@ -25,7 +29,7 @@ func resourceConverterApigeeEnvironment() ResourceConverter {
 	}
 }
 
-func GetApigeeEnvironmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetApigeeEnvironmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{org_id}}/environments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetApigeeEnvironmentCaiObject(d TerraformResourceData, config *Config) ([]A
 	}
 }
 
-func GetApigeeEnvironmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetApigeeEnvironmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandApigeeEnvironmentName(d.Get("name"), d, config)
 	if err != nil {
@@ -88,27 +92,27 @@ func GetApigeeEnvironmentApiObject(d TerraformResourceData, config *Config) (map
 	return obj, nil
 }
 
-func expandApigeeEnvironmentName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvironmentDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvironmentDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvironmentDeploymentType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentDeploymentType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvironmentApiProxyType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentApiProxyType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvironmentNodeConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentNodeConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -141,14 +145,14 @@ func expandApigeeEnvironmentNodeConfig(v interface{}, d TerraformResourceData, c
 	return transformed, nil
 }
 
-func expandApigeeEnvironmentNodeConfigMinNodeCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentNodeConfigMinNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvironmentNodeConfigMaxNodeCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentNodeConfigMaxNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEnvironmentNodeConfigCurrentAggregateNodeCount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandApigeeEnvironmentNodeConfigCurrentAggregateNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

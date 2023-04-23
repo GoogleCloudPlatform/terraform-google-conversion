@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeNetworkEndpointGroupAssetType string = "compute.googleapis.com/NetworkEndpointGroup"
@@ -28,7 +30,7 @@ func resourceConverterComputeNetworkEndpointGroup() ResourceConverter {
 	}
 }
 
-func GetComputeNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeNetworkEndpointGroupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/networkEndpointGroups/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeNetworkEndpointGroupCaiObject(d TerraformResourceData, config *Co
 	}
 }
 
-func GetComputeNetworkEndpointGroupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeNetworkEndpointGroupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeNetworkEndpointGroupName(d.Get("name"), d, config)
 	if err != nil {
@@ -97,19 +99,19 @@ func GetComputeNetworkEndpointGroupApiObject(d TerraformResourceData, config *Co
 	return obj, nil
 }
 
-func expandComputeNetworkEndpointGroupName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkEndpointGroupName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkEndpointGroupDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkEndpointGroupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkEndpointGroupNetworkEndpointType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkEndpointGroupNetworkEndpointType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkEndpointGroupNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkEndpointGroupNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
@@ -117,7 +119,7 @@ func expandComputeNetworkEndpointGroupNetwork(v interface{}, d TerraformResource
 	return f.RelativeLink(), nil
 }
 
-func expandComputeNetworkEndpointGroupSubnetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkEndpointGroupSubnetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("subnetworks", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for subnetwork: %s", err)
@@ -125,11 +127,11 @@ func expandComputeNetworkEndpointGroupSubnetwork(v interface{}, d TerraformResou
 	return f.RelativeLink(), nil
 }
 
-func expandComputeNetworkEndpointGroupDefaultPort(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkEndpointGroupDefaultPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkEndpointGroupZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeNetworkEndpointGroupZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)

@@ -20,6 +20,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeForwardingRuleAssetType string = "compute.googleapis.com/ForwardingRule"
@@ -31,7 +33,7 @@ func resourceConverterComputeForwardingRule() ResourceConverter {
 	}
 }
 
-func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/forwardingRules/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -52,7 +54,7 @@ func GetComputeForwardingRuleCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetComputeForwardingRuleApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeForwardingRuleApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	isMirroringCollectorProp, err := expandComputeForwardingRuleIsMirroringCollector(d.Get("is_mirroring_collector"), d, config)
 	if err != nil {
@@ -166,23 +168,23 @@ func GetComputeForwardingRuleApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandComputeForwardingRuleIsMirroringCollector(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleIsMirroringCollector(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleIPAddress(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleIPAddress(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleIPProtocol(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleIPProtocol(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleBackendService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleBackendService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	// This method returns a full self link from a partial self link.
 	if v == nil || v.(string) == "" {
 		// It does not try to construct anything from empty.
@@ -215,15 +217,15 @@ func expandComputeForwardingRuleBackendService(v interface{}, d TerraformResourc
 	return url + v.(string), nil
 }
 
-func expandComputeForwardingRuleLoadBalancingScheme(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleLoadBalancingScheme(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
@@ -231,15 +233,15 @@ func expandComputeForwardingRuleNetwork(v interface{}, d TerraformResourceData, 
 	return f.RelativeLink(), nil
 }
 
-func expandComputeForwardingRulePortRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRulePortRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRulePorts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRulePorts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v.(*schema.Set).List(), nil
 }
 
-func expandComputeForwardingRuleSubnetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleSubnetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("subnetworks", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for subnetwork: %s", err)
@@ -247,7 +249,7 @@ func expandComputeForwardingRuleSubnetwork(v interface{}, d TerraformResourceDat
 	return f.RelativeLink(), nil
 }
 
-func expandComputeForwardingRuleTarget(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleTarget(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	// This method returns a full self link from a partial self link.
 	if v == nil || v.(string) == "" {
 		// It does not try to construct anything from empty.
@@ -280,19 +282,19 @@ func expandComputeForwardingRuleTarget(v interface{}, d TerraformResourceData, c
 	return url + v.(string), nil
 }
 
-func expandComputeForwardingRuleAllowGlobalAccess(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleAllowGlobalAccess(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleAllPorts(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleAllPorts(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleNetworkTier(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleNetworkTier(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleServiceDirectoryRegistrations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleServiceDirectoryRegistrations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -321,19 +323,19 @@ func expandComputeForwardingRuleServiceDirectoryRegistrations(v interface{}, d T
 	return req, nil
 }
 
-func expandComputeForwardingRuleServiceDirectoryRegistrationsNamespace(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleServiceDirectoryRegistrationsNamespace(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleServiceDirectoryRegistrationsService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleServiceDirectoryRegistrationsService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleServiceLabel(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleServiceLabel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeForwardingRuleRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)

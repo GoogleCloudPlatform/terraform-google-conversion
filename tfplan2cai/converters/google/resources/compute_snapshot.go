@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeSnapshotAssetType string = "compute.googleapis.com/Snapshot"
@@ -28,7 +30,7 @@ func resourceConverterComputeSnapshot() ResourceConverter {
 	}
 }
 
-func GetComputeSnapshotCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSnapshotCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/snapshots/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeSnapshotCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetComputeSnapshotApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeSnapshotApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	chainNameProp, err := expandComputeSnapshotChainName(d.Get("chain_name"), d, config)
 	if err != nil {
@@ -115,23 +117,23 @@ func GetComputeSnapshotApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandComputeSnapshotChainName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotChainName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotStorageLocations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotStorageLocations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandComputeSnapshotLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -142,11 +144,11 @@ func expandComputeSnapshotLabels(v interface{}, d TerraformResourceData, config 
 	return m, nil
 }
 
-func expandComputeSnapshotLabelFingerprint(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotLabelFingerprint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotSourceDisk(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSourceDisk(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseZonalFieldValue("disks", v.(string), "project", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for source_disk: %s", err)
@@ -154,7 +156,7 @@ func expandComputeSnapshotSourceDisk(v interface{}, d TerraformResourceData, con
 	return f.RelativeLink(), nil
 }
 
-func expandComputeSnapshotZone(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)
@@ -162,7 +164,7 @@ func expandComputeSnapshotZone(v interface{}, d TerraformResourceData, config *C
 	return f.RelativeLink(), nil
 }
 
-func expandComputeSnapshotSnapshotEncryptionKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSnapshotEncryptionKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -202,23 +204,23 @@ func expandComputeSnapshotSnapshotEncryptionKey(v interface{}, d TerraformResour
 	return transformed, nil
 }
 
-func expandComputeSnapshotSnapshotEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSnapshotEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotSnapshotEncryptionKeySha256(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSnapshotEncryptionKeySha256(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotSnapshotEncryptionKeyKmsKeySelfLink(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSnapshotEncryptionKeyKmsKeySelfLink(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotSnapshotEncryptionKeyKmsKeyServiceAccount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSnapshotEncryptionKeyKmsKeyServiceAccount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotSourceDiskEncryptionKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSourceDiskEncryptionKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -244,10 +246,10 @@ func expandComputeSnapshotSourceDiskEncryptionKey(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandComputeSnapshotSourceDiskEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSourceDiskEncryptionKeyRawKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSnapshotSourceDiskEncryptionKeyKmsKeyServiceAccount(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSnapshotSourceDiskEncryptionKeyKmsKeyServiceAccount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

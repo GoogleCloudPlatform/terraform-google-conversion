@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const DialogflowFulfillmentAssetType string = "dialogflow.googleapis.com/Fulfillment"
 
@@ -25,7 +29,7 @@ func resourceConverterDialogflowFulfillment() ResourceConverter {
 	}
 }
 
-func GetDialogflowFulfillmentCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetDialogflowFulfillmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetDialogflowFulfillmentCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetDialogflowFulfillmentApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetDialogflowFulfillmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowFulfillmentDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -76,15 +80,15 @@ func GetDialogflowFulfillmentApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandDialogflowFulfillmentDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowFulfillmentDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowFulfillmentEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentFeatures(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowFulfillmentFeatures(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -106,11 +110,11 @@ func expandDialogflowFulfillmentFeatures(v interface{}, d TerraformResourceData,
 	return req, nil
 }
 
-func expandDialogflowFulfillmentFeaturesType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowFulfillmentFeaturesType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentGenericWebService(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowFulfillmentGenericWebService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -150,19 +154,19 @@ func expandDialogflowFulfillmentGenericWebService(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandDialogflowFulfillmentGenericWebServiceUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowFulfillmentGenericWebServiceUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentGenericWebServiceUsername(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowFulfillmentGenericWebServiceUsername(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentGenericWebServicePassword(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandDialogflowFulfillmentGenericWebServicePassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentGenericWebServiceRequestHeaders(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandDialogflowFulfillmentGenericWebServiceRequestHeaders(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

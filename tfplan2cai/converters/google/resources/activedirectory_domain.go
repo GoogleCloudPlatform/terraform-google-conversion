@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ActiveDirectoryDomainAssetType string = "managedidentities.googleapis.com/Domain"
@@ -29,7 +31,7 @@ func resourceConverterActiveDirectoryDomain() ResourceConverter {
 	}
 }
 
-func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//managedidentities.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *Config) 
 	}
 }
 
-func GetActiveDirectoryDomainApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetActiveDirectoryDomainApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandActiveDirectoryDomainLabels(d.Get("labels"), d, config)
 	if err != nil {
@@ -86,7 +88,7 @@ func GetActiveDirectoryDomainApiObject(d TerraformResourceData, config *Config) 
 	return obj, nil
 }
 
-func expandActiveDirectoryDomainLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandActiveDirectoryDomainLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -97,19 +99,19 @@ func expandActiveDirectoryDomainLabels(v interface{}, d TerraformResourceData, c
 	return m, nil
 }
 
-func expandActiveDirectoryDomainAuthorizedNetworks(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainAuthorizedNetworks(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandActiveDirectoryDomainReservedIpRange(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainReservedIpRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandActiveDirectoryDomainLocations(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainLocations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandActiveDirectoryDomainAdmin(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandActiveDirectoryDomainAdmin(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

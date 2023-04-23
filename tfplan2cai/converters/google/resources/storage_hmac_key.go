@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const StorageHmacKeyAssetType string = "storage.googleapis.com/HmacKey"
 
@@ -25,7 +29,7 @@ func resourceConverterStorageHmacKey() ResourceConverter {
 	}
 }
 
-func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//storage.googleapis.com/projects/{{project}}/hmacKeys/{{access_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *Config) ([]Asse
 	}
 }
 
-func GetStorageHmacKeyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetStorageHmacKeyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	serviceAccountEmailProp, err := expandStorageHmacKeyServiceAccountEmail(d.Get("service_account_email"), d, config)
 	if err != nil {
@@ -64,10 +68,10 @@ func GetStorageHmacKeyApiObject(d TerraformResourceData, config *Config) (map[st
 	return obj, nil
 }
 
-func expandStorageHmacKeyServiceAccountEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageHmacKeyServiceAccountEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandStorageHmacKeyState(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandStorageHmacKeyState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputePacketMirroringAssetType string = "compute.googleapis.com/PacketMirroring"
@@ -28,7 +30,7 @@ func resourceConverterComputePacketMirroring() ResourceConverter {
 	}
 }
 
-func GetComputePacketMirroringCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputePacketMirroringCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/packetMirrorings/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputePacketMirroringCaiObject(d TerraformResourceData, config *Config)
 	}
 }
 
-func GetComputePacketMirroringApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputePacketMirroringApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputePacketMirroringName(d.Get("name"), d, config)
 	if err != nil {
@@ -103,19 +105,19 @@ func GetComputePacketMirroringApiObject(d TerraformResourceData, config *Config)
 	return obj, nil
 }
 
-func expandComputePacketMirroringName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePacketMirroringDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePacketMirroringRegion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePacketMirroringNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -134,7 +136,7 @@ func expandComputePacketMirroringNetwork(v interface{}, d TerraformResourceData,
 	return transformed, nil
 }
 
-func expandComputePacketMirroringNetworkUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringNetworkUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for url: %s", err)
@@ -142,11 +144,11 @@ func expandComputePacketMirroringNetworkUrl(v interface{}, d TerraformResourceDa
 	return f.RelativeLink(), nil
 }
 
-func expandComputePacketMirroringPriority(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringPriority(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePacketMirroringCollectorIlb(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringCollectorIlb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -165,7 +167,7 @@ func expandComputePacketMirroringCollectorIlb(v interface{}, d TerraformResource
 	return transformed, nil
 }
 
-func expandComputePacketMirroringCollectorIlbUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringCollectorIlbUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("forwardingRules", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for url: %s", err)
@@ -173,7 +175,7 @@ func expandComputePacketMirroringCollectorIlbUrl(v interface{}, d TerraformResou
 	return f.RelativeLink(), nil
 }
 
-func expandComputePacketMirroringFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -206,19 +208,19 @@ func expandComputePacketMirroringFilter(v interface{}, d TerraformResourceData, 
 	return transformed, nil
 }
 
-func expandComputePacketMirroringFilterIpProtocols(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringFilterIpProtocols(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePacketMirroringFilterCidrRanges(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringFilterCidrRanges(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePacketMirroringFilterDirection(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringFilterDirection(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputePacketMirroringMirroredResources(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringMirroredResources(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -251,7 +253,7 @@ func expandComputePacketMirroringMirroredResources(v interface{}, d TerraformRes
 	return transformed, nil
 }
 
-func expandComputePacketMirroringMirroredResourcesSubnetworks(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringMirroredResourcesSubnetworks(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -273,7 +275,7 @@ func expandComputePacketMirroringMirroredResourcesSubnetworks(v interface{}, d T
 	return req, nil
 }
 
-func expandComputePacketMirroringMirroredResourcesSubnetworksUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringMirroredResourcesSubnetworksUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseRegionalFieldValue("subnetworks", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for url: %s", err)
@@ -281,7 +283,7 @@ func expandComputePacketMirroringMirroredResourcesSubnetworksUrl(v interface{}, 
 	return f.RelativeLink(), nil
 }
 
-func expandComputePacketMirroringMirroredResourcesInstances(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringMirroredResourcesInstances(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -303,7 +305,7 @@ func expandComputePacketMirroringMirroredResourcesInstances(v interface{}, d Ter
 	return req, nil
 }
 
-func expandComputePacketMirroringMirroredResourcesInstancesUrl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringMirroredResourcesInstancesUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseZonalFieldValue("instances", v.(string), "project", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for url: %s", err)
@@ -311,6 +313,6 @@ func expandComputePacketMirroringMirroredResourcesInstancesUrl(v interface{}, d 
 	return f.RelativeLink(), nil
 }
 
-func expandComputePacketMirroringMirroredResourcesTags(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputePacketMirroringMirroredResourcesTags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

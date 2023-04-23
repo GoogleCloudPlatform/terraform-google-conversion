@@ -20,6 +20,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 func sslPolicyCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
@@ -52,7 +54,7 @@ func resourceConverterComputeSslPolicy() ResourceConverter {
 	}
 }
 
-func GetComputeSslPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeSslPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/sslPolicies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -73,7 +75,7 @@ func GetComputeSslPolicyCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetComputeSslPolicyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeSslPolicyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeSslPolicyDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -109,23 +111,23 @@ func GetComputeSslPolicyApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandComputeSslPolicyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslPolicyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSslPolicyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslPolicyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSslPolicyProfile(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslPolicyProfile(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSslPolicyMinTlsVersion(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslPolicyMinTlsVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeSslPolicyCustomFeatures(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeSslPolicyCustomFeatures(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }

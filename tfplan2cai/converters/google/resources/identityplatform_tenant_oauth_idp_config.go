@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const IdentityPlatformTenantOauthIdpConfigAssetType string = "identitytoolkit.googleapis.com/TenantOauthIdpConfig"
 
@@ -25,7 +29,7 @@ func resourceConverterIdentityPlatformTenantOauthIdpConfig() ResourceConverter {
 	}
 }
 
-func GetIdentityPlatformTenantOauthIdpConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIdentityPlatformTenantOauthIdpConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/tenants/{{tenant}}/oauthIdpConfigs/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetIdentityPlatformTenantOauthIdpConfigCaiObject(d TerraformResourceData, c
 	}
 }
 
-func GetIdentityPlatformTenantOauthIdpConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIdentityPlatformTenantOauthIdpConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandIdentityPlatformTenantOauthIdpConfigName(d.Get("name"), d, config)
 	if err != nil {
@@ -88,26 +92,26 @@ func GetIdentityPlatformTenantOauthIdpConfigApiObject(d TerraformResourceData, c
 	return obj, nil
 }
 
-func expandIdentityPlatformTenantOauthIdpConfigName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformTenantOauthIdpConfigName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformTenantOauthIdpConfigDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformTenantOauthIdpConfigDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformTenantOauthIdpConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformTenantOauthIdpConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformTenantOauthIdpConfigIssuer(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformTenantOauthIdpConfigIssuer(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformTenantOauthIdpConfigClientId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformTenantOauthIdpConfigClientId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformTenantOauthIdpConfigClientSecret(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformTenantOauthIdpConfigClientSecret(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

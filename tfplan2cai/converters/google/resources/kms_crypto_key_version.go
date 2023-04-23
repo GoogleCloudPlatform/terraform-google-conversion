@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const KMSCryptoKeyVersionAssetType string = "cloudkms.googleapis.com/CryptoKeyVersion"
 
@@ -25,7 +29,7 @@ func resourceConverterKMSCryptoKeyVersion() ResourceConverter {
 	}
 }
 
-func GetKMSCryptoKeyVersionCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetKMSCryptoKeyVersionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudkms.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetKMSCryptoKeyVersionCaiObject(d TerraformResourceData, config *Config) ([
 	}
 }
 
-func GetKMSCryptoKeyVersionApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetKMSCryptoKeyVersionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	stateProp, err := expandKMSCryptoKeyVersionState(d.Get("state"), d, config)
 	if err != nil {
@@ -58,6 +62,6 @@ func GetKMSCryptoKeyVersionApiObject(d TerraformResourceData, config *Config) (m
 	return obj, nil
 }
 
-func expandKMSCryptoKeyVersionState(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandKMSCryptoKeyVersionState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

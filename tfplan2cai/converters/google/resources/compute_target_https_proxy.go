@@ -17,6 +17,8 @@ package google
 import (
 	"fmt"
 	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const ComputeTargetHttpsProxyAssetType string = "compute.googleapis.com/TargetHttpsProxy"
@@ -28,7 +30,7 @@ func resourceConverterComputeTargetHttpsProxy() ResourceConverter {
 	}
 }
 
-func GetComputeTargetHttpsProxyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeTargetHttpsProxyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/targetHttpsProxies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -49,7 +51,7 @@ func GetComputeTargetHttpsProxyCaiObject(d TerraformResourceData, config *Config
 	}
 }
 
-func GetComputeTargetHttpsProxyApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeTargetHttpsProxyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeTargetHttpsProxyDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -103,19 +105,19 @@ func GetComputeTargetHttpsProxyApiObject(d TerraformResourceData, config *Config
 	return obj, nil
 }
 
-func expandComputeTargetHttpsProxyDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetHttpsProxyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetHttpsProxyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetHttpsProxyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetHttpsProxyQuicOverride(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetHttpsProxyQuicOverride(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetHttpsProxySslCertificates(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetHttpsProxySslCertificates(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -131,11 +133,11 @@ func expandComputeTargetHttpsProxySslCertificates(v interface{}, d TerraformReso
 	return req, nil
 }
 
-func expandComputeTargetHttpsProxyCertificateMap(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetHttpsProxyCertificateMap(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeTargetHttpsProxySslPolicy(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetHttpsProxySslPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("sslPolicies", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for ssl_policy: %s", err)
@@ -143,7 +145,7 @@ func expandComputeTargetHttpsProxySslPolicy(v interface{}, d TerraformResourceDa
 	return f.RelativeLink(), nil
 }
 
-func expandComputeTargetHttpsProxyUrlMap(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetHttpsProxyUrlMap(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("urlMaps", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for url_map: %s", err)
@@ -151,6 +153,6 @@ func expandComputeTargetHttpsProxyUrlMap(v interface{}, d TerraformResourceData,
 	return f.RelativeLink(), nil
 }
 
-func expandComputeTargetHttpsProxyProxyBind(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeTargetHttpsProxyProxyBind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

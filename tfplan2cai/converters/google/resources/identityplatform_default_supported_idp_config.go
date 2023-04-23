@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const IdentityPlatformDefaultSupportedIdpConfigAssetType string = "identitytoolkit.googleapis.com/DefaultSupportedIdpConfig"
 
@@ -25,7 +29,7 @@ func resourceConverterIdentityPlatformDefaultSupportedIdpConfig() ResourceConver
 	}
 }
 
-func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/defaultSupportedIdpConfigs/{{idp_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetIdentityPlatformDefaultSupportedIdpConfigCaiObject(d TerraformResourceDa
 	}
 }
 
-func GetIdentityPlatformDefaultSupportedIdpConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetIdentityPlatformDefaultSupportedIdpConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	clientIdProp, err := expandIdentityPlatformDefaultSupportedIdpConfigClientId(d.Get("client_id"), d, config)
 	if err != nil {
@@ -70,14 +74,14 @@ func GetIdentityPlatformDefaultSupportedIdpConfigApiObject(d TerraformResourceDa
 	return obj, nil
 }
 
-func expandIdentityPlatformDefaultSupportedIdpConfigClientId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformDefaultSupportedIdpConfigClientId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformDefaultSupportedIdpConfigClientSecret(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformDefaultSupportedIdpConfigClientSecret(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformDefaultSupportedIdpConfigEnabled(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandIdentityPlatformDefaultSupportedIdpConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

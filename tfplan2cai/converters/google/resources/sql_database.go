@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const SQLDatabaseAssetType string = "sqladmin.googleapis.com/Database"
 
@@ -25,7 +29,7 @@ func resourceConverterSQLDatabase() ResourceConverter {
 	}
 }
 
-func GetSQLDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetSQLDatabaseCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//sqladmin.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetSQLDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, 
 	}
 }
 
-func GetSQLDatabaseApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetSQLDatabaseApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	charsetProp, err := expandSQLDatabaseCharset(d.Get("charset"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetSQLDatabaseApiObject(d TerraformResourceData, config *Config) (map[strin
 	return obj, nil
 }
 
-func expandSQLDatabaseCharset(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLDatabaseCharset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLDatabaseCollation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLDatabaseCollation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLDatabaseName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLDatabaseName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSQLDatabaseInstance(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSQLDatabaseInstance(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

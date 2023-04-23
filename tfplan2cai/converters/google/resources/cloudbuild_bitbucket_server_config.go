@@ -18,6 +18,8 @@ import (
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const CloudBuildBitbucketServerConfigAssetType string = "cloudbuild.googleapis.com/BitbucketServerConfig"
@@ -29,7 +31,7 @@ func resourceConverterCloudBuildBitbucketServerConfig() ResourceConverter {
 	}
 }
 
-func GetCloudBuildBitbucketServerConfigCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCloudBuildBitbucketServerConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudbuild.googleapis.com/projects/{{project}}/locations/{{location}}/bitbucketServerConfigs/{{config_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +52,7 @@ func GetCloudBuildBitbucketServerConfigCaiObject(d TerraformResourceData, config
 	}
 }
 
-func GetCloudBuildBitbucketServerConfigApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCloudBuildBitbucketServerConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	hostUriProp, err := expandCloudBuildBitbucketServerConfigHostUri(d.Get("host_uri"), d, config)
 	if err != nil {
@@ -104,11 +106,11 @@ func resourceCloudBuildBitbucketServerConfigEncoder(d TerraformResourceData, met
 	return obj, nil
 }
 
-func expandCloudBuildBitbucketServerConfigHostUri(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigHostUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSecrets(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSecrets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -141,27 +143,27 @@ func expandCloudBuildBitbucketServerConfigSecrets(v interface{}, d TerraformReso
 	return transformed, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSecretsAdminAccessTokenVersionName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSecretsAdminAccessTokenVersionName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSecretsReadAccessTokenVersionName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSecretsReadAccessTokenVersionName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSecretsWebhookSecretVersionName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSecretsWebhookSecretVersionName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigUsername(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigUsername(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigApiKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigApiKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigConnectedRepositories(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigConnectedRepositories(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -191,18 +193,18 @@ func expandCloudBuildBitbucketServerConfigConnectedRepositories(v interface{}, d
 	return req, nil
 }
 
-func expandCloudBuildBitbucketServerConfigConnectedRepositoriesProjectKey(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigConnectedRepositoriesProjectKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigConnectedRepositoriesRepoSlug(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigConnectedRepositoriesRepoSlug(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigPeeredNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigPeeredNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSslCa(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSslCa(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

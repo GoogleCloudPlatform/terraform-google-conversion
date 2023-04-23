@@ -14,7 +14,11 @@
 
 package google
 
-import "fmt"
+import (
+	"fmt"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const VertexAIFeaturestoreIAMAssetType string = "{{region}}-aiplatform.googleapis.com/Featurestore"
@@ -47,15 +51,15 @@ func resourceConverterVertexAIFeaturestoreIamMember() ResourceConverter {
 	}
 }
 
-func GetVertexAIFeaturestoreIamPolicyCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newVertexAIFeaturestoreIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetVertexAIFeaturestoreIamBindingCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newVertexAIFeaturestoreIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetVertexAIFeaturestoreIamMemberCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newVertexAIFeaturestoreIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -82,7 +86,7 @@ func MergeVertexAIFeaturestoreIamMemberDelete(existing, incoming Asset) Asset {
 
 func newVertexAIFeaturestoreIamAsset(
 	d TerraformResourceData,
-	config *Config,
+	config *transport_tpg.Config,
 	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
@@ -104,7 +108,7 @@ func newVertexAIFeaturestoreIamAsset(
 	}}, nil
 }
 
-func FetchVertexAIFeaturestoreIamPolicy(d TerraformResourceData, config *Config) (Asset, error) {
+func FetchVertexAIFeaturestoreIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
 		return Asset{}, ErrEmptyIdentityField

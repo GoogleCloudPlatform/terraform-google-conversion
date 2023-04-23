@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const MonitoringGroupAssetType string = "monitoring.googleapis.com/Group"
 
@@ -25,7 +29,7 @@ func resourceConverterMonitoringGroup() ResourceConverter {
 	}
 }
 
-func GetMonitoringGroupCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetMonitoringGroupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetMonitoringGroupCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetMonitoringGroupApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetMonitoringGroupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	parentNameProp, err := expandMonitoringGroupParentName(d.Get("parent_name"), d, config)
 	if err != nil {
@@ -76,18 +80,18 @@ func GetMonitoringGroupApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandMonitoringGroupParentName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringGroupParentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringGroupIsCluster(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringGroupIsCluster(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringGroupDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringGroupDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringGroupFilter(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandMonitoringGroupFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

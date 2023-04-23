@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const ComputeManagedSslCertificateAssetType string = "compute.googleapis.com/ManagedSslCertificate"
 
@@ -25,7 +29,7 @@ func resourceConverterComputeManagedSslCertificate() ResourceConverter {
 	}
 }
 
-func GetComputeManagedSslCertificateCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetComputeManagedSslCertificateCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/sslCertificates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetComputeManagedSslCertificateCaiObject(d TerraformResourceData, config *C
 	}
 }
 
-func GetComputeManagedSslCertificateApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetComputeManagedSslCertificateApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeManagedSslCertificateDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -76,15 +80,15 @@ func GetComputeManagedSslCertificateApiObject(d TerraformResourceData, config *C
 	return obj, nil
 }
 
-func expandComputeManagedSslCertificateDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeManagedSslCertificateDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeManagedSslCertificateName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeManagedSslCertificateName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeManagedSslCertificateManaged(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeManagedSslCertificateManaged(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -103,10 +107,10 @@ func expandComputeManagedSslCertificateManaged(v interface{}, d TerraformResourc
 	return transformed, nil
 }
 
-func expandComputeManagedSslCertificateManagedDomains(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeManagedSslCertificateManagedDomains(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeManagedSslCertificateType(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandComputeManagedSslCertificateType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

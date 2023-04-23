@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const CertificateManagerCertificateMapAssetType string = "certificatemanager.googleapis.com/CertificateMap"
 
@@ -25,7 +29,7 @@ func resourceConverterCertificateManagerCertificateMap() ResourceConverter {
 	}
 }
 
-func GetCertificateManagerCertificateMapCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetCertificateManagerCertificateMapCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//certificatemanager.googleapis.com/projects/{{project}}/locations/global/certificateMaps/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetCertificateManagerCertificateMapCaiObject(d TerraformResourceData, confi
 	}
 }
 
-func GetCertificateManagerCertificateMapApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetCertificateManagerCertificateMapApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandCertificateManagerCertificateMapDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -64,11 +68,11 @@ func GetCertificateManagerCertificateMapApiObject(d TerraformResourceData, confi
 	return obj, nil
 }
 
-func expandCertificateManagerCertificateMapDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandCertificateManagerCertificateMapLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

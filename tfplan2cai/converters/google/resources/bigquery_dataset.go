@@ -20,6 +20,8 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 const datasetIdRegexp = `[0-9A-Za-z_]+`
@@ -57,7 +59,7 @@ func resourceConverterBigQueryDataset() ResourceConverter {
 	}
 }
 
-func GetBigQueryDatasetCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetBigQueryDatasetCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -78,7 +80,7 @@ func GetBigQueryDatasetCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetBigQueryDatasetApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetBigQueryDatasetApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	maxTimeTravelHoursProp, err := expandBigQueryDatasetMaxTimeTravelHours(d.Get("max_time_travel_hours"), d, config)
 	if err != nil {
@@ -156,11 +158,11 @@ func GetBigQueryDatasetApiObject(d TerraformResourceData, config *Config) (map[s
 	return obj, nil
 }
 
-func expandBigQueryDatasetMaxTimeTravelHours(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetMaxTimeTravelHours(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccess(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccess(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -232,27 +234,27 @@ func expandBigQueryDatasetAccess(v interface{}, d TerraformResourceData, config 
 	return req, nil
 }
 
-func expandBigQueryDatasetAccessDomain(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessDomain(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessGroupByEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessGroupByEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessRole(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessRole(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessSpecialGroup(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessSpecialGroup(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessUserByEmail(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessUserByEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessView(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessView(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -285,19 +287,19 @@ func expandBigQueryDatasetAccessView(v interface{}, d TerraformResourceData, con
 	return transformed, nil
 }
 
-func expandBigQueryDatasetAccessViewDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessViewDatasetId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessViewProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessViewProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessViewTableId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessViewTableId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessDataset(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessDataset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -323,7 +325,7 @@ func expandBigQueryDatasetAccessDataset(v interface{}, d TerraformResourceData, 
 	return transformed, nil
 }
 
-func expandBigQueryDatasetAccessDatasetDataset(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessDatasetDataset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -349,19 +351,19 @@ func expandBigQueryDatasetAccessDatasetDataset(v interface{}, d TerraformResourc
 	return transformed, nil
 }
 
-func expandBigQueryDatasetAccessDatasetDatasetDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessDatasetDatasetDatasetId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessDatasetDatasetProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessDatasetDatasetProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessDatasetTargetTypes(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessDatasetTargetTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessRoutine(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessRoutine(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -394,19 +396,19 @@ func expandBigQueryDatasetAccessRoutine(v interface{}, d TerraformResourceData, 
 	return transformed, nil
 }
 
-func expandBigQueryDatasetAccessRoutineDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessRoutineDatasetId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessRoutineProjectId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessRoutineProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetAccessRoutineRoutineId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetAccessRoutineRoutineId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetDatasetReference(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetDatasetReference(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	transformed := make(map[string]interface{})
 	transformedDatasetId, err := expandBigQueryDatasetDatasetReferenceDatasetId(d.Get("dataset_id"), d, config)
 	if err != nil {
@@ -418,27 +420,27 @@ func expandBigQueryDatasetDatasetReference(v interface{}, d TerraformResourceDat
 	return transformed, nil
 }
 
-func expandBigQueryDatasetDatasetReferenceDatasetId(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetDatasetReferenceDatasetId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetDefaultTableExpirationMs(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetDefaultTableExpirationMs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetDefaultPartitionExpirationMs(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetDefaultPartitionExpirationMs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetFriendlyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetFriendlyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandBigQueryDatasetLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -449,11 +451,11 @@ func expandBigQueryDatasetLabels(v interface{}, d TerraformResourceData, config 
 	return m, nil
 }
 
-func expandBigQueryDatasetLocation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetDefaultEncryptionConfiguration(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetDefaultEncryptionConfiguration(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -472,14 +474,14 @@ func expandBigQueryDatasetDefaultEncryptionConfiguration(v interface{}, d Terraf
 	return transformed, nil
 }
 
-func expandBigQueryDatasetDefaultEncryptionConfigurationKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetDefaultEncryptionConfigurationKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetIsCaseInsensitive(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetIsCaseInsensitive(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryDatasetDefaultCollation(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandBigQueryDatasetDefaultCollation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

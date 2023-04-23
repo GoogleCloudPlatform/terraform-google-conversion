@@ -11,6 +11,7 @@ import (
 	"google.golang.org/api/storage/v1"
 
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 
 	"go.uber.org/zap"
 )
@@ -18,7 +19,7 @@ import (
 // AncestryManager is the interface that fetch ancestors for a resource.
 type AncestryManager interface {
 	// Ancestors returns a list of ancestors.
-	Ancestors(config *resources.Config, tfData resources.TerraformResourceData, cai *resources.Asset) ([]string, string, error)
+	Ancestors(config *transport_tpg.Config, tfData resources.TerraformResourceData, cai *resources.Asset) ([]string, string, error)
 }
 
 type manager struct {
@@ -42,15 +43,15 @@ type manager struct {
 // as value to the offline cache. If the key is not prefix with `projects/` or
 // `folders/`, it will be considered as a project. If offline is true, resource
 // manager API requests for ancestry will be disabled.
-func New(cfg *resources.Config, offline bool, entries map[string]string, errorLogger *zap.Logger) (AncestryManager, error) {
+func New(cfg *transport_tpg.Config, offline bool, entries map[string]string, errorLogger *zap.Logger) (AncestryManager, error) {
 	am := &manager{
 		ancestorCache: map[string][]string{},
 		errorLogger:   errorLogger,
 	}
 	if !offline {
-		am.resourceManagerV1 = cfg.NewResourceManagerClient(cfg.GetUserAgent())
-		am.resourceManagerV3 = cfg.NewResourceManagerV3Client(cfg.GetUserAgent())
-		am.storageClient = cfg.NewStorageClient(cfg.GetUserAgent())
+		am.resourceManagerV1 = cfg.NewResourceManagerClient(cfg.UserAgent)
+		am.resourceManagerV3 = cfg.NewResourceManagerV3Client(cfg.UserAgent)
+		am.storageClient = cfg.NewStorageClient(cfg.UserAgent)
 	}
 	err := am.initAncestryCache(entries)
 	if err != nil {
@@ -97,7 +98,7 @@ func parseAncestryKey(val string) (string, error) {
 
 // Ancestors uses the resource manager API to get ancestors for resource.
 // It implements a cache because many resources share the same ancestors.
-func (m *manager) Ancestors(config *resources.Config, tfData resources.TerraformResourceData, cai *resources.Asset) ([]string, string, error) {
+func (m *manager) Ancestors(config *transport_tpg.Config, tfData resources.TerraformResourceData, cai *resources.Asset) ([]string, string, error) {
 	results, err := m.fetchAncestors(config, tfData, cai)
 	if err != nil {
 		return nil, "", err
@@ -112,7 +113,7 @@ func (m *manager) Ancestors(config *resources.Config, tfData resources.Terraform
 
 // fetchAncestors uses the resource manager API to get ancestors for resource.
 // It implements a cache because many resources share the same ancestors.
-func (m *manager) fetchAncestors(config *resources.Config, tfData resources.TerraformResourceData, cai *resources.Asset) ([]string, error) {
+func (m *manager) fetchAncestors(config *transport_tpg.Config, tfData resources.TerraformResourceData, cai *resources.Asset) ([]string, error) {
 	if cai == nil {
 		return nil, fmt.Errorf("CAI asset is nil")
 	}
@@ -318,7 +319,7 @@ func normalizeAncestry(val string) string {
 // getProjectFromResource reads the "project" field from the given resource data and falls
 // back to the provider's value if not given. If the provider's value is not
 // given, an error is returned.
-func (m *manager) getProjectFromResource(d resources.TerraformResourceData, config *resources.Config, cai *resources.Asset) (string, error) {
+func (m *manager) getProjectFromResource(d resources.TerraformResourceData, config *transport_tpg.Config, cai *resources.Asset) (string, error) {
 
 	switch cai.Type {
 	case "cloudresourcemanager.googleapis.com/Project",
@@ -361,6 +362,6 @@ func (m *manager) getProjectFromResource(d resources.TerraformResourceData, conf
 
 type NoOpAncestryManager struct{}
 
-func (*NoOpAncestryManager) Ancestors(config *resources.Config, tfData resources.TerraformResourceData, cai *resources.Asset) ([]string, string, error) {
+func (*NoOpAncestryManager) Ancestors(config *transport_tpg.Config, tfData resources.TerraformResourceData, cai *resources.Asset) ([]string, string, error) {
 	return nil, "", nil
 }

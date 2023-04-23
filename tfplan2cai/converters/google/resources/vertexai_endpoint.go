@@ -14,7 +14,11 @@
 
 package google
 
-import "reflect"
+import (
+	"reflect"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+)
 
 const VertexAIEndpointAssetType string = "{{region}}-aiplatform.googleapis.com/Endpoint"
 
@@ -25,7 +29,7 @@ func resourceConverterVertexAIEndpoint() ResourceConverter {
 	}
 }
 
-func GetVertexAIEndpointCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetVertexAIEndpointCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{region}}-aiplatform.googleapis.com/projects/{{project}}/locations/{{location}}/endpoints/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -46,7 +50,7 @@ func GetVertexAIEndpointCaiObject(d TerraformResourceData, config *Config) ([]As
 	}
 }
 
-func GetVertexAIEndpointApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetVertexAIEndpointApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandVertexAIEndpointDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
@@ -82,15 +86,15 @@ func GetVertexAIEndpointApiObject(d TerraformResourceData, config *Config) (map[
 	return obj, nil
 }
 
-func expandVertexAIEndpointDisplayName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIEndpointDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIEndpointDescription(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIEndpointDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIEndpointLabels(v interface{}, d TerraformResourceData, config *Config) (map[string]string, error) {
+func expandVertexAIEndpointLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -101,7 +105,7 @@ func expandVertexAIEndpointLabels(v interface{}, d TerraformResourceData, config
 	return m, nil
 }
 
-func expandVertexAIEndpointEncryptionSpec(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIEndpointEncryptionSpec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -120,10 +124,10 @@ func expandVertexAIEndpointEncryptionSpec(v interface{}, d TerraformResourceData
 	return transformed, nil
 }
 
-func expandVertexAIEndpointEncryptionSpecKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIEndpointEncryptionSpecKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIEndpointNetwork(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandVertexAIEndpointNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

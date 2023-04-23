@@ -23,6 +23,8 @@ import (
 	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // customizeDiff func for additional checks on google_spanner_database properties:
@@ -120,7 +122,7 @@ func resourceConverterSpannerDatabase() ResourceConverter {
 	}
 }
 
-func GetSpannerDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Asset, error) {
+func GetSpannerDatabaseCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//spanner.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -141,7 +143,7 @@ func GetSpannerDatabaseCaiObject(d TerraformResourceData, config *Config) ([]Ass
 	}
 }
 
-func GetSpannerDatabaseApiObject(d TerraformResourceData, config *Config) (map[string]interface{}, error) {
+func GetSpannerDatabaseApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandSpannerDatabaseName(d.Get("name"), d, config)
 	if err != nil {
@@ -200,19 +202,19 @@ func resourceSpannerDatabaseEncoder(d TerraformResourceData, meta interface{}, o
 	return obj, nil
 }
 
-func expandSpannerDatabaseName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSpannerDatabaseName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseVersionRetentionPeriod(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSpannerDatabaseVersionRetentionPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseDdl(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSpannerDatabaseDdl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseEncryptionConfig(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSpannerDatabaseEncryptionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -231,15 +233,15 @@ func expandSpannerDatabaseEncryptionConfig(v interface{}, d TerraformResourceDat
 	return transformed, nil
 }
 
-func expandSpannerDatabaseEncryptionConfigKmsKeyName(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSpannerDatabaseEncryptionConfigKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseDatabaseDialect(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSpannerDatabaseDatabaseDialect(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseInstance(v interface{}, d TerraformResourceData, config *Config) (interface{}, error) {
+func expandSpannerDatabaseInstance(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := parseGlobalFieldValue("instances", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for instance: %s", err)
