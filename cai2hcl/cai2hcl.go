@@ -8,6 +8,7 @@ import (
 
 	"github.com/hashicorp/hcl/hcl/printer"
 	"github.com/hashicorp/hcl/v2/hclwrite"
+	tpg "github.com/hashicorp/terraform-provider-google/google"
 	"github.com/zclconf/go-cty/cty"
 	"go.uber.org/zap"
 )
@@ -17,6 +18,8 @@ import (
 type Options struct {
 	ErrorLogger *zap.Logger
 }
+
+var schemaProvider = tpg.Provider()
 
 // Convert converts Asset into HCL.
 func Convert(assets []*caiasset.Asset, options *Options) ([]byte, error) {
@@ -42,7 +45,12 @@ func Convert(assets []*caiasset.Asset, options *Options) ([]byte, error) {
 		if !ok {
 			continue
 		}
-		items, err := converter.Convert(v)
+
+		var converterContext = &ConverterContext{
+			name:   name,
+			schema: schemaProvider.ResourcesMap[name].Schema,
+		}
+		items, err := converter(v, converterContext)
 		if err != nil {
 			return nil, err
 		}

@@ -7,35 +7,14 @@ import (
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
-	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/zclconf/go-cty/cty"
 	"google.golang.org/api/cloudresourcemanager/v1"
 )
 
-// ProjectAssetType is the CAI asset type name for project.
-const ProjectAssetType string = "cloudresourcemanager.googleapis.com/Project"
-
-// ProjectAssetType is the CAI asset type name for project.
-const ProjectBillingAssetType string = "cloudbilling.googleapis.com/ProjectBillingInfo"
-
-// ProjectConverter for compute project resource.
-type ProjectConverter struct {
-	name     string
-	schema   map[string]*tfschema.Schema
-	billings map[string]string
-}
-
-// NewProjectConverter returns an HCL converter for compute project.
-func NewProjectConverter() *ProjectConverter {
-	return &ProjectConverter{
-		name:     "google_project",
-		schema:   schemaProvider.ResourcesMap["google_project"].Schema,
-		billings: make(map[string]string),
-	}
-}
-
 // Convert converts asset resource data.
-func (c *ProjectConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBlock, error) {
+func ConvertProjects(assets []*caiasset.Asset, context *ConverterContext) ([]*HCLResourceBlock, error) {
+	var billings = make(map[string]string)
+
 	// process billing info
 	for _, asset := range assets {
 		if asset == nil {
@@ -44,7 +23,7 @@ func (c *ProjectConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBloc
 		if asset.Type == "cloudbilling.googleapis.com/ProjectBillingInfo" {
 			project := parseFieldValue(asset.Name, "projects")
 			projectAssetName := fmt.Sprintf("//cloudresourcemanager.googleapis.com/projects/%s", project)
-			c.billings[projectAssetName] = c.convertBilling(asset)
+			billings[projectAssetName] = convertBilling(asset)
 		}
 	}
 
@@ -57,14 +36,14 @@ func (c *ProjectConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBloc
 			continue
 		}
 		if asset.IAMPolicy != nil {
-			iamBlock, err := c.convertIAM(asset)
+			iamBlock, err := convertIam(asset, context)
 			if err != nil {
 				return nil, err
 			}
 			blocks = append(blocks, iamBlock)
 		}
 		if asset.Resource != nil && asset.Resource.Data != nil {
-			block, err := c.convertResourceData(asset)
+			block, err := convertProject(asset, context, billings)
 			if err != nil {
 				return nil, err
 			}
@@ -74,7 +53,7 @@ func (c *ProjectConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBloc
 	return blocks, nil
 }
 
-func (c *ProjectConverter) convertIAM(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+func convertIam(asset *caiasset.Asset, context *ConverterContext) (*HCLResourceBlock, error) {
 	if asset.IAMPolicy == nil {
 		return nil, fmt.Errorf("asset IAM policy is nil")
 	}
@@ -87,7 +66,7 @@ func (c *ProjectConverter) convertIAM(asset *caiasset.Asset) (*HCLResourceBlock,
 
 	return &HCLResourceBlock{
 		Labels: []string{
-			c.name + "_iam_policy",
+			context.name + "_iam_policy",
 			project + "_iam_policy",
 		},
 		Value: cty.ObjectVal(map[string]cty.Value{
@@ -97,14 +76,14 @@ func (c *ProjectConverter) convertIAM(asset *caiasset.Asset) (*HCLResourceBlock,
 	}, nil
 }
 
-func (c *ProjectConverter) convertBilling(asset *caiasset.Asset) string {
+func convertBilling(asset *caiasset.Asset) string {
 	if asset != nil && asset.Resource != nil && asset.Resource.Data != nil {
 		return strings.TrimPrefix(asset.Resource.Data["billingAccountName"].(string), "billingAccounts/")
 	}
 	return ""
 }
 
-func (c *ProjectConverter) convertResourceData(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+func convertProject(asset *caiasset.Asset, context *ConverterContext, billings map[string]string) (*HCLResourceBlock, error) {
 	if asset == nil || asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
@@ -123,16 +102,16 @@ func (c *ProjectConverter) convertResourceData(asset *caiasset.Asset) (*HCLResou
 		hclData["org_id"] = parseFieldValue(asset.Resource.Parent, "organizations")
 	}
 
-	if billingAccount, ok := c.billings[asset.Name]; ok {
+	if billingAccount, ok := billings[asset.Name]; ok {
 		hclData["billing_account"] = billingAccount
 	}
 
-	ctyVal, err := mapToCtyValWithSchema(hclData, c.schema)
+	ctyVal, err := mapToCtyValWithSchema(hclData, context.schema)
 	if err != nil {
 		return nil, err
 	}
 	return &HCLResourceBlock{
-		Labels: []string{c.name, project.ProjectId},
+		Labels: []string{context.name, project.ProjectId},
 		Value:  ctyVal,
 	}, nil
 }

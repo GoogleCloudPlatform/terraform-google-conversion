@@ -6,44 +6,26 @@ import (
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
-	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/zclconf/go-cty/cty"
 	"google.golang.org/api/compute/v1"
 )
 
-// ComputeInstanceAssetType is the CAI asset type name for compute instance.
-const ComputeInstanceAssetType string = "compute.googleapis.com/Instance"
-
-// ComputeInstanceConverter for compute instance resource.
-type ComputeInstanceConverter struct {
-	name   string
-	schema map[string]*tfschema.Schema
-}
-
-// NewComputeInstanceConverter returns an HCL converter for compute instance.
-func NewComputeInstanceConverter() *ComputeInstanceConverter {
-	return &ComputeInstanceConverter{
-		name:   "google_compute_instance",
-		schema: schemaProvider.ResourcesMap["google_compute_instance"].Schema,
-	}
-}
-
 // Convert converts asset to HCL resource blocks.
-func (c *ComputeInstanceConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBlock, error) {
+func ConvertComputeInstances(assets []*caiasset.Asset, context *ConverterContext) ([]*HCLResourceBlock, error) {
 	var blocks []*HCLResourceBlock
 	for _, asset := range assets {
 		if asset == nil {
 			continue
 		}
 		if asset.IAMPolicy != nil {
-			iamBlock, err := c.convertIAM(asset)
+			iamBlock, err := convertIAM(asset, context)
 			if err != nil {
 				return nil, err
 			}
 			blocks = append(blocks, iamBlock)
 		}
 		if asset.Resource != nil && asset.Resource.Data != nil {
-			block, err := c.convertResourceData(asset)
+			block, err := convertComputeInstance(asset, context)
 			if err != nil {
 				return nil, err
 			}
@@ -53,7 +35,7 @@ func (c *ComputeInstanceConverter) Convert(assets []*caiasset.Asset) ([]*HCLReso
 	return blocks, nil
 }
 
-func (c *ComputeInstanceConverter) convertIAM(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+func convertIAM(asset *caiasset.Asset, context *ConverterContext) (*HCLResourceBlock, error) {
 	if asset == nil || asset.IAMPolicy == nil {
 		return nil, fmt.Errorf("asset IAM policy is nil")
 	}
@@ -68,7 +50,7 @@ func (c *ComputeInstanceConverter) convertIAM(asset *caiasset.Asset) (*HCLResour
 
 	return &HCLResourceBlock{
 		Labels: []string{
-			c.name + "_iam_policy",
+			context.name + "_iam_policy",
 			instanceName + "_iam_policy",
 		},
 		Value: cty.ObjectVal(map[string]cty.Value{
@@ -80,7 +62,7 @@ func (c *ComputeInstanceConverter) convertIAM(asset *caiasset.Asset) (*HCLResour
 	}, nil
 }
 
-func (c *ComputeInstanceConverter) convertResourceData(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+func convertComputeInstance(asset *caiasset.Asset, context *ConverterContext) (*HCLResourceBlock, error) {
 	if asset == nil || asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
@@ -121,12 +103,12 @@ func (c *ComputeInstanceConverter) convertResourceData(asset *caiasset.Asset) (*
 		hclData["zone"] = parseFieldValue(instance.Zone, "zones")
 	}
 
-	ctyVal, err := mapToCtyValWithSchema(hclData, c.schema)
+	ctyVal, err := mapToCtyValWithSchema(hclData, context.schema)
 	if err != nil {
 		return nil, err
 	}
 	return &HCLResourceBlock{
-		Labels: []string{c.name, instance.Name},
+		Labels: []string{context.name, instance.Name},
 		Value:  ctyVal,
 	}, nil
 
