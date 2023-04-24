@@ -19,7 +19,7 @@ fi
 
 echo "Listing supported resources to ${version}-resources.txt"
 go build -o cmd ./tfplan2cai/cmd
-./cmd list-supported-resources > ${version}-resources.txt
+./cmd list-supported-resources > tgc-${version}-resources.txt
 
 echo "Creating Github tag v${version}"
 git tag "v${version}"
