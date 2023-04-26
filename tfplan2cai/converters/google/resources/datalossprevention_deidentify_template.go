@@ -97,6 +97,13 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfig(v interface{}, d
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedImageTransformations, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformations(original["image_transformations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedImageTransformations); val.IsValid() && !isEmptyValue(val) {
+		transformed["imageTransformations"] = transformedImageTransformations
+	}
+
 	transformedInfoTypeTransformations, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformations(original["info_type_transformations"], d, config)
 	if err != nil {
 		return nil, err
@@ -110,6 +117,199 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfig(v interface{}, d
 	} else if val := reflect.ValueOf(transformedRecordTransformations); val.IsValid() && !isEmptyValue(val) {
 		transformed["recordTransformations"] = transformedRecordTransformations
 	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTransforms, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransforms(original["transforms"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTransforms); val.IsValid() && !isEmptyValue(val) {
+		transformed["transforms"] = transformedTransforms
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransforms(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedRedactionColor, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsRedactionColor(original["redaction_color"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRedactionColor); val.IsValid() && !isEmptyValue(val) {
+			transformed["redactionColor"] = transformedRedactionColor
+		}
+
+		transformedSelectedInfoTypes, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsSelectedInfoTypes(original["selected_info_types"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSelectedInfoTypes); val.IsValid() && !isEmptyValue(val) {
+			transformed["selectedInfoTypes"] = transformedSelectedInfoTypes
+		}
+
+		transformedAllInfoTypes, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsAllInfoTypes(original["all_info_types"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["allInfoTypes"] = transformedAllInfoTypes
+		}
+
+		transformedAllText, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsAllText(original["all_text"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["allText"] = transformedAllText
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsRedactionColor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRed, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsRedactionColorRed(original["red"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRed); val.IsValid() && !isEmptyValue(val) {
+		transformed["red"] = transformedRed
+	}
+
+	transformedBlue, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsRedactionColorBlue(original["blue"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBlue); val.IsValid() && !isEmptyValue(val) {
+		transformed["blue"] = transformedBlue
+	}
+
+	transformedGreen, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsRedactionColorGreen(original["green"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGreen); val.IsValid() && !isEmptyValue(val) {
+		transformed["green"] = transformedGreen
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsRedactionColorRed(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsRedactionColorBlue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsRedactionColorGreen(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsSelectedInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedInfoTypes, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsSelectedInfoTypesInfoTypes(original["info_types"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInfoTypes); val.IsValid() && !isEmptyValue(val) {
+		transformed["infoTypes"] = transformedInfoTypes
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsSelectedInfoTypesInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsSelectedInfoTypesInfoTypesName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedVersion, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsSelectedInfoTypesInfoTypesVersion(original["version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !isEmptyValue(val) {
+			transformed["version"] = transformedVersion
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsSelectedInfoTypesInfoTypesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsSelectedInfoTypesInfoTypesVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsAllInfoTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigImageTransformationsTransformsAllText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
 
 	return transformed, nil
 }
@@ -179,12 +379,23 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransform
 			transformed["name"] = transformedName
 		}
 
+		transformedVersion, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsInfoTypesVersion(original["version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !isEmptyValue(val) {
+			transformed["version"] = transformedVersion
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
 }
 
 func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsInfoTypesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsInfoTypesVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -230,6 +441,13 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransform
 		return nil, err
 	} else if val := reflect.ValueOf(transformedCryptoReplaceFfxFpeConfig); val.IsValid() && !isEmptyValue(val) {
 		transformed["cryptoReplaceFfxFpeConfig"] = transformedCryptoReplaceFfxFpeConfig
+	}
+
+	transformedReplaceDictionaryConfig, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceDictionaryConfig(original["replace_dictionary_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReplaceDictionaryConfig); val.IsValid() && !isEmptyValue(val) {
+		transformed["replaceDictionaryConfig"] = transformedReplaceDictionaryConfig
 	}
 
 	return transformed, nil
@@ -980,6 +1198,48 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransform
 }
 
 func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationCryptoReplaceFfxFpeConfigRadix(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceDictionaryConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWordList, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceDictionaryConfigWordList(original["word_list"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWordList); val.IsValid() && !isEmptyValue(val) {
+		transformed["wordList"] = transformedWordList
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceDictionaryConfigWordList(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWords, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceDictionaryConfigWordListWords(original["words"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWords); val.IsValid() && !isEmptyValue(val) {
+		transformed["words"] = transformedWords
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigInfoTypeTransformationsTransformationsPrimitiveTransformationReplaceDictionaryConfigWordListWords(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
