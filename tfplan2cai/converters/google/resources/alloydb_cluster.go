@@ -58,6 +58,12 @@ func GetAlloydbClusterApiObject(d TerraformResourceData, config *transport_tpg.C
 	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
+	encryptionConfigProp, err := expandAlloydbClusterEncryptionConfig(d.Get("encryption_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("encryption_config"); !isEmptyValue(reflect.ValueOf(encryptionConfigProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigProp)) {
+		obj["encryptionConfig"] = encryptionConfigProp
+	}
 	networkProp, err := expandAlloydbClusterNetwork(d.Get("network"), d, config)
 	if err != nil {
 		return nil, err
@@ -95,6 +101,29 @@ func expandAlloydbClusterLabels(v interface{}, d TerraformResourceData, config *
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandAlloydbClusterEncryptionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsKeyName, err := expandAlloydbClusterEncryptionConfigKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterEncryptionConfigKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandAlloydbClusterNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -169,6 +198,13 @@ func expandAlloydbClusterAutomatedBackupPolicy(v interface{}, d TerraformResourc
 		transformed["labels"] = transformedLabels
 	}
 
+	transformedEncryptionConfig, err := expandAlloydbClusterAutomatedBackupPolicyEncryptionConfig(original["encryption_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncryptionConfig); val.IsValid() && !isEmptyValue(val) {
+		transformed["encryptionConfig"] = transformedEncryptionConfig
+	}
+
 	transformedWeeklySchedule, err := expandAlloydbClusterAutomatedBackupPolicyWeeklySchedule(original["weekly_schedule"], d, config)
 	if err != nil {
 		return nil, err
@@ -217,6 +253,29 @@ func expandAlloydbClusterAutomatedBackupPolicyLabels(v interface{}, d TerraformR
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsKeyName, err := expandAlloydbClusterAutomatedBackupPolicyEncryptionConfigKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfigKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandAlloydbClusterAutomatedBackupPolicyWeeklySchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
