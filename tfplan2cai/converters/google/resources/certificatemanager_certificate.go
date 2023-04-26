@@ -39,7 +39,7 @@ func resourceConverterCertificateManagerCertificate() ResourceConverter {
 }
 
 func GetCertificateManagerCertificateCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
-	name, err := assetName(d, config, "//certificatemanager.googleapis.com/projects/{{project}}/locations/global/certificates/{{name}}")
+	name, err := assetName(d, config, "//certificatemanager.googleapis.com/projects/{{project}}/locations/{{location}}/certificates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
 	}
