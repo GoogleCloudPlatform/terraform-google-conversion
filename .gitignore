@@ -13,3 +13,6 @@ examples/*.tfstate*
 
 # Mac OSX
 .DS_Store
+
+# binary
+./cmd
