@@ -96,7 +96,7 @@ func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceD
 		return nil, err
 	}
 
-	_, err = SendRequest(config, "POST", project, url, userAgent, nil)
+	_, err = transport_tpg.SendRequest(config, "POST", project, url, userAgent, nil)
 	if err != nil {
 		return nil, err
 	}
