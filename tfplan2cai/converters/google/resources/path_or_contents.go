@@ -1,7 +1,7 @@
 package google
 
 import (
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/verify"
 )
 
 // If the argument is a path, pathOrContents loads it and returns the contents,
@@ -11,5 +11,5 @@ import (
 // The boolean second return value can be called `wasPath` - it indicates if a
 // path was detected and a file loaded.
 func pathOrContents(poc string) (string, bool, error) {
-	return transport_tpg.PathOrContents(poc)
+	return verify.PathOrContents(poc)
 }
