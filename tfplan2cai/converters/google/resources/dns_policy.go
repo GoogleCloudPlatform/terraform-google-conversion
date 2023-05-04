@@ -201,5 +201,5 @@ func expandDNSPolicyNetworksNetworkUrl(v interface{}, d TerraformResourceData, c
 	if err != nil {
 		return "", err
 	}
-	return ConvertSelfLinkToV1(url), nil
+	return tpgresource.ConvertSelfLinkToV1(url), nil
 }

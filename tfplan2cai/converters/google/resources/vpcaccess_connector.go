@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -120,7 +121,7 @@ func expandVPCAccessConnectorName(v interface{}, d TerraformResourceData, config
 }
 
 func expandVPCAccessConnectorNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return GetResourceNameFromSelfLink(v.(string)), nil
+	return tpgresource.GetResourceNameFromSelfLink(v.(string)), nil
 }
 
 func expandVPCAccessConnectorIpCidrRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
