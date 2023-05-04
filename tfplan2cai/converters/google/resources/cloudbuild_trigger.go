@@ -1391,6 +1391,20 @@ func expandCloudBuildTriggerBuildStep(v interface{}, d TerraformResourceData, co
 			transformed["script"] = transformedScript
 		}
 
+		transformedAllowFailure, err := expandCloudBuildTriggerBuildStepAllowFailure(original["allow_failure"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAllowFailure); val.IsValid() && !isEmptyValue(val) {
+			transformed["allowFailure"] = transformedAllowFailure
+		}
+
+		transformedAllowExitCodes, err := expandCloudBuildTriggerBuildStepAllowExitCodes(original["allow_exit_codes"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAllowExitCodes); val.IsValid() && !isEmptyValue(val) {
+			transformed["allowExitCodes"] = transformedAllowExitCodes
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1474,6 +1488,14 @@ func expandCloudBuildTriggerBuildStepWaitFor(v interface{}, d TerraformResourceD
 }
 
 func expandCloudBuildTriggerBuildStepScript(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildStepAllowFailure(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildStepAllowExitCodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
