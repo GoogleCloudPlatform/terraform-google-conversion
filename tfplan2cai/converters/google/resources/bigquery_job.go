@@ -660,6 +660,13 @@ func expandBigQueryJobConfigurationLoad(v interface{}, d TerraformResourceData, 
 		transformed["destinationEncryptionConfiguration"] = transformedDestinationEncryptionConfiguration
 	}
 
+	transformedParquetOptions, err := expandBigQueryJobConfigurationLoadParquetOptions(original["parquet_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParquetOptions); val.IsValid() && !isEmptyValue(val) {
+		transformed["parquetOptions"] = transformedParquetOptions
+	}
+
 	return transformed, nil
 }
 
@@ -840,6 +847,40 @@ func expandBigQueryJobConfigurationLoadDestinationEncryptionConfigurationKmsKeyN
 }
 
 func expandBigQueryJobConfigurationLoadDestinationEncryptionConfigurationKmsKeyVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryJobConfigurationLoadParquetOptions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnumAsString, err := expandBigQueryJobConfigurationLoadParquetOptionsEnumAsString(original["enum_as_string"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnumAsString); val.IsValid() && !isEmptyValue(val) {
+		transformed["enumAsString"] = transformedEnumAsString
+	}
+
+	transformedEnableListInference, err := expandBigQueryJobConfigurationLoadParquetOptionsEnableListInference(original["enable_list_inference"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableListInference); val.IsValid() && !isEmptyValue(val) {
+		transformed["enableListInference"] = transformedEnableListInference
+	}
+
+	return transformed, nil
+}
+
+func expandBigQueryJobConfigurationLoadParquetOptionsEnumAsString(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryJobConfigurationLoadParquetOptionsEnableListInference(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
