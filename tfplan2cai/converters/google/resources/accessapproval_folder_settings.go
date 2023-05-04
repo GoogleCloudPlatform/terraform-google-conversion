@@ -46,7 +46,7 @@ func accessApprovalEnrolledServicesHash(v interface{}) int {
 	}
 	buf.WriteString(fmt.Sprintf("%s-", strings.ToLower(cp))) // ToLower just in case
 	buf.WriteString(fmt.Sprintf("%s-", strings.ToLower(m["enrollment_level"].(string))))
-	return hashcode(buf.String())
+	return tpgresource.Hashcode(buf.String())
 }
 
 const AccessApprovalFolderSettingsAssetType string = "accessapproval.googleapis.com/FolderSettings"

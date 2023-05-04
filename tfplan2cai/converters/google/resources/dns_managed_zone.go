@@ -342,7 +342,7 @@ func expandDNSManagedZonePrivateVisibilityConfigNetworksNetworkUrl(v interface{}
 	if err != nil {
 		return "", err
 	}
-	return ConvertSelfLinkToV1(url), nil
+	return tpgresource.ConvertSelfLinkToV1(url), nil
 }
 
 func expandDNSManagedZonePrivateVisibilityConfigGkeClustersGkeClusterName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -454,7 +454,7 @@ func expandDNSManagedZonePeeringConfigTargetNetworkNetworkUrl(v interface{}, d T
 	if err != nil {
 		return "", err
 	}
-	return ConvertSelfLinkToV1(url), nil
+	return tpgresource.ConvertSelfLinkToV1(url), nil
 }
 
 func expandDNSManagedZoneCloudLoggingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

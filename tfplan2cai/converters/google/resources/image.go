@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/verify"
 
@@ -214,7 +215,7 @@ func resolveImage(c *transport_tpg.Config, project, name, userAgent string) (str
 func resolveImageRefToRelativeURI(providerProject, name string) (string, error) {
 	switch {
 	case resolveImageLink.MatchString(name): // https://www.googleapis.com/compute/v1/projects/xyz/global/images/xyz
-		namePath, err := getRelativePath(name)
+		namePath, err := tpgresource.GetRelativePath(name)
 		if err != nil {
 			return "", err
 		}

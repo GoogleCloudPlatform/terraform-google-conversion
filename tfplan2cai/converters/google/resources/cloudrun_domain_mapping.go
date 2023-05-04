@@ -20,6 +20,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -142,7 +143,7 @@ func expandCloudRunDomainMappingSpecForceOverride(v interface{}, d TerraformReso
 }
 
 func expandCloudRunDomainMappingSpecRouteName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return GetResourceNameFromSelfLink(v.(string)), nil
+	return tpgresource.GetResourceNameFromSelfLink(v.(string)), nil
 }
 
 func expandCloudRunDomainMappingSpecCertificateMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

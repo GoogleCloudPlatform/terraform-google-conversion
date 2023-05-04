@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -79,9 +80,9 @@ func resourceLoggingLinkedDatasetEncoder(d TerraformResourceData, meta interface
 	// Set parent to the extracted value.
 	d.Set("parent", parent)
 	// Set all the other fields to their short forms before forming url and setting ID.
-	bucket = GetResourceNameFromSelfLink(bucket)
+	bucket = tpgresource.GetResourceNameFromSelfLink(bucket)
 	name := d.Get("name").(string)
-	name = GetResourceNameFromSelfLink(name)
+	name = tpgresource.GetResourceNameFromSelfLink(name)
 	d.Set("location", location)
 	d.Set("bucket", bucket)
 	d.Set("name", name)
