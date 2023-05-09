@@ -1876,6 +1876,13 @@ func expandDataLossPreventionJobTriggerInspectJobActions(v interface{}, d Terraf
 			transformed["deidentify"] = transformedDeidentify
 		}
 
+		transformedPublishToStackdriver, err := expandDataLossPreventionJobTriggerInspectJobActionsPublishToStackdriver(original["publish_to_stackdriver"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["publishToStackdriver"] = transformedPublishToStackdriver
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -2198,4 +2205,19 @@ func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformation
 
 func expandDataLossPreventionJobTriggerInspectJobActionsDeidentifyTransformationDetailsStorageConfigTableTableId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsPublishToStackdriver(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
