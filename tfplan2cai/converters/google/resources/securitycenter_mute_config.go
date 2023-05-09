@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterSecurityCenterMuteConfig() ResourceConverter {
 	}
 }
 
-func GetSecurityCenterMuteConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSecurityCenterMuteConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//securitycenter.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,28 +51,28 @@ func GetSecurityCenterMuteConfigCaiObject(d TerraformResourceData, config *trans
 	}
 }
 
-func GetSecurityCenterMuteConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetSecurityCenterMuteConfigApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandSecurityCenterMuteConfigDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	filterProp, err := expandSecurityCenterMuteConfigFilter(d.Get("filter"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("filter"); !isEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
+	} else if v, ok := d.GetOkExists("filter"); !tpgresource.IsEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
 		obj["filter"] = filterProp
 	}
 
 	return obj, nil
 }
 
-func expandSecurityCenterMuteConfigDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityCenterMuteConfigDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityCenterMuteConfigFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityCenterMuteConfigFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

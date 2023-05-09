@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterDataCatalogPolicyTagIamMember() ResourceConverter {
 	}
 }
 
-func GetDataCatalogPolicyTagIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDataCatalogPolicyTagIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogPolicyTagIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetDataCatalogPolicyTagIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDataCatalogPolicyTagIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogPolicyTagIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetDataCatalogPolicyTagIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDataCatalogPolicyTagIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataCatalogPolicyTagIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeDataCatalogPolicyTagIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newDataCatalogPolicyTagIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newDataCatalogPolicyTagIamAsset(
 	}}, nil
 }
 
-func FetchDataCatalogPolicyTagIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchDataCatalogPolicyTagIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("policy_tag"); !ok {
 		return Asset{}, ErrEmptyIdentityField

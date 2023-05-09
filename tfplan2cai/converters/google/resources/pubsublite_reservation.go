@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterPubsubLiteReservation() ResourceConverter {
 	}
 }
 
-func GetPubsubLiteReservationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetPubsubLiteReservationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{region}}/reservations/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,18 +51,18 @@ func GetPubsubLiteReservationCaiObject(d TerraformResourceData, config *transpor
 	}
 }
 
-func GetPubsubLiteReservationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetPubsubLiteReservationApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	throughputCapacityProp, err := expandPubsubLiteReservationThroughputCapacity(d.Get("throughput_capacity"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("throughput_capacity"); !isEmptyValue(reflect.ValueOf(throughputCapacityProp)) && (ok || !reflect.DeepEqual(v, throughputCapacityProp)) {
+	} else if v, ok := d.GetOkExists("throughput_capacity"); !tpgresource.IsEmptyValue(reflect.ValueOf(throughputCapacityProp)) && (ok || !reflect.DeepEqual(v, throughputCapacityProp)) {
 		obj["throughputCapacity"] = throughputCapacityProp
 	}
 
 	return obj, nil
 }
 
-func expandPubsubLiteReservationThroughputCapacity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteReservationThroughputCapacity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

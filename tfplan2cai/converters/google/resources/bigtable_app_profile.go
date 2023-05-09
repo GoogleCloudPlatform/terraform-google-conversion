@@ -33,7 +33,7 @@ func resourceConverterBigtableAppProfile() ResourceConverter {
 	}
 }
 
-func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetBigtableAppProfileCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigtableadmin.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -54,31 +54,31 @@ func GetBigtableAppProfileCaiObject(d TerraformResourceData, config *transport_t
 	}
 }
 
-func GetBigtableAppProfileApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetBigtableAppProfileApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandBigtableAppProfileDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	multiClusterRoutingUseAnyProp, err := expandBigtableAppProfileMultiClusterRoutingUseAny(d.Get("multi_cluster_routing_use_any"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("multi_cluster_routing_use_any"); !isEmptyValue(reflect.ValueOf(multiClusterRoutingUseAnyProp)) && (ok || !reflect.DeepEqual(v, multiClusterRoutingUseAnyProp)) {
+	} else if v, ok := d.GetOkExists("multi_cluster_routing_use_any"); !tpgresource.IsEmptyValue(reflect.ValueOf(multiClusterRoutingUseAnyProp)) && (ok || !reflect.DeepEqual(v, multiClusterRoutingUseAnyProp)) {
 		obj["multiClusterRoutingUseAny"] = multiClusterRoutingUseAnyProp
 	}
 	singleClusterRoutingProp, err := expandBigtableAppProfileSingleClusterRouting(d.Get("single_cluster_routing"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("single_cluster_routing"); !isEmptyValue(reflect.ValueOf(singleClusterRoutingProp)) && (ok || !reflect.DeepEqual(v, singleClusterRoutingProp)) {
+	} else if v, ok := d.GetOkExists("single_cluster_routing"); !tpgresource.IsEmptyValue(reflect.ValueOf(singleClusterRoutingProp)) && (ok || !reflect.DeepEqual(v, singleClusterRoutingProp)) {
 		obj["singleClusterRouting"] = singleClusterRoutingProp
 	}
 
 	return resourceBigtableAppProfileEncoder(d, config, obj)
 }
 
-func resourceBigtableAppProfileEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceBigtableAppProfileEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// Instance is a URL parameter only, so replace self-link/path with resource name only.
 	if err := d.Set("instance", tpgresource.GetResourceNameFromSelfLink(d.Get("instance").(string))); err != nil {
 		return nil, fmt.Errorf("Error setting instance: %s", err)
@@ -86,11 +86,11 @@ func resourceBigtableAppProfileEncoder(d TerraformResourceData, meta interface{}
 	return obj, nil
 }
 
-func expandBigtableAppProfileDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigtableAppProfileDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigtableAppProfileMultiClusterRoutingUseAny(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigtableAppProfileMultiClusterRoutingUseAny(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil || !v.(bool) {
 		return nil, nil
 	}
@@ -106,7 +106,7 @@ func expandBigtableAppProfileMultiClusterRoutingUseAny(v interface{}, d Terrafor
 	return obj, nil
 }
 
-func expandBigtableAppProfileSingleClusterRouting(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigtableAppProfileSingleClusterRouting(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -118,24 +118,24 @@ func expandBigtableAppProfileSingleClusterRouting(v interface{}, d TerraformReso
 	transformedClusterId, err := expandBigtableAppProfileSingleClusterRoutingClusterId(original["cluster_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedClusterId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedClusterId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["clusterId"] = transformedClusterId
 	}
 
 	transformedAllowTransactionalWrites, err := expandBigtableAppProfileSingleClusterRoutingAllowTransactionalWrites(original["allow_transactional_writes"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllowTransactionalWrites); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAllowTransactionalWrites); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["allowTransactionalWrites"] = transformedAllowTransactionalWrites
 	}
 
 	return transformed, nil
 }
 
-func expandBigtableAppProfileSingleClusterRoutingClusterId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigtableAppProfileSingleClusterRoutingClusterId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigtableAppProfileSingleClusterRoutingAllowTransactionalWrites(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigtableAppProfileSingleClusterRoutingAllowTransactionalWrites(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

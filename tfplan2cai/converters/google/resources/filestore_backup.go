@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterFilestoreBackup() ResourceConverter {
 	}
 }
 
-func GetFilestoreBackupCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetFilestoreBackupCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//file.googleapis.com/projects/{{project}}/locations/{{location}}/backups/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,41 +51,41 @@ func GetFilestoreBackupCaiObject(d TerraformResourceData, config *transport_tpg.
 	}
 }
 
-func GetFilestoreBackupApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetFilestoreBackupApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandFilestoreBackupDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	labelsProp, err := expandFilestoreBackupLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	sourceInstanceProp, err := expandFilestoreBackupSourceInstance(d.Get("source_instance"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("source_instance"); !isEmptyValue(reflect.ValueOf(sourceInstanceProp)) && (ok || !reflect.DeepEqual(v, sourceInstanceProp)) {
+	} else if v, ok := d.GetOkExists("source_instance"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceInstanceProp)) && (ok || !reflect.DeepEqual(v, sourceInstanceProp)) {
 		obj["sourceInstance"] = sourceInstanceProp
 	}
 	sourceFileShareProp, err := expandFilestoreBackupSourceFileShare(d.Get("source_file_share"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("source_file_share"); !isEmptyValue(reflect.ValueOf(sourceFileShareProp)) && (ok || !reflect.DeepEqual(v, sourceFileShareProp)) {
+	} else if v, ok := d.GetOkExists("source_file_share"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceFileShareProp)) && (ok || !reflect.DeepEqual(v, sourceFileShareProp)) {
 		obj["sourceFileShare"] = sourceFileShareProp
 	}
 
 	return obj, nil
 }
 
-func expandFilestoreBackupDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFilestoreBackupDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFilestoreBackupLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandFilestoreBackupLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -95,10 +96,10 @@ func expandFilestoreBackupLabels(v interface{}, d TerraformResourceData, config 
 	return m, nil
 }
 
-func expandFilestoreBackupSourceInstance(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFilestoreBackupSourceInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFilestoreBackupSourceFileShare(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFilestoreBackupSourceFileShare(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterHealthcareConsentStore() ResourceConverter {
 	}
 }
 
-func GetHealthcareConsentStoreCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetHealthcareConsentStoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//healthcare.googleapis.com/{{dataset}}/consentStores/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,39 +51,39 @@ func GetHealthcareConsentStoreCaiObject(d TerraformResourceData, config *transpo
 	}
 }
 
-func GetHealthcareConsentStoreApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetHealthcareConsentStoreApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	defaultConsentTtlProp, err := expandHealthcareConsentStoreDefaultConsentTtl(d.Get("default_consent_ttl"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("default_consent_ttl"); !isEmptyValue(reflect.ValueOf(defaultConsentTtlProp)) && (ok || !reflect.DeepEqual(v, defaultConsentTtlProp)) {
+	} else if v, ok := d.GetOkExists("default_consent_ttl"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultConsentTtlProp)) && (ok || !reflect.DeepEqual(v, defaultConsentTtlProp)) {
 		obj["defaultConsentTtl"] = defaultConsentTtlProp
 	}
 	enableConsentCreateOnUpdateProp, err := expandHealthcareConsentStoreEnableConsentCreateOnUpdate(d.Get("enable_consent_create_on_update"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_consent_create_on_update"); !isEmptyValue(reflect.ValueOf(enableConsentCreateOnUpdateProp)) && (ok || !reflect.DeepEqual(v, enableConsentCreateOnUpdateProp)) {
+	} else if v, ok := d.GetOkExists("enable_consent_create_on_update"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableConsentCreateOnUpdateProp)) && (ok || !reflect.DeepEqual(v, enableConsentCreateOnUpdateProp)) {
 		obj["enableConsentCreateOnUpdate"] = enableConsentCreateOnUpdateProp
 	}
 	labelsProp, err := expandHealthcareConsentStoreLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 
 	return obj, nil
 }
 
-func expandHealthcareConsentStoreDefaultConsentTtl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandHealthcareConsentStoreDefaultConsentTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandHealthcareConsentStoreEnableConsentCreateOnUpdate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandHealthcareConsentStoreEnableConsentCreateOnUpdate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandHealthcareConsentStoreLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandHealthcareConsentStoreLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

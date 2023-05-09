@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterCloudIotDeviceRegistryIamMember() ResourceConverter {
 	}
 }
 
-func GetCloudIotDeviceRegistryIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCloudIotDeviceRegistryIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudIotDeviceRegistryIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetCloudIotDeviceRegistryIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCloudIotDeviceRegistryIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudIotDeviceRegistryIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetCloudIotDeviceRegistryIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCloudIotDeviceRegistryIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudIotDeviceRegistryIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeCloudIotDeviceRegistryIamMemberDelete(existing, incoming Asset) Asset 
 }
 
 func newCloudIotDeviceRegistryIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newCloudIotDeviceRegistryIamAsset(
 	}}, nil
 }
 
-func FetchCloudIotDeviceRegistryIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchCloudIotDeviceRegistryIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
 		return Asset{}, ErrEmptyIdentityField

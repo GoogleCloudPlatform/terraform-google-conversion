@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterCloudRunServiceIamMember() ResourceConverter {
 	}
 }
 
-func GetCloudRunServiceIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCloudRunServiceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudRunServiceIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetCloudRunServiceIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCloudRunServiceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudRunServiceIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetCloudRunServiceIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCloudRunServiceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newCloudRunServiceIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeCloudRunServiceIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newCloudRunServiceIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newCloudRunServiceIamAsset(
 	}}, nil
 }
 
-func FetchCloudRunServiceIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchCloudRunServiceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

@@ -19,6 +19,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -31,7 +32,7 @@ func resourceConverterCloudBuildBitbucketServerConfig() ResourceConverter {
 	}
 }
 
-func GetCloudBuildBitbucketServerConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCloudBuildBitbucketServerConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudbuild.googleapis.com/projects/{{project}}/locations/{{location}}/bitbucketServerConfigs/{{config_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -52,65 +53,65 @@ func GetCloudBuildBitbucketServerConfigCaiObject(d TerraformResourceData, config
 	}
 }
 
-func GetCloudBuildBitbucketServerConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetCloudBuildBitbucketServerConfigApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	hostUriProp, err := expandCloudBuildBitbucketServerConfigHostUri(d.Get("host_uri"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("host_uri"); !isEmptyValue(reflect.ValueOf(hostUriProp)) && (ok || !reflect.DeepEqual(v, hostUriProp)) {
+	} else if v, ok := d.GetOkExists("host_uri"); !tpgresource.IsEmptyValue(reflect.ValueOf(hostUriProp)) && (ok || !reflect.DeepEqual(v, hostUriProp)) {
 		obj["hostUri"] = hostUriProp
 	}
 	secretsProp, err := expandCloudBuildBitbucketServerConfigSecrets(d.Get("secrets"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("secrets"); !isEmptyValue(reflect.ValueOf(secretsProp)) && (ok || !reflect.DeepEqual(v, secretsProp)) {
+	} else if v, ok := d.GetOkExists("secrets"); !tpgresource.IsEmptyValue(reflect.ValueOf(secretsProp)) && (ok || !reflect.DeepEqual(v, secretsProp)) {
 		obj["secrets"] = secretsProp
 	}
 	usernameProp, err := expandCloudBuildBitbucketServerConfigUsername(d.Get("username"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("username"); !isEmptyValue(reflect.ValueOf(usernameProp)) && (ok || !reflect.DeepEqual(v, usernameProp)) {
+	} else if v, ok := d.GetOkExists("username"); !tpgresource.IsEmptyValue(reflect.ValueOf(usernameProp)) && (ok || !reflect.DeepEqual(v, usernameProp)) {
 		obj["username"] = usernameProp
 	}
 	apiKeyProp, err := expandCloudBuildBitbucketServerConfigApiKey(d.Get("api_key"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("api_key"); !isEmptyValue(reflect.ValueOf(apiKeyProp)) && (ok || !reflect.DeepEqual(v, apiKeyProp)) {
+	} else if v, ok := d.GetOkExists("api_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiKeyProp)) && (ok || !reflect.DeepEqual(v, apiKeyProp)) {
 		obj["apiKey"] = apiKeyProp
 	}
 	connectedRepositoriesProp, err := expandCloudBuildBitbucketServerConfigConnectedRepositories(d.Get("connected_repositories"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("connected_repositories"); !isEmptyValue(reflect.ValueOf(connectedRepositoriesProp)) && (ok || !reflect.DeepEqual(v, connectedRepositoriesProp)) {
+	} else if v, ok := d.GetOkExists("connected_repositories"); !tpgresource.IsEmptyValue(reflect.ValueOf(connectedRepositoriesProp)) && (ok || !reflect.DeepEqual(v, connectedRepositoriesProp)) {
 		obj["connectedRepositories"] = connectedRepositoriesProp
 	}
 	peeredNetworkProp, err := expandCloudBuildBitbucketServerConfigPeeredNetwork(d.Get("peered_network"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("peered_network"); !isEmptyValue(reflect.ValueOf(peeredNetworkProp)) && (ok || !reflect.DeepEqual(v, peeredNetworkProp)) {
+	} else if v, ok := d.GetOkExists("peered_network"); !tpgresource.IsEmptyValue(reflect.ValueOf(peeredNetworkProp)) && (ok || !reflect.DeepEqual(v, peeredNetworkProp)) {
 		obj["peeredNetwork"] = peeredNetworkProp
 	}
 	sslCaProp, err := expandCloudBuildBitbucketServerConfigSslCa(d.Get("ssl_ca"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ssl_ca"); !isEmptyValue(reflect.ValueOf(sslCaProp)) && (ok || !reflect.DeepEqual(v, sslCaProp)) {
+	} else if v, ok := d.GetOkExists("ssl_ca"); !tpgresource.IsEmptyValue(reflect.ValueOf(sslCaProp)) && (ok || !reflect.DeepEqual(v, sslCaProp)) {
 		obj["sslCa"] = sslCaProp
 	}
 
 	return resourceCloudBuildBitbucketServerConfigEncoder(d, config, obj)
 }
 
-func resourceCloudBuildBitbucketServerConfigEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceCloudBuildBitbucketServerConfigEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// connectedRepositories is needed for batchCreate on the config after creation.
 	delete(obj, "connectedRepositories")
 	return obj, nil
 }
 
-func expandCloudBuildBitbucketServerConfigHostUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigHostUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSecrets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSecrets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -122,48 +123,48 @@ func expandCloudBuildBitbucketServerConfigSecrets(v interface{}, d TerraformReso
 	transformedAdminAccessTokenVersionName, err := expandCloudBuildBitbucketServerConfigSecretsAdminAccessTokenVersionName(original["admin_access_token_version_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAdminAccessTokenVersionName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAdminAccessTokenVersionName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["adminAccessTokenVersionName"] = transformedAdminAccessTokenVersionName
 	}
 
 	transformedReadAccessTokenVersionName, err := expandCloudBuildBitbucketServerConfigSecretsReadAccessTokenVersionName(original["read_access_token_version_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedReadAccessTokenVersionName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedReadAccessTokenVersionName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["readAccessTokenVersionName"] = transformedReadAccessTokenVersionName
 	}
 
 	transformedWebhookSecretVersionName, err := expandCloudBuildBitbucketServerConfigSecretsWebhookSecretVersionName(original["webhook_secret_version_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedWebhookSecretVersionName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedWebhookSecretVersionName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["webhookSecretVersionName"] = transformedWebhookSecretVersionName
 	}
 
 	return transformed, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSecretsAdminAccessTokenVersionName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSecretsAdminAccessTokenVersionName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSecretsReadAccessTokenVersionName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSecretsReadAccessTokenVersionName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSecretsWebhookSecretVersionName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSecretsWebhookSecretVersionName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigUsername(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigApiKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigApiKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigConnectedRepositories(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigConnectedRepositories(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -177,14 +178,14 @@ func expandCloudBuildBitbucketServerConfigConnectedRepositories(v interface{}, d
 		transformedProjectKey, err := expandCloudBuildBitbucketServerConfigConnectedRepositoriesProjectKey(original["project_key"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedProjectKey); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedProjectKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["projectKey"] = transformedProjectKey
 		}
 
 		transformedRepoSlug, err := expandCloudBuildBitbucketServerConfigConnectedRepositoriesRepoSlug(original["repo_slug"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedRepoSlug); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedRepoSlug); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["repoSlug"] = transformedRepoSlug
 		}
 
@@ -193,18 +194,18 @@ func expandCloudBuildBitbucketServerConfigConnectedRepositories(v interface{}, d
 	return req, nil
 }
 
-func expandCloudBuildBitbucketServerConfigConnectedRepositoriesProjectKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigConnectedRepositoriesProjectKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigConnectedRepositoriesRepoSlug(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigConnectedRepositoriesRepoSlug(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigPeeredNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigPeeredNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudBuildBitbucketServerConfigSslCa(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudBuildBitbucketServerConfigSslCa(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

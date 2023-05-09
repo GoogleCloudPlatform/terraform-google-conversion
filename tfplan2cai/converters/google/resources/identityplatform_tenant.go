@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterIdentityPlatformTenant() ResourceConverter {
 	}
 }
 
-func GetIdentityPlatformTenantCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetIdentityPlatformTenantCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/tenants/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,48 +51,48 @@ func GetIdentityPlatformTenantCaiObject(d TerraformResourceData, config *transpo
 	}
 }
 
-func GetIdentityPlatformTenantApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetIdentityPlatformTenantApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandIdentityPlatformTenantDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	allowPasswordSignupProp, err := expandIdentityPlatformTenantAllowPasswordSignup(d.Get("allow_password_signup"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("allow_password_signup"); !isEmptyValue(reflect.ValueOf(allowPasswordSignupProp)) && (ok || !reflect.DeepEqual(v, allowPasswordSignupProp)) {
+	} else if v, ok := d.GetOkExists("allow_password_signup"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowPasswordSignupProp)) && (ok || !reflect.DeepEqual(v, allowPasswordSignupProp)) {
 		obj["allowPasswordSignup"] = allowPasswordSignupProp
 	}
 	enableEmailLinkSigninProp, err := expandIdentityPlatformTenantEnableEmailLinkSignin(d.Get("enable_email_link_signin"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_email_link_signin"); !isEmptyValue(reflect.ValueOf(enableEmailLinkSigninProp)) && (ok || !reflect.DeepEqual(v, enableEmailLinkSigninProp)) {
+	} else if v, ok := d.GetOkExists("enable_email_link_signin"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableEmailLinkSigninProp)) && (ok || !reflect.DeepEqual(v, enableEmailLinkSigninProp)) {
 		obj["enableEmailLinkSignin"] = enableEmailLinkSigninProp
 	}
 	disableAuthProp, err := expandIdentityPlatformTenantDisableAuth(d.Get("disable_auth"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("disable_auth"); !isEmptyValue(reflect.ValueOf(disableAuthProp)) && (ok || !reflect.DeepEqual(v, disableAuthProp)) {
+	} else if v, ok := d.GetOkExists("disable_auth"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableAuthProp)) && (ok || !reflect.DeepEqual(v, disableAuthProp)) {
 		obj["disableAuth"] = disableAuthProp
 	}
 
 	return obj, nil
 }
 
-func expandIdentityPlatformTenantDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformTenantDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformTenantAllowPasswordSignup(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformTenantAllowPasswordSignup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformTenantEnableEmailLinkSignin(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformTenantEnableEmailLinkSignin(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformTenantDisableAuth(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformTenantDisableAuth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

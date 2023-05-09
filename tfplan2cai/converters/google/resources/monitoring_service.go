@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterMonitoringService() ResourceConverter {
 	}
 }
 
-func GetMonitoringServiceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetMonitoringServiceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,12 +51,12 @@ func GetMonitoringServiceCaiObject(d TerraformResourceData, config *transport_tp
 	}
 }
 
-func GetMonitoringServiceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetMonitoringServiceApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandMonitoringServiceDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	userLabelsProp, err := expandMonitoringServiceUserLabels(d.Get("user_labels"), d, config)
@@ -67,20 +68,20 @@ func GetMonitoringServiceApiObject(d TerraformResourceData, config *transport_tp
 	telemetryProp, err := expandMonitoringServiceTelemetry(d.Get("telemetry"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("telemetry"); !isEmptyValue(reflect.ValueOf(telemetryProp)) && (ok || !reflect.DeepEqual(v, telemetryProp)) {
+	} else if v, ok := d.GetOkExists("telemetry"); !tpgresource.IsEmptyValue(reflect.ValueOf(telemetryProp)) && (ok || !reflect.DeepEqual(v, telemetryProp)) {
 		obj["telemetry"] = telemetryProp
 	}
 	nameProp, err := expandMonitoringServiceServiceId(d.Get("service_id"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("service_id"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("service_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 
 	return resourceMonitoringServiceEncoder(d, config, obj)
 }
 
-func resourceMonitoringServiceEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceMonitoringServiceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// Currently only CUSTOM service types can be created, but the
 	// custom identifier block does not actually have fields right now.
 	// Set to empty to indicate manually-created service type is CUSTOM.
@@ -93,11 +94,11 @@ func resourceMonitoringServiceEncoder(d TerraformResourceData, meta interface{},
 	return obj, nil
 }
 
-func expandMonitoringServiceDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandMonitoringServiceDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringServiceUserLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandMonitoringServiceUserLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -108,7 +109,7 @@ func expandMonitoringServiceUserLabels(v interface{}, d TerraformResourceData, c
 	return m, nil
 }
 
-func expandMonitoringServiceTelemetry(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandMonitoringServiceTelemetry(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -120,17 +121,17 @@ func expandMonitoringServiceTelemetry(v interface{}, d TerraformResourceData, co
 	transformedResourceName, err := expandMonitoringServiceTelemetryResourceName(original["resource_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedResourceName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedResourceName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["resourceName"] = transformedResourceName
 	}
 
 	return transformed, nil
 }
 
-func expandMonitoringServiceTelemetryResourceName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandMonitoringServiceTelemetryResourceName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandMonitoringServiceServiceId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandMonitoringServiceServiceId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterDataplexZoneIamMember() ResourceConverter {
 	}
 }
 
-func GetDataplexZoneIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDataplexZoneIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataplexZoneIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetDataplexZoneIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDataplexZoneIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataplexZoneIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetDataplexZoneIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDataplexZoneIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newDataplexZoneIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeDataplexZoneIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newDataplexZoneIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newDataplexZoneIamAsset(
 	}}, nil
 }
 
-func FetchDataplexZoneIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchDataplexZoneIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

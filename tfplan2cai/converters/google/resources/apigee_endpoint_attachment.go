@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterApigeeEndpointAttachment() ResourceConverter {
 	}
 }
 
-func GetApigeeEndpointAttachmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetApigeeEndpointAttachmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{org_id}}/endpointAttachments/{{endpoint_attachment_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,28 +51,28 @@ func GetApigeeEndpointAttachmentCaiObject(d TerraformResourceData, config *trans
 	}
 }
 
-func GetApigeeEndpointAttachmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetApigeeEndpointAttachmentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	locationProp, err := expandApigeeEndpointAttachmentLocation(d.Get("location"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("location"); !isEmptyValue(reflect.ValueOf(locationProp)) && (ok || !reflect.DeepEqual(v, locationProp)) {
+	} else if v, ok := d.GetOkExists("location"); !tpgresource.IsEmptyValue(reflect.ValueOf(locationProp)) && (ok || !reflect.DeepEqual(v, locationProp)) {
 		obj["location"] = locationProp
 	}
 	serviceAttachmentProp, err := expandApigeeEndpointAttachmentServiceAttachment(d.Get("service_attachment"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("service_attachment"); !isEmptyValue(reflect.ValueOf(serviceAttachmentProp)) && (ok || !reflect.DeepEqual(v, serviceAttachmentProp)) {
+	} else if v, ok := d.GetOkExists("service_attachment"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceAttachmentProp)) && (ok || !reflect.DeepEqual(v, serviceAttachmentProp)) {
 		obj["serviceAttachment"] = serviceAttachmentProp
 	}
 
 	return obj, nil
 }
 
-func expandApigeeEndpointAttachmentLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandApigeeEndpointAttachmentLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeEndpointAttachmentServiceAttachment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandApigeeEndpointAttachmentServiceAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

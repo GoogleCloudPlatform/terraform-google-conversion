@@ -19,6 +19,7 @@ import (
 	"reflect"
 	"regexp"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -31,7 +32,7 @@ func resourceConverterPubsubLiteSubscription() ResourceConverter {
 	}
 }
 
-func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetPubsubLiteSubscriptionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/subscriptions/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -52,28 +53,28 @@ func GetPubsubLiteSubscriptionCaiObject(d TerraformResourceData, config *transpo
 	}
 }
 
-func GetPubsubLiteSubscriptionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetPubsubLiteSubscriptionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	topicProp, err := expandPubsubLiteSubscriptionTopic(d.Get("topic"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("topic"); !isEmptyValue(reflect.ValueOf(topicProp)) && (ok || !reflect.DeepEqual(v, topicProp)) {
+	} else if v, ok := d.GetOkExists("topic"); !tpgresource.IsEmptyValue(reflect.ValueOf(topicProp)) && (ok || !reflect.DeepEqual(v, topicProp)) {
 		obj["topic"] = topicProp
 	}
 	deliveryConfigProp, err := expandPubsubLiteSubscriptionDeliveryConfig(d.Get("delivery_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("delivery_config"); !isEmptyValue(reflect.ValueOf(deliveryConfigProp)) && (ok || !reflect.DeepEqual(v, deliveryConfigProp)) {
+	} else if v, ok := d.GetOkExists("delivery_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(deliveryConfigProp)) && (ok || !reflect.DeepEqual(v, deliveryConfigProp)) {
 		obj["deliveryConfig"] = deliveryConfigProp
 	}
 
 	return resourcePubsubLiteSubscriptionEncoder(d, config, obj)
 }
 
-func resourcePubsubLiteSubscriptionEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourcePubsubLiteSubscriptionEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	config := meta.(*transport_tpg.Config)
 
-	zone, err := getZone(d, config)
+	zone, err := tpgresource.GetZone(d, config)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +85,7 @@ func resourcePubsubLiteSubscriptionEncoder(d TerraformResourceData, meta interfa
 
 	// API Endpoint requires region in the URL. We infer it from the zone.
 
-	region := getRegionFromZone(zone)
+	region := tpgresource.GetRegionFromZone(zone)
 
 	if region == "" {
 		return nil, fmt.Errorf("invalid zone %q, unable to infer region from zone", zone)
@@ -93,13 +94,13 @@ func resourcePubsubLiteSubscriptionEncoder(d TerraformResourceData, meta interfa
 	return obj, nil
 }
 
-func expandPubsubLiteSubscriptionTopic(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	project, err := getProject(d, config)
+func expandPubsubLiteSubscriptionTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	project, err := tpgresource.GetProject(d, config)
 	if err != nil {
 		return "", err
 	}
 
-	zone, err := getZone(d, config)
+	zone, err := tpgresource.GetZone(d, config)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +125,7 @@ func expandPubsubLiteSubscriptionTopic(v interface{}, d TerraformResourceData, c
 	}
 }
 
-func expandPubsubLiteSubscriptionDeliveryConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteSubscriptionDeliveryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -136,13 +137,13 @@ func expandPubsubLiteSubscriptionDeliveryConfig(v interface{}, d TerraformResour
 	transformedDeliveryRequirement, err := expandPubsubLiteSubscriptionDeliveryConfigDeliveryRequirement(original["delivery_requirement"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDeliveryRequirement); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDeliveryRequirement); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["deliveryRequirement"] = transformedDeliveryRequirement
 	}
 
 	return transformed, nil
 }
 
-func expandPubsubLiteSubscriptionDeliveryConfigDeliveryRequirement(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteSubscriptionDeliveryConfigDeliveryRequirement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

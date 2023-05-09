@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterComputeImageIamMember() ResourceConverter {
 	}
 }
 
-func GetComputeImageIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeImageIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeImageIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetComputeImageIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeImageIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeImageIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetComputeImageIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeImageIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newComputeImageIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeComputeImageIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newComputeImageIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newComputeImageIamAsset(
 	}}, nil
 }
 
-func FetchComputeImageIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchComputeImageIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("image"); !ok {
 		return Asset{}, ErrEmptyIdentityField

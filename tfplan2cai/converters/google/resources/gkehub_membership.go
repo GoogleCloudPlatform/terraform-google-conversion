@@ -20,6 +20,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -42,7 +43,7 @@ func resourceConverterGKEHubMembership() ResourceConverter {
 	}
 }
 
-func GetGKEHubMembershipCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetGKEHubMembershipCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gkehub.googleapis.com/projects/{{project}}/locations/global/memberships/{{membership_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -63,31 +64,31 @@ func GetGKEHubMembershipCaiObject(d TerraformResourceData, config *transport_tpg
 	}
 }
 
-func GetGKEHubMembershipApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetGKEHubMembershipApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandGKEHubMembershipLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	endpointProp, err := expandGKEHubMembershipEndpoint(d.Get("endpoint"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("endpoint"); !isEmptyValue(reflect.ValueOf(endpointProp)) && (ok || !reflect.DeepEqual(v, endpointProp)) {
+	} else if v, ok := d.GetOkExists("endpoint"); !tpgresource.IsEmptyValue(reflect.ValueOf(endpointProp)) && (ok || !reflect.DeepEqual(v, endpointProp)) {
 		obj["endpoint"] = endpointProp
 	}
 	authorityProp, err := expandGKEHubMembershipAuthority(d.Get("authority"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("authority"); !isEmptyValue(reflect.ValueOf(authorityProp)) && (ok || !reflect.DeepEqual(v, authorityProp)) {
+	} else if v, ok := d.GetOkExists("authority"); !tpgresource.IsEmptyValue(reflect.ValueOf(authorityProp)) && (ok || !reflect.DeepEqual(v, authorityProp)) {
 		obj["authority"] = authorityProp
 	}
 
 	return obj, nil
 }
 
-func expandGKEHubMembershipLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandGKEHubMembershipLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -98,7 +99,7 @@ func expandGKEHubMembershipLabels(v interface{}, d TerraformResourceData, config
 	return m, nil
 }
 
-func expandGKEHubMembershipEndpoint(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGKEHubMembershipEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -110,14 +111,14 @@ func expandGKEHubMembershipEndpoint(v interface{}, d TerraformResourceData, conf
 	transformedGkeCluster, err := expandGKEHubMembershipEndpointGkeCluster(original["gke_cluster"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedGkeCluster); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedGkeCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["gkeCluster"] = transformedGkeCluster
 	}
 
 	return transformed, nil
 }
 
-func expandGKEHubMembershipEndpointGkeCluster(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGKEHubMembershipEndpointGkeCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -129,14 +130,14 @@ func expandGKEHubMembershipEndpointGkeCluster(v interface{}, d TerraformResource
 	transformedResourceLink, err := expandGKEHubMembershipEndpointGkeClusterResourceLink(original["resource_link"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedResourceLink); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedResourceLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["resourceLink"] = transformedResourceLink
 	}
 
 	return transformed, nil
 }
 
-func expandGKEHubMembershipEndpointGkeClusterResourceLink(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGKEHubMembershipEndpointGkeClusterResourceLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if strings.HasPrefix(v.(string), "//") {
 		return v, nil
 	} else {
@@ -145,7 +146,7 @@ func expandGKEHubMembershipEndpointGkeClusterResourceLink(v interface{}, d Terra
 	}
 }
 
-func expandGKEHubMembershipAuthority(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGKEHubMembershipAuthority(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -157,13 +158,13 @@ func expandGKEHubMembershipAuthority(v interface{}, d TerraformResourceData, con
 	transformedIssuer, err := expandGKEHubMembershipAuthorityIssuer(original["issuer"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedIssuer); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedIssuer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["issuer"] = transformedIssuer
 	}
 
 	return transformed, nil
 }
 
-func expandGKEHubMembershipAuthorityIssuer(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGKEHubMembershipAuthorityIssuer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

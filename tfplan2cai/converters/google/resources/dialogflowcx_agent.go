@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterDialogflowCXAgent() ResourceConverter {
 	}
 }
 
-func GetDialogflowCXAgentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDialogflowCXAgentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-dialogflow.googleapis.com/projects/{{project}}/locations/{{location}}/agents/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,97 +51,97 @@ func GetDialogflowCXAgentCaiObject(d TerraformResourceData, config *transport_tp
 	}
 }
 
-func GetDialogflowCXAgentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetDialogflowCXAgentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowCXAgentDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	defaultLanguageCodeProp, err := expandDialogflowCXAgentDefaultLanguageCode(d.Get("default_language_code"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("default_language_code"); !isEmptyValue(reflect.ValueOf(defaultLanguageCodeProp)) && (ok || !reflect.DeepEqual(v, defaultLanguageCodeProp)) {
+	} else if v, ok := d.GetOkExists("default_language_code"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultLanguageCodeProp)) && (ok || !reflect.DeepEqual(v, defaultLanguageCodeProp)) {
 		obj["defaultLanguageCode"] = defaultLanguageCodeProp
 	}
 	supportedLanguageCodesProp, err := expandDialogflowCXAgentSupportedLanguageCodes(d.Get("supported_language_codes"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("supported_language_codes"); !isEmptyValue(reflect.ValueOf(supportedLanguageCodesProp)) && (ok || !reflect.DeepEqual(v, supportedLanguageCodesProp)) {
+	} else if v, ok := d.GetOkExists("supported_language_codes"); !tpgresource.IsEmptyValue(reflect.ValueOf(supportedLanguageCodesProp)) && (ok || !reflect.DeepEqual(v, supportedLanguageCodesProp)) {
 		obj["supportedLanguageCodes"] = supportedLanguageCodesProp
 	}
 	timeZoneProp, err := expandDialogflowCXAgentTimeZone(d.Get("time_zone"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("time_zone"); !isEmptyValue(reflect.ValueOf(timeZoneProp)) && (ok || !reflect.DeepEqual(v, timeZoneProp)) {
+	} else if v, ok := d.GetOkExists("time_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(timeZoneProp)) && (ok || !reflect.DeepEqual(v, timeZoneProp)) {
 		obj["timeZone"] = timeZoneProp
 	}
 	descriptionProp, err := expandDialogflowCXAgentDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	avatarUriProp, err := expandDialogflowCXAgentAvatarUri(d.Get("avatar_uri"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("avatar_uri"); !isEmptyValue(reflect.ValueOf(avatarUriProp)) && (ok || !reflect.DeepEqual(v, avatarUriProp)) {
+	} else if v, ok := d.GetOkExists("avatar_uri"); !tpgresource.IsEmptyValue(reflect.ValueOf(avatarUriProp)) && (ok || !reflect.DeepEqual(v, avatarUriProp)) {
 		obj["avatarUri"] = avatarUriProp
 	}
 	speechToTextSettingsProp, err := expandDialogflowCXAgentSpeechToTextSettings(d.Get("speech_to_text_settings"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("speech_to_text_settings"); !isEmptyValue(reflect.ValueOf(speechToTextSettingsProp)) && (ok || !reflect.DeepEqual(v, speechToTextSettingsProp)) {
+	} else if v, ok := d.GetOkExists("speech_to_text_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(speechToTextSettingsProp)) && (ok || !reflect.DeepEqual(v, speechToTextSettingsProp)) {
 		obj["speechToTextSettings"] = speechToTextSettingsProp
 	}
 	securitySettingsProp, err := expandDialogflowCXAgentSecuritySettings(d.Get("security_settings"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("security_settings"); !isEmptyValue(reflect.ValueOf(securitySettingsProp)) && (ok || !reflect.DeepEqual(v, securitySettingsProp)) {
+	} else if v, ok := d.GetOkExists("security_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(securitySettingsProp)) && (ok || !reflect.DeepEqual(v, securitySettingsProp)) {
 		obj["securitySettings"] = securitySettingsProp
 	}
 	enableStackdriverLoggingProp, err := expandDialogflowCXAgentEnableStackdriverLogging(d.Get("enable_stackdriver_logging"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_stackdriver_logging"); !isEmptyValue(reflect.ValueOf(enableStackdriverLoggingProp)) && (ok || !reflect.DeepEqual(v, enableStackdriverLoggingProp)) {
+	} else if v, ok := d.GetOkExists("enable_stackdriver_logging"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableStackdriverLoggingProp)) && (ok || !reflect.DeepEqual(v, enableStackdriverLoggingProp)) {
 		obj["enableStackdriverLogging"] = enableStackdriverLoggingProp
 	}
 	enableSpellCorrectionProp, err := expandDialogflowCXAgentEnableSpellCorrection(d.Get("enable_spell_correction"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_spell_correction"); !isEmptyValue(reflect.ValueOf(enableSpellCorrectionProp)) && (ok || !reflect.DeepEqual(v, enableSpellCorrectionProp)) {
+	} else if v, ok := d.GetOkExists("enable_spell_correction"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableSpellCorrectionProp)) && (ok || !reflect.DeepEqual(v, enableSpellCorrectionProp)) {
 		obj["enableSpellCorrection"] = enableSpellCorrectionProp
 	}
 
 	return obj, nil
 }
 
-func expandDialogflowCXAgentDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentDefaultLanguageCode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentDefaultLanguageCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentSupportedLanguageCodes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentSupportedLanguageCodes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentTimeZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentTimeZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentAvatarUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentAvatarUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentSpeechToTextSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentSpeechToTextSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -152,25 +153,25 @@ func expandDialogflowCXAgentSpeechToTextSettings(v interface{}, d TerraformResou
 	transformedEnableSpeechAdaptation, err := expandDialogflowCXAgentSpeechToTextSettingsEnableSpeechAdaptation(original["enable_speech_adaptation"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedEnableSpeechAdaptation); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedEnableSpeechAdaptation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["enableSpeechAdaptation"] = transformedEnableSpeechAdaptation
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowCXAgentSpeechToTextSettingsEnableSpeechAdaptation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentSpeechToTextSettingsEnableSpeechAdaptation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentSecuritySettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentSecuritySettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentEnableStackdriverLogging(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentEnableStackdriverLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXAgentEnableSpellCorrection(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXAgentEnableSpellCorrection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

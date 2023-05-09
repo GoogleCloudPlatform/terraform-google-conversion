@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterDataCatalogTaxonomy() ResourceConverter {
 	}
 }
 
-func GetDataCatalogTaxonomyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDataCatalogTaxonomyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,38 +51,38 @@ func GetDataCatalogTaxonomyCaiObject(d TerraformResourceData, config *transport_
 	}
 }
 
-func GetDataCatalogTaxonomyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetDataCatalogTaxonomyApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDataCatalogTaxonomyDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	descriptionProp, err := expandDataCatalogTaxonomyDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	activatedPolicyTypesProp, err := expandDataCatalogTaxonomyActivatedPolicyTypes(d.Get("activated_policy_types"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("activated_policy_types"); !isEmptyValue(reflect.ValueOf(activatedPolicyTypesProp)) && (ok || !reflect.DeepEqual(v, activatedPolicyTypesProp)) {
+	} else if v, ok := d.GetOkExists("activated_policy_types"); !tpgresource.IsEmptyValue(reflect.ValueOf(activatedPolicyTypesProp)) && (ok || !reflect.DeepEqual(v, activatedPolicyTypesProp)) {
 		obj["activatedPolicyTypes"] = activatedPolicyTypesProp
 	}
 
 	return obj, nil
 }
 
-func expandDataCatalogTaxonomyDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTaxonomyDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTaxonomyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTaxonomyDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTaxonomyActivatedPolicyTypes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTaxonomyActivatedPolicyTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

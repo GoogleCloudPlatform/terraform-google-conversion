@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterApigeeInstanceAttachment() ResourceConverter {
 	}
 }
 
-func GetApigeeInstanceAttachmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetApigeeInstanceAttachmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/{{instance_id}}/attachments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,18 +51,18 @@ func GetApigeeInstanceAttachmentCaiObject(d TerraformResourceData, config *trans
 	}
 }
 
-func GetApigeeInstanceAttachmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetApigeeInstanceAttachmentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	environmentProp, err := expandApigeeInstanceAttachmentEnvironment(d.Get("environment"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("environment"); !isEmptyValue(reflect.ValueOf(environmentProp)) && (ok || !reflect.DeepEqual(v, environmentProp)) {
+	} else if v, ok := d.GetOkExists("environment"); !tpgresource.IsEmptyValue(reflect.ValueOf(environmentProp)) && (ok || !reflect.DeepEqual(v, environmentProp)) {
 		obj["environment"] = environmentProp
 	}
 
 	return obj, nil
 }
 
-func expandApigeeInstanceAttachmentEnvironment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandApigeeInstanceAttachmentEnvironment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

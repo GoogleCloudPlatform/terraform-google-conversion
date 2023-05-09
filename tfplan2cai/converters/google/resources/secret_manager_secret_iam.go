@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterSecretManagerSecretIamMember() ResourceConverter {
 	}
 }
 
-func GetSecretManagerSecretIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSecretManagerSecretIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newSecretManagerSecretIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetSecretManagerSecretIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSecretManagerSecretIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newSecretManagerSecretIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetSecretManagerSecretIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSecretManagerSecretIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newSecretManagerSecretIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeSecretManagerSecretIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newSecretManagerSecretIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newSecretManagerSecretIamAsset(
 	}}, nil
 }
 
-func FetchSecretManagerSecretIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchSecretManagerSecretIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("secret_id"); !ok {
 		return Asset{}, ErrEmptyIdentityField

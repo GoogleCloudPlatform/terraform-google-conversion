@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterKMSKeyRingImportJob() ResourceConverter {
 	}
 }
 
-func GetKMSKeyRingImportJobCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetKMSKeyRingImportJobCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudkms.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,28 +51,28 @@ func GetKMSKeyRingImportJobCaiObject(d TerraformResourceData, config *transport_
 	}
 }
 
-func GetKMSKeyRingImportJobApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetKMSKeyRingImportJobApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	importMethodProp, err := expandKMSKeyRingImportJobImportMethod(d.Get("import_method"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("import_method"); !isEmptyValue(reflect.ValueOf(importMethodProp)) && (ok || !reflect.DeepEqual(v, importMethodProp)) {
+	} else if v, ok := d.GetOkExists("import_method"); !tpgresource.IsEmptyValue(reflect.ValueOf(importMethodProp)) && (ok || !reflect.DeepEqual(v, importMethodProp)) {
 		obj["importMethod"] = importMethodProp
 	}
 	protectionLevelProp, err := expandKMSKeyRingImportJobProtectionLevel(d.Get("protection_level"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("protection_level"); !isEmptyValue(reflect.ValueOf(protectionLevelProp)) && (ok || !reflect.DeepEqual(v, protectionLevelProp)) {
+	} else if v, ok := d.GetOkExists("protection_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(protectionLevelProp)) && (ok || !reflect.DeepEqual(v, protectionLevelProp)) {
 		obj["protectionLevel"] = protectionLevelProp
 	}
 
 	return obj, nil
 }
 
-func expandKMSKeyRingImportJobImportMethod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandKMSKeyRingImportJobImportMethod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandKMSKeyRingImportJobProtectionLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandKMSKeyRingImportJobProtectionLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

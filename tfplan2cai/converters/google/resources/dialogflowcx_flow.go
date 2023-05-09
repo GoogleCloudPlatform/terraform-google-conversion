@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterDialogflowCXFlow() ResourceConverter {
 	}
 }
 
-func GetDialogflowCXFlowCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDialogflowCXFlowCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/flows/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,63 +51,63 @@ func GetDialogflowCXFlowCaiObject(d TerraformResourceData, config *transport_tpg
 	}
 }
 
-func GetDialogflowCXFlowApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetDialogflowCXFlowApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowCXFlowDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	descriptionProp, err := expandDialogflowCXFlowDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	transitionRoutesProp, err := expandDialogflowCXFlowTransitionRoutes(d.Get("transition_routes"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("transition_routes"); !isEmptyValue(reflect.ValueOf(transitionRoutesProp)) && (ok || !reflect.DeepEqual(v, transitionRoutesProp)) {
+	} else if v, ok := d.GetOkExists("transition_routes"); !tpgresource.IsEmptyValue(reflect.ValueOf(transitionRoutesProp)) && (ok || !reflect.DeepEqual(v, transitionRoutesProp)) {
 		obj["transitionRoutes"] = transitionRoutesProp
 	}
 	eventHandlersProp, err := expandDialogflowCXFlowEventHandlers(d.Get("event_handlers"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("event_handlers"); !isEmptyValue(reflect.ValueOf(eventHandlersProp)) && (ok || !reflect.DeepEqual(v, eventHandlersProp)) {
+	} else if v, ok := d.GetOkExists("event_handlers"); !tpgresource.IsEmptyValue(reflect.ValueOf(eventHandlersProp)) && (ok || !reflect.DeepEqual(v, eventHandlersProp)) {
 		obj["eventHandlers"] = eventHandlersProp
 	}
 	transitionRouteGroupsProp, err := expandDialogflowCXFlowTransitionRouteGroups(d.Get("transition_route_groups"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("transition_route_groups"); !isEmptyValue(reflect.ValueOf(transitionRouteGroupsProp)) && (ok || !reflect.DeepEqual(v, transitionRouteGroupsProp)) {
+	} else if v, ok := d.GetOkExists("transition_route_groups"); !tpgresource.IsEmptyValue(reflect.ValueOf(transitionRouteGroupsProp)) && (ok || !reflect.DeepEqual(v, transitionRouteGroupsProp)) {
 		obj["transitionRouteGroups"] = transitionRouteGroupsProp
 	}
 	nluSettingsProp, err := expandDialogflowCXFlowNluSettings(d.Get("nlu_settings"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("nlu_settings"); !isEmptyValue(reflect.ValueOf(nluSettingsProp)) && (ok || !reflect.DeepEqual(v, nluSettingsProp)) {
+	} else if v, ok := d.GetOkExists("nlu_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(nluSettingsProp)) && (ok || !reflect.DeepEqual(v, nluSettingsProp)) {
 		obj["nluSettings"] = nluSettingsProp
 	}
 	languageCodeProp, err := expandDialogflowCXFlowLanguageCode(d.Get("language_code"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("language_code"); !isEmptyValue(reflect.ValueOf(languageCodeProp)) && (ok || !reflect.DeepEqual(v, languageCodeProp)) {
+	} else if v, ok := d.GetOkExists("language_code"); !tpgresource.IsEmptyValue(reflect.ValueOf(languageCodeProp)) && (ok || !reflect.DeepEqual(v, languageCodeProp)) {
 		obj["languageCode"] = languageCodeProp
 	}
 
 	return obj, nil
 }
 
-func expandDialogflowCXFlowDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -119,42 +120,42 @@ func expandDialogflowCXFlowTransitionRoutes(v interface{}, d TerraformResourceDa
 		transformedName, err := expandDialogflowCXFlowTransitionRoutesName(original["name"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["name"] = transformedName
 		}
 
 		transformedIntent, err := expandDialogflowCXFlowTransitionRoutesIntent(original["intent"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedIntent); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedIntent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["intent"] = transformedIntent
 		}
 
 		transformedCondition, err := expandDialogflowCXFlowTransitionRoutesCondition(original["condition"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedCondition); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["condition"] = transformedCondition
 		}
 
 		transformedTriggerFulfillment, err := expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(original["trigger_fulfillment"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedTriggerFulfillment); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedTriggerFulfillment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["triggerFulfillment"] = transformedTriggerFulfillment
 		}
 
 		transformedTargetPage, err := expandDialogflowCXFlowTransitionRoutesTargetPage(original["target_page"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedTargetPage); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedTargetPage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["targetPage"] = transformedTargetPage
 		}
 
 		transformedTargetFlow, err := expandDialogflowCXFlowTransitionRoutesTargetFlow(original["target_flow"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedTargetFlow); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedTargetFlow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["targetFlow"] = transformedTargetFlow
 		}
 
@@ -163,19 +164,19 @@ func expandDialogflowCXFlowTransitionRoutes(v interface{}, d TerraformResourceDa
 	return req, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesIntent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesIntent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesCondition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -187,35 +188,35 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(v interface{}, d T
 	transformedMessages, err := expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(original["messages"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMessages); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMessages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["messages"] = transformedMessages
 	}
 
 	transformedWebhook, err := expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentWebhook(original["webhook"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedWebhook); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedWebhook); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["webhook"] = transformedWebhook
 	}
 
 	transformedReturnPartialResponses, err := expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentReturnPartialResponses(original["return_partial_responses"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedReturnPartialResponses); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedReturnPartialResponses); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["returnPartialResponses"] = transformedReturnPartialResponses
 	}
 
 	transformedTag, err := expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentTag(original["tag"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["tag"] = transformedTag
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -228,7 +229,7 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(v interfac
 		transformedText, err := expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesText(original["text"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedText); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["text"] = transformedText
 		}
 
@@ -237,7 +238,7 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(v interfac
 	return req, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -249,49 +250,49 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesText(v inte
 	transformedText, err := expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextText(original["text"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["text"] = transformedText
 	}
 
 	transformedAllowPlaybackInterruption, err := expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentWebhook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentReturnPartialResponses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTargetPage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTargetPage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRoutesTargetFlow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRoutesTargetFlow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlers(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -304,35 +305,35 @@ func expandDialogflowCXFlowEventHandlers(v interface{}, d TerraformResourceData,
 		transformedName, err := expandDialogflowCXFlowEventHandlersName(original["name"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["name"] = transformedName
 		}
 
 		transformedEvent, err := expandDialogflowCXFlowEventHandlersEvent(original["event"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedEvent); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedEvent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["event"] = transformedEvent
 		}
 
 		transformedTriggerFulfillment, err := expandDialogflowCXFlowEventHandlersTriggerFulfillment(original["trigger_fulfillment"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedTriggerFulfillment); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedTriggerFulfillment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["triggerFulfillment"] = transformedTriggerFulfillment
 		}
 
 		transformedTargetPage, err := expandDialogflowCXFlowEventHandlersTargetPage(original["target_page"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedTargetPage); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedTargetPage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["targetPage"] = transformedTargetPage
 		}
 
 		transformedTargetFlow, err := expandDialogflowCXFlowEventHandlersTargetFlow(original["target_flow"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedTargetFlow); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedTargetFlow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["targetFlow"] = transformedTargetFlow
 		}
 
@@ -341,15 +342,15 @@ func expandDialogflowCXFlowEventHandlers(v interface{}, d TerraformResourceData,
 	return req, nil
 }
 
-func expandDialogflowCXFlowEventHandlersName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersEvent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersEvent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -361,35 +362,35 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d Terr
 	transformedMessages, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(original["messages"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMessages); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMessages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["messages"] = transformedMessages
 	}
 
 	transformedWebhook, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentWebhook(original["webhook"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedWebhook); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedWebhook); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["webhook"] = transformedWebhook
 	}
 
 	transformedReturnPartialResponses, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentReturnPartialResponses(original["return_partial_responses"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedReturnPartialResponses); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedReturnPartialResponses); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["returnPartialResponses"] = transformedReturnPartialResponses
 	}
 
 	transformedTag, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentTag(original["tag"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["tag"] = transformedTag
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -402,7 +403,7 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(v interface{}
 		transformedText, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesText(original["text"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedText); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["text"] = transformedText
 		}
 
@@ -411,7 +412,7 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(v interface{}
 	return req, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -423,53 +424,53 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesText(v interfa
 	transformedText, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextText(original["text"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["text"] = transformedText
 	}
 
 	transformedAllowPlaybackInterruption, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextText(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentWebhook(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentWebhook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentReturnPartialResponses(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentReturnPartialResponses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTriggerFulfillmentTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTargetPage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTargetPage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowEventHandlersTargetFlow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowEventHandlersTargetFlow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowTransitionRouteGroups(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowTransitionRouteGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowNluSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowNluSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -481,39 +482,39 @@ func expandDialogflowCXFlowNluSettings(v interface{}, d TerraformResourceData, c
 	transformedModelType, err := expandDialogflowCXFlowNluSettingsModelType(original["model_type"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedModelType); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedModelType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["modelType"] = transformedModelType
 	}
 
 	transformedClassificationThreshold, err := expandDialogflowCXFlowNluSettingsClassificationThreshold(original["classification_threshold"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedClassificationThreshold); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedClassificationThreshold); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["classificationThreshold"] = transformedClassificationThreshold
 	}
 
 	transformedModelTrainingMode, err := expandDialogflowCXFlowNluSettingsModelTrainingMode(original["model_training_mode"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedModelTrainingMode); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedModelTrainingMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["modelTrainingMode"] = transformedModelTrainingMode
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowCXFlowNluSettingsModelType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowNluSettingsModelType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowNluSettingsClassificationThreshold(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowNluSettingsClassificationThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowNluSettingsModelTrainingMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowNluSettingsModelTrainingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowCXFlowLanguageCode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXFlowLanguageCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

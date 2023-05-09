@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterDialogflowFulfillment() ResourceConverter {
 	}
 }
 
-func GetDialogflowFulfillmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDialogflowFulfillmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//dialogflow.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,45 +51,45 @@ func GetDialogflowFulfillmentCaiObject(d TerraformResourceData, config *transpor
 	}
 }
 
-func GetDialogflowFulfillmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetDialogflowFulfillmentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandDialogflowFulfillmentDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	enabledProp, err := expandDialogflowFulfillmentEnabled(d.Get("enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enabled"); !isEmptyValue(reflect.ValueOf(enabledProp)) && (ok || !reflect.DeepEqual(v, enabledProp)) {
+	} else if v, ok := d.GetOkExists("enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(enabledProp)) && (ok || !reflect.DeepEqual(v, enabledProp)) {
 		obj["enabled"] = enabledProp
 	}
 	featuresProp, err := expandDialogflowFulfillmentFeatures(d.Get("features"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("features"); !isEmptyValue(reflect.ValueOf(featuresProp)) && (ok || !reflect.DeepEqual(v, featuresProp)) {
+	} else if v, ok := d.GetOkExists("features"); !tpgresource.IsEmptyValue(reflect.ValueOf(featuresProp)) && (ok || !reflect.DeepEqual(v, featuresProp)) {
 		obj["features"] = featuresProp
 	}
 	genericWebServiceProp, err := expandDialogflowFulfillmentGenericWebService(d.Get("generic_web_service"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("generic_web_service"); !isEmptyValue(reflect.ValueOf(genericWebServiceProp)) && (ok || !reflect.DeepEqual(v, genericWebServiceProp)) {
+	} else if v, ok := d.GetOkExists("generic_web_service"); !tpgresource.IsEmptyValue(reflect.ValueOf(genericWebServiceProp)) && (ok || !reflect.DeepEqual(v, genericWebServiceProp)) {
 		obj["genericWebService"] = genericWebServiceProp
 	}
 
 	return obj, nil
 }
 
-func expandDialogflowFulfillmentDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowFulfillmentDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowFulfillmentEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentFeatures(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowFulfillmentFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -101,7 +102,7 @@ func expandDialogflowFulfillmentFeatures(v interface{}, d TerraformResourceData,
 		transformedType, err := expandDialogflowFulfillmentFeaturesType(original["type"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["type"] = transformedType
 		}
 
@@ -110,11 +111,11 @@ func expandDialogflowFulfillmentFeatures(v interface{}, d TerraformResourceData,
 	return req, nil
 }
 
-func expandDialogflowFulfillmentFeaturesType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowFulfillmentFeaturesType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentGenericWebService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowFulfillmentGenericWebService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -126,47 +127,47 @@ func expandDialogflowFulfillmentGenericWebService(v interface{}, d TerraformReso
 	transformedUri, err := expandDialogflowFulfillmentGenericWebServiceUri(original["uri"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["uri"] = transformedUri
 	}
 
 	transformedUsername, err := expandDialogflowFulfillmentGenericWebServiceUsername(original["username"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["username"] = transformedUsername
 	}
 
 	transformedPassword, err := expandDialogflowFulfillmentGenericWebServicePassword(original["password"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["password"] = transformedPassword
 	}
 
 	transformedRequestHeaders, err := expandDialogflowFulfillmentGenericWebServiceRequestHeaders(original["request_headers"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedRequestHeaders); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedRequestHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["requestHeaders"] = transformedRequestHeaders
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowFulfillmentGenericWebServiceUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowFulfillmentGenericWebServiceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentGenericWebServiceUsername(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowFulfillmentGenericWebServiceUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentGenericWebServicePassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowFulfillmentGenericWebServicePassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDialogflowFulfillmentGenericWebServiceRequestHeaders(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandDialogflowFulfillmentGenericWebServiceRequestHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -30,7 +31,7 @@ func resourceConverterComputeRegionCommitment() ResourceConverter {
 	}
 }
 
-func GetComputeRegionCommitmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeRegionCommitmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/commitments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,79 +52,79 @@ func GetComputeRegionCommitmentCaiObject(d TerraformResourceData, config *transp
 	}
 }
 
-func GetComputeRegionCommitmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeRegionCommitmentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeRegionCommitmentName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	descriptionProp, err := expandComputeRegionCommitmentDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	planProp, err := expandComputeRegionCommitmentPlan(d.Get("plan"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("plan"); !isEmptyValue(reflect.ValueOf(planProp)) && (ok || !reflect.DeepEqual(v, planProp)) {
+	} else if v, ok := d.GetOkExists("plan"); !tpgresource.IsEmptyValue(reflect.ValueOf(planProp)) && (ok || !reflect.DeepEqual(v, planProp)) {
 		obj["plan"] = planProp
 	}
 	resourcesProp, err := expandComputeRegionCommitmentResources(d.Get("resources"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("resources"); !isEmptyValue(reflect.ValueOf(resourcesProp)) && (ok || !reflect.DeepEqual(v, resourcesProp)) {
+	} else if v, ok := d.GetOkExists("resources"); !tpgresource.IsEmptyValue(reflect.ValueOf(resourcesProp)) && (ok || !reflect.DeepEqual(v, resourcesProp)) {
 		obj["resources"] = resourcesProp
 	}
 	typeProp, err := expandComputeRegionCommitmentType(d.Get("type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("type"); !isEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
+	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
 	categoryProp, err := expandComputeRegionCommitmentCategory(d.Get("category"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("category"); !isEmptyValue(reflect.ValueOf(categoryProp)) && (ok || !reflect.DeepEqual(v, categoryProp)) {
+	} else if v, ok := d.GetOkExists("category"); !tpgresource.IsEmptyValue(reflect.ValueOf(categoryProp)) && (ok || !reflect.DeepEqual(v, categoryProp)) {
 		obj["category"] = categoryProp
 	}
 	licenseResourceProp, err := expandComputeRegionCommitmentLicenseResource(d.Get("license_resource"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("license_resource"); !isEmptyValue(reflect.ValueOf(licenseResourceProp)) && (ok || !reflect.DeepEqual(v, licenseResourceProp)) {
+	} else if v, ok := d.GetOkExists("license_resource"); !tpgresource.IsEmptyValue(reflect.ValueOf(licenseResourceProp)) && (ok || !reflect.DeepEqual(v, licenseResourceProp)) {
 		obj["licenseResource"] = licenseResourceProp
 	}
 	autoRenewProp, err := expandComputeRegionCommitmentAutoRenew(d.Get("auto_renew"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("auto_renew"); !isEmptyValue(reflect.ValueOf(autoRenewProp)) && (ok || !reflect.DeepEqual(v, autoRenewProp)) {
+	} else if v, ok := d.GetOkExists("auto_renew"); !tpgresource.IsEmptyValue(reflect.ValueOf(autoRenewProp)) && (ok || !reflect.DeepEqual(v, autoRenewProp)) {
 		obj["autoRenew"] = autoRenewProp
 	}
 	regionProp, err := expandComputeRegionCommitmentRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("region"); !isEmptyValue(reflect.ValueOf(regionProp)) && (ok || !reflect.DeepEqual(v, regionProp)) {
+	} else if v, ok := d.GetOkExists("region"); !tpgresource.IsEmptyValue(reflect.ValueOf(regionProp)) && (ok || !reflect.DeepEqual(v, regionProp)) {
 		obj["region"] = regionProp
 	}
 
 	return obj, nil
 }
 
-func expandComputeRegionCommitmentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentPlan(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentPlan(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentResources(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -136,21 +137,21 @@ func expandComputeRegionCommitmentResources(v interface{}, d TerraformResourceDa
 		transformedType, err := expandComputeRegionCommitmentResourcesType(original["type"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["type"] = transformedType
 		}
 
 		transformedAmount, err := expandComputeRegionCommitmentResourcesAmount(original["amount"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedAmount); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedAmount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["amount"] = transformedAmount
 		}
 
 		transformedAcceleratorType, err := expandComputeRegionCommitmentResourcesAcceleratorType(original["accelerator_type"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedAcceleratorType); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedAcceleratorType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["acceleratorType"] = transformedAcceleratorType
 		}
 
@@ -159,27 +160,27 @@ func expandComputeRegionCommitmentResources(v interface{}, d TerraformResourceDa
 	return req, nil
 }
 
-func expandComputeRegionCommitmentResourcesType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentResourcesType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentResourcesAmount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentResourcesAmount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentResourcesAcceleratorType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentResourcesAcceleratorType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentCategory(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentCategory(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentLicenseResource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentLicenseResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -191,45 +192,45 @@ func expandComputeRegionCommitmentLicenseResource(v interface{}, d TerraformReso
 	transformedLicense, err := expandComputeRegionCommitmentLicenseResourceLicense(original["license"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLicense); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLicense); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["license"] = transformedLicense
 	}
 
 	transformedAmount, err := expandComputeRegionCommitmentLicenseResourceAmount(original["amount"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAmount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAmount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["amount"] = transformedAmount
 	}
 
 	transformedCoresPerLicense, err := expandComputeRegionCommitmentLicenseResourceCoresPerLicense(original["cores_per_license"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCoresPerLicense); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCoresPerLicense); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["coresPerLicense"] = transformedCoresPerLicense
 	}
 
 	return transformed, nil
 }
 
-func expandComputeRegionCommitmentLicenseResourceLicense(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentLicenseResourceLicense(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentLicenseResourceAmount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentLicenseResourceAmount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentLicenseResourceCoresPerLicense(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentLicenseResourceCoresPerLicense(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentAutoRenew(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRegionCommitmentAutoRenew(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRegionCommitmentRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
+func expandComputeRegionCommitmentRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
 	}

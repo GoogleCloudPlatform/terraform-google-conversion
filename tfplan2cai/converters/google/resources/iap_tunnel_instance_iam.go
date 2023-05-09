@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterIapTunnelInstanceIamMember() ResourceConverter {
 	}
 }
 
-func GetIapTunnelInstanceIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetIapTunnelInstanceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newIapTunnelInstanceIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetIapTunnelInstanceIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetIapTunnelInstanceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newIapTunnelInstanceIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetIapTunnelInstanceIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetIapTunnelInstanceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newIapTunnelInstanceIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeIapTunnelInstanceIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newIapTunnelInstanceIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newIapTunnelInstanceIamAsset(
 	}}, nil
 }
 
-func FetchIapTunnelInstanceIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchIapTunnelInstanceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("zone"); !ok {
 		return Asset{}, ErrEmptyIdentityField

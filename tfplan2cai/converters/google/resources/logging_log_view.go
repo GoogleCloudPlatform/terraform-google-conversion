@@ -31,7 +31,7 @@ func resourceConverterLoggingLogView() ResourceConverter {
 	}
 }
 
-func GetLoggingLogViewCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetLoggingLogViewCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//logging.googleapis.com/{{parent}}/locations/{{location}}/buckets/{{bucket}}/views/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -52,31 +52,31 @@ func GetLoggingLogViewCaiObject(d TerraformResourceData, config *transport_tpg.C
 	}
 }
 
-func GetLoggingLogViewApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetLoggingLogViewApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandLoggingLogViewName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	descriptionProp, err := expandLoggingLogViewDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	filterProp, err := expandLoggingLogViewFilter(d.Get("filter"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("filter"); !isEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
+	} else if v, ok := d.GetOkExists("filter"); !tpgresource.IsEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
 		obj["filter"] = filterProp
 	}
 
 	return resourceLoggingLogViewEncoder(d, config, obj)
 }
 
-func resourceLoggingLogViewEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceLoggingLogViewEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// Extract any empty fields from the bucket field.
 	parent := d.Get("parent").(string)
 	bucket := d.Get("bucket").(string)
@@ -101,14 +101,14 @@ func resourceLoggingLogViewEncoder(d TerraformResourceData, meta interface{}, ob
 	return obj, nil
 }
 
-func expandLoggingLogViewName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingLogViewName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingLogViewDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingLogViewDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingLogViewFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingLogViewFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

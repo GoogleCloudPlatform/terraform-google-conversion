@@ -18,6 +18,7 @@ import (
 	"encoding/json"
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -30,7 +31,7 @@ func resourceConverterFirestoreDocument() ResourceConverter {
 	}
 }
 
-func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetFirestoreDocumentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,19 +52,19 @@ func GetFirestoreDocumentCaiObject(d TerraformResourceData, config *transport_tp
 	}
 }
 
-func GetFirestoreDocumentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetFirestoreDocumentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	fieldsProp, err := expandFirestoreDocumentFields(d.Get("fields"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("fields"); !isEmptyValue(reflect.ValueOf(fieldsProp)) && (ok || !reflect.DeepEqual(v, fieldsProp)) {
+	} else if v, ok := d.GetOkExists("fields"); !tpgresource.IsEmptyValue(reflect.ValueOf(fieldsProp)) && (ok || !reflect.DeepEqual(v, fieldsProp)) {
 		obj["fields"] = fieldsProp
 	}
 
 	return obj, nil
 }
 
-func expandFirestoreDocumentFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreDocumentFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil

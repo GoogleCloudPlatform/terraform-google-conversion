@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterDatastoreIndex() ResourceConverter {
 	}
 }
 
-func GetDatastoreIndexCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDatastoreIndexCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datastore.googleapis.com/projects/{{project}}/indexes/{{index_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,39 +51,39 @@ func GetDatastoreIndexCaiObject(d TerraformResourceData, config *transport_tpg.C
 	}
 }
 
-func GetDatastoreIndexApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetDatastoreIndexApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	kindProp, err := expandDatastoreIndexKind(d.Get("kind"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("kind"); !isEmptyValue(reflect.ValueOf(kindProp)) && (ok || !reflect.DeepEqual(v, kindProp)) {
+	} else if v, ok := d.GetOkExists("kind"); !tpgresource.IsEmptyValue(reflect.ValueOf(kindProp)) && (ok || !reflect.DeepEqual(v, kindProp)) {
 		obj["kind"] = kindProp
 	}
 	ancestorProp, err := expandDatastoreIndexAncestor(d.Get("ancestor"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ancestor"); !isEmptyValue(reflect.ValueOf(ancestorProp)) && (ok || !reflect.DeepEqual(v, ancestorProp)) {
+	} else if v, ok := d.GetOkExists("ancestor"); !tpgresource.IsEmptyValue(reflect.ValueOf(ancestorProp)) && (ok || !reflect.DeepEqual(v, ancestorProp)) {
 		obj["ancestor"] = ancestorProp
 	}
 	propertiesProp, err := expandDatastoreIndexProperties(d.Get("properties"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("properties"); !isEmptyValue(reflect.ValueOf(propertiesProp)) && (ok || !reflect.DeepEqual(v, propertiesProp)) {
+	} else if v, ok := d.GetOkExists("properties"); !tpgresource.IsEmptyValue(reflect.ValueOf(propertiesProp)) && (ok || !reflect.DeepEqual(v, propertiesProp)) {
 		obj["properties"] = propertiesProp
 	}
 
 	return obj, nil
 }
 
-func expandDatastoreIndexKind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDatastoreIndexKind(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatastoreIndexAncestor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDatastoreIndexAncestor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatastoreIndexProperties(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDatastoreIndexProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -95,14 +96,14 @@ func expandDatastoreIndexProperties(v interface{}, d TerraformResourceData, conf
 		transformedName, err := expandDatastoreIndexPropertiesName(original["name"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["name"] = transformedName
 		}
 
 		transformedDirection, err := expandDatastoreIndexPropertiesDirection(original["direction"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDirection); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDirection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["direction"] = transformedDirection
 		}
 
@@ -111,10 +112,10 @@ func expandDatastoreIndexProperties(v interface{}, d TerraformResourceData, conf
 	return req, nil
 }
 
-func expandDatastoreIndexPropertiesName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDatastoreIndexPropertiesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDatastoreIndexPropertiesDirection(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDatastoreIndexPropertiesDirection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

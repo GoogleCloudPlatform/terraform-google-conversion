@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -30,7 +31,7 @@ func resourceConverterComputeDiskResourcePolicyAttachment() ResourceConverter {
 	}
 }
 
-func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeDiskResourcePolicyAttachmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{disk}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,26 +52,26 @@ func GetComputeDiskResourcePolicyAttachmentCaiObject(d TerraformResourceData, co
 	}
 }
 
-func GetComputeDiskResourcePolicyAttachmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeDiskResourcePolicyAttachmentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeDiskResourcePolicyAttachmentName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 
 	return resourceComputeDiskResourcePolicyAttachmentEncoder(d, config, obj)
 }
 
-func resourceComputeDiskResourcePolicyAttachmentEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceComputeDiskResourcePolicyAttachmentEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	config := meta.(*transport_tpg.Config)
-	project, err := getProject(d, config)
+	project, err := tpgresource.GetProject(d, config)
 	if err != nil {
 		return nil, err
 	}
 
-	zone, err := getZone(d, config)
+	zone, err := tpgresource.GetZone(d, config)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +83,7 @@ func resourceComputeDiskResourcePolicyAttachmentEncoder(d TerraformResourceData,
 	// We construct the regional name from the zone:
 	//
 	//	projects/{project}/regions/{region}/resourcePolicies/{resourceId}
-	region := getRegionFromZone(zone)
+	region := tpgresource.GetRegionFromZone(zone)
 	if region == "" {
 		return nil, fmt.Errorf("invalid zone %q, unable to infer region from zone", zone)
 	}
@@ -92,6 +93,6 @@ func resourceComputeDiskResourcePolicyAttachmentEncoder(d TerraformResourceData,
 	return obj, nil
 }
 
-func expandComputeDiskResourcePolicyAttachmentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeDiskResourcePolicyAttachmentName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterAlloydbCluster() ResourceConverter {
 	}
 }
 
-func GetAlloydbClusterCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,49 +51,49 @@ func GetAlloydbClusterCaiObject(d TerraformResourceData, config *transport_tpg.C
 	}
 }
 
-func GetAlloydbClusterApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetAlloydbClusterApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandAlloydbClusterLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	encryptionConfigProp, err := expandAlloydbClusterEncryptionConfig(d.Get("encryption_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("encryption_config"); !isEmptyValue(reflect.ValueOf(encryptionConfigProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigProp)) {
+	} else if v, ok := d.GetOkExists("encryption_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionConfigProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigProp)) {
 		obj["encryptionConfig"] = encryptionConfigProp
 	}
 	networkProp, err := expandAlloydbClusterNetwork(d.Get("network"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("network"); !isEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
+	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
 	displayNameProp, err := expandAlloydbClusterDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	initialUserProp, err := expandAlloydbClusterInitialUser(d.Get("initial_user"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("initial_user"); !isEmptyValue(reflect.ValueOf(initialUserProp)) && (ok || !reflect.DeepEqual(v, initialUserProp)) {
+	} else if v, ok := d.GetOkExists("initial_user"); !tpgresource.IsEmptyValue(reflect.ValueOf(initialUserProp)) && (ok || !reflect.DeepEqual(v, initialUserProp)) {
 		obj["initialUser"] = initialUserProp
 	}
 	automatedBackupPolicyProp, err := expandAlloydbClusterAutomatedBackupPolicy(d.Get("automated_backup_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("automated_backup_policy"); !isEmptyValue(reflect.ValueOf(automatedBackupPolicyProp)) && (ok || !reflect.DeepEqual(v, automatedBackupPolicyProp)) {
+	} else if v, ok := d.GetOkExists("automated_backup_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(automatedBackupPolicyProp)) && (ok || !reflect.DeepEqual(v, automatedBackupPolicyProp)) {
 		obj["automatedBackupPolicy"] = automatedBackupPolicyProp
 	}
 
 	return obj, nil
 }
 
-func expandAlloydbClusterLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandAlloydbClusterLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -103,7 +104,7 @@ func expandAlloydbClusterLabels(v interface{}, d TerraformResourceData, config *
 	return m, nil
 }
 
-func expandAlloydbClusterEncryptionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterEncryptionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -115,26 +116,26 @@ func expandAlloydbClusterEncryptionConfig(v interface{}, d TerraformResourceData
 	transformedKmsKeyName, err := expandAlloydbClusterEncryptionConfigKmsKeyName(original["kms_key_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbClusterEncryptionConfigKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterEncryptionConfigKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterInitialUser(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterInitialUser(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -146,29 +147,29 @@ func expandAlloydbClusterInitialUser(v interface{}, d TerraformResourceData, con
 	transformedUser, err := expandAlloydbClusterInitialUserUser(original["user"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUser); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedUser); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["user"] = transformedUser
 	}
 
 	transformedPassword, err := expandAlloydbClusterInitialUserPassword(original["password"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["password"] = transformedPassword
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbClusterInitialUserUser(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterInitialUserUser(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterInitialUserPassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterInitialUserPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -180,71 +181,71 @@ func expandAlloydbClusterAutomatedBackupPolicy(v interface{}, d TerraformResourc
 	transformedBackupWindow, err := expandAlloydbClusterAutomatedBackupPolicyBackupWindow(original["backup_window"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedBackupWindow); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedBackupWindow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["backupWindow"] = transformedBackupWindow
 	}
 
 	transformedLocation, err := expandAlloydbClusterAutomatedBackupPolicyLocation(original["location"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["location"] = transformedLocation
 	}
 
 	transformedLabels, err := expandAlloydbClusterAutomatedBackupPolicyLabels(original["labels"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["labels"] = transformedLabels
 	}
 
 	transformedEncryptionConfig, err := expandAlloydbClusterAutomatedBackupPolicyEncryptionConfig(original["encryption_config"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedEncryptionConfig); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedEncryptionConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["encryptionConfig"] = transformedEncryptionConfig
 	}
 
 	transformedWeeklySchedule, err := expandAlloydbClusterAutomatedBackupPolicyWeeklySchedule(original["weekly_schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedWeeklySchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedWeeklySchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["weeklySchedule"] = transformedWeeklySchedule
 	}
 
 	transformedTimeBasedRetention, err := expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetention(original["time_based_retention"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedTimeBasedRetention); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedTimeBasedRetention); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["timeBasedRetention"] = transformedTimeBasedRetention
 	}
 
 	transformedQuantityBasedRetention, err := expandAlloydbClusterAutomatedBackupPolicyQuantityBasedRetention(original["quantity_based_retention"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedQuantityBasedRetention); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedQuantityBasedRetention); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["quantityBasedRetention"] = transformedQuantityBasedRetention
 	}
 
 	transformedEnabled, err := expandAlloydbClusterAutomatedBackupPolicyEnabled(original["enabled"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["enabled"] = transformedEnabled
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyBackupWindow(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyBackupWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyLocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandAlloydbClusterAutomatedBackupPolicyLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -255,7 +256,7 @@ func expandAlloydbClusterAutomatedBackupPolicyLabels(v interface{}, d TerraformR
 	return m, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -267,18 +268,18 @@ func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfig(v interface{}, d 
 	transformedKmsKeyName, err := expandAlloydbClusterAutomatedBackupPolicyEncryptionConfigKmsKeyName(original["kms_key_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfigKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfigKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyWeeklySchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyWeeklySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -290,25 +291,25 @@ func expandAlloydbClusterAutomatedBackupPolicyWeeklySchedule(v interface{}, d Te
 	transformedDaysOfWeek, err := expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleDaysOfWeek(original["days_of_week"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDaysOfWeek); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDaysOfWeek); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["daysOfWeek"] = transformedDaysOfWeek
 	}
 
 	transformedStartTimes, err := expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimes(original["start_times"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedStartTimes); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedStartTimes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["startTimes"] = transformedStartTimes
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleDaysOfWeek(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleDaysOfWeek(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -321,28 +322,28 @@ func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimes(v interfa
 		transformedHours, err := expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesHours(original["hours"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedHours); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedHours); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["hours"] = transformedHours
 		}
 
 		transformedMinutes, err := expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesMinutes(original["minutes"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedMinutes); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedMinutes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["minutes"] = transformedMinutes
 		}
 
 		transformedSeconds, err := expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesSeconds(original["seconds"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["seconds"] = transformedSeconds
 		}
 
 		transformedNanos, err := expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesNanos(original["nanos"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["nanos"] = transformedNanos
 		}
 
@@ -351,23 +352,23 @@ func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimes(v interfa
 	return req, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesHours(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesHours(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesMinutes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesMinutes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesSeconds(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesNanos(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetention(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetention(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -379,18 +380,18 @@ func expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetention(v interface{}, 
 	transformedRetentionPeriod, err := expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetentionRetentionPeriod(original["retention_period"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedRetentionPeriod); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedRetentionPeriod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["retentionPeriod"] = transformedRetentionPeriod
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetentionRetentionPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetentionRetentionPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyQuantityBasedRetention(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyQuantityBasedRetention(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -402,17 +403,17 @@ func expandAlloydbClusterAutomatedBackupPolicyQuantityBasedRetention(v interface
 	transformedCount, err := expandAlloydbClusterAutomatedBackupPolicyQuantityBasedRetentionCount(original["count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["count"] = transformedCount
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyQuantityBasedRetentionCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyQuantityBasedRetentionCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbClusterAutomatedBackupPolicyEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbClusterAutomatedBackupPolicyEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterAccessContextManagerAuthorizedOrgsDesc() ResourceConverter
 	}
 }
 
-func GetAccessContextManagerAuthorizedOrgsDescCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAccessContextManagerAuthorizedOrgsDescCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//accesscontextmanager.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,73 +51,73 @@ func GetAccessContextManagerAuthorizedOrgsDescCaiObject(d TerraformResourceData,
 	}
 }
 
-func GetAccessContextManagerAuthorizedOrgsDescApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetAccessContextManagerAuthorizedOrgsDescApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	parentProp, err := expandAccessContextManagerAuthorizedOrgsDescParent(d.Get("parent"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("parent"); !isEmptyValue(reflect.ValueOf(parentProp)) && (ok || !reflect.DeepEqual(v, parentProp)) {
+	} else if v, ok := d.GetOkExists("parent"); !tpgresource.IsEmptyValue(reflect.ValueOf(parentProp)) && (ok || !reflect.DeepEqual(v, parentProp)) {
 		obj["parent"] = parentProp
 	}
 	nameProp, err := expandAccessContextManagerAuthorizedOrgsDescName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	orgsProp, err := expandAccessContextManagerAuthorizedOrgsDescOrgs(d.Get("orgs"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("orgs"); !isEmptyValue(reflect.ValueOf(orgsProp)) && (ok || !reflect.DeepEqual(v, orgsProp)) {
+	} else if v, ok := d.GetOkExists("orgs"); !tpgresource.IsEmptyValue(reflect.ValueOf(orgsProp)) && (ok || !reflect.DeepEqual(v, orgsProp)) {
 		obj["orgs"] = orgsProp
 	}
 	assetTypeProp, err := expandAccessContextManagerAuthorizedOrgsDescAssetType(d.Get("asset_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("asset_type"); !isEmptyValue(reflect.ValueOf(assetTypeProp)) && (ok || !reflect.DeepEqual(v, assetTypeProp)) {
+	} else if v, ok := d.GetOkExists("asset_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(assetTypeProp)) && (ok || !reflect.DeepEqual(v, assetTypeProp)) {
 		obj["assetType"] = assetTypeProp
 	}
 	authorizationDirectionProp, err := expandAccessContextManagerAuthorizedOrgsDescAuthorizationDirection(d.Get("authorization_direction"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("authorization_direction"); !isEmptyValue(reflect.ValueOf(authorizationDirectionProp)) && (ok || !reflect.DeepEqual(v, authorizationDirectionProp)) {
+	} else if v, ok := d.GetOkExists("authorization_direction"); !tpgresource.IsEmptyValue(reflect.ValueOf(authorizationDirectionProp)) && (ok || !reflect.DeepEqual(v, authorizationDirectionProp)) {
 		obj["authorizationDirection"] = authorizationDirectionProp
 	}
 	authorizationTypeProp, err := expandAccessContextManagerAuthorizedOrgsDescAuthorizationType(d.Get("authorization_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("authorization_type"); !isEmptyValue(reflect.ValueOf(authorizationTypeProp)) && (ok || !reflect.DeepEqual(v, authorizationTypeProp)) {
+	} else if v, ok := d.GetOkExists("authorization_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(authorizationTypeProp)) && (ok || !reflect.DeepEqual(v, authorizationTypeProp)) {
 		obj["authorizationType"] = authorizationTypeProp
 	}
 
 	return resourceAccessContextManagerAuthorizedOrgsDescEncoder(d, config, obj)
 }
 
-func resourceAccessContextManagerAuthorizedOrgsDescEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceAccessContextManagerAuthorizedOrgsDescEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	delete(obj, "parent")
 	return obj, nil
 }
 
-func expandAccessContextManagerAuthorizedOrgsDescParent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAccessContextManagerAuthorizedOrgsDescParent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessContextManagerAuthorizedOrgsDescName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAccessContextManagerAuthorizedOrgsDescName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessContextManagerAuthorizedOrgsDescOrgs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAccessContextManagerAuthorizedOrgsDescOrgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessContextManagerAuthorizedOrgsDescAssetType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAccessContextManagerAuthorizedOrgsDescAssetType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessContextManagerAuthorizedOrgsDescAuthorizationDirection(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAccessContextManagerAuthorizedOrgsDescAuthorizationDirection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAccessContextManagerAuthorizedOrgsDescAuthorizationType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAccessContextManagerAuthorizedOrgsDescAuthorizationType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

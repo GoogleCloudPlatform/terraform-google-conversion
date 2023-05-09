@@ -20,6 +20,7 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -32,7 +33,7 @@ func resourceConverterSecretManagerSecretVersion() ResourceConverter {
 	}
 }
 
-func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSecretManagerSecretVersionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//secretmanager.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -53,31 +54,31 @@ func GetSecretManagerSecretVersionCaiObject(d TerraformResourceData, config *tra
 	}
 }
 
-func GetSecretManagerSecretVersionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetSecretManagerSecretVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	stateProp, err := expandSecretManagerSecretVersionEnabled(d.Get("enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enabled"); !isEmptyValue(reflect.ValueOf(stateProp)) && (ok || !reflect.DeepEqual(v, stateProp)) {
+	} else if v, ok := d.GetOkExists("enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(stateProp)) && (ok || !reflect.DeepEqual(v, stateProp)) {
 		obj["state"] = stateProp
 	}
 	payloadProp, err := expandSecretManagerSecretVersionPayload(nil, d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("payload"); !isEmptyValue(reflect.ValueOf(payloadProp)) && (ok || !reflect.DeepEqual(v, payloadProp)) {
+	} else if v, ok := d.GetOkExists("payload"); !tpgresource.IsEmptyValue(reflect.ValueOf(payloadProp)) && (ok || !reflect.DeepEqual(v, payloadProp)) {
 		obj["payload"] = payloadProp
 	}
 
 	return obj, nil
 }
 
-func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecretManagerSecretVersionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	name := d.Get("name").(string)
 	if name == "" {
 		return "", nil
 	}
 
-	url, err := ReplaceVars(d, config, "{{SecretManagerBasePath}}{{name}}")
+	url, err := tpgresource.ReplaceVars(d, config, "{{SecretManagerBasePath}}{{name}}")
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceD
 	parts := strings.Split(name, "/")
 	project := parts[1]
 
-	userAgent, err := generateUserAgentString(d, config.UserAgent)
+	userAgent, err := tpgresource.GenerateUserAgentString(d, config.UserAgent)
 	if err != nil {
 		return nil, err
 	}
@@ -104,19 +105,19 @@ func expandSecretManagerSecretVersionEnabled(v interface{}, d TerraformResourceD
 	return nil, nil
 }
 
-func expandSecretManagerSecretVersionPayload(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecretManagerSecretVersionPayload(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	transformed := make(map[string]interface{})
 	transformedSecretData, err := expandSecretManagerSecretVersionPayloadSecretData(d.Get("secret_data"), d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSecretData); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSecretData); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["data"] = transformedSecretData
 	}
 
 	return transformed, nil
 }
 
-func expandSecretManagerSecretVersionPayloadSecretData(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecretManagerSecretVersionPayloadSecretData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
 	}

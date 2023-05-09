@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterVertexAIFeaturestoreEntitytypeFeature() ResourceConverter 
 	}
 }
 
-func GetVertexAIFeaturestoreEntitytypeFeatureCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreEntitytypeFeatureCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{entitytype}}/features/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,31 +51,31 @@ func GetVertexAIFeaturestoreEntitytypeFeatureCaiObject(d TerraformResourceData, 
 	}
 }
 
-func GetVertexAIFeaturestoreEntitytypeFeatureApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetVertexAIFeaturestoreEntitytypeFeatureApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandVertexAIFeaturestoreEntitytypeFeatureLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	descriptionProp, err := expandVertexAIFeaturestoreEntitytypeFeatureDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	valueTypeProp, err := expandVertexAIFeaturestoreEntitytypeFeatureValueType(d.Get("value_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("value_type"); !isEmptyValue(reflect.ValueOf(valueTypeProp)) && (ok || !reflect.DeepEqual(v, valueTypeProp)) {
+	} else if v, ok := d.GetOkExists("value_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(valueTypeProp)) && (ok || !reflect.DeepEqual(v, valueTypeProp)) {
 		obj["valueType"] = valueTypeProp
 	}
 
 	return obj, nil
 }
 
-func expandVertexAIFeaturestoreEntitytypeFeatureLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandVertexAIFeaturestoreEntitytypeFeatureLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -85,10 +86,10 @@ func expandVertexAIFeaturestoreEntitytypeFeatureLabels(v interface{}, d Terrafor
 	return m, nil
 }
 
-func expandVertexAIFeaturestoreEntitytypeFeatureDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreEntitytypeFeatureDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIFeaturestoreEntitytypeFeatureValueType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreEntitytypeFeatureValueType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

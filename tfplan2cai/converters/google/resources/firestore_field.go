@@ -19,6 +19,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -31,7 +32,7 @@ func resourceConverterFirestoreField() ResourceConverter {
 	}
 }
 
-func GetFirestoreFieldCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetFirestoreFieldCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -52,7 +53,7 @@ func GetFirestoreFieldCaiObject(d TerraformResourceData, config *transport_tpg.C
 	}
 }
 
-func GetFirestoreFieldApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetFirestoreFieldApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	indexConfigProp, err := expandFirestoreFieldIndexConfig(d.Get("index_config"), d, config)
 	if err != nil {
@@ -70,7 +71,7 @@ func GetFirestoreFieldApiObject(d TerraformResourceData, config *transport_tpg.C
 	return resourceFirestoreFieldEncoder(d, config, obj)
 }
 
-func resourceFirestoreFieldEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceFirestoreFieldEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 
 	// We've added project / database / collection / field as split fields of the name, but
 	// the API doesn't expect them.  Make sure we remove them from any requests.
@@ -82,7 +83,7 @@ func resourceFirestoreFieldEncoder(d TerraformResourceData, meta interface{}, ob
 	return obj, nil
 }
 
-func expandFirestoreFieldIndexConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreFieldIndexConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	// We drop all output only fields as they are unnecessary.
 	if v == nil {
 		return nil, nil
@@ -143,7 +144,7 @@ func expandFirestoreFieldIndexConfig(v interface{}, d TerraformResourceData, con
  * This is unique from send_empty_value, which will send an explicit null value
  * for empty configuration blocks.
  */
-func expandFirestoreFieldTtlConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreFieldTtlConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
 	}

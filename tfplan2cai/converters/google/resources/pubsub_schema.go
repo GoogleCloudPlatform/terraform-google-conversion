@@ -30,7 +30,7 @@ func resourceConverterPubsubSchema() ResourceConverter {
 	}
 }
 
-func GetPubsubSchemaCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetPubsubSchemaCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/schemas/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,38 +51,38 @@ func GetPubsubSchemaCaiObject(d TerraformResourceData, config *transport_tpg.Con
 	}
 }
 
-func GetPubsubSchemaApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetPubsubSchemaApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	typeProp, err := expandPubsubSchemaType(d.Get("type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("type"); !isEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
+	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
 	definitionProp, err := expandPubsubSchemaDefinition(d.Get("definition"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("definition"); !isEmptyValue(reflect.ValueOf(definitionProp)) && (ok || !reflect.DeepEqual(v, definitionProp)) {
+	} else if v, ok := d.GetOkExists("definition"); !tpgresource.IsEmptyValue(reflect.ValueOf(definitionProp)) && (ok || !reflect.DeepEqual(v, definitionProp)) {
 		obj["definition"] = definitionProp
 	}
 	nameProp, err := expandPubsubSchemaName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 
 	return obj, nil
 }
 
-func expandPubsubSchemaType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubSchemaType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubSchemaDefinition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubSchemaDefinition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubSchemaName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubSchemaName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return tpgresource.GetResourceNameFromSelfLink(v.(string)), nil
 }

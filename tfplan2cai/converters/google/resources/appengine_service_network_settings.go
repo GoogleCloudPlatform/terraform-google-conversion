@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterAppEngineServiceNetworkSettings() ResourceConverter {
 	}
 }
 
-func GetAppEngineServiceNetworkSettingsCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAppEngineServiceNetworkSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,29 +51,29 @@ func GetAppEngineServiceNetworkSettingsCaiObject(d TerraformResourceData, config
 	}
 }
 
-func GetAppEngineServiceNetworkSettingsApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetAppEngineServiceNetworkSettingsApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	idProp, err := expandAppEngineServiceNetworkSettingsService(d.Get("service"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("service"); !isEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
+	} else if v, ok := d.GetOkExists("service"); !tpgresource.IsEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
 		obj["id"] = idProp
 	}
 	networkSettingsProp, err := expandAppEngineServiceNetworkSettingsNetworkSettings(d.Get("network_settings"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("network_settings"); !isEmptyValue(reflect.ValueOf(networkSettingsProp)) && (ok || !reflect.DeepEqual(v, networkSettingsProp)) {
+	} else if v, ok := d.GetOkExists("network_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkSettingsProp)) && (ok || !reflect.DeepEqual(v, networkSettingsProp)) {
 		obj["networkSettings"] = networkSettingsProp
 	}
 
 	return obj, nil
 }
 
-func expandAppEngineServiceNetworkSettingsService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineServiceNetworkSettingsService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineServiceNetworkSettingsNetworkSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineServiceNetworkSettingsNetworkSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -84,13 +85,13 @@ func expandAppEngineServiceNetworkSettingsNetworkSettings(v interface{}, d Terra
 	transformedIngressTrafficAllowed, err := expandAppEngineServiceNetworkSettingsNetworkSettingsIngressTrafficAllowed(original["ingress_traffic_allowed"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedIngressTrafficAllowed); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedIngressTrafficAllowed); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["ingressTrafficAllowed"] = transformedIngressTrafficAllowed
 	}
 
 	return transformed, nil
 }
 
-func expandAppEngineServiceNetworkSettingsNetworkSettingsIngressTrafficAllowed(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineServiceNetworkSettingsNetworkSettingsIngressTrafficAllowed(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterAppEngineApplicationUrlDispatchRules() ResourceConverter {
 	}
 }
 
-func GetAppEngineApplicationUrlDispatchRulesCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAppEngineApplicationUrlDispatchRulesCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,19 +51,19 @@ func GetAppEngineApplicationUrlDispatchRulesCaiObject(d TerraformResourceData, c
 	}
 }
 
-func GetAppEngineApplicationUrlDispatchRulesApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetAppEngineApplicationUrlDispatchRulesApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	dispatchRulesProp, err := expandAppEngineApplicationUrlDispatchRulesDispatchRules(d.Get("dispatch_rules"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("dispatch_rules"); !isEmptyValue(reflect.ValueOf(dispatchRulesProp)) && (ok || !reflect.DeepEqual(v, dispatchRulesProp)) {
+	} else if v, ok := d.GetOkExists("dispatch_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(dispatchRulesProp)) && (ok || !reflect.DeepEqual(v, dispatchRulesProp)) {
 		obj["dispatchRules"] = dispatchRulesProp
 	}
 
 	return obj, nil
 }
 
-func expandAppEngineApplicationUrlDispatchRulesDispatchRules(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineApplicationUrlDispatchRulesDispatchRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -75,21 +76,21 @@ func expandAppEngineApplicationUrlDispatchRulesDispatchRules(v interface{}, d Te
 		transformedDomain, err := expandAppEngineApplicationUrlDispatchRulesDispatchRulesDomain(original["domain"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["domain"] = transformedDomain
 		}
 
 		transformedPath, err := expandAppEngineApplicationUrlDispatchRulesDispatchRulesPath(original["path"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["path"] = transformedPath
 		}
 
 		transformedService, err := expandAppEngineApplicationUrlDispatchRulesDispatchRulesService(original["service"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedService); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["service"] = transformedService
 		}
 
@@ -98,14 +99,14 @@ func expandAppEngineApplicationUrlDispatchRulesDispatchRules(v interface{}, d Te
 	return req, nil
 }
 
-func expandAppEngineApplicationUrlDispatchRulesDispatchRulesDomain(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineApplicationUrlDispatchRulesDispatchRulesDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineApplicationUrlDispatchRulesDispatchRulesPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineApplicationUrlDispatchRulesDispatchRulesPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineApplicationUrlDispatchRulesDispatchRulesService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineApplicationUrlDispatchRulesDispatchRulesService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

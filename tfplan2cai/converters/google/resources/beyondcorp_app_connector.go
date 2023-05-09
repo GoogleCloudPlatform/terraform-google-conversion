@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterBeyondcorpAppConnector() ResourceConverter {
 	}
 }
 
-func GetBeyondcorpAppConnectorCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetBeyondcorpAppConnectorCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//beyondcorp.googleapis.com/projects/{{project}}/locations/{{region}}/appConnectors/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,35 +51,35 @@ func GetBeyondcorpAppConnectorCaiObject(d TerraformResourceData, config *transpo
 	}
 }
 
-func GetBeyondcorpAppConnectorApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetBeyondcorpAppConnectorApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandBeyondcorpAppConnectorDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	labelsProp, err := expandBeyondcorpAppConnectorLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	principalInfoProp, err := expandBeyondcorpAppConnectorPrincipalInfo(d.Get("principal_info"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("principal_info"); !isEmptyValue(reflect.ValueOf(principalInfoProp)) && (ok || !reflect.DeepEqual(v, principalInfoProp)) {
+	} else if v, ok := d.GetOkExists("principal_info"); !tpgresource.IsEmptyValue(reflect.ValueOf(principalInfoProp)) && (ok || !reflect.DeepEqual(v, principalInfoProp)) {
 		obj["principalInfo"] = principalInfoProp
 	}
 
 	return obj, nil
 }
 
-func expandBeyondcorpAppConnectorDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBeyondcorpAppConnectorDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBeyondcorpAppConnectorLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandBeyondcorpAppConnectorLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -89,7 +90,7 @@ func expandBeyondcorpAppConnectorLabels(v interface{}, d TerraformResourceData, 
 	return m, nil
 }
 
-func expandBeyondcorpAppConnectorPrincipalInfo(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBeyondcorpAppConnectorPrincipalInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -101,14 +102,14 @@ func expandBeyondcorpAppConnectorPrincipalInfo(v interface{}, d TerraformResourc
 	transformedServiceAccount, err := expandBeyondcorpAppConnectorPrincipalInfoServiceAccount(original["service_account"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["serviceAccount"] = transformedServiceAccount
 	}
 
 	return transformed, nil
 }
 
-func expandBeyondcorpAppConnectorPrincipalInfoServiceAccount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBeyondcorpAppConnectorPrincipalInfoServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -120,13 +121,13 @@ func expandBeyondcorpAppConnectorPrincipalInfoServiceAccount(v interface{}, d Te
 	transformedEmail, err := expandBeyondcorpAppConnectorPrincipalInfoServiceAccountEmail(original["email"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedEmail); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["email"] = transformedEmail
 	}
 
 	return transformed, nil
 }
 
-func expandBeyondcorpAppConnectorPrincipalInfoServiceAccountEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBeyondcorpAppConnectorPrincipalInfoServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

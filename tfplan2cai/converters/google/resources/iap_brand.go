@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterIapBrand() ResourceConverter {
 	}
 }
 
-func GetIapBrandCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetIapBrandCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//iap.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,28 +51,28 @@ func GetIapBrandCaiObject(d TerraformResourceData, config *transport_tpg.Config)
 	}
 }
 
-func GetIapBrandApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetIapBrandApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	supportEmailProp, err := expandIapBrandSupportEmail(d.Get("support_email"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("support_email"); !isEmptyValue(reflect.ValueOf(supportEmailProp)) && (ok || !reflect.DeepEqual(v, supportEmailProp)) {
+	} else if v, ok := d.GetOkExists("support_email"); !tpgresource.IsEmptyValue(reflect.ValueOf(supportEmailProp)) && (ok || !reflect.DeepEqual(v, supportEmailProp)) {
 		obj["supportEmail"] = supportEmailProp
 	}
 	applicationTitleProp, err := expandIapBrandApplicationTitle(d.Get("application_title"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("application_title"); !isEmptyValue(reflect.ValueOf(applicationTitleProp)) && (ok || !reflect.DeepEqual(v, applicationTitleProp)) {
+	} else if v, ok := d.GetOkExists("application_title"); !tpgresource.IsEmptyValue(reflect.ValueOf(applicationTitleProp)) && (ok || !reflect.DeepEqual(v, applicationTitleProp)) {
 		obj["applicationTitle"] = applicationTitleProp
 	}
 
 	return obj, nil
 }
 
-func expandIapBrandSupportEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIapBrandSupportEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIapBrandApplicationTitle(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIapBrandApplicationTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

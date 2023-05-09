@@ -21,6 +21,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ import (
  * end of the fields list if not present. We are suppressing
  * this server generated field.
  */
-func FirestoreIFieldsDiffSuppressFunc(k, old, new string, d TerraformResourceDataChange) bool {
+func FirestoreIFieldsDiffSuppressFunc(k, old, new string, d tpgresource.TerraformResourceDataChange) bool {
 	kLength := "fields.#"
 	oldLength, newLength := d.GetChange(kLength)
 	oldInt, ok := oldLength.(int)
@@ -70,7 +71,7 @@ func resourceConverterFirestoreIndex() ResourceConverter {
 	}
 }
 
-func GetFirestoreIndexCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetFirestoreIndexCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//firestore.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -91,37 +92,37 @@ func GetFirestoreIndexCaiObject(d TerraformResourceData, config *transport_tpg.C
 	}
 }
 
-func GetFirestoreIndexApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetFirestoreIndexApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	databaseProp, err := expandFirestoreIndexDatabase(d.Get("database"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("database"); !isEmptyValue(reflect.ValueOf(databaseProp)) && (ok || !reflect.DeepEqual(v, databaseProp)) {
+	} else if v, ok := d.GetOkExists("database"); !tpgresource.IsEmptyValue(reflect.ValueOf(databaseProp)) && (ok || !reflect.DeepEqual(v, databaseProp)) {
 		obj["database"] = databaseProp
 	}
 	collectionProp, err := expandFirestoreIndexCollection(d.Get("collection"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("collection"); !isEmptyValue(reflect.ValueOf(collectionProp)) && (ok || !reflect.DeepEqual(v, collectionProp)) {
+	} else if v, ok := d.GetOkExists("collection"); !tpgresource.IsEmptyValue(reflect.ValueOf(collectionProp)) && (ok || !reflect.DeepEqual(v, collectionProp)) {
 		obj["collection"] = collectionProp
 	}
 	queryScopeProp, err := expandFirestoreIndexQueryScope(d.Get("query_scope"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("query_scope"); !isEmptyValue(reflect.ValueOf(queryScopeProp)) && (ok || !reflect.DeepEqual(v, queryScopeProp)) {
+	} else if v, ok := d.GetOkExists("query_scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(queryScopeProp)) && (ok || !reflect.DeepEqual(v, queryScopeProp)) {
 		obj["queryScope"] = queryScopeProp
 	}
 	fieldsProp, err := expandFirestoreIndexFields(d.Get("fields"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("fields"); !isEmptyValue(reflect.ValueOf(fieldsProp)) && (ok || !reflect.DeepEqual(v, fieldsProp)) {
+	} else if v, ok := d.GetOkExists("fields"); !tpgresource.IsEmptyValue(reflect.ValueOf(fieldsProp)) && (ok || !reflect.DeepEqual(v, fieldsProp)) {
 		obj["fields"] = fieldsProp
 	}
 
 	return resourceFirestoreIndexEncoder(d, config, obj)
 }
 
-func resourceFirestoreIndexEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceFirestoreIndexEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// We've added project / database / collection as split fields of the name, but
 	// the API doesn't expect them.  Make sure we remove them from any requests.
 
@@ -131,19 +132,19 @@ func resourceFirestoreIndexEncoder(d TerraformResourceData, meta interface{}, ob
 	return obj, nil
 }
 
-func expandFirestoreIndexDatabase(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreIndexDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexCollection(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreIndexCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexQueryScope(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreIndexQueryScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreIndexFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -156,21 +157,21 @@ func expandFirestoreIndexFields(v interface{}, d TerraformResourceData, config *
 		transformedFieldPath, err := expandFirestoreIndexFieldsFieldPath(original["field_path"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedFieldPath); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedFieldPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["fieldPath"] = transformedFieldPath
 		}
 
 		transformedOrder, err := expandFirestoreIndexFieldsOrder(original["order"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedOrder); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedOrder); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["order"] = transformedOrder
 		}
 
 		transformedArrayConfig, err := expandFirestoreIndexFieldsArrayConfig(original["array_config"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedArrayConfig); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedArrayConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["arrayConfig"] = transformedArrayConfig
 		}
 
@@ -179,14 +180,14 @@ func expandFirestoreIndexFields(v interface{}, d TerraformResourceData, config *
 	return req, nil
 }
 
-func expandFirestoreIndexFieldsFieldPath(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreIndexFieldsFieldPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexFieldsOrder(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreIndexFieldsOrder(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirestoreIndexFieldsArrayConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandFirestoreIndexFieldsArrayConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

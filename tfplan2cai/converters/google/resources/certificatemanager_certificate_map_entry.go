@@ -30,7 +30,7 @@ func resourceConverterCertificateManagerCertificateMapEntry() ResourceConverter 
 	}
 }
 
-func GetCertificateManagerCertificateMapEntryCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCertificateManagerCertificateMapEntryCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//certificatemanager.googleapis.com/projects/{{project}}/locations/global/certificateMaps/{{map}}/certificateMapEntries/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,53 +51,53 @@ func GetCertificateManagerCertificateMapEntryCaiObject(d TerraformResourceData, 
 	}
 }
 
-func GetCertificateManagerCertificateMapEntryApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetCertificateManagerCertificateMapEntryApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandCertificateManagerCertificateMapEntryDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	labelsProp, err := expandCertificateManagerCertificateMapEntryLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	certificatesProp, err := expandCertificateManagerCertificateMapEntryCertificates(d.Get("certificates"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("certificates"); !isEmptyValue(reflect.ValueOf(certificatesProp)) && (ok || !reflect.DeepEqual(v, certificatesProp)) {
+	} else if v, ok := d.GetOkExists("certificates"); !tpgresource.IsEmptyValue(reflect.ValueOf(certificatesProp)) && (ok || !reflect.DeepEqual(v, certificatesProp)) {
 		obj["certificates"] = certificatesProp
 	}
 	hostnameProp, err := expandCertificateManagerCertificateMapEntryHostname(d.Get("hostname"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("hostname"); !isEmptyValue(reflect.ValueOf(hostnameProp)) && (ok || !reflect.DeepEqual(v, hostnameProp)) {
+	} else if v, ok := d.GetOkExists("hostname"); !tpgresource.IsEmptyValue(reflect.ValueOf(hostnameProp)) && (ok || !reflect.DeepEqual(v, hostnameProp)) {
 		obj["hostname"] = hostnameProp
 	}
 	matcherProp, err := expandCertificateManagerCertificateMapEntryMatcher(d.Get("matcher"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("matcher"); !isEmptyValue(reflect.ValueOf(matcherProp)) && (ok || !reflect.DeepEqual(v, matcherProp)) {
+	} else if v, ok := d.GetOkExists("matcher"); !tpgresource.IsEmptyValue(reflect.ValueOf(matcherProp)) && (ok || !reflect.DeepEqual(v, matcherProp)) {
 		obj["matcher"] = matcherProp
 	}
 	nameProp, err := expandCertificateManagerCertificateMapEntryName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 
 	return obj, nil
 }
 
-func expandCertificateManagerCertificateMapEntryDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapEntryLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandCertificateManagerCertificateMapEntryLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -108,18 +108,18 @@ func expandCertificateManagerCertificateMapEntryLabels(v interface{}, d Terrafor
 	return m, nil
 }
 
-func expandCertificateManagerCertificateMapEntryCertificates(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryCertificates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapEntryHostname(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryHostname(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapEntryMatcher(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryMatcher(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateMapEntryName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateMapEntryName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return tpgresource.GetResourceNameFromSelfLink(v.(string)), nil
 }

@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterAppEngineServiceSplitTraffic() ResourceConverter {
 	}
 }
 
-func GetAppEngineServiceSplitTrafficCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAppEngineServiceSplitTrafficCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,29 +51,29 @@ func GetAppEngineServiceSplitTrafficCaiObject(d TerraformResourceData, config *t
 	}
 }
 
-func GetAppEngineServiceSplitTrafficApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetAppEngineServiceSplitTrafficApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	idProp, err := expandAppEngineServiceSplitTrafficService(d.Get("service"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("service"); !isEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
+	} else if v, ok := d.GetOkExists("service"); !tpgresource.IsEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
 		obj["id"] = idProp
 	}
 	splitProp, err := expandAppEngineServiceSplitTrafficSplit(d.Get("split"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("split"); !isEmptyValue(reflect.ValueOf(splitProp)) && (ok || !reflect.DeepEqual(v, splitProp)) {
+	} else if v, ok := d.GetOkExists("split"); !tpgresource.IsEmptyValue(reflect.ValueOf(splitProp)) && (ok || !reflect.DeepEqual(v, splitProp)) {
 		obj["split"] = splitProp
 	}
 
 	return obj, nil
 }
 
-func expandAppEngineServiceSplitTrafficService(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineServiceSplitTrafficService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineServiceSplitTrafficSplit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineServiceSplitTrafficSplit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -84,25 +85,25 @@ func expandAppEngineServiceSplitTrafficSplit(v interface{}, d TerraformResourceD
 	transformedShardBy, err := expandAppEngineServiceSplitTrafficSplitShardBy(original["shard_by"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedShardBy); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedShardBy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["shardBy"] = transformedShardBy
 	}
 
 	transformedAllocations, err := expandAppEngineServiceSplitTrafficSplitAllocations(original["allocations"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllocations); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAllocations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["allocations"] = transformedAllocations
 	}
 
 	return transformed, nil
 }
 
-func expandAppEngineServiceSplitTrafficSplitShardBy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineServiceSplitTrafficSplitShardBy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineServiceSplitTrafficSplitAllocations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandAppEngineServiceSplitTrafficSplitAllocations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

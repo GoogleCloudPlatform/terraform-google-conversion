@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterAlloydbInstance() ResourceConverter {
 	}
 }
 
-func GetAlloydbInstanceCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAlloydbInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//alloydb.googleapis.com/{{cluster}}/instances/{{instance_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,67 +51,67 @@ func GetAlloydbInstanceCaiObject(d TerraformResourceData, config *transport_tpg.
 	}
 }
 
-func GetAlloydbInstanceApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetAlloydbInstanceApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandAlloydbInstanceLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	annotationsProp, err := expandAlloydbInstanceAnnotations(d.Get("annotations"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("annotations"); !isEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
+	} else if v, ok := d.GetOkExists("annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
 		obj["annotations"] = annotationsProp
 	}
 	displayNameProp, err := expandAlloydbInstanceDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	gceZoneProp, err := expandAlloydbInstanceGceZone(d.Get("gce_zone"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("gce_zone"); !isEmptyValue(reflect.ValueOf(gceZoneProp)) && (ok || !reflect.DeepEqual(v, gceZoneProp)) {
+	} else if v, ok := d.GetOkExists("gce_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(gceZoneProp)) && (ok || !reflect.DeepEqual(v, gceZoneProp)) {
 		obj["gceZone"] = gceZoneProp
 	}
 	databaseFlagsProp, err := expandAlloydbInstanceDatabaseFlags(d.Get("database_flags"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("database_flags"); !isEmptyValue(reflect.ValueOf(databaseFlagsProp)) && (ok || !reflect.DeepEqual(v, databaseFlagsProp)) {
+	} else if v, ok := d.GetOkExists("database_flags"); !tpgresource.IsEmptyValue(reflect.ValueOf(databaseFlagsProp)) && (ok || !reflect.DeepEqual(v, databaseFlagsProp)) {
 		obj["databaseFlags"] = databaseFlagsProp
 	}
 	availabilityTypeProp, err := expandAlloydbInstanceAvailabilityType(d.Get("availability_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("availability_type"); !isEmptyValue(reflect.ValueOf(availabilityTypeProp)) && (ok || !reflect.DeepEqual(v, availabilityTypeProp)) {
+	} else if v, ok := d.GetOkExists("availability_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(availabilityTypeProp)) && (ok || !reflect.DeepEqual(v, availabilityTypeProp)) {
 		obj["availabilityType"] = availabilityTypeProp
 	}
 	instanceTypeProp, err := expandAlloydbInstanceInstanceType(d.Get("instance_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("instance_type"); !isEmptyValue(reflect.ValueOf(instanceTypeProp)) && (ok || !reflect.DeepEqual(v, instanceTypeProp)) {
+	} else if v, ok := d.GetOkExists("instance_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(instanceTypeProp)) && (ok || !reflect.DeepEqual(v, instanceTypeProp)) {
 		obj["instanceType"] = instanceTypeProp
 	}
 	readPoolConfigProp, err := expandAlloydbInstanceReadPoolConfig(d.Get("read_pool_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("read_pool_config"); !isEmptyValue(reflect.ValueOf(readPoolConfigProp)) && (ok || !reflect.DeepEqual(v, readPoolConfigProp)) {
+	} else if v, ok := d.GetOkExists("read_pool_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(readPoolConfigProp)) && (ok || !reflect.DeepEqual(v, readPoolConfigProp)) {
 		obj["readPoolConfig"] = readPoolConfigProp
 	}
 	machineConfigProp, err := expandAlloydbInstanceMachineConfig(d.Get("machine_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("machine_config"); !isEmptyValue(reflect.ValueOf(machineConfigProp)) && (ok || !reflect.DeepEqual(v, machineConfigProp)) {
+	} else if v, ok := d.GetOkExists("machine_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(machineConfigProp)) && (ok || !reflect.DeepEqual(v, machineConfigProp)) {
 		obj["machineConfig"] = machineConfigProp
 	}
 
 	return obj, nil
 }
 
-func expandAlloydbInstanceLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandAlloydbInstanceLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -121,7 +122,7 @@ func expandAlloydbInstanceLabels(v interface{}, d TerraformResourceData, config 
 	return m, nil
 }
 
-func expandAlloydbInstanceAnnotations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandAlloydbInstanceAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -132,15 +133,15 @@ func expandAlloydbInstanceAnnotations(v interface{}, d TerraformResourceData, co
 	return m, nil
 }
 
-func expandAlloydbInstanceDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbInstanceDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceGceZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbInstanceGceZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceDatabaseFlags(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandAlloydbInstanceDatabaseFlags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -151,15 +152,15 @@ func expandAlloydbInstanceDatabaseFlags(v interface{}, d TerraformResourceData, 
 	return m, nil
 }
 
-func expandAlloydbInstanceAvailabilityType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbInstanceAvailabilityType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceInstanceType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbInstanceInstanceType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceReadPoolConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbInstanceReadPoolConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -171,18 +172,18 @@ func expandAlloydbInstanceReadPoolConfig(v interface{}, d TerraformResourceData,
 	transformedNodeCount, err := expandAlloydbInstanceReadPoolConfigNodeCount(original["node_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedNodeCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedNodeCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["nodeCount"] = transformedNodeCount
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbInstanceReadPoolConfigNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbInstanceReadPoolConfigNodeCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlloydbInstanceMachineConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbInstanceMachineConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -194,13 +195,13 @@ func expandAlloydbInstanceMachineConfig(v interface{}, d TerraformResourceData, 
 	transformedCpuCount, err := expandAlloydbInstanceMachineConfigCpuCount(original["cpu_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCpuCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCpuCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["cpuCount"] = transformedCpuCount
 	}
 
 	return transformed, nil
 }
 
-func expandAlloydbInstanceMachineConfigCpuCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAlloydbInstanceMachineConfigCpuCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

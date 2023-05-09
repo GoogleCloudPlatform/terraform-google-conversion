@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterVertexAIFeaturestore() ResourceConverter {
 	}
 }
 
-func GetVertexAIFeaturestoreCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetVertexAIFeaturestoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{region}}-aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/featurestores/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,31 +51,31 @@ func GetVertexAIFeaturestoreCaiObject(d TerraformResourceData, config *transport
 	}
 }
 
-func GetVertexAIFeaturestoreApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetVertexAIFeaturestoreApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandVertexAIFeaturestoreLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	onlineServingConfigProp, err := expandVertexAIFeaturestoreOnlineServingConfig(d.Get("online_serving_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("online_serving_config"); !isEmptyValue(reflect.ValueOf(onlineServingConfigProp)) && (ok || !reflect.DeepEqual(v, onlineServingConfigProp)) {
+	} else if v, ok := d.GetOkExists("online_serving_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(onlineServingConfigProp)) && (ok || !reflect.DeepEqual(v, onlineServingConfigProp)) {
 		obj["onlineServingConfig"] = onlineServingConfigProp
 	}
 	encryptionSpecProp, err := expandVertexAIFeaturestoreEncryptionSpec(d.Get("encryption_spec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("encryption_spec"); !isEmptyValue(reflect.ValueOf(encryptionSpecProp)) && (ok || !reflect.DeepEqual(v, encryptionSpecProp)) {
+	} else if v, ok := d.GetOkExists("encryption_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionSpecProp)) && (ok || !reflect.DeepEqual(v, encryptionSpecProp)) {
 		obj["encryptionSpec"] = encryptionSpecProp
 	}
 
 	return obj, nil
 }
 
-func expandVertexAIFeaturestoreLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandVertexAIFeaturestoreLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -85,7 +86,7 @@ func expandVertexAIFeaturestoreLabels(v interface{}, d TerraformResourceData, co
 	return m, nil
 }
 
-func expandVertexAIFeaturestoreOnlineServingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreOnlineServingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -97,25 +98,25 @@ func expandVertexAIFeaturestoreOnlineServingConfig(v interface{}, d TerraformRes
 	transformedFixedNodeCount, err := expandVertexAIFeaturestoreOnlineServingConfigFixedNodeCount(original["fixed_node_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedFixedNodeCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedFixedNodeCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["fixedNodeCount"] = transformedFixedNodeCount
 	}
 
 	transformedScaling, err := expandVertexAIFeaturestoreOnlineServingConfigScaling(original["scaling"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedScaling); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedScaling); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["scaling"] = transformedScaling
 	}
 
 	return transformed, nil
 }
 
-func expandVertexAIFeaturestoreOnlineServingConfigFixedNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreOnlineServingConfigFixedNodeCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIFeaturestoreOnlineServingConfigScaling(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreOnlineServingConfigScaling(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -127,29 +128,29 @@ func expandVertexAIFeaturestoreOnlineServingConfigScaling(v interface{}, d Terra
 	transformedMinNodeCount, err := expandVertexAIFeaturestoreOnlineServingConfigScalingMinNodeCount(original["min_node_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMinNodeCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMinNodeCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["minNodeCount"] = transformedMinNodeCount
 	}
 
 	transformedMaxNodeCount, err := expandVertexAIFeaturestoreOnlineServingConfigScalingMaxNodeCount(original["max_node_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMaxNodeCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMaxNodeCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["maxNodeCount"] = transformedMaxNodeCount
 	}
 
 	return transformed, nil
 }
 
-func expandVertexAIFeaturestoreOnlineServingConfigScalingMinNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreOnlineServingConfigScalingMinNodeCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIFeaturestoreOnlineServingConfigScalingMaxNodeCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreOnlineServingConfigScalingMaxNodeCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIFeaturestoreEncryptionSpec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreEncryptionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -161,13 +162,13 @@ func expandVertexAIFeaturestoreEncryptionSpec(v interface{}, d TerraformResource
 	transformedKmsKeyName, err := expandVertexAIFeaturestoreEncryptionSpecKmsKeyName(original["kms_key_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
 	return transformed, nil
 }
 
-func expandVertexAIFeaturestoreEncryptionSpecKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIFeaturestoreEncryptionSpecKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

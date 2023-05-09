@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -30,7 +31,7 @@ func resourceConverterComputeInstanceGroupNamedPort() ResourceConverter {
 	}
 }
 
-func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeInstanceGroupNamedPortCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceGroups/{{group}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,27 +52,27 @@ func GetComputeInstanceGroupNamedPortCaiObject(d TerraformResourceData, config *
 	}
 }
 
-func GetComputeInstanceGroupNamedPortApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeInstanceGroupNamedPortApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeInstanceGroupNamedPortName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	portProp, err := expandComputeInstanceGroupNamedPortPort(d.Get("port"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("port"); !isEmptyValue(reflect.ValueOf(portProp)) && (ok || !reflect.DeepEqual(v, portProp)) {
+	} else if v, ok := d.GetOkExists("port"); !tpgresource.IsEmptyValue(reflect.ValueOf(portProp)) && (ok || !reflect.DeepEqual(v, portProp)) {
 		obj["port"] = portProp
 	}
 
 	return resourceComputeInstanceGroupNamedPortEncoder(d, config, obj)
 }
 
-func resourceComputeInstanceGroupNamedPortEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceComputeInstanceGroupNamedPortEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	config := meta.(*transport_tpg.Config)
-	ig, err := ParseInstanceGroupFieldValue(d.Get("group").(string), d, config)
+	ig, err := tpgresource.ParseInstanceGroupFieldValue(d.Get("group").(string), d, config)
 	if err != nil {
 		return nil, err
 	}
@@ -89,10 +90,10 @@ func resourceComputeInstanceGroupNamedPortEncoder(d TerraformResourceData, meta 
 	return obj, nil
 }
 
-func expandComputeInstanceGroupNamedPortName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeInstanceGroupNamedPortName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeInstanceGroupNamedPortPort(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeInstanceGroupNamedPortPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

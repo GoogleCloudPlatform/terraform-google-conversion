@@ -22,6 +22,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -85,7 +86,7 @@ func resourceConverterTPUNode() ResourceConverter {
 	}
 }
 
-func GetTPUNodeCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetTPUNodeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//tpu.googleapis.com/projects/{{project}}/locations/{{zone}}/nodes/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -106,95 +107,95 @@ func GetTPUNodeCaiObject(d TerraformResourceData, config *transport_tpg.Config) 
 	}
 }
 
-func GetTPUNodeApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetTPUNodeApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandTPUNodeName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	descriptionProp, err := expandTPUNodeDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	acceleratorTypeProp, err := expandTPUNodeAcceleratorType(d.Get("accelerator_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("accelerator_type"); !isEmptyValue(reflect.ValueOf(acceleratorTypeProp)) && (ok || !reflect.DeepEqual(v, acceleratorTypeProp)) {
+	} else if v, ok := d.GetOkExists("accelerator_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(acceleratorTypeProp)) && (ok || !reflect.DeepEqual(v, acceleratorTypeProp)) {
 		obj["acceleratorType"] = acceleratorTypeProp
 	}
 	tensorflowVersionProp, err := expandTPUNodeTensorflowVersion(d.Get("tensorflow_version"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("tensorflow_version"); !isEmptyValue(reflect.ValueOf(tensorflowVersionProp)) && (ok || !reflect.DeepEqual(v, tensorflowVersionProp)) {
+	} else if v, ok := d.GetOkExists("tensorflow_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(tensorflowVersionProp)) && (ok || !reflect.DeepEqual(v, tensorflowVersionProp)) {
 		obj["tensorflowVersion"] = tensorflowVersionProp
 	}
 	networkProp, err := expandTPUNodeNetwork(d.Get("network"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("network"); !isEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
+	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
 	cidrBlockProp, err := expandTPUNodeCidrBlock(d.Get("cidr_block"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("cidr_block"); !isEmptyValue(reflect.ValueOf(cidrBlockProp)) && (ok || !reflect.DeepEqual(v, cidrBlockProp)) {
+	} else if v, ok := d.GetOkExists("cidr_block"); !tpgresource.IsEmptyValue(reflect.ValueOf(cidrBlockProp)) && (ok || !reflect.DeepEqual(v, cidrBlockProp)) {
 		obj["cidrBlock"] = cidrBlockProp
 	}
 	useServiceNetworkingProp, err := expandTPUNodeUseServiceNetworking(d.Get("use_service_networking"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("use_service_networking"); !isEmptyValue(reflect.ValueOf(useServiceNetworkingProp)) && (ok || !reflect.DeepEqual(v, useServiceNetworkingProp)) {
+	} else if v, ok := d.GetOkExists("use_service_networking"); !tpgresource.IsEmptyValue(reflect.ValueOf(useServiceNetworkingProp)) && (ok || !reflect.DeepEqual(v, useServiceNetworkingProp)) {
 		obj["useServiceNetworking"] = useServiceNetworkingProp
 	}
 	schedulingConfigProp, err := expandTPUNodeSchedulingConfig(d.Get("scheduling_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("scheduling_config"); !isEmptyValue(reflect.ValueOf(schedulingConfigProp)) && (ok || !reflect.DeepEqual(v, schedulingConfigProp)) {
+	} else if v, ok := d.GetOkExists("scheduling_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(schedulingConfigProp)) && (ok || !reflect.DeepEqual(v, schedulingConfigProp)) {
 		obj["schedulingConfig"] = schedulingConfigProp
 	}
 	labelsProp, err := expandTPUNodeLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 
 	return obj, nil
 }
 
-func expandTPUNodeName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeAcceleratorType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeAcceleratorType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeTensorflowVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeTensorflowVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeCidrBlock(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeCidrBlock(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeUseServiceNetworking(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeUseServiceNetworking(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeSchedulingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeSchedulingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -206,18 +207,18 @@ func expandTPUNodeSchedulingConfig(v interface{}, d TerraformResourceData, confi
 	transformedPreemptible, err := expandTPUNodeSchedulingConfigPreemptible(original["preemptible"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPreemptible); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPreemptible); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["preemptible"] = transformedPreemptible
 	}
 
 	return transformed, nil
 }
 
-func expandTPUNodeSchedulingConfigPreemptible(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandTPUNodeSchedulingConfigPreemptible(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandTPUNodeLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandTPUNodeLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

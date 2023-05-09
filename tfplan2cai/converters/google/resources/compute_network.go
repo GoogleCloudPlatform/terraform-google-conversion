@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterComputeNetwork() ResourceConverter {
 	}
 }
 
-func GetComputeNetworkCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeNetworkCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networks/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,18 +51,18 @@ func GetComputeNetworkCaiObject(d TerraformResourceData, config *transport_tpg.C
 	}
 }
 
-func GetComputeNetworkApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeNetworkApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeNetworkDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	nameProp, err := expandComputeNetworkName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	autoCreateSubnetworksProp, err := expandComputeNetworkAutoCreateSubnetworks(d.Get("auto_create_subnetworks"), d, config)
@@ -73,77 +74,77 @@ func GetComputeNetworkApiObject(d TerraformResourceData, config *transport_tpg.C
 	routingConfigProp, err := expandComputeNetworkRoutingConfig(nil, d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("routing_config"); !isEmptyValue(reflect.ValueOf(routingConfigProp)) && (ok || !reflect.DeepEqual(v, routingConfigProp)) {
+	} else if v, ok := d.GetOkExists("routing_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(routingConfigProp)) && (ok || !reflect.DeepEqual(v, routingConfigProp)) {
 		obj["routingConfig"] = routingConfigProp
 	}
 	mtuProp, err := expandComputeNetworkMtu(d.Get("mtu"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("mtu"); !isEmptyValue(reflect.ValueOf(mtuProp)) && (ok || !reflect.DeepEqual(v, mtuProp)) {
+	} else if v, ok := d.GetOkExists("mtu"); !tpgresource.IsEmptyValue(reflect.ValueOf(mtuProp)) && (ok || !reflect.DeepEqual(v, mtuProp)) {
 		obj["mtu"] = mtuProp
 	}
 	enableUlaInternalIpv6Prop, err := expandComputeNetworkEnableUlaInternalIpv6(d.Get("enable_ula_internal_ipv6"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_ula_internal_ipv6"); !isEmptyValue(reflect.ValueOf(enableUlaInternalIpv6Prop)) && (ok || !reflect.DeepEqual(v, enableUlaInternalIpv6Prop)) {
+	} else if v, ok := d.GetOkExists("enable_ula_internal_ipv6"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableUlaInternalIpv6Prop)) && (ok || !reflect.DeepEqual(v, enableUlaInternalIpv6Prop)) {
 		obj["enableUlaInternalIpv6"] = enableUlaInternalIpv6Prop
 	}
 	internalIpv6RangeProp, err := expandComputeNetworkInternalIpv6Range(d.Get("internal_ipv6_range"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("internal_ipv6_range"); !isEmptyValue(reflect.ValueOf(internalIpv6RangeProp)) && (ok || !reflect.DeepEqual(v, internalIpv6RangeProp)) {
+	} else if v, ok := d.GetOkExists("internal_ipv6_range"); !tpgresource.IsEmptyValue(reflect.ValueOf(internalIpv6RangeProp)) && (ok || !reflect.DeepEqual(v, internalIpv6RangeProp)) {
 		obj["internalIpv6Range"] = internalIpv6RangeProp
 	}
 	networkFirewallPolicyEnforcementOrderProp, err := expandComputeNetworkNetworkFirewallPolicyEnforcementOrder(d.Get("network_firewall_policy_enforcement_order"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("network_firewall_policy_enforcement_order"); !isEmptyValue(reflect.ValueOf(networkFirewallPolicyEnforcementOrderProp)) && (ok || !reflect.DeepEqual(v, networkFirewallPolicyEnforcementOrderProp)) {
+	} else if v, ok := d.GetOkExists("network_firewall_policy_enforcement_order"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkFirewallPolicyEnforcementOrderProp)) && (ok || !reflect.DeepEqual(v, networkFirewallPolicyEnforcementOrderProp)) {
 		obj["networkFirewallPolicyEnforcementOrder"] = networkFirewallPolicyEnforcementOrderProp
 	}
 
 	return obj, nil
 }
 
-func expandComputeNetworkDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkAutoCreateSubnetworks(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkAutoCreateSubnetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkRoutingConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkRoutingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	transformed := make(map[string]interface{})
 	transformedRoutingMode, err := expandComputeNetworkRoutingConfigRoutingMode(d.Get("routing_mode"), d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedRoutingMode); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedRoutingMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["routingMode"] = transformedRoutingMode
 	}
 
 	return transformed, nil
 }
 
-func expandComputeNetworkRoutingConfigRoutingMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkRoutingConfigRoutingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkMtu(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkMtu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkEnableUlaInternalIpv6(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkEnableUlaInternalIpv6(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkInternalIpv6Range(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkInternalIpv6Range(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeNetworkNetworkFirewallPolicyEnforcementOrder(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeNetworkNetworkFirewallPolicyEnforcementOrder(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -20,6 +20,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -32,7 +33,7 @@ func resourceConverterComputeResourcePolicy() ResourceConverter {
 	}
 }
 
-func GetComputeResourcePolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeResourcePolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/resourcePolicies/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -53,57 +54,57 @@ func GetComputeResourcePolicyCaiObject(d TerraformResourceData, config *transpor
 	}
 }
 
-func GetComputeResourcePolicyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeResourcePolicyApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeResourcePolicyName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	descriptionProp, err := expandComputeResourcePolicyDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	snapshotSchedulePolicyProp, err := expandComputeResourcePolicySnapshotSchedulePolicy(d.Get("snapshot_schedule_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("snapshot_schedule_policy"); !isEmptyValue(reflect.ValueOf(snapshotSchedulePolicyProp)) && (ok || !reflect.DeepEqual(v, snapshotSchedulePolicyProp)) {
+	} else if v, ok := d.GetOkExists("snapshot_schedule_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(snapshotSchedulePolicyProp)) && (ok || !reflect.DeepEqual(v, snapshotSchedulePolicyProp)) {
 		obj["snapshotSchedulePolicy"] = snapshotSchedulePolicyProp
 	}
 	groupPlacementPolicyProp, err := expandComputeResourcePolicyGroupPlacementPolicy(d.Get("group_placement_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("group_placement_policy"); !isEmptyValue(reflect.ValueOf(groupPlacementPolicyProp)) && (ok || !reflect.DeepEqual(v, groupPlacementPolicyProp)) {
+	} else if v, ok := d.GetOkExists("group_placement_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(groupPlacementPolicyProp)) && (ok || !reflect.DeepEqual(v, groupPlacementPolicyProp)) {
 		obj["groupPlacementPolicy"] = groupPlacementPolicyProp
 	}
 	instanceSchedulePolicyProp, err := expandComputeResourcePolicyInstanceSchedulePolicy(d.Get("instance_schedule_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("instance_schedule_policy"); !isEmptyValue(reflect.ValueOf(instanceSchedulePolicyProp)) && (ok || !reflect.DeepEqual(v, instanceSchedulePolicyProp)) {
+	} else if v, ok := d.GetOkExists("instance_schedule_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(instanceSchedulePolicyProp)) && (ok || !reflect.DeepEqual(v, instanceSchedulePolicyProp)) {
 		obj["instanceSchedulePolicy"] = instanceSchedulePolicyProp
 	}
 	regionProp, err := expandComputeResourcePolicyRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("region"); !isEmptyValue(reflect.ValueOf(regionProp)) && (ok || !reflect.DeepEqual(v, regionProp)) {
+	} else if v, ok := d.GetOkExists("region"); !tpgresource.IsEmptyValue(reflect.ValueOf(regionProp)) && (ok || !reflect.DeepEqual(v, regionProp)) {
 		obj["region"] = regionProp
 	}
 
 	return obj, nil
 }
 
-func expandComputeResourcePolicyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -115,28 +116,28 @@ func expandComputeResourcePolicySnapshotSchedulePolicy(v interface{}, d Terrafor
 	transformedSchedule, err := expandComputeResourcePolicySnapshotSchedulePolicySchedule(original["schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["schedule"] = transformedSchedule
 	}
 
 	transformedRetentionPolicy, err := expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicy(original["retention_policy"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedRetentionPolicy); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedRetentionPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["retentionPolicy"] = transformedRetentionPolicy
 	}
 
 	transformedSnapshotProperties, err := expandComputeResourcePolicySnapshotSchedulePolicySnapshotProperties(original["snapshot_properties"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSnapshotProperties); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSnapshotProperties); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["snapshotProperties"] = transformedSnapshotProperties
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicySchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -148,28 +149,28 @@ func expandComputeResourcePolicySnapshotSchedulePolicySchedule(v interface{}, d 
 	transformedHourlySchedule, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlySchedule(original["hourly_schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedHourlySchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedHourlySchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["hourlySchedule"] = transformedHourlySchedule
 	}
 
 	transformedDailySchedule, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailySchedule(original["daily_schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDailySchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDailySchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["dailySchedule"] = transformedDailySchedule
 	}
 
 	transformedWeeklySchedule, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklySchedule(original["weekly_schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedWeeklySchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedWeeklySchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["weeklySchedule"] = transformedWeeklySchedule
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlySchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -181,29 +182,29 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlySchedule(v i
 	transformedHoursInCycle, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleHoursInCycle(original["hours_in_cycle"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedHoursInCycle); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedHoursInCycle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["hoursInCycle"] = transformedHoursInCycle
 	}
 
 	transformedStartTime, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleStartTime(original["start_time"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["startTime"] = transformedStartTime
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleHoursInCycle(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleHoursInCycle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailySchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -215,29 +216,29 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailySchedule(v in
 	transformedDaysInCycle, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleDaysInCycle(original["days_in_cycle"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDaysInCycle); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDaysInCycle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["daysInCycle"] = transformedDaysInCycle
 	}
 
 	transformedStartTime, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleStartTime(original["start_time"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["startTime"] = transformedStartTime
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleDaysInCycle(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleDaysInCycle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklySchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -249,14 +250,14 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklySchedule(v i
 	transformedDayOfWeeks, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeks(original["day_of_weeks"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDayOfWeeks); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDayOfWeeks); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["dayOfWeeks"] = transformedDayOfWeeks
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeks(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -270,14 +271,14 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayO
 		transformedStartTime, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeksStartTime(original["start_time"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["startTime"] = transformedStartTime
 		}
 
 		transformedDay, err := expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeksDay(original["day"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDay); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDay); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["day"] = transformedDay
 		}
 
@@ -286,15 +287,15 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayO
 	return req, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeksStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeksStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeksDay(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeksDay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -306,29 +307,29 @@ func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicy(v interfac
 	transformedMaxRetentionDays, err := expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicyMaxRetentionDays(original["max_retention_days"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMaxRetentionDays); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMaxRetentionDays); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["maxRetentionDays"] = transformedMaxRetentionDays
 	}
 
 	transformedOnSourceDiskDelete, err := expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicyOnSourceDiskDelete(original["on_source_disk_delete"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedOnSourceDiskDelete); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedOnSourceDiskDelete); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["onSourceDiskDelete"] = transformedOnSourceDiskDelete
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicyMaxRetentionDays(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicyMaxRetentionDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicyOnSourceDiskDelete(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicyOnSourceDiskDelete(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicySnapshotProperties(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicySnapshotProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -340,14 +341,14 @@ func expandComputeResourcePolicySnapshotSchedulePolicySnapshotProperties(v inter
 	transformedLabels, err := expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesLabels(original["labels"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["labels"] = transformedLabels
 	}
 
 	transformedStorageLocations, err := expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesStorageLocations(original["storage_locations"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedStorageLocations); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedStorageLocations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["storageLocations"] = transformedStorageLocations
 	}
 
@@ -361,14 +362,14 @@ func expandComputeResourcePolicySnapshotSchedulePolicySnapshotProperties(v inter
 	transformedChainName, err := expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesChainName(original["chain_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedChainName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedChainName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["chainName"] = transformedChainName
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -379,20 +380,20 @@ func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesLabels(v
 	return m, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesStorageLocations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesStorageLocations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesGuestFlush(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesGuestFlush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesChainName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesChainName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyGroupPlacementPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyGroupPlacementPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -404,40 +405,40 @@ func expandComputeResourcePolicyGroupPlacementPolicy(v interface{}, d TerraformR
 	transformedVmCount, err := expandComputeResourcePolicyGroupPlacementPolicyVmCount(original["vm_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedVmCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedVmCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["vmCount"] = transformedVmCount
 	}
 
 	transformedAvailabilityDomainCount, err := expandComputeResourcePolicyGroupPlacementPolicyAvailabilityDomainCount(original["availability_domain_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAvailabilityDomainCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAvailabilityDomainCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["availabilityDomainCount"] = transformedAvailabilityDomainCount
 	}
 
 	transformedCollocation, err := expandComputeResourcePolicyGroupPlacementPolicyCollocation(original["collocation"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCollocation); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCollocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["collocation"] = transformedCollocation
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicyGroupPlacementPolicyVmCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyGroupPlacementPolicyVmCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyGroupPlacementPolicyAvailabilityDomainCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyGroupPlacementPolicyAvailabilityDomainCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyGroupPlacementPolicyCollocation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyGroupPlacementPolicyCollocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyInstanceSchedulePolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyInstanceSchedulePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -449,42 +450,42 @@ func expandComputeResourcePolicyInstanceSchedulePolicy(v interface{}, d Terrafor
 	transformedVmStartSchedule, err := expandComputeResourcePolicyInstanceSchedulePolicyVmStartSchedule(original["vm_start_schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedVmStartSchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedVmStartSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["vmStartSchedule"] = transformedVmStartSchedule
 	}
 
 	transformedVmStopSchedule, err := expandComputeResourcePolicyInstanceSchedulePolicyVmStopSchedule(original["vm_stop_schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedVmStopSchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedVmStopSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["vmStopSchedule"] = transformedVmStopSchedule
 	}
 
 	transformedTimeZone, err := expandComputeResourcePolicyInstanceSchedulePolicyTimeZone(original["time_zone"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedTimeZone); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedTimeZone); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["timeZone"] = transformedTimeZone
 	}
 
 	transformedStartTime, err := expandComputeResourcePolicyInstanceSchedulePolicyStartTime(original["start_time"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["startTime"] = transformedStartTime
 	}
 
 	transformedExpirationTime, err := expandComputeResourcePolicyInstanceSchedulePolicyExpirationTime(original["expiration_time"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedExpirationTime); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedExpirationTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["expirationTime"] = transformedExpirationTime
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicyInstanceSchedulePolicyVmStartSchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyInstanceSchedulePolicyVmStartSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -496,18 +497,18 @@ func expandComputeResourcePolicyInstanceSchedulePolicyVmStartSchedule(v interfac
 	transformedSchedule, err := expandComputeResourcePolicyInstanceSchedulePolicyVmStartScheduleSchedule(original["schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["schedule"] = transformedSchedule
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicyInstanceSchedulePolicyVmStartScheduleSchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyInstanceSchedulePolicyVmStartScheduleSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyInstanceSchedulePolicyVmStopSchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyInstanceSchedulePolicyVmStopSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -519,31 +520,31 @@ func expandComputeResourcePolicyInstanceSchedulePolicyVmStopSchedule(v interface
 	transformedSchedule, err := expandComputeResourcePolicyInstanceSchedulePolicyVmStopScheduleSchedule(original["schedule"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSchedule); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["schedule"] = transformedSchedule
 	}
 
 	return transformed, nil
 }
 
-func expandComputeResourcePolicyInstanceSchedulePolicyVmStopScheduleSchedule(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyInstanceSchedulePolicyVmStopScheduleSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyInstanceSchedulePolicyTimeZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyInstanceSchedulePolicyTimeZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyInstanceSchedulePolicyStartTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyInstanceSchedulePolicyStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyInstanceSchedulePolicyExpirationTime(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeResourcePolicyInstanceSchedulePolicyExpirationTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeResourcePolicyRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
+func expandComputeResourcePolicyRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
 	}

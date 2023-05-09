@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterGameServicesGameServerDeploymentRollout() ResourceConverte
 	}
 }
 
-func GetGameServicesGameServerDeploymentRolloutCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetGameServicesGameServerDeploymentRolloutCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/global/gameServerDeployments/{{deployment_id}}/rollout")
 	if err != nil {
 		return []Asset{}, err
@@ -50,29 +51,29 @@ func GetGameServicesGameServerDeploymentRolloutCaiObject(d TerraformResourceData
 	}
 }
 
-func GetGameServicesGameServerDeploymentRolloutApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetGameServicesGameServerDeploymentRolloutApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	defaultGameServerConfigProp, err := expandGameServicesGameServerDeploymentRolloutDefaultGameServerConfig(d.Get("default_game_server_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("default_game_server_config"); !isEmptyValue(reflect.ValueOf(defaultGameServerConfigProp)) && (ok || !reflect.DeepEqual(v, defaultGameServerConfigProp)) {
+	} else if v, ok := d.GetOkExists("default_game_server_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultGameServerConfigProp)) && (ok || !reflect.DeepEqual(v, defaultGameServerConfigProp)) {
 		obj["defaultGameServerConfig"] = defaultGameServerConfigProp
 	}
 	gameServerConfigOverridesProp, err := expandGameServicesGameServerDeploymentRolloutGameServerConfigOverrides(d.Get("game_server_config_overrides"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("game_server_config_overrides"); !isEmptyValue(reflect.ValueOf(gameServerConfigOverridesProp)) && (ok || !reflect.DeepEqual(v, gameServerConfigOverridesProp)) {
+	} else if v, ok := d.GetOkExists("game_server_config_overrides"); !tpgresource.IsEmptyValue(reflect.ValueOf(gameServerConfigOverridesProp)) && (ok || !reflect.DeepEqual(v, gameServerConfigOverridesProp)) {
 		obj["gameServerConfigOverrides"] = gameServerConfigOverridesProp
 	}
 
 	return obj, nil
 }
 
-func expandGameServicesGameServerDeploymentRolloutDefaultGameServerConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGameServicesGameServerDeploymentRolloutDefaultGameServerConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverrides(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -85,14 +86,14 @@ func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverrides(v in
 		transformedRealmsSelector, err := expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesRealmsSelector(original["realms_selector"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedRealmsSelector); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedRealmsSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["realmsSelector"] = transformedRealmsSelector
 		}
 
 		transformedConfigVersion, err := expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesConfigVersion(original["config_version"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedConfigVersion); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedConfigVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["configVersion"] = transformedConfigVersion
 		}
 
@@ -101,7 +102,7 @@ func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverrides(v in
 	return req, nil
 }
 
-func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesRealmsSelector(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesRealmsSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -113,17 +114,17 @@ func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesRealm
 	transformedRealms, err := expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesRealmsSelectorRealms(original["realms"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedRealms); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedRealms); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["realms"] = transformedRealms
 	}
 
 	return transformed, nil
 }
 
-func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesRealmsSelectorRealms(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesRealmsSelectorRealms(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesConfigVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandGameServicesGameServerDeploymentRolloutGameServerConfigOverridesConfigVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

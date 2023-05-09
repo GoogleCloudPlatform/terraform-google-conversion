@@ -21,6 +21,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,7 +52,7 @@ func resourceConverterComputeRouter() ResourceConverter {
 	}
 }
 
-func GetComputeRouterCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeRouterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/routers/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -72,12 +73,12 @@ func GetComputeRouterCaiObject(d TerraformResourceData, config *transport_tpg.Co
 	}
 }
 
-func GetComputeRouterApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeRouterApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeRouterName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	descriptionProp, err := expandComputeRouterDescription(d.Get("description"), d, config)
@@ -89,7 +90,7 @@ func GetComputeRouterApiObject(d TerraformResourceData, config *transport_tpg.Co
 	networkProp, err := expandComputeRouterNetwork(d.Get("network"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("network"); !isEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
+	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
 	bgpProp, err := expandComputeRouterBgp(d.Get("bgp"), d, config)
@@ -101,36 +102,36 @@ func GetComputeRouterApiObject(d TerraformResourceData, config *transport_tpg.Co
 	encryptedInterconnectRouterProp, err := expandComputeRouterEncryptedInterconnectRouter(d.Get("encrypted_interconnect_router"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("encrypted_interconnect_router"); !isEmptyValue(reflect.ValueOf(encryptedInterconnectRouterProp)) && (ok || !reflect.DeepEqual(v, encryptedInterconnectRouterProp)) {
+	} else if v, ok := d.GetOkExists("encrypted_interconnect_router"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptedInterconnectRouterProp)) && (ok || !reflect.DeepEqual(v, encryptedInterconnectRouterProp)) {
 		obj["encryptedInterconnectRouter"] = encryptedInterconnectRouterProp
 	}
 	regionProp, err := expandComputeRouterRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("region"); !isEmptyValue(reflect.ValueOf(regionProp)) && (ok || !reflect.DeepEqual(v, regionProp)) {
+	} else if v, ok := d.GetOkExists("region"); !tpgresource.IsEmptyValue(reflect.ValueOf(regionProp)) && (ok || !reflect.DeepEqual(v, regionProp)) {
 		obj["region"] = regionProp
 	}
 
 	return obj, nil
 }
 
-func expandComputeRouterName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterNetwork(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := parseGlobalFieldValue("networks", v.(string), "project", d, config, true)
+func expandComputeRouterNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
 	}
 	return f.RelativeLink(), nil
 }
 
-func expandComputeRouterBgp(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterBgp(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -142,14 +143,14 @@ func expandComputeRouterBgp(v interface{}, d TerraformResourceData, config *tran
 	transformedAsn, err := expandComputeRouterBgpAsn(original["asn"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAsn); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAsn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["asn"] = transformedAsn
 	}
 
 	transformedAdvertiseMode, err := expandComputeRouterBgpAdvertiseMode(original["advertise_mode"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAdvertiseMode); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAdvertiseMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["advertiseMode"] = transformedAdvertiseMode
 	}
 
@@ -170,26 +171,26 @@ func expandComputeRouterBgp(v interface{}, d TerraformResourceData, config *tran
 	transformedKeepaliveInterval, err := expandComputeRouterBgpKeepaliveInterval(original["keepalive_interval"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedKeepaliveInterval); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedKeepaliveInterval); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["keepaliveInterval"] = transformedKeepaliveInterval
 	}
 
 	return transformed, nil
 }
 
-func expandComputeRouterBgpAsn(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterBgpAsn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterBgpAdvertiseMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterBgpAdvertiseMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterBgpAdvertisedGroups(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterBgpAdvertisedGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterBgpAdvertisedIpRanges(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterBgpAdvertisedIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -218,24 +219,24 @@ func expandComputeRouterBgpAdvertisedIpRanges(v interface{}, d TerraformResource
 	return req, nil
 }
 
-func expandComputeRouterBgpAdvertisedIpRangesRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterBgpAdvertisedIpRangesRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterBgpAdvertisedIpRangesDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterBgpAdvertisedIpRangesDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterBgpKeepaliveInterval(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterBgpKeepaliveInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterEncryptedInterconnectRouter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeRouterEncryptedInterconnectRouter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeRouterRegion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := parseGlobalFieldValue("regions", v.(string), "project", d, config, true)
+func expandComputeRouterRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
 	}

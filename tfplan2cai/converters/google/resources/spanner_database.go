@@ -24,11 +24,12 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // customizeDiff func for additional checks on google_spanner_database properties:
-func resourceSpannerDBDdlCustomDiffFunc(diff TerraformResourceDiff) error {
+func resourceSpannerDBDdlCustomDiffFunc(diff tpgresource.TerraformResourceDiff) error {
 	old, new := diff.GetChange("ddl")
 	oldDdls := old.([]interface{})
 	newDdls := new.([]interface{})
@@ -122,7 +123,7 @@ func resourceConverterSpannerDatabase() ResourceConverter {
 	}
 }
 
-func GetSpannerDatabaseCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSpannerDatabaseCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//spanner.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -143,49 +144,49 @@ func GetSpannerDatabaseCaiObject(d TerraformResourceData, config *transport_tpg.
 	}
 }
 
-func GetSpannerDatabaseApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetSpannerDatabaseApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandSpannerDatabaseName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	versionRetentionPeriodProp, err := expandSpannerDatabaseVersionRetentionPeriod(d.Get("version_retention_period"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("version_retention_period"); !isEmptyValue(reflect.ValueOf(versionRetentionPeriodProp)) && (ok || !reflect.DeepEqual(v, versionRetentionPeriodProp)) {
+	} else if v, ok := d.GetOkExists("version_retention_period"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionRetentionPeriodProp)) && (ok || !reflect.DeepEqual(v, versionRetentionPeriodProp)) {
 		obj["versionRetentionPeriod"] = versionRetentionPeriodProp
 	}
 	extraStatementsProp, err := expandSpannerDatabaseDdl(d.Get("ddl"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ddl"); !isEmptyValue(reflect.ValueOf(extraStatementsProp)) && (ok || !reflect.DeepEqual(v, extraStatementsProp)) {
+	} else if v, ok := d.GetOkExists("ddl"); !tpgresource.IsEmptyValue(reflect.ValueOf(extraStatementsProp)) && (ok || !reflect.DeepEqual(v, extraStatementsProp)) {
 		obj["extraStatements"] = extraStatementsProp
 	}
 	encryptionConfigProp, err := expandSpannerDatabaseEncryptionConfig(d.Get("encryption_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("encryption_config"); !isEmptyValue(reflect.ValueOf(encryptionConfigProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigProp)) {
+	} else if v, ok := d.GetOkExists("encryption_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionConfigProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigProp)) {
 		obj["encryptionConfig"] = encryptionConfigProp
 	}
 	databaseDialectProp, err := expandSpannerDatabaseDatabaseDialect(d.Get("database_dialect"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("database_dialect"); !isEmptyValue(reflect.ValueOf(databaseDialectProp)) && (ok || !reflect.DeepEqual(v, databaseDialectProp)) {
+	} else if v, ok := d.GetOkExists("database_dialect"); !tpgresource.IsEmptyValue(reflect.ValueOf(databaseDialectProp)) && (ok || !reflect.DeepEqual(v, databaseDialectProp)) {
 		obj["databaseDialect"] = databaseDialectProp
 	}
 	instanceProp, err := expandSpannerDatabaseInstance(d.Get("instance"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("instance"); !isEmptyValue(reflect.ValueOf(instanceProp)) && (ok || !reflect.DeepEqual(v, instanceProp)) {
+	} else if v, ok := d.GetOkExists("instance"); !tpgresource.IsEmptyValue(reflect.ValueOf(instanceProp)) && (ok || !reflect.DeepEqual(v, instanceProp)) {
 		obj["instance"] = instanceProp
 	}
 
 	return resourceSpannerDatabaseEncoder(d, config, obj)
 }
 
-func resourceSpannerDatabaseEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceSpannerDatabaseEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	obj["createStatement"] = fmt.Sprintf("CREATE DATABASE `%s`", obj["name"])
 	if dialect, ok := obj["databaseDialect"]; ok && dialect == "POSTGRESQL" {
 		obj["createStatement"] = fmt.Sprintf("CREATE DATABASE \"%s\"", obj["name"])
@@ -202,19 +203,19 @@ func resourceSpannerDatabaseEncoder(d TerraformResourceData, meta interface{}, o
 	return obj, nil
 }
 
-func expandSpannerDatabaseName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSpannerDatabaseName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseVersionRetentionPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSpannerDatabaseVersionRetentionPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseDdl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSpannerDatabaseDdl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseEncryptionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSpannerDatabaseEncryptionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -226,23 +227,23 @@ func expandSpannerDatabaseEncryptionConfig(v interface{}, d TerraformResourceDat
 	transformedKmsKeyName, err := expandSpannerDatabaseEncryptionConfigKmsKeyName(original["kms_key_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
 	return transformed, nil
 }
 
-func expandSpannerDatabaseEncryptionConfigKmsKeyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSpannerDatabaseEncryptionConfigKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseDatabaseDialect(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSpannerDatabaseDatabaseDialect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpannerDatabaseInstance(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := parseGlobalFieldValue("instances", v.(string), "project", d, config, true)
+func expandSpannerDatabaseInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("instances", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for instance: %s", err)
 	}

@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterHealthcareConsentStoreIamMember() ResourceConverter {
 	}
 }
 
-func GetHealthcareConsentStoreIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetHealthcareConsentStoreIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newHealthcareConsentStoreIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetHealthcareConsentStoreIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetHealthcareConsentStoreIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newHealthcareConsentStoreIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetHealthcareConsentStoreIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetHealthcareConsentStoreIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newHealthcareConsentStoreIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeHealthcareConsentStoreIamMemberDelete(existing, incoming Asset) Asset 
 }
 
 func newHealthcareConsentStoreIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newHealthcareConsentStoreIamAsset(
 	}}, nil
 }
 
-func FetchHealthcareConsentStoreIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchHealthcareConsentStoreIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("dataset"); !ok {
 		return Asset{}, ErrEmptyIdentityField

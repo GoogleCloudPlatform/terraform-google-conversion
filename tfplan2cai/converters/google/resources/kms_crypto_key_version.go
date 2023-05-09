@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterKMSCryptoKeyVersion() ResourceConverter {
 	}
 }
 
-func GetKMSCryptoKeyVersionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetKMSCryptoKeyVersionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudkms.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,18 +51,18 @@ func GetKMSCryptoKeyVersionCaiObject(d TerraformResourceData, config *transport_
 	}
 }
 
-func GetKMSCryptoKeyVersionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetKMSCryptoKeyVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	stateProp, err := expandKMSCryptoKeyVersionState(d.Get("state"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("state"); !isEmptyValue(reflect.ValueOf(stateProp)) && (ok || !reflect.DeepEqual(v, stateProp)) {
+	} else if v, ok := d.GetOkExists("state"); !tpgresource.IsEmptyValue(reflect.ValueOf(stateProp)) && (ok || !reflect.DeepEqual(v, stateProp)) {
 		obj["state"] = stateProp
 	}
 
 	return obj, nil
 }
 
-func expandKMSCryptoKeyVersionState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandKMSCryptoKeyVersionState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
