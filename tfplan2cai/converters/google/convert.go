@@ -25,6 +25,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/ancestrymanager"
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfdata"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfplan"
@@ -290,7 +291,7 @@ func (c *Converter) Assets() []caiasset.Asset {
 }
 
 // augmentAsset adds data to an asset that is not set by the conversion library.
-func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *transport_tpg.Config, cai resources.Asset) (Asset, error) {
+func (c *Converter) augmentAsset(tfData tpgresource.TerraformResourceData, cfg *transport_tpg.Config, cai resources.Asset) (Asset, error) {
 	ancestors, parent, err := c.ancestryManager.Ancestors(cfg, tfData, &cai)
 	if err != nil {
 		return Asset{}, fmt.Errorf("getting resource ancestry or parent failed: %w", err)
@@ -425,7 +426,7 @@ func (c *Converter) augmentAsset(tfData resources.TerraformResourceData, cfg *tr
 	}, nil
 }
 
-func convertWrapper(conv resources.ResourceConverter, d resources.TerraformResourceData, config *transport_tpg.Config) (assets []resources.Asset, err error) {
+func convertWrapper(conv resources.ResourceConverter, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (assets []resources.Asset, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			switch v := r.(type) {
