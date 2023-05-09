@@ -10,8 +10,9 @@ import (
 	"testing"
 
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfdata"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfdata"
 
 	"github.com/google/go-cmp/cmp"
 	provider "github.com/hashicorp/terraform-provider-google/google"
@@ -73,7 +74,7 @@ func TestGetAncestors(t *testing.T) {
 	// online return errors when neither cache and mock server cannot cover the request.
 	cases := []struct {
 		name             string
-		data             resources.TerraformResourceData
+		data             tpgresource.TerraformResourceData
 		asset            *resources.Asset
 		cfg              *transport_tpg.Config
 		want             []string
@@ -614,7 +615,7 @@ func TestGetAncestors_Folder(t *testing.T) {
 	p := provider.Provider()
 	cases := []struct {
 		name        string
-		data        resources.TerraformResourceData
+		data        tpgresource.TerraformResourceData
 		asset       *resources.Asset
 		v1Responses map[string][]*crmv1.Ancestor
 		v3Responses map[string]*crmv3.Project
@@ -1206,7 +1207,7 @@ func TestUnknownProject(t *testing.T) {
 	p := provider.Provider()
 	cases := []struct {
 		name        string
-		data        resources.TerraformResourceData
+		data        tpgresource.TerraformResourceData
 		asset       *resources.Asset
 		v1Responses map[string][]*crmv1.Ancestor
 		v3Responses map[string]*crmv3.Project
@@ -1319,7 +1320,7 @@ func TestGetProjectFromResource(t *testing.T) {
 		name   string
 		asset  *resources.Asset
 		config *transport_tpg.Config
-		d      resources.TerraformResourceData
+		d      tpgresource.TerraformResourceData
 		resp   *storage.Bucket
 		want   string
 	}{
