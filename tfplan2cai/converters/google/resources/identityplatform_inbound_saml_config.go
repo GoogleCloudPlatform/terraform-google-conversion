@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterIdentityPlatformInboundSamlConfig() ResourceConverter {
 	}
 }
 
-func GetIdentityPlatformInboundSamlConfigCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetIdentityPlatformInboundSamlConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/inboundSamlConfigs/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,55 +51,55 @@ func GetIdentityPlatformInboundSamlConfigCaiObject(d TerraformResourceData, conf
 	}
 }
 
-func GetIdentityPlatformInboundSamlConfigApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetIdentityPlatformInboundSamlConfigApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandIdentityPlatformInboundSamlConfigName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	displayNameProp, err := expandIdentityPlatformInboundSamlConfigDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	enabledProp, err := expandIdentityPlatformInboundSamlConfigEnabled(d.Get("enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enabled"); !isEmptyValue(reflect.ValueOf(enabledProp)) && (ok || !reflect.DeepEqual(v, enabledProp)) {
+	} else if v, ok := d.GetOkExists("enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(enabledProp)) && (ok || !reflect.DeepEqual(v, enabledProp)) {
 		obj["enabled"] = enabledProp
 	}
 	idpConfigProp, err := expandIdentityPlatformInboundSamlConfigIdpConfig(d.Get("idp_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("idp_config"); !isEmptyValue(reflect.ValueOf(idpConfigProp)) && (ok || !reflect.DeepEqual(v, idpConfigProp)) {
+	} else if v, ok := d.GetOkExists("idp_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(idpConfigProp)) && (ok || !reflect.DeepEqual(v, idpConfigProp)) {
 		obj["idpConfig"] = idpConfigProp
 	}
 	spConfigProp, err := expandIdentityPlatformInboundSamlConfigSpConfig(d.Get("sp_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("sp_config"); !isEmptyValue(reflect.ValueOf(spConfigProp)) && (ok || !reflect.DeepEqual(v, spConfigProp)) {
+	} else if v, ok := d.GetOkExists("sp_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(spConfigProp)) && (ok || !reflect.DeepEqual(v, spConfigProp)) {
 		obj["spConfig"] = spConfigProp
 	}
 
 	return obj, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigEnabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigIdpConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigIdpConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -110,47 +111,47 @@ func expandIdentityPlatformInboundSamlConfigIdpConfig(v interface{}, d Terraform
 	transformedIdpEntityId, err := expandIdentityPlatformInboundSamlConfigIdpConfigIdpEntityId(original["idp_entity_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedIdpEntityId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedIdpEntityId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["idpEntityId"] = transformedIdpEntityId
 	}
 
 	transformedSsoUrl, err := expandIdentityPlatformInboundSamlConfigIdpConfigSsoUrl(original["sso_url"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSsoUrl); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSsoUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["ssoUrl"] = transformedSsoUrl
 	}
 
 	transformedSignRequest, err := expandIdentityPlatformInboundSamlConfigIdpConfigSignRequest(original["sign_request"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSignRequest); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSignRequest); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["signRequest"] = transformedSignRequest
 	}
 
 	transformedIdpCertificates, err := expandIdentityPlatformInboundSamlConfigIdpConfigIdpCertificates(original["idp_certificates"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedIdpCertificates); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedIdpCertificates); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["idpCertificates"] = transformedIdpCertificates
 	}
 
 	return transformed, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigIdpConfigIdpEntityId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigIdpConfigIdpEntityId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigIdpConfigSsoUrl(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigIdpConfigSsoUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigIdpConfigSignRequest(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigIdpConfigSignRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigIdpConfigIdpCertificates(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigIdpConfigIdpCertificates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -163,7 +164,7 @@ func expandIdentityPlatformInboundSamlConfigIdpConfigIdpCertificates(v interface
 		transformedX509Certificate, err := expandIdentityPlatformInboundSamlConfigIdpConfigIdpCertificatesX509Certificate(original["x509_certificate"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedX509Certificate); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedX509Certificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["x509Certificate"] = transformedX509Certificate
 		}
 
@@ -172,11 +173,11 @@ func expandIdentityPlatformInboundSamlConfigIdpConfigIdpCertificates(v interface
 	return req, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigIdpConfigIdpCertificatesX509Certificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigIdpConfigIdpCertificatesX509Certificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigSpConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigSpConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -188,36 +189,36 @@ func expandIdentityPlatformInboundSamlConfigSpConfig(v interface{}, d TerraformR
 	transformedSpEntityId, err := expandIdentityPlatformInboundSamlConfigSpConfigSpEntityId(original["sp_entity_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSpEntityId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSpEntityId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["spEntityId"] = transformedSpEntityId
 	}
 
 	transformedCallbackUri, err := expandIdentityPlatformInboundSamlConfigSpConfigCallbackUri(original["callback_uri"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCallbackUri); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCallbackUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["callbackUri"] = transformedCallbackUri
 	}
 
 	transformedSpCertificates, err := expandIdentityPlatformInboundSamlConfigSpConfigSpCertificates(original["sp_certificates"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSpCertificates); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSpCertificates); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["spCertificates"] = transformedSpCertificates
 	}
 
 	return transformed, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigSpConfigSpEntityId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigSpConfigSpEntityId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigSpConfigCallbackUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigSpConfigCallbackUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigSpConfigSpCertificates(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigSpConfigSpCertificates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -230,7 +231,7 @@ func expandIdentityPlatformInboundSamlConfigSpConfigSpCertificates(v interface{}
 		transformedX509Certificate, err := expandIdentityPlatformInboundSamlConfigSpConfigSpCertificatesX509Certificate(original["x509_certificate"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedX509Certificate); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedX509Certificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["x509Certificate"] = transformedX509Certificate
 		}
 
@@ -239,6 +240,6 @@ func expandIdentityPlatformInboundSamlConfigSpConfigSpCertificates(v interface{}
 	return req, nil
 }
 
-func expandIdentityPlatformInboundSamlConfigSpConfigSpCertificatesX509Certificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandIdentityPlatformInboundSamlConfigSpConfigSpCertificatesX509Certificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

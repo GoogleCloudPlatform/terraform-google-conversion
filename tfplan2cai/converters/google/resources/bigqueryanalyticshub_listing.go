@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterBigqueryAnalyticsHubListing() ResourceConverter {
 	}
 }
 
-func GetBigqueryAnalyticsHubListingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetBigqueryAnalyticsHubListingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//analyticshub.googleapis.com/projects/{{project}}/locations/{{location}}/dataExchanges/{{data_exchange_id}}/listings/{{listing_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,97 +51,97 @@ func GetBigqueryAnalyticsHubListingCaiObject(d TerraformResourceData, config *tr
 	}
 }
 
-func GetBigqueryAnalyticsHubListingApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetBigqueryAnalyticsHubListingApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandBigqueryAnalyticsHubListingDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	descriptionProp, err := expandBigqueryAnalyticsHubListingDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	primaryContactProp, err := expandBigqueryAnalyticsHubListingPrimaryContact(d.Get("primary_contact"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("primary_contact"); !isEmptyValue(reflect.ValueOf(primaryContactProp)) && (ok || !reflect.DeepEqual(v, primaryContactProp)) {
+	} else if v, ok := d.GetOkExists("primary_contact"); !tpgresource.IsEmptyValue(reflect.ValueOf(primaryContactProp)) && (ok || !reflect.DeepEqual(v, primaryContactProp)) {
 		obj["primaryContact"] = primaryContactProp
 	}
 	documentationProp, err := expandBigqueryAnalyticsHubListingDocumentation(d.Get("documentation"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("documentation"); !isEmptyValue(reflect.ValueOf(documentationProp)) && (ok || !reflect.DeepEqual(v, documentationProp)) {
+	} else if v, ok := d.GetOkExists("documentation"); !tpgresource.IsEmptyValue(reflect.ValueOf(documentationProp)) && (ok || !reflect.DeepEqual(v, documentationProp)) {
 		obj["documentation"] = documentationProp
 	}
 	iconProp, err := expandBigqueryAnalyticsHubListingIcon(d.Get("icon"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("icon"); !isEmptyValue(reflect.ValueOf(iconProp)) && (ok || !reflect.DeepEqual(v, iconProp)) {
+	} else if v, ok := d.GetOkExists("icon"); !tpgresource.IsEmptyValue(reflect.ValueOf(iconProp)) && (ok || !reflect.DeepEqual(v, iconProp)) {
 		obj["icon"] = iconProp
 	}
 	requestAccessProp, err := expandBigqueryAnalyticsHubListingRequestAccess(d.Get("request_access"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("request_access"); !isEmptyValue(reflect.ValueOf(requestAccessProp)) && (ok || !reflect.DeepEqual(v, requestAccessProp)) {
+	} else if v, ok := d.GetOkExists("request_access"); !tpgresource.IsEmptyValue(reflect.ValueOf(requestAccessProp)) && (ok || !reflect.DeepEqual(v, requestAccessProp)) {
 		obj["requestAccess"] = requestAccessProp
 	}
 	dataProviderProp, err := expandBigqueryAnalyticsHubListingDataProvider(d.Get("data_provider"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("data_provider"); !isEmptyValue(reflect.ValueOf(dataProviderProp)) && (ok || !reflect.DeepEqual(v, dataProviderProp)) {
+	} else if v, ok := d.GetOkExists("data_provider"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataProviderProp)) && (ok || !reflect.DeepEqual(v, dataProviderProp)) {
 		obj["dataProvider"] = dataProviderProp
 	}
 	publisherProp, err := expandBigqueryAnalyticsHubListingPublisher(d.Get("publisher"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("publisher"); !isEmptyValue(reflect.ValueOf(publisherProp)) && (ok || !reflect.DeepEqual(v, publisherProp)) {
+	} else if v, ok := d.GetOkExists("publisher"); !tpgresource.IsEmptyValue(reflect.ValueOf(publisherProp)) && (ok || !reflect.DeepEqual(v, publisherProp)) {
 		obj["publisher"] = publisherProp
 	}
 	categoriesProp, err := expandBigqueryAnalyticsHubListingCategories(d.Get("categories"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("categories"); !isEmptyValue(reflect.ValueOf(categoriesProp)) && (ok || !reflect.DeepEqual(v, categoriesProp)) {
+	} else if v, ok := d.GetOkExists("categories"); !tpgresource.IsEmptyValue(reflect.ValueOf(categoriesProp)) && (ok || !reflect.DeepEqual(v, categoriesProp)) {
 		obj["categories"] = categoriesProp
 	}
 	bigqueryDatasetProp, err := expandBigqueryAnalyticsHubListingBigqueryDataset(d.Get("bigquery_dataset"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("bigquery_dataset"); !isEmptyValue(reflect.ValueOf(bigqueryDatasetProp)) && (ok || !reflect.DeepEqual(v, bigqueryDatasetProp)) {
+	} else if v, ok := d.GetOkExists("bigquery_dataset"); !tpgresource.IsEmptyValue(reflect.ValueOf(bigqueryDatasetProp)) && (ok || !reflect.DeepEqual(v, bigqueryDatasetProp)) {
 		obj["bigqueryDataset"] = bigqueryDatasetProp
 	}
 
 	return obj, nil
 }
 
-func expandBigqueryAnalyticsHubListingDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingPrimaryContact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingPrimaryContact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingDocumentation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDocumentation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingIcon(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingIcon(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingRequestAccess(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingRequestAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingDataProvider(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDataProvider(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -152,29 +153,29 @@ func expandBigqueryAnalyticsHubListingDataProvider(v interface{}, d TerraformRes
 	transformedName, err := expandBigqueryAnalyticsHubListingDataProviderName(original["name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["name"] = transformedName
 	}
 
 	transformedPrimaryContact, err := expandBigqueryAnalyticsHubListingDataProviderPrimaryContact(original["primary_contact"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPrimaryContact); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPrimaryContact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["primaryContact"] = transformedPrimaryContact
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryAnalyticsHubListingDataProviderName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDataProviderName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingDataProviderPrimaryContact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingDataProviderPrimaryContact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingPublisher(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingPublisher(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -186,33 +187,33 @@ func expandBigqueryAnalyticsHubListingPublisher(v interface{}, d TerraformResour
 	transformedName, err := expandBigqueryAnalyticsHubListingPublisherName(original["name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["name"] = transformedName
 	}
 
 	transformedPrimaryContact, err := expandBigqueryAnalyticsHubListingPublisherPrimaryContact(original["primary_contact"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPrimaryContact); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPrimaryContact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["primaryContact"] = transformedPrimaryContact
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryAnalyticsHubListingPublisherName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingPublisherName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingPublisherPrimaryContact(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingPublisherPrimaryContact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingCategories(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingCategories(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryAnalyticsHubListingBigqueryDataset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingBigqueryDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -224,13 +225,13 @@ func expandBigqueryAnalyticsHubListingBigqueryDataset(v interface{}, d Terraform
 	transformedDataset, err := expandBigqueryAnalyticsHubListingBigqueryDatasetDataset(original["dataset"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDataset); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDataset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["dataset"] = transformedDataset
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryAnalyticsHubListingBigqueryDatasetDataset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryAnalyticsHubListingBigqueryDatasetDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

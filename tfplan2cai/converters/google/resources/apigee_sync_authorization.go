@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterApigeeSyncAuthorization() ResourceConverter {
 	}
 }
 
-func GetApigeeSyncAuthorizationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetApigeeSyncAuthorizationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//apigee.googleapis.com/organizations/{{name}}:getSyncAuthorization")
 	if err != nil {
 		return []Asset{}, err
@@ -50,7 +51,7 @@ func GetApigeeSyncAuthorizationCaiObject(d TerraformResourceData, config *transp
 	}
 }
 
-func GetApigeeSyncAuthorizationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetApigeeSyncAuthorizationApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	identitiesProp, err := expandApigeeSyncAuthorizationIdentities(d.Get("identities"), d, config)
 	if err != nil {
@@ -61,17 +62,17 @@ func GetApigeeSyncAuthorizationApiObject(d TerraformResourceData, config *transp
 	etagProp, err := expandApigeeSyncAuthorizationEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("etag"); !isEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
+	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
 		obj["etag"] = etagProp
 	}
 
 	return obj, nil
 }
 
-func expandApigeeSyncAuthorizationIdentities(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandApigeeSyncAuthorizationIdentities(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandApigeeSyncAuthorizationEtag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandApigeeSyncAuthorizationEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

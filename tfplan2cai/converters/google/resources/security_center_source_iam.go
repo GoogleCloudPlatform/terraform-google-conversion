@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterSecurityCenterSourceIamMember() ResourceConverter {
 	}
 }
 
-func GetSecurityCenterSourceIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSecurityCenterSourceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newSecurityCenterSourceIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetSecurityCenterSourceIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSecurityCenterSourceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newSecurityCenterSourceIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetSecurityCenterSourceIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetSecurityCenterSourceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newSecurityCenterSourceIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeSecurityCenterSourceIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newSecurityCenterSourceIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newSecurityCenterSourceIamAsset(
 	}}, nil
 }
 
-func FetchSecurityCenterSourceIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchSecurityCenterSourceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("organization"); !ok {
 		return Asset{}, ErrEmptyIdentityField

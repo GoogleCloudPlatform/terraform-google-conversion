@@ -19,6 +19,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -38,7 +39,7 @@ func resourceConverterCertificateManagerCertificate() ResourceConverter {
 	}
 }
 
-func GetCertificateManagerCertificateCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCertificateManagerCertificateCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//certificatemanager.googleapis.com/projects/{{project}}/locations/{{location}}/certificates/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -59,47 +60,47 @@ func GetCertificateManagerCertificateCaiObject(d TerraformResourceData, config *
 	}
 }
 
-func GetCertificateManagerCertificateApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetCertificateManagerCertificateApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandCertificateManagerCertificateDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	labelsProp, err := expandCertificateManagerCertificateLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	scopeProp, err := expandCertificateManagerCertificateScope(d.Get("scope"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("scope"); !isEmptyValue(reflect.ValueOf(scopeProp)) && (ok || !reflect.DeepEqual(v, scopeProp)) {
+	} else if v, ok := d.GetOkExists("scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(scopeProp)) && (ok || !reflect.DeepEqual(v, scopeProp)) {
 		obj["scope"] = scopeProp
 	}
 	selfManagedProp, err := expandCertificateManagerCertificateSelfManaged(d.Get("self_managed"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("self_managed"); !isEmptyValue(reflect.ValueOf(selfManagedProp)) && (ok || !reflect.DeepEqual(v, selfManagedProp)) {
+	} else if v, ok := d.GetOkExists("self_managed"); !tpgresource.IsEmptyValue(reflect.ValueOf(selfManagedProp)) && (ok || !reflect.DeepEqual(v, selfManagedProp)) {
 		obj["selfManaged"] = selfManagedProp
 	}
 	managedProp, err := expandCertificateManagerCertificateManaged(d.Get("managed"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("managed"); !isEmptyValue(reflect.ValueOf(managedProp)) && (ok || !reflect.DeepEqual(v, managedProp)) {
+	} else if v, ok := d.GetOkExists("managed"); !tpgresource.IsEmptyValue(reflect.ValueOf(managedProp)) && (ok || !reflect.DeepEqual(v, managedProp)) {
 		obj["managed"] = managedProp
 	}
 
 	return obj, nil
 }
 
-func expandCertificateManagerCertificateDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandCertificateManagerCertificateLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -110,11 +111,11 @@ func expandCertificateManagerCertificateLabels(v interface{}, d TerraformResourc
 	return m, nil
 }
 
-func expandCertificateManagerCertificateScope(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateSelfManaged(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManaged(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -126,51 +127,51 @@ func expandCertificateManagerCertificateSelfManaged(v interface{}, d TerraformRe
 	transformedCertificatePem, err := expandCertificateManagerCertificateSelfManagedCertificatePem(original["certificate_pem"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCertificatePem); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCertificatePem); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["certificatePem"] = transformedCertificatePem
 	}
 
 	transformedPrivateKeyPem, err := expandCertificateManagerCertificateSelfManagedPrivateKeyPem(original["private_key_pem"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPrivateKeyPem); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPrivateKeyPem); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["privateKeyPem"] = transformedPrivateKeyPem
 	}
 
 	transformedPemCertificate, err := expandCertificateManagerCertificateSelfManagedPemCertificate(original["pem_certificate"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPemCertificate); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPemCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["pemCertificate"] = transformedPemCertificate
 	}
 
 	transformedPemPrivateKey, err := expandCertificateManagerCertificateSelfManagedPemPrivateKey(original["pem_private_key"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPemPrivateKey); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPemPrivateKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["pemPrivateKey"] = transformedPemPrivateKey
 	}
 
 	return transformed, nil
 }
 
-func expandCertificateManagerCertificateSelfManagedCertificatePem(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManagedCertificatePem(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateSelfManagedPrivateKeyPem(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManagedPrivateKeyPem(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateSelfManagedPemCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManagedPemCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateSelfManagedPemPrivateKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateSelfManagedPemPrivateKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManaged(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManaged(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -182,54 +183,54 @@ func expandCertificateManagerCertificateManaged(v interface{}, d TerraformResour
 	transformedDomains, err := expandCertificateManagerCertificateManagedDomains(original["domains"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDomains); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDomains); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["domains"] = transformedDomains
 	}
 
 	transformedDnsAuthorizations, err := expandCertificateManagerCertificateManagedDnsAuthorizations(original["dns_authorizations"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDnsAuthorizations); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDnsAuthorizations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["dnsAuthorizations"] = transformedDnsAuthorizations
 	}
 
 	transformedState, err := expandCertificateManagerCertificateManagedState(original["state"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedState); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["state"] = transformedState
 	}
 
 	transformedProvisioningIssue, err := expandCertificateManagerCertificateManagedProvisioningIssue(original["provisioning_issue"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedProvisioningIssue); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedProvisioningIssue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["provisioningIssue"] = transformedProvisioningIssue
 	}
 
 	transformedAuthorizationAttemptInfo, err := expandCertificateManagerCertificateManagedAuthorizationAttemptInfo(original["authorization_attempt_info"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAuthorizationAttemptInfo); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAuthorizationAttemptInfo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["authorizationAttemptInfo"] = transformedAuthorizationAttemptInfo
 	}
 
 	return transformed, nil
 }
 
-func expandCertificateManagerCertificateManagedDomains(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedDomains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedDnsAuthorizations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedDnsAuthorizations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedProvisioningIssue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedProvisioningIssue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -241,29 +242,29 @@ func expandCertificateManagerCertificateManagedProvisioningIssue(v interface{}, 
 	transformedReason, err := expandCertificateManagerCertificateManagedProvisioningIssueReason(original["reason"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedReason); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedReason); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["reason"] = transformedReason
 	}
 
 	transformedDetails, err := expandCertificateManagerCertificateManagedProvisioningIssueDetails(original["details"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDetails); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDetails); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["details"] = transformedDetails
 	}
 
 	return transformed, nil
 }
 
-func expandCertificateManagerCertificateManagedProvisioningIssueReason(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedProvisioningIssueReason(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedProvisioningIssueDetails(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedProvisioningIssueDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfo(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -276,28 +277,28 @@ func expandCertificateManagerCertificateManagedAuthorizationAttemptInfo(v interf
 		transformedDomain, err := expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDomain(original["domain"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["domain"] = transformedDomain
 		}
 
 		transformedState, err := expandCertificateManagerCertificateManagedAuthorizationAttemptInfoState(original["state"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedState); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["state"] = transformedState
 		}
 
 		transformedFailureReason, err := expandCertificateManagerCertificateManagedAuthorizationAttemptInfoFailureReason(original["failure_reason"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedFailureReason); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedFailureReason); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["failureReason"] = transformedFailureReason
 		}
 
 		transformedDetails, err := expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDetails(original["details"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDetails); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDetails); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["details"] = transformedDetails
 		}
 
@@ -306,18 +307,18 @@ func expandCertificateManagerCertificateManagedAuthorizationAttemptInfo(v interf
 	return req, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDomain(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoFailureReason(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoFailureReason(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDetails(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCertificateManagerCertificateManagedAuthorizationAttemptInfoDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

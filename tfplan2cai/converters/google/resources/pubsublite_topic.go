@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -30,7 +31,7 @@ func resourceConverterPubsubLiteTopic() ResourceConverter {
 	}
 }
 
-func GetPubsubLiteTopicCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetPubsubLiteTopicCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/topics/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,34 +52,34 @@ func GetPubsubLiteTopicCaiObject(d TerraformResourceData, config *transport_tpg.
 	}
 }
 
-func GetPubsubLiteTopicApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetPubsubLiteTopicApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	partitionConfigProp, err := expandPubsubLiteTopicPartitionConfig(d.Get("partition_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("partition_config"); !isEmptyValue(reflect.ValueOf(partitionConfigProp)) && (ok || !reflect.DeepEqual(v, partitionConfigProp)) {
+	} else if v, ok := d.GetOkExists("partition_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(partitionConfigProp)) && (ok || !reflect.DeepEqual(v, partitionConfigProp)) {
 		obj["partitionConfig"] = partitionConfigProp
 	}
 	retentionConfigProp, err := expandPubsubLiteTopicRetentionConfig(d.Get("retention_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("retention_config"); !isEmptyValue(reflect.ValueOf(retentionConfigProp)) && (ok || !reflect.DeepEqual(v, retentionConfigProp)) {
+	} else if v, ok := d.GetOkExists("retention_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(retentionConfigProp)) && (ok || !reflect.DeepEqual(v, retentionConfigProp)) {
 		obj["retentionConfig"] = retentionConfigProp
 	}
 	reservationConfigProp, err := expandPubsubLiteTopicReservationConfig(d.Get("reservation_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("reservation_config"); !isEmptyValue(reflect.ValueOf(reservationConfigProp)) && (ok || !reflect.DeepEqual(v, reservationConfigProp)) {
+	} else if v, ok := d.GetOkExists("reservation_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservationConfigProp)) && (ok || !reflect.DeepEqual(v, reservationConfigProp)) {
 		obj["reservationConfig"] = reservationConfigProp
 	}
 
 	return resourcePubsubLiteTopicEncoder(d, config, obj)
 }
 
-func resourcePubsubLiteTopicEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourcePubsubLiteTopicEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	config := meta.(*transport_tpg.Config)
 
-	zone, err := getZone(d, config)
+	zone, err := tpgresource.GetZone(d, config)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +90,7 @@ func resourcePubsubLiteTopicEncoder(d TerraformResourceData, meta interface{}, o
 
 	// API Endpoint requires region in the URL. We infer it from the zone.
 
-	region := getRegionFromZone(zone)
+	region := tpgresource.GetRegionFromZone(zone)
 
 	if region == "" {
 		return nil, fmt.Errorf("invalid zone %q, unable to infer region from zone", zone)
@@ -98,7 +99,7 @@ func resourcePubsubLiteTopicEncoder(d TerraformResourceData, meta interface{}, o
 	return obj, nil
 }
 
-func expandPubsubLiteTopicPartitionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicPartitionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -110,25 +111,25 @@ func expandPubsubLiteTopicPartitionConfig(v interface{}, d TerraformResourceData
 	transformedCount, err := expandPubsubLiteTopicPartitionConfigCount(original["count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["count"] = transformedCount
 	}
 
 	transformedCapacity, err := expandPubsubLiteTopicPartitionConfigCapacity(original["capacity"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCapacity); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCapacity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["capacity"] = transformedCapacity
 	}
 
 	return transformed, nil
 }
 
-func expandPubsubLiteTopicPartitionConfigCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicPartitionConfigCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubLiteTopicPartitionConfigCapacity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicPartitionConfigCapacity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -140,29 +141,29 @@ func expandPubsubLiteTopicPartitionConfigCapacity(v interface{}, d TerraformReso
 	transformedPublishMibPerSec, err := expandPubsubLiteTopicPartitionConfigCapacityPublishMibPerSec(original["publish_mib_per_sec"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPublishMibPerSec); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPublishMibPerSec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["publishMibPerSec"] = transformedPublishMibPerSec
 	}
 
 	transformedSubscribeMibPerSec, err := expandPubsubLiteTopicPartitionConfigCapacitySubscribeMibPerSec(original["subscribe_mib_per_sec"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSubscribeMibPerSec); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSubscribeMibPerSec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["subscribeMibPerSec"] = transformedSubscribeMibPerSec
 	}
 
 	return transformed, nil
 }
 
-func expandPubsubLiteTopicPartitionConfigCapacityPublishMibPerSec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicPartitionConfigCapacityPublishMibPerSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubLiteTopicPartitionConfigCapacitySubscribeMibPerSec(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicPartitionConfigCapacitySubscribeMibPerSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubLiteTopicRetentionConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicRetentionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -174,29 +175,29 @@ func expandPubsubLiteTopicRetentionConfig(v interface{}, d TerraformResourceData
 	transformedPerPartitionBytes, err := expandPubsubLiteTopicRetentionConfigPerPartitionBytes(original["per_partition_bytes"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPerPartitionBytes); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPerPartitionBytes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["perPartitionBytes"] = transformedPerPartitionBytes
 	}
 
 	transformedPeriod, err := expandPubsubLiteTopicRetentionConfigPeriod(original["period"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPeriod); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPeriod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["period"] = transformedPeriod
 	}
 
 	return transformed, nil
 }
 
-func expandPubsubLiteTopicRetentionConfigPerPartitionBytes(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicRetentionConfigPerPartitionBytes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubLiteTopicRetentionConfigPeriod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicRetentionConfigPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandPubsubLiteTopicReservationConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandPubsubLiteTopicReservationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -208,15 +209,15 @@ func expandPubsubLiteTopicReservationConfig(v interface{}, d TerraformResourceDa
 	transformedThroughputReservation, err := expandPubsubLiteTopicReservationConfigThroughputReservation(original["throughput_reservation"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedThroughputReservation); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedThroughputReservation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["throughputReservation"] = transformedThroughputReservation
 	}
 
 	return transformed, nil
 }
 
-func expandPubsubLiteTopicReservationConfigThroughputReservation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := parseRegionalFieldValue("reservations", v.(string), "project", "region", "zone", d, config, true)
+func expandPubsubLiteTopicReservationConfigThroughputReservation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseRegionalFieldValue("reservations", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for throughput_reservation: %s", err)
 	}

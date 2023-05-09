@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterPrivatecaCertificateTemplateIamMember() ResourceConverter 
 	}
 }
 
-func GetPrivatecaCertificateTemplateIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetPrivatecaCertificateTemplateIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newPrivatecaCertificateTemplateIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetPrivatecaCertificateTemplateIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetPrivatecaCertificateTemplateIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newPrivatecaCertificateTemplateIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetPrivatecaCertificateTemplateIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetPrivatecaCertificateTemplateIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newPrivatecaCertificateTemplateIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergePrivatecaCertificateTemplateIamMemberDelete(existing, incoming Asset) 
 }
 
 func newPrivatecaCertificateTemplateIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newPrivatecaCertificateTemplateIamAsset(
 	}}, nil
 }
 
-func FetchPrivatecaCertificateTemplateIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchPrivatecaCertificateTemplateIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterBigqueryConnectionConnection() ResourceConverter {
 	}
 }
 
-func GetBigqueryConnectionConnectionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetBigqueryConnectionConnectionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigqueryconnection.googleapis.com/projects/{{project}}/locations/{{location}}/connections/{{connection_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,48 +51,48 @@ func GetBigqueryConnectionConnectionCaiObject(d TerraformResourceData, config *t
 	}
 }
 
-func GetBigqueryConnectionConnectionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetBigqueryConnectionConnectionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	connection_idProp, err := expandBigqueryConnectionConnectionConnectionId(d.Get("connection_id"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("connection_id"); !isEmptyValue(reflect.ValueOf(connection_idProp)) && (ok || !reflect.DeepEqual(v, connection_idProp)) {
+	} else if v, ok := d.GetOkExists("connection_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(connection_idProp)) && (ok || !reflect.DeepEqual(v, connection_idProp)) {
 		obj["connection_id"] = connection_idProp
 	}
 	friendlyNameProp, err := expandBigqueryConnectionConnectionFriendlyName(d.Get("friendly_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("friendly_name"); !isEmptyValue(reflect.ValueOf(friendlyNameProp)) && (ok || !reflect.DeepEqual(v, friendlyNameProp)) {
+	} else if v, ok := d.GetOkExists("friendly_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(friendlyNameProp)) && (ok || !reflect.DeepEqual(v, friendlyNameProp)) {
 		obj["friendlyName"] = friendlyNameProp
 	}
 	descriptionProp, err := expandBigqueryConnectionConnectionDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	cloudSqlProp, err := expandBigqueryConnectionConnectionCloudSql(d.Get("cloud_sql"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("cloud_sql"); !isEmptyValue(reflect.ValueOf(cloudSqlProp)) && (ok || !reflect.DeepEqual(v, cloudSqlProp)) {
+	} else if v, ok := d.GetOkExists("cloud_sql"); !tpgresource.IsEmptyValue(reflect.ValueOf(cloudSqlProp)) && (ok || !reflect.DeepEqual(v, cloudSqlProp)) {
 		obj["cloudSql"] = cloudSqlProp
 	}
 	awsProp, err := expandBigqueryConnectionConnectionAws(d.Get("aws"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("aws"); !isEmptyValue(reflect.ValueOf(awsProp)) && (ok || !reflect.DeepEqual(v, awsProp)) {
+	} else if v, ok := d.GetOkExists("aws"); !tpgresource.IsEmptyValue(reflect.ValueOf(awsProp)) && (ok || !reflect.DeepEqual(v, awsProp)) {
 		obj["aws"] = awsProp
 	}
 	azureProp, err := expandBigqueryConnectionConnectionAzure(d.Get("azure"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("azure"); !isEmptyValue(reflect.ValueOf(azureProp)) && (ok || !reflect.DeepEqual(v, azureProp)) {
+	} else if v, ok := d.GetOkExists("azure"); !tpgresource.IsEmptyValue(reflect.ValueOf(azureProp)) && (ok || !reflect.DeepEqual(v, azureProp)) {
 		obj["azure"] = azureProp
 	}
 	cloudSpannerProp, err := expandBigqueryConnectionConnectionCloudSpanner(d.Get("cloud_spanner"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("cloud_spanner"); !isEmptyValue(reflect.ValueOf(cloudSpannerProp)) && (ok || !reflect.DeepEqual(v, cloudSpannerProp)) {
+	} else if v, ok := d.GetOkExists("cloud_spanner"); !tpgresource.IsEmptyValue(reflect.ValueOf(cloudSpannerProp)) && (ok || !reflect.DeepEqual(v, cloudSpannerProp)) {
 		obj["cloudSpanner"] = cloudSpannerProp
 	}
 	cloudResourceProp, err := expandBigqueryConnectionConnectionCloudResource(d.Get("cloud_resource"), d, config)
@@ -104,25 +105,25 @@ func GetBigqueryConnectionConnectionApiObject(d TerraformResourceData, config *t
 	return resourceBigqueryConnectionConnectionEncoder(d, config, obj)
 }
 
-func resourceBigqueryConnectionConnectionEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceBigqueryConnectionConnectionEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// connection_id is needed to qualify the URL but cannot be sent in the body
 	delete(obj, "connection_id")
 	return obj, nil
 }
 
-func expandBigqueryConnectionConnectionConnectionId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionConnectionId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionFriendlyName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionFriendlyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSql(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSql(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -134,50 +135,50 @@ func expandBigqueryConnectionConnectionCloudSql(v interface{}, d TerraformResour
 	transformedInstanceId, err := expandBigqueryConnectionConnectionCloudSqlInstanceId(original["instance_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedInstanceId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedInstanceId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["instanceId"] = transformedInstanceId
 	}
 
 	transformedDatabase, err := expandBigqueryConnectionConnectionCloudSqlDatabase(original["database"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["database"] = transformedDatabase
 	}
 
 	transformedCredential, err := expandBigqueryConnectionConnectionCloudSqlCredential(original["credential"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCredential); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["credential"] = transformedCredential
 	}
 
 	transformedType, err := expandBigqueryConnectionConnectionCloudSqlType(original["type"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["type"] = transformedType
 	}
 
 	transformedServiceAccountId, err := expandBigqueryConnectionConnectionCloudSqlServiceAccountId(original["service_account_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedServiceAccountId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedServiceAccountId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["serviceAccountId"] = transformedServiceAccountId
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSqlInstanceId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSqlInstanceId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSqlDatabase(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSqlDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSqlCredential(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSqlCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -189,37 +190,37 @@ func expandBigqueryConnectionConnectionCloudSqlCredential(v interface{}, d Terra
 	transformedUsername, err := expandBigqueryConnectionConnectionCloudSqlCredentialUsername(original["username"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["username"] = transformedUsername
 	}
 
 	transformedPassword, err := expandBigqueryConnectionConnectionCloudSqlCredentialPassword(original["password"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["password"] = transformedPassword
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSqlCredentialUsername(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSqlCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSqlCredentialPassword(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSqlCredentialPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSqlType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSqlType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSqlServiceAccountId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSqlServiceAccountId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAws(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAws(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -231,14 +232,14 @@ func expandBigqueryConnectionConnectionAws(v interface{}, d TerraformResourceDat
 	transformedAccessRole, err := expandBigqueryConnectionConnectionAwsAccessRole(original["access_role"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAccessRole); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAccessRole); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["accessRole"] = transformedAccessRole
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryConnectionConnectionAwsAccessRole(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAwsAccessRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -250,29 +251,29 @@ func expandBigqueryConnectionConnectionAwsAccessRole(v interface{}, d TerraformR
 	transformedIamRoleId, err := expandBigqueryConnectionConnectionAwsAccessRoleIamRoleId(original["iam_role_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedIamRoleId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedIamRoleId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["iamRoleId"] = transformedIamRoleId
 	}
 
 	transformedIdentity, err := expandBigqueryConnectionConnectionAwsAccessRoleIdentity(original["identity"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["identity"] = transformedIdentity
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryConnectionConnectionAwsAccessRoleIamRoleId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAwsAccessRoleIamRoleId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAwsAccessRoleIdentity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAwsAccessRoleIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAzure(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAzure(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -284,84 +285,84 @@ func expandBigqueryConnectionConnectionAzure(v interface{}, d TerraformResourceD
 	transformedApplication, err := expandBigqueryConnectionConnectionAzureApplication(original["application"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedApplication); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedApplication); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["application"] = transformedApplication
 	}
 
 	transformedClientId, err := expandBigqueryConnectionConnectionAzureClientId(original["client_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["clientId"] = transformedClientId
 	}
 
 	transformedObjectId, err := expandBigqueryConnectionConnectionAzureObjectId(original["object_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedObjectId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedObjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["objectId"] = transformedObjectId
 	}
 
 	transformedCustomerTenantId, err := expandBigqueryConnectionConnectionAzureCustomerTenantId(original["customer_tenant_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCustomerTenantId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCustomerTenantId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["customerTenantId"] = transformedCustomerTenantId
 	}
 
 	transformedFederatedApplicationClientId, err := expandBigqueryConnectionConnectionAzureFederatedApplicationClientId(original["federated_application_client_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedFederatedApplicationClientId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedFederatedApplicationClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["federatedApplicationClientId"] = transformedFederatedApplicationClientId
 	}
 
 	transformedRedirectUri, err := expandBigqueryConnectionConnectionAzureRedirectUri(original["redirect_uri"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedRedirectUri); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedRedirectUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["redirectUri"] = transformedRedirectUri
 	}
 
 	transformedIdentity, err := expandBigqueryConnectionConnectionAzureIdentity(original["identity"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["identity"] = transformedIdentity
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryConnectionConnectionAzureApplication(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAzureApplication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAzureClientId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAzureClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAzureObjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAzureObjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAzureCustomerTenantId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAzureCustomerTenantId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAzureFederatedApplicationClientId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAzureFederatedApplicationClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAzureRedirectUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAzureRedirectUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionAzureIdentity(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionAzureIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSpanner(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSpanner(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -373,40 +374,40 @@ func expandBigqueryConnectionConnectionCloudSpanner(v interface{}, d TerraformRe
 	transformedDatabase, err := expandBigqueryConnectionConnectionCloudSpannerDatabase(original["database"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["database"] = transformedDatabase
 	}
 
 	transformedUseParallelism, err := expandBigqueryConnectionConnectionCloudSpannerUseParallelism(original["use_parallelism"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUseParallelism); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedUseParallelism); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["useParallelism"] = transformedUseParallelism
 	}
 
 	transformedUseServerlessAnalytics, err := expandBigqueryConnectionConnectionCloudSpannerUseServerlessAnalytics(original["use_serverless_analytics"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUseServerlessAnalytics); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedUseServerlessAnalytics); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["useServerlessAnalytics"] = transformedUseServerlessAnalytics
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSpannerDatabase(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSpannerDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSpannerUseParallelism(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSpannerUseParallelism(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudSpannerUseServerlessAnalytics(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudSpannerUseServerlessAnalytics(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryConnectionConnectionCloudResource(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -418,13 +419,13 @@ func expandBigqueryConnectionConnectionCloudResource(v interface{}, d TerraformR
 	transformedServiceAccountId, err := expandBigqueryConnectionConnectionCloudResourceServiceAccountId(original["service_account_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedServiceAccountId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedServiceAccountId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["serviceAccountId"] = transformedServiceAccountId
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryConnectionConnectionCloudResourceServiceAccountId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryConnectionConnectionCloudResourceServiceAccountId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

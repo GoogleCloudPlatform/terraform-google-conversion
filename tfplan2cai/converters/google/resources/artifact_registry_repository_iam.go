@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterArtifactRegistryRepositoryIamMember() ResourceConverter {
 	}
 }
 
-func GetArtifactRegistryRepositoryIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetArtifactRegistryRepositoryIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newArtifactRegistryRepositoryIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetArtifactRegistryRepositoryIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetArtifactRegistryRepositoryIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newArtifactRegistryRepositoryIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetArtifactRegistryRepositoryIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetArtifactRegistryRepositoryIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newArtifactRegistryRepositoryIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeArtifactRegistryRepositoryIamMemberDelete(existing, incoming Asset) As
 }
 
 func newArtifactRegistryRepositoryIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newArtifactRegistryRepositoryIamAsset(
 	}}, nil
 }
 
-func FetchArtifactRegistryRepositoryIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchArtifactRegistryRepositoryIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

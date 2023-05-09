@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterAccessContextManagerAccessPolicyIamMember() ResourceConver
 	}
 }
 
-func GetAccessContextManagerAccessPolicyIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAccessContextManagerAccessPolicyIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newAccessContextManagerAccessPolicyIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetAccessContextManagerAccessPolicyIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAccessContextManagerAccessPolicyIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newAccessContextManagerAccessPolicyIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetAccessContextManagerAccessPolicyIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAccessContextManagerAccessPolicyIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newAccessContextManagerAccessPolicyIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeAccessContextManagerAccessPolicyIamMemberDelete(existing, incoming Ass
 }
 
 func newAccessContextManagerAccessPolicyIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newAccessContextManagerAccessPolicyIamAsset(
 	}}, nil
 }
 
-func FetchAccessContextManagerAccessPolicyIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchAccessContextManagerAccessPolicyIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("name"); !ok {
 		return Asset{}, ErrEmptyIdentityField

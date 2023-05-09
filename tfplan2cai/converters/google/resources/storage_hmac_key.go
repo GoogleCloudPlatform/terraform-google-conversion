@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterStorageHmacKey() ResourceConverter {
 	}
 }
 
-func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetStorageHmacKeyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//storage.googleapis.com/projects/{{project}}/hmacKeys/{{access_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,28 +51,28 @@ func GetStorageHmacKeyCaiObject(d TerraformResourceData, config *transport_tpg.C
 	}
 }
 
-func GetStorageHmacKeyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetStorageHmacKeyApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	serviceAccountEmailProp, err := expandStorageHmacKeyServiceAccountEmail(d.Get("service_account_email"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("service_account_email"); !isEmptyValue(reflect.ValueOf(serviceAccountEmailProp)) && (ok || !reflect.DeepEqual(v, serviceAccountEmailProp)) {
+	} else if v, ok := d.GetOkExists("service_account_email"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceAccountEmailProp)) && (ok || !reflect.DeepEqual(v, serviceAccountEmailProp)) {
 		obj["serviceAccountEmail"] = serviceAccountEmailProp
 	}
 	stateProp, err := expandStorageHmacKeyState(d.Get("state"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("state"); !isEmptyValue(reflect.ValueOf(stateProp)) && (ok || !reflect.DeepEqual(v, stateProp)) {
+	} else if v, ok := d.GetOkExists("state"); !tpgresource.IsEmptyValue(reflect.ValueOf(stateProp)) && (ok || !reflect.DeepEqual(v, stateProp)) {
 		obj["state"] = stateProp
 	}
 
 	return obj, nil
 }
 
-func expandStorageHmacKeyServiceAccountEmail(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandStorageHmacKeyServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandStorageHmacKeyState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandStorageHmacKeyState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

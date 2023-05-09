@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterBigqueryReservationCapacityCommitment() ResourceConverter 
 	}
 }
 
-func GetBigqueryReservationCapacityCommitmentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetBigqueryReservationCapacityCommitmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/capacityCommitments/{{capacity_commitment_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,48 +51,48 @@ func GetBigqueryReservationCapacityCommitmentCaiObject(d TerraformResourceData, 
 	}
 }
 
-func GetBigqueryReservationCapacityCommitmentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetBigqueryReservationCapacityCommitmentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	slotCountProp, err := expandBigqueryReservationCapacityCommitmentSlotCount(d.Get("slot_count"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("slot_count"); !isEmptyValue(reflect.ValueOf(slotCountProp)) && (ok || !reflect.DeepEqual(v, slotCountProp)) {
+	} else if v, ok := d.GetOkExists("slot_count"); !tpgresource.IsEmptyValue(reflect.ValueOf(slotCountProp)) && (ok || !reflect.DeepEqual(v, slotCountProp)) {
 		obj["slotCount"] = slotCountProp
 	}
 	planProp, err := expandBigqueryReservationCapacityCommitmentPlan(d.Get("plan"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("plan"); !isEmptyValue(reflect.ValueOf(planProp)) && (ok || !reflect.DeepEqual(v, planProp)) {
+	} else if v, ok := d.GetOkExists("plan"); !tpgresource.IsEmptyValue(reflect.ValueOf(planProp)) && (ok || !reflect.DeepEqual(v, planProp)) {
 		obj["plan"] = planProp
 	}
 	renewalPlanProp, err := expandBigqueryReservationCapacityCommitmentRenewalPlan(d.Get("renewal_plan"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("renewal_plan"); !isEmptyValue(reflect.ValueOf(renewalPlanProp)) && (ok || !reflect.DeepEqual(v, renewalPlanProp)) {
+	} else if v, ok := d.GetOkExists("renewal_plan"); !tpgresource.IsEmptyValue(reflect.ValueOf(renewalPlanProp)) && (ok || !reflect.DeepEqual(v, renewalPlanProp)) {
 		obj["renewalPlan"] = renewalPlanProp
 	}
 	editionProp, err := expandBigqueryReservationCapacityCommitmentEdition(d.Get("edition"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("edition"); !isEmptyValue(reflect.ValueOf(editionProp)) && (ok || !reflect.DeepEqual(v, editionProp)) {
+	} else if v, ok := d.GetOkExists("edition"); !tpgresource.IsEmptyValue(reflect.ValueOf(editionProp)) && (ok || !reflect.DeepEqual(v, editionProp)) {
 		obj["edition"] = editionProp
 	}
 
 	return obj, nil
 }
 
-func expandBigqueryReservationCapacityCommitmentSlotCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryReservationCapacityCommitmentSlotCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationCapacityCommitmentPlan(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryReservationCapacityCommitmentPlan(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationCapacityCommitmentRenewalPlan(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryReservationCapacityCommitmentRenewalPlan(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryReservationCapacityCommitmentEdition(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryReservationCapacityCommitmentEdition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -19,6 +19,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -31,7 +32,7 @@ func resourceConverterDataCatalogTag() ResourceConverter {
 	}
 }
 
-func GetDataCatalogTagCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDataCatalogTagCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//datacatalog.googleapis.com/{{parent}}/tags")
 	if err != nil {
 		return []Asset{}, err
@@ -52,33 +53,33 @@ func GetDataCatalogTagCaiObject(d TerraformResourceData, config *transport_tpg.C
 	}
 }
 
-func GetDataCatalogTagApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetDataCatalogTagApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	templateProp, err := expandDataCatalogTagTemplate(d.Get("template"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("template"); !isEmptyValue(reflect.ValueOf(templateProp)) && (ok || !reflect.DeepEqual(v, templateProp)) {
+	} else if v, ok := d.GetOkExists("template"); !tpgresource.IsEmptyValue(reflect.ValueOf(templateProp)) && (ok || !reflect.DeepEqual(v, templateProp)) {
 		obj["template"] = templateProp
 	}
 	fieldsProp, err := expandDataCatalogTagFields(d.Get("fields"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("fields"); !isEmptyValue(reflect.ValueOf(fieldsProp)) && (ok || !reflect.DeepEqual(v, fieldsProp)) {
+	} else if v, ok := d.GetOkExists("fields"); !tpgresource.IsEmptyValue(reflect.ValueOf(fieldsProp)) && (ok || !reflect.DeepEqual(v, fieldsProp)) {
 		obj["fields"] = fieldsProp
 	}
 	columnProp, err := expandDataCatalogTagColumn(d.Get("column"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("column"); !isEmptyValue(reflect.ValueOf(columnProp)) && (ok || !reflect.DeepEqual(v, columnProp)) {
+	} else if v, ok := d.GetOkExists("column"); !tpgresource.IsEmptyValue(reflect.ValueOf(columnProp)) && (ok || !reflect.DeepEqual(v, columnProp)) {
 		obj["column"] = columnProp
 	}
 
 	return resourceDataCatalogTagEncoder(d, config, obj)
 }
 
-func resourceDataCatalogTagEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceDataCatalogTagEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	if obj["fields"] != nil {
-		// isEmptyValue() does not work for a boolean as it shows
+		// IsEmptyValue() does not work for a boolean as it shows
 		// false when it is 'empty'. Filter boolValue here based on
 		// the rule api does not take more than 1 'value'
 		fields := obj["fields"].(map[string]interface{})
@@ -96,11 +97,11 @@ func resourceDataCatalogTagEncoder(d TerraformResourceData, meta interface{}, ob
 	return obj, nil
 }
 
-func expandDataCatalogTagTemplate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFields(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func expandDataCatalogTagFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	if v == nil {
 		return map[string]interface{}{}, nil
 	}
@@ -112,28 +113,28 @@ func expandDataCatalogTagFields(v interface{}, d TerraformResourceData, config *
 		transformedDisplayName, err := expandDataCatalogTagFieldsDisplayName(original["display_name"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["display_name"] = transformedDisplayName
 		}
 
 		transformedOrder, err := expandDataCatalogTagFieldsOrder(original["order"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedOrder); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedOrder); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["order"] = transformedOrder
 		}
 
 		transformedDoubleValue, err := expandDataCatalogTagFieldsDoubleValue(original["double_value"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDoubleValue); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDoubleValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["doubleValue"] = transformedDoubleValue
 		}
 
 		transformedStringValue, err := expandDataCatalogTagFieldsStringValue(original["string_value"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedStringValue); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedStringValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["stringValue"] = transformedStringValue
 		}
 
@@ -147,14 +148,14 @@ func expandDataCatalogTagFields(v interface{}, d TerraformResourceData, config *
 		transformedTimestampValue, err := expandDataCatalogTagFieldsTimestampValue(original["timestamp_value"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedTimestampValue); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedTimestampValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["timestampValue"] = transformedTimestampValue
 		}
 
 		transformedEnumValue, err := expandDataCatalogTagFieldsEnumValue(original["enum_value"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedEnumValue); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedEnumValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["enumValue"] = transformedEnumValue
 		}
 
@@ -167,41 +168,41 @@ func expandDataCatalogTagFields(v interface{}, d TerraformResourceData, config *
 	return m, nil
 }
 
-func expandDataCatalogTagFieldsDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagFieldsDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsOrder(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagFieldsOrder(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsDoubleValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagFieldsDoubleValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsStringValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagFieldsStringValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsBoolValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagFieldsBoolValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsTimestampValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagFieldsTimestampValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDataCatalogTagFieldsEnumValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagFieldsEnumValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	// we flattened the original["enum_value"]["display_name"] object to be just original["enum_value"] so here,
 	// v is the value we want from the config
 	transformed := make(map[string]interface{})
-	if val := reflect.ValueOf(v); val.IsValid() && !isEmptyValue(val) {
+	if val := reflect.ValueOf(v); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["displayName"] = v
 	}
 
 	return transformed, nil
 }
 
-func expandDataCatalogTagColumn(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDataCatalogTagColumn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

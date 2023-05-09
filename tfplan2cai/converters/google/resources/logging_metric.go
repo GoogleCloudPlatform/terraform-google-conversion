@@ -19,6 +19,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -31,7 +32,7 @@ func resourceConverterLoggingMetric() ResourceConverter {
 	}
 }
 
-func GetLoggingMetricCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetLoggingMetricCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//logging.googleapis.com/projects/{{project}}/metrics/{{%name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -52,87 +53,87 @@ func GetLoggingMetricCaiObject(d TerraformResourceData, config *transport_tpg.Co
 	}
 }
 
-func GetLoggingMetricApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetLoggingMetricApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandLoggingMetricName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	descriptionProp, err := expandLoggingMetricDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	bucketNameProp, err := expandLoggingMetricBucketName(d.Get("bucket_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("bucket_name"); !isEmptyValue(reflect.ValueOf(bucketNameProp)) && (ok || !reflect.DeepEqual(v, bucketNameProp)) {
+	} else if v, ok := d.GetOkExists("bucket_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(bucketNameProp)) && (ok || !reflect.DeepEqual(v, bucketNameProp)) {
 		obj["bucketName"] = bucketNameProp
 	}
 	disabledProp, err := expandLoggingMetricDisabled(d.Get("disabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("disabled"); !isEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
+	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
 		obj["disabled"] = disabledProp
 	}
 	filterProp, err := expandLoggingMetricFilter(d.Get("filter"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("filter"); !isEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
+	} else if v, ok := d.GetOkExists("filter"); !tpgresource.IsEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
 		obj["filter"] = filterProp
 	}
 	metricDescriptorProp, err := expandLoggingMetricMetricDescriptor(d.Get("metric_descriptor"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("metric_descriptor"); !isEmptyValue(reflect.ValueOf(metricDescriptorProp)) && (ok || !reflect.DeepEqual(v, metricDescriptorProp)) {
+	} else if v, ok := d.GetOkExists("metric_descriptor"); !tpgresource.IsEmptyValue(reflect.ValueOf(metricDescriptorProp)) && (ok || !reflect.DeepEqual(v, metricDescriptorProp)) {
 		obj["metricDescriptor"] = metricDescriptorProp
 	}
 	labelExtractorsProp, err := expandLoggingMetricLabelExtractors(d.Get("label_extractors"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("label_extractors"); !isEmptyValue(reflect.ValueOf(labelExtractorsProp)) && (ok || !reflect.DeepEqual(v, labelExtractorsProp)) {
+	} else if v, ok := d.GetOkExists("label_extractors"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelExtractorsProp)) && (ok || !reflect.DeepEqual(v, labelExtractorsProp)) {
 		obj["labelExtractors"] = labelExtractorsProp
 	}
 	valueExtractorProp, err := expandLoggingMetricValueExtractor(d.Get("value_extractor"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("value_extractor"); !isEmptyValue(reflect.ValueOf(valueExtractorProp)) && (ok || !reflect.DeepEqual(v, valueExtractorProp)) {
+	} else if v, ok := d.GetOkExists("value_extractor"); !tpgresource.IsEmptyValue(reflect.ValueOf(valueExtractorProp)) && (ok || !reflect.DeepEqual(v, valueExtractorProp)) {
 		obj["valueExtractor"] = valueExtractorProp
 	}
 	bucketOptionsProp, err := expandLoggingMetricBucketOptions(d.Get("bucket_options"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("bucket_options"); !isEmptyValue(reflect.ValueOf(bucketOptionsProp)) && (ok || !reflect.DeepEqual(v, bucketOptionsProp)) {
+	} else if v, ok := d.GetOkExists("bucket_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(bucketOptionsProp)) && (ok || !reflect.DeepEqual(v, bucketOptionsProp)) {
 		obj["bucketOptions"] = bucketOptionsProp
 	}
 
 	return obj, nil
 }
 
-func expandLoggingMetricName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricDisabled(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricFilter(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -144,54 +145,54 @@ func expandLoggingMetricMetricDescriptor(v interface{}, d TerraformResourceData,
 	transformedUnit, err := expandLoggingMetricMetricDescriptorUnit(original["unit"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUnit); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedUnit); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["unit"] = transformedUnit
 	}
 
 	transformedValueType, err := expandLoggingMetricMetricDescriptorValueType(original["value_type"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedValueType); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedValueType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["valueType"] = transformedValueType
 	}
 
 	transformedMetricKind, err := expandLoggingMetricMetricDescriptorMetricKind(original["metric_kind"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMetricKind); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMetricKind); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["metricKind"] = transformedMetricKind
 	}
 
 	transformedLabels, err := expandLoggingMetricMetricDescriptorLabels(original["labels"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["labels"] = transformedLabels
 	}
 
 	transformedDisplayName, err := expandLoggingMetricMetricDescriptorDisplayName(original["display_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["displayName"] = transformedDisplayName
 	}
 
 	return transformed, nil
 }
 
-func expandLoggingMetricMetricDescriptorUnit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorUnit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorValueType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorValueType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorMetricKind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorMetricKind(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -205,21 +206,21 @@ func expandLoggingMetricMetricDescriptorLabels(v interface{}, d TerraformResourc
 		transformedKey, err := expandLoggingMetricMetricDescriptorLabelsKey(original["key"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["key"] = transformedKey
 		}
 
 		transformedDescription, err := expandLoggingMetricMetricDescriptorLabelsDescription(original["description"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["description"] = transformedDescription
 		}
 
 		transformedValueType, err := expandLoggingMetricMetricDescriptorLabelsValueType(original["value_type"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedValueType); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedValueType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["valueType"] = transformedValueType
 		}
 
@@ -228,23 +229,23 @@ func expandLoggingMetricMetricDescriptorLabels(v interface{}, d TerraformResourc
 	return req, nil
 }
 
-func expandLoggingMetricMetricDescriptorLabelsKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorLabelsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorLabelsDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorLabelsDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorLabelsValueType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorLabelsValueType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricMetricDescriptorDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricMetricDescriptorDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricLabelExtractors(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandLoggingMetricLabelExtractors(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -255,11 +256,11 @@ func expandLoggingMetricLabelExtractors(v interface{}, d TerraformResourceData, 
 	return m, nil
 }
 
-func expandLoggingMetricValueExtractor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricValueExtractor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -271,28 +272,28 @@ func expandLoggingMetricBucketOptions(v interface{}, d TerraformResourceData, co
 	transformedLinearBuckets, err := expandLoggingMetricBucketOptionsLinearBuckets(original["linear_buckets"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLinearBuckets); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLinearBuckets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["linearBuckets"] = transformedLinearBuckets
 	}
 
 	transformedExponentialBuckets, err := expandLoggingMetricBucketOptionsExponentialBuckets(original["exponential_buckets"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedExponentialBuckets); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedExponentialBuckets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["exponentialBuckets"] = transformedExponentialBuckets
 	}
 
 	transformedExplicitBuckets, err := expandLoggingMetricBucketOptionsExplicitBuckets(original["explicit_buckets"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedExplicitBuckets); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedExplicitBuckets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["explicitBuckets"] = transformedExplicitBuckets
 	}
 
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsLinearBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsLinearBuckets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -304,40 +305,40 @@ func expandLoggingMetricBucketOptionsLinearBuckets(v interface{}, d TerraformRes
 	transformedNumFiniteBuckets, err := expandLoggingMetricBucketOptionsLinearBucketsNumFiniteBuckets(original["num_finite_buckets"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedNumFiniteBuckets); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedNumFiniteBuckets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["numFiniteBuckets"] = transformedNumFiniteBuckets
 	}
 
 	transformedWidth, err := expandLoggingMetricBucketOptionsLinearBucketsWidth(original["width"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedWidth); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedWidth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["width"] = transformedWidth
 	}
 
 	transformedOffset, err := expandLoggingMetricBucketOptionsLinearBucketsOffset(original["offset"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedOffset); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedOffset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["offset"] = transformedOffset
 	}
 
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsLinearBucketsNumFiniteBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsLinearBucketsNumFiniteBuckets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsLinearBucketsWidth(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsLinearBucketsWidth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsLinearBucketsOffset(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsLinearBucketsOffset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExponentialBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExponentialBuckets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -349,40 +350,40 @@ func expandLoggingMetricBucketOptionsExponentialBuckets(v interface{}, d Terrafo
 	transformedNumFiniteBuckets, err := expandLoggingMetricBucketOptionsExponentialBucketsNumFiniteBuckets(original["num_finite_buckets"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedNumFiniteBuckets); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedNumFiniteBuckets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["numFiniteBuckets"] = transformedNumFiniteBuckets
 	}
 
 	transformedGrowthFactor, err := expandLoggingMetricBucketOptionsExponentialBucketsGrowthFactor(original["growth_factor"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedGrowthFactor); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedGrowthFactor); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["growthFactor"] = transformedGrowthFactor
 	}
 
 	transformedScale, err := expandLoggingMetricBucketOptionsExponentialBucketsScale(original["scale"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedScale); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedScale); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["scale"] = transformedScale
 	}
 
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsExponentialBucketsNumFiniteBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExponentialBucketsNumFiniteBuckets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExponentialBucketsGrowthFactor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExponentialBucketsGrowthFactor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExponentialBucketsScale(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExponentialBucketsScale(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLoggingMetricBucketOptionsExplicitBuckets(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExplicitBuckets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -394,13 +395,13 @@ func expandLoggingMetricBucketOptionsExplicitBuckets(v interface{}, d TerraformR
 	transformedBounds, err := expandLoggingMetricBucketOptionsExplicitBucketsBounds(original["bounds"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedBounds); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedBounds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["bounds"] = transformedBounds
 	}
 
 	return transformed, nil
 }
 
-func expandLoggingMetricBucketOptionsExplicitBucketsBounds(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingMetricBucketOptionsExplicitBucketsBounds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

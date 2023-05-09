@@ -19,6 +19,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -31,7 +32,7 @@ func resourceConverterActiveDirectoryDomain() ResourceConverter {
 	}
 }
 
-func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetActiveDirectoryDomainCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//managedidentities.googleapis.com/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -52,43 +53,43 @@ func GetActiveDirectoryDomainCaiObject(d TerraformResourceData, config *transpor
 	}
 }
 
-func GetActiveDirectoryDomainApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetActiveDirectoryDomainApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	labelsProp, err := expandActiveDirectoryDomainLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	authorizedNetworksProp, err := expandActiveDirectoryDomainAuthorizedNetworks(d.Get("authorized_networks"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("authorized_networks"); !isEmptyValue(reflect.ValueOf(authorizedNetworksProp)) && (ok || !reflect.DeepEqual(v, authorizedNetworksProp)) {
+	} else if v, ok := d.GetOkExists("authorized_networks"); !tpgresource.IsEmptyValue(reflect.ValueOf(authorizedNetworksProp)) && (ok || !reflect.DeepEqual(v, authorizedNetworksProp)) {
 		obj["authorizedNetworks"] = authorizedNetworksProp
 	}
 	reservedIpRangeProp, err := expandActiveDirectoryDomainReservedIpRange(d.Get("reserved_ip_range"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("reserved_ip_range"); !isEmptyValue(reflect.ValueOf(reservedIpRangeProp)) && (ok || !reflect.DeepEqual(v, reservedIpRangeProp)) {
+	} else if v, ok := d.GetOkExists("reserved_ip_range"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservedIpRangeProp)) && (ok || !reflect.DeepEqual(v, reservedIpRangeProp)) {
 		obj["reservedIpRange"] = reservedIpRangeProp
 	}
 	locationsProp, err := expandActiveDirectoryDomainLocations(d.Get("locations"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("locations"); !isEmptyValue(reflect.ValueOf(locationsProp)) && (ok || !reflect.DeepEqual(v, locationsProp)) {
+	} else if v, ok := d.GetOkExists("locations"); !tpgresource.IsEmptyValue(reflect.ValueOf(locationsProp)) && (ok || !reflect.DeepEqual(v, locationsProp)) {
 		obj["locations"] = locationsProp
 	}
 	adminProp, err := expandActiveDirectoryDomainAdmin(d.Get("admin"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("admin"); !isEmptyValue(reflect.ValueOf(adminProp)) && (ok || !reflect.DeepEqual(v, adminProp)) {
+	} else if v, ok := d.GetOkExists("admin"); !tpgresource.IsEmptyValue(reflect.ValueOf(adminProp)) && (ok || !reflect.DeepEqual(v, adminProp)) {
 		obj["admin"] = adminProp
 	}
 
 	return obj, nil
 }
 
-func expandActiveDirectoryDomainLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandActiveDirectoryDomainLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -99,19 +100,19 @@ func expandActiveDirectoryDomainLabels(v interface{}, d TerraformResourceData, c
 	return m, nil
 }
 
-func expandActiveDirectoryDomainAuthorizedNetworks(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandActiveDirectoryDomainAuthorizedNetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
 
-func expandActiveDirectoryDomainReservedIpRange(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandActiveDirectoryDomainReservedIpRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandActiveDirectoryDomainLocations(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandActiveDirectoryDomainLocations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandActiveDirectoryDomainAdmin(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandActiveDirectoryDomainAdmin(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

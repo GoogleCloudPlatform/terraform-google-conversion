@@ -21,6 +21,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -58,7 +59,7 @@ func resourceConverterDeploymentManagerDeployment() ResourceConverter {
 	}
 }
 
-func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDeploymentManagerDeploymentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//www.googleapis.com/projects/{{project}}/global/deployments/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -79,18 +80,18 @@ func GetDeploymentManagerDeploymentCaiObject(d TerraformResourceData, config *tr
 	}
 }
 
-func GetDeploymentManagerDeploymentApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetDeploymentManagerDeploymentApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandDeploymentManagerDeploymentName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	descriptionProp, err := expandDeploymentManagerDeploymentDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	labelsProp, err := expandDeploymentManagerDeploymentLabels(d.Get("labels"), d, config)
@@ -102,22 +103,22 @@ func GetDeploymentManagerDeploymentApiObject(d TerraformResourceData, config *tr
 	targetProp, err := expandDeploymentManagerDeploymentTarget(d.Get("target"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("target"); !isEmptyValue(reflect.ValueOf(targetProp)) && (ok || !reflect.DeepEqual(v, targetProp)) {
+	} else if v, ok := d.GetOkExists("target"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetProp)) && (ok || !reflect.DeepEqual(v, targetProp)) {
 		obj["target"] = targetProp
 	}
 
 	return obj, nil
 }
 
-func expandDeploymentManagerDeploymentName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -131,14 +132,14 @@ func expandDeploymentManagerDeploymentLabels(v interface{}, d TerraformResourceD
 		transformedKey, err := expandDeploymentManagerDeploymentLabelsKey(original["key"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["key"] = transformedKey
 		}
 
 		transformedValue, err := expandDeploymentManagerDeploymentLabelsValue(original["value"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["value"] = transformedValue
 		}
 
@@ -147,15 +148,15 @@ func expandDeploymentManagerDeploymentLabels(v interface{}, d TerraformResourceD
 	return req, nil
 }
 
-func expandDeploymentManagerDeploymentLabelsKey(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentLabelsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentLabelsValue(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentLabelsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentTarget(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -167,21 +168,21 @@ func expandDeploymentManagerDeploymentTarget(v interface{}, d TerraformResourceD
 	transformedConfig, err := expandDeploymentManagerDeploymentTargetConfig(original["config"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["config"] = transformedConfig
 	}
 
 	transformedImports, err := expandDeploymentManagerDeploymentTargetImports(original["imports"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedImports); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedImports); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["imports"] = transformedImports
 	}
 
 	return transformed, nil
 }
 
-func expandDeploymentManagerDeploymentTargetConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -193,18 +194,18 @@ func expandDeploymentManagerDeploymentTargetConfig(v interface{}, d TerraformRes
 	transformedContent, err := expandDeploymentManagerDeploymentTargetConfigContent(original["content"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedContent); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedContent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["content"] = transformedContent
 	}
 
 	return transformed, nil
 }
 
-func expandDeploymentManagerDeploymentTargetConfigContent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetConfigContent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentTargetImports(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetImports(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -217,14 +218,14 @@ func expandDeploymentManagerDeploymentTargetImports(v interface{}, d TerraformRe
 		transformedContent, err := expandDeploymentManagerDeploymentTargetImportsContent(original["content"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedContent); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedContent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["content"] = transformedContent
 		}
 
 		transformedName, err := expandDeploymentManagerDeploymentTargetImportsName(original["name"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["name"] = transformedName
 		}
 
@@ -233,10 +234,10 @@ func expandDeploymentManagerDeploymentTargetImports(v interface{}, d TerraformRe
 	return req, nil
 }
 
-func expandDeploymentManagerDeploymentTargetImportsContent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetImportsContent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeploymentManagerDeploymentTargetImportsName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeploymentManagerDeploymentTargetImportsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

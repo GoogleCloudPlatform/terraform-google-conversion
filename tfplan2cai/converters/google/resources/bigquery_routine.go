@@ -18,6 +18,7 @@ import (
 	"encoding/json"
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -30,7 +31,7 @@ func resourceConverterBigQueryRoutine() ResourceConverter {
 	}
 }
 
-func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetBigQueryRoutineCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}/routines/{{routine_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -51,92 +52,92 @@ func GetBigQueryRoutineCaiObject(d TerraformResourceData, config *transport_tpg.
 	}
 }
 
-func GetBigQueryRoutineApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetBigQueryRoutineApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	routineReferenceProp, err := expandBigQueryRoutineRoutineReference(nil, d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("routine_reference"); !isEmptyValue(reflect.ValueOf(routineReferenceProp)) && (ok || !reflect.DeepEqual(v, routineReferenceProp)) {
+	} else if v, ok := d.GetOkExists("routine_reference"); !tpgresource.IsEmptyValue(reflect.ValueOf(routineReferenceProp)) && (ok || !reflect.DeepEqual(v, routineReferenceProp)) {
 		obj["routineReference"] = routineReferenceProp
 	}
 	routineTypeProp, err := expandBigQueryRoutineRoutineType(d.Get("routine_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("routine_type"); !isEmptyValue(reflect.ValueOf(routineTypeProp)) && (ok || !reflect.DeepEqual(v, routineTypeProp)) {
+	} else if v, ok := d.GetOkExists("routine_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(routineTypeProp)) && (ok || !reflect.DeepEqual(v, routineTypeProp)) {
 		obj["routineType"] = routineTypeProp
 	}
 	languageProp, err := expandBigQueryRoutineLanguage(d.Get("language"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("language"); !isEmptyValue(reflect.ValueOf(languageProp)) && (ok || !reflect.DeepEqual(v, languageProp)) {
+	} else if v, ok := d.GetOkExists("language"); !tpgresource.IsEmptyValue(reflect.ValueOf(languageProp)) && (ok || !reflect.DeepEqual(v, languageProp)) {
 		obj["language"] = languageProp
 	}
 	argumentsProp, err := expandBigQueryRoutineArguments(d.Get("arguments"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("arguments"); !isEmptyValue(reflect.ValueOf(argumentsProp)) && (ok || !reflect.DeepEqual(v, argumentsProp)) {
+	} else if v, ok := d.GetOkExists("arguments"); !tpgresource.IsEmptyValue(reflect.ValueOf(argumentsProp)) && (ok || !reflect.DeepEqual(v, argumentsProp)) {
 		obj["arguments"] = argumentsProp
 	}
 	returnTypeProp, err := expandBigQueryRoutineReturnType(d.Get("return_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("return_type"); !isEmptyValue(reflect.ValueOf(returnTypeProp)) && (ok || !reflect.DeepEqual(v, returnTypeProp)) {
+	} else if v, ok := d.GetOkExists("return_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(returnTypeProp)) && (ok || !reflect.DeepEqual(v, returnTypeProp)) {
 		obj["returnType"] = returnTypeProp
 	}
 	returnTableTypeProp, err := expandBigQueryRoutineReturnTableType(d.Get("return_table_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("return_table_type"); !isEmptyValue(reflect.ValueOf(returnTableTypeProp)) && (ok || !reflect.DeepEqual(v, returnTableTypeProp)) {
+	} else if v, ok := d.GetOkExists("return_table_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(returnTableTypeProp)) && (ok || !reflect.DeepEqual(v, returnTableTypeProp)) {
 		obj["returnTableType"] = returnTableTypeProp
 	}
 	importedLibrariesProp, err := expandBigQueryRoutineImportedLibraries(d.Get("imported_libraries"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("imported_libraries"); !isEmptyValue(reflect.ValueOf(importedLibrariesProp)) && (ok || !reflect.DeepEqual(v, importedLibrariesProp)) {
+	} else if v, ok := d.GetOkExists("imported_libraries"); !tpgresource.IsEmptyValue(reflect.ValueOf(importedLibrariesProp)) && (ok || !reflect.DeepEqual(v, importedLibrariesProp)) {
 		obj["importedLibraries"] = importedLibrariesProp
 	}
 	definitionBodyProp, err := expandBigQueryRoutineDefinitionBody(d.Get("definition_body"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("definition_body"); !isEmptyValue(reflect.ValueOf(definitionBodyProp)) && (ok || !reflect.DeepEqual(v, definitionBodyProp)) {
+	} else if v, ok := d.GetOkExists("definition_body"); !tpgresource.IsEmptyValue(reflect.ValueOf(definitionBodyProp)) && (ok || !reflect.DeepEqual(v, definitionBodyProp)) {
 		obj["definitionBody"] = definitionBodyProp
 	}
 	descriptionProp, err := expandBigQueryRoutineDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	determinismLevelProp, err := expandBigQueryRoutineDeterminismLevel(d.Get("determinism_level"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("determinism_level"); !isEmptyValue(reflect.ValueOf(determinismLevelProp)) && (ok || !reflect.DeepEqual(v, determinismLevelProp)) {
+	} else if v, ok := d.GetOkExists("determinism_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(determinismLevelProp)) && (ok || !reflect.DeepEqual(v, determinismLevelProp)) {
 		obj["determinismLevel"] = determinismLevelProp
 	}
 
 	return obj, nil
 }
 
-func expandBigQueryRoutineRoutineReference(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineRoutineReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 
 	transformed := make(map[string]interface{})
 	transformed["datasetId"] = d.Get("dataset_id")
-	project, _ := getProject(d, config)
+	project, _ := tpgresource.GetProject(d, config)
 	transformed["projectId"] = project
 	transformed["routineId"] = d.Get("routine_id")
 
 	return transformed, nil
 }
 
-func expandBigQueryRoutineRoutineType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineRoutineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineLanguage(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineLanguage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineArguments(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineArguments(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -149,28 +150,28 @@ func expandBigQueryRoutineArguments(v interface{}, d TerraformResourceData, conf
 		transformedName, err := expandBigQueryRoutineArgumentsName(original["name"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["name"] = transformedName
 		}
 
 		transformedArgumentKind, err := expandBigQueryRoutineArgumentsArgumentKind(original["argument_kind"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedArgumentKind); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedArgumentKind); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["argumentKind"] = transformedArgumentKind
 		}
 
 		transformedMode, err := expandBigQueryRoutineArgumentsMode(original["mode"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["mode"] = transformedMode
 		}
 
 		transformedDataType, err := expandBigQueryRoutineArgumentsDataType(original["data_type"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDataType); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDataType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["dataType"] = transformedDataType
 		}
 
@@ -179,19 +180,19 @@ func expandBigQueryRoutineArguments(v interface{}, d TerraformResourceData, conf
 	return req, nil
 }
 
-func expandBigQueryRoutineArgumentsName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineArgumentsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineArgumentsArgumentKind(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineArgumentsArgumentKind(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineArgumentsMode(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineArgumentsMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineArgumentsDataType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineArgumentsDataType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil
@@ -203,7 +204,7 @@ func expandBigQueryRoutineArgumentsDataType(v interface{}, d TerraformResourceDa
 	return m, nil
 }
 
-func expandBigQueryRoutineReturnType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineReturnType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil
@@ -215,7 +216,7 @@ func expandBigQueryRoutineReturnType(v interface{}, d TerraformResourceData, con
 	return m, nil
 }
 
-func expandBigQueryRoutineReturnTableType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineReturnTableType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil
@@ -227,18 +228,18 @@ func expandBigQueryRoutineReturnTableType(v interface{}, d TerraformResourceData
 	return m, nil
 }
 
-func expandBigQueryRoutineImportedLibraries(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineImportedLibraries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineDefinitionBody(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineDefinitionBody(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigQueryRoutineDeterminismLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigQueryRoutineDeterminismLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterVertexAIIndex() ResourceConverter {
 	}
 }
 
-func GetVertexAIIndexCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetVertexAIIndexCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{region}}-aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/indexes/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,51 +51,51 @@ func GetVertexAIIndexCaiObject(d TerraformResourceData, config *transport_tpg.Co
 	}
 }
 
-func GetVertexAIIndexApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetVertexAIIndexApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandVertexAIIndexDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	descriptionProp, err := expandVertexAIIndexDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	metadataProp, err := expandVertexAIIndexMetadata(d.Get("metadata"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("metadata"); !isEmptyValue(reflect.ValueOf(metadataProp)) && (ok || !reflect.DeepEqual(v, metadataProp)) {
+	} else if v, ok := d.GetOkExists("metadata"); !tpgresource.IsEmptyValue(reflect.ValueOf(metadataProp)) && (ok || !reflect.DeepEqual(v, metadataProp)) {
 		obj["metadata"] = metadataProp
 	}
 	labelsProp, err := expandVertexAIIndexLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !isEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	indexUpdateMethodProp, err := expandVertexAIIndexIndexUpdateMethod(d.Get("index_update_method"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("index_update_method"); !isEmptyValue(reflect.ValueOf(indexUpdateMethodProp)) && (ok || !reflect.DeepEqual(v, indexUpdateMethodProp)) {
+	} else if v, ok := d.GetOkExists("index_update_method"); !tpgresource.IsEmptyValue(reflect.ValueOf(indexUpdateMethodProp)) && (ok || !reflect.DeepEqual(v, indexUpdateMethodProp)) {
 		obj["indexUpdateMethod"] = indexUpdateMethodProp
 	}
 
 	return obj, nil
 }
 
-func expandVertexAIIndexDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadata(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -106,36 +107,36 @@ func expandVertexAIIndexMetadata(v interface{}, d TerraformResourceData, config 
 	transformedContentsDeltaUri, err := expandVertexAIIndexMetadataContentsDeltaUri(original["contents_delta_uri"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedContentsDeltaUri); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedContentsDeltaUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["contentsDeltaUri"] = transformedContentsDeltaUri
 	}
 
 	transformedIsCompleteOverwrite, err := expandVertexAIIndexMetadataIsCompleteOverwrite(original["is_complete_overwrite"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedIsCompleteOverwrite); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedIsCompleteOverwrite); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["isCompleteOverwrite"] = transformedIsCompleteOverwrite
 	}
 
 	transformedConfig, err := expandVertexAIIndexMetadataConfig(original["config"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["config"] = transformedConfig
 	}
 
 	return transformed, nil
 }
 
-func expandVertexAIIndexMetadataContentsDeltaUri(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataContentsDeltaUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadataIsCompleteOverwrite(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataIsCompleteOverwrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadataConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -147,58 +148,58 @@ func expandVertexAIIndexMetadataConfig(v interface{}, d TerraformResourceData, c
 	transformedDimensions, err := expandVertexAIIndexMetadataConfigDimensions(original["dimensions"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDimensions); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDimensions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["dimensions"] = transformedDimensions
 	}
 
 	transformedApproximateNeighborsCount, err := expandVertexAIIndexMetadataConfigApproximateNeighborsCount(original["approximate_neighbors_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedApproximateNeighborsCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedApproximateNeighborsCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["approximateNeighborsCount"] = transformedApproximateNeighborsCount
 	}
 
 	transformedDistanceMeasureType, err := expandVertexAIIndexMetadataConfigDistanceMeasureType(original["distance_measure_type"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDistanceMeasureType); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedDistanceMeasureType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["distanceMeasureType"] = transformedDistanceMeasureType
 	}
 
 	transformedFeatureNormType, err := expandVertexAIIndexMetadataConfigFeatureNormType(original["feature_norm_type"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedFeatureNormType); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedFeatureNormType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["featureNormType"] = transformedFeatureNormType
 	}
 
 	transformedAlgorithmConfig, err := expandVertexAIIndexMetadataConfigAlgorithmConfig(original["algorithm_config"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAlgorithmConfig); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedAlgorithmConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["algorithmConfig"] = transformedAlgorithmConfig
 	}
 
 	return transformed, nil
 }
 
-func expandVertexAIIndexMetadataConfigDimensions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigDimensions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadataConfigApproximateNeighborsCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigApproximateNeighborsCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadataConfigDistanceMeasureType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigDistanceMeasureType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadataConfigFeatureNormType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigFeatureNormType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadataConfigAlgorithmConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigAlgorithmConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -210,7 +211,7 @@ func expandVertexAIIndexMetadataConfigAlgorithmConfig(v interface{}, d Terraform
 	transformedTreeAhConfig, err := expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfig(original["tree_ah_config"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedTreeAhConfig); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedTreeAhConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["treeAhConfig"] = transformedTreeAhConfig
 	}
 
@@ -224,7 +225,7 @@ func expandVertexAIIndexMetadataConfigAlgorithmConfig(v interface{}, d Terraform
 	return transformed, nil
 }
 
-func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -236,29 +237,29 @@ func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfig(v interface{},
 	transformedLeafNodeEmbeddingCount, err := expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigLeafNodeEmbeddingCount(original["leaf_node_embedding_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLeafNodeEmbeddingCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLeafNodeEmbeddingCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["leafNodeEmbeddingCount"] = transformedLeafNodeEmbeddingCount
 	}
 
 	transformedLeafNodesToSearchPercent, err := expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigLeafNodesToSearchPercent(original["leaf_nodes_to_search_percent"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLeafNodesToSearchPercent); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLeafNodesToSearchPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["leafNodesToSearchPercent"] = transformedLeafNodesToSearchPercent
 	}
 
 	return transformed, nil
 }
 
-func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigLeafNodeEmbeddingCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigLeafNodeEmbeddingCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigLeafNodesToSearchPercent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigLeafNodesToSearchPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandVertexAIIndexMetadataConfigAlgorithmConfigBruteForceConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexMetadataConfigAlgorithmConfigBruteForceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -273,7 +274,7 @@ func expandVertexAIIndexMetadataConfigAlgorithmConfigBruteForceConfig(v interfac
 	return transformed, nil
 }
 
-func expandVertexAIIndexLabels(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandVertexAIIndexLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -284,6 +285,6 @@ func expandVertexAIIndexLabels(v interface{}, d TerraformResourceData, config *t
 	return m, nil
 }
 
-func expandVertexAIIndexIndexUpdateMethod(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandVertexAIIndexIndexUpdateMethod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

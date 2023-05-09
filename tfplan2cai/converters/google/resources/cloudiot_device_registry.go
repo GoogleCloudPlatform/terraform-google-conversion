@@ -23,65 +23,66 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/verify"
 )
 
-func expandCloudIotDeviceRegistryHTTPConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryHTTPConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
 	transformedHTTPEnabledState, err := expandCloudIotDeviceRegistryHTTPEnabledState(original["http_enabled_state"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedHTTPEnabledState); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedHTTPEnabledState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["httpEnabledState"] = transformedHTTPEnabledState
 	}
 
 	return transformed, nil
 }
 
-func expandCloudIotDeviceRegistryHTTPEnabledState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryHTTPEnabledState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryMqttConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryMqttConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
 	transformedMqttEnabledState, err := expandCloudIotDeviceRegistryMqttEnabledState(original["mqtt_enabled_state"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMqttEnabledState); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMqttEnabledState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["mqttEnabledState"] = transformedMqttEnabledState
 	}
 
 	return transformed, nil
 }
 
-func expandCloudIotDeviceRegistryMqttEnabledState(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryMqttEnabledState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
 	transformedPubsubTopicName, err := expandCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(original["pubsub_topic_name"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPubsubTopicName); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPubsubTopicName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["pubsubTopicName"] = transformedPubsubTopicName
 	}
 
 	return transformed, nil
 }
 
-func expandCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryCredentials(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryCredentials(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 
@@ -95,7 +96,7 @@ func expandCloudIotDeviceRegistryCredentials(v interface{}, d TerraformResourceD
 		transformedPublicKeyCertificate, err := expandCloudIotDeviceRegistryCredentialsPublicKeyCertificate(original["public_key_certificate"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedPublicKeyCertificate); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedPublicKeyCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["publicKeyCertificate"] = transformedPublicKeyCertificate
 		}
 
@@ -105,32 +106,32 @@ func expandCloudIotDeviceRegistryCredentials(v interface{}, d TerraformResourceD
 	return req, nil
 }
 
-func expandCloudIotDeviceRegistryCredentialsPublicKeyCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryCredentialsPublicKeyCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
 	transformedFormat, err := expandCloudIotDeviceRegistryPublicKeyCertificateFormat(original["format"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedFormat); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["format"] = transformedFormat
 	}
 
 	transformedCertificate, err := expandCloudIotDeviceRegistryPublicKeyCertificateCertificate(original["certificate"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCertificate); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["certificate"] = transformedCertificate
 	}
 
 	return transformed, nil
 }
 
-func expandCloudIotDeviceRegistryPublicKeyCertificateFormat(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryPublicKeyCertificateFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryPublicKeyCertificateCertificate(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryPublicKeyCertificateCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -234,7 +235,7 @@ func flattenCloudIotDeviceRegistryStateNotificationConfig(v interface{}, d *sche
 	transformed := make(map[string]interface{})
 
 	transformedPubsubTopicName := flattenCloudIotDeviceRegistryStateNotificationConfigPubsubTopicName(original["pubsubTopicName"], d, config)
-	if val := reflect.ValueOf(transformedPubsubTopicName); val.IsValid() && !isEmptyValue(val) {
+	if val := reflect.ValueOf(transformedPubsubTopicName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		log.Printf("[DEBUG] pubsub topic name is not null: %v", d.Get("pubsub_topic_name"))
 		transformed["pubsub_topic_name"] = transformedPubsubTopicName
 	}
@@ -277,7 +278,7 @@ func resourceConverterCloudIotDeviceRegistry() ResourceConverter {
 	}
 }
 
-func GetCloudIotDeviceRegistryCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetCloudIotDeviceRegistryCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudiot.googleapis.com/projects/{{project}}/locations/{{region}}/registries/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -298,31 +299,31 @@ func GetCloudIotDeviceRegistryCaiObject(d TerraformResourceData, config *transpo
 	}
 }
 
-func GetCloudIotDeviceRegistryApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetCloudIotDeviceRegistryApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	idProp, err := expandCloudIotDeviceRegistryName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
 		obj["id"] = idProp
 	}
 	eventNotificationConfigsProp, err := expandCloudIotDeviceRegistryEventNotificationConfigs(d.Get("event_notification_configs"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("event_notification_configs"); !isEmptyValue(reflect.ValueOf(eventNotificationConfigsProp)) && (ok || !reflect.DeepEqual(v, eventNotificationConfigsProp)) {
+	} else if v, ok := d.GetOkExists("event_notification_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(eventNotificationConfigsProp)) && (ok || !reflect.DeepEqual(v, eventNotificationConfigsProp)) {
 		obj["eventNotificationConfigs"] = eventNotificationConfigsProp
 	}
 	logLevelProp, err := expandCloudIotDeviceRegistryLogLevel(d.Get("log_level"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("log_level"); !isEmptyValue(reflect.ValueOf(logLevelProp)) && (ok || !reflect.DeepEqual(v, logLevelProp)) {
+	} else if v, ok := d.GetOkExists("log_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(logLevelProp)) && (ok || !reflect.DeepEqual(v, logLevelProp)) {
 		obj["logLevel"] = logLevelProp
 	}
 
 	return resourceCloudIotDeviceRegistryEncoder(d, config, obj)
 }
 
-func resourceCloudIotDeviceRegistryEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceCloudIotDeviceRegistryEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	config := meta.(*transport_tpg.Config)
 
 	log.Printf("[DEBUG] Resource data before encoding extra schema entries %q: %#v", d.Id(), obj)
@@ -331,7 +332,7 @@ func resourceCloudIotDeviceRegistryEncoder(d TerraformResourceData, meta interfa
 	stateNotificationConfigProp, err := expandCloudIotDeviceRegistryStateNotificationConfig(d.Get("state_notification_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("state_notification_config"); !isEmptyValue(reflect.ValueOf(stateNotificationConfigProp)) && (ok || !reflect.DeepEqual(v, stateNotificationConfigProp)) {
+	} else if v, ok := d.GetOkExists("state_notification_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(stateNotificationConfigProp)) && (ok || !reflect.DeepEqual(v, stateNotificationConfigProp)) {
 		log.Printf("[DEBUG] Encoding %q. Setting stateNotificationConfig: %#v", d.Id(), stateNotificationConfigProp)
 		obj["stateNotificationConfig"] = stateNotificationConfigProp
 	}
@@ -340,7 +341,7 @@ func resourceCloudIotDeviceRegistryEncoder(d TerraformResourceData, meta interfa
 	httpConfigProp, err := expandCloudIotDeviceRegistryHTTPConfig(d.Get("http_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("http_config"); !isEmptyValue(reflect.ValueOf(httpConfigProp)) && (ok || !reflect.DeepEqual(v, httpConfigProp)) {
+	} else if v, ok := d.GetOkExists("http_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(httpConfigProp)) && (ok || !reflect.DeepEqual(v, httpConfigProp)) {
 		log.Printf("[DEBUG] Encoding %q. Setting httpConfig: %#v", d.Id(), httpConfigProp)
 		obj["httpConfig"] = httpConfigProp
 	}
@@ -349,7 +350,7 @@ func resourceCloudIotDeviceRegistryEncoder(d TerraformResourceData, meta interfa
 	mqttConfigProp, err := expandCloudIotDeviceRegistryMqttConfig(d.Get("mqtt_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("mqtt_config"); !isEmptyValue(reflect.ValueOf(mqttConfigProp)) && (ok || !reflect.DeepEqual(v, mqttConfigProp)) {
+	} else if v, ok := d.GetOkExists("mqtt_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(mqttConfigProp)) && (ok || !reflect.DeepEqual(v, mqttConfigProp)) {
 		log.Printf("[DEBUG] Encoding %q. Setting mqttConfig: %#v", d.Id(), mqttConfigProp)
 		obj["mqttConfig"] = mqttConfigProp
 	}
@@ -358,7 +359,7 @@ func resourceCloudIotDeviceRegistryEncoder(d TerraformResourceData, meta interfa
 	credentialsProp, err := expandCloudIotDeviceRegistryCredentials(d.Get("credentials"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("credentials"); !isEmptyValue(reflect.ValueOf(credentialsProp)) && (ok || !reflect.DeepEqual(v, credentialsProp)) {
+	} else if v, ok := d.GetOkExists("credentials"); !tpgresource.IsEmptyValue(reflect.ValueOf(credentialsProp)) && (ok || !reflect.DeepEqual(v, credentialsProp)) {
 		log.Printf("[DEBUG] Encoding %q. Setting credentials: %#v", d.Id(), credentialsProp)
 		obj["credentials"] = credentialsProp
 	}
@@ -368,11 +369,11 @@ func resourceCloudIotDeviceRegistryEncoder(d TerraformResourceData, meta interfa
 	return obj, nil
 }
 
-func expandCloudIotDeviceRegistryName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryEventNotificationConfigs(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryEventNotificationConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -385,14 +386,14 @@ func expandCloudIotDeviceRegistryEventNotificationConfigs(v interface{}, d Terra
 		transformedSubfolderMatches, err := expandCloudIotDeviceRegistryEventNotificationConfigsSubfolderMatches(original["subfolder_matches"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedSubfolderMatches); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedSubfolderMatches); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["subfolderMatches"] = transformedSubfolderMatches
 		}
 
 		transformedPubsubTopicName, err := expandCloudIotDeviceRegistryEventNotificationConfigsPubsubTopicName(original["pubsub_topic_name"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedPubsubTopicName); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedPubsubTopicName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["pubsubTopicName"] = transformedPubsubTopicName
 		}
 
@@ -401,14 +402,14 @@ func expandCloudIotDeviceRegistryEventNotificationConfigs(v interface{}, d Terra
 	return req, nil
 }
 
-func expandCloudIotDeviceRegistryEventNotificationConfigsSubfolderMatches(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryEventNotificationConfigsSubfolderMatches(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryEventNotificationConfigsPubsubTopicName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryEventNotificationConfigsPubsubTopicName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandCloudIotDeviceRegistryLogLevel(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandCloudIotDeviceRegistryLogLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

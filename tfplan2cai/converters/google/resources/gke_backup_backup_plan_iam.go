@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterGKEBackupBackupPlanIamMember() ResourceConverter {
 	}
 }
 
-func GetGKEBackupBackupPlanIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetGKEBackupBackupPlanIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newGKEBackupBackupPlanIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetGKEBackupBackupPlanIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetGKEBackupBackupPlanIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newGKEBackupBackupPlanIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetGKEBackupBackupPlanIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetGKEBackupBackupPlanIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newGKEBackupBackupPlanIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeGKEBackupBackupPlanIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newGKEBackupBackupPlanIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newGKEBackupBackupPlanIamAsset(
 	}}, nil
 }
 
-func FetchGKEBackupBackupPlanIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchGKEBackupBackupPlanIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
 		return Asset{}, ErrEmptyIdentityField

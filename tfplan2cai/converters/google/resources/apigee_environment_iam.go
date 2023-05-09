@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterApigeeEnvironmentIamMember() ResourceConverter {
 	}
 }
 
-func GetApigeeEnvironmentIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetApigeeEnvironmentIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newApigeeEnvironmentIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetApigeeEnvironmentIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetApigeeEnvironmentIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newApigeeEnvironmentIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetApigeeEnvironmentIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetApigeeEnvironmentIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newApigeeEnvironmentIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeApigeeEnvironmentIamMemberDelete(existing, incoming Asset) Asset {
 }
 
 func newApigeeEnvironmentIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newApigeeEnvironmentIamAsset(
 	}}, nil
 }
 
-func FetchApigeeEnvironmentIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchApigeeEnvironmentIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("org_id"); !ok {
 		return Asset{}, ErrEmptyIdentityField

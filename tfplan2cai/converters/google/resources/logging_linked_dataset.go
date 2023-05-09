@@ -31,7 +31,7 @@ func resourceConverterLoggingLinkedDataset() ResourceConverter {
 	}
 }
 
-func GetLoggingLinkedDatasetCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetLoggingLinkedDatasetCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//logging.googleapis.com/{{parent}}/locations/{{location}}/buckets/{{bucket}}/links/{{link_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -52,19 +52,19 @@ func GetLoggingLinkedDatasetCaiObject(d TerraformResourceData, config *transport
 	}
 }
 
-func GetLoggingLinkedDatasetApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetLoggingLinkedDatasetApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandLoggingLinkedDatasetDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 
 	return resourceLoggingLinkedDatasetEncoder(d, config, obj)
 }
 
-func resourceLoggingLinkedDatasetEncoder(d TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+func resourceLoggingLinkedDatasetEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// Extract any empty fields from the bucket field.
 	parent := d.Get("parent").(string)
 	bucket := d.Get("bucket").(string)
@@ -89,6 +89,6 @@ func resourceLoggingLinkedDatasetEncoder(d TerraformResourceData, meta interface
 	return obj, nil
 }
 
-func expandLoggingLinkedDatasetDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLoggingLinkedDatasetDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

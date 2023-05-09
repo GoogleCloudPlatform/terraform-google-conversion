@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterStorageTransferAgentPool() ResourceConverter {
 	}
 }
 
-func GetStorageTransferAgentPoolCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetStorageTransferAgentPoolCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//storagetransfer.googleapis.com/projects/{{project}}/agentPools/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,29 +51,29 @@ func GetStorageTransferAgentPoolCaiObject(d TerraformResourceData, config *trans
 	}
 }
 
-func GetStorageTransferAgentPoolApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetStorageTransferAgentPoolApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	displayNameProp, err := expandStorageTransferAgentPoolDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("display_name"); !isEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
 	bandwidthLimitProp, err := expandStorageTransferAgentPoolBandwidthLimit(d.Get("bandwidth_limit"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("bandwidth_limit"); !isEmptyValue(reflect.ValueOf(bandwidthLimitProp)) && (ok || !reflect.DeepEqual(v, bandwidthLimitProp)) {
+	} else if v, ok := d.GetOkExists("bandwidth_limit"); !tpgresource.IsEmptyValue(reflect.ValueOf(bandwidthLimitProp)) && (ok || !reflect.DeepEqual(v, bandwidthLimitProp)) {
 		obj["bandwidthLimit"] = bandwidthLimitProp
 	}
 
 	return obj, nil
 }
 
-func expandStorageTransferAgentPoolDisplayName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandStorageTransferAgentPoolDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandStorageTransferAgentPoolBandwidthLimit(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandStorageTransferAgentPoolBandwidthLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -84,13 +85,13 @@ func expandStorageTransferAgentPoolBandwidthLimit(v interface{}, d TerraformReso
 	transformedLimitMbps, err := expandStorageTransferAgentPoolBandwidthLimitLimitMbps(original["limit_mbps"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLimitMbps); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLimitMbps); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["limitMbps"] = transformedLimitMbps
 	}
 
 	return transformed, nil
 }
 
-func expandStorageTransferAgentPoolBandwidthLimitLimitMbps(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandStorageTransferAgentPoolBandwidthLimitLimitMbps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

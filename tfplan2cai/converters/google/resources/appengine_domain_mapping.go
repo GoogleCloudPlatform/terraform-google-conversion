@@ -19,6 +19,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -45,7 +46,7 @@ func resourceConverterAppEngineDomainMapping() ResourceConverter {
 	}
 }
 
-func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetAppEngineDomainMappingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//appengine.googleapis.com/apps/{{project}}/domainMappings/{{domain_name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -66,25 +67,25 @@ func GetAppEngineDomainMappingCaiObject(d TerraformResourceData, config *transpo
 	}
 }
 
-func GetAppEngineDomainMappingApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetAppEngineDomainMappingApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	sslSettingsProp, err := expandAppEngineDomainMappingSslSettings(d.Get("ssl_settings"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ssl_settings"); !isEmptyValue(reflect.ValueOf(sslSettingsProp)) && (ok || !reflect.DeepEqual(v, sslSettingsProp)) {
+	} else if v, ok := d.GetOkExists("ssl_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(sslSettingsProp)) && (ok || !reflect.DeepEqual(v, sslSettingsProp)) {
 		obj["sslSettings"] = sslSettingsProp
 	}
 	idProp, err := expandAppEngineDomainMappingDomainName(d.Get("domain_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("domain_name"); !isEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
+	} else if v, ok := d.GetOkExists("domain_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
 		obj["id"] = idProp
 	}
 
 	return obj, nil
 }
 
-func expandAppEngineDomainMappingSslSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineDomainMappingSslSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -96,39 +97,39 @@ func expandAppEngineDomainMappingSslSettings(v interface{}, d TerraformResourceD
 	transformedCertificateId, err := expandAppEngineDomainMappingSslSettingsCertificateId(original["certificate_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCertificateId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCertificateId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["certificateId"] = transformedCertificateId
 	}
 
 	transformedSslManagementType, err := expandAppEngineDomainMappingSslSettingsSslManagementType(original["ssl_management_type"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSslManagementType); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedSslManagementType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["sslManagementType"] = transformedSslManagementType
 	}
 
 	transformedPendingManagedCertificateId, err := expandAppEngineDomainMappingSslSettingsPendingManagedCertificateId(original["pending_managed_certificate_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPendingManagedCertificateId); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPendingManagedCertificateId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["pendingManagedCertificateId"] = transformedPendingManagedCertificateId
 	}
 
 	return transformed, nil
 }
 
-func expandAppEngineDomainMappingSslSettingsCertificateId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineDomainMappingSslSettingsCertificateId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineDomainMappingSslSettingsSslManagementType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineDomainMappingSslSettingsSslManagementType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineDomainMappingSslSettingsPendingManagedCertificateId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineDomainMappingSslSettingsPendingManagedCertificateId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandAppEngineDomainMappingDomainName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandAppEngineDomainMappingDomainName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterResourceManagerLien() ResourceConverter {
 	}
 }
 
-func GetResourceManagerLienCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetResourceManagerLienCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//cloudresourcemanager.googleapis.com/liens?parent={{parent}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,48 +51,48 @@ func GetResourceManagerLienCaiObject(d TerraformResourceData, config *transport_
 	}
 }
 
-func GetResourceManagerLienApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetResourceManagerLienApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	reasonProp, err := expandResourceManagerLienReason(d.Get("reason"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("reason"); !isEmptyValue(reflect.ValueOf(reasonProp)) && (ok || !reflect.DeepEqual(v, reasonProp)) {
+	} else if v, ok := d.GetOkExists("reason"); !tpgresource.IsEmptyValue(reflect.ValueOf(reasonProp)) && (ok || !reflect.DeepEqual(v, reasonProp)) {
 		obj["reason"] = reasonProp
 	}
 	originProp, err := expandResourceManagerLienOrigin(d.Get("origin"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("origin"); !isEmptyValue(reflect.ValueOf(originProp)) && (ok || !reflect.DeepEqual(v, originProp)) {
+	} else if v, ok := d.GetOkExists("origin"); !tpgresource.IsEmptyValue(reflect.ValueOf(originProp)) && (ok || !reflect.DeepEqual(v, originProp)) {
 		obj["origin"] = originProp
 	}
 	parentProp, err := expandResourceManagerLienParent(d.Get("parent"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("parent"); !isEmptyValue(reflect.ValueOf(parentProp)) && (ok || !reflect.DeepEqual(v, parentProp)) {
+	} else if v, ok := d.GetOkExists("parent"); !tpgresource.IsEmptyValue(reflect.ValueOf(parentProp)) && (ok || !reflect.DeepEqual(v, parentProp)) {
 		obj["parent"] = parentProp
 	}
 	restrictionsProp, err := expandResourceManagerLienRestrictions(d.Get("restrictions"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("restrictions"); !isEmptyValue(reflect.ValueOf(restrictionsProp)) && (ok || !reflect.DeepEqual(v, restrictionsProp)) {
+	} else if v, ok := d.GetOkExists("restrictions"); !tpgresource.IsEmptyValue(reflect.ValueOf(restrictionsProp)) && (ok || !reflect.DeepEqual(v, restrictionsProp)) {
 		obj["restrictions"] = restrictionsProp
 	}
 
 	return obj, nil
 }
 
-func expandResourceManagerLienReason(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandResourceManagerLienReason(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandResourceManagerLienOrigin(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandResourceManagerLienOrigin(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandResourceManagerLienParent(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandResourceManagerLienParent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandResourceManagerLienRestrictions(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandResourceManagerLienRestrictions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

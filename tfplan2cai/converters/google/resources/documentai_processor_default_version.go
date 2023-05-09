@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterDocumentAIProcessorDefaultVersion() ResourceConverter {
 	}
 }
 
-func GetDocumentAIProcessorDefaultVersionCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetDocumentAIProcessorDefaultVersionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//{{location}}-documentai.googleapis.com/{{processor}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,28 +51,28 @@ func GetDocumentAIProcessorDefaultVersionCaiObject(d TerraformResourceData, conf
 	}
 }
 
-func GetDocumentAIProcessorDefaultVersionApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetDocumentAIProcessorDefaultVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	defaultProcessorVersionProp, err := expandDocumentAIProcessorDefaultVersionVersion(d.Get("version"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("version"); !isEmptyValue(reflect.ValueOf(defaultProcessorVersionProp)) && (ok || !reflect.DeepEqual(v, defaultProcessorVersionProp)) {
+	} else if v, ok := d.GetOkExists("version"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultProcessorVersionProp)) && (ok || !reflect.DeepEqual(v, defaultProcessorVersionProp)) {
 		obj["defaultProcessorVersion"] = defaultProcessorVersionProp
 	}
 	processorProp, err := expandDocumentAIProcessorDefaultVersionProcessor(d.Get("processor"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("processor"); !isEmptyValue(reflect.ValueOf(processorProp)) && (ok || !reflect.DeepEqual(v, processorProp)) {
+	} else if v, ok := d.GetOkExists("processor"); !tpgresource.IsEmptyValue(reflect.ValueOf(processorProp)) && (ok || !reflect.DeepEqual(v, processorProp)) {
 		obj["processor"] = processorProp
 	}
 
 	return obj, nil
 }
 
-func expandDocumentAIProcessorDefaultVersionVersion(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDocumentAIProcessorDefaultVersionVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDocumentAIProcessorDefaultVersionProcessor(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDocumentAIProcessorDefaultVersionProcessor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

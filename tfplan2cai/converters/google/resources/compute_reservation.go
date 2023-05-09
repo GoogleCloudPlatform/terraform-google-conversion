@@ -20,6 +20,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -32,7 +33,7 @@ func resourceConverterComputeReservation() ResourceConverter {
 	}
 }
 
-func GetComputeReservationCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetComputeReservationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/reservations/{{name}}")
 	if err != nil {
 		return []Asset{}, err
@@ -53,61 +54,61 @@ func GetComputeReservationCaiObject(d TerraformResourceData, config *transport_t
 	}
 }
 
-func GetComputeReservationApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeReservationApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	descriptionProp, err := expandComputeReservationDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	nameProp, err := expandComputeReservationName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
 	specificReservationRequiredProp, err := expandComputeReservationSpecificReservationRequired(d.Get("specific_reservation_required"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("specific_reservation_required"); !isEmptyValue(reflect.ValueOf(specificReservationRequiredProp)) && (ok || !reflect.DeepEqual(v, specificReservationRequiredProp)) {
+	} else if v, ok := d.GetOkExists("specific_reservation_required"); !tpgresource.IsEmptyValue(reflect.ValueOf(specificReservationRequiredProp)) && (ok || !reflect.DeepEqual(v, specificReservationRequiredProp)) {
 		obj["specificReservationRequired"] = specificReservationRequiredProp
 	}
 	shareSettingsProp, err := expandComputeReservationShareSettings(d.Get("share_settings"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("share_settings"); !isEmptyValue(reflect.ValueOf(shareSettingsProp)) && (ok || !reflect.DeepEqual(v, shareSettingsProp)) {
+	} else if v, ok := d.GetOkExists("share_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(shareSettingsProp)) && (ok || !reflect.DeepEqual(v, shareSettingsProp)) {
 		obj["shareSettings"] = shareSettingsProp
 	}
 	specificReservationProp, err := expandComputeReservationSpecificReservation(d.Get("specific_reservation"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("specific_reservation"); !isEmptyValue(reflect.ValueOf(specificReservationProp)) && (ok || !reflect.DeepEqual(v, specificReservationProp)) {
+	} else if v, ok := d.GetOkExists("specific_reservation"); !tpgresource.IsEmptyValue(reflect.ValueOf(specificReservationProp)) && (ok || !reflect.DeepEqual(v, specificReservationProp)) {
 		obj["specificReservation"] = specificReservationProp
 	}
 	zoneProp, err := expandComputeReservationZone(d.Get("zone"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("zone"); !isEmptyValue(reflect.ValueOf(zoneProp)) && (ok || !reflect.DeepEqual(v, zoneProp)) {
+	} else if v, ok := d.GetOkExists("zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(zoneProp)) && (ok || !reflect.DeepEqual(v, zoneProp)) {
 		obj["zone"] = zoneProp
 	}
 
 	return obj, nil
 }
 
-func expandComputeReservationDescription(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationName(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationRequired(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationRequired(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationShareSettings(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationShareSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -119,25 +120,25 @@ func expandComputeReservationShareSettings(v interface{}, d TerraformResourceDat
 	transformedShareType, err := expandComputeReservationShareSettingsShareType(original["share_type"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedShareType); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedShareType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["shareType"] = transformedShareType
 	}
 
 	transformedProjectMap, err := expandComputeReservationShareSettingsProjectMap(original["project_map"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedProjectMap); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedProjectMap); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["projectMap"] = transformedProjectMap
 	}
 
 	return transformed, nil
 }
 
-func expandComputeReservationShareSettingsShareType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationShareSettingsShareType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationShareSettingsProjectMap(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func expandComputeReservationShareSettingsProjectMap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	if v == nil {
 		return map[string]interface{}{}, nil
 	}
@@ -149,7 +150,7 @@ func expandComputeReservationShareSettingsProjectMap(v interface{}, d TerraformR
 		transformedProjectId, err := expandComputeReservationShareSettingsProjectMapProjectId(original["project_id"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["projectId"] = transformedProjectId
 		}
 
@@ -162,11 +163,11 @@ func expandComputeReservationShareSettingsProjectMap(v interface{}, d TerraformR
 	return m, nil
 }
 
-func expandComputeReservationShareSettingsProjectMapProjectId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationShareSettingsProjectMapProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservation(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -178,36 +179,36 @@ func expandComputeReservationSpecificReservation(v interface{}, d TerraformResou
 	transformedCount, err := expandComputeReservationSpecificReservationCount(original["count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["count"] = transformedCount
 	}
 
 	transformedInUseCount, err := expandComputeReservationSpecificReservationInUseCount(original["in_use_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedInUseCount); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedInUseCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["inUseCount"] = transformedInUseCount
 	}
 
 	transformedInstanceProperties, err := expandComputeReservationSpecificReservationInstanceProperties(original["instance_properties"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedInstanceProperties); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedInstanceProperties); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["instanceProperties"] = transformedInstanceProperties
 	}
 
 	return transformed, nil
 }
 
-func expandComputeReservationSpecificReservationCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInUseCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInUseCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstanceProperties(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstanceProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -219,43 +220,43 @@ func expandComputeReservationSpecificReservationInstanceProperties(v interface{}
 	transformedMachineType, err := expandComputeReservationSpecificReservationInstancePropertiesMachineType(original["machine_type"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMachineType); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMachineType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["machineType"] = transformedMachineType
 	}
 
 	transformedMinCpuPlatform, err := expandComputeReservationSpecificReservationInstancePropertiesMinCpuPlatform(original["min_cpu_platform"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMinCpuPlatform); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedMinCpuPlatform); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["minCpuPlatform"] = transformedMinCpuPlatform
 	}
 
 	transformedGuestAccelerators, err := expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerators(original["guest_accelerators"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedGuestAccelerators); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedGuestAccelerators); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["guestAccelerators"] = transformedGuestAccelerators
 	}
 
 	transformedLocalSsds, err := expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(original["local_ssds"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedLocalSsds); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedLocalSsds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["localSsds"] = transformedLocalSsds
 	}
 
 	return transformed, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesMachineType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesMinCpuPlatform(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesMinCpuPlatform(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerators(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerators(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -268,14 +269,14 @@ func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerat
 		transformedAcceleratorType, err := expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorType(original["accelerator_type"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedAcceleratorType); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedAcceleratorType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["acceleratorType"] = transformedAcceleratorType
 		}
 
 		transformedAcceleratorCount, err := expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorCount(original["accelerator_count"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedAcceleratorCount); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedAcceleratorCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["acceleratorCount"] = transformedAcceleratorCount
 		}
 
@@ -284,15 +285,15 @@ func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerat
 	return req, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorCount(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesGuestAcceleratorsAcceleratorCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -305,14 +306,14 @@ func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v in
 		transformedInterface, err := expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsInterface(original["interface"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedInterface); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedInterface); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["interface"] = transformedInterface
 		}
 
 		transformedDiskSizeGb, err := expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsDiskSizeGb(original["disk_size_gb"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedDiskSizeGb); val.IsValid() && !isEmptyValue(val) {
+		} else if val := reflect.ValueOf(transformedDiskSizeGb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["diskSizeGb"] = transformedDiskSizeGb
 		}
 
@@ -321,16 +322,16 @@ func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v in
 	return req, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsInterface(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsInterface(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsDiskSizeGb(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsDiskSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeReservationZone(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := parseGlobalFieldValue("zones", v.(string), "project", d, config, true)
+func expandComputeReservationZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)
 	}

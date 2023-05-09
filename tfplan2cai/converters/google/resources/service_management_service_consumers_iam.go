@@ -17,6 +17,7 @@ package google
 import (
 	"fmt"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -51,15 +52,15 @@ func resourceConverterServiceManagementServiceConsumersIamMember() ResourceConve
 	}
 }
 
-func GetServiceManagementServiceConsumersIamPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetServiceManagementServiceConsumersIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newServiceManagementServiceConsumersIamAsset(d, config, expandIamPolicyBindings)
 }
 
-func GetServiceManagementServiceConsumersIamBindingCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetServiceManagementServiceConsumersIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newServiceManagementServiceConsumersIamAsset(d, config, expandIamRoleBindings)
 }
 
-func GetServiceManagementServiceConsumersIamMemberCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetServiceManagementServiceConsumersIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	return newServiceManagementServiceConsumersIamAsset(d, config, expandIamMemberBindings)
 }
 
@@ -85,9 +86,9 @@ func MergeServiceManagementServiceConsumersIamMemberDelete(existing, incoming As
 }
 
 func newServiceManagementServiceConsumersIamAsset(
-	d TerraformResourceData,
+	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d TerraformResourceData) ([]IAMBinding, error),
+	expandBindings func(d tpgresource.TerraformResourceData) ([]IAMBinding, error),
 ) ([]Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
@@ -108,7 +109,7 @@ func newServiceManagementServiceConsumersIamAsset(
 	}}, nil
 }
 
-func FetchServiceManagementServiceConsumersIamPolicy(d TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
+func FetchServiceManagementServiceConsumersIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("service_name"); !ok {
 		return Asset{}, ErrEmptyIdentityField

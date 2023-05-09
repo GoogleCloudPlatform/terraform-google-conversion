@@ -17,6 +17,7 @@ package google
 import (
 	"reflect"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
@@ -29,7 +30,7 @@ func resourceConverterBigqueryDatapolicyDataPolicy() ResourceConverter {
 	}
 }
 
-func GetBigqueryDatapolicyDataPolicyCaiObject(d TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
+func GetBigqueryDatapolicyDataPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]Asset, error) {
 	name, err := assetName(d, config, "//bigquerydatapolicy.googleapis.com/projects/{{project}}/locations/{{location}}/dataPolicies/{{data_policy_id}}")
 	if err != nil {
 		return []Asset{}, err
@@ -50,49 +51,49 @@ func GetBigqueryDatapolicyDataPolicyCaiObject(d TerraformResourceData, config *t
 	}
 }
 
-func GetBigqueryDatapolicyDataPolicyApiObject(d TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetBigqueryDatapolicyDataPolicyApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	dataPolicyIdProp, err := expandBigqueryDatapolicyDataPolicyDataPolicyId(d.Get("data_policy_id"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("data_policy_id"); !isEmptyValue(reflect.ValueOf(dataPolicyIdProp)) && (ok || !reflect.DeepEqual(v, dataPolicyIdProp)) {
+	} else if v, ok := d.GetOkExists("data_policy_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataPolicyIdProp)) && (ok || !reflect.DeepEqual(v, dataPolicyIdProp)) {
 		obj["dataPolicyId"] = dataPolicyIdProp
 	}
 	policyTagProp, err := expandBigqueryDatapolicyDataPolicyPolicyTag(d.Get("policy_tag"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("policy_tag"); !isEmptyValue(reflect.ValueOf(policyTagProp)) && (ok || !reflect.DeepEqual(v, policyTagProp)) {
+	} else if v, ok := d.GetOkExists("policy_tag"); !tpgresource.IsEmptyValue(reflect.ValueOf(policyTagProp)) && (ok || !reflect.DeepEqual(v, policyTagProp)) {
 		obj["policyTag"] = policyTagProp
 	}
 	dataPolicyTypeProp, err := expandBigqueryDatapolicyDataPolicyDataPolicyType(d.Get("data_policy_type"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("data_policy_type"); !isEmptyValue(reflect.ValueOf(dataPolicyTypeProp)) && (ok || !reflect.DeepEqual(v, dataPolicyTypeProp)) {
+	} else if v, ok := d.GetOkExists("data_policy_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataPolicyTypeProp)) && (ok || !reflect.DeepEqual(v, dataPolicyTypeProp)) {
 		obj["dataPolicyType"] = dataPolicyTypeProp
 	}
 	dataMaskingPolicyProp, err := expandBigqueryDatapolicyDataPolicyDataMaskingPolicy(d.Get("data_masking_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("data_masking_policy"); !isEmptyValue(reflect.ValueOf(dataMaskingPolicyProp)) && (ok || !reflect.DeepEqual(v, dataMaskingPolicyProp)) {
+	} else if v, ok := d.GetOkExists("data_masking_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataMaskingPolicyProp)) && (ok || !reflect.DeepEqual(v, dataMaskingPolicyProp)) {
 		obj["dataMaskingPolicy"] = dataMaskingPolicyProp
 	}
 
 	return obj, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyDataPolicyId(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyDataPolicyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyPolicyTag(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyPolicyTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyDataPolicyType(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyDataPolicyType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyDataMaskingPolicy(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyDataMaskingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -104,13 +105,13 @@ func expandBigqueryDatapolicyDataPolicyDataMaskingPolicy(v interface{}, d Terraf
 	transformedPredefinedExpression, err := expandBigqueryDatapolicyDataPolicyDataMaskingPolicyPredefinedExpression(original["predefined_expression"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPredefinedExpression); val.IsValid() && !isEmptyValue(val) {
+	} else if val := reflect.ValueOf(transformedPredefinedExpression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["predefinedExpression"] = transformedPredefinedExpression
 	}
 
 	return transformed, nil
 }
 
-func expandBigqueryDatapolicyDataPolicyDataMaskingPolicyPredefinedExpression(v interface{}, d TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandBigqueryDatapolicyDataPolicyDataMaskingPolicyPredefinedExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
