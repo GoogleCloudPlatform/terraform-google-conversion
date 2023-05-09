@@ -4,13 +4,14 @@ import (
 	"testing"
 
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 )
 
 func TestAssetParent(t *testing.T) {
 	tests := []struct {
 		name      string
 		ancestors []string
-		tfData    resources.TerraformResourceData
+		tfData    tpgresource.TerraformResourceData
 		cai       *resources.Asset
 		want      string
 		wantErr   bool
@@ -76,7 +77,7 @@ func TestAssetParent_Fail(t *testing.T) {
 	tests := []struct {
 		name      string
 		ancestors []string
-		tfData    resources.TerraformResourceData
+		tfData    tpgresource.TerraformResourceData
 		cai       *resources.Asset
 	}{
 		{

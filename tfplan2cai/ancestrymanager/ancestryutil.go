@@ -5,9 +5,10 @@ import (
 	"strings"
 
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 	"github.com/hashicorp/errwrap"
 	"google.golang.org/api/googleapi"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
 
 // assetParent derives a resource's parent from its ancestors.
@@ -75,7 +76,7 @@ func sanitizeAncestryPath(s string) string {
 	return ret
 }
 
-func getProjectFromSchema(projectSchemaField string, d resources.TerraformResourceData, config *transport_tpg.Config) (string, error) {
+func getProjectFromSchema(projectSchemaField string, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (string, error) {
 	res, ok := d.GetOk(projectSchemaField)
 	if ok && projectSchemaField != "" {
 		return res.(string), nil
@@ -91,7 +92,7 @@ func getProjectFromSchema(projectSchemaField string, d resources.TerraformResour
 }
 
 // getOrganizationFromResource reads org_id field from terraform data.
-func getOrganizationFromResource(tfData resources.TerraformResourceData) (string, bool) {
+func getOrganizationFromResource(tfData tpgresource.TerraformResourceData) (string, bool) {
 	orgID, ok := tfData.GetOk("org_id")
 	if ok {
 		return orgID.(string), ok
@@ -104,7 +105,7 @@ func getOrganizationFromResource(tfData resources.TerraformResourceData) (string
 }
 
 // getFolderFromResource reads folder_id, folder, parent field from terraform data.
-func getFolderFromResource(tfData resources.TerraformResourceData) (string, bool) {
+func getFolderFromResource(tfData tpgresource.TerraformResourceData) (string, bool) {
 	folderID, ok := tfData.GetOk("folder_id")
 	if ok {
 		return folderID.(string), ok
