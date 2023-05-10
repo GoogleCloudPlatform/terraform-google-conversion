@@ -735,6 +735,13 @@ func expandMonitoringAlertPolicyAlertStrategy(v interface{}, d tpgresource.Terra
 		transformed["autoClose"] = transformedAutoClose
 	}
 
+	transformedNotificationChannelStrategy, err := expandMonitoringAlertPolicyAlertStrategyNotificationChannelStrategy(original["notification_channel_strategy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNotificationChannelStrategy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["notificationChannelStrategy"] = transformedNotificationChannelStrategy
+	}
+
 	return transformed, nil
 }
 
@@ -762,6 +769,43 @@ func expandMonitoringAlertPolicyAlertStrategyNotificationRateLimitPeriod(v inter
 }
 
 func expandMonitoringAlertPolicyAlertStrategyAutoClose(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyAlertStrategyNotificationChannelStrategy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedNotificationChannelNames, err := expandMonitoringAlertPolicyAlertStrategyNotificationChannelStrategyNotificationChannelNames(original["notification_channel_names"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNotificationChannelNames); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["notificationChannelNames"] = transformedNotificationChannelNames
+		}
+
+		transformedRenotifyInterval, err := expandMonitoringAlertPolicyAlertStrategyNotificationChannelStrategyRenotifyInterval(original["renotify_interval"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRenotifyInterval); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["renotifyInterval"] = transformedRenotifyInterval
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandMonitoringAlertPolicyAlertStrategyNotificationChannelStrategyNotificationChannelNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyAlertStrategyNotificationChannelStrategyRenotifyInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
