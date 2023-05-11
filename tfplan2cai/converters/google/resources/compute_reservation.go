@@ -154,7 +154,7 @@ func expandComputeReservationShareSettingsProjectMap(v interface{}, d tpgresourc
 			transformed["projectId"] = transformedProjectId
 		}
 
-		transformedId, err := expandString(original["id"], d, config)
+		transformedId, err := tpgresource.ExpandString(original["id"], d, config)
 		if err != nil {
 			return nil, err
 		}

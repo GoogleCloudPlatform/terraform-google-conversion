@@ -172,7 +172,7 @@ func expandDataCatalogTagTemplateFields(v interface{}, d tpgresource.TerraformRe
 			transformed["order"] = transformedOrder
 		}
 
-		transformedFieldId, err := expandString(original["field_id"], d, config)
+		transformedFieldId, err := tpgresource.ExpandString(original["field_id"], d, config)
 		if err != nil {
 			return nil, err
 		}
