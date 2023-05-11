@@ -170,7 +170,7 @@ func expandBinaryAuthorizationPolicyClusterAdmissionRules(v interface{}, d tpgre
 			transformed["enforcementMode"] = transformedEnforcementMode
 		}
 
-		transformedCluster, err := expandString(original["cluster"], d, config)
+		transformedCluster, err := tpgresource.ExpandString(original["cluster"], d, config)
 		if err != nil {
 			return nil, err
 		}

@@ -159,7 +159,7 @@ func expandDataCatalogTagFields(v interface{}, d tpgresource.TerraformResourceDa
 			transformed["enumValue"] = transformedEnumValue
 		}
 
-		transformedFieldName, err := expandString(original["field_name"], d, config)
+		transformedFieldName, err := tpgresource.ExpandString(original["field_name"], d, config)
 		if err != nil {
 			return nil, err
 		}

@@ -409,7 +409,7 @@ func expandComputeRegionAutoscalerAutoscalingPolicyScalingSchedules(v interface{
 			transformed["description"] = transformedDescription
 		}
 
-		transformedName, err := expandString(original["name"], d, config)
+		transformedName, err := tpgresource.ExpandString(original["name"], d, config)
 		if err != nil {
 			return nil, err
 		}

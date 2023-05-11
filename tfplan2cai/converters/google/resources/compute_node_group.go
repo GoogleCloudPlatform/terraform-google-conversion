@@ -252,7 +252,7 @@ func expandComputeNodeGroupShareSettingsProjectMap(v interface{}, d tpgresource.
 			transformed["projectId"] = transformedProjectId
 		}
 
-		transformedId, err := expandString(original["id"], d, config)
+		transformedId, err := tpgresource.ExpandString(original["id"], d, config)
 		if err != nil {
 			return nil, err
 		}
