@@ -15,6 +15,7 @@
 package google
 
 import (
+	"fmt"
 	"reflect"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
@@ -108,6 +109,20 @@ func GetArtifactRegistryRepositoryApiObject(d tpgresource.TerraformResourceData,
 		obj["remoteRepositoryConfig"] = remoteRepositoryConfigProp
 	}
 
+	return resourceArtifactRegistryRepositoryEncoder(d, config, obj)
+}
+
+func resourceArtifactRegistryRepositoryEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	config := meta.(*transport_tpg.Config)
+	if _, ok := d.GetOk("location"); !ok {
+		location, err := getRegionFromSchema("region", "zone", d, config)
+		if err != nil {
+			return nil, fmt.Errorf("Cannot determine location: set in this resource, or set provider-level 'region' or 'zone'.")
+		}
+		if err := d.Set("location", location); err != nil {
+			return nil, fmt.Errorf("Error setting location: %s", err)
+		}
+	}
 	return obj, nil
 }
 
