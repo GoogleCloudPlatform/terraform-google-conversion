@@ -449,6 +449,13 @@ func expandMonitoringAlertPolicyConditionsConditionThreshold(v interface{}, d tp
 		transformed["duration"] = transformedDuration
 	}
 
+	transformedForecastOptions, err := expandMonitoringAlertPolicyConditionsConditionThresholdForecastOptions(original["forecast_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedForecastOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["forecastOptions"] = transformedForecastOptions
+	}
+
 	transformedComparison, err := expandMonitoringAlertPolicyConditionsConditionThresholdComparison(original["comparison"], d, config)
 	if err != nil {
 		return nil, err
@@ -555,6 +562,29 @@ func expandMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregati
 }
 
 func expandMonitoringAlertPolicyConditionsConditionThresholdDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionThresholdForecastOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedForecastHorizon, err := expandMonitoringAlertPolicyConditionsConditionThresholdForecastOptionsForecastHorizon(original["forecast_horizon"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedForecastHorizon); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["forecastHorizon"] = transformedForecastHorizon
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionThresholdForecastOptionsForecastHorizon(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
