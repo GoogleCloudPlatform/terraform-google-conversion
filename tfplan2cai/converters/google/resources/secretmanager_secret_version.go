@@ -97,7 +97,13 @@ func expandSecretManagerSecretVersionEnabled(v interface{}, d tpgresource.Terraf
 		return nil, err
 	}
 
-	_, err = transport_tpg.SendRequest(config, "POST", project, url, userAgent, nil)
+	_, err = transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+		Config:    config,
+		Method:    "POST",
+		Project:   project,
+		RawURL:    url,
+		UserAgent: userAgent,
+	})
 	if err != nil {
 		return nil, err
 	}

@@ -33,7 +33,15 @@ func deleteTagTemplateField(d *schema.ResourceData, config *transport_tpg.Config
 		return err
 	}
 	var obj map[string]interface{}
-	res, err := transport_tpg.SendRequestWithTimeout(config, "DELETE", billingProject, url_delete, userAgent, obj, d.Timeout(schema.TimeoutDelete))
+	res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+		Config:    config,
+		Method:    "DELETE",
+		Project:   billingProject,
+		RawURL:    url_delete,
+		UserAgent: userAgent,
+		Body:      obj,
+		Timeout:   d.Timeout(schema.TimeoutDelete),
+	})
 	if err != nil {
 		return fmt.Errorf("Error deleting TagTemplate Field %v: %s", name, err)
 	}
@@ -55,7 +63,15 @@ func createTagTemplateField(d *schema.ResourceData, config *transport_tpg.Config
 		return err
 	}
 
-	res_create, err := transport_tpg.SendRequestWithTimeout(config, "POST", billingProject, url_create, userAgent, body, d.Timeout(schema.TimeoutCreate))
+	res_create, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+		Config:    config,
+		Method:    "POST",
+		Project:   billingProject,
+		RawURL:    url_create,
+		UserAgent: userAgent,
+		Body:      body,
+		Timeout:   d.Timeout(schema.TimeoutCreate),
+	})
 	if err != nil {
 		return fmt.Errorf("Error creating TagTemplate Field: %s", err)
 	}
