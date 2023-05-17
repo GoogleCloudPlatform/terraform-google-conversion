@@ -236,6 +236,13 @@ func expandDatastreamStreamSourceConfigMysqlSourceConfig(v interface{}, d tpgres
 		transformed["maxConcurrentCdcTasks"] = transformedMaxConcurrentCdcTasks
 	}
 
+	transformedMaxConcurrentBackfillTasks, err := expandDatastreamStreamSourceConfigMysqlSourceConfigMaxConcurrentBackfillTasks(original["max_concurrent_backfill_tasks"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["maxConcurrentBackfillTasks"] = transformedMaxConcurrentBackfillTasks
+	}
+
 	return transformed, nil
 }
 
@@ -594,6 +601,10 @@ func expandDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlDatab
 }
 
 func expandDatastreamStreamSourceConfigMysqlSourceConfigMaxConcurrentCdcTasks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigMysqlSourceConfigMaxConcurrentBackfillTasks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
