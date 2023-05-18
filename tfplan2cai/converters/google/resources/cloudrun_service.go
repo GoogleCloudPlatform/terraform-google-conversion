@@ -457,6 +457,13 @@ func expandCloudRunServiceSpecTemplateSpecContainers(v interface{}, d tpgresourc
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
+		transformedName, err := expandCloudRunServiceSpecTemplateSpecContainersName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
 		transformedWorkingDir, err := expandCloudRunServiceSpecTemplateSpecContainersWorkingDir(original["working_dir"], d, config)
 		if err != nil {
 			return nil, err
@@ -537,6 +544,10 @@ func expandCloudRunServiceSpecTemplateSpecContainers(v interface{}, d tpgresourc
 		req = append(req, transformed)
 	}
 	return req, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCloudRunServiceSpecTemplateSpecContainersWorkingDir(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
