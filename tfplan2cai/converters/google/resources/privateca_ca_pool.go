@@ -429,6 +429,13 @@ func expandPrivatecaCaPoolPublishingOptions(v interface{}, d tpgresource.Terrafo
 		transformed["publishCrl"] = transformedPublishCrl
 	}
 
+	transformedEncodingFormat, err := expandPrivatecaCaPoolPublishingOptionsEncodingFormat(original["encoding_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncodingFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["encodingFormat"] = transformedEncodingFormat
+	}
+
 	return transformed, nil
 }
 
@@ -437,6 +444,10 @@ func expandPrivatecaCaPoolPublishingOptionsPublishCaCert(v interface{}, d tpgres
 }
 
 func expandPrivatecaCaPoolPublishingOptionsPublishCrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCaPoolPublishingOptionsEncodingFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
