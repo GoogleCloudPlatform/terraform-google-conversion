@@ -177,6 +177,12 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("source_ip_ranges"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceIpRangesProp)) && (ok || !reflect.DeepEqual(v, sourceIpRangesProp)) {
 		obj["sourceIpRanges"] = sourceIpRangesProp
 	}
+	allowPscGlobalAccessProp, err := expandComputeForwardingRuleAllowPscGlobalAccess(d.Get("allow_psc_global_access"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_psc_global_access"); ok || !reflect.DeepEqual(v, allowPscGlobalAccessProp) {
+		obj["allowPscGlobalAccess"] = allowPscGlobalAccessProp
+	}
 	regionProp, err := expandComputeForwardingRuleRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -370,6 +376,10 @@ func expandComputeForwardingRuleServiceLabel(v interface{}, d tpgresource.Terraf
 }
 
 func expandComputeForwardingRuleSourceIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeForwardingRuleAllowPscGlobalAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
