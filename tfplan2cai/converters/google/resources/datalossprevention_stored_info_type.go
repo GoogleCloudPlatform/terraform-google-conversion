@@ -119,6 +119,10 @@ func GetDataLossPreventionStoredInfoTypeApiObject(d tpgresource.TerraformResourc
 func resourceDataLossPreventionStoredInfoTypeEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	newObj := make(map[string]interface{})
 	newObj["config"] = obj
+	storedInfoTypeIdProp, ok := d.GetOk("stored_info_type_id")
+	if ok && storedInfoTypeIdProp != nil {
+		newObj["storedInfoTypeId"] = storedInfoTypeIdProp
+	}
 	return newObj, nil
 }
 
