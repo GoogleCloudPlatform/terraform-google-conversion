@@ -78,6 +78,10 @@ func GetDataLossPreventionDeidentifyTemplateApiObject(d tpgresource.TerraformRes
 func resourceDataLossPreventionDeidentifyTemplateEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	newObj := make(map[string]interface{})
 	newObj["deidentifyTemplate"] = obj
+	templateIdProp, ok := d.GetOk("template_id")
+	if ok && templateIdProp != nil {
+		newObj["templateId"] = templateIdProp
+	}
 	return newObj, nil
 }
 
