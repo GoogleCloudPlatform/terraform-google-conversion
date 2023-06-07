@@ -16,6 +16,7 @@ package vertexai
 
 import (
 	"reflect"
+	"regexp"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
@@ -70,6 +71,17 @@ func GetVertexAIFeaturestoreEntitytypeFeatureApiObject(d tpgresource.TerraformRe
 		return nil, err
 	} else if v, ok := d.GetOkExists("value_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(valueTypeProp)) && (ok || !reflect.DeepEqual(v, valueTypeProp)) {
 		obj["valueType"] = valueTypeProp
+	}
+
+	return resourceVertexAIFeaturestoreEntitytypeFeatureEncoder(d, config, obj)
+}
+
+func resourceVertexAIFeaturestoreEntitytypeFeatureEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	if v, ok := d.GetOk("entitytype"); ok {
+		re := regexp.MustCompile("^projects/(.+)/locations/(.+)/featurestores/(.+)/entityTypes/(.+)$")
+		if parts := re.FindStringSubmatch(v.(string)); parts != nil {
+			d.Set("region", parts[2])
+		}
 	}
 
 	return obj, nil
