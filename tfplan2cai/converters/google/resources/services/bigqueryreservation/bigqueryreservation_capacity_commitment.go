@@ -17,9 +17,18 @@ package bigqueryreservation
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
+
+func bigqueryReservationCapacityCommitmentPlanDiffSuppressFunc(_, old, new string, _ *schema.ResourceData) bool {
+	if (old == "FLEX" || old == "MONTHLY" || old == "ANNUAL") && new == old+"_FLAT_RATE" {
+		return true
+	}
+	return false
+}
 
 const BigqueryReservationCapacityCommitmentAssetType string = "bigqueryreservation.googleapis.com/CapacityCommitment"
 
