@@ -1762,6 +1762,13 @@ func expandComputeUrlMapPathMatcherRouteRulesMatchRules(v interface{}, d tpgreso
 			transformed["regexMatch"] = transformedRegexMatch
 		}
 
+		transformedPathTemplateMatch, err := expandComputeUrlMapPathMatcherRouteRulesMatchRulesPathTemplateMatch(original["path_template_match"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPathTemplateMatch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pathTemplateMatch"] = transformedPathTemplateMatch
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -2042,6 +2049,10 @@ func expandComputeUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatchesRege
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesMatchRulesRegexMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherRouteRulesMatchRulesPathTemplateMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -2513,6 +2524,13 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(v interface{}
 		transformed["pathPrefixRewrite"] = transformedPathPrefixRewrite
 	}
 
+	transformedPathTemplateRewrite, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathTemplateRewrite(original["path_template_rewrite"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPathTemplateRewrite); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pathTemplateRewrite"] = transformedPathTemplateRewrite
+	}
+
 	return transformed, nil
 }
 
@@ -2521,6 +2539,10 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewriteHostRewrite(v 
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathPrefixRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathTemplateRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
