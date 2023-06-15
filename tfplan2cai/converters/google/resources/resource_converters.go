@@ -39,6 +39,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/gkebackup"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/gkehub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/gkehub2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/healthcare"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/iap"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/kms"
@@ -248,6 +249,9 @@ func ResourceConverters() map[string][]tpgresource.ResourceConverter {
 		"google_gke_hub_membership_iam_policy":                    {gkehub.ResourceConverterGKEHubMembershipIamPolicy()},
 		"google_gke_hub_membership_iam_binding":                   {gkehub.ResourceConverterGKEHubMembershipIamBinding()},
 		"google_gke_hub_membership_iam_member":                    {gkehub.ResourceConverterGKEHubMembershipIamMember()},
+		"google_gke_hub_feature_iam_policy":                       {gkehub2.ResourceConverterGKEHub2FeatureIamPolicy()},
+		"google_gke_hub_feature_iam_binding":                      {gkehub2.ResourceConverterGKEHub2FeatureIamBinding()},
+		"google_gke_hub_feature_iam_member":                       {gkehub2.ResourceConverterGKEHub2FeatureIamMember()},
 		"google_healthcare_consent_store_iam_policy":              {healthcare.ResourceConverterHealthcareConsentStoreIamPolicy()},
 		"google_healthcare_consent_store_iam_binding":             {healthcare.ResourceConverterHealthcareConsentStoreIamBinding()},
 		"google_healthcare_consent_store_iam_member":              {healthcare.ResourceConverterHealthcareConsentStoreIamMember()},
