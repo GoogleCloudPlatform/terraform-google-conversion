@@ -203,6 +203,13 @@ func expandIAMBetaWorkloadIdentityPoolProviderOidc(v interface{}, d tpgresource.
 		transformed["issuerUri"] = transformedIssuerUri
 	}
 
+	transformedJwksJson, err := expandIAMBetaWorkloadIdentityPoolProviderOidcJwksJson(original["jwks_json"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJwksJson); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jwksJson"] = transformedJwksJson
+	}
+
 	return transformed, nil
 }
 
@@ -211,5 +218,9 @@ func expandIAMBetaWorkloadIdentityPoolProviderOidcAllowedAudiences(v interface{}
 }
 
 func expandIAMBetaWorkloadIdentityPoolProviderOidcIssuerUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolProviderOidcJwksJson(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
