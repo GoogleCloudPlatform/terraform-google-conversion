@@ -59,6 +59,12 @@ func GetCloudRunV2JobApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
+	annotationsProp, err := expandCloudRunV2JobAnnotations(d.Get("annotations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
+		obj["annotations"] = annotationsProp
+	}
 	clientProp, err := expandCloudRunV2JobClient(d.Get("client"), d, config)
 	if err != nil {
 		return nil, err
@@ -94,6 +100,17 @@ func GetCloudRunV2JobApiObject(d tpgresource.TerraformResourceData, config *tran
 }
 
 func expandCloudRunV2JobLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCloudRunV2JobAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -166,6 +183,13 @@ func expandCloudRunV2JobTemplate(v interface{}, d tpgresource.TerraformResourceD
 		transformed["labels"] = transformedLabels
 	}
 
+	transformedAnnotations, err := expandCloudRunV2JobTemplateAnnotations(original["annotations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAnnotations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["annotations"] = transformedAnnotations
+	}
+
 	transformedParallelism, err := expandCloudRunV2JobTemplateParallelism(original["parallelism"], d, config)
 	if err != nil {
 		return nil, err
@@ -191,6 +215,17 @@ func expandCloudRunV2JobTemplate(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandCloudRunV2JobTemplateLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCloudRunV2JobTemplateAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
