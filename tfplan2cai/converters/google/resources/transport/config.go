@@ -165,7 +165,7 @@ type Config struct {
 	BillingProject                     string
 	Zone                               string
 	Scopes                             []string
-	BatchingConfig                     *batchingConfig
+	BatchingConfig                     *BatchingConfig
 	UserProjectOverride                bool
 	RequestReason                      string
 	RequestTimeout                     time.Duration
@@ -1153,8 +1153,8 @@ func (c *Config) LoadAndValidate(ctx context.Context) error {
 	return nil
 }
 
-func ExpandProviderBatchingConfig(v interface{}) (*batchingConfig, error) {
-	config := &batchingConfig{
+func ExpandProviderBatchingConfig(v interface{}) (*BatchingConfig, error) {
+	config := &BatchingConfig{
 		SendAfter:      time.Second * DefaultBatchSendIntervalSec,
 		EnableBatching: true,
 	}
