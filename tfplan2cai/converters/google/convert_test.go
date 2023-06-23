@@ -16,7 +16,7 @@ import (
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/tfdata"
 	tfjson "github.com/hashicorp/terraform-json"
-	provider "github.com/hashicorp/terraform-provider-google/google"
+	provider "github.com/hashicorp/terraform-provider-google-beta/google-beta"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
