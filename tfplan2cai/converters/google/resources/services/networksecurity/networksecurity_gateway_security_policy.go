@@ -40,8 +40,8 @@ func GetNetworkSecurityGatewaySecurityPolicyCaiObject(d tpgresource.TerraformRes
 			Name: name,
 			Type: NetworkSecurityGatewaySecurityPolicyAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1beta1/rest",
 				DiscoveryName:        "GatewaySecurityPolicy",
 				Data:                 obj,
 			},
@@ -59,6 +59,15 @@ func GetNetworkSecurityGatewaySecurityPolicyApiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+<<<<<<< HEAD
+=======
+	tlsInspectionPolicyProp, err := expandNetworkSecurityGatewaySecurityPolicyTlsInspectionPolicy(d.Get("tls_inspection_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tls_inspection_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(tlsInspectionPolicyProp)) && (ok || !reflect.DeepEqual(v, tlsInspectionPolicyProp)) {
+		obj["tlsInspectionPolicy"] = tlsInspectionPolicyProp
+	}
+>>>>>>> d85c314 (all change required to pass test)
 
 	return obj, nil
 }
@@ -66,3 +75,10 @@ func GetNetworkSecurityGatewaySecurityPolicyApiObject(d tpgresource.TerraformRes
 func expandNetworkSecurityGatewaySecurityPolicyDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
+<<<<<<< HEAD
+=======
+
+func expandNetworkSecurityGatewaySecurityPolicyTlsInspectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+>>>>>>> d85c314 (all change required to pass test)

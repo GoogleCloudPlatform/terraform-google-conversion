@@ -40,8 +40,8 @@ func GetNetworkSecurityUrlListsCaiObject(d tpgresource.TerraformResourceData, co
 			Name: name,
 			Type: NetworkSecurityUrlListsAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1beta1/rest",
 				DiscoveryName:        "UrlLists",
 				Data:                 obj,
 			},

@@ -40,8 +40,8 @@ func GetNetworkSecurityAddressGroupCaiObject(d tpgresource.TerraformResourceData
 			Name: name,
 			Type: NetworkSecurityAddressGroupAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1beta1/rest",
 				DiscoveryName:        "AddressGroup",
 				Data:                 obj,
 			},
