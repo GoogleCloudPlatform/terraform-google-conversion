@@ -250,6 +250,7 @@ type Config struct {
 	OSConfigBasePath                 string
 	OSLoginBasePath                  string
 	PrivatecaBasePath                string
+	PublicCABasePath                 string
 	PubsubBasePath                   string
 	PubsubLiteBasePath               string
 	RedisBasePath                    string
@@ -359,6 +360,7 @@ const NotebooksBasePathKey = "Notebooks"
 const OSConfigBasePathKey = "OSConfig"
 const OSLoginBasePathKey = "OSLogin"
 const PrivatecaBasePathKey = "Privateca"
+const PublicCABasePathKey = "PublicCA"
 const PubsubBasePathKey = "Pubsub"
 const PubsubLiteBasePathKey = "PubsubLite"
 const RedisBasePathKey = "Redis"
@@ -462,6 +464,7 @@ var DefaultBasePaths = map[string]string{
 	OSConfigBasePathKey:                 "https://osconfig.googleapis.com/v1/",
 	OSLoginBasePathKey:                  "https://oslogin.googleapis.com/v1/",
 	PrivatecaBasePathKey:                "https://privateca.googleapis.com/v1/",
+	PublicCABasePathKey:                 "https://publicca.googleapis.com/v1/",
 	PubsubBasePathKey:                   "https://pubsub.googleapis.com/v1/",
 	PubsubLiteBasePathKey:               "https://{{region}}-pubsublite.googleapis.com/v1/admin/",
 	RedisBasePathKey:                    "https://redis.googleapis.com/v1/",
@@ -907,6 +910,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 		d.Set("privateca_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_PRIVATECA_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[PrivatecaBasePathKey]))
+	}
+	if d.Get("public_ca_custom_endpoint") == "" {
+		d.Set("public_ca_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_PUBLIC_CA_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[PublicCABasePathKey]))
 	}
 	if d.Get("pubsub_custom_endpoint") == "" {
 		d.Set("pubsub_custom_endpoint", MultiEnvDefault([]string{
@@ -1908,6 +1916,7 @@ func ConfigureBasePaths(c *Config) {
 	c.OSConfigBasePath = DefaultBasePaths[OSConfigBasePathKey]
 	c.OSLoginBasePath = DefaultBasePaths[OSLoginBasePathKey]
 	c.PrivatecaBasePath = DefaultBasePaths[PrivatecaBasePathKey]
+	c.PublicCABasePath = DefaultBasePaths[PublicCABasePathKey]
 	c.PubsubBasePath = DefaultBasePaths[PubsubBasePathKey]
 	c.PubsubLiteBasePath = DefaultBasePaths[PubsubLiteBasePathKey]
 	c.RedisBasePath = DefaultBasePaths[RedisBasePathKey]
