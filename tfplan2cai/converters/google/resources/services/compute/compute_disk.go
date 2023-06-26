@@ -361,6 +361,12 @@ func GetComputeDiskApiObject(d tpgresource.TerraformResourceData, config *transp
 	} else if v, ok := d.GetOkExists("provisioned_iops"); !tpgresource.IsEmptyValue(reflect.ValueOf(provisionedIopsProp)) && (ok || !reflect.DeepEqual(v, provisionedIopsProp)) {
 		obj["provisionedIops"] = provisionedIopsProp
 	}
+	provisionedThroughputProp, err := expandComputeDiskProvisionedThroughput(d.Get("provisioned_throughput"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("provisioned_throughput"); !tpgresource.IsEmptyValue(reflect.ValueOf(provisionedThroughputProp)) && (ok || !reflect.DeepEqual(v, provisionedThroughputProp)) {
+		obj["provisionedThroughput"] = provisionedThroughputProp
+	}
 	guestOsFeaturesProp, err := expandComputeDiskGuestOsFeatures(d.Get("guest_os_features"), d, config)
 	if err != nil {
 		return nil, err
@@ -496,6 +502,10 @@ func expandComputeDiskImage(v interface{}, d tpgresource.TerraformResourceData, 
 }
 
 func expandComputeDiskProvisionedIops(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeDiskProvisionedThroughput(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
