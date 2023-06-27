@@ -142,8 +142,8 @@ github.com/google/s2a-go v0.1.4/go.mod h1:Ej+mSEMGRnqRzjc7VtF+jdBwYG5fuJfiZ8ELkj
 github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/googleapis/enterprise-certificate-proxy v0.2.3 h1:yk9/cqRKtT9wXZSsRH9aurXEpJX+U6FLtpYTdC3R06k=
-github.com/googleapis/enterprise-certificate-proxy v0.2.3/go.mod h1:AwSRAtLfXpU5Nm3pW+v7rGDHp09LsPtGY9MduiEsR9k=
+github.com/googleapis/enterprise-certificate-proxy v0.2.4 h1:uGy6JWR/uMIILU8wbf+OkstIrNiMjGpEIyhx8f6W7s4=
+github.com/googleapis/enterprise-certificate-proxy v0.2.4/go.mod h1:AwSRAtLfXpU5Nm3pW+v7rGDHp09LsPtGY9MduiEsR9k=
 github.com/googleapis/gax-go/v2 v2.10.0 h1:ebSgKfMxynOdxw8QQuFOKMgomqeLGPqNLQox2bo42zg=
 github.com/googleapis/gax-go/v2 v2.10.0/go.mod h1:4UOEnMCrxsSqQ940WnTiD6qJ63le2ev3xfyagutxiPw=
 github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 h1:+9834+KizmvFV7pXQGSXQTsaWhq2GjuNUt0aUU0YBYw=
@@ -196,8 +196,8 @@ github.com/hashicorp/terraform-plugin-mux v0.8.0 h1:WCTP66mZ+iIaIrCNJnjPEYnVjawT
 github.com/hashicorp/terraform-plugin-mux v0.8.0/go.mod h1:vdW0daEi8Kd4RFJmet5Ot+SIVB/B8SwQVJiYKQwdCy8=
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0 h1:FtCLTiTcykdsURXPt/ku7fYXm3y19nbzbZcUxHx9RbI=
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0/go.mod h1:80wf5oad1tW+oLnbXS4UTYmDCrl7BuN1Q+IA91X1a4Y=
-github.com/hashicorp/terraform-provider-google v1.20.1-0.20230627194503-68dd08a7ef99 h1:KUN+6ZO3bl+O/Gyo/+DMGG7/gtxLC8ZlSXw30q4d/nA=
-github.com/hashicorp/terraform-provider-google v1.20.1-0.20230627194503-68dd08a7ef99/go.mod h1:77DqxtmralrdfVRvR61N8tjIgwHhstwgoakDCYDjIMg=
+github.com/hashicorp/terraform-provider-google v1.20.1-0.20230627225136-e577b4987847 h1:TtEqLgy4nI8gAuNUUNus/kqpNaCCJ2Kvw1jMNSUwZ0M=
+github.com/hashicorp/terraform-provider-google v1.20.1-0.20230627225136-e577b4987847/go.mod h1:6w7cSc08y2sMAi95uKAZRarjxMxG/01pjRQ3scXV5XE=
 github.com/hashicorp/terraform-registry-address v0.1.0 h1:W6JkV9wbum+m516rCl5/NjKxCyTVaaUBbzYcMzBDO3U=
 github.com/hashicorp/terraform-registry-address v0.1.0/go.mod h1:EnyO2jYO6j29DTHbJcm00E5nQTFeTtyZH3H5ycydQ5A=
 github.com/hashicorp/terraform-svchost v0.0.0-20200729002733-f050f53b9734 h1:HKLsbzeOsfXmKNpr3GiT18XAblV0BjCbzL8KQAMZGa0=
@@ -431,8 +431,8 @@ golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8T
 golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 h1:H2TDz8ibqkAF6YGhCdN3jS9O0/s90v0rJh3X/OLHEUk=
 golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2/go.mod h1:K8+ghG5WaK9qNqU5K3HdILfMLy1f3aNYFI/wnl100a8=
-google.golang.org/api v0.125.0 h1:7xGvEY4fyWbhWMHf3R2/4w7L4fXyfpRGE9g6lp8+DCk=
-google.golang.org/api v0.125.0/go.mod h1:mBwVAtz+87bEN6CbA1GtZPDOqY2R5ONPqJeIlvyo4Aw=
+google.golang.org/api v0.128.0 h1:RjPESny5CnQRn9V6siglged+DZCgfu9l6mO9dkX9VOg=
+google.golang.org/api v0.128.0/go.mod h1:Y611qgqaE92On/7g65MQgxYul3c0rEB894kniWLY750=
 google.golang.org/appengine v1.1.0/go.mod h1:EbEs0AVv82hx2wNQdGPgUI5lhzA/G0D9YwlJXL52JkM=
 google.golang.org/appengine v1.4.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
 google.golang.org/appengine v1.6.5/go.mod h1:8WjMMxjGQR8xUklV/ARdw2HLXBOI7O7uCIDZVag1xfc=
