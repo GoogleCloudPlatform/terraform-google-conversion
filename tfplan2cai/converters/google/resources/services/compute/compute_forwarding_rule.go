@@ -183,6 +183,12 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("allow_psc_global_access"); ok || !reflect.DeepEqual(v, allowPscGlobalAccessProp) {
 		obj["allowPscGlobalAccess"] = allowPscGlobalAccessProp
 	}
+	noAutomateDnsZoneProp, err := expandComputeForwardingRuleNoAutomateDnsZone(d.Get("no_automate_dns_zone"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("no_automate_dns_zone"); ok || !reflect.DeepEqual(v, noAutomateDnsZoneProp) {
+		obj["noAutomateDnsZone"] = noAutomateDnsZoneProp
+	}
 	regionProp, err := expandComputeForwardingRuleRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -380,6 +386,10 @@ func expandComputeForwardingRuleSourceIpRanges(v interface{}, d tpgresource.Terr
 }
 
 func expandComputeForwardingRuleAllowPscGlobalAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeForwardingRuleNoAutomateDnsZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
