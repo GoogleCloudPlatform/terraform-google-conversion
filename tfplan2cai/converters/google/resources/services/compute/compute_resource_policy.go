@@ -86,6 +86,12 @@ func GetComputeResourcePolicyApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("instance_schedule_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(instanceSchedulePolicyProp)) && (ok || !reflect.DeepEqual(v, instanceSchedulePolicyProp)) {
 		obj["instanceSchedulePolicy"] = instanceSchedulePolicyProp
 	}
+	diskConsistencyGroupPolicyProp, err := expandComputeResourcePolicyDiskConsistencyGroupPolicy(d.Get("disk_consistency_group_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disk_consistency_group_policy"); ok || !reflect.DeepEqual(v, diskConsistencyGroupPolicyProp) {
+		obj["diskConsistencyGroupPolicy"] = diskConsistencyGroupPolicyProp
+	}
 	regionProp, err := expandComputeResourcePolicyRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -541,6 +547,23 @@ func expandComputeResourcePolicyInstanceSchedulePolicyStartTime(v interface{}, d
 
 func expandComputeResourcePolicyInstanceSchedulePolicyExpirationTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeResourcePolicyDiskConsistencyGroupPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	if isEnabled, ok := original["enabled"]; ok {
+		if !isEnabled.(bool) {
+			return nil, nil
+		}
+	}
+	transformed := make(map[string]interface{})
+	return transformed, nil
 }
 
 func expandComputeResourcePolicyRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
