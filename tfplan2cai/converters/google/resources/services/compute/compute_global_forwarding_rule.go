@@ -132,6 +132,12 @@ func GetComputeGlobalForwardingRuleApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("source_ip_ranges"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceIpRangesProp)) && (ok || !reflect.DeepEqual(v, sourceIpRangesProp)) {
 		obj["sourceIpRanges"] = sourceIpRangesProp
 	}
+	noAutomateDnsZoneProp, err := expandComputeGlobalForwardingRuleNoAutomateDnsZone(d.Get("no_automate_dns_zone"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("no_automate_dns_zone"); ok || !reflect.DeepEqual(v, noAutomateDnsZoneProp) {
+		obj["noAutomateDnsZone"] = noAutomateDnsZoneProp
+	}
 
 	return obj, nil
 }
@@ -262,5 +268,9 @@ func expandComputeGlobalForwardingRuleTarget(v interface{}, d tpgresource.Terraf
 }
 
 func expandComputeGlobalForwardingRuleSourceIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeGlobalForwardingRuleNoAutomateDnsZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
