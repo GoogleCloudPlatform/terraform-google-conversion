@@ -111,6 +111,12 @@ func GetComputeRegionDiskApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("source_disk"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceDiskProp)) && (ok || !reflect.DeepEqual(v, sourceDiskProp)) {
 		obj["sourceDisk"] = sourceDiskProp
 	}
+	asyncPrimaryDiskProp, err := expandComputeRegionDiskAsyncPrimaryDisk(d.Get("async_primary_disk"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("async_primary_disk"); !tpgresource.IsEmptyValue(reflect.ValueOf(asyncPrimaryDiskProp)) && (ok || !reflect.DeepEqual(v, asyncPrimaryDiskProp)) {
+		obj["asyncPrimaryDisk"] = asyncPrimaryDiskProp
+	}
 	guestOsFeaturesProp, err := expandComputeRegionDiskGuestOsFeatures(d.Get("guest_os_features"), d, config)
 	if err != nil {
 		return nil, err
@@ -248,6 +254,29 @@ func expandComputeRegionDiskType(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandComputeRegionDiskSourceDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskAsyncPrimaryDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisk, err := expandComputeRegionDiskAsyncPrimaryDiskDisk(original["disk"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisk); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disk"] = transformedDisk
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionDiskAsyncPrimaryDiskDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
