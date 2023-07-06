@@ -194,6 +194,13 @@ func expandIAMWorkforcePoolWorkforcePoolProviderOidc(v interface{}, d tpgresourc
 		transformed["clientId"] = transformedClientId
 	}
 
+	transformedClientSecret, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcClientSecret(original["client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecret"] = transformedClientSecret
+	}
+
 	transformedWebSsoConfig, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfig(original["web_sso_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -209,6 +216,59 @@ func expandIAMWorkforcePoolWorkforcePoolProviderOidcIssuerUri(v interface{}, d t
 }
 
 func expandIAMWorkforcePoolWorkforcePoolProviderOidcClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderOidcClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedValue, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcClientSecretValue(original["value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["value"] = transformedValue
+	}
+
+	return transformed, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderOidcClientSecretValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPlainText, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcClientSecretValuePlainText(original["plain_text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPlainText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["plainText"] = transformedPlainText
+	}
+
+	transformedThumbprint, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcClientSecretValueThumbprint(original["thumbprint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThumbprint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thumbprint"] = transformedThumbprint
+	}
+
+	return transformed, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderOidcClientSecretValuePlainText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderOidcClientSecretValueThumbprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
