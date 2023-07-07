@@ -155,6 +155,12 @@ func GetCloudBuildTriggerApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("git_file_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(gitFileSourceProp)) && (ok || !reflect.DeepEqual(v, gitFileSourceProp)) {
 		obj["gitFileSource"] = gitFileSourceProp
 	}
+	repositoryEventConfigProp, err := expandCloudBuildTriggerRepositoryEventConfig(d.Get("repository_event_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("repository_event_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(repositoryEventConfigProp)) && (ok || !reflect.DeepEqual(v, repositoryEventConfigProp)) {
+		obj["repositoryEventConfig"] = repositoryEventConfigProp
+	}
 	sourceToBuildProp, err := expandCloudBuildTriggerSourceToBuild(d.Get("source_to_build"), d, config)
 	if err != nil {
 		return nil, err
@@ -285,6 +291,13 @@ func expandCloudBuildTriggerGitFileSource(v interface{}, d tpgresource.Terraform
 		transformed["uri"] = transformedUri
 	}
 
+	transformedRepository, err := expandCloudBuildTriggerGitFileSourceRepository(original["repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repository"] = transformedRepository
+	}
+
 	transformedRepoType, err := expandCloudBuildTriggerGitFileSourceRepoType(original["repo_type"], d, config)
 	if err != nil {
 		return nil, err
@@ -317,6 +330,10 @@ func expandCloudBuildTriggerGitFileSourceUri(v interface{}, d tpgresource.Terraf
 	return v, nil
 }
 
+func expandCloudBuildTriggerGitFileSourceRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandCloudBuildTriggerGitFileSourceRepoType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -326,6 +343,133 @@ func expandCloudBuildTriggerGitFileSourceRevision(v interface{}, d tpgresource.T
 }
 
 func expandCloudBuildTriggerGitFileSourceGithubEnterpriseConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRepository, err := expandCloudBuildTriggerRepositoryEventConfigRepository(original["repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repository"] = transformedRepository
+	}
+
+	transformedPullRequest, err := expandCloudBuildTriggerRepositoryEventConfigPullRequest(original["pull_request"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPullRequest); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pullRequest"] = transformedPullRequest
+	}
+
+	transformedPush, err := expandCloudBuildTriggerRepositoryEventConfigPush(original["push"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPush); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["push"] = transformedPush
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigPullRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBranch, err := expandCloudBuildTriggerRepositoryEventConfigPullRequestBranch(original["branch"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBranch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["branch"] = transformedBranch
+	}
+
+	transformedInvertRegex, err := expandCloudBuildTriggerRepositoryEventConfigPullRequestInvertRegex(original["invert_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInvertRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["invertRegex"] = transformedInvertRegex
+	}
+
+	transformedCommentControl, err := expandCloudBuildTriggerRepositoryEventConfigPullRequestCommentControl(original["comment_control"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCommentControl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["commentControl"] = transformedCommentControl
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigPullRequestBranch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigPullRequestInvertRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigPullRequestCommentControl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigPush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBranch, err := expandCloudBuildTriggerRepositoryEventConfigPushBranch(original["branch"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBranch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["branch"] = transformedBranch
+	}
+
+	transformedTag, err := expandCloudBuildTriggerRepositoryEventConfigPushTag(original["tag"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tag"] = transformedTag
+	}
+
+	transformedInvertRegex, err := expandCloudBuildTriggerRepositoryEventConfigPushInvertRegex(original["invert_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInvertRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["invertRegex"] = transformedInvertRegex
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigPushBranch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigPushTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerRepositoryEventConfigPushInvertRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -343,6 +487,13 @@ func expandCloudBuildTriggerSourceToBuild(v interface{}, d tpgresource.Terraform
 		return nil, err
 	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["uri"] = transformedUri
+	}
+
+	transformedRepository, err := expandCloudBuildTriggerSourceToBuildRepository(original["repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repository"] = transformedRepository
 	}
 
 	transformedRef, err := expandCloudBuildTriggerSourceToBuildRef(original["ref"], d, config)
@@ -370,6 +521,10 @@ func expandCloudBuildTriggerSourceToBuild(v interface{}, d tpgresource.Terraform
 }
 
 func expandCloudBuildTriggerSourceToBuildUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerSourceToBuildRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
