@@ -194,6 +194,13 @@ func expandCertificateManagerCertificateManaged(v interface{}, d tpgresource.Ter
 		transformed["dnsAuthorizations"] = transformedDnsAuthorizations
 	}
 
+	transformedIssuanceConfig, err := expandCertificateManagerCertificateManagedIssuanceConfig(original["issuance_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIssuanceConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["issuanceConfig"] = transformedIssuanceConfig
+	}
+
 	transformedState, err := expandCertificateManagerCertificateManagedState(original["state"], d, config)
 	if err != nil {
 		return nil, err
@@ -223,6 +230,10 @@ func expandCertificateManagerCertificateManagedDomains(v interface{}, d tpgresou
 }
 
 func expandCertificateManagerCertificateManagedDnsAuthorizations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateManagerCertificateManagedIssuanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
