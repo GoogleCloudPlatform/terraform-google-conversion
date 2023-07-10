@@ -96,6 +96,13 @@ func expandGKEHub2FeatureSpec(v interface{}, d tpgresource.TerraformResourceData
 		transformed["multiclusteringress"] = transformedMulticlusteringress
 	}
 
+	transformedFleetobservability, err := expandGKEHub2FeatureSpecFleetobservability(original["fleetobservability"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFleetobservability); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fleetobservability"] = transformedFleetobservability
+	}
+
 	return transformed, nil
 }
 
@@ -119,5 +126,96 @@ func expandGKEHub2FeatureSpecMulticlusteringress(v interface{}, d tpgresource.Te
 }
 
 func expandGKEHub2FeatureSpecMulticlusteringressConfigMembership(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecFleetobservability(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLoggingConfig, err := expandGKEHub2FeatureSpecFleetobservabilityLoggingConfig(original["logging_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLoggingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["loggingConfig"] = transformedLoggingConfig
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDefaultConfig, err := expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigDefaultConfig(original["default_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultConfig"] = transformedDefaultConfig
+	}
+
+	transformedFleetScopeLogsConfig, err := expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigFleetScopeLogsConfig(original["fleet_scope_logs_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFleetScopeLogsConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fleetScopeLogsConfig"] = transformedFleetScopeLogsConfig
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigDefaultConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMode, err := expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigDefaultConfigMode(original["mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mode"] = transformedMode
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigDefaultConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigFleetScopeLogsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMode, err := expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigFleetScopeLogsConfigMode(original["mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mode"] = transformedMode
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigFleetScopeLogsConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
