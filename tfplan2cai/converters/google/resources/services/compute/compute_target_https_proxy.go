@@ -102,6 +102,12 @@ func GetComputeTargetHttpsProxyApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("proxy_bind"); !tpgresource.IsEmptyValue(reflect.ValueOf(proxyBindProp)) && (ok || !reflect.DeepEqual(v, proxyBindProp)) {
 		obj["proxyBind"] = proxyBindProp
 	}
+	httpKeepAliveTimeoutSecProp, err := expandComputeTargetHttpsProxyHttpKeepAliveTimeoutSec(d.Get("http_keep_alive_timeout_sec"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("http_keep_alive_timeout_sec"); !tpgresource.IsEmptyValue(reflect.ValueOf(httpKeepAliveTimeoutSecProp)) && (ok || !reflect.DeepEqual(v, httpKeepAliveTimeoutSecProp)) {
+		obj["httpKeepAliveTimeoutSec"] = httpKeepAliveTimeoutSecProp
+	}
 
 	return obj, nil
 }
@@ -155,5 +161,9 @@ func expandComputeTargetHttpsProxyUrlMap(v interface{}, d tpgresource.TerraformR
 }
 
 func expandComputeTargetHttpsProxyProxyBind(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeTargetHttpsProxyHttpKeepAliveTimeoutSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
