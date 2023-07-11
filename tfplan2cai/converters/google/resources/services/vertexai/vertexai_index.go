@@ -159,6 +159,13 @@ func expandVertexAIIndexMetadataConfig(v interface{}, d tpgresource.TerraformRes
 		transformed["approximateNeighborsCount"] = transformedApproximateNeighborsCount
 	}
 
+	transformedShardSize, err := expandVertexAIIndexMetadataConfigShardSize(original["shard_size"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedShardSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["shardSize"] = transformedShardSize
+	}
+
 	transformedDistanceMeasureType, err := expandVertexAIIndexMetadataConfigDistanceMeasureType(original["distance_measure_type"], d, config)
 	if err != nil {
 		return nil, err
@@ -188,6 +195,10 @@ func expandVertexAIIndexMetadataConfigDimensions(v interface{}, d tpgresource.Te
 }
 
 func expandVertexAIIndexMetadataConfigApproximateNeighborsCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIIndexMetadataConfigShardSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
