@@ -69,6 +69,7 @@ func resourceMonitoringMonitoredProjectEncoder(d tpgresource.TerraformResourceDa
 	name = tpgresource.GetResourceNameFromSelfLink(name)
 	metricsScope := d.Get("metrics_scope").(string)
 	metricsScope = tpgresource.GetResourceNameFromSelfLink(metricsScope)
+	d.Set("metrics_scope", metricsScope)
 	obj["name"] = fmt.Sprintf("locations/global/metricsScopes/%s/projects/%s", metricsScope, name)
 	return obj, nil
 }
