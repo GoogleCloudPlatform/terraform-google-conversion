@@ -65,6 +65,12 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("version"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionProp)) && (ok || !reflect.DeepEqual(v, versionProp)) {
 		obj["version"] = versionProp
 	}
+	complexDataTypeReferenceParsingProp, err := expandHealthcareFhirStoreComplexDataTypeReferenceParsing(d.Get("complex_data_type_reference_parsing"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("complex_data_type_reference_parsing"); !tpgresource.IsEmptyValue(reflect.ValueOf(complexDataTypeReferenceParsingProp)) && (ok || !reflect.DeepEqual(v, complexDataTypeReferenceParsingProp)) {
+		obj["complexDataTypeReferenceParsing"] = complexDataTypeReferenceParsingProp
+	}
 	enableUpdateCreateProp, err := expandHealthcareFhirStoreEnableUpdateCreate(d.Get("enable_update_create"), d, config)
 	if err != nil {
 		return nil, err
@@ -116,6 +122,10 @@ func expandHealthcareFhirStoreName(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandHealthcareFhirStoreVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreComplexDataTypeReferenceParsing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
