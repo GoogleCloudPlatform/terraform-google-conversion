@@ -59,15 +59,12 @@ func GetNetworkSecurityGatewaySecurityPolicyApiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-<<<<<<< HEAD
-=======
 	tlsInspectionPolicyProp, err := expandNetworkSecurityGatewaySecurityPolicyTlsInspectionPolicy(d.Get("tls_inspection_policy"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("tls_inspection_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(tlsInspectionPolicyProp)) && (ok || !reflect.DeepEqual(v, tlsInspectionPolicyProp)) {
 		obj["tlsInspectionPolicy"] = tlsInspectionPolicyProp
 	}
->>>>>>> d85c314 (all change required to pass test)
 
 	return obj, nil
 }
