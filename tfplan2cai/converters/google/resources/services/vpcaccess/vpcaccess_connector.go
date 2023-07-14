@@ -15,11 +15,17 @@
 package vpcaccess
 
 import (
+	"context"
 	"reflect"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
+
+// Are the number of min/max instances reduced?
+func AreInstancesReduced(_ context.Context, old, new, _ interface{}) bool {
+	return new.(int) < old.(int)
+}
 
 const VPCAccessConnectorAssetType string = "vpcaccess.googleapis.com/Connector"
 
