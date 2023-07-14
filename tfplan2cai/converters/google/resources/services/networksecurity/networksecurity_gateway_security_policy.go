@@ -72,10 +72,7 @@ func GetNetworkSecurityGatewaySecurityPolicyApiObject(d tpgresource.TerraformRes
 func expandNetworkSecurityGatewaySecurityPolicyDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
-<<<<<<< HEAD
-=======
 
 func expandNetworkSecurityGatewaySecurityPolicyTlsInspectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
->>>>>>> d85c314 (all change required to pass test)
