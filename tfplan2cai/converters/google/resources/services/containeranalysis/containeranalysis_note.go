@@ -42,8 +42,8 @@ func GetContainerAnalysisNoteCaiObject(d tpgresource.TerraformResourceData, conf
 			Name: name,
 			Type: ContainerAnalysisNoteAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/containeranalysis/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/containeranalysis/v1beta1/rest",
 				DiscoveryName:        "Note",
 				Data:                 obj,
 			},
@@ -102,9 +102,7 @@ func GetContainerAnalysisNoteApiObject(d tpgresource.TerraformResourceData, conf
 }
 
 func resourceContainerAnalysisNoteEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	// Field was renamed in GA API
-	obj["attestation"] = obj["attestationAuthority"]
-	delete(obj, "attestationAuthority")
+	// encoder logic only in GA provider
 
 	return obj, nil
 }

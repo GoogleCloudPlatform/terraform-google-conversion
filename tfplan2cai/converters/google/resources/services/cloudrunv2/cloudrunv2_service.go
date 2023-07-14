@@ -485,6 +485,13 @@ func expandCloudRunV2ServiceTemplateContainers(v interface{}, d tpgresource.Terr
 			transformed["startupProbe"] = transformedStartupProbe
 		}
 
+		transformedDependsOn, err := expandCloudRunV2ServiceTemplateContainersDependsOn(original["depends_on"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDependsOn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dependsOn"] = transformedDependsOn
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1187,6 +1194,10 @@ func expandCloudRunV2ServiceTemplateContainersStartupProbeGrpcService(v interfac
 	return v, nil
 }
 
+func expandCloudRunV2ServiceTemplateContainersDependsOn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandCloudRunV2ServiceTemplateVolumes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -1216,6 +1227,13 @@ func expandCloudRunV2ServiceTemplateVolumes(v interface{}, d tpgresource.Terrafo
 			return nil, err
 		} else if val := reflect.ValueOf(transformedCloudSqlInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["cloudSqlInstance"] = transformedCloudSqlInstance
+		}
+
+		transformedEmptyDir, err := expandCloudRunV2ServiceTemplateVolumesEmptyDir(original["empty_dir"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEmptyDir); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["emptyDir"] = transformedEmptyDir
 		}
 
 		req = append(req, transformed)
@@ -1336,6 +1354,40 @@ func expandCloudRunV2ServiceTemplateVolumesCloudSqlInstance(v interface{}, d tpg
 }
 
 func expandCloudRunV2ServiceTemplateVolumesCloudSqlInstanceInstances(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateVolumesEmptyDir(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMedium, err := expandCloudRunV2ServiceTemplateVolumesEmptyDirMedium(original["medium"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMedium); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["medium"] = transformedMedium
+	}
+
+	transformedSizeLimit, err := expandCloudRunV2ServiceTemplateVolumesEmptyDirSizeLimit(original["size_limit"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSizeLimit); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sizeLimit"] = transformedSizeLimit
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2ServiceTemplateVolumesEmptyDirMedium(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateVolumesEmptyDirSizeLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

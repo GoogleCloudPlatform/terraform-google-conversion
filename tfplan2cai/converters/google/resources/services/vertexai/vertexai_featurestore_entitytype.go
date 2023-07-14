@@ -41,8 +41,8 @@ func GetVertexAIFeaturestoreEntitytypeCaiObject(d tpgresource.TerraformResourceD
 			Name: name,
 			Type: VertexAIFeaturestoreEntitytypeAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
 				DiscoveryName:        "FeaturestoreEntitytype",
 				Data:                 obj,
 			},
@@ -71,6 +71,12 @@ func GetVertexAIFeaturestoreEntitytypeApiObject(d tpgresource.TerraformResourceD
 		return nil, err
 	} else if v, ok := d.GetOkExists("monitoring_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(monitoringConfigProp)) && (ok || !reflect.DeepEqual(v, monitoringConfigProp)) {
 		obj["monitoringConfig"] = monitoringConfigProp
+	}
+	offlineStorageTtlDaysProp, err := expandVertexAIFeaturestoreEntitytypeOfflineStorageTtlDays(d.Get("offline_storage_ttl_days"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("offline_storage_ttl_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(offlineStorageTtlDaysProp)) && (ok || !reflect.DeepEqual(v, offlineStorageTtlDaysProp)) {
+		obj["offlineStorageTtlDays"] = offlineStorageTtlDaysProp
 	}
 
 	return resourceVertexAIFeaturestoreEntitytypeEncoder(d, config, obj)
@@ -158,6 +164,13 @@ func expandVertexAIFeaturestoreEntitytypeMonitoringConfigSnapshotAnalysis(v inte
 		transformed["disabled"] = transformedDisabled
 	}
 
+	transformedMonitoringInterval, err := expandVertexAIFeaturestoreEntitytypeMonitoringConfigSnapshotAnalysisMonitoringInterval(original["monitoring_interval"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMonitoringInterval); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["monitoringInterval"] = transformedMonitoringInterval
+	}
+
 	transformedMonitoringIntervalDays, err := expandVertexAIFeaturestoreEntitytypeMonitoringConfigSnapshotAnalysisMonitoringIntervalDays(original["monitoring_interval_days"], d, config)
 	if err != nil {
 		return nil, err
@@ -176,6 +189,10 @@ func expandVertexAIFeaturestoreEntitytypeMonitoringConfigSnapshotAnalysis(v inte
 }
 
 func expandVertexAIFeaturestoreEntitytypeMonitoringConfigSnapshotAnalysisDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeaturestoreEntitytypeMonitoringConfigSnapshotAnalysisMonitoringInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -264,5 +281,9 @@ func expandVertexAIFeaturestoreEntitytypeMonitoringConfigCategoricalThresholdCon
 }
 
 func expandVertexAIFeaturestoreEntitytypeMonitoringConfigCategoricalThresholdConfigValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeaturestoreEntitytypeOfflineStorageTtlDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

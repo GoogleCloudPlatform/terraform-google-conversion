@@ -40,8 +40,8 @@ func GetComputeHttpsHealthCheckCaiObject(d tpgresource.TerraformResourceData, co
 			Name: name,
 			Type: ComputeHttpsHealthCheckAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "HttpsHealthCheck",
 				Data:                 obj,
 			},

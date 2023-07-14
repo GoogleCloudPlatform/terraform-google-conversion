@@ -71,8 +71,8 @@ func GetIAMBetaWorkloadIdentityPoolCaiObject(d tpgresource.TerraformResourceData
 			Name: name,
 			Type: IAMBetaWorkloadIdentityPoolAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/iam/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/iam/v1beta/rest",
 				DiscoveryName:        "WorkloadIdentityPool",
 				Data:                 obj,
 			},

@@ -40,8 +40,8 @@ func GetBigqueryAnalyticsHubListingCaiObject(d tpgresource.TerraformResourceData
 			Name: name,
 			Type: BigqueryAnalyticsHubListingAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/analyticshub/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/analyticshub/v1beta1/rest",
 				DiscoveryName:        "Listing",
 				Data:                 obj,
 			},

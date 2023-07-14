@@ -42,8 +42,8 @@ func GetMemcacheInstanceCaiObject(d tpgresource.TerraformResourceData, config *t
 			Name: name,
 			Type: MemcacheInstanceAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/memcache/v1/rest",
+				Version:              "v1beta2",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/memcache/v1beta2/rest",
 				DiscoveryName:        "Instance",
 				Data:                 obj,
 			},

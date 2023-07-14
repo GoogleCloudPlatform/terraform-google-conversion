@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"google.golang.org/api/googleapi"
 
-	"google.golang.org/api/compute/v1"
+	compute "google.golang.org/api/compute/v0.beta"
 )
 
 func instanceSchedulingNodeAffinitiesElemSchema() *schema.Resource {
@@ -128,7 +128,55 @@ func expandScheduling(v interface{}) (*compute.Scheduling, error) {
 		scheduling.InstanceTerminationAction = v.(string)
 		scheduling.ForceSendFields = append(scheduling.ForceSendFields, "InstanceTerminationAction")
 	}
+	if v, ok := original["max_run_duration"]; ok {
+		transformedMaxRunDuration, err := expandComputeMaxRunDuration(v)
+		if scheduling.InstanceTerminationAction == "STOP" && transformedMaxRunDuration != nil {
+			return nil, fmt.Errorf("Can not set MaxRunDuration on instance with STOP InstanceTerminationAction, it is not supported by terraform.")
+		}
+		if err != nil {
+			return nil, err
+		}
+		scheduling.MaxRunDuration = transformedMaxRunDuration
+		scheduling.ForceSendFields = append(scheduling.ForceSendFields, "MaxRunDuration")
+	}
+	if v, ok := original["maintenance_interval"]; ok {
+		scheduling.MaintenanceInterval = v.(string)
+	}
 	return scheduling, nil
+}
+
+func expandComputeMaxRunDuration(v interface{}) (*compute.Duration, error) {
+	l := v.([]interface{})
+	duration := compute.Duration{}
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+
+	transformedNanos, err := expandComputeMaxRunDurationNanos(original["nanos"])
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		duration.Nanos = int64(transformedNanos.(int))
+	}
+
+	transformedSeconds, err := expandComputeMaxRunDurationSeconds(original["seconds"])
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		duration.Seconds = int64(transformedSeconds.(int))
+	}
+
+	return &duration, nil
+}
+
+func expandComputeMaxRunDurationNanos(v interface{}) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeMaxRunDurationSeconds(v interface{}) (interface{}, error) {
+	return v, nil
 }
 
 func flattenScheduling(resp *compute.Scheduling) []map[string]interface{} {
@@ -144,6 +192,13 @@ func flattenScheduling(resp *compute.Scheduling) []map[string]interface{} {
 		schedulingMap["automatic_restart"] = *resp.AutomaticRestart
 	}
 
+	if resp.MaxRunDuration != nil {
+		schedulingMap["max_run_duration"] = flattenComputeMaxRunDuration(resp.MaxRunDuration)
+	}
+	if resp.MaintenanceInterval != "" {
+		schedulingMap["maintenance_interval"] = resp.MaintenanceInterval
+	}
+
 	nodeAffinities := schema.NewSet(schema.HashResource(instanceSchedulingNodeAffinitiesElemSchema()), nil)
 	for _, na := range resp.NodeAffinities {
 		nodeAffinities.Add(map[string]interface{}{
@@ -155,6 +210,16 @@ func flattenScheduling(resp *compute.Scheduling) []map[string]interface{} {
 	schedulingMap["node_affinities"] = nodeAffinities
 
 	return []map[string]interface{}{schedulingMap}
+}
+
+func flattenComputeMaxRunDuration(v *compute.Duration) []interface{} {
+	if v == nil {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["nanos"] = v.Nanos
+	transformed["seconds"] = v.Seconds
+	return []interface{}{transformed}
 }
 
 func flattenAccessConfigs(accessConfigs []*compute.AccessConfig) ([]map[string]interface{}, string) {
@@ -224,6 +289,13 @@ func flattenNetworkInterfaces(d *schema.ResourceData, config *transport_tpg.Conf
 			internalIP = iface.NetworkIP
 		}
 
+		if iface.NetworkAttachment != "" {
+			networkAttachment, err := tpgresource.GetRelativePath(iface.NetworkAttachment)
+			if err != nil {
+				return nil, "", "", "", err
+			}
+			flattened[i]["network_attachment"] = networkAttachment
+		}
 	}
 	return flattened, region, internalIP, externalIP, nil
 }
@@ -268,10 +340,24 @@ func expandNetworkInterfaces(d tpgresource.TerraformResourceData, config *transp
 	for i, raw := range configs {
 		data := raw.(map[string]interface{})
 
+		var networkAttachment = ""
 		network := data["network"].(string)
 		subnetwork := data["subnetwork"].(string)
-		if network == "" && subnetwork == "" {
-			return nil, fmt.Errorf("exactly one of network or subnetwork must be provided")
+		if networkAttachmentObj, ok := data["network_attachment"]; ok {
+			networkAttachment = networkAttachmentObj.(string)
+		}
+		// Checks if networkAttachment is not specified in resource, network or subnetwork have to be specifed.
+		if networkAttachment == "" && network == "" && subnetwork == "" {
+			return nil, fmt.Errorf("exactly one of network, subnetwork, or network_attachment must be provided")
+		}
+
+		if networkAttachment != "" {
+			if network != "" {
+				return nil, fmt.Errorf("Cannot have a network provided with networkAttachment given that networkAttachment is associated with a network already")
+			}
+			if subnetwork != "" {
+				return nil, fmt.Errorf("Cannot have a subnetwork provided with networkAttachment given that networkAttachment is associated with a subnetwork already")
+			}
 		}
 
 		nf, err := tpgresource.ParseNetworkFieldValue(network, d, config)
@@ -288,6 +374,7 @@ func expandNetworkInterfaces(d tpgresource.TerraformResourceData, config *transp
 		ifaces[i] = &compute.NetworkInterface{
 			NetworkIP:         data["network_ip"].(string),
 			Network:           nf.RelativeLink(),
+			NetworkAttachment: networkAttachment,
 			Subnetwork:        sf.RelativeLink(),
 			AccessConfigs:     expandAccessConfigs(data["access_config"].([]interface{})),
 			AliasIpRanges:     expandAliasIpRanges(data["alias_ip_range"].([]interface{})),

@@ -43,8 +43,8 @@ func GetDNSManagedZoneCaiObject(d tpgresource.TerraformResourceData, config *tra
 			Name: name,
 			Type: DNSManagedZoneAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1/rest",
+				Version:              "v1beta2",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1beta2/rest",
 				DiscoveryName:        "ManagedZone",
 				Data:                 obj,
 			},
@@ -109,6 +109,18 @@ func GetDNSManagedZoneApiObject(d tpgresource.TerraformResourceData, config *tra
 		return nil, err
 	} else if v, ok := d.GetOkExists("peering_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(peeringConfigProp)) && (ok || !reflect.DeepEqual(v, peeringConfigProp)) {
 		obj["peeringConfig"] = peeringConfigProp
+	}
+	reverseLookupConfigProp, err := expandDNSManagedZoneReverseLookup(d.Get("reverse_lookup"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("reverse_lookup"); !tpgresource.IsEmptyValue(reflect.ValueOf(reverseLookupConfigProp)) && (ok || !reflect.DeepEqual(v, reverseLookupConfigProp)) {
+		obj["reverseLookupConfig"] = reverseLookupConfigProp
+	}
+	serviceDirectoryConfigProp, err := expandDNSManagedZoneServiceDirectoryConfig(d.Get("service_directory_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("service_directory_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceDirectoryConfigProp)) && (ok || !reflect.DeepEqual(v, serviceDirectoryConfigProp)) {
+		obj["serviceDirectoryConfig"] = serviceDirectoryConfigProp
 	}
 	cloudLoggingConfigProp, err := expandDNSManagedZoneCloudLoggingConfig(d.Get("cloud_logging_config"), d, config)
 	if err != nil {
@@ -456,6 +468,65 @@ func expandDNSManagedZonePeeringConfigTargetNetworkNetworkUrl(v interface{}, d t
 		return "", err
 	}
 	return tpgresource.ConvertSelfLinkToV1(url), nil
+}
+
+func expandDNSManagedZoneReverseLookup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil || !v.(bool) {
+		return nil, nil
+	}
+
+	return struct{}{}, nil
+}
+
+func expandDNSManagedZoneServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNamespace, err := expandDNSManagedZoneServiceDirectoryConfigNamespace(original["namespace"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNamespace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["namespace"] = transformedNamespace
+	}
+
+	return transformed, nil
+}
+
+func expandDNSManagedZoneServiceDirectoryConfigNamespace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNamespaceUrl, err := expandDNSManagedZoneServiceDirectoryConfigNamespaceNamespaceUrl(original["namespace_url"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNamespaceUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["namespaceUrl"] = transformedNamespaceUrl
+	}
+
+	return transformed, nil
+}
+
+func expandDNSManagedZoneServiceDirectoryConfigNamespaceNamespaceUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil || v.(string) == "" {
+		return "", nil
+	} else if strings.HasPrefix(v.(string), "https://") {
+		return v, nil
+	}
+	url, err := tpgresource.ReplaceVars(d, config, "{{ServiceDirectoryBasePath}}"+v.(string))
+	if err != nil {
+		return "", err
+	}
+	return url, nil
 }
 
 func expandDNSManagedZoneCloudLoggingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

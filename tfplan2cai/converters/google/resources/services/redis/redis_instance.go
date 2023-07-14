@@ -85,8 +85,8 @@ func GetRedisInstanceCaiObject(d tpgresource.TerraformResourceData, config *tran
 			Name: name,
 			Type: RedisInstanceAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/redis/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/redis/v1beta1/rest",
 				DiscoveryName:        "Instance",
 				Data:                 obj,
 			},

@@ -44,8 +44,8 @@ func GetComputeRegionDiskCaiObject(d tpgresource.TerraformResourceData, config *
 			Name: name,
 			Type: ComputeRegionDiskAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionDisk",
 				Data:                 obj,
 			},
@@ -400,6 +400,13 @@ func expandComputeRegionDiskSourceSnapshotEncryptionKey(v interface{}, d tpgreso
 		transformed["rawKey"] = transformedRawKey
 	}
 
+	transformedKmsKeyName, err := expandComputeRegionDiskSourceSnapshotEncryptionKeyKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
 	transformedSha256, err := expandComputeRegionDiskSourceSnapshotEncryptionKeySha256(original["sha256"], d, config)
 	if err != nil {
 		return nil, err
@@ -411,6 +418,10 @@ func expandComputeRegionDiskSourceSnapshotEncryptionKey(v interface{}, d tpgreso
 }
 
 func expandComputeRegionDiskSourceSnapshotEncryptionKeyRawKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskSourceSnapshotEncryptionKeyKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
