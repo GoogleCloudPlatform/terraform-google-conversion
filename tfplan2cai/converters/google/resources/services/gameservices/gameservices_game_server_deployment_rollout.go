@@ -40,8 +40,8 @@ func GetGameServicesGameServerDeploymentRolloutCaiObject(d tpgresource.Terraform
 			Name: name,
 			Type: GameServicesGameServerDeploymentRolloutAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gameservices/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gameservices/v1beta/rest",
 				DiscoveryName:        "GameServerDeploymentRollout",
 				Data:                 obj,
 			},

@@ -41,8 +41,8 @@ func GetComputeGlobalForwardingRuleCaiObject(d tpgresource.TerraformResourceData
 			Name: name,
 			Type: ComputeGlobalForwardingRuleAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "GlobalForwardingRule",
 				Data:                 obj,
 			},
@@ -131,6 +131,12 @@ func GetComputeGlobalForwardingRuleApiObject(d tpgresource.TerraformResourceData
 		return nil, err
 	} else if v, ok := d.GetOkExists("source_ip_ranges"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceIpRangesProp)) && (ok || !reflect.DeepEqual(v, sourceIpRangesProp)) {
 		obj["sourceIpRanges"] = sourceIpRangesProp
+	}
+	allowPscGlobalAccessProp, err := expandComputeGlobalForwardingRuleAllowPscGlobalAccess(d.Get("allow_psc_global_access"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_psc_global_access"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowPscGlobalAccessProp)) && (ok || !reflect.DeepEqual(v, allowPscGlobalAccessProp)) {
+		obj["allowPscGlobalAccess"] = allowPscGlobalAccessProp
 	}
 	noAutomateDnsZoneProp, err := expandComputeGlobalForwardingRuleNoAutomateDnsZone(d.Get("no_automate_dns_zone"), d, config)
 	if err != nil {
@@ -268,6 +274,10 @@ func expandComputeGlobalForwardingRuleTarget(v interface{}, d tpgresource.Terraf
 }
 
 func expandComputeGlobalForwardingRuleSourceIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeGlobalForwardingRuleAllowPscGlobalAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

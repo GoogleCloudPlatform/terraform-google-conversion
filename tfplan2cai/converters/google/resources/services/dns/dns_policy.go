@@ -43,8 +43,8 @@ func GetDNSPolicyCaiObject(d tpgresource.TerraformResourceData, config *transpor
 			Name: name,
 			Type: DNSPolicyAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1/rest",
+				Version:              "v1beta2",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1beta2/rest",
 				DiscoveryName:        "Policy",
 				Data:                 obj,
 			},

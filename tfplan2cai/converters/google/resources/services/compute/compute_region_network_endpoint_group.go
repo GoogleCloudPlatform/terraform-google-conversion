@@ -41,8 +41,8 @@ func GetComputeRegionNetworkEndpointGroupCaiObject(d tpgresource.TerraformResour
 			Name: name,
 			Type: ComputeRegionNetworkEndpointGroupAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionNetworkEndpointGroup",
 				Data:                 obj,
 			},
@@ -107,6 +107,12 @@ func GetComputeRegionNetworkEndpointGroupApiObject(d tpgresource.TerraformResour
 		return nil, err
 	} else if v, ok := d.GetOkExists("cloud_function"); !tpgresource.IsEmptyValue(reflect.ValueOf(cloudFunctionProp)) && (ok || !reflect.DeepEqual(v, cloudFunctionProp)) {
 		obj["cloudFunction"] = cloudFunctionProp
+	}
+	serverlessDeploymentProp, err := expandComputeRegionNetworkEndpointGroupServerlessDeployment(d.Get("serverless_deployment"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("serverless_deployment"); !tpgresource.IsEmptyValue(reflect.ValueOf(serverlessDeploymentProp)) && (ok || !reflect.DeepEqual(v, serverlessDeploymentProp)) {
+		obj["serverlessDeployment"] = serverlessDeploymentProp
 	}
 	regionProp, err := expandComputeRegionNetworkEndpointGroupRegion(d.Get("region"), d, config)
 	if err != nil {
@@ -276,6 +282,67 @@ func expandComputeRegionNetworkEndpointGroupCloudFunctionFunction(v interface{},
 }
 
 func expandComputeRegionNetworkEndpointGroupCloudFunctionUrlMask(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupServerlessDeployment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPlatform, err := expandComputeRegionNetworkEndpointGroupServerlessDeploymentPlatform(original["platform"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPlatform); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["platform"] = transformedPlatform
+	}
+
+	transformedResource, err := expandComputeRegionNetworkEndpointGroupServerlessDeploymentResource(original["resource"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resource"] = transformedResource
+	}
+
+	transformedVersion, err := expandComputeRegionNetworkEndpointGroupServerlessDeploymentVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	transformedUrlMask, err := expandComputeRegionNetworkEndpointGroupServerlessDeploymentUrlMask(original["url_mask"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUrlMask); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["urlMask"] = transformedUrlMask
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupServerlessDeploymentPlatform(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupServerlessDeploymentResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupServerlessDeploymentVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupServerlessDeploymentUrlMask(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

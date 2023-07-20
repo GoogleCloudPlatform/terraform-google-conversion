@@ -17,6 +17,8 @@ package dataprocmetastore
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
@@ -40,8 +42,8 @@ func GetDataprocMetastoreServiceCaiObject(d tpgresource.TerraformResourceData, c
 			Name: name,
 			Type: DataprocMetastoreServiceAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/metastore/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/metastore/v1beta/rest",
 				DiscoveryName:        "Service",
 				Data:                 obj,
 			},
@@ -112,6 +114,12 @@ func GetDataprocMetastoreServiceApiObject(d tpgresource.TerraformResourceData, c
 		return nil, err
 	} else if v, ok := d.GetOkExists("release_channel"); !tpgresource.IsEmptyValue(reflect.ValueOf(releaseChannelProp)) && (ok || !reflect.DeepEqual(v, releaseChannelProp)) {
 		obj["releaseChannel"] = releaseChannelProp
+	}
+	metadataIntegrationProp, err := expandDataprocMetastoreServiceMetadataIntegration(d.Get("metadata_integration"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("metadata_integration"); !tpgresource.IsEmptyValue(reflect.ValueOf(metadataIntegrationProp)) && (ok || !reflect.DeepEqual(v, metadataIntegrationProp)) {
+		obj["metadataIntegration"] = metadataIntegrationProp
 	}
 	telemetryConfigProp, err := expandDataprocMetastoreServiceTelemetryConfig(d.Get("telemetry_config"), d, config)
 	if err != nil {
@@ -212,6 +220,13 @@ func expandDataprocMetastoreServiceHiveMetastoreConfig(v interface{}, d tpgresou
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedEndpointProtocol, err := expandDataprocMetastoreServiceHiveMetastoreConfigEndpointProtocol(original["endpoint_protocol"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndpointProtocol); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endpointProtocol"] = transformedEndpointProtocol
+	}
+
 	transformedVersion, err := expandDataprocMetastoreServiceHiveMetastoreConfigVersion(original["version"], d, config)
 	if err != nil {
 		return nil, err
@@ -233,7 +248,18 @@ func expandDataprocMetastoreServiceHiveMetastoreConfig(v interface{}, d tpgresou
 		transformed["kerberosConfig"] = transformedKerberosConfig
 	}
 
+	transformedAuxiliaryVersions, err := expandDataprocMetastoreServiceHiveMetastoreConfigAuxiliaryVersions(original["auxiliary_versions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuxiliaryVersions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["auxiliaryVersions"] = transformedAuxiliaryVersions
+	}
+
 	return transformed, nil
+}
+
+func expandDataprocMetastoreServiceHiveMetastoreConfigEndpointProtocol(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDataprocMetastoreServiceHiveMetastoreConfigVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -315,6 +341,53 @@ func expandDataprocMetastoreServiceHiveMetastoreConfigKerberosConfigKrb5ConfigGc
 	return v, nil
 }
 
+func expandDataprocMetastoreServiceHiveMetastoreConfigAuxiliaryVersions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+	if v == nil {
+		return map[string]interface{}{}, nil
+	}
+	m := make(map[string]interface{})
+	for _, raw := range v.(*schema.Set).List() {
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedVersion, err := expandDataprocMetastoreServiceHiveMetastoreConfigAuxiliaryVersionsVersion(original["version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["version"] = transformedVersion
+		}
+
+		transformedConfigOverrides, err := expandDataprocMetastoreServiceHiveMetastoreConfigAuxiliaryVersionsConfigOverrides(original["config_overrides"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConfigOverrides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["configOverrides"] = transformedConfigOverrides
+		}
+
+		transformedKey, err := tpgresource.ExpandString(original["key"], d, config)
+		if err != nil {
+			return nil, err
+		}
+		m[transformedKey] = transformed
+	}
+	return m, nil
+}
+
+func expandDataprocMetastoreServiceHiveMetastoreConfigAuxiliaryVersionsVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceHiveMetastoreConfigAuxiliaryVersionsConfigOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
 func expandDataprocMetastoreServiceNetworkConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -376,6 +449,48 @@ func expandDataprocMetastoreServiceDatabaseType(v interface{}, d tpgresource.Ter
 }
 
 func expandDataprocMetastoreServiceReleaseChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceMetadataIntegration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDataCatalogConfig, err := expandDataprocMetastoreServiceMetadataIntegrationDataCatalogConfig(original["data_catalog_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataCatalogConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataCatalogConfig"] = transformedDataCatalogConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDataprocMetastoreServiceMetadataIntegrationDataCatalogConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandDataprocMetastoreServiceMetadataIntegrationDataCatalogConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandDataprocMetastoreServiceMetadataIntegrationDataCatalogConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

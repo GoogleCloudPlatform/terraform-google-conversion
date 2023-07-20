@@ -205,6 +205,11 @@ func CompareIpAddressOrSelfLinkOrResourceName(_, old, new string, _ *schema.Reso
 	return CompareSelfLinkOrResourceName("", old, new, nil)
 }
 
+// Suppress all diffs, used for Disk.Interface which is a nonfunctional field
+func AlwaysDiffSuppress(_, _, _ string, _ *schema.ResourceData) bool {
+	return true
+}
+
 // Use this method when subnet is optioanl and auto_create_subnetworks = true
 // API sometimes choose a subnet so the diff needs to be ignored
 func CompareOptionalSubnet(_, old, new string, _ *schema.ResourceData) bool {

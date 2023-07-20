@@ -40,8 +40,8 @@ func GetHealthcareDicomStoreCaiObject(d tpgresource.TerraformResourceData, confi
 			Name: name,
 			Type: HealthcareDicomStoreAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1beta1/rest",
 				DiscoveryName:        "DicomStore",
 				Data:                 obj,
 			},
@@ -70,6 +70,12 @@ func GetHealthcareDicomStoreApiObject(d tpgresource.TerraformResourceData, confi
 		return nil, err
 	} else if v, ok := d.GetOkExists("notification_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(notificationConfigProp)) && (ok || !reflect.DeepEqual(v, notificationConfigProp)) {
 		obj["notificationConfig"] = notificationConfigProp
+	}
+	streamConfigsProp, err := expandHealthcareDicomStoreStreamConfigs(d.Get("stream_configs"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("stream_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(streamConfigsProp)) && (ok || !reflect.DeepEqual(v, streamConfigsProp)) {
+		obj["streamConfigs"] = streamConfigsProp
 	}
 
 	return obj, nil
@@ -110,5 +116,50 @@ func expandHealthcareDicomStoreNotificationConfig(v interface{}, d tpgresource.T
 }
 
 func expandHealthcareDicomStoreNotificationConfigPubsubTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareDicomStoreStreamConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedBigqueryDestination, err := expandHealthcareDicomStoreStreamConfigsBigqueryDestination(original["bigquery_destination"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBigqueryDestination); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["bigqueryDestination"] = transformedBigqueryDestination
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandHealthcareDicomStoreStreamConfigsBigqueryDestination(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTableUri, err := expandHealthcareDicomStoreStreamConfigsBigqueryDestinationTableUri(original["table_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTableUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tableUri"] = transformedTableUri
+	}
+
+	return transformed, nil
+}
+
+func expandHealthcareDicomStoreStreamConfigsBigqueryDestinationTableUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

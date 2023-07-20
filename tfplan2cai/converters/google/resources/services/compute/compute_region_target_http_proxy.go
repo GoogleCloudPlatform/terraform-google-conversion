@@ -41,8 +41,8 @@ func GetComputeRegionTargetHttpProxyCaiObject(d tpgresource.TerraformResourceDat
 			Name: name,
 			Type: ComputeRegionTargetHttpProxyAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionTargetHttpProxy",
 				Data:                 obj,
 			},

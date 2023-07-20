@@ -42,8 +42,8 @@ func GetContainerAnalysisOccurrenceCaiObject(d tpgresource.TerraformResourceData
 			Name: name,
 			Type: ContainerAnalysisOccurrenceAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/containeranalysis/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/containeranalysis/v1beta1/rest",
 				DiscoveryName:        "Occurrence",
 				Data:                 obj,
 			},
@@ -84,7 +84,28 @@ func GetContainerAnalysisOccurrenceApiObject(d tpgresource.TerraformResourceData
 }
 
 func resourceContainerAnalysisOccurrenceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	// encoder logic only in non-GA versions
+	// Resource object was flattened in GA API
+	if resourceuri, ok := obj["resourceUri"]; ok {
+		obj["resource"] = map[string]interface{}{
+			"uri": resourceuri,
+		}
+		delete(obj, "resourceUri")
+	}
+
+	// Beta `attestation.genericSignedAttestation` was flattened to just
+	// `attestation` (no contentType) in GA
+	if v, ok := obj["attestation"]; ok && v != nil {
+		gaAtt := v.(map[string]interface{})
+		obj["attestation"] = map[string]interface{}{
+			"attestation": map[string]interface{}{
+				"genericSignedAttestation": map[string]interface{}{
+					"contentType":       "SIMPLE_SIGNING_JSON",
+					"serializedPayload": gaAtt["serializedPayload"],
+					"signatures":        gaAtt["signatures"],
+				},
+			},
+		}
+	}
 
 	return obj, nil
 }

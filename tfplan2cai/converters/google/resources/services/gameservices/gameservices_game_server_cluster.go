@@ -53,8 +53,8 @@ func GetGameServicesGameServerClusterCaiObject(d tpgresource.TerraformResourceDa
 			Name: name,
 			Type: GameServicesGameServerClusterAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gameservices/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gameservices/v1beta/rest",
 				DiscoveryName:        "GameServerCluster",
 				Data:                 obj,
 			},

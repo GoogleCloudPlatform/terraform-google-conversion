@@ -41,8 +41,8 @@ func GetHealthcareHl7V2StoreCaiObject(d tpgresource.TerraformResourceData, confi
 			Name: name,
 			Type: HealthcareHl7V2StoreAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1beta1/rest",
 				DiscoveryName:        "Hl7V2Store",
 				Data:                 obj,
 			},

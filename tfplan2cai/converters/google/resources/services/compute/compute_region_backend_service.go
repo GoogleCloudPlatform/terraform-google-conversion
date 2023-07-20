@@ -134,8 +134,8 @@ func GetComputeRegionBackendServiceCaiObject(d tpgresource.TerraformResourceData
 			Name: name,
 			Type: ComputeRegionBackendServiceAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionBackendService",
 				Data:                 obj,
 			},
@@ -261,6 +261,12 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("session_affinity"); !tpgresource.IsEmptyValue(reflect.ValueOf(sessionAffinityProp)) && (ok || !reflect.DeepEqual(v, sessionAffinityProp)) {
 		obj["sessionAffinity"] = sessionAffinityProp
 	}
+	connectionTrackingPolicyProp, err := expandComputeRegionBackendServiceConnectionTrackingPolicy(d.Get("connection_tracking_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("connection_tracking_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(connectionTrackingPolicyProp)) && (ok || !reflect.DeepEqual(v, connectionTrackingPolicyProp)) {
+		obj["connectionTrackingPolicy"] = connectionTrackingPolicyProp
+	}
 	timeoutSecProp, err := expandComputeRegionBackendServiceTimeoutSec(d.Get("timeout_sec"), d, config)
 	if err != nil {
 		return nil, err
@@ -278,6 +284,12 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 		return nil, err
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
+	}
+	subsettingProp, err := expandComputeRegionBackendServiceSubsetting(d.Get("subsetting"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("subsetting"); !tpgresource.IsEmptyValue(reflect.ValueOf(subsettingProp)) && (ok || !reflect.DeepEqual(v, subsettingProp)) {
+		obj["subsetting"] = subsettingProp
 	}
 	regionProp, err := expandComputeRegionBackendServiceRegion(d.Get("region"), d, config)
 	if err != nil {
@@ -312,6 +324,19 @@ func resourceComputeRegionBackendServiceEncoder(d tpgresource.TerraformResourceD
 
 	if d.Get("load_balancing_scheme").(string) == "EXTERNAL_MANAGED" || d.Get("load_balancing_scheme").(string) == "INTERNAL_MANAGED" {
 		return obj, nil
+	}
+
+	// To remove subsetting on an ILB, "NONE" must be specified. If subsetting
+	// isn't specified, we set the value to NONE to make this use case work.
+	_, ok := obj["subsetting"]
+	if !ok {
+		loadBalancingScheme, ok := obj["loadBalancingScheme"]
+		// External load balancing scheme does not support subsetting
+		if !ok || loadBalancingScheme.(string) != "EXTERNAL" {
+			data := map[string]interface{}{}
+			data["policy"] = "NONE"
+			obj["subsetting"] = data
+		}
 	}
 
 	backendServiceOnlyManagedApiFieldNames := []string{
@@ -508,6 +533,13 @@ func expandComputeRegionBackendServiceCircuitBreakers(v interface{}, d tpgresour
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedConnectTimeout, err := expandComputeRegionBackendServiceCircuitBreakersConnectTimeout(original["connect_timeout"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectTimeout"] = transformedConnectTimeout
+	}
+
 	transformedMaxRequestsPerConnection, err := expandComputeRegionBackendServiceCircuitBreakersMaxRequestsPerConnection(original["max_requests_per_connection"], d, config)
 	if err != nil {
 		return nil, err
@@ -544,6 +576,40 @@ func expandComputeRegionBackendServiceCircuitBreakers(v interface{}, d tpgresour
 	}
 
 	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceCircuitBreakersConnectTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSeconds, err := expandComputeRegionBackendServiceCircuitBreakersConnectTimeoutSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	transformedNanos, err := expandComputeRegionBackendServiceCircuitBreakersConnectTimeoutNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceCircuitBreakersConnectTimeoutSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCircuitBreakersConnectTimeoutNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeRegionBackendServiceCircuitBreakersMaxRequestsPerConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -874,12 +940,23 @@ func expandComputeRegionBackendServiceCdnPolicyNegativeCachingPolicy(v interface
 			transformed["code"] = transformedCode
 		}
 
+		transformedTtl, err := expandComputeRegionBackendServiceCdnPolicyNegativeCachingPolicyTtl(original["ttl"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ttl"] = transformedTtl
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
 }
 
 func expandComputeRegionBackendServiceCdnPolicyNegativeCachingPolicyCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCdnPolicyNegativeCachingPolicyTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1231,6 +1308,51 @@ func expandComputeRegionBackendServiceSessionAffinity(v interface{}, d tpgresour
 	return v, nil
 }
 
+func expandComputeRegionBackendServiceConnectionTrackingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdleTimeoutSec, err := expandComputeRegionBackendServiceConnectionTrackingPolicyIdleTimeoutSec(original["idle_timeout_sec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleTimeoutSec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleTimeoutSec"] = transformedIdleTimeoutSec
+	}
+
+	transformedTrackingMode, err := expandComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(original["tracking_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTrackingMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["trackingMode"] = transformedTrackingMode
+	}
+
+	transformedConnectionPersistenceOnUnhealthyBackends, err := expandComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(original["connection_persistence_on_unhealthy_backends"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectionPersistenceOnUnhealthyBackends); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectionPersistenceOnUnhealthyBackends"] = transformedConnectionPersistenceOnUnhealthyBackends
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicyIdleTimeoutSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeRegionBackendServiceTimeoutSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -1275,6 +1397,29 @@ func expandComputeRegionBackendServiceNetwork(v interface{}, d tpgresource.Terra
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeRegionBackendServiceSubsetting(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPolicy, err := expandComputeRegionBackendServiceSubsettingPolicy(original["policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["policy"] = transformedPolicy
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceSubsettingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeRegionBackendServiceRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

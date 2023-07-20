@@ -40,8 +40,8 @@ func GetFilestoreSnapshotCaiObject(d tpgresource.TerraformResourceData, config *
 			Name: name,
 			Type: FilestoreSnapshotAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/file/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/file/v1beta1/rest",
 				DiscoveryName:        "Snapshot",
 				Data:                 obj,
 			},

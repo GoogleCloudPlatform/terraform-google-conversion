@@ -42,8 +42,8 @@ func GetDataCatalogTagCaiObject(d tpgresource.TerraformResourceData, config *tra
 			Name: name,
 			Type: DataCatalogTagAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datacatalog/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datacatalog/v1beta1/rest",
 				DiscoveryName:        "Tag",
 				Data:                 obj,
 			},

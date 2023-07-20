@@ -65,8 +65,8 @@ func GetDataFusionInstanceCaiObject(d tpgresource.TerraformResourceData, config 
 			Name: name,
 			Type: DataFusionInstanceAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datafusion/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datafusion/v1beta1/rest",
 				DiscoveryName:        "Instance",
 				Data:                 obj,
 			},

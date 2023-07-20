@@ -42,8 +42,8 @@ func GetCloudIdentityGroupMembershipCaiObject(d tpgresource.TerraformResourceDat
 			Name: name,
 			Type: CloudIdentityGroupMembershipAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudidentity/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudidentity/v1beta1/rest",
 				DiscoveryName:        "GroupMembership",
 				Data:                 obj,
 			},
@@ -55,6 +55,12 @@ func GetCloudIdentityGroupMembershipCaiObject(d tpgresource.TerraformResourceDat
 
 func GetCloudIdentityGroupMembershipApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	memberKeyProp, err := expandCloudIdentityGroupMembershipMemberKey(d.Get("member_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("member_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(memberKeyProp)) && (ok || !reflect.DeepEqual(v, memberKeyProp)) {
+		obj["memberKey"] = memberKeyProp
+	}
 	preferredMemberKeyProp, err := expandCloudIdentityGroupMembershipPreferredMemberKey(d.Get("preferred_member_key"), d, config)
 	if err != nil {
 		return nil, err
@@ -69,6 +75,40 @@ func GetCloudIdentityGroupMembershipApiObject(d tpgresource.TerraformResourceDat
 	}
 
 	return obj, nil
+}
+
+func expandCloudIdentityGroupMembershipMemberKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedId, err := expandCloudIdentityGroupMembershipMemberKeyId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedNamespace, err := expandCloudIdentityGroupMembershipMemberKeyNamespace(original["namespace"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNamespace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["namespace"] = transformedNamespace
+	}
+
+	return transformed, nil
+}
+
+func expandCloudIdentityGroupMembershipMemberKeyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudIdentityGroupMembershipMemberKeyNamespace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCloudIdentityGroupMembershipPreferredMemberKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

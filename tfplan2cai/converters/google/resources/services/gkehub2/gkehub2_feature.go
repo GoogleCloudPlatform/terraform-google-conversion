@@ -40,8 +40,8 @@ func GetGKEHub2FeatureCaiObject(d tpgresource.TerraformResourceData, config *tra
 			Name: name,
 			Type: GKEHub2FeatureAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gkehub/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gkehub/v1beta/rest",
 				DiscoveryName:        "Feature",
 				Data:                 obj,
 			},

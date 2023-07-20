@@ -40,8 +40,8 @@ func GetHealthcareDatasetCaiObject(d tpgresource.TerraformResourceData, config *
 			Name: name,
 			Type: HealthcareDatasetAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1beta1/rest",
 				DiscoveryName:        "Dataset",
 				Data:                 obj,
 			},

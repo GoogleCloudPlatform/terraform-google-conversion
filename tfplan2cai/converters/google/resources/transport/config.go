@@ -34,14 +34,14 @@ import (
 	"google.golang.org/api/cloudbilling/v1"
 	"google.golang.org/api/cloudbuild/v1"
 	"google.golang.org/api/cloudfunctions/v1"
-	"google.golang.org/api/cloudidentity/v1"
+	cloudidentity "google.golang.org/api/cloudidentity/v1beta1"
 	"google.golang.org/api/cloudiot/v1"
 	"google.golang.org/api/cloudkms/v1"
 	"google.golang.org/api/cloudresourcemanager/v1"
 	resourceManagerV3 "google.golang.org/api/cloudresourcemanager/v3"
-	"google.golang.org/api/composer/v1"
-	"google.golang.org/api/compute/v1"
-	"google.golang.org/api/container/v1"
+	"google.golang.org/api/composer/v1beta1"
+	compute "google.golang.org/api/compute/v0.beta"
+	container "google.golang.org/api/container/v1beta1"
 	dataflow "google.golang.org/api/dataflow/v1b3"
 	"google.golang.org/api/dataproc/v1"
 	"google.golang.org/api/dns/v1"
@@ -51,6 +51,7 @@ import (
 	cloudlogging "google.golang.org/api/logging/v2"
 	"google.golang.org/api/pubsub/v1"
 	runadminv2 "google.golang.org/api/run/v2"
+	runtimeconfig "google.golang.org/api/runtimeconfig/v1beta1"
 	"google.golang.org/api/servicemanagement/v1"
 	"google.golang.org/api/servicenetworking/v1"
 	"google.golang.org/api/serviceusage/v1"
@@ -184,6 +185,7 @@ type Config struct {
 	AccessContextManagerBasePath     string
 	ActiveDirectoryBasePath          string
 	AlloydbBasePath                  string
+	ApiGatewayBasePath               string
 	ApigeeBasePath                   string
 	AppEngineBasePath                string
 	ArtifactRegistryBasePath         string
@@ -215,6 +217,7 @@ type Config struct {
 	ContainerAttachedBasePath        string
 	DatabaseMigrationServiceBasePath string
 	DataCatalogBasePath              string
+	DataformBasePath                 string
 	DataFusionBasePath               string
 	DataLossPreventionBasePath       string
 	DataplexBasePath                 string
@@ -229,11 +232,17 @@ type Config struct {
 	DocumentAIBasePath               string
 	EssentialContactsBasePath        string
 	FilestoreBasePath                string
+	FirebaseBasePath                 string
+	FirebaseDatabaseBasePath         string
+	FirebaseExtensionsBasePath       string
+	FirebaseHostingBasePath          string
+	FirebaseStorageBasePath          string
 	FirestoreBasePath                string
 	GameServicesBasePath             string
 	GKEBackupBasePath                string
 	GKEHubBasePath                   string
 	GKEHub2BasePath                  string
+	GkeonpremBasePath                string
 	HealthcareBasePath               string
 	IAM2BasePath                     string
 	IAMBetaBasePath                  string
@@ -250,6 +259,7 @@ type Config struct {
 	NetworkSecurityBasePath          string
 	NetworkServicesBasePath          string
 	NotebooksBasePath                string
+	OrgPolicyBasePath                string
 	OSConfigBasePath                 string
 	OSLoginBasePath                  string
 	PrivatecaBasePath                string
@@ -258,8 +268,11 @@ type Config struct {
 	PubsubLiteBasePath               string
 	RedisBasePath                    string
 	ResourceManagerBasePath          string
+	RuntimeConfigBasePath            string
 	SecretManagerBasePath            string
 	SecurityCenterBasePath           string
+	SecurityScannerBasePath          string
+	ServiceDirectoryBasePath         string
 	ServiceManagementBasePath        string
 	ServiceUsageBasePath             string
 	SourceRepoBasePath               string
@@ -270,8 +283,10 @@ type Config struct {
 	TagsBasePath                     string
 	TPUBasePath                      string
 	VertexAIBasePath                 string
+	VmwareengineBasePath             string
 	VPCAccessBasePath                string
 	WorkflowsBasePath                string
+	WorkstationsBasePath             string
 
 	CloudBillingBasePath      string
 	ComposerBasePath          string
@@ -297,6 +312,7 @@ const AccessApprovalBasePathKey = "AccessApproval"
 const AccessContextManagerBasePathKey = "AccessContextManager"
 const ActiveDirectoryBasePathKey = "ActiveDirectory"
 const AlloydbBasePathKey = "Alloydb"
+const ApiGatewayBasePathKey = "ApiGateway"
 const ApigeeBasePathKey = "Apigee"
 const AppEngineBasePathKey = "AppEngine"
 const ArtifactRegistryBasePathKey = "ArtifactRegistry"
@@ -328,6 +344,7 @@ const ContainerAnalysisBasePathKey = "ContainerAnalysis"
 const ContainerAttachedBasePathKey = "ContainerAttached"
 const DatabaseMigrationServiceBasePathKey = "DatabaseMigrationService"
 const DataCatalogBasePathKey = "DataCatalog"
+const DataformBasePathKey = "Dataform"
 const DataFusionBasePathKey = "DataFusion"
 const DataLossPreventionBasePathKey = "DataLossPrevention"
 const DataplexBasePathKey = "Dataplex"
@@ -342,11 +359,17 @@ const DNSBasePathKey = "DNS"
 const DocumentAIBasePathKey = "DocumentAI"
 const EssentialContactsBasePathKey = "EssentialContacts"
 const FilestoreBasePathKey = "Filestore"
+const FirebaseBasePathKey = "Firebase"
+const FirebaseDatabaseBasePathKey = "FirebaseDatabase"
+const FirebaseExtensionsBasePathKey = "FirebaseExtensions"
+const FirebaseHostingBasePathKey = "FirebaseHosting"
+const FirebaseStorageBasePathKey = "FirebaseStorage"
 const FirestoreBasePathKey = "Firestore"
 const GameServicesBasePathKey = "GameServices"
 const GKEBackupBasePathKey = "GKEBackup"
 const GKEHubBasePathKey = "GKEHub"
 const GKEHub2BasePathKey = "GKEHub2"
+const GkeonpremBasePathKey = "Gkeonprem"
 const HealthcareBasePathKey = "Healthcare"
 const IAM2BasePathKey = "IAM2"
 const IAMBetaBasePathKey = "IAMBeta"
@@ -363,6 +386,7 @@ const NetworkManagementBasePathKey = "NetworkManagement"
 const NetworkSecurityBasePathKey = "NetworkSecurity"
 const NetworkServicesBasePathKey = "NetworkServices"
 const NotebooksBasePathKey = "Notebooks"
+const OrgPolicyBasePathKey = "OrgPolicy"
 const OSConfigBasePathKey = "OSConfig"
 const OSLoginBasePathKey = "OSLogin"
 const PrivatecaBasePathKey = "Privateca"
@@ -371,8 +395,11 @@ const PubsubBasePathKey = "Pubsub"
 const PubsubLiteBasePathKey = "PubsubLite"
 const RedisBasePathKey = "Redis"
 const ResourceManagerBasePathKey = "ResourceManager"
+const RuntimeConfigBasePathKey = "RuntimeConfig"
 const SecretManagerBasePathKey = "SecretManager"
 const SecurityCenterBasePathKey = "SecurityCenter"
+const SecurityScannerBasePathKey = "SecurityScanner"
+const ServiceDirectoryBasePathKey = "ServiceDirectory"
 const ServiceManagementBasePathKey = "ServiceManagement"
 const ServiceUsageBasePathKey = "ServiceUsage"
 const SourceRepoBasePathKey = "SourceRepo"
@@ -383,8 +410,10 @@ const StorageTransferBasePathKey = "StorageTransfer"
 const TagsBasePathKey = "Tags"
 const TPUBasePathKey = "TPU"
 const VertexAIBasePathKey = "VertexAI"
+const VmwareengineBasePathKey = "Vmwareengine"
 const VPCAccessBasePathKey = "VPCAccess"
 const WorkflowsBasePathKey = "Workflows"
+const WorkstationsBasePathKey = "Workstations"
 const CloudBillingBasePathKey = "CloudBilling"
 const ComposerBasePathKey = "Composer"
 const ContainerBasePathKey = "Container"
@@ -402,14 +431,15 @@ const TagsLocationBasePathKey = "TagsLocation"
 var DefaultBasePaths = map[string]string{
 	AccessApprovalBasePathKey:           "https://accessapproval.googleapis.com/v1/",
 	AccessContextManagerBasePathKey:     "https://accesscontextmanager.googleapis.com/v1/",
-	ActiveDirectoryBasePathKey:          "https://managedidentities.googleapis.com/v1/",
-	AlloydbBasePathKey:                  "https://alloydb.googleapis.com/v1/",
+	ActiveDirectoryBasePathKey:          "https://managedidentities.googleapis.com/v1beta1/",
+	AlloydbBasePathKey:                  "https://alloydb.googleapis.com/v1beta/",
+	ApiGatewayBasePathKey:               "https://apigateway.googleapis.com/v1beta/",
 	ApigeeBasePathKey:                   "https://apigee.googleapis.com/v1/",
 	AppEngineBasePathKey:                "https://appengine.googleapis.com/v1/",
 	ArtifactRegistryBasePathKey:         "https://artifactregistry.googleapis.com/v1/",
 	BeyondcorpBasePathKey:               "https://beyondcorp.googleapis.com/v1/",
 	BigQueryBasePathKey:                 "https://bigquery.googleapis.com/bigquery/v2/",
-	BigqueryAnalyticsHubBasePathKey:     "https://analyticshub.googleapis.com/v1/",
+	BigqueryAnalyticsHubBasePathKey:     "https://analyticshub.googleapis.com/v1beta1/",
 	BigqueryConnectionBasePathKey:       "https://bigqueryconnection.googleapis.com/v1/",
 	BigqueryDatapolicyBasePathKey:       "https://bigquerydatapolicy.googleapis.com/v1/",
 	BigqueryDataTransferBasePathKey:     "https://bigquerydatatransfer.googleapis.com/v1/",
@@ -422,66 +452,77 @@ var DefaultBasePaths = map[string]string{
 	CloudBuildBasePathKey:               "https://cloudbuild.googleapis.com/v1/",
 	Cloudbuildv2BasePathKey:             "https://cloudbuild.googleapis.com/v2/",
 	CloudFunctionsBasePathKey:           "https://cloudfunctions.googleapis.com/v1/",
-	Cloudfunctions2BasePathKey:          "https://cloudfunctions.googleapis.com/v2/",
-	CloudIdentityBasePathKey:            "https://cloudidentity.googleapis.com/v1/",
+	Cloudfunctions2BasePathKey:          "https://cloudfunctions.googleapis.com/v2beta/",
+	CloudIdentityBasePathKey:            "https://cloudidentity.googleapis.com/v1beta1/",
 	CloudIdsBasePathKey:                 "https://ids.googleapis.com/v1/",
 	CloudIotBasePathKey:                 "https://cloudiot.googleapis.com/v1/",
 	CloudRunBasePathKey:                 "https://{{location}}-run.googleapis.com/",
 	CloudRunV2BasePathKey:               "https://run.googleapis.com/v2/",
 	CloudSchedulerBasePathKey:           "https://cloudscheduler.googleapis.com/v1/",
 	CloudTasksBasePathKey:               "https://cloudtasks.googleapis.com/v2/",
-	ComputeBasePathKey:                  "https://compute.googleapis.com/compute/v1/",
-	ContainerAnalysisBasePathKey:        "https://containeranalysis.googleapis.com/v1/",
+	ComputeBasePathKey:                  "https://compute.googleapis.com/compute/beta/",
+	ContainerAnalysisBasePathKey:        "https://containeranalysis.googleapis.com/v1beta1/",
 	ContainerAttachedBasePathKey:        "https://{{location}}-gkemulticloud.googleapis.com/v1/",
 	DatabaseMigrationServiceBasePathKey: "https://datamigration.googleapis.com/v1/",
-	DataCatalogBasePathKey:              "https://datacatalog.googleapis.com/v1/",
-	DataFusionBasePathKey:               "https://datafusion.googleapis.com/v1/",
+	DataCatalogBasePathKey:              "https://datacatalog.googleapis.com/v1beta1/",
+	DataformBasePathKey:                 "https://dataform.googleapis.com/v1beta1/",
+	DataFusionBasePathKey:               "https://datafusion.googleapis.com/v1beta1/",
 	DataLossPreventionBasePathKey:       "https://dlp.googleapis.com/v2/",
 	DataplexBasePathKey:                 "https://dataplex.googleapis.com/v1/",
-	DataprocBasePathKey:                 "https://dataproc.googleapis.com/v1/",
-	DataprocMetastoreBasePathKey:        "https://metastore.googleapis.com/v1/",
+	DataprocBasePathKey:                 "https://dataproc.googleapis.com/v1beta2/",
+	DataprocMetastoreBasePathKey:        "https://metastore.googleapis.com/v1beta/",
 	DatastoreBasePathKey:                "https://datastore.googleapis.com/v1/",
 	DatastreamBasePathKey:               "https://datastream.googleapis.com/v1/",
 	DeploymentManagerBasePathKey:        "https://www.googleapis.com/deploymentmanager/v2/",
 	DialogflowBasePathKey:               "https://dialogflow.googleapis.com/v2/",
 	DialogflowCXBasePathKey:             "https://{{location}}-dialogflow.googleapis.com/v3/",
-	DNSBasePathKey:                      "https://dns.googleapis.com/dns/v1/",
+	DNSBasePathKey:                      "https://dns.googleapis.com/dns/v1beta2/",
 	DocumentAIBasePathKey:               "https://{{location}}-documentai.googleapis.com/v1/",
 	EssentialContactsBasePathKey:        "https://essentialcontacts.googleapis.com/v1/",
-	FilestoreBasePathKey:                "https://file.googleapis.com/v1/",
+	FilestoreBasePathKey:                "https://file.googleapis.com/v1beta1/",
+	FirebaseBasePathKey:                 "https://firebase.googleapis.com/v1beta1/",
+	FirebaseDatabaseBasePathKey:         "https://firebasedatabase.googleapis.com/v1beta/",
+	FirebaseExtensionsBasePathKey:       "https://firebaseextensions.googleapis.com/v1beta/",
+	FirebaseHostingBasePathKey:          "https://firebasehosting.googleapis.com/v1beta1/",
+	FirebaseStorageBasePathKey:          "https://firebasestorage.googleapis.com/v1beta/",
 	FirestoreBasePathKey:                "https://firestore.googleapis.com/v1/",
-	GameServicesBasePathKey:             "https://gameservices.googleapis.com/v1/",
+	GameServicesBasePathKey:             "https://gameservices.googleapis.com/v1beta/",
 	GKEBackupBasePathKey:                "https://gkebackup.googleapis.com/v1/",
-	GKEHubBasePathKey:                   "https://gkehub.googleapis.com/v1/",
-	GKEHub2BasePathKey:                  "https://gkehub.googleapis.com/v1/",
-	HealthcareBasePathKey:               "https://healthcare.googleapis.com/v1/",
-	IAM2BasePathKey:                     "https://iam.googleapis.com/v2/",
-	IAMBetaBasePathKey:                  "https://iam.googleapis.com/v1/",
+	GKEHubBasePathKey:                   "https://gkehub.googleapis.com/v1beta1/",
+	GKEHub2BasePathKey:                  "https://gkehub.googleapis.com/v1beta/",
+	GkeonpremBasePathKey:                "https://gkeonprem.googleapis.com/v1/",
+	HealthcareBasePathKey:               "https://healthcare.googleapis.com/v1beta1/",
+	IAM2BasePathKey:                     "https://iam.googleapis.com/v2beta/",
+	IAMBetaBasePathKey:                  "https://iam.googleapis.com/v1beta/",
 	IAMWorkforcePoolBasePathKey:         "https://iam.googleapis.com/v1/",
 	IapBasePathKey:                      "https://iap.googleapis.com/v1/",
 	IdentityPlatformBasePathKey:         "https://identitytoolkit.googleapis.com/v2/",
 	KMSBasePathKey:                      "https://cloudkms.googleapis.com/v1/",
 	LoggingBasePathKey:                  "https://logging.googleapis.com/v2/",
 	LookerBasePathKey:                   "https://looker.googleapis.com/v1/",
-	MemcacheBasePathKey:                 "https://memcache.googleapis.com/v1/",
+	MemcacheBasePathKey:                 "https://memcache.googleapis.com/v1beta2/",
 	MLEngineBasePathKey:                 "https://ml.googleapis.com/v1/",
 	MonitoringBasePathKey:               "https://monitoring.googleapis.com/",
 	NetworkManagementBasePathKey:        "https://networkmanagement.googleapis.com/v1/",
-	NetworkSecurityBasePathKey:          "https://networksecurity.googleapis.com/v1/",
+	NetworkSecurityBasePathKey:          "https://networksecurity.googleapis.com/v1beta1/",
 	NetworkServicesBasePathKey:          "https://networkservices.googleapis.com/v1/",
 	NotebooksBasePathKey:                "https://notebooks.googleapis.com/v1/",
-	OSConfigBasePathKey:                 "https://osconfig.googleapis.com/v1/",
+	OrgPolicyBasePathKey:                "https://orgpolicy.googleapis.com/v2/",
+	OSConfigBasePathKey:                 "https://osconfig.googleapis.com/v1beta/",
 	OSLoginBasePathKey:                  "https://oslogin.googleapis.com/v1/",
 	PrivatecaBasePathKey:                "https://privateca.googleapis.com/v1/",
-	PublicCABasePathKey:                 "https://publicca.googleapis.com/v1/",
+	PublicCABasePathKey:                 "https://publicca.googleapis.com/v1beta1/",
 	PubsubBasePathKey:                   "https://pubsub.googleapis.com/v1/",
 	PubsubLiteBasePathKey:               "https://{{region}}-pubsublite.googleapis.com/v1/admin/",
-	RedisBasePathKey:                    "https://redis.googleapis.com/v1/",
+	RedisBasePathKey:                    "https://redis.googleapis.com/v1beta1/",
 	ResourceManagerBasePathKey:          "https://cloudresourcemanager.googleapis.com/v1/",
+	RuntimeConfigBasePathKey:            "https://runtimeconfig.googleapis.com/v1beta1/",
 	SecretManagerBasePathKey:            "https://secretmanager.googleapis.com/v1/",
 	SecurityCenterBasePathKey:           "https://securitycenter.googleapis.com/v1/",
+	SecurityScannerBasePathKey:          "https://websecurityscanner.googleapis.com/v1beta/",
+	ServiceDirectoryBasePathKey:         "https://servicedirectory.googleapis.com/v1beta1/",
 	ServiceManagementBasePathKey:        "https://servicemanagement.googleapis.com/v1/",
-	ServiceUsageBasePathKey:             "https://serviceusage.googleapis.com/v1/",
+	ServiceUsageBasePathKey:             "https://serviceusage.googleapis.com/v1beta1/",
 	SourceRepoBasePathKey:               "https://sourcerepo.googleapis.com/v1/",
 	SpannerBasePathKey:                  "https://spanner.googleapis.com/v1/",
 	SQLBasePathKey:                      "https://sqladmin.googleapis.com/sql/v1beta4/",
@@ -489,12 +530,14 @@ var DefaultBasePaths = map[string]string{
 	StorageTransferBasePathKey:          "https://storagetransfer.googleapis.com/v1/",
 	TagsBasePathKey:                     "https://cloudresourcemanager.googleapis.com/v3/",
 	TPUBasePathKey:                      "https://tpu.googleapis.com/v1/",
-	VertexAIBasePathKey:                 "https://{{region}}-aiplatform.googleapis.com/v1/",
-	VPCAccessBasePathKey:                "https://vpcaccess.googleapis.com/v1/",
+	VertexAIBasePathKey:                 "https://{{region}}-aiplatform.googleapis.com/v1beta1/",
+	VmwareengineBasePathKey:             "https://vmwareengine.googleapis.com/v1/",
+	VPCAccessBasePathKey:                "https://vpcaccess.googleapis.com/v1beta1/",
 	WorkflowsBasePathKey:                "https://workflows.googleapis.com/v1/",
+	WorkstationsBasePathKey:             "https://workstations.googleapis.com/v1beta/",
 	CloudBillingBasePathKey:             "https://cloudbilling.googleapis.com/v1/",
-	ComposerBasePathKey:                 "https://composer.googleapis.com/v1/",
-	ContainerBasePathKey:                "https://container.googleapis.com/v1/",
+	ComposerBasePathKey:                 "https://composer.googleapis.com/v1beta1/",
+	ContainerBasePathKey:                "https://container.googleapis.com/v1beta1/",
 	DataflowBasePathKey:                 "https://dataflow.googleapis.com/v1b3/",
 	IAMBasePathKey:                      "https://iam.googleapis.com/v1/",
 	IamCredentialsBasePathKey:           "https://iamcredentials.googleapis.com/v1/",
@@ -589,6 +632,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 		d.Set("alloydb_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_ALLOYDB_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[AlloydbBasePathKey]))
+	}
+	if d.Get("api_gateway_custom_endpoint") == "" {
+		d.Set("api_gateway_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_API_GATEWAY_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[ApiGatewayBasePathKey]))
 	}
 	if d.Get("apigee_custom_endpoint") == "" {
 		d.Set("apigee_custom_endpoint", MultiEnvDefault([]string{
@@ -745,6 +793,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 			"GOOGLE_DATA_CATALOG_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[DataCatalogBasePathKey]))
 	}
+	if d.Get("dataform_custom_endpoint") == "" {
+		d.Set("dataform_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_DATAFORM_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[DataformBasePathKey]))
+	}
 	if d.Get("data_fusion_custom_endpoint") == "" {
 		d.Set("data_fusion_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_DATA_FUSION_CUSTOM_ENDPOINT",
@@ -815,6 +868,31 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 			"GOOGLE_FILESTORE_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[FilestoreBasePathKey]))
 	}
+	if d.Get("firebase_custom_endpoint") == "" {
+		d.Set("firebase_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_FIREBASE_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[FirebaseBasePathKey]))
+	}
+	if d.Get("firebase_database_custom_endpoint") == "" {
+		d.Set("firebase_database_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_FIREBASE_DATABASE_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[FirebaseDatabaseBasePathKey]))
+	}
+	if d.Get("firebase_extensions_custom_endpoint") == "" {
+		d.Set("firebase_extensions_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_FIREBASE_EXTENSIONS_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[FirebaseExtensionsBasePathKey]))
+	}
+	if d.Get("firebase_hosting_custom_endpoint") == "" {
+		d.Set("firebase_hosting_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_FIREBASE_HOSTING_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[FirebaseHostingBasePathKey]))
+	}
+	if d.Get("firebase_storage_custom_endpoint") == "" {
+		d.Set("firebase_storage_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_FIREBASE_STORAGE_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[FirebaseStorageBasePathKey]))
+	}
 	if d.Get("firestore_custom_endpoint") == "" {
 		d.Set("firestore_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_FIRESTORE_CUSTOM_ENDPOINT",
@@ -839,6 +917,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 		d.Set("gke_hub2_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_GKE_HUB2_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[GKEHub2BasePathKey]))
+	}
+	if d.Get("gkeonprem_custom_endpoint") == "" {
+		d.Set("gkeonprem_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_GKEONPREM_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[GkeonpremBasePathKey]))
 	}
 	if d.Get("healthcare_custom_endpoint") == "" {
 		d.Set("healthcare_custom_endpoint", MultiEnvDefault([]string{
@@ -920,6 +1003,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 			"GOOGLE_NOTEBOOKS_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[NotebooksBasePathKey]))
 	}
+	if d.Get("org_policy_custom_endpoint") == "" {
+		d.Set("org_policy_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_ORG_POLICY_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[OrgPolicyBasePathKey]))
+	}
 	if d.Get("os_config_custom_endpoint") == "" {
 		d.Set("os_config_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_OS_CONFIG_CUSTOM_ENDPOINT",
@@ -960,6 +1048,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 			"GOOGLE_RESOURCE_MANAGER_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[ResourceManagerBasePathKey]))
 	}
+	if d.Get("runtime_config_custom_endpoint") == "" {
+		d.Set("runtime_config_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_RUNTIME_CONFIG_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[RuntimeConfigBasePathKey]))
+	}
 	if d.Get("secret_manager_custom_endpoint") == "" {
 		d.Set("secret_manager_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_SECRET_MANAGER_CUSTOM_ENDPOINT",
@@ -969,6 +1062,16 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 		d.Set("security_center_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_SECURITY_CENTER_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[SecurityCenterBasePathKey]))
+	}
+	if d.Get("security_scanner_custom_endpoint") == "" {
+		d.Set("security_scanner_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_SECURITY_SCANNER_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[SecurityScannerBasePathKey]))
+	}
+	if d.Get("service_directory_custom_endpoint") == "" {
+		d.Set("service_directory_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_SERVICE_DIRECTORY_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[ServiceDirectoryBasePathKey]))
 	}
 	if d.Get("service_management_custom_endpoint") == "" {
 		d.Set("service_management_custom_endpoint", MultiEnvDefault([]string{
@@ -1020,6 +1123,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 			"GOOGLE_VERTEX_AI_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[VertexAIBasePathKey]))
 	}
+	if d.Get("vmwareengine_custom_endpoint") == "" {
+		d.Set("vmwareengine_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_VMWAREENGINE_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[VmwareengineBasePathKey]))
+	}
 	if d.Get("vpc_access_custom_endpoint") == "" {
 		d.Set("vpc_access_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_VPC_ACCESS_CUSTOM_ENDPOINT",
@@ -1029,6 +1137,11 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 		d.Set("workflows_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_WORKFLOWS_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[WorkflowsBasePathKey]))
+	}
+	if d.Get("workstations_custom_endpoint") == "" {
+		d.Set("workstations_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_WORKSTATIONS_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[WorkstationsBasePathKey]))
 	}
 
 	if d.Get(CloudBillingCustomEndpointEntryKey) == "" {
@@ -1065,6 +1178,12 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 		d.Set(ResourceManagerV3CustomEndpointEntryKey, MultiEnvDefault([]string{
 			"GOOGLE_RESOURCE_MANAGER_V3_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[ResourceManagerV3BasePathKey]))
+	}
+
+	if d.Get(RuntimeConfigCustomEndpointEntryKey) == "" {
+		d.Set(RuntimeConfigCustomEndpointEntryKey, MultiEnvDefault([]string{
+			"GOOGLE_RUNTIMECONFIG_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[RuntimeConfigBasePathKey]))
 	}
 
 	if d.Get(IAMCustomEndpointEntryKey) == "" {
@@ -1466,6 +1585,20 @@ func (c *Config) NewResourceManagerV3Client(userAgent string) *resourceManagerV3
 	clientResourceManagerV3.BasePath = resourceManagerV3BasePath
 
 	return clientResourceManagerV3
+}
+
+func (c *Config) NewRuntimeconfigClient(userAgent string) *runtimeconfig.Service {
+	runtimeConfigClientBasePath := RemoveBasePathVersion(c.RuntimeConfigBasePath)
+	log.Printf("[INFO] Instantiating Google Cloud Runtimeconfig client for path %s", runtimeConfigClientBasePath)
+	clientRuntimeconfig, err := runtimeconfig.NewService(c.Context, option.WithHTTPClient(c.Client))
+	if err != nil {
+		log.Printf("[WARN] Error creating client runtime config: %s", err)
+		return nil
+	}
+	clientRuntimeconfig.UserAgent = userAgent
+	clientRuntimeconfig.BasePath = runtimeConfigClientBasePath
+
+	return clientRuntimeconfig
 }
 
 func (c *Config) NewIamClient(userAgent string) *iam.Service {
@@ -1874,6 +2007,7 @@ func ConfigureBasePaths(c *Config) {
 	c.AccessContextManagerBasePath = DefaultBasePaths[AccessContextManagerBasePathKey]
 	c.ActiveDirectoryBasePath = DefaultBasePaths[ActiveDirectoryBasePathKey]
 	c.AlloydbBasePath = DefaultBasePaths[AlloydbBasePathKey]
+	c.ApiGatewayBasePath = DefaultBasePaths[ApiGatewayBasePathKey]
 	c.ApigeeBasePath = DefaultBasePaths[ApigeeBasePathKey]
 	c.AppEngineBasePath = DefaultBasePaths[AppEngineBasePathKey]
 	c.ArtifactRegistryBasePath = DefaultBasePaths[ArtifactRegistryBasePathKey]
@@ -1905,6 +2039,7 @@ func ConfigureBasePaths(c *Config) {
 	c.ContainerAttachedBasePath = DefaultBasePaths[ContainerAttachedBasePathKey]
 	c.DatabaseMigrationServiceBasePath = DefaultBasePaths[DatabaseMigrationServiceBasePathKey]
 	c.DataCatalogBasePath = DefaultBasePaths[DataCatalogBasePathKey]
+	c.DataformBasePath = DefaultBasePaths[DataformBasePathKey]
 	c.DataFusionBasePath = DefaultBasePaths[DataFusionBasePathKey]
 	c.DataLossPreventionBasePath = DefaultBasePaths[DataLossPreventionBasePathKey]
 	c.DataplexBasePath = DefaultBasePaths[DataplexBasePathKey]
@@ -1919,11 +2054,17 @@ func ConfigureBasePaths(c *Config) {
 	c.DocumentAIBasePath = DefaultBasePaths[DocumentAIBasePathKey]
 	c.EssentialContactsBasePath = DefaultBasePaths[EssentialContactsBasePathKey]
 	c.FilestoreBasePath = DefaultBasePaths[FilestoreBasePathKey]
+	c.FirebaseBasePath = DefaultBasePaths[FirebaseBasePathKey]
+	c.FirebaseDatabaseBasePath = DefaultBasePaths[FirebaseDatabaseBasePathKey]
+	c.FirebaseExtensionsBasePath = DefaultBasePaths[FirebaseExtensionsBasePathKey]
+	c.FirebaseHostingBasePath = DefaultBasePaths[FirebaseHostingBasePathKey]
+	c.FirebaseStorageBasePath = DefaultBasePaths[FirebaseStorageBasePathKey]
 	c.FirestoreBasePath = DefaultBasePaths[FirestoreBasePathKey]
 	c.GameServicesBasePath = DefaultBasePaths[GameServicesBasePathKey]
 	c.GKEBackupBasePath = DefaultBasePaths[GKEBackupBasePathKey]
 	c.GKEHubBasePath = DefaultBasePaths[GKEHubBasePathKey]
 	c.GKEHub2BasePath = DefaultBasePaths[GKEHub2BasePathKey]
+	c.GkeonpremBasePath = DefaultBasePaths[GkeonpremBasePathKey]
 	c.HealthcareBasePath = DefaultBasePaths[HealthcareBasePathKey]
 	c.IAM2BasePath = DefaultBasePaths[IAM2BasePathKey]
 	c.IAMBetaBasePath = DefaultBasePaths[IAMBetaBasePathKey]
@@ -1940,6 +2081,7 @@ func ConfigureBasePaths(c *Config) {
 	c.NetworkSecurityBasePath = DefaultBasePaths[NetworkSecurityBasePathKey]
 	c.NetworkServicesBasePath = DefaultBasePaths[NetworkServicesBasePathKey]
 	c.NotebooksBasePath = DefaultBasePaths[NotebooksBasePathKey]
+	c.OrgPolicyBasePath = DefaultBasePaths[OrgPolicyBasePathKey]
 	c.OSConfigBasePath = DefaultBasePaths[OSConfigBasePathKey]
 	c.OSLoginBasePath = DefaultBasePaths[OSLoginBasePathKey]
 	c.PrivatecaBasePath = DefaultBasePaths[PrivatecaBasePathKey]
@@ -1948,8 +2090,11 @@ func ConfigureBasePaths(c *Config) {
 	c.PubsubLiteBasePath = DefaultBasePaths[PubsubLiteBasePathKey]
 	c.RedisBasePath = DefaultBasePaths[RedisBasePathKey]
 	c.ResourceManagerBasePath = DefaultBasePaths[ResourceManagerBasePathKey]
+	c.RuntimeConfigBasePath = DefaultBasePaths[RuntimeConfigBasePathKey]
 	c.SecretManagerBasePath = DefaultBasePaths[SecretManagerBasePathKey]
 	c.SecurityCenterBasePath = DefaultBasePaths[SecurityCenterBasePathKey]
+	c.SecurityScannerBasePath = DefaultBasePaths[SecurityScannerBasePathKey]
+	c.ServiceDirectoryBasePath = DefaultBasePaths[ServiceDirectoryBasePathKey]
 	c.ServiceManagementBasePath = DefaultBasePaths[ServiceManagementBasePathKey]
 	c.ServiceUsageBasePath = DefaultBasePaths[ServiceUsageBasePathKey]
 	c.SourceRepoBasePath = DefaultBasePaths[SourceRepoBasePathKey]
@@ -1960,8 +2105,10 @@ func ConfigureBasePaths(c *Config) {
 	c.TagsBasePath = DefaultBasePaths[TagsBasePathKey]
 	c.TPUBasePath = DefaultBasePaths[TPUBasePathKey]
 	c.VertexAIBasePath = DefaultBasePaths[VertexAIBasePathKey]
+	c.VmwareengineBasePath = DefaultBasePaths[VmwareengineBasePathKey]
 	c.VPCAccessBasePath = DefaultBasePaths[VPCAccessBasePathKey]
 	c.WorkflowsBasePath = DefaultBasePaths[WorkflowsBasePathKey]
+	c.WorkstationsBasePath = DefaultBasePaths[WorkstationsBasePathKey]
 
 	// Handwritten Products / Versioned / Atypical Entries
 	c.CloudBillingBasePath = DefaultBasePaths[CloudBillingBasePathKey]

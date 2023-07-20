@@ -41,8 +41,8 @@ func GetComputeDiskResourcePolicyAttachmentCaiObject(d tpgresource.TerraformReso
 			Name: name,
 			Type: ComputeDiskResourcePolicyAttachmentAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "DiskResourcePolicyAttachment",
 				Data:                 obj,
 			},

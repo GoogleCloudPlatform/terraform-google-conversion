@@ -42,8 +42,8 @@ func GetComputeTargetInstanceCaiObject(d tpgresource.TerraformResourceData, conf
 			Name: name,
 			Type: ComputeTargetInstanceAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "TargetInstance",
 				Data:                 obj,
 			},
@@ -60,6 +60,12 @@ func GetComputeTargetInstanceApiObject(d tpgresource.TerraformResourceData, conf
 		return nil, err
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
+	}
+	networkProp, err := expandComputeTargetInstanceNetwork(d.Get("network"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
+		obj["network"] = networkProp
 	}
 	descriptionProp, err := expandComputeTargetInstanceDescription(d.Get("description"), d, config)
 	if err != nil {
@@ -90,6 +96,10 @@ func GetComputeTargetInstanceApiObject(d tpgresource.TerraformResourceData, conf
 }
 
 func expandComputeTargetInstanceName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeTargetInstanceNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

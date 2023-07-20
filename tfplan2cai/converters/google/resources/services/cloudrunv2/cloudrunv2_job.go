@@ -996,6 +996,13 @@ func expandCloudRunV2JobTemplateTemplateVolumes(v interface{}, d tpgresource.Ter
 			transformed["cloudSqlInstance"] = transformedCloudSqlInstance
 		}
 
+		transformedEmptyDir, err := expandCloudRunV2JobTemplateTemplateVolumesEmptyDir(original["empty_dir"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEmptyDir); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["emptyDir"] = transformedEmptyDir
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1114,6 +1121,40 @@ func expandCloudRunV2JobTemplateTemplateVolumesCloudSqlInstance(v interface{}, d
 }
 
 func expandCloudRunV2JobTemplateTemplateVolumesCloudSqlInstanceInstances(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesEmptyDir(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMedium, err := expandCloudRunV2JobTemplateTemplateVolumesEmptyDirMedium(original["medium"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMedium); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["medium"] = transformedMedium
+	}
+
+	transformedSizeLimit, err := expandCloudRunV2JobTemplateTemplateVolumesEmptyDirSizeLimit(original["size_limit"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSizeLimit); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sizeLimit"] = transformedSizeLimit
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesEmptyDirMedium(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesEmptyDirSizeLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -40,8 +40,8 @@ func GetOSConfigPatchDeploymentCaiObject(d tpgresource.TerraformResourceData, co
 			Name: name,
 			Type: OSConfigPatchDeploymentAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/osconfig/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/osconfig/v1beta/rest",
 				DiscoveryName:        "PatchDeployment",
 				Data:                 obj,
 			},

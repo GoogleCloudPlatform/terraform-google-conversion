@@ -66,8 +66,8 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 			Name: name,
 			Type: ComputeSubnetworkAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "Subnetwork",
 				Data:                 obj,
 			},

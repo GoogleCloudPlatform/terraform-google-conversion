@@ -46,8 +46,8 @@ func GetVPCAccessConnectorCaiObject(d tpgresource.TerraformResourceData, config 
 			Name: name,
 			Type: VPCAccessConnectorAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/vpcaccess/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/vpcaccess/v1beta1/rest",
 				DiscoveryName:        "Connector",
 				Data:                 obj,
 			},

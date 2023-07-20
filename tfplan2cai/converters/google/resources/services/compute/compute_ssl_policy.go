@@ -65,8 +65,8 @@ func GetComputeSslPolicyCaiObject(d tpgresource.TerraformResourceData, config *t
 			Name: name,
 			Type: ComputeSslPolicyAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "SslPolicy",
 				Data:                 obj,
 			},
