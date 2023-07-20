@@ -255,6 +255,12 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("protocol"); !tpgresource.IsEmptyValue(reflect.ValueOf(protocolProp)) && (ok || !reflect.DeepEqual(v, protocolProp)) {
 		obj["protocol"] = protocolProp
 	}
+	securityPolicyProp, err := expandComputeRegionBackendServiceSecurityPolicy(d.Get("security_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("security_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(securityPolicyProp)) && (ok || !reflect.DeepEqual(v, securityPolicyProp)) {
+		obj["securityPolicy"] = securityPolicyProp
+	}
 	sessionAffinityProp, err := expandComputeRegionBackendServiceSessionAffinity(d.Get("session_affinity"), d, config)
 	if err != nil {
 		return nil, err
@@ -1301,6 +1307,10 @@ func expandComputeRegionBackendServicePortName(v interface{}, d tpgresource.Terr
 }
 
 func expandComputeRegionBackendServiceProtocol(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceSecurityPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
