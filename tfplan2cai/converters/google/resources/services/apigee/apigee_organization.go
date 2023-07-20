@@ -77,6 +77,12 @@ func GetApigeeOrganizationApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("authorized_network"); !tpgresource.IsEmptyValue(reflect.ValueOf(authorizedNetworkProp)) && (ok || !reflect.DeepEqual(v, authorizedNetworkProp)) {
 		obj["authorizedNetwork"] = authorizedNetworkProp
 	}
+	disableVpcPeeringProp, err := expandApigeeOrganizationDisableVpcPeering(d.Get("disable_vpc_peering"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disable_vpc_peering"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableVpcPeeringProp)) && (ok || !reflect.DeepEqual(v, disableVpcPeeringProp)) {
+		obj["disableVpcPeering"] = disableVpcPeeringProp
+	}
 	runtimeTypeProp, err := expandApigeeOrganizationRuntimeType(d.Get("runtime_type"), d, config)
 	if err != nil {
 		return nil, err
@@ -123,6 +129,10 @@ func expandApigeeOrganizationAnalyticsRegion(v interface{}, d tpgresource.Terraf
 }
 
 func expandApigeeOrganizationAuthorizedNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeOrganizationDisableVpcPeering(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

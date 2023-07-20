@@ -67,6 +67,7 @@ func GetMonitoringMonitoredProjectApiObject(d tpgresource.TerraformResourceData,
 func resourceMonitoringMonitoredProjectEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	name := d.Get("name").(string)
 	name = tpgresource.GetResourceNameFromSelfLink(name)
+	d.Set("name", name)
 	metricsScope := d.Get("metrics_scope").(string)
 	metricsScope = tpgresource.GetResourceNameFromSelfLink(metricsScope)
 	d.Set("metrics_scope", metricsScope)
