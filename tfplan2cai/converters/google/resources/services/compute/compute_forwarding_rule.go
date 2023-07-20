@@ -44,8 +44,8 @@ func GetComputeForwardingRuleCaiObject(d tpgresource.TerraformResourceData, conf
 			Name: name,
 			Type: ComputeForwardingRuleAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "ForwardingRule",
 				Data:                 obj,
 			},

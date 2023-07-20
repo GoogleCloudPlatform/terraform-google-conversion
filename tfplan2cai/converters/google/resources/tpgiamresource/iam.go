@@ -479,7 +479,7 @@ func IamWithDeprecationMessage(message string) func(s *IamSettings) {
 }
 
 func IamWithGAResourceDeprecation() func(s *IamSettings) {
-	return IamWithDeprecationMessage("This resource has been deprecated in the google (GA) provider, and will only be available in the google-beta provider in a future release.")
+	return IamWithDeprecationMessage("")
 }
 
 func IamWithBatching(s *IamSettings) {

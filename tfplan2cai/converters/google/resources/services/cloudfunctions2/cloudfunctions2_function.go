@@ -42,8 +42,8 @@ func GetCloudfunctions2functionCaiObject(d tpgresource.TerraformResourceData, co
 			Name: name,
 			Type: Cloudfunctions2functionAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudfunctions/v2/rest",
+				Version:              "v2beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudfunctions/v2beta/rest",
 				DiscoveryName:        "function",
 				Data:                 obj,
 			},

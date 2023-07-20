@@ -41,8 +41,8 @@ func GetComputeRegionTargetHttpsProxyCaiObject(d tpgresource.TerraformResourceDa
 			Name: name,
 			Type: ComputeRegionTargetHttpsProxyAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionTargetHttpsProxy",
 				Data:                 obj,
 			},
@@ -71,6 +71,12 @@ func GetComputeRegionTargetHttpsProxyApiObject(d tpgresource.TerraformResourceDa
 		return nil, err
 	} else if v, ok := d.GetOkExists("ssl_certificates"); !tpgresource.IsEmptyValue(reflect.ValueOf(sslCertificatesProp)) && (ok || !reflect.DeepEqual(v, sslCertificatesProp)) {
 		obj["sslCertificates"] = sslCertificatesProp
+	}
+	sslPolicyProp, err := expandComputeRegionTargetHttpsProxySslPolicy(d.Get("ssl_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ssl_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(sslPolicyProp)) && (ok || !reflect.DeepEqual(v, sslPolicyProp)) {
+		obj["sslPolicy"] = sslPolicyProp
 	}
 	urlMapProp, err := expandComputeRegionTargetHttpsProxyUrlMap(d.Get("url_map"), d, config)
 	if err != nil {
@@ -110,6 +116,14 @@ func expandComputeRegionTargetHttpsProxySslCertificates(v interface{}, d tpgreso
 		req = append(req, f.RelativeLink())
 	}
 	return req, nil
+}
+
+func expandComputeRegionTargetHttpsProxySslPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseRegionalFieldValue("sslPolicies", v.(string), "project", "region", "zone", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for ssl_policy: %s", err)
+	}
+	return f.RelativeLink(), nil
 }
 
 func expandComputeRegionTargetHttpsProxyUrlMap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

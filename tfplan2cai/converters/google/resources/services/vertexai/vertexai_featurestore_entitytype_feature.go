@@ -41,8 +41,8 @@ func GetVertexAIFeaturestoreEntitytypeFeatureCaiObject(d tpgresource.TerraformRe
 			Name: name,
 			Type: VertexAIFeaturestoreEntitytypeFeatureAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
 				DiscoveryName:        "FeaturestoreEntitytypeFeature",
 				Data:                 obj,
 			},

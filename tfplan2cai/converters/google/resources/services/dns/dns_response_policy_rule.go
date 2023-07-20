@@ -40,8 +40,8 @@ func GetDNSResponsePolicyRuleCaiObject(d tpgresource.TerraformResourceData, conf
 			Name: name,
 			Type: DNSResponsePolicyRuleAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1/rest",
+				Version:              "v1beta2",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1beta2/rest",
 				DiscoveryName:        "ResponsePolicyRule",
 				Data:                 obj,
 			},
@@ -70,6 +70,12 @@ func GetDNSResponsePolicyRuleApiObject(d tpgresource.TerraformResourceData, conf
 		return nil, err
 	} else if v, ok := d.GetOkExists("local_data"); !tpgresource.IsEmptyValue(reflect.ValueOf(localDataProp)) && (ok || !reflect.DeepEqual(v, localDataProp)) {
 		obj["localData"] = localDataProp
+	}
+	behaviorProp, err := expandDNSResponsePolicyRuleBehavior(d.Get("behavior"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("behavior"); !tpgresource.IsEmptyValue(reflect.ValueOf(behaviorProp)) && (ok || !reflect.DeepEqual(v, behaviorProp)) {
+		obj["behavior"] = behaviorProp
 	}
 
 	return obj, nil
@@ -158,5 +164,9 @@ func expandDNSResponsePolicyRuleLocalDataLocalDatasTtl(v interface{}, d tpgresou
 }
 
 func expandDNSResponsePolicyRuleLocalDataLocalDatasRrdatas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDNSResponsePolicyRuleBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

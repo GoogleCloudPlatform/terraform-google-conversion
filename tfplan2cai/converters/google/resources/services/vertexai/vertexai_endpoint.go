@@ -40,8 +40,8 @@ func GetVertexAIEndpointCaiObject(d tpgresource.TerraformResourceData, config *t
 			Name: name,
 			Type: VertexAIEndpointAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
 				DiscoveryName:        "Endpoint",
 				Data:                 obj,
 			},

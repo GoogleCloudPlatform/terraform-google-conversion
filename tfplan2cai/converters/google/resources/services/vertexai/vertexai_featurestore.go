@@ -40,8 +40,8 @@ func GetVertexAIFeaturestoreCaiObject(d tpgresource.TerraformResourceData, confi
 			Name: name,
 			Type: VertexAIFeaturestoreAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
 				DiscoveryName:        "Featurestore",
 				Data:                 obj,
 			},
@@ -64,6 +64,12 @@ func GetVertexAIFeaturestoreApiObject(d tpgresource.TerraformResourceData, confi
 		return nil, err
 	} else if v, ok := d.GetOkExists("online_serving_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(onlineServingConfigProp)) && (ok || !reflect.DeepEqual(v, onlineServingConfigProp)) {
 		obj["onlineServingConfig"] = onlineServingConfigProp
+	}
+	onlineStorageTtlDaysProp, err := expandVertexAIFeaturestoreOnlineStorageTtlDays(d.Get("online_storage_ttl_days"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("online_storage_ttl_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(onlineStorageTtlDaysProp)) && (ok || !reflect.DeepEqual(v, onlineStorageTtlDaysProp)) {
+		obj["onlineStorageTtlDays"] = onlineStorageTtlDaysProp
 	}
 	encryptionSpecProp, err := expandVertexAIFeaturestoreEncryptionSpec(d.Get("encryption_spec"), d, config)
 	if err != nil {
@@ -147,6 +153,10 @@ func expandVertexAIFeaturestoreOnlineServingConfigScalingMinNodeCount(v interfac
 }
 
 func expandVertexAIFeaturestoreOnlineServingConfigScalingMaxNodeCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeaturestoreOnlineStorageTtlDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

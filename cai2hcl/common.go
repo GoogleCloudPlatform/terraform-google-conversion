@@ -2,7 +2,7 @@ package cai2hcl
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
-	tpg "github.com/hashicorp/terraform-provider-google/google"
+	tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta"
 	"github.com/zclconf/go-cty/cty"
 )
 

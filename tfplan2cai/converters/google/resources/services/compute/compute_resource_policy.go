@@ -43,8 +43,8 @@ func GetComputeResourcePolicyCaiObject(d tpgresource.TerraformResourceData, conf
 			Name: name,
 			Type: ComputeResourcePolicyAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "ResourcePolicy",
 				Data:                 obj,
 			},
@@ -429,6 +429,13 @@ func expandComputeResourcePolicyGroupPlacementPolicy(v interface{}, d tpgresourc
 		transformed["collocation"] = transformedCollocation
 	}
 
+	transformedMaxDistance, err := expandComputeResourcePolicyGroupPlacementPolicyMaxDistance(original["max_distance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxDistance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxDistance"] = transformedMaxDistance
+	}
+
 	return transformed, nil
 }
 
@@ -441,6 +448,10 @@ func expandComputeResourcePolicyGroupPlacementPolicyAvailabilityDomainCount(v in
 }
 
 func expandComputeResourcePolicyGroupPlacementPolicyCollocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeResourcePolicyGroupPlacementPolicyMaxDistance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

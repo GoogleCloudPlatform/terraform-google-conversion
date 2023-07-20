@@ -25,6 +25,7 @@ func configureTestBasePaths(c *transport_tpg.Config, url string) {
 	c.AccessContextManagerBasePath = url
 	c.ActiveDirectoryBasePath = url
 	c.AlloydbBasePath = url
+	c.ApiGatewayBasePath = url
 	c.ApigeeBasePath = url
 	c.AppEngineBasePath = url
 	c.ArtifactRegistryBasePath = url
@@ -56,6 +57,7 @@ func configureTestBasePaths(c *transport_tpg.Config, url string) {
 	c.ContainerAttachedBasePath = url
 	c.DatabaseMigrationServiceBasePath = url
 	c.DataCatalogBasePath = url
+	c.DataformBasePath = url
 	c.DataFusionBasePath = url
 	c.DataLossPreventionBasePath = url
 	c.DataplexBasePath = url
@@ -70,11 +72,17 @@ func configureTestBasePaths(c *transport_tpg.Config, url string) {
 	c.DocumentAIBasePath = url
 	c.EssentialContactsBasePath = url
 	c.FilestoreBasePath = url
+	c.FirebaseBasePath = url
+	c.FirebaseDatabaseBasePath = url
+	c.FirebaseExtensionsBasePath = url
+	c.FirebaseHostingBasePath = url
+	c.FirebaseStorageBasePath = url
 	c.FirestoreBasePath = url
 	c.GameServicesBasePath = url
 	c.GKEBackupBasePath = url
 	c.GKEHubBasePath = url
 	c.GKEHub2BasePath = url
+	c.GkeonpremBasePath = url
 	c.HealthcareBasePath = url
 	c.IAM2BasePath = url
 	c.IAMBetaBasePath = url
@@ -91,6 +99,7 @@ func configureTestBasePaths(c *transport_tpg.Config, url string) {
 	c.NetworkSecurityBasePath = url
 	c.NetworkServicesBasePath = url
 	c.NotebooksBasePath = url
+	c.OrgPolicyBasePath = url
 	c.OSConfigBasePath = url
 	c.OSLoginBasePath = url
 	c.PrivatecaBasePath = url
@@ -99,8 +108,11 @@ func configureTestBasePaths(c *transport_tpg.Config, url string) {
 	c.PubsubLiteBasePath = url
 	c.RedisBasePath = url
 	c.ResourceManagerBasePath = url
+	c.RuntimeConfigBasePath = url
 	c.SecretManagerBasePath = url
 	c.SecurityCenterBasePath = url
+	c.SecurityScannerBasePath = url
+	c.ServiceDirectoryBasePath = url
 	c.ServiceManagementBasePath = url
 	c.ServiceUsageBasePath = url
 	c.SourceRepoBasePath = url
@@ -111,8 +123,10 @@ func configureTestBasePaths(c *transport_tpg.Config, url string) {
 	c.TagsBasePath = url
 	c.TPUBasePath = url
 	c.VertexAIBasePath = url
+	c.VmwareengineBasePath = url
 	c.VPCAccessBasePath = url
 	c.WorkflowsBasePath = url
+	c.WorkstationsBasePath = url
 
 	// Handwritten Products / Versioned / Atypical Entries
 	c.CloudBillingBasePath = url

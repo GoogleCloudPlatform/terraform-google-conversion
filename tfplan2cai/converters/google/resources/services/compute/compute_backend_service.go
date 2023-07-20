@@ -193,8 +193,8 @@ func GetComputeBackendServiceCaiObject(d tpgresource.TerraformResourceData, conf
 			Name: name,
 			Type: ComputeBackendServiceAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+				Version:              "beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "BackendService",
 				Data:                 obj,
 			},
@@ -561,6 +561,13 @@ func expandComputeBackendServiceCircuitBreakers(v interface{}, d tpgresource.Ter
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedConnectTimeout, err := expandComputeBackendServiceCircuitBreakersConnectTimeout(original["connect_timeout"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectTimeout"] = transformedConnectTimeout
+	}
+
 	transformedMaxRequestsPerConnection, err := expandComputeBackendServiceCircuitBreakersMaxRequestsPerConnection(original["max_requests_per_connection"], d, config)
 	if err != nil {
 		return nil, err
@@ -597,6 +604,40 @@ func expandComputeBackendServiceCircuitBreakers(v interface{}, d tpgresource.Ter
 	}
 
 	return transformed, nil
+}
+
+func expandComputeBackendServiceCircuitBreakersConnectTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSeconds, err := expandComputeBackendServiceCircuitBreakersConnectTimeoutSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	transformedNanos, err := expandComputeBackendServiceCircuitBreakersConnectTimeoutNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	return transformed, nil
+}
+
+func expandComputeBackendServiceCircuitBreakersConnectTimeoutSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceCircuitBreakersConnectTimeoutNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeBackendServiceCircuitBreakersMaxRequestsPerConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

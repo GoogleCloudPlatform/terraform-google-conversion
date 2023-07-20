@@ -53,8 +53,8 @@ func GetGKEHubMembershipCaiObject(d tpgresource.TerraformResourceData, config *t
 			Name: name,
 			Type: GKEHubMembershipAssetType,
 			Resource: &tpgresource.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gkehub/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gkehub/v1beta1/rest",
 				DiscoveryName:        "Membership",
 				Data:                 obj,
 			},
@@ -66,6 +66,12 @@ func GetGKEHubMembershipCaiObject(d tpgresource.TerraformResourceData, config *t
 
 func GetGKEHubMembershipApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	descriptionProp, err := expandGKEHubMembershipDescription(d.Get("description"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+		obj["description"] = descriptionProp
+	}
 	labelsProp, err := expandGKEHubMembershipLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -86,6 +92,10 @@ func GetGKEHubMembershipApiObject(d tpgresource.TerraformResourceData, config *t
 	}
 
 	return obj, nil
+}
+
+func expandGKEHubMembershipDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandGKEHubMembershipLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
