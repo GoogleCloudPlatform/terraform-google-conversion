@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai"
-	"github.com/stretchr/testify/require"
+	"github.com/google/go-cmp/cmp"
 	"go.uber.org/zap/zaptest"
 )
 
@@ -172,7 +172,9 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 			}
 			expectedAssets := normalizeAssets(t, want, true)
 			actualAssets := normalizeAssets(t, got, true)
-			require.ElementsMatch(t, actualAssets, expectedAssets)
+			if diff := cmp.Diff(expectedAssets, actualAssets); diff != "" {
+				t.Errorf("%v diff(-want, +got):\n%s", t.Name(), diff)
+			}
 		})
 	}
 }
@@ -232,7 +234,9 @@ func TestReadPlannedAssetsCoverage_WithoutDefaultProject(t *testing.T) {
 			}
 			expectedAssets := normalizeAssets(t, want, true)
 			actualAssets := normalizeAssets(t, got, true)
-			require.ElementsMatch(t, actualAssets, expectedAssets)
+			if diff := cmp.Diff(expectedAssets, actualAssets); diff != "" {
+				t.Errorf("%v diff(-want, +got):\n%s", t.Name(), diff)
+			}
 		})
 	}
 }
