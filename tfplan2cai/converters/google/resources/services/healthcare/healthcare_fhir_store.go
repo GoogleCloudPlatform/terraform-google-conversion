@@ -271,6 +271,13 @@ func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfig(v int
 		transformed["recursiveStructureDepth"] = transformedRecursiveStructureDepth
 	}
 
+	transformedLastUpdatedPartitionConfig, err := expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUpdatedPartitionConfig(original["last_updated_partition_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLastUpdatedPartitionConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["lastUpdatedPartitionConfig"] = transformedLastUpdatedPartitionConfig
+	}
+
 	return transformed, nil
 }
 
@@ -279,6 +286,40 @@ func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigSchema
 }
 
 func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigRecursiveStructureDepth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUpdatedPartitionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUpdatedPartitionConfigType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	transformedExpirationMs, err := expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUpdatedPartitionConfigExpirationMs(original["expiration_ms"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpirationMs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expirationMs"] = transformedExpirationMs
+	}
+
+	return transformed, nil
+}
+
+func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUpdatedPartitionConfigType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUpdatedPartitionConfigExpirationMs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
