@@ -92,6 +92,27 @@ func cloudrunLabelDiffSuppress(k, old, new string, d *schema.ResourceData) bool 
 	return false
 }
 
+var cloudRunGoogleProvidedTemplateLabels = []string{
+	"run.googleapis.com/startupProbeType",
+}
+
+func cloudrunTemplateLabelDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	// Suppress diffs for the labels provided by Google
+	for _, label := range cloudRunGoogleProvidedTemplateLabels {
+		if strings.Contains(k, label) && new == "" {
+			return true
+		}
+	}
+
+	// Let diff be determined by labels (above)
+	if strings.Contains(k, "labels.%") {
+		return true
+	}
+
+	// For other keys, don't suppress diff.
+	return false
+}
+
 const CloudRunServiceAssetType string = "run.googleapis.com/Service"
 
 func ResourceConverterCloudRunService() tpgresource.ResourceConverter {
