@@ -18,9 +18,38 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
 )
+
+func ResourceMonitoringMonitoredProjectNameDiffSuppressFunc(k, old, new string, d tpgresource.TerraformResourceDataChange) bool {
+	// Don't suppress if values are empty strings
+	if old == "" || new == "" {
+		return false
+	}
+
+	oldShort := tpgresource.GetResourceNameFromSelfLink(old)
+	newShort := tpgresource.GetResourceNameFromSelfLink(new)
+
+	// Suppress if short names are equal
+	if oldShort == newShort {
+		return true
+	}
+
+	_, isOldNumErr := tpgresource.StringToFixed64(oldShort)
+	isOldNumber := isOldNumErr == nil
+	_, isNewNumErr := tpgresource.StringToFixed64(newShort)
+	isNewNumber := isNewNumErr == nil
+
+	// Suppress if comparing a project number to project id
+	return isOldNumber != isNewNumber
+}
+
+func resourceMonitoringMonitoredProjectNameDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	return ResourceMonitoringMonitoredProjectNameDiffSuppressFunc(k, old, new, d)
+}
 
 const MonitoringMonitoredProjectAssetType string = "monitoring.googleapis.com/MonitoredProject"
 
