@@ -1348,6 +1348,13 @@ func expandComputeRegionBackendServiceConnectionTrackingPolicy(v interface{}, d 
 		transformed["connectionPersistenceOnUnhealthyBackends"] = transformedConnectionPersistenceOnUnhealthyBackends
 	}
 
+	transformedEnableStrongAffinity, err := expandComputeRegionBackendServiceConnectionTrackingPolicyEnableStrongAffinity(original["enable_strong_affinity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableStrongAffinity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableStrongAffinity"] = transformedEnableStrongAffinity
+	}
+
 	return transformed, nil
 }
 
@@ -1360,6 +1367,10 @@ func expandComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(v int
 }
 
 func expandComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicyEnableStrongAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
