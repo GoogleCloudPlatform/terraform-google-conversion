@@ -347,6 +347,13 @@ func expandHealthcareFhirStoreNotificationConfigs(v interface{}, d tpgresource.T
 			transformed["sendFullResource"] = transformedSendFullResource
 		}
 
+		transformedSendPreviousResourceOnDelete, err := expandHealthcareFhirStoreNotificationConfigsSendPreviousResourceOnDelete(original["send_previous_resource_on_delete"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSendPreviousResourceOnDelete); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sendPreviousResourceOnDelete"] = transformedSendPreviousResourceOnDelete
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -357,5 +364,9 @@ func expandHealthcareFhirStoreNotificationConfigsPubsubTopic(v interface{}, d tp
 }
 
 func expandHealthcareFhirStoreNotificationConfigsSendFullResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreNotificationConfigsSendPreviousResourceOnDelete(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
