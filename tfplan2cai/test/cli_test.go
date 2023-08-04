@@ -22,9 +22,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
+	"github.com/google/go-cmp/cmp"
 )
 
 // TestCLI tests the "convert" and "validate" subcommand against a generated .tfplan file.
@@ -298,7 +297,9 @@ type compareConvertOutputFunc func(t *testing.T, expected []caiasset.Asset, actu
 func compareUnmergedConvertOutput(t *testing.T, expected []caiasset.Asset, actual []caiasset.Asset, offline bool) {
 	expectedAssets := normalizeAssets(t, expected, offline)
 	actualAssets := normalizeAssets(t, actual, offline)
-	require.ElementsMatch(t, expectedAssets, actualAssets)
+	if diff := cmp.Diff(expectedAssets, actualAssets); diff != "" {
+		t.Errorf("%v diff(-want, +got):\n%s", t.Name(), diff)
+	}
 }
 
 // For merged IAM members, only consider whether the expected members are present.
@@ -339,7 +340,9 @@ func compareMergedIamMemberOutput(t *testing.T, expected []caiasset.Asset, actua
 
 	expectedAssets := normalizeAssets(t, expected, offline)
 	actualAssets := normalizeAssets(t, normalizedActual, offline)
-	require.ElementsMatch(t, expectedAssets, actualAssets)
+	if diff := cmp.Diff(expectedAssets, actualAssets); diff != "" {
+		t.Errorf("%v diff(-want, +got):\n%s", t.Name(), diff)
+	}
 }
 
 // For merged IAM bindings, only consider whether the expected bindings are as expected.
@@ -369,5 +372,7 @@ func compareMergedIamBindingOutput(t *testing.T, expected []caiasset.Asset, actu
 
 	expectedAssets := normalizeAssets(t, expected, offline)
 	actualAssets := normalizeAssets(t, normalizedActual, offline)
-	require.ElementsMatch(t, expectedAssets, actualAssets)
+	if diff := cmp.Diff(expectedAssets, actualAssets); diff != "" {
+		t.Errorf("%v diff(-want, +got):\n%s", t.Name(), diff)
+	}
 }

@@ -114,6 +114,12 @@ func GetComputeServiceAttachmentApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("consumer_accept_lists"); ok || !reflect.DeepEqual(v, consumerAcceptListsProp) {
 		obj["consumerAcceptLists"] = consumerAcceptListsProp
 	}
+	reconcileConnectionsProp, err := expandComputeServiceAttachmentReconcileConnections(d.Get("reconcile_connections"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("reconcile_connections"); ok || !reflect.DeepEqual(v, reconcileConnectionsProp) {
+		obj["reconcileConnections"] = reconcileConnectionsProp
+	}
 	regionProp, err := expandComputeServiceAttachmentRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -210,6 +216,10 @@ func expandComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(v interface
 }
 
 func expandComputeServiceAttachmentConsumerAcceptListsConnectionLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeServiceAttachmentReconcileConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -176,6 +176,12 @@ func GetSpannerDatabaseApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("database_dialect"); !tpgresource.IsEmptyValue(reflect.ValueOf(databaseDialectProp)) && (ok || !reflect.DeepEqual(v, databaseDialectProp)) {
 		obj["databaseDialect"] = databaseDialectProp
 	}
+	enableDropProtectionProp, err := expandSpannerDatabaseEnableDropProtection(d.Get("enable_drop_protection"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_drop_protection"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableDropProtectionProp)) && (ok || !reflect.DeepEqual(v, enableDropProtectionProp)) {
+		obj["enableDropProtection"] = enableDropProtectionProp
+	}
 	instanceProp, err := expandSpannerDatabaseInstance(d.Get("instance"), d, config)
 	if err != nil {
 		return nil, err
@@ -239,6 +245,10 @@ func expandSpannerDatabaseEncryptionConfigKmsKeyName(v interface{}, d tpgresourc
 }
 
 func expandSpannerDatabaseDatabaseDialect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerDatabaseEnableDropProtection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
