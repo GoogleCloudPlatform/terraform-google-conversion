@@ -176,6 +176,13 @@ func expandMonitoringAlertPolicyConditions(v interface{}, d tpgresource.Terrafor
 			transformed["conditionMatchedLog"] = transformedConditionMatchedLog
 		}
 
+		transformedConditionPrometheusQueryLanguage, err := expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguage(original["condition_prometheus_query_language"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConditionPrometheusQueryLanguage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["conditionPrometheusQueryLanguage"] = transformedConditionPrometheusQueryLanguage
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -736,6 +743,91 @@ func expandMonitoringAlertPolicyConditionsConditionMatchedLogLabelExtractors(v i
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedQuery, err := expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageQuery(original["query"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedQuery); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["query"] = transformedQuery
+	}
+
+	transformedDuration, err := expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageDuration(original["duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["duration"] = transformedDuration
+	}
+
+	transformedEvaluationInterval, err := expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageEvaluationInterval(original["evaluation_interval"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEvaluationInterval); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["evaluationInterval"] = transformedEvaluationInterval
+	}
+
+	transformedLabels, err := expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageLabels(original["labels"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labels"] = transformedLabels
+	}
+
+	transformedRuleGroup, err := expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageRuleGroup(original["rule_group"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRuleGroup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ruleGroup"] = transformedRuleGroup
+	}
+
+	transformedAlertRule, err := expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageAlertRule(original["alert_rule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAlertRule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["alertRule"] = transformedAlertRule
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageQuery(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageEvaluationInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageRuleGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageAlertRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandMonitoringAlertPolicyNotificationChannels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
