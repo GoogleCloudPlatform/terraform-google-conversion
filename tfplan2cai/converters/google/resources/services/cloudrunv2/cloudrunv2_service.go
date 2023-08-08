@@ -794,13 +794,6 @@ func expandCloudRunV2ServiceTemplateContainersLivenessProbe(v interface{}, d tpg
 		transformed["httpGet"] = transformedHttpGet
 	}
 
-	transformedTcpSocket, err := expandCloudRunV2ServiceTemplateContainersLivenessProbeTcpSocket(original["tcp_socket"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["tcpSocket"] = transformedTcpSocket
-	}
-
 	transformedGrpc, err := expandCloudRunV2ServiceTemplateContainersLivenessProbeGrpc(original["grpc"], d, config)
 	if err != nil {
 		return nil, err
@@ -907,34 +900,6 @@ func expandCloudRunV2ServiceTemplateContainersLivenessProbeHttpGetHttpHeadersNam
 }
 
 func expandCloudRunV2ServiceTemplateContainersLivenessProbeHttpGetHttpHeadersValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandCloudRunV2ServiceTemplateContainersLivenessProbeTcpSocket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 {
-		return nil, nil
-	}
-
-	if l[0] == nil {
-		transformed := make(map[string]interface{})
-		return transformed, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedPort, err := expandCloudRunV2ServiceTemplateContainersLivenessProbeTcpSocketPort(original["port"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["port"] = transformedPort
-	}
-
-	return transformed, nil
-}
-
-func expandCloudRunV2ServiceTemplateContainersLivenessProbeTcpSocketPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
