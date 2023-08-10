@@ -120,6 +120,13 @@ func expandBillingBudgetBudgetFilter(v interface{}, d tpgresource.TerraformResou
 		transformed["projects"] = transformedProjects
 	}
 
+	transformedResourceAncestors, err := expandBillingBudgetBudgetFilterResourceAncestors(original["resource_ancestors"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResourceAncestors); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resourceAncestors"] = transformedResourceAncestors
+	}
+
 	transformedCreditTypesTreatment, err := expandBillingBudgetBudgetFilterCreditTypesTreatment(original["credit_types_treatment"], d, config)
 	if err != nil {
 		return nil, err
@@ -173,6 +180,11 @@ func expandBillingBudgetBudgetFilter(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandBillingBudgetBudgetFilterProjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandBillingBudgetBudgetFilterResourceAncestors(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
