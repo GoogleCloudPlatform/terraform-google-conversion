@@ -94,6 +94,12 @@ func GetPubsubSubscriptionApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("bigquery_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(bigqueryConfigProp)) && (ok || !reflect.DeepEqual(v, bigqueryConfigProp)) {
 		obj["bigqueryConfig"] = bigqueryConfigProp
 	}
+	cloudStorageConfigProp, err := expandPubsubSubscriptionCloudStorageConfig(d.Get("cloud_storage_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cloud_storage_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(cloudStorageConfigProp)) && (ok || !reflect.DeepEqual(v, cloudStorageConfigProp)) {
+		obj["cloudStorageConfig"] = cloudStorageConfigProp
+	}
 	pushConfigProp, err := expandPubsubSubscriptionPushConfig(d.Get("push_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -253,6 +259,114 @@ func expandPubsubSubscriptionBigqueryConfigWriteMetadata(v interface{}, d tpgres
 }
 
 func expandPubsubSubscriptionBigqueryConfigDropUnknownFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBucket, err := expandPubsubSubscriptionCloudStorageConfigBucket(original["bucket"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucket); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bucket"] = transformedBucket
+	}
+
+	transformedFilenamePrefix, err := expandPubsubSubscriptionCloudStorageConfigFilenamePrefix(original["filename_prefix"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilenamePrefix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filenamePrefix"] = transformedFilenamePrefix
+	}
+
+	transformedFilenameSuffix, err := expandPubsubSubscriptionCloudStorageConfigFilenameSuffix(original["filename_suffix"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilenameSuffix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filenameSuffix"] = transformedFilenameSuffix
+	}
+
+	transformedMaxDuration, err := expandPubsubSubscriptionCloudStorageConfigMaxDuration(original["max_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxDuration"] = transformedMaxDuration
+	}
+
+	transformedMaxBytes, err := expandPubsubSubscriptionCloudStorageConfigMaxBytes(original["max_bytes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxBytes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxBytes"] = transformedMaxBytes
+	}
+
+	transformedState, err := expandPubsubSubscriptionCloudStorageConfigState(original["state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["state"] = transformedState
+	}
+
+	transformedAvroConfig, err := expandPubsubSubscriptionCloudStorageConfigAvroConfig(original["avro_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAvroConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["avroConfig"] = transformedAvroConfig
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigBucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigFilenamePrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigFilenameSuffix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigMaxDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigMaxBytes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigAvroConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWriteMetadata, err := expandPubsubSubscriptionCloudStorageConfigAvroConfigWriteMetadata(original["write_metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWriteMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["writeMetadata"] = transformedWriteMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigAvroConfigWriteMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

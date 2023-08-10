@@ -91,6 +91,12 @@ func GetCloudfunctions2functionApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
+	kmsKeyNameProp, err := expandCloudfunctions2functionKmsKeyName(d.Get("kms_key_name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyNameProp)) && (ok || !reflect.DeepEqual(v, kmsKeyNameProp)) {
+		obj["kmsKeyName"] = kmsKeyNameProp
+	}
 
 	return obj, nil
 }
@@ -847,4 +853,8 @@ func expandCloudfunctions2functionLabels(v interface{}, d tpgresource.TerraformR
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandCloudfunctions2functionKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
