@@ -319,6 +319,13 @@ func expandCloudBuildTriggerGitFileSource(v interface{}, d tpgresource.Terraform
 		transformed["githubEnterpriseConfig"] = transformedGithubEnterpriseConfig
 	}
 
+	transformedBitbucketServerConfig, err := expandCloudBuildTriggerGitFileSourceBitbucketServerConfig(original["bitbucket_server_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBitbucketServerConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bitbucketServerConfig"] = transformedBitbucketServerConfig
+	}
+
 	return transformed, nil
 }
 
@@ -343,6 +350,10 @@ func expandCloudBuildTriggerGitFileSourceRevision(v interface{}, d tpgresource.T
 }
 
 func expandCloudBuildTriggerGitFileSourceGithubEnterpriseConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerGitFileSourceBitbucketServerConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -517,6 +528,13 @@ func expandCloudBuildTriggerSourceToBuild(v interface{}, d tpgresource.Terraform
 		transformed["githubEnterpriseConfig"] = transformedGithubEnterpriseConfig
 	}
 
+	transformedBitbucketServerConfig, err := expandCloudBuildTriggerSourceToBuildBitbucketServerConfig(original["bitbucket_server_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBitbucketServerConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bitbucketServerConfig"] = transformedBitbucketServerConfig
+	}
+
 	return transformed, nil
 }
 
@@ -537,6 +555,10 @@ func expandCloudBuildTriggerSourceToBuildRepoType(v interface{}, d tpgresource.T
 }
 
 func expandCloudBuildTriggerSourceToBuildGithubEnterpriseConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerSourceToBuildBitbucketServerConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
