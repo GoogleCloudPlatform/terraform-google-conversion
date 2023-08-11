@@ -65,6 +65,12 @@ func GetSecretManagerSecretApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
 		obj["annotations"] = annotationsProp
 	}
+	versionAliasesProp, err := expandSecretManagerSecretVersionAliases(d.Get("version_aliases"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("version_aliases"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionAliasesProp)) && (ok || !reflect.DeepEqual(v, versionAliasesProp)) {
+		obj["versionAliases"] = versionAliasesProp
+	}
 	replicationProp, err := expandSecretManagerSecretReplication(d.Get("replication"), d, config)
 	if err != nil {
 		return nil, err
@@ -111,6 +117,17 @@ func expandSecretManagerSecretLabels(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandSecretManagerSecretAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandSecretManagerSecretVersionAliases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
