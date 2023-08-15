@@ -262,10 +262,21 @@ func expandGkeonpremVmwareClusterControlPlaneNodeVsphereConfig(v interface{}, d 
 		transformed["datastore"] = transformedDatastore
 	}
 
+	transformedStoragePolicyName, err := expandGkeonpremVmwareClusterControlPlaneNodeVsphereConfigStoragePolicyName(original["storage_policy_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStoragePolicyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["storagePolicyName"] = transformedStoragePolicyName
+	}
+
 	return transformed, nil
 }
 
 func expandGkeonpremVmwareClusterControlPlaneNodeVsphereConfigDatastore(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareClusterControlPlaneNodeVsphereConfigStoragePolicyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
