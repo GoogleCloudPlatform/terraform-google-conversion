@@ -84,6 +84,12 @@ func GetComputeRegionSecurityPolicyApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("ddos_protection_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(ddosProtectionConfigProp)) && (ok || !reflect.DeepEqual(v, ddosProtectionConfigProp)) {
 		obj["ddosProtectionConfig"] = ddosProtectionConfigProp
 	}
+	userDefinedFieldsProp, err := expandComputeRegionSecurityPolicyUserDefinedFields(d.Get("user_defined_fields"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("user_defined_fields"); !tpgresource.IsEmptyValue(reflect.ValueOf(userDefinedFieldsProp)) && (ok || !reflect.DeepEqual(v, userDefinedFieldsProp)) {
+		obj["userDefinedFields"] = userDefinedFieldsProp
+	}
 	regionProp, err := expandComputeRegionSecurityPolicyRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -130,6 +136,76 @@ func expandComputeRegionSecurityPolicyDdosProtectionConfig(v interface{}, d tpgr
 }
 
 func expandComputeRegionSecurityPolicyDdosProtectionConfigDdosProtection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandComputeRegionSecurityPolicyUserDefinedFieldsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedBase, err := expandComputeRegionSecurityPolicyUserDefinedFieldsBase(original["base"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["base"] = transformedBase
+		}
+
+		transformedOffset, err := expandComputeRegionSecurityPolicyUserDefinedFieldsOffset(original["offset"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOffset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["offset"] = transformedOffset
+		}
+
+		transformedSize, err := expandComputeRegionSecurityPolicyUserDefinedFieldsSize(original["size"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["size"] = transformedSize
+		}
+
+		transformedMask, err := expandComputeRegionSecurityPolicyUserDefinedFieldsMask(original["mask"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMask); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["mask"] = transformedMask
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsBase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsOffset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsMask(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
