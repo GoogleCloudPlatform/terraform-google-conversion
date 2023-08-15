@@ -566,6 +566,13 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettings(v interface
 		transformed["cmekKeyName"] = transformedCmekKeyName
 	}
 
+	transformedEdition, err := expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsEdition(original["edition"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEdition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["edition"] = transformedEdition
+	}
+
 	return transformed, nil
 }
 
@@ -751,6 +758,10 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsCollation(v 
 }
 
 func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsCmekKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsEdition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
