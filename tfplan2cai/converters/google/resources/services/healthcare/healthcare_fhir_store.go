@@ -113,6 +113,12 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("stream_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(streamConfigsProp)) && (ok || !reflect.DeepEqual(v, streamConfigsProp)) {
 		obj["streamConfigs"] = streamConfigsProp
 	}
+	defaultSearchHandlingStrictProp, err := expandHealthcareFhirStoreDefaultSearchHandlingStrict(d.Get("default_search_handling_strict"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("default_search_handling_strict"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultSearchHandlingStrictProp)) && (ok || !reflect.DeepEqual(v, defaultSearchHandlingStrictProp)) {
+		obj["defaultSearchHandlingStrict"] = defaultSearchHandlingStrictProp
+	}
 	notificationConfigsProp, err := expandHealthcareFhirStoreNotificationConfigs(d.Get("notification_configs"), d, config)
 	if err != nil {
 		return nil, err
@@ -320,6 +326,10 @@ func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUp
 }
 
 func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUpdatedPartitionConfigExpirationMs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreDefaultSearchHandlingStrict(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
