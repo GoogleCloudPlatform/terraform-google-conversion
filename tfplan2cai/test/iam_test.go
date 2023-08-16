@@ -3,7 +3,6 @@ package test
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -78,14 +77,14 @@ func TestIAMFetchFullResource(t *testing.T) {
 		server.Close()
 	})
 
-	cfg := resources.NewTestConfig(server)
+	cfg := newTestConfig(server)
 
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
 			t.Parallel()
 
 			// Create a temporary directory for generating tfplan.json from template.
-			dir, err := ioutil.TempDir(tmpDir, "terraform")
+			dir, err := os.MkdirTemp(tmpDir, "terraform")
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -94,7 +93,7 @@ func TestIAMFetchFullResource(t *testing.T) {
 			generateTestFiles(t, "../testdata/templates", dir, c.name+".tfplan.json")
 			path := filepath.Join(dir, c.name+".tfplan.json")
 
-			data, err := ioutil.ReadFile(path)
+			data, err := os.ReadFile(path)
 			if err != nil {
 				t.Fatalf("opening JSON plan file: %s", err)
 			}

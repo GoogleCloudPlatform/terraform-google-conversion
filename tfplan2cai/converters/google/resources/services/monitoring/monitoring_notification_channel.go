@@ -21,8 +21,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 var sensitiveLabels = []string{"auth_token", "service_key", "password"}
@@ -40,23 +41,23 @@ func sensitiveLabelCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v
 
 const MonitoringNotificationChannelAssetType string = "monitoring.googleapis.com/NotificationChannel"
 
-func ResourceConverterMonitoringNotificationChannel() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterMonitoringNotificationChannel() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: MonitoringNotificationChannelAssetType,
 		Convert:   GetMonitoringNotificationChannelCaiObject,
 	}
 }
 
-func GetMonitoringNotificationChannelCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//monitoring.googleapis.com/{{name}}")
+func GetMonitoringNotificationChannelCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetMonitoringNotificationChannelApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: MonitoringNotificationChannelAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",
 				DiscoveryName:        "NotificationChannel",
@@ -64,7 +65,7 @@ func GetMonitoringNotificationChannelCaiObject(d tpgresource.TerraformResourceDa
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

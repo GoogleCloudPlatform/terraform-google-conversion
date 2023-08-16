@@ -23,9 +23,10 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/verify"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
 )
 
 func expandCloudIotDeviceRegistryHTTPConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -271,23 +272,23 @@ func validateCloudIotDeviceRegistrySubfolderMatch(v interface{}, k string) (warn
 
 const CloudIotDeviceRegistryAssetType string = "cloudiot.googleapis.com/DeviceRegistry"
 
-func ResourceConverterCloudIotDeviceRegistry() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudIotDeviceRegistry() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: CloudIotDeviceRegistryAssetType,
 		Convert:   GetCloudIotDeviceRegistryCaiObject,
 	}
 }
 
-func GetCloudIotDeviceRegistryCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//cloudiot.googleapis.com/projects/{{project}}/locations/{{region}}/registries/{{name}}")
+func GetCloudIotDeviceRegistryCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//cloudiot.googleapis.com/projects/{{project}}/locations/{{region}}/registries/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetCloudIotDeviceRegistryApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: CloudIotDeviceRegistryAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudiot/v1/rest",
 				DiscoveryName:        "DeviceRegistry",
@@ -295,7 +296,7 @@ func GetCloudIotDeviceRegistryCaiObject(d tpgresource.TerraformResourceData, con
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

@@ -17,29 +17,30 @@ package dataproc
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DataprocAutoscalingPolicyAssetType string = "dataproc.googleapis.com/AutoscalingPolicy"
 
-func ResourceConverterDataprocAutoscalingPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocAutoscalingPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DataprocAutoscalingPolicyAssetType,
 		Convert:   GetDataprocAutoscalingPolicyCaiObject,
 	}
 }
 
-func GetDataprocAutoscalingPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//dataproc.googleapis.com/projects/{{project}}/locations/{{location}}/autoscalingPolicies/{{policy_id}}")
+func GetDataprocAutoscalingPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//dataproc.googleapis.com/projects/{{project}}/locations/{{location}}/autoscalingPolicies/{{policy_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDataprocAutoscalingPolicyApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DataprocAutoscalingPolicyAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dataproc/v1beta2/rest",
 				DiscoveryName:        "AutoscalingPolicy",
@@ -47,7 +48,7 @@ func GetDataprocAutoscalingPolicyCaiObject(d tpgresource.TerraformResourceData, 
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

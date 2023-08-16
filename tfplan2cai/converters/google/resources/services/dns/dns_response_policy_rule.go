@@ -17,29 +17,30 @@ package dns
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DNSResponsePolicyRuleAssetType string = "dns.googleapis.com/ResponsePolicyRule"
 
-func ResourceConverterDNSResponsePolicyRule() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDNSResponsePolicyRule() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DNSResponsePolicyRuleAssetType,
 		Convert:   GetDNSResponsePolicyRuleCaiObject,
 	}
 }
 
-func GetDNSResponsePolicyRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//dns.googleapis.com/projects/{{project}}/responsePolicies/{{response_policy}}/rules/{{rule_name}}")
+func GetDNSResponsePolicyRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//dns.googleapis.com/projects/{{project}}/responsePolicies/{{response_policy}}/rules/{{rule_name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDNSResponsePolicyRuleApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DNSResponsePolicyRuleAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1beta2/rest",
 				DiscoveryName:        "ResponsePolicyRule",
@@ -47,7 +48,7 @@ func GetDNSResponsePolicyRuleCaiObject(d tpgresource.TerraformResourceData, conf
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

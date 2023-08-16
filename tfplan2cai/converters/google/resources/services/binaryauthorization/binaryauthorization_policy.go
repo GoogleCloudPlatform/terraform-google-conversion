@@ -21,8 +21,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 func DefaultBinaryAuthorizationPolicy(project string) map[string]interface{} {
@@ -42,23 +43,23 @@ func DefaultBinaryAuthorizationPolicy(project string) map[string]interface{} {
 
 const BinaryAuthorizationPolicyAssetType string = "binaryauthorization.googleapis.com/Policy"
 
-func ResourceConverterBinaryAuthorizationPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBinaryAuthorizationPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: BinaryAuthorizationPolicyAssetType,
 		Convert:   GetBinaryAuthorizationPolicyCaiObject,
 	}
 }
 
-func GetBinaryAuthorizationPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//binaryauthorization.googleapis.com/projects/{{project}}/policy")
+func GetBinaryAuthorizationPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//binaryauthorization.googleapis.com/projects/{{project}}/policy")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetBinaryAuthorizationPolicyApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: BinaryAuthorizationPolicyAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/binaryauthorization/v1/rest",
 				DiscoveryName:        "Policy",
@@ -66,7 +67,7 @@ func GetBinaryAuthorizationPolicyCaiObject(d tpgresource.TerraformResourceData, 
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

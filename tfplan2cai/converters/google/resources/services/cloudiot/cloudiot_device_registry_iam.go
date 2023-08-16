@@ -17,24 +17,24 @@ package cloudiot
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const CloudIotDeviceRegistryIAMAssetType string = "cloudiot.googleapis.com/DeviceRegistry"
 
-func ResourceConverterCloudIotDeviceRegistryIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudIotDeviceRegistryIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudIotDeviceRegistryIAMAssetType,
 		Convert:           GetCloudIotDeviceRegistryIamPolicyCaiObject,
 		MergeCreateUpdate: MergeCloudIotDeviceRegistryIamPolicy,
 	}
 }
 
-func ResourceConverterCloudIotDeviceRegistryIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudIotDeviceRegistryIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudIotDeviceRegistryIAMAssetType,
 		Convert:           GetCloudIotDeviceRegistryIamBindingCaiObject,
 		FetchFullResource: FetchCloudIotDeviceRegistryIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterCloudIotDeviceRegistryIamBinding() tpgresource.ResourceCon
 	}
 }
 
-func ResourceConverterCloudIotDeviceRegistryIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudIotDeviceRegistryIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudIotDeviceRegistryIAMAssetType,
 		Convert:           GetCloudIotDeviceRegistryIamMemberCaiObject,
 		FetchFullResource: FetchCloudIotDeviceRegistryIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterCloudIotDeviceRegistryIamMember() tpgresource.ResourceConv
 	}
 }
 
-func GetCloudIotDeviceRegistryIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudIotDeviceRegistryIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetCloudIotDeviceRegistryIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudIotDeviceRegistryIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetCloudIotDeviceRegistryIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudIotDeviceRegistryIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetCloudIotDeviceRegistryIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudIotDeviceRegistryIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetCloudIotDeviceRegistryIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudIotDeviceRegistryIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetCloudIotDeviceRegistryIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudIotDeviceRegistryIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeCloudIotDeviceRegistryIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeCloudIotDeviceRegistryIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeCloudIotDeviceRegistryIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeCloudIotDeviceRegistryIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeCloudIotDeviceRegistryIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeCloudIotDeviceRegistryIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeCloudIotDeviceRegistryIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeCloudIotDeviceRegistryIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeCloudIotDeviceRegistryIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeCloudIotDeviceRegistryIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newCloudIotDeviceRegistryIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//cloudiot.googleapis.com/projects/{{project}}/locations/{{location}}/registries/{{name}}")
+	name, err := cai.AssetName(d, config, "//cloudiot.googleapis.com/projects/{{project}}/locations/{{location}}/registries/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: CloudIotDeviceRegistryIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchCloudIotDeviceRegistryIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchCloudIotDeviceRegistryIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		CloudIotDeviceRegistryIamUpdaterProducer,
 		d,
 		config,

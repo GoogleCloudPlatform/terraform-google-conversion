@@ -19,29 +19,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const AccessApprovalProjectSettingsAssetType string = "accessapproval.googleapis.com/ProjectSettings"
 
-func ResourceConverterAccessApprovalProjectSettings() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterAccessApprovalProjectSettings() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: AccessApprovalProjectSettingsAssetType,
 		Convert:   GetAccessApprovalProjectSettingsCaiObject,
 	}
 }
 
-func GetAccessApprovalProjectSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//accessapproval.googleapis.com/projects/{{project_id}}/accessApprovalSettings")
+func GetAccessApprovalProjectSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//accessapproval.googleapis.com/projects/{{project_id}}/accessApprovalSettings")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetAccessApprovalProjectSettingsApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: AccessApprovalProjectSettingsAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accessapproval/v1/rest",
 				DiscoveryName:        "ProjectSettings",
@@ -49,7 +50,7 @@ func GetAccessApprovalProjectSettingsCaiObject(d tpgresource.TerraformResourceDa
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

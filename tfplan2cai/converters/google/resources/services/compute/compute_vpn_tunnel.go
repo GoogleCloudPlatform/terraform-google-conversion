@@ -23,8 +23,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // validatePeerAddr returns false if a tunnel's peer_ip property
@@ -130,23 +131,23 @@ func getVpnTunnelLink(config *transport_tpg.Config, project, region, tunnel, use
 
 const ComputeVpnTunnelAssetType string = "compute.googleapis.com/VpnTunnel"
 
-func ResourceConverterComputeVpnTunnel() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeVpnTunnel() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeVpnTunnelAssetType,
 		Convert:   GetComputeVpnTunnelCaiObject,
 	}
 }
 
-func GetComputeVpnTunnelCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/vpnTunnels/{{name}}")
+func GetComputeVpnTunnelCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/vpnTunnels/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeVpnTunnelApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeVpnTunnelAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "VpnTunnel",
@@ -154,7 +155,7 @@ func GetComputeVpnTunnelCaiObject(d tpgresource.TerraformResourceData, config *t
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

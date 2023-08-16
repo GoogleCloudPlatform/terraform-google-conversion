@@ -18,29 +18,30 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const LoggingLogViewAssetType string = "logging.googleapis.com/LogView"
 
-func ResourceConverterLoggingLogView() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterLoggingLogView() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: LoggingLogViewAssetType,
 		Convert:   GetLoggingLogViewCaiObject,
 	}
 }
 
-func GetLoggingLogViewCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//logging.googleapis.com/{{parent}}/locations/{{location}}/buckets/{{bucket}}/views/{{name}}")
+func GetLoggingLogViewCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//logging.googleapis.com/{{parent}}/locations/{{location}}/buckets/{{bucket}}/views/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetLoggingLogViewApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: LoggingLogViewAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/logging/v2/rest",
 				DiscoveryName:        "LogView",
@@ -48,7 +49,7 @@ func GetLoggingLogViewCaiObject(d tpgresource.TerraformResourceData, config *tra
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

@@ -17,29 +17,30 @@ package securitycenter
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const SecurityCenterSourceAssetType string = "securitycenter.googleapis.com/Source"
 
-func ResourceConverterSecurityCenterSource() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterSecurityCenterSource() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: SecurityCenterSourceAssetType,
 		Convert:   GetSecurityCenterSourceCaiObject,
 	}
 }
 
-func GetSecurityCenterSourceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//securitycenter.googleapis.com/{{name}}")
+func GetSecurityCenterSourceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//securitycenter.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetSecurityCenterSourceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: SecurityCenterSourceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/securitycenter/v1/rest",
 				DiscoveryName:        "Source",
@@ -47,7 +48,7 @@ func GetSecurityCenterSourceCaiObject(d tpgresource.TerraformResourceData, confi
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

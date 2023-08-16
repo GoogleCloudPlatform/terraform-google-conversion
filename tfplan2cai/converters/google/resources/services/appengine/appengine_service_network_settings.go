@@ -17,29 +17,30 @@ package appengine
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const AppEngineServiceNetworkSettingsAssetType string = "appengine.googleapis.com/ServiceNetworkSettings"
 
-func ResourceConverterAppEngineServiceNetworkSettings() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterAppEngineServiceNetworkSettings() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: AppEngineServiceNetworkSettingsAssetType,
 		Convert:   GetAppEngineServiceNetworkSettingsCaiObject,
 	}
 }
 
-func GetAppEngineServiceNetworkSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
+func GetAppEngineServiceNetworkSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetAppEngineServiceNetworkSettingsApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: AppEngineServiceNetworkSettingsAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
 				DiscoveryName:        "ServiceNetworkSettings",
@@ -47,7 +48,7 @@ func GetAppEngineServiceNetworkSettingsCaiObject(d tpgresource.TerraformResource
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

@@ -23,8 +23,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Both oidc and oauth headers cannot be set
@@ -97,23 +98,23 @@ func validateHttpHeaders() schema.SchemaValidateFunc {
 
 const CloudSchedulerJobAssetType string = "cloudscheduler.googleapis.com/Job"
 
-func ResourceConverterCloudSchedulerJob() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudSchedulerJob() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: CloudSchedulerJobAssetType,
 		Convert:   GetCloudSchedulerJobCaiObject,
 	}
 }
 
-func GetCloudSchedulerJobCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//cloudscheduler.googleapis.com/projects/{{project}}/locations/{{region}}/jobs/{{name}}")
+func GetCloudSchedulerJobCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//cloudscheduler.googleapis.com/projects/{{project}}/locations/{{region}}/jobs/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetCloudSchedulerJobApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: CloudSchedulerJobAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudscheduler/v1/rest",
 				DiscoveryName:        "Job",
@@ -121,7 +122,7 @@ func GetCloudSchedulerJobCaiObject(d tpgresource.TerraformResourceData, config *
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

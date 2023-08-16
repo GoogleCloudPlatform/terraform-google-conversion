@@ -17,24 +17,24 @@ package gkehub2
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const GKEHub2FeatureIAMAssetType string = "gkehub.googleapis.com/Feature"
 
-func ResourceConverterGKEHub2FeatureIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterGKEHub2FeatureIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         GKEHub2FeatureIAMAssetType,
 		Convert:           GetGKEHub2FeatureIamPolicyCaiObject,
 		MergeCreateUpdate: MergeGKEHub2FeatureIamPolicy,
 	}
 }
 
-func ResourceConverterGKEHub2FeatureIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterGKEHub2FeatureIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         GKEHub2FeatureIAMAssetType,
 		Convert:           GetGKEHub2FeatureIamBindingCaiObject,
 		FetchFullResource: FetchGKEHub2FeatureIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterGKEHub2FeatureIamBinding() tpgresource.ResourceConverter {
 	}
 }
 
-func ResourceConverterGKEHub2FeatureIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterGKEHub2FeatureIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         GKEHub2FeatureIAMAssetType,
 		Convert:           GetGKEHub2FeatureIamMemberCaiObject,
 		FetchFullResource: FetchGKEHub2FeatureIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterGKEHub2FeatureIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetGKEHub2FeatureIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newGKEHub2FeatureIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetGKEHub2FeatureIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newGKEHub2FeatureIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetGKEHub2FeatureIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newGKEHub2FeatureIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetGKEHub2FeatureIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newGKEHub2FeatureIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetGKEHub2FeatureIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newGKEHub2FeatureIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetGKEHub2FeatureIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newGKEHub2FeatureIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeGKEHub2FeatureIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeGKEHub2FeatureIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeGKEHub2FeatureIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeGKEHub2FeatureIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeGKEHub2FeatureIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeGKEHub2FeatureIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeGKEHub2FeatureIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeGKEHub2FeatureIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeGKEHub2FeatureIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeGKEHub2FeatureIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newGKEHub2FeatureIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//gkehub.googleapis.com/projects/{{project}}/locations/{{location}}/features/{{name}}")
+	name, err := cai.AssetName(d, config, "//gkehub.googleapis.com/projects/{{project}}/locations/{{location}}/features/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: GKEHub2FeatureIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchGKEHub2FeatureIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchGKEHub2FeatureIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		GKEHub2FeatureIamUpdaterProducer,
 		d,
 		config,

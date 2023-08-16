@@ -17,29 +17,30 @@ package gameservices
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const GameServicesGameServerDeploymentAssetType string = "gameservices.googleapis.com/GameServerDeployment"
 
-func ResourceConverterGameServicesGameServerDeployment() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterGameServicesGameServerDeployment() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: GameServicesGameServerDeploymentAssetType,
 		Convert:   GetGameServicesGameServerDeploymentCaiObject,
 	}
 }
 
-func GetGameServicesGameServerDeploymentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/gameServerDeployments/{{deployment_id}}")
+func GetGameServicesGameServerDeploymentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//gameservices.googleapis.com/projects/{{project}}/locations/{{location}}/gameServerDeployments/{{deployment_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetGameServicesGameServerDeploymentApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: GameServicesGameServerDeploymentAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gameservices/v1beta/rest",
 				DiscoveryName:        "GameServerDeployment",
@@ -47,7 +48,7 @@ func GetGameServicesGameServerDeploymentCaiObject(d tpgresource.TerraformResourc
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

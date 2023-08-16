@@ -17,29 +17,30 @@ package mlengine
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const MLEngineModelAssetType string = "ml.googleapis.com/Model"
 
-func ResourceConverterMLEngineModel() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterMLEngineModel() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: MLEngineModelAssetType,
 		Convert:   GetMLEngineModelCaiObject,
 	}
 }
 
-func GetMLEngineModelCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//ml.googleapis.com/projects/{{project}}/models/{{name}}")
+func GetMLEngineModelCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//ml.googleapis.com/projects/{{project}}/models/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetMLEngineModelApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: MLEngineModelAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ml/v1/rest",
 				DiscoveryName:        "Model",
@@ -47,7 +48,7 @@ func GetMLEngineModelCaiObject(d tpgresource.TerraformResourceData, config *tran
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

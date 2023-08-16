@@ -18,29 +18,30 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DNSResponsePolicyAssetType string = "dns.googleapis.com/ResponsePolicy"
 
-func ResourceConverterDNSResponsePolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDNSResponsePolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DNSResponsePolicyAssetType,
 		Convert:   GetDNSResponsePolicyCaiObject,
 	}
 }
 
-func GetDNSResponsePolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//dns.googleapis.com/projects/{{project}}/responsePolicies/{{response_policy_name}}")
+func GetDNSResponsePolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//dns.googleapis.com/projects/{{project}}/responsePolicies/{{response_policy_name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDNSResponsePolicyApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DNSResponsePolicyAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1beta2/rest",
 				DiscoveryName:        "ResponsePolicy",
@@ -48,7 +49,7 @@ func GetDNSResponsePolicyCaiObject(d tpgresource.TerraformResourceData, config *
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
