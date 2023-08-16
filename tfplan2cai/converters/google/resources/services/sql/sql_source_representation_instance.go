@@ -18,29 +18,30 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const SQLSourceRepresentationInstanceAssetType string = "sqladmin.googleapis.com/SourceRepresentationInstance"
 
-func ResourceConverterSQLSourceRepresentationInstance() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterSQLSourceRepresentationInstance() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: SQLSourceRepresentationInstanceAssetType,
 		Convert:   GetSQLSourceRepresentationInstanceCaiObject,
 	}
 }
 
-func GetSQLSourceRepresentationInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//sqladmin.googleapis.com/projects/{{project}}/instances/{{name}}")
+func GetSQLSourceRepresentationInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//sqladmin.googleapis.com/projects/{{project}}/instances/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetSQLSourceRepresentationInstanceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: SQLSourceRepresentationInstanceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta4",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta4/rest",
 				DiscoveryName:        "SourceRepresentationInstance",
@@ -48,7 +49,7 @@ func GetSQLSourceRepresentationInstanceCaiObject(d tpgresource.TerraformResource
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

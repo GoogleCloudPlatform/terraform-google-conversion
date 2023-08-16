@@ -17,24 +17,24 @@ package servicemanagement
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ServiceManagementServiceConsumersIAMAssetType string = "servicemanagement.googleapis.com/ServiceConsumers"
 
-func ResourceConverterServiceManagementServiceConsumersIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterServiceManagementServiceConsumersIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ServiceManagementServiceConsumersIAMAssetType,
 		Convert:           GetServiceManagementServiceConsumersIamPolicyCaiObject,
 		MergeCreateUpdate: MergeServiceManagementServiceConsumersIamPolicy,
 	}
 }
 
-func ResourceConverterServiceManagementServiceConsumersIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterServiceManagementServiceConsumersIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ServiceManagementServiceConsumersIAMAssetType,
 		Convert:           GetServiceManagementServiceConsumersIamBindingCaiObject,
 		FetchFullResource: FetchServiceManagementServiceConsumersIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterServiceManagementServiceConsumersIamBinding() tpgresource.
 	}
 }
 
-func ResourceConverterServiceManagementServiceConsumersIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterServiceManagementServiceConsumersIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ServiceManagementServiceConsumersIAMAssetType,
 		Convert:           GetServiceManagementServiceConsumersIamMemberCaiObject,
 		FetchFullResource: FetchServiceManagementServiceConsumersIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterServiceManagementServiceConsumersIamMember() tpgresource.R
 	}
 }
 
-func GetServiceManagementServiceConsumersIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newServiceManagementServiceConsumersIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetServiceManagementServiceConsumersIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newServiceManagementServiceConsumersIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetServiceManagementServiceConsumersIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newServiceManagementServiceConsumersIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetServiceManagementServiceConsumersIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newServiceManagementServiceConsumersIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetServiceManagementServiceConsumersIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newServiceManagementServiceConsumersIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetServiceManagementServiceConsumersIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newServiceManagementServiceConsumersIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeServiceManagementServiceConsumersIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeServiceManagementServiceConsumersIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeServiceManagementServiceConsumersIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeServiceManagementServiceConsumersIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeServiceManagementServiceConsumersIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeServiceManagementServiceConsumersIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeServiceManagementServiceConsumersIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeServiceManagementServiceConsumersIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeServiceManagementServiceConsumersIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeServiceManagementServiceConsumersIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newServiceManagementServiceConsumersIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//servicemanagement.googleapis.com/services/{{service_name}}/consumers/{{consumer_project}}")
+	name, err := cai.AssetName(d, config, "//servicemanagement.googleapis.com/services/{{service_name}}/consumers/{{consumer_project}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: ServiceManagementServiceConsumersIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchServiceManagementServiceConsumersIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchServiceManagementServiceConsumersIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("service_name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("consumer_project"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		ServiceManagementServiceConsumersIamUpdaterProducer,
 		d,
 		config,

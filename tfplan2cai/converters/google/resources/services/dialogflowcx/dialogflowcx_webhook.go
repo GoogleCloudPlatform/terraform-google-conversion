@@ -17,29 +17,30 @@ package dialogflowcx
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DialogflowCXWebhookAssetType string = "{{location}}-dialogflow.googleapis.com/Webhook"
 
-func ResourceConverterDialogflowCXWebhook() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDialogflowCXWebhook() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DialogflowCXWebhookAssetType,
 		Convert:   GetDialogflowCXWebhookCaiObject,
 	}
 }
 
-func GetDialogflowCXWebhookCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/webhooks/{{name}}")
+func GetDialogflowCXWebhookCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/webhooks/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDialogflowCXWebhookApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DialogflowCXWebhookAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{location}}-dialogflow/v3/rest",
 				DiscoveryName:        "Webhook",
@@ -47,7 +48,7 @@ func GetDialogflowCXWebhookCaiObject(d tpgresource.TerraformResourceData, config
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

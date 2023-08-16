@@ -20,8 +20,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const workforcePoolIdRegexp = `^[a-z][a-z0-9-]{4,61}[a-z0-9]$`
@@ -47,23 +48,23 @@ func ValidateWorkforcePoolId(v interface{}, k string) (ws []string, errors []err
 
 const IAMWorkforcePoolWorkforcePoolAssetType string = "iam.googleapis.com/WorkforcePool"
 
-func ResourceConverterIAMWorkforcePoolWorkforcePool() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIAMWorkforcePoolWorkforcePool() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: IAMWorkforcePoolWorkforcePoolAssetType,
 		Convert:   GetIAMWorkforcePoolWorkforcePoolCaiObject,
 	}
 }
 
-func GetIAMWorkforcePoolWorkforcePoolCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//iam.googleapis.com/locations/{{location}}/workforcePools/{{workforce_pool_id}}")
+func GetIAMWorkforcePoolWorkforcePoolCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//iam.googleapis.com/locations/{{location}}/workforcePools/{{workforce_pool_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetIAMWorkforcePoolWorkforcePoolApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: IAMWorkforcePoolWorkforcePoolAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/iam/v1/rest",
 				DiscoveryName:        "WorkforcePool",
@@ -71,7 +72,7 @@ func GetIAMWorkforcePoolWorkforcePoolCaiObject(d tpgresource.TerraformResourceDa
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

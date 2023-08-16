@@ -2,7 +2,6 @@ package test
 
 import (
 	"context"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -131,7 +130,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			t.Parallel()
 			// Create a temporary directory for running terraform.
-			dir, err := ioutil.TempDir(tmpDir, "terraform")
+			dir, err := os.MkdirTemp(tmpDir, "terraform")
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -153,7 +152,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 				data.Provider["project"]: data.Ancestry,
 			}
 
-			jsonPlan, err := ioutil.ReadFile(planfile)
+			jsonPlan, err := os.ReadFile(planfile)
 			if err != nil {
 				t.Fatalf("Error parsing %s: %s", f, err)
 			}
@@ -193,7 +192,7 @@ func TestReadPlannedAssetsCoverage_WithoutDefaultProject(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			t.Parallel()
 			// Create a temporary directory for running terraform.
-			dir, err := ioutil.TempDir(tmpDir, "terraform")
+			dir, err := os.MkdirTemp(tmpDir, "terraform")
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -215,7 +214,7 @@ func TestReadPlannedAssetsCoverage_WithoutDefaultProject(t *testing.T) {
 				// data.Provider["project"]: data.Ancestry,
 			}
 
-			jsonPlan, err := ioutil.ReadFile(planfile)
+			jsonPlan, err := os.ReadFile(planfile)
 			if err != nil {
 				t.Fatalf("Error parsing %s: %s", f, err)
 			}

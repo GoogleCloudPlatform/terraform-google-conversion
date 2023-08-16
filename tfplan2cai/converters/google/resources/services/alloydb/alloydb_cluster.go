@@ -17,29 +17,30 @@ package alloydb
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const AlloydbClusterAssetType string = "alloydb.googleapis.com/Cluster"
 
-func ResourceConverterAlloydbCluster() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterAlloydbCluster() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: AlloydbClusterAssetType,
 		Convert:   GetAlloydbClusterCaiObject,
 	}
 }
 
-func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}")
+func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetAlloydbClusterApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: AlloydbClusterAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/alloydb/v1beta/rest",
 				DiscoveryName:        "Cluster",
@@ -47,7 +48,7 @@ func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *tra
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

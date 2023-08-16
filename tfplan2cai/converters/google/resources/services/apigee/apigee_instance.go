@@ -20,8 +20,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Supress diffs when the lists of project have the same number of entries to handle the case that
@@ -51,23 +52,23 @@ func ProjectListDiffSuppressFunc(d tpgresource.TerraformResourceDataChange) bool
 
 const ApigeeInstanceAssetType string = "apigee.googleapis.com/Instance"
 
-func ResourceConverterApigeeInstance() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterApigeeInstance() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ApigeeInstanceAssetType,
 		Convert:   GetApigeeInstanceCaiObject,
 	}
 }
 
-func GetApigeeInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//apigee.googleapis.com/{{org_id}}/instances/{{name}}")
+func GetApigeeInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//apigee.googleapis.com/{{org_id}}/instances/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetApigeeInstanceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ApigeeInstanceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/apigee/v1/rest",
 				DiscoveryName:        "Instance",
@@ -75,7 +76,7 @@ func GetApigeeInstanceCaiObject(d tpgresource.TerraformResourceData, config *tra
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

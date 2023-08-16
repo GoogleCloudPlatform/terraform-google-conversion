@@ -17,24 +17,24 @@ package privateca
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const PrivatecaCertificateTemplateIAMAssetType string = "privateca.googleapis.com/CertificateTemplate"
 
-func ResourceConverterPrivatecaCertificateTemplateIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPrivatecaCertificateTemplateIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PrivatecaCertificateTemplateIAMAssetType,
 		Convert:           GetPrivatecaCertificateTemplateIamPolicyCaiObject,
 		MergeCreateUpdate: MergePrivatecaCertificateTemplateIamPolicy,
 	}
 }
 
-func ResourceConverterPrivatecaCertificateTemplateIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPrivatecaCertificateTemplateIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PrivatecaCertificateTemplateIAMAssetType,
 		Convert:           GetPrivatecaCertificateTemplateIamBindingCaiObject,
 		FetchFullResource: FetchPrivatecaCertificateTemplateIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterPrivatecaCertificateTemplateIamBinding() tpgresource.Resou
 	}
 }
 
-func ResourceConverterPrivatecaCertificateTemplateIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPrivatecaCertificateTemplateIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PrivatecaCertificateTemplateIAMAssetType,
 		Convert:           GetPrivatecaCertificateTemplateIamMemberCaiObject,
 		FetchFullResource: FetchPrivatecaCertificateTemplateIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterPrivatecaCertificateTemplateIamMember() tpgresource.Resour
 	}
 }
 
-func GetPrivatecaCertificateTemplateIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPrivatecaCertificateTemplateIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetPrivatecaCertificateTemplateIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPrivatecaCertificateTemplateIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetPrivatecaCertificateTemplateIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPrivatecaCertificateTemplateIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetPrivatecaCertificateTemplateIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPrivatecaCertificateTemplateIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetPrivatecaCertificateTemplateIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPrivatecaCertificateTemplateIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetPrivatecaCertificateTemplateIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPrivatecaCertificateTemplateIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergePrivatecaCertificateTemplateIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergePrivatecaCertificateTemplateIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergePrivatecaCertificateTemplateIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergePrivatecaCertificateTemplateIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergePrivatecaCertificateTemplateIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergePrivatecaCertificateTemplateIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergePrivatecaCertificateTemplateIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergePrivatecaCertificateTemplateIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergePrivatecaCertificateTemplateIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergePrivatecaCertificateTemplateIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newPrivatecaCertificateTemplateIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//privateca.googleapis.com/projects/{{project}}/locations/{{location}}/certificateTemplates/{{name}}/{{certificate_template}}")
+	name, err := cai.AssetName(d, config, "//privateca.googleapis.com/projects/{{project}}/locations/{{location}}/certificateTemplates/{{name}}/{{certificate_template}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: PrivatecaCertificateTemplateIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchPrivatecaCertificateTemplateIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchPrivatecaCertificateTemplateIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("certificate_template"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		PrivatecaCertificateTemplateIamUpdaterProducer,
 		d,
 		config,

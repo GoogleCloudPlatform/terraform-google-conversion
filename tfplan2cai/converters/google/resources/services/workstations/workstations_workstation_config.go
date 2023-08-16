@@ -17,29 +17,30 @@ package workstations
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const WorkstationsWorkstationConfigAssetType string = "workstations.googleapis.com/WorkstationConfig"
 
-func ResourceConverterWorkstationsWorkstationConfig() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterWorkstationsWorkstationConfig() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: WorkstationsWorkstationConfigAssetType,
 		Convert:   GetWorkstationsWorkstationConfigCaiObject,
 	}
 }
 
-func GetWorkstationsWorkstationConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//workstations.googleapis.com/projects/{{project}}/locations/{{location}}/workstationClusters/{{workstation_cluster_id}}/workstationConfigs/{{workstation_config_id}}")
+func GetWorkstationsWorkstationConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//workstations.googleapis.com/projects/{{project}}/locations/{{location}}/workstationClusters/{{workstation_cluster_id}}/workstationConfigs/{{workstation_config_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetWorkstationsWorkstationConfigApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: WorkstationsWorkstationConfigAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/workstations/v1beta/rest",
 				DiscoveryName:        "WorkstationConfig",
@@ -47,7 +48,7 @@ func GetWorkstationsWorkstationConfigCaiObject(d tpgresource.TerraformResourceDa
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

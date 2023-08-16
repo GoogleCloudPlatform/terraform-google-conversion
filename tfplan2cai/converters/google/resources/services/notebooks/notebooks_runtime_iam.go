@@ -17,24 +17,24 @@ package notebooks
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const NotebooksRuntimeIAMAssetType string = "notebooks.googleapis.com/Runtime"
 
-func ResourceConverterNotebooksRuntimeIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNotebooksRuntimeIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         NotebooksRuntimeIAMAssetType,
 		Convert:           GetNotebooksRuntimeIamPolicyCaiObject,
 		MergeCreateUpdate: MergeNotebooksRuntimeIamPolicy,
 	}
 }
 
-func ResourceConverterNotebooksRuntimeIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNotebooksRuntimeIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         NotebooksRuntimeIAMAssetType,
 		Convert:           GetNotebooksRuntimeIamBindingCaiObject,
 		FetchFullResource: FetchNotebooksRuntimeIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterNotebooksRuntimeIamBinding() tpgresource.ResourceConverter
 	}
 }
 
-func ResourceConverterNotebooksRuntimeIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNotebooksRuntimeIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         NotebooksRuntimeIAMAssetType,
 		Convert:           GetNotebooksRuntimeIamMemberCaiObject,
 		FetchFullResource: FetchNotebooksRuntimeIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterNotebooksRuntimeIamMember() tpgresource.ResourceConverter 
 	}
 }
 
-func GetNotebooksRuntimeIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newNotebooksRuntimeIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetNotebooksRuntimeIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newNotebooksRuntimeIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetNotebooksRuntimeIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newNotebooksRuntimeIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetNotebooksRuntimeIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newNotebooksRuntimeIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetNotebooksRuntimeIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newNotebooksRuntimeIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetNotebooksRuntimeIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newNotebooksRuntimeIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeNotebooksRuntimeIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeNotebooksRuntimeIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeNotebooksRuntimeIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeNotebooksRuntimeIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeNotebooksRuntimeIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeNotebooksRuntimeIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeNotebooksRuntimeIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeNotebooksRuntimeIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeNotebooksRuntimeIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeNotebooksRuntimeIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newNotebooksRuntimeIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/runtimes/{{runtime_name}}")
+	name, err := cai.AssetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/runtimes/{{runtime_name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: NotebooksRuntimeIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchNotebooksRuntimeIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchNotebooksRuntimeIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("runtime_name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		NotebooksRuntimeIamUpdaterProducer,
 		d,
 		config,

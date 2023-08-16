@@ -17,24 +17,24 @@ package cloudtasks
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const CloudTasksQueueIAMAssetType string = "cloudtasks.googleapis.com/Queue"
 
-func ResourceConverterCloudTasksQueueIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudTasksQueueIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudTasksQueueIAMAssetType,
 		Convert:           GetCloudTasksQueueIamPolicyCaiObject,
 		MergeCreateUpdate: MergeCloudTasksQueueIamPolicy,
 	}
 }
 
-func ResourceConverterCloudTasksQueueIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudTasksQueueIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudTasksQueueIAMAssetType,
 		Convert:           GetCloudTasksQueueIamBindingCaiObject,
 		FetchFullResource: FetchCloudTasksQueueIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterCloudTasksQueueIamBinding() tpgresource.ResourceConverter 
 	}
 }
 
-func ResourceConverterCloudTasksQueueIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudTasksQueueIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudTasksQueueIAMAssetType,
 		Convert:           GetCloudTasksQueueIamMemberCaiObject,
 		FetchFullResource: FetchCloudTasksQueueIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterCloudTasksQueueIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetCloudTasksQueueIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudTasksQueueIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetCloudTasksQueueIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudTasksQueueIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetCloudTasksQueueIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudTasksQueueIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetCloudTasksQueueIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudTasksQueueIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetCloudTasksQueueIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudTasksQueueIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetCloudTasksQueueIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudTasksQueueIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeCloudTasksQueueIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeCloudTasksQueueIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeCloudTasksQueueIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeCloudTasksQueueIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeCloudTasksQueueIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeCloudTasksQueueIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeCloudTasksQueueIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeCloudTasksQueueIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeCloudTasksQueueIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeCloudTasksQueueIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newCloudTasksQueueIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//cloudtasks.googleapis.com/projects/{{project}}/locations/{{location}}/queues/{{name}}")
+	name, err := cai.AssetName(d, config, "//cloudtasks.googleapis.com/projects/{{project}}/locations/{{location}}/queues/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: CloudTasksQueueIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchCloudTasksQueueIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchCloudTasksQueueIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		CloudTasksQueueIamUpdaterProducer,
 		d,
 		config,

@@ -17,24 +17,24 @@ package dns
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DNSManagedZoneIAMAssetType string = "dns.googleapis.com/ManagedZone"
 
-func ResourceConverterDNSManagedZoneIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDNSManagedZoneIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DNSManagedZoneIAMAssetType,
 		Convert:           GetDNSManagedZoneIamPolicyCaiObject,
 		MergeCreateUpdate: MergeDNSManagedZoneIamPolicy,
 	}
 }
 
-func ResourceConverterDNSManagedZoneIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDNSManagedZoneIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DNSManagedZoneIAMAssetType,
 		Convert:           GetDNSManagedZoneIamBindingCaiObject,
 		FetchFullResource: FetchDNSManagedZoneIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterDNSManagedZoneIamBinding() tpgresource.ResourceConverter {
 	}
 }
 
-func ResourceConverterDNSManagedZoneIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDNSManagedZoneIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DNSManagedZoneIAMAssetType,
 		Convert:           GetDNSManagedZoneIamMemberCaiObject,
 		FetchFullResource: FetchDNSManagedZoneIamPolicy,
@@ -53,70 +53,70 @@ func ResourceConverterDNSManagedZoneIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetDNSManagedZoneIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDNSManagedZoneIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetDNSManagedZoneIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDNSManagedZoneIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetDNSManagedZoneIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDNSManagedZoneIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetDNSManagedZoneIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDNSManagedZoneIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetDNSManagedZoneIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDNSManagedZoneIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetDNSManagedZoneIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDNSManagedZoneIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeDNSManagedZoneIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeDNSManagedZoneIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeDNSManagedZoneIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeDNSManagedZoneIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeDNSManagedZoneIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeDNSManagedZoneIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeDNSManagedZoneIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeDNSManagedZoneIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeDNSManagedZoneIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeDNSManagedZoneIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newDNSManagedZoneIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{managed_zone}}")
+	name, err := cai.AssetName(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{managed_zone}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: DNSManagedZoneIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchDNSManagedZoneIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchDNSManagedZoneIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("managed_zone"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		DNSManagedZoneIamUpdaterProducer,
 		d,
 		config,

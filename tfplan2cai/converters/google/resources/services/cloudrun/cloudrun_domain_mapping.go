@@ -20,8 +20,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 var domainMappingGoogleProvidedLabels = []string{
@@ -48,23 +49,23 @@ func DomainMappingLabelDiffSuppress(k, old, new string, d *schema.ResourceData) 
 
 const CloudRunDomainMappingAssetType string = "run.googleapis.com/DomainMapping"
 
-func ResourceConverterCloudRunDomainMapping() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudRunDomainMapping() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: CloudRunDomainMappingAssetType,
 		Convert:   GetCloudRunDomainMappingCaiObject,
 	}
 }
 
-func GetCloudRunDomainMappingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/DomainMappings/{{name}}")
+func GetCloudRunDomainMappingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/DomainMappings/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetCloudRunDomainMappingApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: CloudRunDomainMappingAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/run/v1/rest",
 				DiscoveryName:        "DomainMapping",
@@ -72,7 +73,7 @@ func GetCloudRunDomainMappingCaiObject(d tpgresource.TerraformResourceData, conf
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

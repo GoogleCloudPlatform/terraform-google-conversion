@@ -22,8 +22,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 func resourceDatastreamStreamCustomDiffFunc(diff tpgresource.TerraformResourceDiff) error {
@@ -59,23 +60,23 @@ func resourceDatastreamStreamCustomDiff(_ context.Context, diff *schema.Resource
 
 const DatastreamStreamAssetType string = "datastream.googleapis.com/Stream"
 
-func ResourceConverterDatastreamStream() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDatastreamStream() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DatastreamStreamAssetType,
 		Convert:   GetDatastreamStreamCaiObject,
 	}
 }
 
-func GetDatastreamStreamCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/streams/{{stream_id}}")
+func GetDatastreamStreamCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/streams/{{stream_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDatastreamStreamApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DatastreamStreamAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datastream/v1/rest",
 				DiscoveryName:        "Stream",
@@ -83,7 +84,7 @@ func GetDatastreamStreamCaiObject(d tpgresource.TerraformResourceData, config *t
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

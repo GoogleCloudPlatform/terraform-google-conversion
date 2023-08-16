@@ -16,7 +16,6 @@ package test
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -39,7 +38,7 @@ func TestCLI(t *testing.T) {
 		compareConvertOutput compareConvertOutputFunc
 	}{
 		// cli-only, the following tests are not in read_test or
-		// have unique paramters that separate them
+		// have unique parameters that separate them
 		{name: "bucket"},
 		{name: "disk"},
 		{name: "firewall"},
@@ -156,8 +155,8 @@ func TestCLI(t *testing.T) {
 
 	// Map of cases to skip to reasons for the skip
 	skipCases := map[string]string{
-		"TestCLI/v=0.12/tf=example_compute_forwarding_rule/offline=true/cmd=convert":                              "temperarily skip because of the predictable drift in offline mode",
-		"TestCLI/v=0.12/tf=example_compute_forwarding_rule/offline=true/cmd=validate/constraint=always_violate":   "temperarily skip because of the predictable drift in offline mode",
+		"TestCLI/v=0.12/tf=example_compute_forwarding_rule/offline=true/cmd=convert":                              "temporarily skip because of the predictable drift in offline mode",
+		"TestCLI/v=0.12/tf=example_compute_forwarding_rule/offline=true/cmd=validate/constraint=always_violate":   "temporarily skip because of the predictable drift in offline mode",
 		"TestCLI/v=0.12/tf=example_compute_instance/offline=true/cmd=convert":                                     "compute_instance doesn't work in offline mode - github.com/hashicorp/terraform-provider-google/issues/8489",
 		"TestCLI/v=0.12/tf=example_compute_instance/offline=true/cmd=validate/constraint=always_violate":          "compute_instance doesn't work in offline mode - github.com/hashicorp/terraform-provider-google/issues/8489",
 		"TestCLI/v=0.12/tf=example_organization_iam_binding/offline=false/cmd=convert":                            "skip because test runner doesn't have org permissions",
@@ -183,7 +182,7 @@ func TestCLI(t *testing.T) {
 			t.Run(fmt.Sprintf("v=0.12/tf=%s/offline=%t", c.name, offline), func(t *testing.T) {
 				t.Parallel()
 				// Create a temporary directory for running terraform.
-				dir, err := ioutil.TempDir(tmpDir, "terraform")
+				dir, err := os.MkdirTemp(tmpDir, "terraform")
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -255,7 +254,7 @@ func TestCLIWithoutProject(t *testing.T) {
 			t.Run(fmt.Sprintf("v=0.12/tf=%s/offline=%t", c.name, offline), func(t *testing.T) {
 				t.Parallel()
 				// Create a temporary directory for running terraform.
-				dir, err := ioutil.TempDir(tmpDir, "terraform")
+				dir, err := os.MkdirTemp(tmpDir, "terraform")
 				if err != nil {
 					log.Fatal(err)
 				}

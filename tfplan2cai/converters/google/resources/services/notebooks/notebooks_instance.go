@@ -20,8 +20,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const notebooksInstanceGoogleProvidedLabel = "goog-caip-notebook"
@@ -43,23 +44,23 @@ func NotebooksInstanceLabelDiffSuppress(k, old, new string, d *schema.ResourceDa
 
 const NotebooksInstanceAssetType string = "notebooks.googleapis.com/Instance"
 
-func ResourceConverterNotebooksInstance() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNotebooksInstance() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: NotebooksInstanceAssetType,
 		Convert:   GetNotebooksInstanceCaiObject,
 	}
 }
 
-func GetNotebooksInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}")
+func GetNotebooksInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetNotebooksInstanceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: NotebooksInstanceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/notebooks/v1/rest",
 				DiscoveryName:        "Instance",
@@ -67,7 +68,7 @@ func GetNotebooksInstanceCaiObject(d tpgresource.TerraformResourceData, config *
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

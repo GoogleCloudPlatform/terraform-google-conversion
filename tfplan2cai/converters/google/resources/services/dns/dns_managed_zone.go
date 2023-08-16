@@ -20,29 +20,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DNSManagedZoneAssetType string = "dns.googleapis.com/ManagedZone"
 
-func ResourceConverterDNSManagedZone() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDNSManagedZone() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DNSManagedZoneAssetType,
 		Convert:   GetDNSManagedZoneCaiObject,
 	}
 }
 
-func GetDNSManagedZoneCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{name}}")
+func GetDNSManagedZoneCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//dns.googleapis.com/projects/{{project}}/managedZones/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDNSManagedZoneApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DNSManagedZoneAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dns/v1beta2/rest",
 				DiscoveryName:        "ManagedZone",
@@ -50,7 +51,7 @@ func GetDNSManagedZoneCaiObject(d tpgresource.TerraformResourceData, config *tra
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

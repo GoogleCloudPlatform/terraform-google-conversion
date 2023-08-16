@@ -17,29 +17,30 @@ package networksecurity
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const NetworkSecurityGatewaySecurityPolicyRuleAssetType string = "networksecurity.googleapis.com/GatewaySecurityPolicyRule"
 
-func ResourceConverterNetworkSecurityGatewaySecurityPolicyRule() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNetworkSecurityGatewaySecurityPolicyRule() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: NetworkSecurityGatewaySecurityPolicyRuleAssetType,
 		Convert:   GetNetworkSecurityGatewaySecurityPolicyRuleCaiObject,
 	}
 }
 
-func GetNetworkSecurityGatewaySecurityPolicyRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//networksecurity.googleapis.com/projects/{{project}}/locations/{{location}}/gatewaySecurityPolicies/{{gateway_security_policy}}/rules/{{name}}")
+func GetNetworkSecurityGatewaySecurityPolicyRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//networksecurity.googleapis.com/projects/{{project}}/locations/{{location}}/gatewaySecurityPolicies/{{gateway_security_policy}}/rules/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetNetworkSecurityGatewaySecurityPolicyRuleApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: NetworkSecurityGatewaySecurityPolicyRuleAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1beta1/rest",
 				DiscoveryName:        "GatewaySecurityPolicyRule",
@@ -47,7 +48,7 @@ func GetNetworkSecurityGatewaySecurityPolicyRuleCaiObject(d tpgresource.Terrafor
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

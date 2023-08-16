@@ -17,29 +17,30 @@ package oslogin
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const OSLoginSSHPublicKeyAssetType string = "oslogin.googleapis.com/SSHPublicKey"
 
-func ResourceConverterOSLoginSSHPublicKey() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterOSLoginSSHPublicKey() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: OSLoginSSHPublicKeyAssetType,
 		Convert:   GetOSLoginSSHPublicKeyCaiObject,
 	}
 }
 
-func GetOSLoginSSHPublicKeyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//oslogin.googleapis.com/users/{{user}}/sshPublicKeys/{{fingerprint}}/{{name}}")
+func GetOSLoginSSHPublicKeyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//oslogin.googleapis.com/users/{{user}}/sshPublicKeys/{{fingerprint}}/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetOSLoginSSHPublicKeyApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: OSLoginSSHPublicKeyAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/oslogin/v1/rest",
 				DiscoveryName:        "SSHPublicKey",
@@ -47,7 +48,7 @@ func GetOSLoginSSHPublicKeyCaiObject(d tpgresource.TerraformResourceData, config
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

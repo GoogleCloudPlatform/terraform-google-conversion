@@ -23,8 +23,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // diffsupress for beta and to check change in source_disk attribute
@@ -271,23 +272,23 @@ func suppressWindowsFamilyDiff(imageName, familyName string) bool {
 
 const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
 
-func ResourceConverterComputeDisk() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeDisk() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeDiskAssetType,
 		Convert:   GetComputeDiskCaiObject,
 	}
 }
 
-func GetComputeDiskCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{name}}")
+func GetComputeDiskCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeDiskApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeDiskAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "Disk",
@@ -295,7 +296,7 @@ func GetComputeDiskCaiObject(d tpgresource.TerraformResourceData, config *transp
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

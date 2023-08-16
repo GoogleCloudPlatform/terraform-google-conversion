@@ -19,8 +19,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 func bigqueryReservationCapacityCommitmentPlanDiffSuppressFunc(_, old, new string, _ *schema.ResourceData) bool {
@@ -32,23 +33,23 @@ func bigqueryReservationCapacityCommitmentPlanDiffSuppressFunc(_, old, new strin
 
 const BigqueryReservationCapacityCommitmentAssetType string = "bigqueryreservation.googleapis.com/CapacityCommitment"
 
-func ResourceConverterBigqueryReservationCapacityCommitment() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBigqueryReservationCapacityCommitment() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: BigqueryReservationCapacityCommitmentAssetType,
 		Convert:   GetBigqueryReservationCapacityCommitmentCaiObject,
 	}
 }
 
-func GetBigqueryReservationCapacityCommitmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/capacityCommitments/{{capacity_commitment_id}}")
+func GetBigqueryReservationCapacityCommitmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/capacityCommitments/{{capacity_commitment_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetBigqueryReservationCapacityCommitmentApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: BigqueryReservationCapacityCommitmentAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigqueryreservation/v1/rest",
 				DiscoveryName:        "CapacityCommitment",
@@ -56,7 +57,7 @@ func GetBigqueryReservationCapacityCommitmentCaiObject(d tpgresource.TerraformRe
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

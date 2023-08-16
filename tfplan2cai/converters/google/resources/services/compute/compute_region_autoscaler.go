@@ -20,29 +20,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ComputeRegionAutoscalerAssetType string = "compute.googleapis.com/RegionAutoscaler"
 
-func ResourceConverterComputeRegionAutoscaler() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeRegionAutoscaler() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeRegionAutoscalerAssetType,
 		Convert:   GetComputeRegionAutoscalerCaiObject,
 	}
 }
 
-func GetComputeRegionAutoscalerCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/autoscalers/{{name}}")
+func GetComputeRegionAutoscalerCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/autoscalers/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeRegionAutoscalerApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeRegionAutoscalerAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionAutoscaler",
@@ -50,7 +51,7 @@ func GetComputeRegionAutoscalerCaiObject(d tpgresource.TerraformResourceData, co
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

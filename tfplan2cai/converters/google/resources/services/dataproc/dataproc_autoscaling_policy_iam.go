@@ -17,24 +17,24 @@ package dataproc
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataprocAutoscalingPolicyIAMAssetType string = "dataproc.googleapis.com/AutoscalingPolicy"
 
-func ResourceConverterDataprocAutoscalingPolicyIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocAutoscalingPolicyIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocAutoscalingPolicyIAMAssetType,
 		Convert:           GetDataprocAutoscalingPolicyIamPolicyCaiObject,
 		MergeCreateUpdate: MergeDataprocAutoscalingPolicyIamPolicy,
 	}
 }
 
-func ResourceConverterDataprocAutoscalingPolicyIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocAutoscalingPolicyIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocAutoscalingPolicyIAMAssetType,
 		Convert:           GetDataprocAutoscalingPolicyIamBindingCaiObject,
 		FetchFullResource: FetchDataprocAutoscalingPolicyIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterDataprocAutoscalingPolicyIamBinding() tpgresource.Resource
 	}
 }
 
-func ResourceConverterDataprocAutoscalingPolicyIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocAutoscalingPolicyIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocAutoscalingPolicyIAMAssetType,
 		Convert:           GetDataprocAutoscalingPolicyIamMemberCaiObject,
 		FetchFullResource: FetchDataprocAutoscalingPolicyIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterDataprocAutoscalingPolicyIamMember() tpgresource.ResourceC
 	}
 }
 
-func GetDataprocAutoscalingPolicyIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocAutoscalingPolicyIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetDataprocAutoscalingPolicyIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocAutoscalingPolicyIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetDataprocAutoscalingPolicyIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocAutoscalingPolicyIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetDataprocAutoscalingPolicyIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocAutoscalingPolicyIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetDataprocAutoscalingPolicyIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocAutoscalingPolicyIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetDataprocAutoscalingPolicyIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocAutoscalingPolicyIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeDataprocAutoscalingPolicyIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeDataprocAutoscalingPolicyIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeDataprocAutoscalingPolicyIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeDataprocAutoscalingPolicyIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeDataprocAutoscalingPolicyIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeDataprocAutoscalingPolicyIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeDataprocAutoscalingPolicyIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeDataprocAutoscalingPolicyIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeDataprocAutoscalingPolicyIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeDataprocAutoscalingPolicyIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newDataprocAutoscalingPolicyIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//dataproc.googleapis.com/projects/{{project}}/locations/{{location}}/autoscalingPolicies/{{policy_id}}")
+	name, err := cai.AssetName(d, config, "//dataproc.googleapis.com/projects/{{project}}/locations/{{location}}/autoscalingPolicies/{{policy_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: DataprocAutoscalingPolicyIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchDataprocAutoscalingPolicyIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchDataprocAutoscalingPolicyIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("policy_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		DataprocAutoscalingPolicyIamUpdaterProducer,
 		d,
 		config,

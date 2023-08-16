@@ -17,29 +17,30 @@ package databasemigrationservice
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DatabaseMigrationServiceConnectionProfileAssetType string = "datamigration.googleapis.com/ConnectionProfile"
 
-func ResourceConverterDatabaseMigrationServiceConnectionProfile() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDatabaseMigrationServiceConnectionProfile() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DatabaseMigrationServiceConnectionProfileAssetType,
 		Convert:   GetDatabaseMigrationServiceConnectionProfileCaiObject,
 	}
 }
 
-func GetDatabaseMigrationServiceConnectionProfileCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//datamigration.googleapis.com/projects/{{project}}/locations/{{location}}/connectionProfiles/{{connection_profile_id}}")
+func GetDatabaseMigrationServiceConnectionProfileCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//datamigration.googleapis.com/projects/{{project}}/locations/{{location}}/connectionProfiles/{{connection_profile_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDatabaseMigrationServiceConnectionProfileApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DatabaseMigrationServiceConnectionProfileAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datamigration/v1/rest",
 				DiscoveryName:        "ConnectionProfile",
@@ -47,7 +48,7 @@ func GetDatabaseMigrationServiceConnectionProfileCaiObject(d tpgresource.Terrafo
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

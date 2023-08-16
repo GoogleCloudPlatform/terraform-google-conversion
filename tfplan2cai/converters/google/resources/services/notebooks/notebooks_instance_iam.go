@@ -17,24 +17,24 @@ package notebooks
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const NotebooksInstanceIAMAssetType string = "notebooks.googleapis.com/Instance"
 
-func ResourceConverterNotebooksInstanceIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNotebooksInstanceIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         NotebooksInstanceIAMAssetType,
 		Convert:           GetNotebooksInstanceIamPolicyCaiObject,
 		MergeCreateUpdate: MergeNotebooksInstanceIamPolicy,
 	}
 }
 
-func ResourceConverterNotebooksInstanceIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNotebooksInstanceIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         NotebooksInstanceIAMAssetType,
 		Convert:           GetNotebooksInstanceIamBindingCaiObject,
 		FetchFullResource: FetchNotebooksInstanceIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterNotebooksInstanceIamBinding() tpgresource.ResourceConverte
 	}
 }
 
-func ResourceConverterNotebooksInstanceIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNotebooksInstanceIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         NotebooksInstanceIAMAssetType,
 		Convert:           GetNotebooksInstanceIamMemberCaiObject,
 		FetchFullResource: FetchNotebooksInstanceIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterNotebooksInstanceIamMember() tpgresource.ResourceConverter
 	}
 }
 
-func GetNotebooksInstanceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newNotebooksInstanceIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetNotebooksInstanceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newNotebooksInstanceIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetNotebooksInstanceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newNotebooksInstanceIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetNotebooksInstanceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newNotebooksInstanceIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetNotebooksInstanceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newNotebooksInstanceIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetNotebooksInstanceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newNotebooksInstanceIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeNotebooksInstanceIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeNotebooksInstanceIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeNotebooksInstanceIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeNotebooksInstanceIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeNotebooksInstanceIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeNotebooksInstanceIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeNotebooksInstanceIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeNotebooksInstanceIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeNotebooksInstanceIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeNotebooksInstanceIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newNotebooksInstanceIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance_name}}")
+	name, err := cai.AssetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance_name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: NotebooksInstanceIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchNotebooksInstanceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchNotebooksInstanceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("instance_name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		NotebooksInstanceIamUpdaterProducer,
 		d,
 		config,

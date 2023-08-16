@@ -17,29 +17,30 @@ package appengine
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const AppEngineServiceSplitTrafficAssetType string = "appengine.googleapis.com/ServiceSplitTraffic"
 
-func ResourceConverterAppEngineServiceSplitTraffic() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterAppEngineServiceSplitTraffic() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: AppEngineServiceSplitTrafficAssetType,
 		Convert:   GetAppEngineServiceSplitTrafficCaiObject,
 	}
 }
 
-func GetAppEngineServiceSplitTrafficCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
+func GetAppEngineServiceSplitTrafficCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/{{service}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetAppEngineServiceSplitTrafficApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: AppEngineServiceSplitTrafficAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
 				DiscoveryName:        "ServiceSplitTraffic",
@@ -47,7 +48,7 @@ func GetAppEngineServiceSplitTrafficCaiObject(d tpgresource.TerraformResourceDat
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

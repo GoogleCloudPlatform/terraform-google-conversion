@@ -18,29 +18,30 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ComputeRegionHealthCheckAssetType string = "compute.googleapis.com/RegionHealthCheck"
 
-func ResourceConverterComputeRegionHealthCheck() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeRegionHealthCheck() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeRegionHealthCheckAssetType,
 		Convert:   GetComputeRegionHealthCheckCaiObject,
 	}
 }
 
-func GetComputeRegionHealthCheckCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/healthChecks/{{name}}")
+func GetComputeRegionHealthCheckCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/healthChecks/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeRegionHealthCheckApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeRegionHealthCheckAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionHealthCheck",
@@ -48,7 +49,7 @@ func GetComputeRegionHealthCheckCaiObject(d tpgresource.TerraformResourceData, c
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

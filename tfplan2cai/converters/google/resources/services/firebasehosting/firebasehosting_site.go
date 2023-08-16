@@ -17,29 +17,30 @@ package firebasehosting
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const FirebaseHostingSiteAssetType string = "firebasehosting.googleapis.com/Site"
 
-func ResourceConverterFirebaseHostingSite() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterFirebaseHostingSite() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: FirebaseHostingSiteAssetType,
 		Convert:   GetFirebaseHostingSiteCaiObject,
 	}
 }
 
-func GetFirebaseHostingSiteCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//firebasehosting.googleapis.com/projects/{{project}}/sites/{{site_id}}")
+func GetFirebaseHostingSiteCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//firebasehosting.googleapis.com/projects/{{project}}/sites/{{site_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetFirebaseHostingSiteApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: FirebaseHostingSiteAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/firebasehosting/v1beta1/rest",
 				DiscoveryName:        "Site",
@@ -47,7 +48,7 @@ func GetFirebaseHostingSiteCaiObject(d tpgresource.TerraformResourceData, config
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

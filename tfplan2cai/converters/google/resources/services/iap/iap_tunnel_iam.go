@@ -17,24 +17,24 @@ package iap
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const IapTunnelIAMAssetType string = "iap.googleapis.com/Tunnel"
 
-func ResourceConverterIapTunnelIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIapTunnelIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         IapTunnelIAMAssetType,
 		Convert:           GetIapTunnelIamPolicyCaiObject,
 		MergeCreateUpdate: MergeIapTunnelIamPolicy,
 	}
 }
 
-func ResourceConverterIapTunnelIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIapTunnelIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         IapTunnelIAMAssetType,
 		Convert:           GetIapTunnelIamBindingCaiObject,
 		FetchFullResource: FetchIapTunnelIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterIapTunnelIamBinding() tpgresource.ResourceConverter {
 	}
 }
 
-func ResourceConverterIapTunnelIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIapTunnelIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         IapTunnelIAMAssetType,
 		Convert:           GetIapTunnelIamMemberCaiObject,
 		FetchFullResource: FetchIapTunnelIamPolicy,
@@ -53,67 +53,67 @@ func ResourceConverterIapTunnelIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetIapTunnelIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newIapTunnelIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetIapTunnelIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newIapTunnelIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetIapTunnelIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newIapTunnelIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetIapTunnelIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newIapTunnelIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetIapTunnelIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newIapTunnelIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetIapTunnelIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newIapTunnelIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeIapTunnelIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeIapTunnelIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeIapTunnelIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeIapTunnelIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeIapTunnelIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeIapTunnelIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeIapTunnelIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeIapTunnelIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeIapTunnelIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeIapTunnelIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newIapTunnelIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//iap.googleapis.com/projects/{{project}}/iap_tunnel")
+	name, err := cai.AssetName(d, config, "//iap.googleapis.com/projects/{{project}}/iap_tunnel")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: IapTunnelIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchIapTunnelIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchIapTunnelIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		IapTunnelIamUpdaterProducer,
 		d,
 		config,

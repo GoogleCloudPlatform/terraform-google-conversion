@@ -17,24 +17,24 @@ package dataprocmetastore
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataprocMetastoreFederationIAMAssetType string = "metastore.googleapis.com/Federation"
 
-func ResourceConverterDataprocMetastoreFederationIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocMetastoreFederationIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocMetastoreFederationIAMAssetType,
 		Convert:           GetDataprocMetastoreFederationIamPolicyCaiObject,
 		MergeCreateUpdate: MergeDataprocMetastoreFederationIamPolicy,
 	}
 }
 
-func ResourceConverterDataprocMetastoreFederationIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocMetastoreFederationIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocMetastoreFederationIAMAssetType,
 		Convert:           GetDataprocMetastoreFederationIamBindingCaiObject,
 		FetchFullResource: FetchDataprocMetastoreFederationIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterDataprocMetastoreFederationIamBinding() tpgresource.Resour
 	}
 }
 
-func ResourceConverterDataprocMetastoreFederationIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocMetastoreFederationIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocMetastoreFederationIAMAssetType,
 		Convert:           GetDataprocMetastoreFederationIamMemberCaiObject,
 		FetchFullResource: FetchDataprocMetastoreFederationIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterDataprocMetastoreFederationIamMember() tpgresource.Resourc
 	}
 }
 
-func GetDataprocMetastoreFederationIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocMetastoreFederationIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetDataprocMetastoreFederationIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocMetastoreFederationIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetDataprocMetastoreFederationIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocMetastoreFederationIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetDataprocMetastoreFederationIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocMetastoreFederationIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetDataprocMetastoreFederationIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocMetastoreFederationIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetDataprocMetastoreFederationIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocMetastoreFederationIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeDataprocMetastoreFederationIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeDataprocMetastoreFederationIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeDataprocMetastoreFederationIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeDataprocMetastoreFederationIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeDataprocMetastoreFederationIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeDataprocMetastoreFederationIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeDataprocMetastoreFederationIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeDataprocMetastoreFederationIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeDataprocMetastoreFederationIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeDataprocMetastoreFederationIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newDataprocMetastoreFederationIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//metastore.googleapis.com/projects/{{project}}/locations/{{location}}/federations/{{federation_id}}")
+	name, err := cai.AssetName(d, config, "//metastore.googleapis.com/projects/{{project}}/locations/{{location}}/federations/{{federation_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: DataprocMetastoreFederationIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchDataprocMetastoreFederationIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchDataprocMetastoreFederationIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("federation_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		DataprocMetastoreFederationIamUpdaterProducer,
 		d,
 		config,

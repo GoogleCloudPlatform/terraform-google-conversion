@@ -17,24 +17,24 @@ package servicedirectory
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ServiceDirectoryServiceIAMAssetType string = "servicedirectory.googleapis.com/Service"
 
-func ResourceConverterServiceDirectoryServiceIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterServiceDirectoryServiceIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ServiceDirectoryServiceIAMAssetType,
 		Convert:           GetServiceDirectoryServiceIamPolicyCaiObject,
 		MergeCreateUpdate: MergeServiceDirectoryServiceIamPolicy,
 	}
 }
 
-func ResourceConverterServiceDirectoryServiceIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterServiceDirectoryServiceIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ServiceDirectoryServiceIAMAssetType,
 		Convert:           GetServiceDirectoryServiceIamBindingCaiObject,
 		FetchFullResource: FetchServiceDirectoryServiceIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterServiceDirectoryServiceIamBinding() tpgresource.ResourceCo
 	}
 }
 
-func ResourceConverterServiceDirectoryServiceIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterServiceDirectoryServiceIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ServiceDirectoryServiceIAMAssetType,
 		Convert:           GetServiceDirectoryServiceIamMemberCaiObject,
 		FetchFullResource: FetchServiceDirectoryServiceIamPolicy,
@@ -53,70 +53,70 @@ func ResourceConverterServiceDirectoryServiceIamMember() tpgresource.ResourceCon
 	}
 }
 
-func GetServiceDirectoryServiceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newServiceDirectoryServiceIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetServiceDirectoryServiceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newServiceDirectoryServiceIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetServiceDirectoryServiceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newServiceDirectoryServiceIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetServiceDirectoryServiceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newServiceDirectoryServiceIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetServiceDirectoryServiceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newServiceDirectoryServiceIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetServiceDirectoryServiceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newServiceDirectoryServiceIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeServiceDirectoryServiceIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeServiceDirectoryServiceIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeServiceDirectoryServiceIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeServiceDirectoryServiceIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeServiceDirectoryServiceIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeServiceDirectoryServiceIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeServiceDirectoryServiceIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeServiceDirectoryServiceIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeServiceDirectoryServiceIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeServiceDirectoryServiceIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newServiceDirectoryServiceIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//servicedirectory.googleapis.com/projects/{{project}}/locations/{{location}}/namespaces/{{namespace_id}}/services/{{service_id}}")
+	name, err := cai.AssetName(d, config, "//servicedirectory.googleapis.com/projects/{{project}}/locations/{{location}}/namespaces/{{namespace_id}}/services/{{service_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: ServiceDirectoryServiceIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchServiceDirectoryServiceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchServiceDirectoryServiceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		ServiceDirectoryServiceIamUpdaterProducer,
 		d,
 		config,

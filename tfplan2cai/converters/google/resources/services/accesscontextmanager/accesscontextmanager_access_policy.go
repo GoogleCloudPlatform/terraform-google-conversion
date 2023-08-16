@@ -17,29 +17,30 @@ package accesscontextmanager
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const AccessContextManagerAccessPolicyAssetType string = "accesscontextmanager.googleapis.com/AccessPolicy"
 
-func ResourceConverterAccessContextManagerAccessPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterAccessContextManagerAccessPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: AccessContextManagerAccessPolicyAssetType,
 		Convert:   GetAccessContextManagerAccessPolicyCaiObject,
 	}
 }
 
-func GetAccessContextManagerAccessPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//accesscontextmanager.googleapis.com/accessPolicies/{{name}}")
+func GetAccessContextManagerAccessPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//accesscontextmanager.googleapis.com/accessPolicies/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetAccessContextManagerAccessPolicyApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: AccessContextManagerAccessPolicyAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accesscontextmanager/v1/rest",
 				DiscoveryName:        "AccessPolicy",
@@ -47,7 +48,7 @@ func GetAccessContextManagerAccessPolicyCaiObject(d tpgresource.TerraformResourc
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

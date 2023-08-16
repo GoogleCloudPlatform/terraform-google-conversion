@@ -17,29 +17,30 @@ package dataform
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DataformRepositoryReleaseConfigAssetType string = "dataform.googleapis.com/RepositoryReleaseConfig"
 
-func ResourceConverterDataformRepositoryReleaseConfig() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataformRepositoryReleaseConfig() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DataformRepositoryReleaseConfigAssetType,
 		Convert:   GetDataformRepositoryReleaseConfigCaiObject,
 	}
 }
 
-func GetDataformRepositoryReleaseConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//dataform.googleapis.com/projects/{{project}}/locations/{{region}}/repositories/{{repository}}/releaseConfigs/{{name}}")
+func GetDataformRepositoryReleaseConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//dataform.googleapis.com/projects/{{project}}/locations/{{region}}/repositories/{{repository}}/releaseConfigs/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDataformRepositoryReleaseConfigApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DataformRepositoryReleaseConfigAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dataform/v1beta1/rest",
 				DiscoveryName:        "RepositoryReleaseConfig",
@@ -47,7 +48,7 @@ func GetDataformRepositoryReleaseConfigCaiObject(d tpgresource.TerraformResource
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

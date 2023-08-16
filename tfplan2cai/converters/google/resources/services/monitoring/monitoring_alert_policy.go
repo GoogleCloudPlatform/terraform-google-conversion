@@ -19,8 +19,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // API does not return a value for REDUCE_NONE
@@ -30,23 +31,23 @@ func crossSeriesReducerDiffSuppress(k, old, new string, d *schema.ResourceData) 
 
 const MonitoringAlertPolicyAssetType string = "monitoring.googleapis.com/AlertPolicy"
 
-func ResourceConverterMonitoringAlertPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterMonitoringAlertPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: MonitoringAlertPolicyAssetType,
 		Convert:   GetMonitoringAlertPolicyCaiObject,
 	}
 }
 
-func GetMonitoringAlertPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//monitoring.googleapis.com/{{name}}")
+func GetMonitoringAlertPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetMonitoringAlertPolicyApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: MonitoringAlertPolicyAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",
 				DiscoveryName:        "AlertPolicy",
@@ -54,7 +55,7 @@ func GetMonitoringAlertPolicyCaiObject(d tpgresource.TerraformResourceData, conf
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

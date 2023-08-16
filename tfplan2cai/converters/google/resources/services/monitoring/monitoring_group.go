@@ -17,29 +17,30 @@ package monitoring
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const MonitoringGroupAssetType string = "monitoring.googleapis.com/Group"
 
-func ResourceConverterMonitoringGroup() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterMonitoringGroup() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: MonitoringGroupAssetType,
 		Convert:   GetMonitoringGroupCaiObject,
 	}
 }
 
-func GetMonitoringGroupCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//monitoring.googleapis.com/{{name}}")
+func GetMonitoringGroupCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//monitoring.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetMonitoringGroupApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: MonitoringGroupAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v3/rest",
 				DiscoveryName:        "Group",
@@ -47,7 +48,7 @@ func GetMonitoringGroupCaiObject(d tpgresource.TerraformResourceData, config *tr
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
