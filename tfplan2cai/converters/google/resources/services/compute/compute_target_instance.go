@@ -86,6 +86,12 @@ func GetComputeTargetInstanceApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("nat_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(natPolicyProp)) && (ok || !reflect.DeepEqual(v, natPolicyProp)) {
 		obj["natPolicy"] = natPolicyProp
 	}
+	securityPolicyProp, err := expandComputeTargetInstanceSecurityPolicy(d.Get("security_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("security_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(securityPolicyProp)) && (ok || !reflect.DeepEqual(v, securityPolicyProp)) {
+		obj["securityPolicy"] = securityPolicyProp
+	}
 	zoneProp, err := expandComputeTargetInstanceZone(d.Get("zone"), d, config)
 	if err != nil {
 		return nil, err
@@ -142,6 +148,10 @@ func expandComputeTargetInstanceInstance(v interface{}, d tpgresource.TerraformR
 }
 
 func expandComputeTargetInstanceNatPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeTargetInstanceSecurityPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
