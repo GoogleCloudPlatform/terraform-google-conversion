@@ -240,7 +240,6 @@ type Config struct {
 	FirebaseHostingBasePath          string
 	FirebaseStorageBasePath          string
 	FirestoreBasePath                string
-	GameServicesBasePath             string
 	GKEBackupBasePath                string
 	GKEHubBasePath                   string
 	GKEHub2BasePath                  string
@@ -370,7 +369,6 @@ const FirebaseExtensionsBasePathKey = "FirebaseExtensions"
 const FirebaseHostingBasePathKey = "FirebaseHosting"
 const FirebaseStorageBasePathKey = "FirebaseStorage"
 const FirestoreBasePathKey = "Firestore"
-const GameServicesBasePathKey = "GameServices"
 const GKEBackupBasePathKey = "GKEBackup"
 const GKEHubBasePathKey = "GKEHub"
 const GKEHub2BasePathKey = "GKEHub2"
@@ -494,7 +492,6 @@ var DefaultBasePaths = map[string]string{
 	FirebaseHostingBasePathKey:          "https://firebasehosting.googleapis.com/v1beta1/",
 	FirebaseStorageBasePathKey:          "https://firebasestorage.googleapis.com/v1beta/",
 	FirestoreBasePathKey:                "https://firestore.googleapis.com/v1/",
-	GameServicesBasePathKey:             "https://gameservices.googleapis.com/v1beta/",
 	GKEBackupBasePathKey:                "https://gkebackup.googleapis.com/v1/",
 	GKEHubBasePathKey:                   "https://gkehub.googleapis.com/v1beta1/",
 	GKEHub2BasePathKey:                  "https://gkehub.googleapis.com/v1beta/",
@@ -916,11 +913,6 @@ func HandleSDKDefaults(d *schema.ResourceData) error {
 		d.Set("firestore_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_FIRESTORE_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[FirestoreBasePathKey]))
-	}
-	if d.Get("game_services_custom_endpoint") == "" {
-		d.Set("game_services_custom_endpoint", MultiEnvDefault([]string{
-			"GOOGLE_GAME_SERVICES_CUSTOM_ENDPOINT",
-		}, DefaultBasePaths[GameServicesBasePathKey]))
 	}
 	if d.Get("gke_backup_custom_endpoint") == "" {
 		d.Set("gke_backup_custom_endpoint", MultiEnvDefault([]string{
@@ -2086,7 +2078,6 @@ func ConfigureBasePaths(c *Config) {
 	c.FirebaseHostingBasePath = DefaultBasePaths[FirebaseHostingBasePathKey]
 	c.FirebaseStorageBasePath = DefaultBasePaths[FirebaseStorageBasePathKey]
 	c.FirestoreBasePath = DefaultBasePaths[FirestoreBasePathKey]
-	c.GameServicesBasePath = DefaultBasePaths[GameServicesBasePathKey]
 	c.GKEBackupBasePath = DefaultBasePaths[GKEBackupBasePathKey]
 	c.GKEHubBasePath = DefaultBasePaths[GKEHubBasePathKey]
 	c.GKEHub2BasePath = DefaultBasePaths[GKEHub2BasePathKey]
