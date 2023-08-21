@@ -78,6 +78,12 @@ func GetFirebaseAppleAppApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("team_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(teamIdProp)) && (ok || !reflect.DeepEqual(v, teamIdProp)) {
 		obj["teamId"] = teamIdProp
 	}
+	apiKeyIdProp, err := expandFirebaseAppleAppApiKeyId(d.Get("api_key_id"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("api_key_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiKeyIdProp)) && (ok || !reflect.DeepEqual(v, apiKeyIdProp)) {
+		obj["apiKeyId"] = apiKeyIdProp
+	}
 
 	return obj, nil
 }
@@ -95,5 +101,9 @@ func expandFirebaseAppleAppAppStoreId(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandFirebaseAppleAppTeamId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAppleAppApiKeyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

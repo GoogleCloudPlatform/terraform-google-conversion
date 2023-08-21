@@ -78,6 +78,12 @@ func GetFirebaseAndroidAppApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("sha256_hashes"); !tpgresource.IsEmptyValue(reflect.ValueOf(sha256HashesProp)) && (ok || !reflect.DeepEqual(v, sha256HashesProp)) {
 		obj["sha256Hashes"] = sha256HashesProp
 	}
+	apiKeyIdProp, err := expandFirebaseAndroidAppApiKeyId(d.Get("api_key_id"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("api_key_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiKeyIdProp)) && (ok || !reflect.DeepEqual(v, apiKeyIdProp)) {
+		obj["apiKeyId"] = apiKeyIdProp
+	}
 	etagProp, err := expandFirebaseAndroidAppEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
@@ -101,6 +107,10 @@ func expandFirebaseAndroidAppSha1Hashes(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandFirebaseAndroidAppSha256Hashes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAndroidAppApiKeyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
