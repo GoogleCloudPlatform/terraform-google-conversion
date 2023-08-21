@@ -84,6 +84,18 @@ func GetAlloydbClusterApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("initial_user"); !tpgresource.IsEmptyValue(reflect.ValueOf(initialUserProp)) && (ok || !reflect.DeepEqual(v, initialUserProp)) {
 		obj["initialUser"] = initialUserProp
 	}
+	restoreBackupSourceProp, err := expandAlloydbClusterRestoreBackupSource(d.Get("restore_backup_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restore_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreBackupSourceProp)) && (ok || !reflect.DeepEqual(v, restoreBackupSourceProp)) {
+		obj["restoreBackupSource"] = restoreBackupSourceProp
+	}
+	restoreContinuousBackupSourceProp, err := expandAlloydbClusterRestoreContinuousBackupSource(d.Get("restore_continuous_backup_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restore_continuous_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreContinuousBackupSourceProp)) && (ok || !reflect.DeepEqual(v, restoreContinuousBackupSourceProp)) {
+		obj["restoreContinuousBackupSource"] = restoreContinuousBackupSourceProp
+	}
 	continuousBackupConfigProp, err := expandAlloydbClusterContinuousBackupConfig(d.Get("continuous_backup_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -173,6 +185,63 @@ func expandAlloydbClusterInitialUserUser(v interface{}, d tpgresource.TerraformR
 }
 
 func expandAlloydbClusterInitialUserPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBackupName, err := expandAlloydbClusterRestoreBackupSourceBackupName(original["backup_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackupName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backupName"] = transformedBackupName
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterRestoreBackupSourceBackupName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreContinuousBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCluster, err := expandAlloydbClusterRestoreContinuousBackupSourceCluster(original["cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cluster"] = transformedCluster
+	}
+
+	transformedPointInTime, err := expandAlloydbClusterRestoreContinuousBackupSourcePointInTime(original["point_in_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPointInTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pointInTime"] = transformedPointInTime
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterRestoreContinuousBackupSourceCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreContinuousBackupSourcePointInTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
