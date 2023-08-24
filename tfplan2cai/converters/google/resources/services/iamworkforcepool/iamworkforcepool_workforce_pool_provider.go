@@ -296,6 +296,13 @@ func expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfig(v interface{}, 
 		transformed["assertionClaimsBehavior"] = transformedAssertionClaimsBehavior
 	}
 
+	transformedAdditionalScopes, err := expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigAdditionalScopes(original["additional_scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAdditionalScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["additionalScopes"] = transformedAdditionalScopes
+	}
+
 	return transformed, nil
 }
 
@@ -304,5 +311,9 @@ func expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigResponseType(v i
 }
 
 func expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigAssertionClaimsBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigAdditionalScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
