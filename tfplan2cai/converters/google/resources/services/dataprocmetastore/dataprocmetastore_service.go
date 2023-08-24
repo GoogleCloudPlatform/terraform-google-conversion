@@ -19,29 +19,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DataprocMetastoreServiceAssetType string = "metastore.googleapis.com/Service"
 
-func ResourceConverterDataprocMetastoreService() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocMetastoreService() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DataprocMetastoreServiceAssetType,
 		Convert:   GetDataprocMetastoreServiceCaiObject,
 	}
 }
 
-func GetDataprocMetastoreServiceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//metastore.googleapis.com/projects/{{project}}/locations/{{location}}/services/{{service_id}}")
+func GetDataprocMetastoreServiceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//metastore.googleapis.com/projects/{{project}}/locations/{{location}}/services/{{service_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDataprocMetastoreServiceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DataprocMetastoreServiceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/metastore/v1beta/rest",
 				DiscoveryName:        "Service",
@@ -49,7 +50,7 @@ func GetDataprocMetastoreServiceCaiObject(d tpgresource.TerraformResourceData, c
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -78,6 +79,12 @@ func GetDataprocMetastoreServiceApiObject(d tpgresource.TerraformResourceData, c
 		return nil, err
 	} else if v, ok := d.GetOkExists("tier"); !tpgresource.IsEmptyValue(reflect.ValueOf(tierProp)) && (ok || !reflect.DeepEqual(v, tierProp)) {
 		obj["tier"] = tierProp
+	}
+	scalingConfigProp, err := expandDataprocMetastoreServiceScalingConfig(d.Get("scaling_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scaling_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(scalingConfigProp)) && (ok || !reflect.DeepEqual(v, scalingConfigProp)) {
+		obj["scalingConfig"] = scalingConfigProp
 	}
 	maintenanceWindowProp, err := expandDataprocMetastoreServiceMaintenanceWindow(d.Get("maintenance_window"), d, config)
 	if err != nil {
@@ -151,6 +158,40 @@ func expandDataprocMetastoreServicePort(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandDataprocMetastoreServiceTier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceScalingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedInstanceSize, err := expandDataprocMetastoreServiceScalingConfigInstanceSize(original["instance_size"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstanceSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instanceSize"] = transformedInstanceSize
+	}
+
+	transformedScalingFactor, err := expandDataprocMetastoreServiceScalingConfigScalingFactor(original["scaling_factor"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScalingFactor); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scalingFactor"] = transformedScalingFactor
+	}
+
+	return transformed, nil
+}
+
+func expandDataprocMetastoreServiceScalingConfigInstanceSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceScalingConfigScalingFactor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

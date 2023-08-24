@@ -17,29 +17,30 @@ package identityplatform
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const IdentityPlatformTenantInboundSamlConfigAssetType string = "identitytoolkit.googleapis.com/TenantInboundSamlConfig"
 
-func ResourceConverterIdentityPlatformTenantInboundSamlConfig() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIdentityPlatformTenantInboundSamlConfig() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: IdentityPlatformTenantInboundSamlConfigAssetType,
 		Convert:   GetIdentityPlatformTenantInboundSamlConfigCaiObject,
 	}
 }
 
-func GetIdentityPlatformTenantInboundSamlConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/tenants/{{tenant}}/inboundSamlConfigs/{{name}}")
+func GetIdentityPlatformTenantInboundSamlConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/tenants/{{tenant}}/inboundSamlConfigs/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetIdentityPlatformTenantInboundSamlConfigApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: IdentityPlatformTenantInboundSamlConfigAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v2/rest",
 				DiscoveryName:        "TenantInboundSamlConfig",
@@ -47,7 +48,7 @@ func GetIdentityPlatformTenantInboundSamlConfigCaiObject(d tpgresource.Terraform
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

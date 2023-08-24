@@ -17,29 +17,30 @@ package dataplex
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DataplexDatascanAssetType string = "dataplex.googleapis.com/Datascan"
 
-func ResourceConverterDataplexDatascan() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataplexDatascan() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DataplexDatascanAssetType,
 		Convert:   GetDataplexDatascanCaiObject,
 	}
 }
 
-func GetDataplexDatascanCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//dataplex.googleapis.com/projects/{{project}}/locations/{{location}}/dataScans/{{data_scan_id}}")
+func GetDataplexDatascanCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//dataplex.googleapis.com/projects/{{project}}/locations/{{location}}/dataScans/{{data_scan_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDataplexDatascanApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DataplexDatascanAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dataplex/v1/rest",
 				DiscoveryName:        "Datascan",
@@ -47,7 +48,7 @@ func GetDataplexDatascanCaiObject(d tpgresource.TerraformResourceData, config *t
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -269,6 +270,13 @@ func expandDataplexDatascanDataQualitySpec(v interface{}, d tpgresource.Terrafor
 		transformed["rowFilter"] = transformedRowFilter
 	}
 
+	transformedPostScanActions, err := expandDataplexDatascanDataQualitySpecPostScanActions(original["post_scan_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPostScanActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["postScanActions"] = transformedPostScanActions
+	}
+
 	transformedRules, err := expandDataplexDatascanDataQualitySpecRules(original["rules"], d, config)
 	if err != nil {
 		return nil, err
@@ -284,6 +292,48 @@ func expandDataplexDatascanDataQualitySpecSamplingPercent(v interface{}, d tpgre
 }
 
 func expandDataplexDatascanDataQualitySpecRowFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecPostScanActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBigqueryExport, err := expandDataplexDatascanDataQualitySpecPostScanActionsBigqueryExport(original["bigquery_export"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBigqueryExport); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bigqueryExport"] = transformedBigqueryExport
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataQualitySpecPostScanActionsBigqueryExport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResultsTable, err := expandDataplexDatascanDataQualitySpecPostScanActionsBigqueryExportResultsTable(original["results_table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResultsTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resultsTable"] = transformedResultsTable
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataQualitySpecPostScanActionsBigqueryExportResultsTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -323,6 +373,20 @@ func expandDataplexDatascanDataQualitySpecRules(v interface{}, d tpgresource.Ter
 			return nil, err
 		} else if val := reflect.ValueOf(transformedThreshold); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["threshold"] = transformedThreshold
+		}
+
+		transformedName, err := expandDataplexDatascanDataQualitySpecRulesName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedDescription, err := expandDataplexDatascanDataQualitySpecRulesDescription(original["description"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["description"] = transformedDescription
 		}
 
 		transformedRangeExpectation, err := expandDataplexDatascanDataQualitySpecRulesRangeExpectation(original["range_expectation"], d, config)
@@ -399,6 +463,14 @@ func expandDataplexDatascanDataQualitySpecRulesDimension(v interface{}, d tpgres
 }
 
 func expandDataplexDatascanDataQualitySpecRulesThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -675,6 +747,27 @@ func expandDataplexDatascanDataProfileSpec(v interface{}, d tpgresource.Terrafor
 		transformed["rowFilter"] = transformedRowFilter
 	}
 
+	transformedPostScanActions, err := expandDataplexDatascanDataProfileSpecPostScanActions(original["post_scan_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPostScanActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["postScanActions"] = transformedPostScanActions
+	}
+
+	transformedIncludeFields, err := expandDataplexDatascanDataProfileSpecIncludeFields(original["include_fields"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeFields"] = transformedIncludeFields
+	}
+
+	transformedExcludeFields, err := expandDataplexDatascanDataProfileSpecExcludeFields(original["exclude_fields"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExcludeFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["excludeFields"] = transformedExcludeFields
+	}
+
 	return transformed, nil
 }
 
@@ -683,5 +776,93 @@ func expandDataplexDatascanDataProfileSpecSamplingPercent(v interface{}, d tpgre
 }
 
 func expandDataplexDatascanDataProfileSpecRowFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataProfileSpecPostScanActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBigqueryExport, err := expandDataplexDatascanDataProfileSpecPostScanActionsBigqueryExport(original["bigquery_export"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBigqueryExport); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bigqueryExport"] = transformedBigqueryExport
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataProfileSpecPostScanActionsBigqueryExport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResultsTable, err := expandDataplexDatascanDataProfileSpecPostScanActionsBigqueryExportResultsTable(original["results_table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResultsTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resultsTable"] = transformedResultsTable
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataProfileSpecPostScanActionsBigqueryExportResultsTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataProfileSpecIncludeFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFieldNames, err := expandDataplexDatascanDataProfileSpecIncludeFieldsFieldNames(original["field_names"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFieldNames); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fieldNames"] = transformedFieldNames
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataProfileSpecIncludeFieldsFieldNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataProfileSpecExcludeFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFieldNames, err := expandDataplexDatascanDataProfileSpecExcludeFieldsFieldNames(original["field_names"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFieldNames); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fieldNames"] = transformedFieldNames
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataProfileSpecExcludeFieldsFieldNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

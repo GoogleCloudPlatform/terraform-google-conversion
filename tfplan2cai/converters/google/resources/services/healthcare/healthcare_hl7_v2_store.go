@@ -18,29 +18,30 @@ import (
 	"encoding/json"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const HealthcareHl7V2StoreAssetType string = "healthcare.googleapis.com/Hl7V2Store"
 
-func ResourceConverterHealthcareHl7V2Store() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterHealthcareHl7V2Store() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: HealthcareHl7V2StoreAssetType,
 		Convert:   GetHealthcareHl7V2StoreCaiObject,
 	}
 }
 
-func GetHealthcareHl7V2StoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//healthcare.googleapis.com/{{dataset}}/hl7V2Stores/{{name}}")
+func GetHealthcareHl7V2StoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//healthcare.googleapis.com/{{dataset}}/hl7V2Stores/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetHealthcareHl7V2StoreApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: HealthcareHl7V2StoreAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1beta1/rest",
 				DiscoveryName:        "Hl7V2Store",
@@ -48,7 +49,7 @@ func GetHealthcareHl7V2StoreCaiObject(d tpgresource.TerraformResourceData, confi
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

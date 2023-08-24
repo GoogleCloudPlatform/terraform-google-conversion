@@ -23,8 +23,9 @@ import (
 	"github.com/apparentlymart/go-cidr/cidr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Whether the IP CIDR change shrinks the block.
@@ -49,23 +50,23 @@ func IsShrinkageIpCidr(_ context.Context, old, new, _ interface{}) bool {
 
 const ComputeSubnetworkAssetType string = "compute.googleapis.com/Subnetwork"
 
-func ResourceConverterComputeSubnetwork() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeSubnetwork() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeSubnetworkAssetType,
 		Convert:   GetComputeSubnetworkCaiObject,
 	}
 }
 
-func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{name}}")
+func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeSubnetworkApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeSubnetworkAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "Subnetwork",
@@ -73,7 +74,7 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

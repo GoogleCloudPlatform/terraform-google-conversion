@@ -17,24 +17,24 @@ package workstations
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const WorkstationsWorkstationIAMAssetType string = "workstations.googleapis.com/Workstation"
 
-func ResourceConverterWorkstationsWorkstationIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterWorkstationsWorkstationIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         WorkstationsWorkstationIAMAssetType,
 		Convert:           GetWorkstationsWorkstationIamPolicyCaiObject,
 		MergeCreateUpdate: MergeWorkstationsWorkstationIamPolicy,
 	}
 }
 
-func ResourceConverterWorkstationsWorkstationIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterWorkstationsWorkstationIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         WorkstationsWorkstationIAMAssetType,
 		Convert:           GetWorkstationsWorkstationIamBindingCaiObject,
 		FetchFullResource: FetchWorkstationsWorkstationIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterWorkstationsWorkstationIamBinding() tpgresource.ResourceCo
 	}
 }
 
-func ResourceConverterWorkstationsWorkstationIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterWorkstationsWorkstationIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         WorkstationsWorkstationIAMAssetType,
 		Convert:           GetWorkstationsWorkstationIamMemberCaiObject,
 		FetchFullResource: FetchWorkstationsWorkstationIamPolicy,
@@ -53,79 +53,79 @@ func ResourceConverterWorkstationsWorkstationIamMember() tpgresource.ResourceCon
 	}
 }
 
-func GetWorkstationsWorkstationIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newWorkstationsWorkstationIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetWorkstationsWorkstationIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newWorkstationsWorkstationIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetWorkstationsWorkstationIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newWorkstationsWorkstationIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetWorkstationsWorkstationIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newWorkstationsWorkstationIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetWorkstationsWorkstationIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newWorkstationsWorkstationIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetWorkstationsWorkstationIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newWorkstationsWorkstationIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeWorkstationsWorkstationIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeWorkstationsWorkstationIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeWorkstationsWorkstationIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeWorkstationsWorkstationIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeWorkstationsWorkstationIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeWorkstationsWorkstationIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeWorkstationsWorkstationIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeWorkstationsWorkstationIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeWorkstationsWorkstationIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeWorkstationsWorkstationIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newWorkstationsWorkstationIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//workstations.googleapis.com/projects/{{project}}/locations/{{location}}/workstationClusters/{{workstation_cluster_id}}/workstationConfigs/{{workstation_config_id}}/workstations/{{workstation_id}}")
+	name, err := cai.AssetName(d, config, "//workstations.googleapis.com/projects/{{project}}/locations/{{location}}/workstationClusters/{{workstation_cluster_id}}/workstationConfigs/{{workstation_config_id}}/workstations/{{workstation_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: WorkstationsWorkstationIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchWorkstationsWorkstationIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchWorkstationsWorkstationIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("workstation_cluster_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("workstation_config_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("workstation_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		WorkstationsWorkstationIamUpdaterProducer,
 		d,
 		config,

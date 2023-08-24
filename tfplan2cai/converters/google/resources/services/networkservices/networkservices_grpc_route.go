@@ -17,29 +17,30 @@ package networkservices
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const NetworkServicesGrpcRouteAssetType string = "networkservices.googleapis.com/GrpcRoute"
 
-func ResourceConverterNetworkServicesGrpcRoute() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNetworkServicesGrpcRoute() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: NetworkServicesGrpcRouteAssetType,
 		Convert:   GetNetworkServicesGrpcRouteCaiObject,
 	}
 }
 
-func GetNetworkServicesGrpcRouteCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/grpcRoutes/{{name}}")
+func GetNetworkServicesGrpcRouteCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/grpcRoutes/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetNetworkServicesGrpcRouteApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: NetworkServicesGrpcRouteAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkservices/v1/rest",
 				DiscoveryName:        "GrpcRoute",
@@ -47,7 +48,7 @@ func GetNetworkServicesGrpcRouteCaiObject(d tpgresource.TerraformResourceData, c
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

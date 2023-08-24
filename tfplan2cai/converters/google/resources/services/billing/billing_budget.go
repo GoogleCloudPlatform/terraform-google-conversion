@@ -19,8 +19,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Check to see if a specified value in the config exists and suppress diffs if so. Otherwise run EmptyOrDefaultStringSuppress.
@@ -36,23 +37,23 @@ func checkValAndDefaultStringSuppress(defaultVal string, checkVal string) schema
 
 const BillingBudgetAssetType string = "billingbudgets.googleapis.com/Budget"
 
-func ResourceConverterBillingBudget() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBillingBudget() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: BillingBudgetAssetType,
 		Convert:   GetBillingBudgetCaiObject,
 	}
 }
 
-func GetBillingBudgetCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//billingbudgets.googleapis.com/billingAccounts/{{billing_account}}/budgets/{{name}}")
+func GetBillingBudgetCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//billingbudgets.googleapis.com/billingAccounts/{{billing_account}}/budgets/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetBillingBudgetApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: BillingBudgetAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/billingbudgets/v1/rest",
 				DiscoveryName:        "Budget",
@@ -60,7 +61,7 @@ func GetBillingBudgetCaiObject(d tpgresource.TerraformResourceData, config *tran
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

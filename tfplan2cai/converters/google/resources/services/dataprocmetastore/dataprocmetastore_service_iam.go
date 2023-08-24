@@ -17,24 +17,24 @@ package dataprocmetastore
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataprocMetastoreServiceIAMAssetType string = "metastore.googleapis.com/Service"
 
-func ResourceConverterDataprocMetastoreServiceIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocMetastoreServiceIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocMetastoreServiceIAMAssetType,
 		Convert:           GetDataprocMetastoreServiceIamPolicyCaiObject,
 		MergeCreateUpdate: MergeDataprocMetastoreServiceIamPolicy,
 	}
 }
 
-func ResourceConverterDataprocMetastoreServiceIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocMetastoreServiceIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocMetastoreServiceIAMAssetType,
 		Convert:           GetDataprocMetastoreServiceIamBindingCaiObject,
 		FetchFullResource: FetchDataprocMetastoreServiceIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterDataprocMetastoreServiceIamBinding() tpgresource.ResourceC
 	}
 }
 
-func ResourceConverterDataprocMetastoreServiceIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataprocMetastoreServiceIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataprocMetastoreServiceIAMAssetType,
 		Convert:           GetDataprocMetastoreServiceIamMemberCaiObject,
 		FetchFullResource: FetchDataprocMetastoreServiceIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterDataprocMetastoreServiceIamMember() tpgresource.ResourceCo
 	}
 }
 
-func GetDataprocMetastoreServiceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocMetastoreServiceIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetDataprocMetastoreServiceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocMetastoreServiceIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetDataprocMetastoreServiceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocMetastoreServiceIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetDataprocMetastoreServiceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocMetastoreServiceIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetDataprocMetastoreServiceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataprocMetastoreServiceIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetDataprocMetastoreServiceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataprocMetastoreServiceIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeDataprocMetastoreServiceIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeDataprocMetastoreServiceIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeDataprocMetastoreServiceIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeDataprocMetastoreServiceIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeDataprocMetastoreServiceIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeDataprocMetastoreServiceIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeDataprocMetastoreServiceIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeDataprocMetastoreServiceIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeDataprocMetastoreServiceIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeDataprocMetastoreServiceIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newDataprocMetastoreServiceIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//metastore.googleapis.com/projects/{{project}}/locations/{{location}}/services/{{service_id}}")
+	name, err := cai.AssetName(d, config, "//metastore.googleapis.com/projects/{{project}}/locations/{{location}}/services/{{service_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: DataprocMetastoreServiceIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchDataprocMetastoreServiceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchDataprocMetastoreServiceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("service_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		DataprocMetastoreServiceIamUpdaterProducer,
 		d,
 		config,

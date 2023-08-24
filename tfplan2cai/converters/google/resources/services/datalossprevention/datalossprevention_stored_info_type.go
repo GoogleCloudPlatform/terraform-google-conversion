@@ -20,8 +20,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // This customizeDiff allows updating the dictionary, regex, and large_custom_dictionary fields, but
@@ -52,23 +53,23 @@ func storedInfoTypeCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v
 
 const DataLossPreventionStoredInfoTypeAssetType string = "dlp.googleapis.com/StoredInfoType"
 
-func ResourceConverterDataLossPreventionStoredInfoType() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataLossPreventionStoredInfoType() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DataLossPreventionStoredInfoTypeAssetType,
 		Convert:   GetDataLossPreventionStoredInfoTypeCaiObject,
 	}
 }
 
-func GetDataLossPreventionStoredInfoTypeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//dlp.googleapis.com/{{parent}}/storedInfoTypes/{{name}}")
+func GetDataLossPreventionStoredInfoTypeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//dlp.googleapis.com/{{parent}}/storedInfoTypes/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDataLossPreventionStoredInfoTypeApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DataLossPreventionStoredInfoTypeAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dlp/v2/rest",
 				DiscoveryName:        "StoredInfoType",
@@ -76,7 +77,7 @@ func GetDataLossPreventionStoredInfoTypeCaiObject(d tpgresource.TerraformResourc
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

@@ -18,29 +18,30 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ComputeGlobalForwardingRuleAssetType string = "compute.googleapis.com/GlobalForwardingRule"
 
-func ResourceConverterComputeGlobalForwardingRule() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeGlobalForwardingRule() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeGlobalForwardingRuleAssetType,
 		Convert:   GetComputeGlobalForwardingRuleCaiObject,
 	}
 }
 
-func GetComputeGlobalForwardingRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/forwardingRules/{{name}}")
+func GetComputeGlobalForwardingRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/forwardingRules/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeGlobalForwardingRuleApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeGlobalForwardingRuleAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "GlobalForwardingRule",
@@ -48,7 +49,7 @@ func GetComputeGlobalForwardingRuleCaiObject(d tpgresource.TerraformResourceData
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

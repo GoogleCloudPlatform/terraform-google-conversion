@@ -17,29 +17,30 @@ package orgpolicy
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const OrgPolicyCustomConstraintAssetType string = "orgpolicy.googleapis.com/CustomConstraint"
 
-func ResourceConverterOrgPolicyCustomConstraint() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterOrgPolicyCustomConstraint() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: OrgPolicyCustomConstraintAssetType,
 		Convert:   GetOrgPolicyCustomConstraintCaiObject,
 	}
 }
 
-func GetOrgPolicyCustomConstraintCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//orgpolicy.googleapis.com/{{parent}}/customConstraints/{{name}}")
+func GetOrgPolicyCustomConstraintCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//orgpolicy.googleapis.com/{{parent}}/customConstraints/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetOrgPolicyCustomConstraintApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: OrgPolicyCustomConstraintAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/orgpolicy/v2/rest",
 				DiscoveryName:        "CustomConstraint",
@@ -47,7 +48,7 @@ func GetOrgPolicyCustomConstraintCaiObject(d tpgresource.TerraformResourceData, 
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

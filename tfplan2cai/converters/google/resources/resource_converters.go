@@ -14,6 +14,7 @@
 package google
 
 import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/accesscontextmanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/artifactregistry"
@@ -57,19 +58,18 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/sql"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/vertexai"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/vpcaccess"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
 )
 
 // ResourceConverter returns a map of terraform resource types (i.e. `google_project`)
 // to a slice of ResourceConverters.
 //
 // Modelling of relationships:
-// terraform resources to CAI assets as []tpgresource.ResourceConverter:
+// terraform resources to CAI assets as []cai.ResourceConverter:
 // 1:1 = [ResourceConverter{Convert: convertAbc}]                  (len=1)
 // 1:N = [ResourceConverter{Convert: convertAbc}, ...]             (len=N)
 // N:1 = [ResourceConverter{Convert: convertAbc, merge: mergeAbc}] (len=1)
-func ResourceConverters() map[string][]tpgresource.ResourceConverter {
-	return map[string][]tpgresource.ResourceConverter{
+func ResourceConverters() map[string][]cai.ResourceConverter {
+	return map[string][]cai.ResourceConverter{
 		"google_compute_address":                                  {compute.ResourceConverterComputeAddress()},
 		"google_compute_firewall":                                 {compute.ResourceConverterComputeFirewall()},
 		"google_compute_disk":                                     {compute.ResourceConverterComputeDisk()},

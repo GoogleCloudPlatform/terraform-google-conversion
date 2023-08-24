@@ -17,24 +17,24 @@ package cloudfunctions2
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const Cloudfunctions2functionIAMAssetType string = "cloudfunctions.googleapis.com/function"
 
-func ResourceConverterCloudfunctions2functionIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudfunctions2functionIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         Cloudfunctions2functionIAMAssetType,
 		Convert:           GetCloudfunctions2functionIamPolicyCaiObject,
 		MergeCreateUpdate: MergeCloudfunctions2functionIamPolicy,
 	}
 }
 
-func ResourceConverterCloudfunctions2functionIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudfunctions2functionIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         Cloudfunctions2functionIAMAssetType,
 		Convert:           GetCloudfunctions2functionIamBindingCaiObject,
 		FetchFullResource: FetchCloudfunctions2functionIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterCloudfunctions2functionIamBinding() tpgresource.ResourceCo
 	}
 }
 
-func ResourceConverterCloudfunctions2functionIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudfunctions2functionIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         Cloudfunctions2functionIAMAssetType,
 		Convert:           GetCloudfunctions2functionIamMemberCaiObject,
 		FetchFullResource: FetchCloudfunctions2functionIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterCloudfunctions2functionIamMember() tpgresource.ResourceCon
 	}
 }
 
-func GetCloudfunctions2functionIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudfunctions2functionIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetCloudfunctions2functionIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudfunctions2functionIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetCloudfunctions2functionIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudfunctions2functionIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetCloudfunctions2functionIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudfunctions2functionIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetCloudfunctions2functionIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudfunctions2functionIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetCloudfunctions2functionIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudfunctions2functionIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeCloudfunctions2functionIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeCloudfunctions2functionIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeCloudfunctions2functionIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeCloudfunctions2functionIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeCloudfunctions2functionIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeCloudfunctions2functionIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeCloudfunctions2functionIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeCloudfunctions2functionIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeCloudfunctions2functionIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeCloudfunctions2functionIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newCloudfunctions2functionIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//cloudfunctions.googleapis.com/projects/{{project}}/locations/{{location}}/functions/{{cloud_function}}")
+	name, err := cai.AssetName(d, config, "//cloudfunctions.googleapis.com/projects/{{project}}/locations/{{location}}/functions/{{cloud_function}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: Cloudfunctions2functionIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchCloudfunctions2functionIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchCloudfunctions2functionIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("cloud_function"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		Cloudfunctions2functionIamUpdaterProducer,
 		d,
 		config,

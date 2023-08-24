@@ -21,8 +21,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 func enableRTDB(config *transport_tpg.Config, d *schema.ResourceData, project string, billingProject string, userAgent string) error {
@@ -69,23 +70,23 @@ func disableRTDB(config *transport_tpg.Config, d *schema.ResourceData, project s
 
 const FirebaseDatabaseInstanceAssetType string = "firebasedatabase.googleapis.com/Instance"
 
-func ResourceConverterFirebaseDatabaseInstance() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterFirebaseDatabaseInstance() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: FirebaseDatabaseInstanceAssetType,
 		Convert:   GetFirebaseDatabaseInstanceCaiObject,
 	}
 }
 
-func GetFirebaseDatabaseInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//firebasedatabase.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{instance_id}}")
+func GetFirebaseDatabaseInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//firebasedatabase.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{instance_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetFirebaseDatabaseInstanceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: FirebaseDatabaseInstanceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/firebasedatabase/v1beta/rest",
 				DiscoveryName:        "Instance",
@@ -93,7 +94,7 @@ func GetFirebaseDatabaseInstanceCaiObject(d tpgresource.TerraformResourceData, c
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

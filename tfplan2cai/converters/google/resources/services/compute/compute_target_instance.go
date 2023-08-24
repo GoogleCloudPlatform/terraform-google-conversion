@@ -19,29 +19,30 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ComputeTargetInstanceAssetType string = "compute.googleapis.com/TargetInstance"
 
-func ResourceConverterComputeTargetInstance() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeTargetInstance() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeTargetInstanceAssetType,
 		Convert:   GetComputeTargetInstanceCaiObject,
 	}
 }
 
-func GetComputeTargetInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/targetInstances/{{name}}")
+func GetComputeTargetInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/targetInstances/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeTargetInstanceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeTargetInstanceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "TargetInstance",
@@ -49,7 +50,7 @@ func GetComputeTargetInstanceCaiObject(d tpgresource.TerraformResourceData, conf
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -84,6 +85,12 @@ func GetComputeTargetInstanceApiObject(d tpgresource.TerraformResourceData, conf
 		return nil, err
 	} else if v, ok := d.GetOkExists("nat_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(natPolicyProp)) && (ok || !reflect.DeepEqual(v, natPolicyProp)) {
 		obj["natPolicy"] = natPolicyProp
+	}
+	securityPolicyProp, err := expandComputeTargetInstanceSecurityPolicy(d.Get("security_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("security_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(securityPolicyProp)) && (ok || !reflect.DeepEqual(v, securityPolicyProp)) {
+		obj["securityPolicy"] = securityPolicyProp
 	}
 	zoneProp, err := expandComputeTargetInstanceZone(d.Get("zone"), d, config)
 	if err != nil {
@@ -141,6 +148,10 @@ func expandComputeTargetInstanceInstance(v interface{}, d tpgresource.TerraformR
 }
 
 func expandComputeTargetInstanceNatPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeTargetInstanceSecurityPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

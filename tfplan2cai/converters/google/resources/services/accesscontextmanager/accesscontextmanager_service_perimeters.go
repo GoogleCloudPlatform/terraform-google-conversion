@@ -19,29 +19,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const AccessContextManagerServicePerimetersAssetType string = "accesscontextmanager.googleapis.com/ServicePerimeters"
 
-func ResourceConverterAccessContextManagerServicePerimeters() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterAccessContextManagerServicePerimeters() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: AccessContextManagerServicePerimetersAssetType,
 		Convert:   GetAccessContextManagerServicePerimetersCaiObject,
 	}
 }
 
-func GetAccessContextManagerServicePerimetersCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//accesscontextmanager.googleapis.com/{{parent}}/servicePerimeters")
+func GetAccessContextManagerServicePerimetersCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//accesscontextmanager.googleapis.com/{{parent}}/servicePerimeters")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetAccessContextManagerServicePerimetersApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: AccessContextManagerServicePerimetersAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/accesscontextmanager/v1/rest",
 				DiscoveryName:        "ServicePerimeters",
@@ -49,7 +50,7 @@ func GetAccessContextManagerServicePerimetersCaiObject(d tpgresource.TerraformRe
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

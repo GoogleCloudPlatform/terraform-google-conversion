@@ -23,8 +23,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 func revisionNameCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
@@ -115,23 +116,23 @@ func cloudrunTemplateLabelDiffSuppress(k, old, new string, d *schema.ResourceDat
 
 const CloudRunServiceAssetType string = "run.googleapis.com/Service"
 
-func ResourceConverterCloudRunService() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudRunService() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: CloudRunServiceAssetType,
 		Convert:   GetCloudRunServiceCaiObject,
 	}
 }
 
-func GetCloudRunServiceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/services/{{name}}")
+func GetCloudRunServiceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/services/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetCloudRunServiceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: CloudRunServiceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/run/v1/rest",
 				DiscoveryName:        "Service",
@@ -139,7 +140,7 @@ func GetCloudRunServiceCaiObject(d tpgresource.TerraformResourceData, config *tr
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

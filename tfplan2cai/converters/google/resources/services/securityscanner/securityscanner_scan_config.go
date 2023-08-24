@@ -17,29 +17,30 @@ package securityscanner
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const SecurityScannerScanConfigAssetType string = "websecurityscanner.googleapis.com/ScanConfig"
 
-func ResourceConverterSecurityScannerScanConfig() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterSecurityScannerScanConfig() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: SecurityScannerScanConfigAssetType,
 		Convert:   GetSecurityScannerScanConfigCaiObject,
 	}
 }
 
-func GetSecurityScannerScanConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//websecurityscanner.googleapis.com/{{name}}")
+func GetSecurityScannerScanConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//websecurityscanner.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetSecurityScannerScanConfigApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: SecurityScannerScanConfigAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/websecurityscanner/v1beta/rest",
 				DiscoveryName:        "ScanConfig",
@@ -47,7 +48,7 @@ func GetSecurityScannerScanConfigCaiObject(d tpgresource.TerraformResourceData, 
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

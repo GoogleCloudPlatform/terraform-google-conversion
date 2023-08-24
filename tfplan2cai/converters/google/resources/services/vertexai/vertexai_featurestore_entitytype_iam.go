@@ -17,24 +17,24 @@ package vertexai
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const VertexAIFeaturestoreEntitytypeIAMAssetType string = "{{region}}-aiplatform.googleapis.com/FeaturestoreEntitytype"
 
-func ResourceConverterVertexAIFeaturestoreEntitytypeIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterVertexAIFeaturestoreEntitytypeIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         VertexAIFeaturestoreEntitytypeIAMAssetType,
 		Convert:           GetVertexAIFeaturestoreEntitytypeIamPolicyCaiObject,
 		MergeCreateUpdate: MergeVertexAIFeaturestoreEntitytypeIamPolicy,
 	}
 }
 
-func ResourceConverterVertexAIFeaturestoreEntitytypeIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterVertexAIFeaturestoreEntitytypeIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         VertexAIFeaturestoreEntitytypeIAMAssetType,
 		Convert:           GetVertexAIFeaturestoreEntitytypeIamBindingCaiObject,
 		FetchFullResource: FetchVertexAIFeaturestoreEntitytypeIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterVertexAIFeaturestoreEntitytypeIamBinding() tpgresource.Res
 	}
 }
 
-func ResourceConverterVertexAIFeaturestoreEntitytypeIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterVertexAIFeaturestoreEntitytypeIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         VertexAIFeaturestoreEntitytypeIAMAssetType,
 		Convert:           GetVertexAIFeaturestoreEntitytypeIamMemberCaiObject,
 		FetchFullResource: FetchVertexAIFeaturestoreEntitytypeIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterVertexAIFeaturestoreEntitytypeIamMember() tpgresource.Reso
 	}
 }
 
-func GetVertexAIFeaturestoreEntitytypeIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetVertexAIFeaturestoreEntitytypeIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetVertexAIFeaturestoreEntitytypeIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetVertexAIFeaturestoreEntitytypeIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetVertexAIFeaturestoreEntitytypeIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetVertexAIFeaturestoreEntitytypeIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newVertexAIFeaturestoreEntitytypeIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeVertexAIFeaturestoreEntitytypeIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeVertexAIFeaturestoreEntitytypeIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeVertexAIFeaturestoreEntitytypeIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeVertexAIFeaturestoreEntitytypeIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeVertexAIFeaturestoreEntitytypeIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeVertexAIFeaturestoreEntitytypeIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeVertexAIFeaturestoreEntitytypeIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeVertexAIFeaturestoreEntitytypeIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeVertexAIFeaturestoreEntitytypeIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeVertexAIFeaturestoreEntitytypeIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newVertexAIFeaturestoreEntitytypeIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{entitytype}}")
+	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{entitytype}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: VertexAIFeaturestoreEntitytypeIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchVertexAIFeaturestoreEntitytypeIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchVertexAIFeaturestoreEntitytypeIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("featurestore"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("entitytype"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		VertexAIFeaturestoreEntitytypeIamUpdaterProducer,
 		d,
 		config,

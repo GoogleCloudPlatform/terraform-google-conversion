@@ -21,8 +21,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 func customDiffDeploymentManagerDeployment(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
@@ -52,23 +53,23 @@ func customDiffDeploymentManagerDeployment(_ context.Context, d *schema.Resource
 
 const DeploymentManagerDeploymentAssetType string = "www.googleapis.com/Deployment"
 
-func ResourceConverterDeploymentManagerDeployment() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDeploymentManagerDeployment() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DeploymentManagerDeploymentAssetType,
 		Convert:   GetDeploymentManagerDeploymentCaiObject,
 	}
 }
 
-func GetDeploymentManagerDeploymentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//www.googleapis.com/projects/{{project}}/global/deployments/{{name}}")
+func GetDeploymentManagerDeploymentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//www.googleapis.com/projects/{{project}}/global/deployments/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDeploymentManagerDeploymentApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DeploymentManagerDeploymentAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/www/v2/rest",
 				DiscoveryName:        "Deployment",
@@ -76,7 +77,7 @@ func GetDeploymentManagerDeploymentCaiObject(d tpgresource.TerraformResourceData
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

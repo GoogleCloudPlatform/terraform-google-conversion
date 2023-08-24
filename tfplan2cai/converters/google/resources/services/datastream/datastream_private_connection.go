@@ -17,29 +17,30 @@ package datastream
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DatastreamPrivateConnectionAssetType string = "datastream.googleapis.com/PrivateConnection"
 
-func ResourceConverterDatastreamPrivateConnection() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDatastreamPrivateConnection() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DatastreamPrivateConnectionAssetType,
 		Convert:   GetDatastreamPrivateConnectionCaiObject,
 	}
 }
 
-func GetDatastreamPrivateConnectionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/privateConnections/{{private_connection_id}}")
+func GetDatastreamPrivateConnectionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/privateConnections/{{private_connection_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDatastreamPrivateConnectionApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DatastreamPrivateConnectionAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datastream/v1/rest",
 				DiscoveryName:        "PrivateConnection",
@@ -47,7 +48,7 @@ func GetDatastreamPrivateConnectionCaiObject(d tpgresource.TerraformResourceData
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

@@ -19,29 +19,30 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const CloudAssetFolderFeedAssetType string = "cloudasset.googleapis.com/FolderFeed"
 
-func ResourceConverterCloudAssetFolderFeed() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudAssetFolderFeed() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: CloudAssetFolderFeedAssetType,
 		Convert:   GetCloudAssetFolderFeedCaiObject,
 	}
 }
 
-func GetCloudAssetFolderFeedCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//cloudasset.googleapis.com/{{name}}")
+func GetCloudAssetFolderFeedCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//cloudasset.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetCloudAssetFolderFeedApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: CloudAssetFolderFeedAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudasset/v1/rest",
 				DiscoveryName:        "FolderFeed",
@@ -49,7 +50,7 @@ func GetCloudAssetFolderFeedCaiObject(d tpgresource.TerraformResourceData, confi
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

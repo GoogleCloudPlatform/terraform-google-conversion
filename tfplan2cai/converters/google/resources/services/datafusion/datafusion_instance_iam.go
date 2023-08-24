@@ -17,24 +17,24 @@ package datafusion
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataFusionInstanceIAMAssetType string = "datafusion.googleapis.com/Instance"
 
-func ResourceConverterDataFusionInstanceIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataFusionInstanceIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataFusionInstanceIAMAssetType,
 		Convert:           GetDataFusionInstanceIamPolicyCaiObject,
 		MergeCreateUpdate: MergeDataFusionInstanceIamPolicy,
 	}
 }
 
-func ResourceConverterDataFusionInstanceIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataFusionInstanceIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataFusionInstanceIAMAssetType,
 		Convert:           GetDataFusionInstanceIamBindingCaiObject,
 		FetchFullResource: FetchDataFusionInstanceIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterDataFusionInstanceIamBinding() tpgresource.ResourceConvert
 	}
 }
 
-func ResourceConverterDataFusionInstanceIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataFusionInstanceIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataFusionInstanceIAMAssetType,
 		Convert:           GetDataFusionInstanceIamMemberCaiObject,
 		FetchFullResource: FetchDataFusionInstanceIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterDataFusionInstanceIamMember() tpgresource.ResourceConverte
 	}
 }
 
-func GetDataFusionInstanceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataFusionInstanceIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetDataFusionInstanceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataFusionInstanceIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetDataFusionInstanceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataFusionInstanceIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetDataFusionInstanceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataFusionInstanceIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetDataFusionInstanceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataFusionInstanceIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetDataFusionInstanceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataFusionInstanceIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeDataFusionInstanceIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeDataFusionInstanceIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeDataFusionInstanceIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeDataFusionInstanceIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeDataFusionInstanceIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeDataFusionInstanceIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeDataFusionInstanceIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeDataFusionInstanceIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeDataFusionInstanceIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeDataFusionInstanceIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newDataFusionInstanceIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//datafusion.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}")
+	name, err := cai.AssetName(d, config, "//datafusion.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: DataFusionInstanceIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchDataFusionInstanceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchDataFusionInstanceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		DataFusionInstanceIamUpdaterProducer,
 		d,
 		config,

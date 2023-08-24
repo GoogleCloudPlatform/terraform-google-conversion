@@ -17,24 +17,24 @@ package apigateway
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ApiGatewayApiIAMAssetType string = "apigateway.googleapis.com/Api"
 
-func ResourceConverterApiGatewayApiIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterApiGatewayApiIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ApiGatewayApiIAMAssetType,
 		Convert:           GetApiGatewayApiIamPolicyCaiObject,
 		MergeCreateUpdate: MergeApiGatewayApiIamPolicy,
 	}
 }
 
-func ResourceConverterApiGatewayApiIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterApiGatewayApiIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ApiGatewayApiIAMAssetType,
 		Convert:           GetApiGatewayApiIamBindingCaiObject,
 		FetchFullResource: FetchApiGatewayApiIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterApiGatewayApiIamBinding() tpgresource.ResourceConverter {
 	}
 }
 
-func ResourceConverterApiGatewayApiIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterApiGatewayApiIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ApiGatewayApiIAMAssetType,
 		Convert:           GetApiGatewayApiIamMemberCaiObject,
 		FetchFullResource: FetchApiGatewayApiIamPolicy,
@@ -53,70 +53,70 @@ func ResourceConverterApiGatewayApiIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetApiGatewayApiIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newApiGatewayApiIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetApiGatewayApiIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newApiGatewayApiIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetApiGatewayApiIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newApiGatewayApiIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetApiGatewayApiIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newApiGatewayApiIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetApiGatewayApiIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newApiGatewayApiIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetApiGatewayApiIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newApiGatewayApiIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeApiGatewayApiIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeApiGatewayApiIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeApiGatewayApiIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeApiGatewayApiIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeApiGatewayApiIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeApiGatewayApiIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeApiGatewayApiIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeApiGatewayApiIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeApiGatewayApiIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeApiGatewayApiIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newApiGatewayApiIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//apigateway.googleapis.com/projects/{{project}}/locations/global/apis/{{api}}")
+	name, err := cai.AssetName(d, config, "//apigateway.googleapis.com/projects/{{project}}/locations/global/apis/{{api}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: ApiGatewayApiIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchApiGatewayApiIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchApiGatewayApiIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("api"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		ApiGatewayApiIamUpdaterProducer,
 		d,
 		config,

@@ -17,24 +17,24 @@ package compute
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ComputeSubnetworkIAMAssetType string = "compute.googleapis.com/Subnetwork"
 
-func ResourceConverterComputeSubnetworkIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeSubnetworkIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeSubnetworkIAMAssetType,
 		Convert:           GetComputeSubnetworkIamPolicyCaiObject,
 		MergeCreateUpdate: MergeComputeSubnetworkIamPolicy,
 	}
 }
 
-func ResourceConverterComputeSubnetworkIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeSubnetworkIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeSubnetworkIAMAssetType,
 		Convert:           GetComputeSubnetworkIamBindingCaiObject,
 		FetchFullResource: FetchComputeSubnetworkIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterComputeSubnetworkIamBinding() tpgresource.ResourceConverte
 	}
 }
 
-func ResourceConverterComputeSubnetworkIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeSubnetworkIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeSubnetworkIAMAssetType,
 		Convert:           GetComputeSubnetworkIamMemberCaiObject,
 		FetchFullResource: FetchComputeSubnetworkIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterComputeSubnetworkIamMember() tpgresource.ResourceConverter
 	}
 }
 
-func GetComputeSubnetworkIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeSubnetworkIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetComputeSubnetworkIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeSubnetworkIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetComputeSubnetworkIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeSubnetworkIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetComputeSubnetworkIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeSubnetworkIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetComputeSubnetworkIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeSubnetworkIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetComputeSubnetworkIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeSubnetworkIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeComputeSubnetworkIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeComputeSubnetworkIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeComputeSubnetworkIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeComputeSubnetworkIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeComputeSubnetworkIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeComputeSubnetworkIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeComputeSubnetworkIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeComputeSubnetworkIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeComputeSubnetworkIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeComputeSubnetworkIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newComputeSubnetworkIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{subnetwork}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{subnetwork}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: ComputeSubnetworkIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchComputeSubnetworkIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchComputeSubnetworkIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("subnetwork"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		ComputeSubnetworkIamUpdaterProducer,
 		d,
 		config,

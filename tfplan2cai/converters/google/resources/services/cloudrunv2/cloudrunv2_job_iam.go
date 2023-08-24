@@ -17,24 +17,24 @@ package cloudrunv2
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const CloudRunV2JobIAMAssetType string = "run.googleapis.com/Job"
 
-func ResourceConverterCloudRunV2JobIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudRunV2JobIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudRunV2JobIAMAssetType,
 		Convert:           GetCloudRunV2JobIamPolicyCaiObject,
 		MergeCreateUpdate: MergeCloudRunV2JobIamPolicy,
 	}
 }
 
-func ResourceConverterCloudRunV2JobIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudRunV2JobIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudRunV2JobIAMAssetType,
 		Convert:           GetCloudRunV2JobIamBindingCaiObject,
 		FetchFullResource: FetchCloudRunV2JobIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterCloudRunV2JobIamBinding() tpgresource.ResourceConverter {
 	}
 }
 
-func ResourceConverterCloudRunV2JobIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudRunV2JobIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         CloudRunV2JobIAMAssetType,
 		Convert:           GetCloudRunV2JobIamMemberCaiObject,
 		FetchFullResource: FetchCloudRunV2JobIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterCloudRunV2JobIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetCloudRunV2JobIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudRunV2JobIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetCloudRunV2JobIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudRunV2JobIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetCloudRunV2JobIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudRunV2JobIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetCloudRunV2JobIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudRunV2JobIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetCloudRunV2JobIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newCloudRunV2JobIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetCloudRunV2JobIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newCloudRunV2JobIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeCloudRunV2JobIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeCloudRunV2JobIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeCloudRunV2JobIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeCloudRunV2JobIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeCloudRunV2JobIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeCloudRunV2JobIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeCloudRunV2JobIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeCloudRunV2JobIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeCloudRunV2JobIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeCloudRunV2JobIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newCloudRunV2JobIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/jobs/{{name}}")
+	name, err := cai.AssetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/jobs/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: CloudRunV2JobIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchCloudRunV2JobIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchCloudRunV2JobIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		CloudRunV2JobIamUpdaterProducer,
 		d,
 		config,

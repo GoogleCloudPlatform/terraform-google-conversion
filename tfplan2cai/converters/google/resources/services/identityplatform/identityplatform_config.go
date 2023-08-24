@@ -19,29 +19,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const IdentityPlatformConfigAssetType string = "identitytoolkit.googleapis.com/Config"
 
-func ResourceConverterIdentityPlatformConfig() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIdentityPlatformConfig() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: IdentityPlatformConfigAssetType,
 		Convert:   GetIdentityPlatformConfigCaiObject,
 	}
 }
 
-func GetIdentityPlatformConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/config")
+func GetIdentityPlatformConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//identitytoolkit.googleapis.com/projects/{{project}}/config")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetIdentityPlatformConfigApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: IdentityPlatformConfigAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v2/rest",
 				DiscoveryName:        "Config",
@@ -49,7 +50,7 @@ func GetIdentityPlatformConfigCaiObject(d tpgresource.TerraformResourceData, con
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

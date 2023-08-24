@@ -17,29 +17,30 @@ package bigquerydatapolicy
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const BigqueryDatapolicyDataPolicyAssetType string = "bigquerydatapolicy.googleapis.com/DataPolicy"
 
-func ResourceConverterBigqueryDatapolicyDataPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBigqueryDatapolicyDataPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: BigqueryDatapolicyDataPolicyAssetType,
 		Convert:   GetBigqueryDatapolicyDataPolicyCaiObject,
 	}
 }
 
-func GetBigqueryDatapolicyDataPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//bigquerydatapolicy.googleapis.com/projects/{{project}}/locations/{{location}}/dataPolicies/{{data_policy_id}}")
+func GetBigqueryDatapolicyDataPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//bigquerydatapolicy.googleapis.com/projects/{{project}}/locations/{{location}}/dataPolicies/{{data_policy_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetBigqueryDatapolicyDataPolicyApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: BigqueryDatapolicyDataPolicyAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigquerydatapolicy/v1/rest",
 				DiscoveryName:        "DataPolicy",
@@ -47,7 +48,7 @@ func GetBigqueryDatapolicyDataPolicyCaiObject(d tpgresource.TerraformResourceDat
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

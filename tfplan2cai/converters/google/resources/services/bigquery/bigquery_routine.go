@@ -18,29 +18,30 @@ import (
 	"encoding/json"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const BigQueryRoutineAssetType string = "bigquery.googleapis.com/Routine"
 
-func ResourceConverterBigQueryRoutine() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBigQueryRoutine() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: BigQueryRoutineAssetType,
 		Convert:   GetBigQueryRoutineCaiObject,
 	}
 }
 
-func GetBigQueryRoutineCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}/routines/{{routine_id}}")
+func GetBigQueryRoutineCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}/routines/{{routine_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetBigQueryRoutineApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: BigQueryRoutineAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest",
 				DiscoveryName:        "Routine",
@@ -48,7 +49,7 @@ func GetBigQueryRoutineCaiObject(d tpgresource.TerraformResourceData, config *tr
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

@@ -19,29 +19,30 @@ import (
 	"reflect"
 	"regexp"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const PubsubLiteSubscriptionAssetType string = "pubsublite.googleapis.com/Subscription"
 
-func ResourceConverterPubsubLiteSubscription() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPubsubLiteSubscription() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: PubsubLiteSubscriptionAssetType,
 		Convert:   GetPubsubLiteSubscriptionCaiObject,
 	}
 }
 
-func GetPubsubLiteSubscriptionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/subscriptions/{{name}}")
+func GetPubsubLiteSubscriptionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//pubsublite.googleapis.com/projects/{{project}}/locations/{{zone}}/subscriptions/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetPubsubLiteSubscriptionApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: PubsubLiteSubscriptionAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "admin",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/pubsublite/admin/rest",
 				DiscoveryName:        "Subscription",
@@ -49,7 +50,7 @@ func GetPubsubLiteSubscriptionCaiObject(d tpgresource.TerraformResourceData, con
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

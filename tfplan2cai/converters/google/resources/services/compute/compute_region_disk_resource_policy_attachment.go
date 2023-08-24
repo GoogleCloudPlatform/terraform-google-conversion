@@ -18,29 +18,30 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ComputeRegionDiskResourcePolicyAttachmentAssetType string = "compute.googleapis.com/RegionDiskResourcePolicyAttachment"
 
-func ResourceConverterComputeRegionDiskResourcePolicyAttachment() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeRegionDiskResourcePolicyAttachment() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeRegionDiskResourcePolicyAttachmentAssetType,
 		Convert:   GetComputeRegionDiskResourcePolicyAttachmentCaiObject,
 	}
 }
 
-func GetComputeRegionDiskResourcePolicyAttachmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/disks/{{disk}}")
+func GetComputeRegionDiskResourcePolicyAttachmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/disks/{{disk}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeRegionDiskResourcePolicyAttachmentApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeRegionDiskResourcePolicyAttachmentAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionDiskResourcePolicyAttachment",
@@ -48,7 +49,7 @@ func GetComputeRegionDiskResourcePolicyAttachmentCaiObject(d tpgresource.Terrafo
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

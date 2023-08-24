@@ -17,24 +17,24 @@ package iap
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const IapWebIAMAssetType string = "iap.googleapis.com/Web"
 
-func ResourceConverterIapWebIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIapWebIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         IapWebIAMAssetType,
 		Convert:           GetIapWebIamPolicyCaiObject,
 		MergeCreateUpdate: MergeIapWebIamPolicy,
 	}
 }
 
-func ResourceConverterIapWebIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIapWebIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         IapWebIAMAssetType,
 		Convert:           GetIapWebIamBindingCaiObject,
 		FetchFullResource: FetchIapWebIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterIapWebIamBinding() tpgresource.ResourceConverter {
 	}
 }
 
-func ResourceConverterIapWebIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIapWebIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         IapWebIAMAssetType,
 		Convert:           GetIapWebIamMemberCaiObject,
 		FetchFullResource: FetchIapWebIamPolicy,
@@ -53,67 +53,67 @@ func ResourceConverterIapWebIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetIapWebIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newIapWebIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetIapWebIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newIapWebIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetIapWebIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newIapWebIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetIapWebIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newIapWebIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetIapWebIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newIapWebIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetIapWebIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newIapWebIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeIapWebIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeIapWebIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeIapWebIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeIapWebIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeIapWebIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeIapWebIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeIapWebIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeIapWebIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeIapWebIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeIapWebIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newIapWebIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//iap.googleapis.com/projects/{{project}}/iap_web")
+	name, err := cai.AssetName(d, config, "//iap.googleapis.com/projects/{{project}}/iap_web")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: IapWebIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchIapWebIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchIapWebIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		IapWebIamUpdaterProducer,
 		d,
 		config,

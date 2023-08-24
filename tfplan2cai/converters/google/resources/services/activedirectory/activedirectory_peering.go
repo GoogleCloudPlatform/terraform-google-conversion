@@ -17,29 +17,30 @@ package activedirectory
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ActiveDirectoryPeeringAssetType string = "managedidentities.googleapis.com/Peering"
 
-func ResourceConverterActiveDirectoryPeering() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterActiveDirectoryPeering() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ActiveDirectoryPeeringAssetType,
 		Convert:   GetActiveDirectoryPeeringCaiObject,
 	}
 }
 
-func GetActiveDirectoryPeeringCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//managedidentities.googleapis.com/{{name}}")
+func GetActiveDirectoryPeeringCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//managedidentities.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetActiveDirectoryPeeringApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ActiveDirectoryPeeringAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/managedidentities/v1beta1/rest",
 				DiscoveryName:        "Peering",
@@ -47,7 +48,7 @@ func GetActiveDirectoryPeeringCaiObject(d tpgresource.TerraformResourceData, con
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

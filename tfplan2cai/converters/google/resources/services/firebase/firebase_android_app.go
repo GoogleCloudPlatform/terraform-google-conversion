@@ -17,29 +17,30 @@ package firebase
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const FirebaseAndroidAppAssetType string = "firebase.googleapis.com/AndroidApp"
 
-func ResourceConverterFirebaseAndroidApp() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterFirebaseAndroidApp() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: FirebaseAndroidAppAssetType,
 		Convert:   GetFirebaseAndroidAppCaiObject,
 	}
 }
 
-func GetFirebaseAndroidAppCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//firebase.googleapis.com/projects/{{project}}/androidApps/{{app_id}}")
+func GetFirebaseAndroidAppCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//firebase.googleapis.com/projects/{{project}}/androidApps/{{app_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetFirebaseAndroidAppApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: FirebaseAndroidAppAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/firebase/v1beta1/rest",
 				DiscoveryName:        "AndroidApp",
@@ -47,7 +48,7 @@ func GetFirebaseAndroidAppCaiObject(d tpgresource.TerraformResourceData, config 
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -77,6 +78,12 @@ func GetFirebaseAndroidAppApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("sha256_hashes"); !tpgresource.IsEmptyValue(reflect.ValueOf(sha256HashesProp)) && (ok || !reflect.DeepEqual(v, sha256HashesProp)) {
 		obj["sha256Hashes"] = sha256HashesProp
 	}
+	apiKeyIdProp, err := expandFirebaseAndroidAppApiKeyId(d.Get("api_key_id"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("api_key_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiKeyIdProp)) && (ok || !reflect.DeepEqual(v, apiKeyIdProp)) {
+		obj["apiKeyId"] = apiKeyIdProp
+	}
 	etagProp, err := expandFirebaseAndroidAppEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
@@ -100,6 +107,10 @@ func expandFirebaseAndroidAppSha1Hashes(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandFirebaseAndroidAppSha256Hashes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAndroidAppApiKeyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

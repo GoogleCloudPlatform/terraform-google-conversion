@@ -17,24 +17,24 @@ package compute
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ComputeBackendServiceIAMAssetType string = "compute.googleapis.com/BackendService"
 
-func ResourceConverterComputeBackendServiceIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeBackendServiceIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeBackendServiceIAMAssetType,
 		Convert:           GetComputeBackendServiceIamPolicyCaiObject,
 		MergeCreateUpdate: MergeComputeBackendServiceIamPolicy,
 	}
 }
 
-func ResourceConverterComputeBackendServiceIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeBackendServiceIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeBackendServiceIAMAssetType,
 		Convert:           GetComputeBackendServiceIamBindingCaiObject,
 		FetchFullResource: FetchComputeBackendServiceIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterComputeBackendServiceIamBinding() tpgresource.ResourceConv
 	}
 }
 
-func ResourceConverterComputeBackendServiceIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeBackendServiceIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeBackendServiceIAMAssetType,
 		Convert:           GetComputeBackendServiceIamMemberCaiObject,
 		FetchFullResource: FetchComputeBackendServiceIamPolicy,
@@ -53,70 +53,70 @@ func ResourceConverterComputeBackendServiceIamMember() tpgresource.ResourceConve
 	}
 }
 
-func GetComputeBackendServiceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeBackendServiceIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetComputeBackendServiceIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeBackendServiceIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetComputeBackendServiceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeBackendServiceIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetComputeBackendServiceIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeBackendServiceIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetComputeBackendServiceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeBackendServiceIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetComputeBackendServiceIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeBackendServiceIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeComputeBackendServiceIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeComputeBackendServiceIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeComputeBackendServiceIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeComputeBackendServiceIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeComputeBackendServiceIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeComputeBackendServiceIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeComputeBackendServiceIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeComputeBackendServiceIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeComputeBackendServiceIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeComputeBackendServiceIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newComputeBackendServiceIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/backendServices/{{name}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/backendServices/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: ComputeBackendServiceIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchComputeBackendServiceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchComputeBackendServiceIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("name"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		ComputeBackendServiceIamUpdaterProducer,
 		d,
 		config,

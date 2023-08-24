@@ -17,24 +17,24 @@ package dataplex
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataplexDatascanIAMAssetType string = "dataplex.googleapis.com/Datascan"
 
-func ResourceConverterDataplexDatascanIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataplexDatascanIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataplexDatascanIAMAssetType,
 		Convert:           GetDataplexDatascanIamPolicyCaiObject,
 		MergeCreateUpdate: MergeDataplexDatascanIamPolicy,
 	}
 }
 
-func ResourceConverterDataplexDatascanIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataplexDatascanIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataplexDatascanIAMAssetType,
 		Convert:           GetDataplexDatascanIamBindingCaiObject,
 		FetchFullResource: FetchDataplexDatascanIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterDataplexDatascanIamBinding() tpgresource.ResourceConverter
 	}
 }
 
-func ResourceConverterDataplexDatascanIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataplexDatascanIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataplexDatascanIAMAssetType,
 		Convert:           GetDataplexDatascanIamMemberCaiObject,
 		FetchFullResource: FetchDataplexDatascanIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterDataplexDatascanIamMember() tpgresource.ResourceConverter 
 	}
 }
 
-func GetDataplexDatascanIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataplexDatascanIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetDataplexDatascanIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataplexDatascanIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetDataplexDatascanIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataplexDatascanIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetDataplexDatascanIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataplexDatascanIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetDataplexDatascanIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataplexDatascanIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetDataplexDatascanIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataplexDatascanIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeDataplexDatascanIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeDataplexDatascanIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeDataplexDatascanIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeDataplexDatascanIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeDataplexDatascanIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeDataplexDatascanIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeDataplexDatascanIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeDataplexDatascanIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeDataplexDatascanIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeDataplexDatascanIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newDataplexDatascanIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//dataplex.googleapis.com/projects/{{project}}/locations/{{location}}/dataScans/{{data_scan_id}}")
+	name, err := cai.AssetName(d, config, "//dataplex.googleapis.com/projects/{{project}}/locations/{{location}}/dataScans/{{data_scan_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: DataplexDatascanIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchDataplexDatascanIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchDataplexDatascanIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("data_scan_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		DataplexDatascanIamUpdaterProducer,
 		d,
 		config,
