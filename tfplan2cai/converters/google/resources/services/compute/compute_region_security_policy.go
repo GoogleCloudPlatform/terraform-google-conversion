@@ -18,29 +18,30 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ComputeRegionSecurityPolicyAssetType string = "compute.googleapis.com/RegionSecurityPolicy"
 
-func ResourceConverterComputeRegionSecurityPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeRegionSecurityPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeRegionSecurityPolicyAssetType,
 		Convert:   GetComputeRegionSecurityPolicyCaiObject,
 	}
 }
 
-func GetComputeRegionSecurityPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/securityPolicies/{{name}}")
+func GetComputeRegionSecurityPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/securityPolicies/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeRegionSecurityPolicyApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeRegionSecurityPolicyAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "RegionSecurityPolicy",
@@ -48,7 +49,7 @@ func GetComputeRegionSecurityPolicyCaiObject(d tpgresource.TerraformResourceData
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -83,6 +84,12 @@ func GetComputeRegionSecurityPolicyApiObject(d tpgresource.TerraformResourceData
 		return nil, err
 	} else if v, ok := d.GetOkExists("ddos_protection_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(ddosProtectionConfigProp)) && (ok || !reflect.DeepEqual(v, ddosProtectionConfigProp)) {
 		obj["ddosProtectionConfig"] = ddosProtectionConfigProp
+	}
+	userDefinedFieldsProp, err := expandComputeRegionSecurityPolicyUserDefinedFields(d.Get("user_defined_fields"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("user_defined_fields"); !tpgresource.IsEmptyValue(reflect.ValueOf(userDefinedFieldsProp)) && (ok || !reflect.DeepEqual(v, userDefinedFieldsProp)) {
+		obj["userDefinedFields"] = userDefinedFieldsProp
 	}
 	regionProp, err := expandComputeRegionSecurityPolicyRegion(d.Get("region"), d, config)
 	if err != nil {
@@ -130,6 +137,76 @@ func expandComputeRegionSecurityPolicyDdosProtectionConfig(v interface{}, d tpgr
 }
 
 func expandComputeRegionSecurityPolicyDdosProtectionConfigDdosProtection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandComputeRegionSecurityPolicyUserDefinedFieldsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedBase, err := expandComputeRegionSecurityPolicyUserDefinedFieldsBase(original["base"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["base"] = transformedBase
+		}
+
+		transformedOffset, err := expandComputeRegionSecurityPolicyUserDefinedFieldsOffset(original["offset"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOffset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["offset"] = transformedOffset
+		}
+
+		transformedSize, err := expandComputeRegionSecurityPolicyUserDefinedFieldsSize(original["size"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["size"] = transformedSize
+		}
+
+		transformedMask, err := expandComputeRegionSecurityPolicyUserDefinedFieldsMask(original["mask"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMask); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["mask"] = transformedMask
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsBase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsOffset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyUserDefinedFieldsMask(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

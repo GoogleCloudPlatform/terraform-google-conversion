@@ -18,29 +18,32 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ArtifactRegistryRepositoryAssetType string = "artifactregistry.googleapis.com/Repository"
 
-func ResourceConverterArtifactRegistryRepository() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterArtifactRegistryRepository() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ArtifactRegistryRepositoryAssetType,
 		Convert:   GetArtifactRegistryRepositoryCaiObject,
 	}
 }
 
-func GetArtifactRegistryRepositoryCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//artifactregistry.googleapis.com/projects/{{project}}/locations/{{location}}/repositories/{{repository_id}}")
+func GetArtifactRegistryRepositoryCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//artifactregistry.googleapis.com/projects/{{project}}/locations/{{location}}/repositories/{{repository_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetArtifactRegistryRepositoryApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ArtifactRegistryRepositoryAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/artifactregistry/v1/rest",
 				DiscoveryName:        "Repository",
@@ -48,7 +51,7 @@ func GetArtifactRegistryRepositoryCaiObject(d tpgresource.TerraformResourceData,
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -102,11 +105,23 @@ func GetArtifactRegistryRepositoryApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("virtual_repository_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(virtualRepositoryConfigProp)) && (ok || !reflect.DeepEqual(v, virtualRepositoryConfigProp)) {
 		obj["virtualRepositoryConfig"] = virtualRepositoryConfigProp
 	}
+	cleanupPoliciesProp, err := expandArtifactRegistryRepositoryCleanupPolicies(d.Get("cleanup_policies"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cleanup_policies"); !tpgresource.IsEmptyValue(reflect.ValueOf(cleanupPoliciesProp)) && (ok || !reflect.DeepEqual(v, cleanupPoliciesProp)) {
+		obj["cleanupPolicies"] = cleanupPoliciesProp
+	}
 	remoteRepositoryConfigProp, err := expandArtifactRegistryRepositoryRemoteRepositoryConfig(d.Get("remote_repository_config"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("remote_repository_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(remoteRepositoryConfigProp)) && (ok || !reflect.DeepEqual(v, remoteRepositoryConfigProp)) {
 		obj["remoteRepositoryConfig"] = remoteRepositoryConfigProp
+	}
+	cleanupPolicyDryRunProp, err := expandArtifactRegistryRepositoryCleanupPolicyDryRun(d.Get("cleanup_policy_dry_run"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cleanup_policy_dry_run"); !tpgresource.IsEmptyValue(reflect.ValueOf(cleanupPolicyDryRunProp)) && (ok || !reflect.DeepEqual(v, cleanupPolicyDryRunProp)) {
+		obj["cleanupPolicyDryRun"] = cleanupPolicyDryRunProp
 	}
 
 	return resourceArtifactRegistryRepositoryEncoder(d, config, obj)
@@ -282,6 +297,161 @@ func expandArtifactRegistryRepositoryVirtualRepositoryConfigUpstreamPoliciesPrio
 	return v, nil
 }
 
+func expandArtifactRegistryRepositoryCleanupPolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+	if v == nil {
+		return map[string]interface{}{}, nil
+	}
+	m := make(map[string]interface{})
+	for _, raw := range v.(*schema.Set).List() {
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAction, err := expandArtifactRegistryRepositoryCleanupPoliciesAction(original["action"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["action"] = transformedAction
+		}
+
+		transformedCondition, err := expandArtifactRegistryRepositoryCleanupPoliciesCondition(original["condition"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["condition"] = transformedCondition
+		}
+
+		transformedMostRecentVersions, err := expandArtifactRegistryRepositoryCleanupPoliciesMostRecentVersions(original["most_recent_versions"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMostRecentVersions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["mostRecentVersions"] = transformedMostRecentVersions
+		}
+
+		transformedId, err := tpgresource.ExpandString(original["id"], d, config)
+		if err != nil {
+			return nil, err
+		}
+		m[transformedId] = transformed
+	}
+	return m, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTagState, err := expandArtifactRegistryRepositoryCleanupPoliciesConditionTagState(original["tag_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTagState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tagState"] = transformedTagState
+	}
+
+	transformedTagPrefixes, err := expandArtifactRegistryRepositoryCleanupPoliciesConditionTagPrefixes(original["tag_prefixes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTagPrefixes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tagPrefixes"] = transformedTagPrefixes
+	}
+
+	transformedVersionNamePrefixes, err := expandArtifactRegistryRepositoryCleanupPoliciesConditionVersionNamePrefixes(original["version_name_prefixes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersionNamePrefixes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["versionNamePrefixes"] = transformedVersionNamePrefixes
+	}
+
+	transformedPackageNamePrefixes, err := expandArtifactRegistryRepositoryCleanupPoliciesConditionPackageNamePrefixes(original["package_name_prefixes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPackageNamePrefixes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["packageNamePrefixes"] = transformedPackageNamePrefixes
+	}
+
+	transformedOlderThan, err := expandArtifactRegistryRepositoryCleanupPoliciesConditionOlderThan(original["older_than"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOlderThan); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["olderThan"] = transformedOlderThan
+	}
+
+	transformedNewerThan, err := expandArtifactRegistryRepositoryCleanupPoliciesConditionNewerThan(original["newer_than"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNewerThan); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["newerThan"] = transformedNewerThan
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesConditionTagState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesConditionTagPrefixes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesConditionVersionNamePrefixes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesConditionPackageNamePrefixes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesConditionOlderThan(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesConditionNewerThan(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesMostRecentVersions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPackageNamePrefixes, err := expandArtifactRegistryRepositoryCleanupPoliciesMostRecentVersionsPackageNamePrefixes(original["package_name_prefixes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPackageNamePrefixes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["packageNamePrefixes"] = transformedPackageNamePrefixes
+	}
+
+	transformedKeepCount, err := expandArtifactRegistryRepositoryCleanupPoliciesMostRecentVersionsKeepCount(original["keep_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKeepCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["keepCount"] = transformedKeepCount
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesMostRecentVersionsPackageNamePrefixes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPoliciesMostRecentVersionsKeepCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -422,5 +592,9 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepository(v in
 }
 
 func expandArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepositoryPublicRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryCleanupPolicyDryRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

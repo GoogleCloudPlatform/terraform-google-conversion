@@ -17,24 +17,24 @@ package containeranalysis
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ContainerAnalysisNoteIAMAssetType string = "containeranalysis.googleapis.com/Note"
 
-func ResourceConverterContainerAnalysisNoteIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterContainerAnalysisNoteIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ContainerAnalysisNoteIAMAssetType,
 		Convert:           GetContainerAnalysisNoteIamPolicyCaiObject,
 		MergeCreateUpdate: MergeContainerAnalysisNoteIamPolicy,
 	}
 }
 
-func ResourceConverterContainerAnalysisNoteIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterContainerAnalysisNoteIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ContainerAnalysisNoteIAMAssetType,
 		Convert:           GetContainerAnalysisNoteIamBindingCaiObject,
 		FetchFullResource: FetchContainerAnalysisNoteIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterContainerAnalysisNoteIamBinding() tpgresource.ResourceConv
 	}
 }
 
-func ResourceConverterContainerAnalysisNoteIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterContainerAnalysisNoteIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ContainerAnalysisNoteIAMAssetType,
 		Convert:           GetContainerAnalysisNoteIamMemberCaiObject,
 		FetchFullResource: FetchContainerAnalysisNoteIamPolicy,
@@ -53,70 +53,70 @@ func ResourceConverterContainerAnalysisNoteIamMember() tpgresource.ResourceConve
 	}
 }
 
-func GetContainerAnalysisNoteIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newContainerAnalysisNoteIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetContainerAnalysisNoteIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newContainerAnalysisNoteIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetContainerAnalysisNoteIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newContainerAnalysisNoteIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetContainerAnalysisNoteIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newContainerAnalysisNoteIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetContainerAnalysisNoteIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newContainerAnalysisNoteIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetContainerAnalysisNoteIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newContainerAnalysisNoteIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeContainerAnalysisNoteIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeContainerAnalysisNoteIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeContainerAnalysisNoteIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeContainerAnalysisNoteIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeContainerAnalysisNoteIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeContainerAnalysisNoteIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeContainerAnalysisNoteIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeContainerAnalysisNoteIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeContainerAnalysisNoteIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeContainerAnalysisNoteIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newContainerAnalysisNoteIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//containeranalysis.googleapis.com/projects/{{project}}/notes/{{note}}")
+	name, err := cai.AssetName(d, config, "//containeranalysis.googleapis.com/projects/{{project}}/notes/{{note}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: ContainerAnalysisNoteIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchContainerAnalysisNoteIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchContainerAnalysisNoteIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("note"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		ContainerAnalysisNoteIamUpdaterProducer,
 		d,
 		config,

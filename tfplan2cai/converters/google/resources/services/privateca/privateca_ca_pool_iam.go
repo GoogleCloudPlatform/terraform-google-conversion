@@ -17,24 +17,24 @@ package privateca
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const PrivatecaCaPoolIAMAssetType string = "privateca.googleapis.com/CaPool"
 
-func ResourceConverterPrivatecaCaPoolIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPrivatecaCaPoolIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PrivatecaCaPoolIAMAssetType,
 		Convert:           GetPrivatecaCaPoolIamPolicyCaiObject,
 		MergeCreateUpdate: MergePrivatecaCaPoolIamPolicy,
 	}
 }
 
-func ResourceConverterPrivatecaCaPoolIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPrivatecaCaPoolIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PrivatecaCaPoolIAMAssetType,
 		Convert:           GetPrivatecaCaPoolIamBindingCaiObject,
 		FetchFullResource: FetchPrivatecaCaPoolIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterPrivatecaCaPoolIamBinding() tpgresource.ResourceConverter 
 	}
 }
 
-func ResourceConverterPrivatecaCaPoolIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPrivatecaCaPoolIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PrivatecaCaPoolIAMAssetType,
 		Convert:           GetPrivatecaCaPoolIamMemberCaiObject,
 		FetchFullResource: FetchPrivatecaCaPoolIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterPrivatecaCaPoolIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetPrivatecaCaPoolIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPrivatecaCaPoolIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetPrivatecaCaPoolIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPrivatecaCaPoolIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetPrivatecaCaPoolIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPrivatecaCaPoolIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetPrivatecaCaPoolIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPrivatecaCaPoolIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetPrivatecaCaPoolIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPrivatecaCaPoolIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetPrivatecaCaPoolIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPrivatecaCaPoolIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergePrivatecaCaPoolIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergePrivatecaCaPoolIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergePrivatecaCaPoolIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergePrivatecaCaPoolIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergePrivatecaCaPoolIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergePrivatecaCaPoolIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergePrivatecaCaPoolIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergePrivatecaCaPoolIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergePrivatecaCaPoolIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergePrivatecaCaPoolIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newPrivatecaCaPoolIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//privateca.googleapis.com/projects/{{project}}/locations/{{location}}/caPools/{{ca_pool}}")
+	name, err := cai.AssetName(d, config, "//privateca.googleapis.com/projects/{{project}}/locations/{{location}}/caPools/{{ca_pool}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: PrivatecaCaPoolIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchPrivatecaCaPoolIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchPrivatecaCaPoolIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("location"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("ca_pool"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		PrivatecaCaPoolIamUpdaterProducer,
 		d,
 		config,

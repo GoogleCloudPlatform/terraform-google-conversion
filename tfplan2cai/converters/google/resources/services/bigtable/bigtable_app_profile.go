@@ -20,29 +20,30 @@ import (
 
 	"google.golang.org/api/bigtableadmin/v2"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const BigtableAppProfileAssetType string = "bigtableadmin.googleapis.com/AppProfile"
 
-func ResourceConverterBigtableAppProfile() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBigtableAppProfile() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: BigtableAppProfileAssetType,
 		Convert:   GetBigtableAppProfileCaiObject,
 	}
 }
 
-func GetBigtableAppProfileCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//bigtableadmin.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
+func GetBigtableAppProfileCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//bigtableadmin.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetBigtableAppProfileApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: BigtableAppProfileAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigtableadmin/v2/rest",
 				DiscoveryName:        "AppProfile",
@@ -50,7 +51,7 @@ func GetBigtableAppProfileCaiObject(d tpgresource.TerraformResourceData, config 
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

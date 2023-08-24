@@ -18,29 +18,30 @@ import (
 	"reflect"
 	"regexp"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const VertexAIFeaturestoreEntitytypeAssetType string = "{{region}}-aiplatform.googleapis.com/FeaturestoreEntitytype"
 
-func ResourceConverterVertexAIFeaturestoreEntitytype() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterVertexAIFeaturestoreEntitytype() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: VertexAIFeaturestoreEntitytypeAssetType,
 		Convert:   GetVertexAIFeaturestoreEntitytypeCaiObject,
 	}
 }
 
-func GetVertexAIFeaturestoreEntitytypeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{name}}")
+func GetVertexAIFeaturestoreEntitytypeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetVertexAIFeaturestoreEntitytypeApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: VertexAIFeaturestoreEntitytypeAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
 				DiscoveryName:        "FeaturestoreEntitytype",
@@ -48,7 +49,7 @@ func GetVertexAIFeaturestoreEntitytypeCaiObject(d tpgresource.TerraformResourceD
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

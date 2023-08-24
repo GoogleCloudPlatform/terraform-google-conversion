@@ -17,29 +17,30 @@ package healthcare
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const HealthcareFhirStoreAssetType string = "healthcare.googleapis.com/FhirStore"
 
-func ResourceConverterHealthcareFhirStore() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterHealthcareFhirStore() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: HealthcareFhirStoreAssetType,
 		Convert:   GetHealthcareFhirStoreCaiObject,
 	}
 }
 
-func GetHealthcareFhirStoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//healthcare.googleapis.com/{{dataset}}/fhirStores/{{name}}")
+func GetHealthcareFhirStoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//healthcare.googleapis.com/{{dataset}}/fhirStores/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetHealthcareFhirStoreApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: HealthcareFhirStoreAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1beta1/rest",
 				DiscoveryName:        "FhirStore",
@@ -47,7 +48,7 @@ func GetHealthcareFhirStoreCaiObject(d tpgresource.TerraformResourceData, config
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -112,6 +113,12 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 		return nil, err
 	} else if v, ok := d.GetOkExists("stream_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(streamConfigsProp)) && (ok || !reflect.DeepEqual(v, streamConfigsProp)) {
 		obj["streamConfigs"] = streamConfigsProp
+	}
+	defaultSearchHandlingStrictProp, err := expandHealthcareFhirStoreDefaultSearchHandlingStrict(d.Get("default_search_handling_strict"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("default_search_handling_strict"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultSearchHandlingStrictProp)) && (ok || !reflect.DeepEqual(v, defaultSearchHandlingStrictProp)) {
+		obj["defaultSearchHandlingStrict"] = defaultSearchHandlingStrictProp
 	}
 	notificationConfigsProp, err := expandHealthcareFhirStoreNotificationConfigs(d.Get("notification_configs"), d, config)
 	if err != nil {
@@ -320,6 +327,10 @@ func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUp
 }
 
 func expandHealthcareFhirStoreStreamConfigsBigqueryDestinationSchemaConfigLastUpdatedPartitionConfigExpirationMs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreDefaultSearchHandlingStrict(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

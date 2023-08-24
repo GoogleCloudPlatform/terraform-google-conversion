@@ -17,29 +17,30 @@ package firebase
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const FirebaseAppleAppAssetType string = "firebase.googleapis.com/AppleApp"
 
-func ResourceConverterFirebaseAppleApp() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterFirebaseAppleApp() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: FirebaseAppleAppAssetType,
 		Convert:   GetFirebaseAppleAppCaiObject,
 	}
 }
 
-func GetFirebaseAppleAppCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//firebase.googleapis.com/projects/{{project}}/iosApps/{{app_id}}")
+func GetFirebaseAppleAppCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//firebase.googleapis.com/projects/{{project}}/iosApps/{{app_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetFirebaseAppleAppApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: FirebaseAppleAppAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/firebase/v1beta1/rest",
 				DiscoveryName:        "AppleApp",
@@ -47,7 +48,7 @@ func GetFirebaseAppleAppCaiObject(d tpgresource.TerraformResourceData, config *t
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -77,6 +78,12 @@ func GetFirebaseAppleAppApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("team_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(teamIdProp)) && (ok || !reflect.DeepEqual(v, teamIdProp)) {
 		obj["teamId"] = teamIdProp
 	}
+	apiKeyIdProp, err := expandFirebaseAppleAppApiKeyId(d.Get("api_key_id"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("api_key_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiKeyIdProp)) && (ok || !reflect.DeepEqual(v, apiKeyIdProp)) {
+		obj["apiKeyId"] = apiKeyIdProp
+	}
 
 	return obj, nil
 }
@@ -94,5 +101,9 @@ func expandFirebaseAppleAppAppStoreId(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandFirebaseAppleAppTeamId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAppleAppApiKeyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

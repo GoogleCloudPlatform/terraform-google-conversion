@@ -17,29 +17,30 @@ package healthcare
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const HealthcareDicomStoreAssetType string = "healthcare.googleapis.com/DicomStore"
 
-func ResourceConverterHealthcareDicomStore() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterHealthcareDicomStore() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: HealthcareDicomStoreAssetType,
 		Convert:   GetHealthcareDicomStoreCaiObject,
 	}
 }
 
-func GetHealthcareDicomStoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//healthcare.googleapis.com/{{dataset}}/dicomStores/{{name}}")
+func GetHealthcareDicomStoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//healthcare.googleapis.com/{{dataset}}/dicomStores/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetHealthcareDicomStoreApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: HealthcareDicomStoreAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/healthcare/v1beta1/rest",
 				DiscoveryName:        "DicomStore",
@@ -47,7 +48,7 @@ func GetHealthcareDicomStoreCaiObject(d tpgresource.TerraformResourceData, confi
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

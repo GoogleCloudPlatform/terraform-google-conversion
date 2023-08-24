@@ -17,24 +17,24 @@ package pubsub
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const PubsubTopicIAMAssetType string = "pubsub.googleapis.com/Topic"
 
-func ResourceConverterPubsubTopicIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPubsubTopicIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PubsubTopicIAMAssetType,
 		Convert:           GetPubsubTopicIamPolicyCaiObject,
 		MergeCreateUpdate: MergePubsubTopicIamPolicy,
 	}
 }
 
-func ResourceConverterPubsubTopicIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPubsubTopicIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PubsubTopicIAMAssetType,
 		Convert:           GetPubsubTopicIamBindingCaiObject,
 		FetchFullResource: FetchPubsubTopicIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterPubsubTopicIamBinding() tpgresource.ResourceConverter {
 	}
 }
 
-func ResourceConverterPubsubTopicIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterPubsubTopicIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         PubsubTopicIAMAssetType,
 		Convert:           GetPubsubTopicIamMemberCaiObject,
 		FetchFullResource: FetchPubsubTopicIamPolicy,
@@ -53,70 +53,70 @@ func ResourceConverterPubsubTopicIamMember() tpgresource.ResourceConverter {
 	}
 }
 
-func GetPubsubTopicIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPubsubTopicIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetPubsubTopicIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPubsubTopicIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetPubsubTopicIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPubsubTopicIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetPubsubTopicIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPubsubTopicIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetPubsubTopicIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newPubsubTopicIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetPubsubTopicIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newPubsubTopicIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergePubsubTopicIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergePubsubTopicIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergePubsubTopicIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergePubsubTopicIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergePubsubTopicIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergePubsubTopicIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergePubsubTopicIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergePubsubTopicIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergePubsubTopicIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergePubsubTopicIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newPubsubTopicIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/topics/{{topic}}")
+	name, err := cai.AssetName(d, config, "//pubsub.googleapis.com/projects/{{project}}/topics/{{topic}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: PubsubTopicIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchPubsubTopicIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchPubsubTopicIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("topic"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		PubsubTopicIamUpdaterProducer,
 		d,
 		config,

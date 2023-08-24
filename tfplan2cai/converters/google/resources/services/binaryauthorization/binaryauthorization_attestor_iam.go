@@ -17,24 +17,24 @@ package binaryauthorization
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const BinaryAuthorizationAttestorIAMAssetType string = "binaryauthorization.googleapis.com/Attestor"
 
-func ResourceConverterBinaryAuthorizationAttestorIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBinaryAuthorizationAttestorIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         BinaryAuthorizationAttestorIAMAssetType,
 		Convert:           GetBinaryAuthorizationAttestorIamPolicyCaiObject,
 		MergeCreateUpdate: MergeBinaryAuthorizationAttestorIamPolicy,
 	}
 }
 
-func ResourceConverterBinaryAuthorizationAttestorIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBinaryAuthorizationAttestorIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         BinaryAuthorizationAttestorIAMAssetType,
 		Convert:           GetBinaryAuthorizationAttestorIamBindingCaiObject,
 		FetchFullResource: FetchBinaryAuthorizationAttestorIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterBinaryAuthorizationAttestorIamBinding() tpgresource.Resour
 	}
 }
 
-func ResourceConverterBinaryAuthorizationAttestorIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterBinaryAuthorizationAttestorIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         BinaryAuthorizationAttestorIAMAssetType,
 		Convert:           GetBinaryAuthorizationAttestorIamMemberCaiObject,
 		FetchFullResource: FetchBinaryAuthorizationAttestorIamPolicy,
@@ -53,70 +53,70 @@ func ResourceConverterBinaryAuthorizationAttestorIamMember() tpgresource.Resourc
 	}
 }
 
-func GetBinaryAuthorizationAttestorIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newBinaryAuthorizationAttestorIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetBinaryAuthorizationAttestorIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newBinaryAuthorizationAttestorIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetBinaryAuthorizationAttestorIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newBinaryAuthorizationAttestorIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetBinaryAuthorizationAttestorIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newBinaryAuthorizationAttestorIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetBinaryAuthorizationAttestorIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newBinaryAuthorizationAttestorIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetBinaryAuthorizationAttestorIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newBinaryAuthorizationAttestorIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeBinaryAuthorizationAttestorIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeBinaryAuthorizationAttestorIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeBinaryAuthorizationAttestorIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeBinaryAuthorizationAttestorIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeBinaryAuthorizationAttestorIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeBinaryAuthorizationAttestorIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeBinaryAuthorizationAttestorIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeBinaryAuthorizationAttestorIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeBinaryAuthorizationAttestorIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeBinaryAuthorizationAttestorIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newBinaryAuthorizationAttestorIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//binaryauthorization.googleapis.com/projects/{{project}}/attestors/{{attestor}}")
+	name, err := cai.AssetName(d, config, "//binaryauthorization.googleapis.com/projects/{{project}}/attestors/{{attestor}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: BinaryAuthorizationAttestorIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchBinaryAuthorizationAttestorIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchBinaryAuthorizationAttestorIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("attestor"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		BinaryAuthorizationAttestorIamUpdaterProducer,
 		d,
 		config,

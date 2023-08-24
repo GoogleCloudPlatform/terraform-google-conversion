@@ -20,8 +20,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const workloadIdentityPoolProviderIdRegexp = `^[0-9a-z-]+$`
@@ -54,23 +55,23 @@ func ValidateWorkloadIdentityPoolProviderId(v interface{}, k string) (ws []strin
 
 const IAMBetaWorkloadIdentityPoolProviderAssetType string = "iam.googleapis.com/WorkloadIdentityPoolProvider"
 
-func ResourceConverterIAMBetaWorkloadIdentityPoolProvider() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterIAMBetaWorkloadIdentityPoolProvider() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: IAMBetaWorkloadIdentityPoolProviderAssetType,
 		Convert:   GetIAMBetaWorkloadIdentityPoolProviderCaiObject,
 	}
 }
 
-func GetIAMBetaWorkloadIdentityPoolProviderCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//iam.googleapis.com/projects/{{project}}/locations/global/workloadIdentityPools/{{workload_identity_pool_id}}/providers/{{workload_identity_pool_provider_id}}")
+func GetIAMBetaWorkloadIdentityPoolProviderCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//iam.googleapis.com/projects/{{project}}/locations/global/workloadIdentityPools/{{workload_identity_pool_id}}/providers/{{workload_identity_pool_provider_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetIAMBetaWorkloadIdentityPoolProviderApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: IAMBetaWorkloadIdentityPoolProviderAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/iam/v1beta/rest",
 				DiscoveryName:        "WorkloadIdentityPoolProvider",
@@ -78,7 +79,7 @@ func GetIAMBetaWorkloadIdentityPoolProviderCaiObject(d tpgresource.TerraformReso
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

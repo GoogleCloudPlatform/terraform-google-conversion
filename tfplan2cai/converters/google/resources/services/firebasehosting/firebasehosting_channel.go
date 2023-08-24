@@ -17,29 +17,30 @@ package firebasehosting
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const FirebaseHostingChannelAssetType string = "firebasehosting.googleapis.com/Channel"
 
-func ResourceConverterFirebaseHostingChannel() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterFirebaseHostingChannel() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: FirebaseHostingChannelAssetType,
 		Convert:   GetFirebaseHostingChannelCaiObject,
 	}
 }
 
-func GetFirebaseHostingChannelCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//firebasehosting.googleapis.com/sites/{{site_id}}/channels/{{channel_id}}")
+func GetFirebaseHostingChannelCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//firebasehosting.googleapis.com/sites/{{site_id}}/channels/{{channel_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetFirebaseHostingChannelApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: FirebaseHostingChannelAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/firebasehosting/v1beta1/rest",
 				DiscoveryName:        "Channel",
@@ -47,7 +48,7 @@ func GetFirebaseHostingChannelCaiObject(d tpgresource.TerraformResourceData, con
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

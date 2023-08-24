@@ -17,29 +17,30 @@ package compute
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ComputeOrganizationSecurityPolicyAssociationAssetType string = "compute.googleapis.com/OrganizationSecurityPolicyAssociation"
 
-func ResourceConverterComputeOrganizationSecurityPolicyAssociation() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeOrganizationSecurityPolicyAssociation() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ComputeOrganizationSecurityPolicyAssociationAssetType,
 		Convert:   GetComputeOrganizationSecurityPolicyAssociationCaiObject,
 	}
 }
 
-func GetComputeOrganizationSecurityPolicyAssociationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/{{policy_id}}/getAssociation?name={{name}}")
+func GetComputeOrganizationSecurityPolicyAssociationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/{{policy_id}}/getAssociation?name={{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetComputeOrganizationSecurityPolicyAssociationApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ComputeOrganizationSecurityPolicyAssociationAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "OrganizationSecurityPolicyAssociation",
@@ -47,7 +48,7 @@ func GetComputeOrganizationSecurityPolicyAssociationCaiObject(d tpgresource.Terr
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

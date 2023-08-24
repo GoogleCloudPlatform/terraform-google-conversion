@@ -18,29 +18,30 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const NetworkManagementConnectivityTestAssetType string = "networkmanagement.googleapis.com/ConnectivityTest"
 
-func ResourceConverterNetworkManagementConnectivityTest() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNetworkManagementConnectivityTest() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: NetworkManagementConnectivityTestAssetType,
 		Convert:   GetNetworkManagementConnectivityTestCaiObject,
 	}
 }
 
-func GetNetworkManagementConnectivityTestCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//networkmanagement.googleapis.com/projects/{{project}}/locations/global/connectivityTests/{{name}}")
+func GetNetworkManagementConnectivityTestCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//networkmanagement.googleapis.com/projects/{{project}}/locations/global/connectivityTests/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetNetworkManagementConnectivityTestApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: NetworkManagementConnectivityTestAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkmanagement/v1/rest",
 				DiscoveryName:        "ConnectivityTest",
@@ -48,7 +49,7 @@ func GetNetworkManagementConnectivityTestCaiObject(d tpgresource.TerraformResour
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

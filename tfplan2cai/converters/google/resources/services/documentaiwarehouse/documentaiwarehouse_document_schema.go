@@ -17,29 +17,30 @@ package documentaiwarehouse
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DocumentAIWarehouseDocumentSchemaAssetType string = "contentwarehouse.googleapis.com/DocumentSchema"
 
-func ResourceConverterDocumentAIWarehouseDocumentSchema() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDocumentAIWarehouseDocumentSchema() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DocumentAIWarehouseDocumentSchemaAssetType,
 		Convert:   GetDocumentAIWarehouseDocumentSchemaCaiObject,
 	}
 }
 
-func GetDocumentAIWarehouseDocumentSchemaCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//contentwarehouse.googleapis.com/{{name}}")
+func GetDocumentAIWarehouseDocumentSchemaCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//contentwarehouse.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDocumentAIWarehouseDocumentSchemaApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DocumentAIWarehouseDocumentSchemaAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/contentwarehouse/v1/rest",
 				DiscoveryName:        "DocumentSchema",
@@ -47,7 +48,7 @@ func GetDocumentAIWarehouseDocumentSchemaCaiObject(d tpgresource.TerraformResour
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

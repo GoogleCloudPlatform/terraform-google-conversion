@@ -20,8 +20,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 func ResourceMonitoringMonitoredProjectNameDiffSuppressFunc(k, old, new string, d tpgresource.TerraformResourceDataChange) bool {
@@ -53,23 +54,23 @@ func resourceMonitoringMonitoredProjectNameDiffSuppress(k, old, new string, d *s
 
 const MonitoringMonitoredProjectAssetType string = "monitoring.googleapis.com/MonitoredProject"
 
-func ResourceConverterMonitoringMonitoredProject() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterMonitoringMonitoredProject() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: MonitoringMonitoredProjectAssetType,
 		Convert:   GetMonitoringMonitoredProjectCaiObject,
 	}
 }
 
-func GetMonitoringMonitoredProjectCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//monitoring.googleapis.com/locations/global/metricsScopes/{{metrics_scope}}")
+func GetMonitoringMonitoredProjectCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//monitoring.googleapis.com/locations/global/metricsScopes/{{metrics_scope}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetMonitoringMonitoredProjectApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: MonitoringMonitoredProjectAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/monitoring/v1/rest",
 				DiscoveryName:        "MonitoredProject",
@@ -77,7 +78,7 @@ func GetMonitoringMonitoredProjectCaiObject(d tpgresource.TerraformResourceData,
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

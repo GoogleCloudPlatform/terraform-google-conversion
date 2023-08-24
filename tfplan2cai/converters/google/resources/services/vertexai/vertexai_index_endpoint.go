@@ -17,29 +17,30 @@ package vertexai
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const VertexAIIndexEndpointAssetType string = "{{region}}-aiplatform.googleapis.com/IndexEndpoint"
 
-func ResourceConverterVertexAIIndexEndpoint() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterVertexAIIndexEndpoint() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: VertexAIIndexEndpointAssetType,
 		Convert:   GetVertexAIIndexEndpointCaiObject,
 	}
 }
 
-func GetVertexAIIndexEndpointCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/indexEndpoints/{{name}}")
+func GetVertexAIIndexEndpointCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/indexEndpoints/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetVertexAIIndexEndpointApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: VertexAIIndexEndpointAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
 				DiscoveryName:        "IndexEndpoint",
@@ -47,7 +48,7 @@ func GetVertexAIIndexEndpointCaiObject(d tpgresource.TerraformResourceData, conf
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

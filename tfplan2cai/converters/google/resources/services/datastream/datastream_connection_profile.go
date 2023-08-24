@@ -17,29 +17,30 @@ package datastream
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DatastreamConnectionProfileAssetType string = "datastream.googleapis.com/ConnectionProfile"
 
-func ResourceConverterDatastreamConnectionProfile() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDatastreamConnectionProfile() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DatastreamConnectionProfileAssetType,
 		Convert:   GetDatastreamConnectionProfileCaiObject,
 	}
 }
 
-func GetDatastreamConnectionProfileCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/connectionProfiles/{{connection_profile_id}}")
+func GetDatastreamConnectionProfileCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/connectionProfiles/{{connection_profile_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDatastreamConnectionProfileApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DatastreamConnectionProfileAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/datastream/v1/rest",
 				DiscoveryName:        "ConnectionProfile",
@@ -47,7 +48,7 @@ func GetDatastreamConnectionProfileCaiObject(d tpgresource.TerraformResourceData
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

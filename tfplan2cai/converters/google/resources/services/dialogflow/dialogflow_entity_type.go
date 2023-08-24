@@ -17,29 +17,30 @@ package dialogflow
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DialogflowEntityTypeAssetType string = "dialogflow.googleapis.com/EntityType"
 
-func ResourceConverterDialogflowEntityType() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDialogflowEntityType() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DialogflowEntityTypeAssetType,
 		Convert:   GetDialogflowEntityTypeCaiObject,
 	}
 }
 
-func GetDialogflowEntityTypeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//dialogflow.googleapis.com/{{name}}")
+func GetDialogflowEntityTypeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//dialogflow.googleapis.com/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDialogflowEntityTypeApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DialogflowEntityTypeAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v2/rest",
 				DiscoveryName:        "EntityType",
@@ -47,7 +48,7 @@ func GetDialogflowEntityTypeCaiObject(d tpgresource.TerraformResourceData, confi
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

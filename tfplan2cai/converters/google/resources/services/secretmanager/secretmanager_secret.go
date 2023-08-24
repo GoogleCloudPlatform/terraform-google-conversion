@@ -17,29 +17,30 @@ package secretmanager
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const SecretManagerSecretAssetType string = "secretmanager.googleapis.com/Secret"
 
-func ResourceConverterSecretManagerSecret() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterSecretManagerSecret() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: SecretManagerSecretAssetType,
 		Convert:   GetSecretManagerSecretCaiObject,
 	}
 }
 
-func GetSecretManagerSecretCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//secretmanager.googleapis.com/projects/{{project}}/secrets/{{secret_id}}")
+func GetSecretManagerSecretCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//secretmanager.googleapis.com/projects/{{project}}/secrets/{{secret_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetSecretManagerSecretApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: SecretManagerSecretAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/secretmanager/v1/rest",
 				DiscoveryName:        "Secret",
@@ -47,7 +48,7 @@ func GetSecretManagerSecretCaiObject(d tpgresource.TerraformResourceData, config
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -64,6 +65,12 @@ func GetSecretManagerSecretApiObject(d tpgresource.TerraformResourceData, config
 		return nil, err
 	} else if v, ok := d.GetOkExists("annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
 		obj["annotations"] = annotationsProp
+	}
+	versionAliasesProp, err := expandSecretManagerSecretVersionAliases(d.Get("version_aliases"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("version_aliases"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionAliasesProp)) && (ok || !reflect.DeepEqual(v, versionAliasesProp)) {
+		obj["versionAliases"] = versionAliasesProp
 	}
 	replicationProp, err := expandSecretManagerSecretReplication(d.Get("replication"), d, config)
 	if err != nil {
@@ -111,6 +118,17 @@ func expandSecretManagerSecretLabels(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandSecretManagerSecretAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandSecretManagerSecretVersionAliases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

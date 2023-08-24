@@ -20,29 +20,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ApiGatewayApiConfigAssetType string = "apigateway.googleapis.com/ApiConfig"
 
-func ResourceConverterApiGatewayApiConfig() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterApiGatewayApiConfig() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ApiGatewayApiConfigAssetType,
 		Convert:   GetApiGatewayApiConfigCaiObject,
 	}
 }
 
-func GetApiGatewayApiConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//apigateway.googleapis.com/projects/{{project}}/locations/global/apis/{{api}}/configs/{{api_config_id}}")
+func GetApiGatewayApiConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//apigateway.googleapis.com/projects/{{project}}/locations/global/apis/{{api}}/configs/{{api_config_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetApiGatewayApiConfigApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ApiGatewayApiConfigAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/apigateway/v1beta/rest",
 				DiscoveryName:        "ApiConfig",
@@ -50,7 +51,7 @@ func GetApiGatewayApiConfigCaiObject(d tpgresource.TerraformResourceData, config
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

@@ -17,29 +17,30 @@ package alloydb
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const AlloydbClusterAssetType string = "alloydb.googleapis.com/Cluster"
 
-func ResourceConverterAlloydbCluster() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterAlloydbCluster() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: AlloydbClusterAssetType,
 		Convert:   GetAlloydbClusterCaiObject,
 	}
 }
 
-func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}")
+func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetAlloydbClusterApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: AlloydbClusterAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/alloydb/v1beta/rest",
 				DiscoveryName:        "Cluster",
@@ -47,7 +48,7 @@ func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *tra
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -82,6 +83,18 @@ func GetAlloydbClusterApiObject(d tpgresource.TerraformResourceData, config *tra
 		return nil, err
 	} else if v, ok := d.GetOkExists("initial_user"); !tpgresource.IsEmptyValue(reflect.ValueOf(initialUserProp)) && (ok || !reflect.DeepEqual(v, initialUserProp)) {
 		obj["initialUser"] = initialUserProp
+	}
+	restoreBackupSourceProp, err := expandAlloydbClusterRestoreBackupSource(d.Get("restore_backup_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restore_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreBackupSourceProp)) && (ok || !reflect.DeepEqual(v, restoreBackupSourceProp)) {
+		obj["restoreBackupSource"] = restoreBackupSourceProp
+	}
+	restoreContinuousBackupSourceProp, err := expandAlloydbClusterRestoreContinuousBackupSource(d.Get("restore_continuous_backup_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restore_continuous_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreContinuousBackupSourceProp)) && (ok || !reflect.DeepEqual(v, restoreContinuousBackupSourceProp)) {
+		obj["restoreContinuousBackupSource"] = restoreContinuousBackupSourceProp
 	}
 	continuousBackupConfigProp, err := expandAlloydbClusterContinuousBackupConfig(d.Get("continuous_backup_config"), d, config)
 	if err != nil {
@@ -172,6 +185,63 @@ func expandAlloydbClusterInitialUserUser(v interface{}, d tpgresource.TerraformR
 }
 
 func expandAlloydbClusterInitialUserPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBackupName, err := expandAlloydbClusterRestoreBackupSourceBackupName(original["backup_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackupName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backupName"] = transformedBackupName
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterRestoreBackupSourceBackupName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreContinuousBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCluster, err := expandAlloydbClusterRestoreContinuousBackupSourceCluster(original["cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cluster"] = transformedCluster
+	}
+
+	transformedPointInTime, err := expandAlloydbClusterRestoreContinuousBackupSourcePointInTime(original["point_in_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPointInTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pointInTime"] = transformedPointInTime
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterRestoreContinuousBackupSourceCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreContinuousBackupSourcePointInTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

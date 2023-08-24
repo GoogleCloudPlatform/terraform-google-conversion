@@ -17,29 +17,30 @@ package serviceusage
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const ServiceUsageConsumerQuotaOverrideAssetType string = "serviceusage.googleapis.com/ConsumerQuotaOverride"
 
-func ResourceConverterServiceUsageConsumerQuotaOverride() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterServiceUsageConsumerQuotaOverride() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: ServiceUsageConsumerQuotaOverrideAssetType,
 		Convert:   GetServiceUsageConsumerQuotaOverrideCaiObject,
 	}
 }
 
-func GetServiceUsageConsumerQuotaOverrideCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//serviceusage.googleapis.com/projects/{{project}}/services/{{service}}/consumerQuotaMetrics/{{metric}}/limits/{{limit}}/consumerOverrides/")
+func GetServiceUsageConsumerQuotaOverrideCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//serviceusage.googleapis.com/projects/{{project}}/services/{{service}}/consumerQuotaMetrics/{{metric}}/limits/{{limit}}/consumerOverrides/")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetServiceUsageConsumerQuotaOverrideApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: ServiceUsageConsumerQuotaOverrideAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/serviceusage/v1beta1/rest",
 				DiscoveryName:        "ConsumerQuotaOverride",
@@ -47,7 +48,7 @@ func GetServiceUsageConsumerQuotaOverrideCaiObject(d tpgresource.TerraformResour
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

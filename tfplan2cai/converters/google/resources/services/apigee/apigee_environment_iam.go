@@ -17,24 +17,24 @@ package apigee
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ApigeeEnvironmentIAMAssetType string = "apigee.googleapis.com/Environment"
 
-func ResourceConverterApigeeEnvironmentIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterApigeeEnvironmentIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ApigeeEnvironmentIAMAssetType,
 		Convert:           GetApigeeEnvironmentIamPolicyCaiObject,
 		MergeCreateUpdate: MergeApigeeEnvironmentIamPolicy,
 	}
 }
 
-func ResourceConverterApigeeEnvironmentIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterApigeeEnvironmentIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ApigeeEnvironmentIAMAssetType,
 		Convert:           GetApigeeEnvironmentIamBindingCaiObject,
 		FetchFullResource: FetchApigeeEnvironmentIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterApigeeEnvironmentIamBinding() tpgresource.ResourceConverte
 	}
 }
 
-func ResourceConverterApigeeEnvironmentIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterApigeeEnvironmentIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ApigeeEnvironmentIAMAssetType,
 		Convert:           GetApigeeEnvironmentIamMemberCaiObject,
 		FetchFullResource: FetchApigeeEnvironmentIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterApigeeEnvironmentIamMember() tpgresource.ResourceConverter
 	}
 }
 
-func GetApigeeEnvironmentIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newApigeeEnvironmentIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetApigeeEnvironmentIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newApigeeEnvironmentIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetApigeeEnvironmentIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newApigeeEnvironmentIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetApigeeEnvironmentIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newApigeeEnvironmentIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetApigeeEnvironmentIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newApigeeEnvironmentIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetApigeeEnvironmentIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newApigeeEnvironmentIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeApigeeEnvironmentIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeApigeeEnvironmentIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeApigeeEnvironmentIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeApigeeEnvironmentIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeApigeeEnvironmentIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeApigeeEnvironmentIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeApigeeEnvironmentIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeApigeeEnvironmentIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeApigeeEnvironmentIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeApigeeEnvironmentIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newApigeeEnvironmentIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//apigee.googleapis.com/{{org_id}}/environments/{{env_id}}")
+	name, err := cai.AssetName(d, config, "//apigee.googleapis.com/{{org_id}}/environments/{{env_id}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: ApigeeEnvironmentIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchApigeeEnvironmentIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchApigeeEnvironmentIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("org_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("env_id"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		ApigeeEnvironmentIamUpdaterProducer,
 		d,
 		config,

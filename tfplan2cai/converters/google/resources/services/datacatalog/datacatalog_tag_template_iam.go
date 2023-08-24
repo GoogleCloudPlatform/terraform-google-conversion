@@ -17,24 +17,24 @@ package datacatalog
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const DataCatalogTagTemplateIAMAssetType string = "datacatalog.googleapis.com/TagTemplate"
 
-func ResourceConverterDataCatalogTagTemplateIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataCatalogTagTemplateIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataCatalogTagTemplateIAMAssetType,
 		Convert:           GetDataCatalogTagTemplateIamPolicyCaiObject,
 		MergeCreateUpdate: MergeDataCatalogTagTemplateIamPolicy,
 	}
 }
 
-func ResourceConverterDataCatalogTagTemplateIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataCatalogTagTemplateIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataCatalogTagTemplateIAMAssetType,
 		Convert:           GetDataCatalogTagTemplateIamBindingCaiObject,
 		FetchFullResource: FetchDataCatalogTagTemplateIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterDataCatalogTagTemplateIamBinding() tpgresource.ResourceCon
 	}
 }
 
-func ResourceConverterDataCatalogTagTemplateIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDataCatalogTagTemplateIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         DataCatalogTagTemplateIAMAssetType,
 		Convert:           GetDataCatalogTagTemplateIamMemberCaiObject,
 		FetchFullResource: FetchDataCatalogTagTemplateIamPolicy,
@@ -53,73 +53,73 @@ func ResourceConverterDataCatalogTagTemplateIamMember() tpgresource.ResourceConv
 	}
 }
 
-func GetDataCatalogTagTemplateIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataCatalogTagTemplateIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetDataCatalogTagTemplateIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataCatalogTagTemplateIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetDataCatalogTagTemplateIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataCatalogTagTemplateIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetDataCatalogTagTemplateIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataCatalogTagTemplateIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetDataCatalogTagTemplateIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newDataCatalogTagTemplateIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetDataCatalogTagTemplateIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newDataCatalogTagTemplateIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeDataCatalogTagTemplateIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeDataCatalogTagTemplateIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeDataCatalogTagTemplateIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeDataCatalogTagTemplateIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeDataCatalogTagTemplateIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeDataCatalogTagTemplateIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeDataCatalogTagTemplateIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeDataCatalogTagTemplateIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeDataCatalogTagTemplateIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeDataCatalogTagTemplateIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newDataCatalogTagTemplateIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//datacatalog.googleapis.com/projects/{{project}}/locations/{{region}}/tagTemplates/{{tag_template}}")
+	name, err := cai.AssetName(d, config, "//datacatalog.googleapis.com/projects/{{project}}/locations/{{region}}/tagTemplates/{{tag_template}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: DataCatalogTagTemplateIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchDataCatalogTagTemplateIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchDataCatalogTagTemplateIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("region"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 	if _, ok := d.GetOk("tag_template"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		DataCatalogTagTemplateIamUpdaterProducer,
 		d,
 		config,

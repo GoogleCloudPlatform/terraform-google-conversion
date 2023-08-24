@@ -17,24 +17,24 @@ package compute
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgiamresource"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
 const ComputeMachineImageIAMAssetType string = "compute.googleapis.com/MachineImage"
 
-func ResourceConverterComputeMachineImageIamPolicy() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeMachineImageIamPolicy() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeMachineImageIAMAssetType,
 		Convert:           GetComputeMachineImageIamPolicyCaiObject,
 		MergeCreateUpdate: MergeComputeMachineImageIamPolicy,
 	}
 }
 
-func ResourceConverterComputeMachineImageIamBinding() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeMachineImageIamBinding() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeMachineImageIAMAssetType,
 		Convert:           GetComputeMachineImageIamBindingCaiObject,
 		FetchFullResource: FetchComputeMachineImageIamPolicy,
@@ -43,8 +43,8 @@ func ResourceConverterComputeMachineImageIamBinding() tpgresource.ResourceConver
 	}
 }
 
-func ResourceConverterComputeMachineImageIamMember() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterComputeMachineImageIamMember() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType:         ComputeMachineImageIAMAssetType,
 		Convert:           GetComputeMachineImageIamMemberCaiObject,
 		FetchFullResource: FetchComputeMachineImageIamPolicy,
@@ -53,70 +53,70 @@ func ResourceConverterComputeMachineImageIamMember() tpgresource.ResourceConvert
 	}
 }
 
-func GetComputeMachineImageIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeMachineImageIamAsset(d, config, tpgiamresource.ExpandIamPolicyBindings)
+func GetComputeMachineImageIamPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeMachineImageIamAsset(d, config, cai.ExpandIamPolicyBindings)
 }
 
-func GetComputeMachineImageIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeMachineImageIamAsset(d, config, tpgiamresource.ExpandIamRoleBindings)
+func GetComputeMachineImageIamBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeMachineImageIamAsset(d, config, cai.ExpandIamRoleBindings)
 }
 
-func GetComputeMachineImageIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	return newComputeMachineImageIamAsset(d, config, tpgiamresource.ExpandIamMemberBindings)
+func GetComputeMachineImageIamMemberCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	return newComputeMachineImageIamAsset(d, config, cai.ExpandIamMemberBindings)
 }
 
-func MergeComputeMachineImageIamPolicy(existing, incoming tpgresource.Asset) tpgresource.Asset {
+func MergeComputeMachineImageIamPolicy(existing, incoming cai.Asset) cai.Asset {
 	existing.IAMPolicy = incoming.IAMPolicy
 	return existing
 }
 
-func MergeComputeMachineImageIamBinding(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAuthoritativeBindings)
+func MergeComputeMachineImageIamBinding(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAuthoritativeBindings)
 }
 
-func MergeComputeMachineImageIamBindingDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAuthoritativeBindings)
+func MergeComputeMachineImageIamBindingDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAuthoritativeBindings)
 }
 
-func MergeComputeMachineImageIamMember(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeIamAssets(existing, incoming, tpgiamresource.MergeAdditiveBindings)
+func MergeComputeMachineImageIamMember(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeIamAssets(existing, incoming, cai.MergeAdditiveBindings)
 }
 
-func MergeComputeMachineImageIamMemberDelete(existing, incoming tpgresource.Asset) tpgresource.Asset {
-	return tpgiamresource.MergeDeleteIamAssets(existing, incoming, tpgiamresource.MergeDeleteAdditiveBindings)
+func MergeComputeMachineImageIamMemberDelete(existing, incoming cai.Asset) cai.Asset {
+	return cai.MergeDeleteIamAssets(existing, incoming, cai.MergeDeleteAdditiveBindings)
 }
 
 func newComputeMachineImageIamAsset(
 	d tpgresource.TerraformResourceData,
 	config *transport_tpg.Config,
-	expandBindings func(d tpgresource.TerraformResourceData) ([]tpgresource.IAMBinding, error),
-) ([]tpgresource.Asset, error) {
+	expandBindings func(d tpgresource.TerraformResourceData) ([]cai.IAMBinding, error),
+) ([]cai.Asset, error) {
 	bindings, err := expandBindings(d)
 	if err != nil {
-		return []tpgresource.Asset{}, fmt.Errorf("expanding bindings: %v", err)
+		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := tpgresource.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/machineImages/{{machine_image}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/machineImages/{{machine_image}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 
-	return []tpgresource.Asset{{
+	return []cai.Asset{{
 		Name: name,
 		Type: ComputeMachineImageIAMAssetType,
-		IAMPolicy: &tpgresource.IAMPolicy{
+		IAMPolicy: &cai.IAMPolicy{
 			Bindings: bindings,
 		},
 	}}, nil
 }
 
-func FetchComputeMachineImageIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgresource.Asset, error) {
+func FetchComputeMachineImageIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
 	if _, ok := d.GetOk("machine_image"); !ok {
-		return tpgresource.Asset{}, tpgresource.ErrEmptyIdentityField
+		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
 
-	return tpgiamresource.FetchIamPolicy(
+	return cai.FetchIamPolicy(
 		ComputeMachineImageIamUpdaterProducer,
 		d,
 		config,

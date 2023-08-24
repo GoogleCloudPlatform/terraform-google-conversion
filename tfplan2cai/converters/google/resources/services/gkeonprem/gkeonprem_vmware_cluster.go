@@ -17,29 +17,30 @@ package gkeonprem
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const GkeonpremVmwareClusterAssetType string = "gkeonprem.googleapis.com/VmwareCluster"
 
-func ResourceConverterGkeonpremVmwareCluster() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterGkeonpremVmwareCluster() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: GkeonpremVmwareClusterAssetType,
 		Convert:   GetGkeonpremVmwareClusterCaiObject,
 	}
 }
 
-func GetGkeonpremVmwareClusterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//gkeonprem.googleapis.com/projects/{{project}}/locations/{{location}}/vmwareClusters/{{name}}")
+func GetGkeonpremVmwareClusterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//gkeonprem.googleapis.com/projects/{{project}}/locations/{{location}}/vmwareClusters/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetGkeonpremVmwareClusterApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: GkeonpremVmwareClusterAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gkeonprem/v1/rest",
 				DiscoveryName:        "VmwareCluster",
@@ -47,7 +48,7 @@ func GetGkeonpremVmwareClusterCaiObject(d tpgresource.TerraformResourceData, con
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
@@ -262,10 +263,21 @@ func expandGkeonpremVmwareClusterControlPlaneNodeVsphereConfig(v interface{}, d 
 		transformed["datastore"] = transformedDatastore
 	}
 
+	transformedStoragePolicyName, err := expandGkeonpremVmwareClusterControlPlaneNodeVsphereConfigStoragePolicyName(original["storage_policy_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStoragePolicyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["storagePolicyName"] = transformedStoragePolicyName
+	}
+
 	return transformed, nil
 }
 
 func expandGkeonpremVmwareClusterControlPlaneNodeVsphereConfigDatastore(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareClusterControlPlaneNodeVsphereConfigStoragePolicyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

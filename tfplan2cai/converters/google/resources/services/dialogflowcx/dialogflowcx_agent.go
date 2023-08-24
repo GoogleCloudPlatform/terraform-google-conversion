@@ -17,29 +17,30 @@ package dialogflowcx
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const DialogflowCXAgentAssetType string = "{{location}}-dialogflow.googleapis.com/Agent"
 
-func ResourceConverterDialogflowCXAgent() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterDialogflowCXAgent() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: DialogflowCXAgentAssetType,
 		Convert:   GetDialogflowCXAgentCaiObject,
 	}
 }
 
-func GetDialogflowCXAgentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/projects/{{project}}/locations/{{location}}/agents/{{name}}")
+func GetDialogflowCXAgentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/projects/{{project}}/locations/{{location}}/agents/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetDialogflowCXAgentApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: DialogflowCXAgentAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v3",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{location}}-dialogflow/v3/rest",
 				DiscoveryName:        "Agent",
@@ -47,7 +48,7 @@ func GetDialogflowCXAgentCaiObject(d tpgresource.TerraformResourceData, config *
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

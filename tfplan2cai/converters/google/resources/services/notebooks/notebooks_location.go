@@ -17,29 +17,30 @@ package notebooks
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const NotebooksLocationAssetType string = "notebooks.googleapis.com/Location"
 
-func ResourceConverterNotebooksLocation() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterNotebooksLocation() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: NotebooksLocationAssetType,
 		Convert:   GetNotebooksLocationCaiObject,
 	}
 }
 
-func GetNotebooksLocationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{name}}")
+func GetNotebooksLocationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//notebooks.googleapis.com/projects/{{project}}/locations/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetNotebooksLocationApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: NotebooksLocationAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/notebooks/v1/rest",
 				DiscoveryName:        "Location",
@@ -47,7 +48,7 @@ func GetNotebooksLocationCaiObject(d tpgresource.TerraformResourceData, config *
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 

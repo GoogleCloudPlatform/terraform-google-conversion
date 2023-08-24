@@ -17,29 +17,30 @@ package cloudiot
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
+	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
 const CloudIotDeviceAssetType string = "cloudiot.googleapis.com/Device"
 
-func ResourceConverterCloudIotDevice() tpgresource.ResourceConverter {
-	return tpgresource.ResourceConverter{
+func ResourceConverterCloudIotDevice() cai.ResourceConverter {
+	return cai.ResourceConverter{
 		AssetType: CloudIotDeviceAssetType,
 		Convert:   GetCloudIotDeviceCaiObject,
 	}
 }
 
-func GetCloudIotDeviceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]tpgresource.Asset, error) {
-	name, err := tpgresource.AssetName(d, config, "//cloudiot.googleapis.com/{{registry}}/devices/{{name}}")
+func GetCloudIotDeviceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+	name, err := cai.AssetName(d, config, "//cloudiot.googleapis.com/{{registry}}/devices/{{name}}")
 	if err != nil {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 	if obj, err := GetCloudIotDeviceApiObject(d, config); err == nil {
-		return []tpgresource.Asset{{
+		return []cai.Asset{{
 			Name: name,
 			Type: CloudIotDeviceAssetType,
-			Resource: &tpgresource.AssetResource{
+			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudiot/v1/rest",
 				DiscoveryName:        "Device",
@@ -47,7 +48,7 @@ func GetCloudIotDeviceCaiObject(d tpgresource.TerraformResourceData, config *tra
 			},
 		}}, nil
 	} else {
-		return []tpgresource.Asset{}, err
+		return []cai.Asset{}, err
 	}
 }
 
