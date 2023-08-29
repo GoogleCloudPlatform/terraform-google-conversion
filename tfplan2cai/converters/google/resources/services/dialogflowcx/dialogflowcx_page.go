@@ -15,6 +15,7 @@
 package dialogflowcx
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
@@ -141,6 +142,20 @@ func expandDialogflowCXPageEntryFulfillment(v interface{}, d tpgresource.Terrafo
 		transformed["tag"] = transformedTag
 	}
 
+	transformedSetParameterActions, err := expandDialogflowCXPageEntryFulfillmentSetParameterActions(original["set_parameter_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSetParameterActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["setParameterActions"] = transformedSetParameterActions
+	}
+
+	transformedConditionalCases, err := expandDialogflowCXPageEntryFulfillmentConditionalCases(original["conditional_cases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConditionalCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conditionalCases"] = transformedConditionalCases
+	}
+
 	return transformed, nil
 }
 
@@ -154,6 +169,13 @@ func expandDialogflowCXPageEntryFulfillmentMessages(v interface{}, d tpgresource
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
+		transformedChannel, err := expandDialogflowCXPageEntryFulfillmentMessagesChannel(original["channel"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedChannel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["channel"] = transformedChannel
+		}
+
 		transformedText, err := expandDialogflowCXPageEntryFulfillmentMessagesText(original["text"], d, config)
 		if err != nil {
 			return nil, err
@@ -161,9 +183,55 @@ func expandDialogflowCXPageEntryFulfillmentMessages(v interface{}, d tpgresource
 			transformed["text"] = transformedText
 		}
 
+		transformedPayload, err := expandDialogflowCXPageEntryFulfillmentMessagesPayload(original["payload"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPayload); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["payload"] = transformedPayload
+		}
+
+		transformedConversationSuccess, err := expandDialogflowCXPageEntryFulfillmentMessagesConversationSuccess(original["conversation_success"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConversationSuccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["conversationSuccess"] = transformedConversationSuccess
+		}
+
+		transformedOutputAudioText, err := expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioText(original["output_audio_text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOutputAudioText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["outputAudioText"] = transformedOutputAudioText
+		}
+
+		transformedLiveAgentHandoff, err := expandDialogflowCXPageEntryFulfillmentMessagesLiveAgentHandoff(original["live_agent_handoff"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLiveAgentHandoff); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["liveAgentHandoff"] = transformedLiveAgentHandoff
+		}
+
+		transformedPlayAudio, err := expandDialogflowCXPageEntryFulfillmentMessagesPlayAudio(original["play_audio"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPlayAudio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["playAudio"] = transformedPlayAudio
+		}
+
+		transformedTelephonyTransferCall, err := expandDialogflowCXPageEntryFulfillmentMessagesTelephonyTransferCall(original["telephony_transfer_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTelephonyTransferCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["telephonyTransferCall"] = transformedTelephonyTransferCall
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDialogflowCXPageEntryFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -200,6 +268,182 @@ func expandDialogflowCXPageEntryFulfillmentMessagesTextAllowPlaybackInterruption
 	return v, nil
 }
 
+func expandDialogflowCXPageEntryFulfillmentMessagesPayload(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageEntryFulfillmentMessagesConversationSuccessMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesConversationSuccessMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	transformedText, err := expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioTextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	transformedSsml, err := expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioTextSsml(original["ssml"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSsml); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ssml"] = transformedSsml
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioTextSsml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageEntryFulfillmentMessagesLiveAgentHandoffMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesLiveAgentHandoffMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAudioUri, err := expandDialogflowCXPageEntryFulfillmentMessagesPlayAudioAudioUri(original["audio_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudioUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["audioUri"] = transformedAudioUri
+	}
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageEntryFulfillmentMessagesPlayAudioAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesPlayAudioAudioUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesPlayAudioAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPhoneNumber, err := expandDialogflowCXPageEntryFulfillmentMessagesTelephonyTransferCallPhoneNumber(original["phone_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumber"] = transformedPhoneNumber
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentMessagesTelephonyTransferCallPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDialogflowCXPageEntryFulfillmentWebhook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -210,6 +454,85 @@ func expandDialogflowCXPageEntryFulfillmentReturnPartialResponses(v interface{},
 
 func expandDialogflowCXPageEntryFulfillmentTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedParameter, err := expandDialogflowCXPageEntryFulfillmentSetParameterActionsParameter(original["parameter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParameter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["parameter"] = transformedParameter
+		}
+
+		transformedValue, err := expandDialogflowCXPageEntryFulfillmentSetParameterActionsValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentSetParameterActionsParameter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentSetParameterActionsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCases, err := expandDialogflowCXPageEntryFulfillmentConditionalCasesCases(original["cases"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cases"] = transformedCases
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageEntryFulfillmentConditionalCasesCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandDialogflowCXPageForm(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -276,6 +599,13 @@ func expandDialogflowCXPageFormParameters(v interface{}, d tpgresource.Terraform
 			transformed["fillBehavior"] = transformedFillBehavior
 		}
 
+		transformedDefaultValue, err := expandDialogflowCXPageFormParametersDefaultValue(original["default_value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDefaultValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["defaultValue"] = transformedDefaultValue
+		}
+
 		transformedRedact, err := expandDialogflowCXPageFormParametersRedact(original["redact"], d, config)
 		if err != nil {
 			return nil, err
@@ -320,6 +650,13 @@ func expandDialogflowCXPageFormParametersFillBehavior(v interface{}, d tpgresour
 		transformed["initialPromptFulfillment"] = transformedInitialPromptFulfillment
 	}
 
+	transformedRepromptEventHandlers, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlers(original["reprompt_event_handlers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepromptEventHandlers); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repromptEventHandlers"] = transformedRepromptEventHandlers
+	}
+
 	return transformed, nil
 }
 
@@ -360,6 +697,20 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillment(v 
 		transformed["tag"] = transformedTag
 	}
 
+	transformedSetParameterActions, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentSetParameterActions(original["set_parameter_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSetParameterActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["setParameterActions"] = transformedSetParameterActions
+	}
+
+	transformedConditionalCases, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentConditionalCases(original["conditional_cases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConditionalCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conditionalCases"] = transformedConditionalCases
+	}
+
 	return transformed, nil
 }
 
@@ -373,6 +724,13 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMes
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
+		transformedChannel, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesChannel(original["channel"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedChannel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["channel"] = transformedChannel
+		}
+
 		transformedText, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesText(original["text"], d, config)
 		if err != nil {
 			return nil, err
@@ -380,9 +738,55 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMes
 			transformed["text"] = transformedText
 		}
 
+		transformedPayload, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPayload(original["payload"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPayload); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["payload"] = transformedPayload
+		}
+
+		transformedConversationSuccess, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesConversationSuccess(original["conversation_success"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConversationSuccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["conversationSuccess"] = transformedConversationSuccess
+		}
+
+		transformedOutputAudioText, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioText(original["output_audio_text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOutputAudioText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["outputAudioText"] = transformedOutputAudioText
+		}
+
+		transformedLiveAgentHandoff, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesLiveAgentHandoff(original["live_agent_handoff"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLiveAgentHandoff); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["liveAgentHandoff"] = transformedLiveAgentHandoff
+		}
+
+		transformedPlayAudio, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPlayAudio(original["play_audio"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPlayAudio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["playAudio"] = transformedPlayAudio
+		}
+
+		transformedTelephonyTransferCall, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesTelephonyTransferCall(original["telephony_transfer_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTelephonyTransferCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["telephonyTransferCall"] = transformedTelephonyTransferCall
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -419,6 +823,182 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMes
 	return v, nil
 }
 
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPayload(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesConversationSuccessMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesConversationSuccessMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	transformedText, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioTextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	transformedSsml, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioTextSsml(original["ssml"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSsml); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ssml"] = transformedSsml
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioTextSsml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesLiveAgentHandoffMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesLiveAgentHandoffMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAudioUri, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPlayAudioAudioUri(original["audio_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudioUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["audioUri"] = transformedAudioUri
+	}
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPlayAudioAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPlayAudioAudioUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPlayAudioAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPhoneNumber, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesTelephonyTransferCallPhoneNumber(original["phone_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumber"] = transformedPhoneNumber
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesTelephonyTransferCallPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentWebhook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -429,6 +1009,593 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentRet
 
 func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedParameter, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentSetParameterActionsParameter(original["parameter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParameter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["parameter"] = transformedParameter
+		}
+
+		transformedValue, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentSetParameterActionsValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentSetParameterActionsParameter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentSetParameterActionsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCases, err := expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentConditionalCasesCases(original["cases"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cases"] = transformedCases
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentConditionalCasesCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedEvent, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersEvent(original["event"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEvent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["event"] = transformedEvent
+		}
+
+		transformedTriggerFulfillment, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillment(original["trigger_fulfillment"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTriggerFulfillment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["triggerFulfillment"] = transformedTriggerFulfillment
+		}
+
+		transformedTargetPage, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTargetPage(original["target_page"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetPage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetPage"] = transformedTargetPage
+		}
+
+		transformedTargetFlow, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTargetFlow(original["target_flow"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetFlow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetFlow"] = transformedTargetFlow
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersEvent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMessages, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessages(original["messages"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMessages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["messages"] = transformedMessages
+	}
+
+	transformedWebhook, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentWebhook(original["webhook"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhook); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhook"] = transformedWebhook
+	}
+
+	transformedReturnPartialResponses, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentReturnPartialResponses(original["return_partial_responses"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReturnPartialResponses); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["returnPartialResponses"] = transformedReturnPartialResponses
+	}
+
+	transformedTag, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentTag(original["tag"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tag"] = transformedTag
+	}
+
+	transformedSetParameterActions, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentSetParameterActions(original["set_parameter_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSetParameterActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["setParameterActions"] = transformedSetParameterActions
+	}
+
+	transformedConditionalCases, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentConditionalCases(original["conditional_cases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConditionalCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conditionalCases"] = transformedConditionalCases
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedChannel, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesChannel(original["channel"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedChannel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["channel"] = transformedChannel
+		}
+
+		transformedText, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesText(original["text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["text"] = transformedText
+		}
+
+		transformedPayload, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPayload(original["payload"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPayload); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["payload"] = transformedPayload
+		}
+
+		transformedConversationSuccess, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesConversationSuccess(original["conversation_success"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConversationSuccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["conversationSuccess"] = transformedConversationSuccess
+		}
+
+		transformedOutputAudioText, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioText(original["output_audio_text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOutputAudioText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["outputAudioText"] = transformedOutputAudioText
+		}
+
+		transformedLiveAgentHandoff, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesLiveAgentHandoff(original["live_agent_handoff"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLiveAgentHandoff); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["liveAgentHandoff"] = transformedLiveAgentHandoff
+		}
+
+		transformedPlayAudio, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPlayAudio(original["play_audio"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPlayAudio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["playAudio"] = transformedPlayAudio
+		}
+
+		transformedTelephonyTransferCall, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesTelephonyTransferCall(original["telephony_transfer_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTelephonyTransferCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["telephonyTransferCall"] = transformedTelephonyTransferCall
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedText, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesTextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPayload(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesConversationSuccessMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesConversationSuccessMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	transformedText, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioTextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	transformedSsml, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioTextSsml(original["ssml"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSsml); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ssml"] = transformedSsml
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioTextSsml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesLiveAgentHandoffMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesLiveAgentHandoffMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAudioUri, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPlayAudioAudioUri(original["audio_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudioUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["audioUri"] = transformedAudioUri
+	}
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPlayAudioAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPlayAudioAudioUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPlayAudioAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPhoneNumber, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesTelephonyTransferCallPhoneNumber(original["phone_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumber"] = transformedPhoneNumber
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesTelephonyTransferCallPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentWebhook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentReturnPartialResponses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedParameter, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentSetParameterActionsParameter(original["parameter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParameter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["parameter"] = transformedParameter
+		}
+
+		transformedValue, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentSetParameterActionsValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentSetParameterActionsParameter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentSetParameterActionsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCases, err := expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentConditionalCasesCases(original["cases"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cases"] = transformedCases
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentConditionalCasesCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTargetPage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTargetFlow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageFormParametersDefaultValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandDialogflowCXPageFormParametersRedact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -545,6 +1712,20 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillment(v interface{}, d t
 		transformed["tag"] = transformedTag
 	}
 
+	transformedSetParameterActions, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentSetParameterActions(original["set_parameter_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSetParameterActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["setParameterActions"] = transformedSetParameterActions
+	}
+
+	transformedConditionalCases, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentConditionalCases(original["conditional_cases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConditionalCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conditionalCases"] = transformedConditionalCases
+	}
+
 	return transformed, nil
 }
 
@@ -558,6 +1739,13 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessages(v interfac
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
+		transformedChannel, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesChannel(original["channel"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedChannel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["channel"] = transformedChannel
+		}
+
 		transformedText, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesText(original["text"], d, config)
 		if err != nil {
 			return nil, err
@@ -565,9 +1753,55 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessages(v interfac
 			transformed["text"] = transformedText
 		}
 
+		transformedPayload, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPayload(original["payload"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPayload); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["payload"] = transformedPayload
+		}
+
+		transformedConversationSuccess, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesConversationSuccess(original["conversation_success"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConversationSuccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["conversationSuccess"] = transformedConversationSuccess
+		}
+
+		transformedOutputAudioText, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioText(original["output_audio_text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOutputAudioText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["outputAudioText"] = transformedOutputAudioText
+		}
+
+		transformedLiveAgentHandoff, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesLiveAgentHandoff(original["live_agent_handoff"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLiveAgentHandoff); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["liveAgentHandoff"] = transformedLiveAgentHandoff
+		}
+
+		transformedPlayAudio, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPlayAudio(original["play_audio"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPlayAudio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["playAudio"] = transformedPlayAudio
+		}
+
+		transformedTelephonyTransferCall, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTelephonyTransferCall(original["telephony_transfer_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTelephonyTransferCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["telephonyTransferCall"] = transformedTelephonyTransferCall
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -604,6 +1838,182 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTextAllowPl
 	return v, nil
 }
 
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPayload(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesConversationSuccessMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesConversationSuccessMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	transformedText, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioTextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	transformedSsml, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioTextSsml(original["ssml"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSsml); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ssml"] = transformedSsml
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioTextSsml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesLiveAgentHandoffMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesLiveAgentHandoffMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAudioUri, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPlayAudioAudioUri(original["audio_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudioUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["audioUri"] = transformedAudioUri
+	}
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPlayAudioAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPlayAudioAudioUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPlayAudioAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPhoneNumber, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTelephonyTransferCallPhoneNumber(original["phone_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumber"] = transformedPhoneNumber
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesTelephonyTransferCallPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentWebhook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -614,6 +2024,85 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentReturnPartialRespon
 
 func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedParameter, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentSetParameterActionsParameter(original["parameter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParameter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["parameter"] = transformedParameter
+		}
+
+		transformedValue, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentSetParameterActionsValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentSetParameterActionsParameter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentSetParameterActionsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCases, err := expandDialogflowCXPageTransitionRoutesTriggerFulfillmentConditionalCasesCases(original["cases"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cases"] = transformedCases
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentConditionalCasesCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandDialogflowCXPageTransitionRoutesTargetPage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -719,6 +2208,20 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillment(v interface{}, d tpgr
 		transformed["tag"] = transformedTag
 	}
 
+	transformedSetParameterActions, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentSetParameterActions(original["set_parameter_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSetParameterActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["setParameterActions"] = transformedSetParameterActions
+	}
+
+	transformedConditionalCases, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentConditionalCases(original["conditional_cases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConditionalCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conditionalCases"] = transformedConditionalCases
+	}
+
 	return transformed, nil
 }
 
@@ -732,6 +2235,13 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessages(v interface{}
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
+		transformedChannel, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesChannel(original["channel"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedChannel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["channel"] = transformedChannel
+		}
+
 		transformedText, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesText(original["text"], d, config)
 		if err != nil {
 			return nil, err
@@ -739,9 +2249,55 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessages(v interface{}
 			transformed["text"] = transformedText
 		}
 
+		transformedPayload, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPayload(original["payload"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPayload); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["payload"] = transformedPayload
+		}
+
+		transformedConversationSuccess, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesConversationSuccess(original["conversation_success"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConversationSuccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["conversationSuccess"] = transformedConversationSuccess
+		}
+
+		transformedOutputAudioText, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioText(original["output_audio_text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOutputAudioText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["outputAudioText"] = transformedOutputAudioText
+		}
+
+		transformedLiveAgentHandoff, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesLiveAgentHandoff(original["live_agent_handoff"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLiveAgentHandoff); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["liveAgentHandoff"] = transformedLiveAgentHandoff
+		}
+
+		transformedPlayAudio, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPlayAudio(original["play_audio"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPlayAudio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["playAudio"] = transformedPlayAudio
+		}
+
+		transformedTelephonyTransferCall, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTelephonyTransferCall(original["telephony_transfer_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTelephonyTransferCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["telephonyTransferCall"] = transformedTelephonyTransferCall
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -778,6 +2334,182 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTextAllowPlayb
 	return v, nil
 }
 
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPayload(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesConversationSuccessMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesConversationSuccessMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	transformedText, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioTextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	transformedSsml, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioTextSsml(original["ssml"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSsml); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ssml"] = transformedSsml
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioTextSsml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesLiveAgentHandoffMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesLiveAgentHandoffMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAudioUri, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPlayAudioAudioUri(original["audio_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudioUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["audioUri"] = transformedAudioUri
+	}
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPlayAudioAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPlayAudioAudioUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPlayAudioAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPhoneNumber, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTelephonyTransferCallPhoneNumber(original["phone_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumber"] = transformedPhoneNumber
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesTelephonyTransferCallPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDialogflowCXPageEventHandlersTriggerFulfillmentWebhook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -788,6 +2520,85 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentReturnPartialResponses
 
 func expandDialogflowCXPageEventHandlersTriggerFulfillmentTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedParameter, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentSetParameterActionsParameter(original["parameter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParameter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["parameter"] = transformedParameter
+		}
+
+		transformedValue, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentSetParameterActionsValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentSetParameterActionsParameter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentSetParameterActionsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCases, err := expandDialogflowCXPageEventHandlersTriggerFulfillmentConditionalCasesCases(original["cases"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cases"] = transformedCases
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXPageEventHandlersTriggerFulfillmentConditionalCasesCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandDialogflowCXPageEventHandlersTargetPage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
