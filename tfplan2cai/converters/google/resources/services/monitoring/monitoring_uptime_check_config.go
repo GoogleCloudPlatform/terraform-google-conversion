@@ -120,6 +120,12 @@ func GetMonitoringUptimeCheckConfigApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("monitored_resource"); !tpgresource.IsEmptyValue(reflect.ValueOf(monitoredResourceProp)) && (ok || !reflect.DeepEqual(v, monitoredResourceProp)) {
 		obj["monitoredResource"] = monitoredResourceProp
 	}
+	syntheticMonitorProp, err := expandMonitoringUptimeCheckConfigSyntheticMonitor(d.Get("synthetic_monitor"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("synthetic_monitor"); !tpgresource.IsEmptyValue(reflect.ValueOf(syntheticMonitorProp)) && (ok || !reflect.DeepEqual(v, syntheticMonitorProp)) {
+		obj["syntheticMonitor"] = syntheticMonitorProp
+	}
 
 	return obj, nil
 }
@@ -521,4 +527,46 @@ func expandMonitoringUptimeCheckConfigMonitoredResourceLabels(v interface{}, d t
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandMonitoringUptimeCheckConfigSyntheticMonitor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCloudFunctionV2, err := expandMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2(original["cloud_function_v2"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudFunctionV2); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cloudFunctionV2"] = transformedCloudFunctionV2
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2Name(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2Name(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
