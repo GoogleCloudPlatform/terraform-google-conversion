@@ -32,7 +32,7 @@ func ResourceConverterBiglakeDatabase() cai.ResourceConverter {
 }
 
 func GetBiglakeDatabaseCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//biglake.googleapis.com/projects/{{project}}/locations/{{location}}/catalogs/{{catalog_id}}/databases/{{name}}")
+	name, err := cai.AssetName(d, config, "//biglake.googleapis.com/{{catalog}}/databases/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
