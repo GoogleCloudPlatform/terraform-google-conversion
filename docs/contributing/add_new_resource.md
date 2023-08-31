@@ -267,6 +267,14 @@ make tgc OUTPUT_PATH="/path/to/your/terraform-google-conversion/tfplan2cai"
 
 Now [run your tests](./index.md#testing) and make sure they pass locally before proceeding. (But you can also go ahead and open PRs if you're running into issues you can't figure out how to resolve.)
 
+Note: To get a specific google provider version, go to the tgc folder, and update the modules. For example,
+
+```bash
+cd /path/to/your/terraform-google-conversion
+
+go mod edit -replace github.com/hashicorp/terraform-provider-google-beta=github.com/modular-magician/terraform-provider-google-beta@auto-pr-8670
+```
+
 ### 3. Make PRs
 
 Now that you have your code working locally, open a PR for [Magic Modules](https://github.com/GoogleCloudPlatform/magic-modules).
