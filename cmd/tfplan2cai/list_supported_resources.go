@@ -22,9 +22,23 @@ import (
 	"text/tabwriter"
 
 	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
+	"github.com/spf13/cobra"
 )
 
 type listSupportedResourcesOptions struct{}
+
+func newListSupportedResourcesCmd() *cobra.Command {
+	o := listSupportedResourcesOptions{}
+
+	cmd := &cobra.Command{
+		Use:   "list-supported-resources",
+		Short: "List supported terraform resources.",
+		RunE: func(c *cobra.Command, args []string) error {
+			return o.run()
+		},
+	}
+	return cmd
+}
 
 func (o *listSupportedResourcesOptions) run() error {
 	converters := resources.ResourceConverters()

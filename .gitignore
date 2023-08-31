@@ -16,3 +16,4 @@ examples/*.tfstate*
 
 # binary
 ./cmd
+bin/
