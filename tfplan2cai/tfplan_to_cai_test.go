@@ -3,7 +3,7 @@ package tfplan2cai
 
 import (
 	"context"
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -21,7 +21,7 @@ func TestConvert_noPlanJSON(t *testing.T) {
 func TestConvert_noResourceChanges(t *testing.T) {
 	ctx := context.Background()
 	f := "../testdata/empty-0.13.7.tfplan.json"
-	jsonPlan, err := ioutil.ReadFile(f)
+	jsonPlan, err := os.ReadFile(f)
 	if err != nil {
 		t.Fatalf("Error parsing %s: %s", f, err)
 	}

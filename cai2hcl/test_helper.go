@@ -3,7 +3,7 @@ package cai2hcl
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 	"github.com/google/go-cmp/cmp"
@@ -13,11 +13,11 @@ import (
 func assertTestData(fileName string) (err error) {
 	assetFilePath := fmt.Sprintf("../testdata/%s.json", fileName)
 	expectedTfFilePath := fmt.Sprintf("../testdata/%s.tf", fileName)
-	assetPayload, err := ioutil.ReadFile(assetFilePath)
+	assetPayload, err := os.ReadFile(assetFilePath)
 	if err != nil {
 		return fmt.Errorf("cannot open %s, got: %s", assetFilePath, err)
 	}
-	want, err := ioutil.ReadFile(expectedTfFilePath)
+	want, err := os.ReadFile(expectedTfFilePath)
 	if err != nil {
 		return fmt.Errorf("cannot open %s, got: %s", expectedTfFilePath, err)
 	}
