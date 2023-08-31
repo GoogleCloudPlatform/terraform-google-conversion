@@ -243,7 +243,7 @@ It's easiest to set up a [test project](https://cloud.google.com/docs/terraform/
 ```
 4. Using the newly compiled binary, run
 ```bash
-  tfplan2cai convert example_product_resource.tfplan.json --project=[YOUR-PROJECT] > example_product_resource.json
+  ./bin/tfplan2cai convert example_product_resource.tfplan.json --project=[YOUR-PROJECT] > example_product_resource.json
 ```
 
 Once you have initial versions completed, you need to make the following replacements in the .tfplan.json and .json files:
