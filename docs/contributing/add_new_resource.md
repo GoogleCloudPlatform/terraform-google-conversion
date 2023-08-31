@@ -229,11 +229,11 @@ Terraform google conversion tests require setting up a few files in [`testdata/t
 - example_product_resource.tfplan.json
   - A plan json file generated from example_product_resource.tf.
 - example_product_resource.json
-  - The results of running [`terraform-google-conversion convert example_product_resource.tfplan.json`](./index.md#convert-command)
+  - The results of running [`tfplan2cai convert example_product_resource.tfplan.json`](./index.md#convert-command)
 
-It's easiest to set up a [test project](https://cloud.google.com/docs/terraform/policy-validation/validate-policies) to create the initial versions of these files. The idea is to use the terraform-google-conversion binary to invoke a convert operation, and replace the strings specific to your test project in the generated files. The following are typical steps that you can take:
+It's easiest to set up a [test project](https://cloud.google.com/docs/terraform/policy-validation/validate-policies) to create the initial versions of these files. The idea is to use the tfplan2cai binary to invoke a convert operation, and replace the strings specific to your test project in the generated files. The following are typical steps that you can take:
 
-1. Run `make build` to compile the terraform-google-conversion binary.
+1. Run `make build` to compile the tfplan2cai binary.
 2. Create `example_product_resource.tf`, where the content is the resource that you would like to test, and place it in a new folder.
 3. Within the new folder, run these commands to get resource files in json format.
 ```bash
@@ -243,7 +243,7 @@ It's easiest to set up a [test project](https://cloud.google.com/docs/terraform/
 ```
 4. Using the newly compiled binary, run
 ```bash
-  terraform-google-conversion convert example_product_resource.tfplan.json --project=[YOUR-PROJECT] > example_product_resource.json
+  tfplan2cai convert example_product_resource.tfplan.json --project=[YOUR-PROJECT] > example_product_resource.json
 ```
 
 Once you have initial versions completed, you need to make the following replacements in the .tfplan.json and .json files:

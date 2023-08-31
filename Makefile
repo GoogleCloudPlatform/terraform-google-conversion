@@ -1,7 +1,9 @@
 TERRAFORM_VERSION=0.12.31
 
+build_dir=./bin
+
 build:
-	go build ./...
+	GO111MODULE=on go build -o ${build_dir}/tfplan2cai ./cmd/tfplan2cai
 
 test:
 	GO111MODULE=on go test -short ./...
