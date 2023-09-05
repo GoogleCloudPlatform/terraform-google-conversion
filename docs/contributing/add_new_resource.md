@@ -222,7 +222,7 @@ You can then run `make test` inside your terraform-google-conversion repository 
 
 ### 2. Adding new tests
 
-Terraform google conversion tests require setting up a few files in [`testdata/templates`](https://github.com/GoogleCloudPlatform/terraform-google-conversion/tree/master/testdata/templates). Using the previous example, these files would be:
+Terraform google conversion tests require setting up a few files in [`tfplan2cai/testdata/templates`](https://github.com/GoogleCloudPlatform/terraform-google-conversion/tree/main/tfplan2cai/testdata/templates). Using the previous example, these files would be:
 
 - example_product_resource.tf
   - A basic terraform file that creates the minimum resources necessary for the google_product_resource resource.
