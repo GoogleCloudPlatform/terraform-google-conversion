@@ -112,7 +112,7 @@ func TestNewConfigExtractsEnvVars(t *testing.T) {
 					t.Fatalf("error setting env var %s=%s: %s", key, value, err)
 				}
 			}
-			if _, ok := existingEnv[c.envKey]; !ok {
+			if !isSet {
 				// c.envKey was previously unset.
 				err = os.Unsetenv(c.envKey)
 				if err != nil {
