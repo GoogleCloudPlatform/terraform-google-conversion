@@ -97,12 +97,6 @@ func GetComputeAddressApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("subnetwork"); !tpgresource.IsEmptyValue(reflect.ValueOf(subnetworkProp)) && (ok || !reflect.DeepEqual(v, subnetworkProp)) {
 		obj["subnetwork"] = subnetworkProp
 	}
-	labelsProp, err := expandComputeAddressLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	labelFingerprintProp, err := expandComputeAddressLabelFingerprint(d.Get("label_fingerprint"), d, config)
 	if err != nil {
 		return nil, err
@@ -132,6 +126,12 @@ func GetComputeAddressApiObject(d tpgresource.TerraformResourceData, config *tra
 		return nil, err
 	} else if v, ok := d.GetOkExists("ipv6_endpoint_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipv6EndpointTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6EndpointTypeProp)) {
 		obj["ipv6EndpointType"] = ipv6EndpointTypeProp
+	}
+	labelsProp, err := expandComputeAddressTerraformLabels(d.Get("terraform_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("terraform_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 	regionProp, err := expandComputeAddressRegion(d.Get("region"), d, config)
 	if err != nil {
@@ -175,17 +175,6 @@ func expandComputeAddressSubnetwork(v interface{}, d tpgresource.TerraformResour
 	return f.RelativeLink(), nil
 }
 
-func expandComputeAddressLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
 func expandComputeAddressLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -208,6 +197,17 @@ func expandComputeAddressIpVersion(v interface{}, d tpgresource.TerraformResourc
 
 func expandComputeAddressIpv6EndpointType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeAddressTerraformLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandComputeAddressRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
