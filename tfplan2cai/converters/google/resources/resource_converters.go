@@ -25,7 +25,6 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/cloudfunctions"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/cloudfunctions2"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/cloudiot"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/cloudrun"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/cloudrunv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/services/cloudtasks"
@@ -163,9 +162,6 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_cloudfunctions2_function_iam_policy":              {cloudfunctions2.ResourceConverterCloudfunctions2functionIamPolicy()},
 		"google_cloudfunctions2_function_iam_binding":             {cloudfunctions2.ResourceConverterCloudfunctions2functionIamBinding()},
 		"google_cloudfunctions2_function_iam_member":              {cloudfunctions2.ResourceConverterCloudfunctions2functionIamMember()},
-		"google_cloudiot_registry_iam_policy":                     {cloudiot.ResourceConverterCloudIotDeviceRegistryIamPolicy()},
-		"google_cloudiot_registry_iam_binding":                    {cloudiot.ResourceConverterCloudIotDeviceRegistryIamBinding()},
-		"google_cloudiot_registry_iam_member":                     {cloudiot.ResourceConverterCloudIotDeviceRegistryIamMember()},
 		"google_cloud_run_service_iam_policy":                     {cloudrun.ResourceConverterCloudRunServiceIamPolicy()},
 		"google_cloud_run_service_iam_binding":                    {cloudrun.ResourceConverterCloudRunServiceIamBinding()},
 		"google_cloud_run_service_iam_member":                     {cloudrun.ResourceConverterCloudRunServiceIamMember()},
