@@ -145,10 +145,10 @@ func GetComputeGlobalForwardingRuleApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("no_automate_dns_zone"); ok || !reflect.DeepEqual(v, noAutomateDnsZoneProp) {
 		obj["noAutomateDnsZone"] = noAutomateDnsZoneProp
 	}
-	labelsProp, err := expandComputeGlobalForwardingRuleTerraformLabels(d.Get("terraform_labels"), d, config)
+	labelsProp, err := expandComputeGlobalForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("terraform_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 
@@ -289,7 +289,7 @@ func expandComputeGlobalForwardingRuleNoAutomateDnsZone(v interface{}, d tpgreso
 	return v, nil
 }
 
-func expandComputeGlobalForwardingRuleTerraformLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandComputeGlobalForwardingRuleEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
