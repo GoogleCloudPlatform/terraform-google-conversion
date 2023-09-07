@@ -190,10 +190,10 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("ip_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipVersionProp)) && (ok || !reflect.DeepEqual(v, ipVersionProp)) {
 		obj["ipVersion"] = ipVersionProp
 	}
-	labelsProp, err := expandComputeForwardingRuleTerraformLabels(d.Get("terraform_labels"), d, config)
+	labelsProp, err := expandComputeForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("terraform_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	regionProp, err := expandComputeForwardingRuleRegion(d.Get("region"), d, config)
@@ -393,7 +393,7 @@ func expandComputeForwardingRuleIpVersion(v interface{}, d tpgresource.Terraform
 	return v, nil
 }
 
-func expandComputeForwardingRuleTerraformLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandComputeForwardingRuleEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

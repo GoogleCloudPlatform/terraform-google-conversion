@@ -66,12 +66,6 @@ func GetCloudRunV2ServiceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
-	annotationsProp, err := expandCloudRunV2ServiceAnnotations(d.Get("annotations"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
-	}
 	clientProp, err := expandCloudRunV2ServiceClient(d.Get("client"), d, config)
 	if err != nil {
 		return nil, err
@@ -120,6 +114,12 @@ func GetCloudRunV2ServiceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("traffic"); !tpgresource.IsEmptyValue(reflect.ValueOf(trafficProp)) && (ok || !reflect.DeepEqual(v, trafficProp)) {
 		obj["traffic"] = trafficProp
 	}
+	annotationsProp, err := expandCloudRunV2ServiceEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
+		obj["annotations"] = annotationsProp
+	}
 
 	return obj, nil
 }
@@ -129,17 +129,6 @@ func expandCloudRunV2ServiceDescription(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandCloudRunV2ServiceLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
-func expandCloudRunV2ServiceAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -1440,4 +1429,15 @@ func expandCloudRunV2ServiceTrafficPercent(v interface{}, d tpgresource.Terrafor
 
 func expandCloudRunV2ServiceTrafficTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudRunV2ServiceEffectiveAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

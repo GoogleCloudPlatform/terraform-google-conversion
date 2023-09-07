@@ -127,10 +127,10 @@ func GetComputeAddressApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("ipv6_endpoint_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipv6EndpointTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6EndpointTypeProp)) {
 		obj["ipv6EndpointType"] = ipv6EndpointTypeProp
 	}
-	labelsProp, err := expandComputeAddressTerraformLabels(d.Get("terraform_labels"), d, config)
+	labelsProp, err := expandComputeAddressEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("terraform_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	regionProp, err := expandComputeAddressRegion(d.Get("region"), d, config)
@@ -199,7 +199,7 @@ func expandComputeAddressIpv6EndpointType(v interface{}, d tpgresource.Terraform
 	return v, nil
 }
 
-func expandComputeAddressTerraformLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandComputeAddressEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
