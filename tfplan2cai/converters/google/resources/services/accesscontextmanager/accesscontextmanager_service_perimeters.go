@@ -73,7 +73,6 @@ func GetAccessContextManagerServicePerimetersApiObject(d tpgresource.TerraformRe
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimeters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -230,10 +229,12 @@ func expandAccessContextManagerServicePerimetersServicePerimetersStatus(v interf
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersStatusResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersStatusAccessLevels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -278,6 +279,7 @@ func expandAccessContextManagerServicePerimetersServicePerimetersStatusVpcAccess
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -344,6 +346,7 @@ func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPo
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressFromIdentities(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -411,6 +414,7 @@ func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPo
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersStatusIngressPoliciesIngressToResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -544,6 +548,7 @@ func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPol
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressFromIdentities(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -581,10 +586,12 @@ func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPol
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersStatusEgressPoliciesEgressToExternalResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -713,14 +720,17 @@ func expandAccessContextManagerServicePerimetersServicePerimetersSpec(v interfac
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecAccessLevels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecRestrictedServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -755,6 +765,7 @@ func expandAccessContextManagerServicePerimetersServicePerimetersSpecVpcAccessib
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecVpcAccessibleServicesAllowedServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -825,6 +836,7 @@ func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoli
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressFromIdentities(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -892,6 +904,7 @@ func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoli
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecIngressPoliciesIngressToResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -1025,6 +1038,7 @@ func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPolic
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressFromIdentities(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -1062,10 +1076,12 @@ func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPolic
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersSpecEgressPoliciesEgressToExternalResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
