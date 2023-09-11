@@ -148,11 +148,22 @@ func expandSecretManagerSecretReplication(v interface{}, d tpgresource.Terraform
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedAutomatic, err := expandSecretManagerSecretReplicationAutomatic(original["automatic"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedAutomatic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["automatic"] = transformedAutomatic
+	if _, ok := d.GetOk("replication.0.automatic"); ok {
+		transformedAutomatic, err := expandSecretManagerSecretReplicationAutomatic(original["automatic"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAutomatic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["automatic"] = transformedAutomatic
+		}
+	}
+
+	if _, ok := d.GetOk("replication.0.auto"); ok {
+		transformedAuto, err := expandSecretManagerSecretReplicationAuto(original["auto"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["automatic"] = transformedAuto
+		}
 	}
 
 	transformedUserManaged, err := expandSecretManagerSecretReplicationUserManaged(original["user_managed"], d, config)
@@ -171,6 +182,53 @@ func expandSecretManagerSecretReplicationAutomatic(v interface{}, d tpgresource.
 	}
 
 	return struct{}{}, nil
+}
+
+func expandSecretManagerSecretReplicationAuto(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCustomerManagedEncryption, err := expandSecretManagerSecretReplicationAutoCustomerManagedEncryption(original["customer_managed_encryption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCustomerManagedEncryption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["customerManagedEncryption"] = transformedCustomerManagedEncryption
+	}
+
+	return transformed, nil
+}
+
+func expandSecretManagerSecretReplicationAutoCustomerManagedEncryption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsKeyName, err := expandSecretManagerSecretReplicationAutoCustomerManagedEncryptionKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	return transformed, nil
+}
+
+func expandSecretManagerSecretReplicationAutoCustomerManagedEncryptionKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSecretManagerSecretReplicationUserManaged(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
