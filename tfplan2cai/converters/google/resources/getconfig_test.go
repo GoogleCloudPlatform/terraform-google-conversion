@@ -106,17 +106,17 @@ func TestNewConfigExtractsEnvVars(t *testing.T) {
 			assert.Equal(t, c.expected, c.getConfigValue(cfg))
 
 			// Restore previous states of environment variables.
-			for key, value := range existingEnv {
-				err = os.Setenv(key, value)
-				if err != nil {
-					t.Fatalf("error setting env var %s=%s: %s", key, value, err)
-				}
-			}
 			if !isSet {
 				// c.envKey was previously unset.
 				err = os.Unsetenv(c.envKey)
 				if err != nil {
 					t.Fatalf("error unsetting env var %s: %s", c.envKey, err)
+				}
+			}
+			for key, value := range existingEnv {
+				err = os.Setenv(key, value)
+				if err != nil {
+					t.Fatalf("error setting env var %s=%s: %s", key, value, err)
 				}
 			}
 		})
