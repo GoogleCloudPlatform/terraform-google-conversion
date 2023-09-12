@@ -1,10 +1,11 @@
-package cai2hcl
+package resources
 
 import (
 	"encoding/json"
 	"fmt"
 	"strings"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/cai2hcl/converters/google/common"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
 	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -26,29 +27,29 @@ type ProjectConverter struct {
 }
 
 // NewProjectConverter returns an HCL converter for compute project.
-func NewProjectConverter() *ProjectConverter {
+func NewProjectConverter(name string, schema map[string]*tfschema.Schema) common.Converter {
 	return &ProjectConverter{
-		name:     "google_project",
-		schema:   schemaProvider.ResourcesMap["google_project"].Schema,
+		name:     name,
+		schema:   schema,
 		billings: make(map[string]string),
 	}
 }
 
 // Convert converts asset resource data.
-func (c *ProjectConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBlock, error) {
+func (c *ProjectConverter) Convert(assets []*caiasset.Asset) ([]*common.HCLResourceBlock, error) {
 	// process billing info
 	for _, asset := range assets {
 		if asset == nil {
 			continue
 		}
 		if asset.Type == "cloudbilling.googleapis.com/ProjectBillingInfo" {
-			project := parseFieldValue(asset.Name, "projects")
+			project := common.ParseFieldValue(asset.Name, "projects")
 			projectAssetName := fmt.Sprintf("//cloudresourcemanager.googleapis.com/projects/%s", project)
 			c.billings[projectAssetName] = c.convertBilling(asset)
 		}
 	}
 
-	var blocks []*HCLResourceBlock
+	var blocks []*common.HCLResourceBlock
 	for _, asset := range assets {
 		if asset == nil {
 			continue
@@ -74,18 +75,18 @@ func (c *ProjectConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBloc
 	return blocks, nil
 }
 
-func (c *ProjectConverter) convertIAM(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+func (c *ProjectConverter) convertIAM(asset *caiasset.Asset) (*common.HCLResourceBlock, error) {
 	if asset.IAMPolicy == nil {
 		return nil, fmt.Errorf("asset IAM policy is nil")
 	}
 
-	project := parseFieldValue(asset.Name, "projects")
+	project := common.ParseFieldValue(asset.Name, "projects")
 	policyData, err := json.Marshal(asset.IAMPolicy)
 	if err != nil {
 		return nil, err
 	}
 
-	return &HCLResourceBlock{
+	return &common.HCLResourceBlock{
 		Labels: []string{
 			c.name + "_iam_policy",
 			project + "_iam_policy",
@@ -104,12 +105,12 @@ func (c *ProjectConverter) convertBilling(asset *caiasset.Asset) string {
 	return ""
 }
 
-func (c *ProjectConverter) convertResourceData(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+func (c *ProjectConverter) convertResourceData(asset *caiasset.Asset) (*common.HCLResourceBlock, error) {
 	if asset == nil || asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
 	var project *cloudresourcemanager.Project
-	if err := decodeJSON(asset.Resource.Data, &project); err != nil {
+	if err := common.DecodeJSON(asset.Resource.Data, &project); err != nil {
 		return nil, err
 	}
 
@@ -118,20 +119,20 @@ func (c *ProjectConverter) convertResourceData(asset *caiasset.Asset) (*HCLResou
 	hclData["project_id"] = project.ProjectId
 	hclData["labels"] = project.Labels
 	if strings.Contains(asset.Resource.Parent, "folders/") {
-		hclData["folder_id"] = parseFieldValue(asset.Resource.Parent, "folders")
+		hclData["folder_id"] = common.ParseFieldValue(asset.Resource.Parent, "folders")
 	} else if strings.Contains(asset.Resource.Parent, "organizations/") {
-		hclData["org_id"] = parseFieldValue(asset.Resource.Parent, "organizations")
+		hclData["org_id"] = common.ParseFieldValue(asset.Resource.Parent, "organizations")
 	}
 
 	if billingAccount, ok := c.billings[asset.Name]; ok {
 		hclData["billing_account"] = billingAccount
 	}
 
-	ctyVal, err := mapToCtyValWithSchema(hclData, c.schema)
+	ctyVal, err := common.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
 		return nil, err
 	}
-	return &HCLResourceBlock{
+	return &common.HCLResourceBlock{
 		Labels: []string{c.name, project.ProjectId},
 		Value:  ctyVal,
 	}, nil

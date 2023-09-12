@@ -4,15 +4,54 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
+
 	"github.com/google/go-cmp/cmp"
 	"go.uber.org/zap"
 )
 
-func assertTestData(fileName string) (err error) {
-	assetFilePath := fmt.Sprintf("../testdata/%s.json", fileName)
-	expectedTfFilePath := fmt.Sprintf("../testdata/%s.tf", fileName)
+type TestCase struct {
+	name         string
+	sourceFolder string
+}
+
+var testDataFileNames = []string{
+	"compute_instance_iam",
+	"full_compute_instance",
+	"project_create",
+	"project_iam",
+	"full_compute_forwarding_rule",
+}
+
+func TestCai2HclConvert(t *testing.T) {
+	cases := []TestCase{}
+
+	for _, name := range testDataFileNames {
+		cases = append(cases, TestCase{name: name, sourceFolder: "./testdata"})
+	}
+
+	for i := range cases {
+		c := cases[i]
+
+		t.Run(c.name, func(t *testing.T) {
+			t.Parallel()
+
+			err := assertTestData(c)
+			if err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
+func assertTestData(testCase TestCase) (err error) {
+	fileName := testCase.name
+	folder := testCase.sourceFolder
+
+	assetFilePath := fmt.Sprintf("%s/%s.json", folder, fileName)
+	expectedTfFilePath := fmt.Sprintf("%s/%s.tf", folder, fileName)
 	assetPayload, err := os.ReadFile(assetFilePath)
 	if err != nil {
 		return fmt.Errorf("cannot open %s, got: %s", assetFilePath, err)

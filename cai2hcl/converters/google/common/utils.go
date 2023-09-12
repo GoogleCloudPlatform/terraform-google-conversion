@@ -1,4 +1,4 @@
-package cai2hcl
+package common
 
 import (
 	"encoding/json"
@@ -11,18 +11,19 @@ import (
 	ctyjson "github.com/zclconf/go-cty/cty/json"
 )
 
-func parseFieldValue(str string, field string) string {
-	strList := strings.Split(str, "/")
-	for ix, item := range strList {
-		if item == field && ix+1 < len(strList) {
-			return strList[ix+1]
+// Extracts named part from resource url.
+func ParseFieldValue(url string, name string) string {
+	fragments := strings.Split(url, "/")
+	for ix, item := range fragments {
+		if item == name && ix+1 < len(fragments) {
+			return fragments[ix+1]
 		}
 	}
 	return ""
 }
 
-// decodeJSON decodes the map object into the target struct.
-func decodeJSON(data map[string]interface{}, v interface{}) error {
+// Decodes the map object into the target struct.
+func DecodeJSON(data map[string]interface{}, v interface{}) error {
 	b, err := json.Marshal(data)
 	if err != nil {
 		return err
@@ -33,7 +34,8 @@ func decodeJSON(data map[string]interface{}, v interface{}) error {
 	return nil
 }
 
-func mapToCtyValWithSchema(m map[string]interface{}, s map[string]*schema.Schema) (cty.Value, error) {
+// Converts resource from untyped map format to TF JSON.
+func MapToCtyValWithSchema(m map[string]interface{}, s map[string]*schema.Schema) (cty.Value, error) {
 	b, err := json.Marshal(&m)
 	if err != nil {
 		return cty.NilVal, fmt.Errorf("error marshaling map as JSON: %v", err)

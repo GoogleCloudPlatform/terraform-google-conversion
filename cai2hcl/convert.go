@@ -1,4 +1,3 @@
-// Package cai2hcl converts CAI assets to hcl bytes.
 package cai2hcl
 
 import (
@@ -28,7 +27,7 @@ func Convert(assets []*caiasset.Asset, options *Options) ([]byte, error) {
 	// tf -> cai has 1:N mappings occasionally
 	groups := make(map[string][]*caiasset.Asset)
 	for _, asset := range assets {
-		name, ok := converterNames[asset.Type]
+		name, ok := ConverterNames[asset.Type]
 		if !ok {
 			continue
 		}
@@ -38,7 +37,7 @@ func Convert(assets []*caiasset.Asset, options *Options) ([]byte, error) {
 	f := hclwrite.NewFile()
 	rootBody := f.Body()
 	for name, v := range groups {
-		converter, ok := converterMap[name]
+		converter, ok := ConverterMap[name]
 		if !ok {
 			continue
 		}
