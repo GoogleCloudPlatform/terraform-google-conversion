@@ -127,6 +127,12 @@ func GetContainerAttachedClusterApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("monitoring_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(monitoringConfigProp)) && (ok || !reflect.DeepEqual(v, monitoringConfigProp)) {
 		obj["monitoringConfig"] = monitoringConfigProp
 	}
+	binaryAuthorizationProp, err := expandContainerAttachedClusterBinaryAuthorization(d.Get("binary_authorization"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("binary_authorization"); !tpgresource.IsEmptyValue(reflect.ValueOf(binaryAuthorizationProp)) && (ok || !reflect.DeepEqual(v, binaryAuthorizationProp)) {
+		obj["binaryAuthorization"] = binaryAuthorizationProp
+	}
 
 	return obj, nil
 }
@@ -361,5 +367,33 @@ func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfig(v int
 }
 
 func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandContainerAttachedClusterBinaryAuthorization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEvaluationMode, err := expandContainerAttachedClusterBinaryAuthorizationEvaluationMode(original["evaluation_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEvaluationMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["evaluationMode"] = transformedEvaluationMode
+	}
+
+	return transformed, nil
+}
+
+func expandContainerAttachedClusterBinaryAuthorizationEvaluationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
