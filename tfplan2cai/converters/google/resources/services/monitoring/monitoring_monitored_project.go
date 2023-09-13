@@ -16,6 +16,7 @@ package monitoring
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -96,10 +97,14 @@ func GetMonitoringMonitoredProjectApiObject(d tpgresource.TerraformResourceData,
 
 func resourceMonitoringMonitoredProjectEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	name := d.Get("name").(string)
+	log.Printf("[DEBUG] Encoded monitored project name: %s", name)
 	name = tpgresource.GetResourceNameFromSelfLink(name)
+	log.Printf("[DEBUG] Encoded monitored project resource name: %s", name)
 	d.Set("name", name)
 	metricsScope := d.Get("metrics_scope").(string)
+	log.Printf("[DEBUG] Encoded monitored project metricsScope: %s", metricsScope)
 	metricsScope = tpgresource.GetResourceNameFromSelfLink(metricsScope)
+	log.Printf("[DEBUG] Encoded monitored project metricsScope resource name: %s", metricsScope)
 	d.Set("metrics_scope", metricsScope)
 	obj["name"] = fmt.Sprintf("locations/global/metricsScopes/%s/projects/%s", metricsScope, name)
 	return obj, nil
