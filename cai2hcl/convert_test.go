@@ -1,4 +1,4 @@
-package cai2hcl
+package convert
 
 import (
 	"encoding/json"
