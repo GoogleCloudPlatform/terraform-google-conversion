@@ -84,6 +84,12 @@ func GetFirestoreDatabaseApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("app_engine_integration_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(appEngineIntegrationModeProp)) && (ok || !reflect.DeepEqual(v, appEngineIntegrationModeProp)) {
 		obj["appEngineIntegrationMode"] = appEngineIntegrationModeProp
 	}
+	pointInTimeRecoveryEnablementProp, err := expandFirestoreDatabasePointInTimeRecoveryEnablement(d.Get("point_in_time_recovery_enablement"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("point_in_time_recovery_enablement"); !tpgresource.IsEmptyValue(reflect.ValueOf(pointInTimeRecoveryEnablementProp)) && (ok || !reflect.DeepEqual(v, pointInTimeRecoveryEnablementProp)) {
+		obj["pointInTimeRecoveryEnablement"] = pointInTimeRecoveryEnablementProp
+	}
 	etagProp, err := expandFirestoreDatabaseEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
@@ -111,6 +117,10 @@ func expandFirestoreDatabaseConcurrencyMode(v interface{}, d tpgresource.Terrafo
 }
 
 func expandFirestoreDatabaseAppEngineIntegrationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreDatabasePointInTimeRecoveryEnablement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

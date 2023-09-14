@@ -138,6 +138,12 @@ func GetGkeonpremVmwareClusterApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("enable_control_plane_v2"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableControlPlaneV2Prop)) && (ok || !reflect.DeepEqual(v, enableControlPlaneV2Prop)) {
 		obj["enableControlPlaneV2"] = enableControlPlaneV2Prop
 	}
+	upgradePolicyProp, err := expandGkeonpremVmwareClusterUpgradePolicy(d.Get("upgrade_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("upgrade_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(upgradePolicyProp)) && (ok || !reflect.DeepEqual(v, upgradePolicyProp)) {
+		obj["upgradePolicy"] = upgradePolicyProp
+	}
 
 	return obj, nil
 }
@@ -1036,5 +1042,28 @@ func expandGkeonpremVmwareClusterAuthorizationAdminUsersUsername(v interface{}, 
 }
 
 func expandGkeonpremVmwareClusterEnableControlPlaneV2(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareClusterUpgradePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedControlPlaneOnly, err := expandGkeonpremVmwareClusterUpgradePolicyControlPlaneOnly(original["control_plane_only"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedControlPlaneOnly); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["controlPlaneOnly"] = transformedControlPlaneOnly
+	}
+
+	return transformed, nil
+}
+
+func expandGkeonpremVmwareClusterUpgradePolicyControlPlaneOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
