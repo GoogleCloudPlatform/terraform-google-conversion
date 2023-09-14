@@ -144,6 +144,18 @@ func GetGkeonpremBareMetalClusterApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("security_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(securityConfigProp)) && (ok || !reflect.DeepEqual(v, securityConfigProp)) {
 		obj["securityConfig"] = securityConfigProp
 	}
+	binaryAuthorizationProp, err := expandGkeonpremBareMetalClusterBinaryAuthorization(d.Get("binary_authorization"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("binary_authorization"); !tpgresource.IsEmptyValue(reflect.ValueOf(binaryAuthorizationProp)) && (ok || !reflect.DeepEqual(v, binaryAuthorizationProp)) {
+		obj["binaryAuthorization"] = binaryAuthorizationProp
+	}
+	upgradePolicyProp, err := expandGkeonpremBareMetalClusterUpgradePolicy(d.Get("upgrade_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("upgrade_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(upgradePolicyProp)) && (ok || !reflect.DeepEqual(v, upgradePolicyProp)) {
+		obj["upgradePolicy"] = upgradePolicyProp
+	}
 
 	return obj, nil
 }
@@ -1616,5 +1628,51 @@ func expandGkeonpremBareMetalClusterSecurityConfigAuthorizationAdminUsers(v inte
 }
 
 func expandGkeonpremBareMetalClusterSecurityConfigAuthorizationAdminUsersUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremBareMetalClusterBinaryAuthorization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEvaluationMode, err := expandGkeonpremBareMetalClusterBinaryAuthorizationEvaluationMode(original["evaluation_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEvaluationMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["evaluationMode"] = transformedEvaluationMode
+	}
+
+	return transformed, nil
+}
+
+func expandGkeonpremBareMetalClusterBinaryAuthorizationEvaluationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremBareMetalClusterUpgradePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPolicy, err := expandGkeonpremBareMetalClusterUpgradePolicyPolicy(original["policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["policy"] = transformedPolicy
+	}
+
+	return transformed, nil
+}
+
+func expandGkeonpremBareMetalClusterUpgradePolicyPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
