@@ -129,5 +129,8 @@ func expandSecretManagerSecretVersionPayloadSecretData(v interface{}, d tpgresou
 		return nil, nil
 	}
 
+	if d.Get("is_secret_data_base64").(bool) {
+		return v, nil
+	}
 	return base64.StdEncoding.EncodeToString([]byte(v.(string))), nil
 }
