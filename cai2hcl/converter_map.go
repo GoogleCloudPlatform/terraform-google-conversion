@@ -5,7 +5,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/cai2hcl/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/cai2hcl/services/resourcemanager"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta"
+	tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/provider"
 )
 
 var ConverterNames = map[string]string{
