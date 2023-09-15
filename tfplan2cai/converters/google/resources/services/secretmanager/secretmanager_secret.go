@@ -148,22 +148,11 @@ func expandSecretManagerSecretReplication(v interface{}, d tpgresource.Terraform
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	if _, ok := d.GetOk("replication.0.automatic"); ok {
-		transformedAutomatic, err := expandSecretManagerSecretReplicationAutomatic(original["automatic"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedAutomatic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["automatic"] = transformedAutomatic
-		}
-	}
-
-	if _, ok := d.GetOk("replication.0.auto"); ok {
-		transformedAuto, err := expandSecretManagerSecretReplicationAuto(original["auto"], d, config)
-		if err != nil {
-			return nil, err
-		} else {
-			transformed["automatic"] = transformedAuto
-		}
+	transformedAuto, err := expandSecretManagerSecretReplicationAuto(original["auto"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["automatic"] = transformedAuto
 	}
 
 	transformedUserManaged, err := expandSecretManagerSecretReplicationUserManaged(original["user_managed"], d, config)
@@ -174,14 +163,6 @@ func expandSecretManagerSecretReplication(v interface{}, d tpgresource.Terraform
 	}
 
 	return transformed, nil
-}
-
-func expandSecretManagerSecretReplicationAutomatic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil || !v.(bool) {
-		return nil, nil
-	}
-
-	return struct{}{}, nil
 }
 
 func expandSecretManagerSecretReplicationAuto(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
