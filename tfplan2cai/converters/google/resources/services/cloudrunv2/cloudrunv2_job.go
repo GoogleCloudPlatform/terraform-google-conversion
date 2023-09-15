@@ -1198,6 +1198,13 @@ func expandCloudRunV2JobTemplateTemplateVpcAccess(v interface{}, d tpgresource.T
 		transformed["egress"] = transformedEgress
 	}
 
+	transformedNetworkInterfaces, err := expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfaces(original["network_interfaces"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkInterfaces); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkInterfaces"] = transformedNetworkInterfaces
+	}
+
 	return transformed, nil
 }
 
@@ -1206,6 +1213,54 @@ func expandCloudRunV2JobTemplateTemplateVpcAccessConnector(v interface{}, d tpgr
 }
 
 func expandCloudRunV2JobTemplateTemplateVpcAccessEgress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfaces(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedNetwork, err := expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfacesNetwork(original["network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["network"] = transformedNetwork
+		}
+
+		transformedSubnetwork, err := expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfacesSubnetwork(original["subnetwork"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["subnetwork"] = transformedSubnetwork
+		}
+
+		transformedTags, err := expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfacesTags(original["tags"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tags"] = transformedTags
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfacesNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfacesSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfacesTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
