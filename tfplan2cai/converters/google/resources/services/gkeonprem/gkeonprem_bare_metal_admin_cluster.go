@@ -66,12 +66,6 @@ func GetGkeonpremBareMetalAdminClusterApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("bare_metal_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(bareMetalVersionProp)) && (ok || !reflect.DeepEqual(v, bareMetalVersionProp)) {
 		obj["bareMetalVersion"] = bareMetalVersionProp
 	}
-	annotationsProp, err := expandGkeonpremBareMetalAdminClusterAnnotations(d.Get("annotations"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
-	}
 	networkConfigProp, err := expandGkeonpremBareMetalAdminClusterNetworkConfig(d.Get("network_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -132,6 +126,12 @@ func GetGkeonpremBareMetalAdminClusterApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("security_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(securityConfigProp)) && (ok || !reflect.DeepEqual(v, securityConfigProp)) {
 		obj["securityConfig"] = securityConfigProp
 	}
+	annotationsProp, err := expandGkeonpremBareMetalAdminClusterEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
+		obj["annotations"] = annotationsProp
+	}
 
 	return obj, nil
 }
@@ -142,17 +142,6 @@ func expandGkeonpremBareMetalAdminClusterDescription(v interface{}, d tpgresourc
 
 func expandGkeonpremBareMetalAdminClusterBareMetalVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandGkeonpremBareMetalAdminClusterAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandGkeonpremBareMetalAdminClusterNetworkConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -851,4 +840,15 @@ func expandGkeonpremBareMetalAdminClusterSecurityConfigAuthorizationAdminUsers(v
 
 func expandGkeonpremBareMetalAdminClusterSecurityConfigAuthorizationAdminUsersUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandGkeonpremBareMetalAdminClusterEffectiveAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
