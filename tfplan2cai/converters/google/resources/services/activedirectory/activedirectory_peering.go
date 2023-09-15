@@ -54,12 +54,6 @@ func GetActiveDirectoryPeeringCaiObject(d tpgresource.TerraformResourceData, con
 
 func GetActiveDirectoryPeeringApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandActiveDirectoryPeeringLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	authorizedNetworkProp, err := expandActiveDirectoryPeeringAuthorizedNetwork(d.Get("authorized_network"), d, config)
 	if err != nil {
 		return nil, err
@@ -78,19 +72,14 @@ func GetActiveDirectoryPeeringApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("status_message"); !tpgresource.IsEmptyValue(reflect.ValueOf(statusMessageProp)) && (ok || !reflect.DeepEqual(v, statusMessageProp)) {
 		obj["statusMessage"] = statusMessageProp
 	}
+	labelsProp, err := expandActiveDirectoryPeeringEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
-}
-
-func expandActiveDirectoryPeeringLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandActiveDirectoryPeeringAuthorizedNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -103,4 +92,15 @@ func expandActiveDirectoryPeeringDomainResource(v interface{}, d tpgresource.Ter
 
 func expandActiveDirectoryPeeringStatusMessage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandActiveDirectoryPeeringEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

@@ -66,10 +66,10 @@ func GetApiGatewayGatewayApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("api_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiConfigProp)) && (ok || !reflect.DeepEqual(v, apiConfigProp)) {
 		obj["apiConfig"] = apiConfigProp
 	}
-	labelsProp, err := expandApiGatewayGatewayLabels(d.Get("labels"), d, config)
+	labelsProp, err := expandApiGatewayGatewayEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 
@@ -84,7 +84,7 @@ func expandApiGatewayGatewayApiConfig(v interface{}, d tpgresource.TerraformReso
 	return v, nil
 }
 
-func expandApiGatewayGatewayLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandApiGatewayGatewayEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

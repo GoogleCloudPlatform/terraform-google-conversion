@@ -60,17 +60,17 @@ func GetBeyondcorpAppConnectorApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
-	labelsProp, err := expandBeyondcorpAppConnectorLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	principalInfoProp, err := expandBeyondcorpAppConnectorPrincipalInfo(d.Get("principal_info"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("principal_info"); !tpgresource.IsEmptyValue(reflect.ValueOf(principalInfoProp)) && (ok || !reflect.DeepEqual(v, principalInfoProp)) {
 		obj["principalInfo"] = principalInfoProp
+	}
+	labelsProp, err := expandBeyondcorpAppConnectorEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 
 	return obj, nil
@@ -78,17 +78,6 @@ func GetBeyondcorpAppConnectorApiObject(d tpgresource.TerraformResourceData, con
 
 func expandBeyondcorpAppConnectorDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandBeyondcorpAppConnectorLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandBeyondcorpAppConnectorPrincipalInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -131,4 +120,15 @@ func expandBeyondcorpAppConnectorPrincipalInfoServiceAccount(v interface{}, d tp
 
 func expandBeyondcorpAppConnectorPrincipalInfoServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandBeyondcorpAppConnectorEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
