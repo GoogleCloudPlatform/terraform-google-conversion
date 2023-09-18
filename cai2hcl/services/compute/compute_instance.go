@@ -1,4 +1,4 @@
-package cai2hcl
+package compute
 
 import (
 	"encoding/json"
@@ -6,6 +6,7 @@ import (
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/cai2hcl/common"
 	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/zclconf/go-cty/cty"
 	"google.golang.org/api/compute/v1"
@@ -21,16 +22,16 @@ type ComputeInstanceConverter struct {
 }
 
 // NewComputeInstanceConverter returns an HCL converter for compute instance.
-func NewComputeInstanceConverter() *ComputeInstanceConverter {
+func NewComputeInstanceConverter(name string, schema map[string]*tfschema.Schema) common.Converter {
 	return &ComputeInstanceConverter{
-		name:   "google_compute_instance",
-		schema: schemaProvider.ResourcesMap["google_compute_instance"].Schema,
+		name:   name,
+		schema: schema,
 	}
 }
 
 // Convert converts asset to HCL resource blocks.
-func (c *ComputeInstanceConverter) Convert(assets []*caiasset.Asset) ([]*HCLResourceBlock, error) {
-	var blocks []*HCLResourceBlock
+func (c *ComputeInstanceConverter) Convert(assets []*caiasset.Asset) ([]*common.HCLResourceBlock, error) {
+	var blocks []*common.HCLResourceBlock
 	for _, asset := range assets {
 		if asset == nil {
 			continue
@@ -53,20 +54,20 @@ func (c *ComputeInstanceConverter) Convert(assets []*caiasset.Asset) ([]*HCLReso
 	return blocks, nil
 }
 
-func (c *ComputeInstanceConverter) convertIAM(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+func (c *ComputeInstanceConverter) convertIAM(asset *caiasset.Asset) (*common.HCLResourceBlock, error) {
 	if asset == nil || asset.IAMPolicy == nil {
 		return nil, fmt.Errorf("asset IAM policy is nil")
 	}
-	zone := parseFieldValue(asset.Name, "zones")
-	instanceName := parseFieldValue(asset.Name, "instances")
-	project := parseFieldValue(asset.Name, "projects")
+	zone := common.ParseFieldValue(asset.Name, "zones")
+	instanceName := common.ParseFieldValue(asset.Name, "instances")
+	project := common.ParseFieldValue(asset.Name, "projects")
 
 	policyData, err := json.Marshal(asset.IAMPolicy)
 	if err != nil {
 		return nil, err
 	}
 
-	return &HCLResourceBlock{
+	return &common.HCLResourceBlock{
 		Labels: []string{
 			c.name + "_iam_policy",
 			instanceName + "_iam_policy",
@@ -80,13 +81,13 @@ func (c *ComputeInstanceConverter) convertIAM(asset *caiasset.Asset) (*HCLResour
 	}, nil
 }
 
-func (c *ComputeInstanceConverter) convertResourceData(asset *caiasset.Asset) (*HCLResourceBlock, error) {
+func (c *ComputeInstanceConverter) convertResourceData(asset *caiasset.Asset) (*common.HCLResourceBlock, error) {
 	if asset == nil || asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
 
 	var instance *compute.Instance
-	if err := decodeJSON(asset.Resource.Data, &instance); err != nil {
+	if err := common.DecodeJSON(asset.Resource.Data, &instance); err != nil {
 		return nil, err
 	}
 
@@ -98,7 +99,7 @@ func (c *ComputeInstanceConverter) convertResourceData(asset *caiasset.Asset) (*
 	hclData["boot_disk"] = bootDisks
 	hclData["scratch_disk"] = scratchDisks
 	hclData["attached_disk"] = attachedDisks
-	hclData["machine_type"] = parseFieldValue(instance.MachineType, "machineTypes")
+	hclData["machine_type"] = common.ParseFieldValue(instance.MachineType, "machineTypes")
 	hclData["name"] = instance.Name
 	hclData["network_interface"] = flattenNetworkInterfaces(instance.NetworkInterfaces)
 	hclData["tags"] = instance.Tags.Items
@@ -116,16 +117,16 @@ func (c *ComputeInstanceConverter) convertResourceData(asset *caiasset.Asset) (*
 	hclData["metadata"] = convertMetadata(instance.Metadata)
 
 	if instance.Zone == "" {
-		hclData["zone"] = parseFieldValue(asset.Name, "zones")
+		hclData["zone"] = common.ParseFieldValue(asset.Name, "zones")
 	} else {
-		hclData["zone"] = parseFieldValue(instance.Zone, "zones")
+		hclData["zone"] = common.ParseFieldValue(instance.Zone, "zones")
 	}
 
-	ctyVal, err := mapToCtyValWithSchema(hclData, c.schema)
+	ctyVal, err := common.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
 		return nil, err
 	}
-	return &HCLResourceBlock{
+	return &common.HCLResourceBlock{
 		Labels: []string{c.name, instance.Name},
 		Value:  ctyVal,
 	}, nil
@@ -158,7 +159,7 @@ func convertBootDisk(disk *compute.AttachedDisk) map[string]interface{} {
 		data["initialize_params"] = []map[string]interface{}{
 			{
 				"size":   disk.InitializeParams.DiskSizeGb,
-				"type":   parseFieldValue(disk.InitializeParams.DiskType, "diskTypes"),
+				"type":   common.ParseFieldValue(disk.InitializeParams.DiskType, "diskTypes"),
 				"image":  disk.InitializeParams.SourceImage,
 				"labels": disk.InitializeParams.Labels,
 			},
