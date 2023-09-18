@@ -66,12 +66,6 @@ func GetPrivatecaCertificateApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("certificate_template"); !tpgresource.IsEmptyValue(reflect.ValueOf(certificateTemplateProp)) && (ok || !reflect.DeepEqual(v, certificateTemplateProp)) {
 		obj["certificateTemplate"] = certificateTemplateProp
 	}
-	labelsProp, err := expandPrivatecaCertificateLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	pemCsrProp, err := expandPrivatecaCertificatePemCsr(d.Get("pem_csr"), d, config)
 	if err != nil {
 		return nil, err
@@ -84,6 +78,12 @@ func GetPrivatecaCertificateApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("config"); !tpgresource.IsEmptyValue(reflect.ValueOf(configProp)) && (ok || !reflect.DeepEqual(v, configProp)) {
 		obj["config"] = configProp
 	}
+	labelsProp, err := expandPrivatecaCertificateEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
 }
@@ -94,17 +94,6 @@ func expandPrivatecaCertificateLifetime(v interface{}, d tpgresource.TerraformRe
 
 func expandPrivatecaCertificateCertificateTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandPrivatecaCertificateLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandPrivatecaCertificatePemCsr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -411,4 +400,15 @@ func expandPrivatecaCertificateConfigPublicKeyKey(v interface{}, d tpgresource.T
 
 func expandPrivatecaCertificateConfigPublicKeyFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandPrivatecaCertificateEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

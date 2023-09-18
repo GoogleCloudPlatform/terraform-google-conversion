@@ -158,10 +158,10 @@ func GetTPUNodeApiObject(d tpgresource.TerraformResourceData, config *transport_
 	} else if v, ok := d.GetOkExists("scheduling_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(schedulingConfigProp)) && (ok || !reflect.DeepEqual(v, schedulingConfigProp)) {
 		obj["schedulingConfig"] = schedulingConfigProp
 	}
-	labelsProp, err := expandTPUNodeLabels(d.Get("labels"), d, config)
+	labelsProp, err := expandTPUNodeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 
@@ -219,7 +219,7 @@ func expandTPUNodeSchedulingConfigPreemptible(v interface{}, d tpgresource.Terra
 	return v, nil
 }
 
-func expandTPUNodeLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandTPUNodeEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
