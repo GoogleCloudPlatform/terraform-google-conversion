@@ -55,12 +55,6 @@ func GetVertexAIFeaturestoreEntitytypeFeatureCaiObject(d tpgresource.TerraformRe
 
 func GetVertexAIFeaturestoreEntitytypeFeatureApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandVertexAIFeaturestoreEntitytypeFeatureLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	descriptionProp, err := expandVertexAIFeaturestoreEntitytypeFeatureDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -72,6 +66,12 @@ func GetVertexAIFeaturestoreEntitytypeFeatureApiObject(d tpgresource.TerraformRe
 		return nil, err
 	} else if v, ok := d.GetOkExists("value_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(valueTypeProp)) && (ok || !reflect.DeepEqual(v, valueTypeProp)) {
 		obj["valueType"] = valueTypeProp
+	}
+	labelsProp, err := expandVertexAIFeaturestoreEntitytypeFeatureEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 
 	return resourceVertexAIFeaturestoreEntitytypeFeatureEncoder(d, config, obj)
@@ -88,7 +88,15 @@ func resourceVertexAIFeaturestoreEntitytypeFeatureEncoder(d tpgresource.Terrafor
 	return obj, nil
 }
 
-func expandVertexAIFeaturestoreEntitytypeFeatureLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandVertexAIFeaturestoreEntitytypeFeatureDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeaturestoreEntitytypeFeatureValueType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeaturestoreEntitytypeFeatureEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -97,12 +105,4 @@ func expandVertexAIFeaturestoreEntitytypeFeatureLabels(v interface{}, d tpgresou
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandVertexAIFeaturestoreEntitytypeFeatureDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandVertexAIFeaturestoreEntitytypeFeatureValueType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
