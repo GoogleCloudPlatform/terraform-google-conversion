@@ -114,10 +114,10 @@ func GetPrivatecaCertificateAuthorityApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("gcs_bucket"); !tpgresource.IsEmptyValue(reflect.ValueOf(gcsBucketProp)) && (ok || !reflect.DeepEqual(v, gcsBucketProp)) {
 		obj["gcsBucket"] = gcsBucketProp
 	}
-	labelsProp, err := expandPrivatecaCertificateAuthorityLabels(d.Get("labels"), d, config)
+	labelsProp, err := expandPrivatecaCertificateAuthorityEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 
@@ -484,7 +484,7 @@ func expandPrivatecaCertificateAuthorityGcsBucket(v interface{}, d tpgresource.T
 	return v, nil
 }
 
-func expandPrivatecaCertificateAuthorityLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandPrivatecaCertificateAuthorityEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

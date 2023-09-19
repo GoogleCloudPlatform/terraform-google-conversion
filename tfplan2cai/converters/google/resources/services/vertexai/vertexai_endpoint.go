@@ -66,12 +66,6 @@ func GetVertexAIEndpointApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	labelsProp, err := expandVertexAIEndpointLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	encryptionSpecProp, err := expandVertexAIEndpointEncryptionSpec(d.Get("encryption_spec"), d, config)
 	if err != nil {
 		return nil, err
@@ -84,6 +78,12 @@ func GetVertexAIEndpointApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
+	labelsProp, err := expandVertexAIEndpointEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
 }
@@ -94,17 +94,6 @@ func expandVertexAIEndpointDisplayName(v interface{}, d tpgresource.TerraformRes
 
 func expandVertexAIEndpointDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandVertexAIEndpointLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandVertexAIEndpointEncryptionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -132,4 +121,15 @@ func expandVertexAIEndpointEncryptionSpecKmsKeyName(v interface{}, d tpgresource
 
 func expandVertexAIEndpointNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandVertexAIEndpointEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
