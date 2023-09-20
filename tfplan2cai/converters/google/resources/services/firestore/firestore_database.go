@@ -90,6 +90,12 @@ func GetFirestoreDatabaseApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("point_in_time_recovery_enablement"); !tpgresource.IsEmptyValue(reflect.ValueOf(pointInTimeRecoveryEnablementProp)) && (ok || !reflect.DeepEqual(v, pointInTimeRecoveryEnablementProp)) {
 		obj["pointInTimeRecoveryEnablement"] = pointInTimeRecoveryEnablementProp
 	}
+	deleteProtectionStateProp, err := expandFirestoreDatabaseDeleteProtectionState(d.Get("delete_protection_state"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("delete_protection_state"); !tpgresource.IsEmptyValue(reflect.ValueOf(deleteProtectionStateProp)) && (ok || !reflect.DeepEqual(v, deleteProtectionStateProp)) {
+		obj["deleteProtectionState"] = deleteProtectionStateProp
+	}
 	etagProp, err := expandFirestoreDatabaseEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
@@ -121,6 +127,10 @@ func expandFirestoreDatabaseAppEngineIntegrationMode(v interface{}, d tpgresourc
 }
 
 func expandFirestoreDatabasePointInTimeRecoveryEnablement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreDatabaseDeleteProtectionState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
