@@ -90,6 +90,18 @@ func GetWorkstationsWorkstationConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("running_timeout"); !tpgresource.IsEmptyValue(reflect.ValueOf(runningTimeoutProp)) && (ok || !reflect.DeepEqual(v, runningTimeoutProp)) {
 		obj["runningTimeout"] = runningTimeoutProp
 	}
+	replicaZonesProp, err := expandWorkstationsWorkstationConfigReplicaZones(d.Get("replica_zones"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("replica_zones"); !tpgresource.IsEmptyValue(reflect.ValueOf(replicaZonesProp)) && (ok || !reflect.DeepEqual(v, replicaZonesProp)) {
+		obj["replicaZones"] = replicaZonesProp
+	}
+	enableAuditAgentProp, err := expandWorkstationsWorkstationConfigEnableAuditAgent(d.Get("enable_audit_agent"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_audit_agent"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableAuditAgentProp)) && (ok || !reflect.DeepEqual(v, enableAuditAgentProp)) {
+		obj["enableAuditAgent"] = enableAuditAgentProp
+	}
 	hostProp, err := expandWorkstationsWorkstationConfigHost(d.Get("host"), d, config)
 	if err != nil {
 		return nil, err
@@ -156,6 +168,14 @@ func expandWorkstationsWorkstationConfigRunningTimeout(v interface{}, d tpgresou
 	return v, nil
 }
 
+func expandWorkstationsWorkstationConfigReplicaZones(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigEnableAuditAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandWorkstationsWorkstationConfigHost(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -196,6 +216,13 @@ func expandWorkstationsWorkstationConfigHostGceInstance(v interface{}, d tpgreso
 		return nil, err
 	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	transformedServiceAccountScopes, err := expandWorkstationsWorkstationConfigHostGceInstanceServiceAccountScopes(original["service_account_scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountScopes"] = transformedServiceAccountScopes
 	}
 
 	transformedPoolSize, err := expandWorkstationsWorkstationConfigHostGceInstancePoolSize(original["pool_size"], d, config)
@@ -262,6 +289,10 @@ func expandWorkstationsWorkstationConfigHostGceInstanceMachineType(v interface{}
 }
 
 func expandWorkstationsWorkstationConfigHostGceInstanceServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceServiceAccountScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
