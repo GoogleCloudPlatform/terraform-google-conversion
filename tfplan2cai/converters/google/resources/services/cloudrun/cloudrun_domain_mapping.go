@@ -15,8 +15,9 @@
 package cloudrun
 
 import (
+	"context"
+	"fmt"
 	"reflect"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -25,26 +26,14 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-var domainMappingGoogleProvidedLabels = []string{
-	"cloud.googleapis.com/location",
-	"run.googleapis.com/overrideAt",
-}
+func hasMetadata(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	newCount := diff.Get("metadata.#")
 
-func DomainMappingLabelDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
-	// Suppress diffs for the labels provided by Google
-	for _, label := range domainMappingGoogleProvidedLabels {
-		if strings.Contains(k, label) && new == "" {
-			return true
-		}
+	if newCount.(int) < 1 {
+		return fmt.Errorf("Insufficient \"metadata\" blocks. 1 \"metadata\" block is required.")
 	}
 
-	// Let diff be determined by labels (above)
-	if strings.Contains(k, "labels.%") {
-		return true
-	}
-
-	// For other keys, don't suppress diff.
-	return false
+	return nil
 }
 
 const CloudRunDomainMappingAssetType string = "run.googleapis.com/DomainMapping"
@@ -160,13 +149,6 @@ func expandCloudRunDomainMappingMetadata(v interface{}, d tpgresource.TerraformR
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedLabels, err := expandCloudRunDomainMappingMetadataLabels(original["labels"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["labels"] = transformedLabels
-	}
-
 	transformedGeneration, err := expandCloudRunDomainMappingMetadataGeneration(original["generation"], d, config)
 	if err != nil {
 		return nil, err
@@ -202,25 +184,21 @@ func expandCloudRunDomainMappingMetadata(v interface{}, d tpgresource.TerraformR
 		transformed["namespace"] = transformedNamespace
 	}
 
-	transformedAnnotations, err := expandCloudRunDomainMappingMetadataAnnotations(original["annotations"], d, config)
+	transformedEffectiveLabels, err := expandCloudRunDomainMappingMetadataEffectiveLabels(original["effective_labels"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAnnotations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["annotations"] = transformedAnnotations
+	} else if val := reflect.ValueOf(transformedEffectiveLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labels"] = transformedEffectiveLabels
+	}
+
+	transformedEffectiveAnnotations, err := expandCloudRunDomainMappingMetadataEffectiveAnnotations(original["effective_annotations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEffectiveAnnotations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["annotations"] = transformedEffectiveAnnotations
 	}
 
 	return transformed, nil
-}
-
-func expandCloudRunDomainMappingMetadataLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandCloudRunDomainMappingMetadataGeneration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -243,7 +221,18 @@ func expandCloudRunDomainMappingMetadataNamespace(v interface{}, d tpgresource.T
 	return v, nil
 }
 
-func expandCloudRunDomainMappingMetadataAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandCloudRunDomainMappingMetadataEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCloudRunDomainMappingMetadataEffectiveAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
