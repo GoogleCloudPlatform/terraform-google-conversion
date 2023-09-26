@@ -75,12 +75,6 @@ func GetComputeNodeGroupApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("node_template"); !tpgresource.IsEmptyValue(reflect.ValueOf(nodeTemplateProp)) && (ok || !reflect.DeepEqual(v, nodeTemplateProp)) {
 		obj["nodeTemplate"] = nodeTemplateProp
 	}
-	sizeProp, err := expandComputeNodeGroupSize(d.Get("size"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("size"); ok || !reflect.DeepEqual(v, sizeProp) {
-		obj["size"] = sizeProp
-	}
 	maintenancePolicyProp, err := expandComputeNodeGroupMaintenancePolicy(d.Get("maintenance_policy"), d, config)
 	if err != nil {
 		return nil, err
@@ -129,10 +123,6 @@ func expandComputeNodeGroupNodeTemplate(v interface{}, d tpgresource.TerraformRe
 		return nil, fmt.Errorf("Invalid value for node_template: %s", err)
 	}
 	return f.RelativeLink(), nil
-}
-
-func expandComputeNodeGroupSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandComputeNodeGroupMaintenancePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
