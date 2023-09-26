@@ -66,12 +66,6 @@ func GetGKEBackupRestorePlanApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	labelsProp, err := expandGKEBackupRestorePlanLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	backupPlanProp, err := expandGKEBackupRestorePlanBackupPlan(d.Get("backup_plan"), d, config)
 	if err != nil {
 		return nil, err
@@ -90,6 +84,12 @@ func GetGKEBackupRestorePlanApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("restore_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreConfigProp)) && (ok || !reflect.DeepEqual(v, restoreConfigProp)) {
 		obj["restoreConfig"] = restoreConfigProp
 	}
+	labelsProp, err := expandGKEBackupRestorePlanEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
 }
@@ -100,17 +100,6 @@ func expandGKEBackupRestorePlanName(v interface{}, d tpgresource.TerraformResour
 
 func expandGKEBackupRestorePlanDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandGKEBackupRestorePlanLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandGKEBackupRestorePlanBackupPlan(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -622,4 +611,15 @@ func expandGKEBackupRestorePlanRestoreConfigTransformationRulesFieldActionsPath(
 
 func expandGKEBackupRestorePlanRestoreConfigTransformationRulesFieldActionsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandGKEBackupRestorePlanEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
