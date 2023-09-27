@@ -457,6 +457,13 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d tpg
 		transformed["description"] = transformedDescription
 	}
 
+	transformedAptRepository, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigAptRepository(original["apt_repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAptRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["aptRepository"] = transformedAptRepository
+	}
+
 	transformedDockerRepository, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigDockerRepository(original["docker_repository"], d, config)
 	if err != nil {
 		return nil, err
@@ -485,10 +492,70 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d tpg
 		transformed["pythonRepository"] = transformedPythonRepository
 	}
 
+	transformedYumRepository, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepository(original["yum_repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedYumRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["yumRepository"] = transformedYumRepository
+	}
+
 	return transformed, nil
 }
 
 func expandArtifactRegistryRepositoryRemoteRepositoryConfigDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigAptRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPublicRepository, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepository(original["public_repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPublicRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["publicRepository"] = transformedPublicRepository
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRepositoryBase, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepositoryRepositoryBase(original["repository_base"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepositoryBase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repositoryBase"] = transformedRepositoryBase
+	}
+
+	transformedRepositoryPath, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepositoryRepositoryPath(original["repository_path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepositoryPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repositoryPath"] = transformedRepositoryPath
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepositoryRepositoryBase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepositoryRepositoryPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -581,6 +648,59 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepository(v in
 }
 
 func expandArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepositoryPublicRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPublicRepository, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepository(original["public_repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPublicRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["publicRepository"] = transformedPublicRepository
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRepositoryBase, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepositoryRepositoryBase(original["repository_base"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepositoryBase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repositoryBase"] = transformedRepositoryBase
+	}
+
+	transformedRepositoryPath, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepositoryRepositoryPath(original["repository_path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepositoryPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repositoryPath"] = transformedRepositoryPath
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepositoryRepositoryBase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepositoryRepositoryPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
