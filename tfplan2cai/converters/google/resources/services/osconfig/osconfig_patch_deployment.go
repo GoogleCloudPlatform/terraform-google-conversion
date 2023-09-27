@@ -1274,6 +1274,13 @@ func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonth(v inter
 		transformed["dayOfWeek"] = transformedDayOfWeek
 	}
 
+	transformedDayOffset, err := expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthDayOffset(original["day_offset"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDayOffset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dayOffset"] = transformedDayOffset
+	}
+
 	return transformed, nil
 }
 
@@ -1282,6 +1289,10 @@ func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthWeekOrdi
 }
 
 func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthDayOfWeek(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOSConfigPatchDeploymentRecurringScheduleMonthlyWeekDayOfMonthDayOffset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
