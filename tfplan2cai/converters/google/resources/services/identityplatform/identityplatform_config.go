@@ -86,6 +86,12 @@ func GetIdentityPlatformConfigApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("authorized_domains"); !tpgresource.IsEmptyValue(reflect.ValueOf(authorizedDomainsProp)) && (ok || !reflect.DeepEqual(v, authorizedDomainsProp)) {
 		obj["authorizedDomains"] = authorizedDomainsProp
 	}
+	smsRegionConfigProp, err := expandIdentityPlatformConfigSmsRegionConfig(d.Get("sms_region_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("sms_region_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(smsRegionConfigProp)) && (ok || !reflect.DeepEqual(v, smsRegionConfigProp)) {
+		obj["smsRegionConfig"] = smsRegionConfigProp
+	}
 
 	return obj, nil
 }
@@ -486,5 +492,77 @@ func expandIdentityPlatformConfigQuotaSignUpQuotaConfigQuotaDuration(v interface
 }
 
 func expandIdentityPlatformConfigAuthorizedDomains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigSmsRegionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowByDefault, err := expandIdentityPlatformConfigSmsRegionConfigAllowByDefault(original["allow_by_default"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowByDefault); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowByDefault"] = transformedAllowByDefault
+	}
+
+	transformedAllowlistOnly, err := expandIdentityPlatformConfigSmsRegionConfigAllowlistOnly(original["allowlist_only"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowlistOnly); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowlistOnly"] = transformedAllowlistOnly
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigSmsRegionConfigAllowByDefault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisallowedRegions, err := expandIdentityPlatformConfigSmsRegionConfigAllowByDefaultDisallowedRegions(original["disallowed_regions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisallowedRegions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disallowedRegions"] = transformedDisallowedRegions
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigSmsRegionConfigAllowByDefaultDisallowedRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigSmsRegionConfigAllowlistOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedRegions, err := expandIdentityPlatformConfigSmsRegionConfigAllowlistOnlyAllowedRegions(original["allowed_regions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedRegions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedRegions"] = transformedAllowedRegions
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigSmsRegionConfigAllowlistOnlyAllowedRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
