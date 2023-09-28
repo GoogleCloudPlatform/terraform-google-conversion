@@ -22,6 +22,8 @@ func TestIAMFetchFullResource(t *testing.T) {
 	cases := []struct {
 		name string
 	}{
+		{name: "example_bigquery_dataset_iam_binding"},
+		{name: "example_bigquery_dataset_iam_member"},
 		{name: "example_cloud_run_service_iam_binding"},
 		{name: "example_cloud_run_service_iam_member"},
 		{name: "example_compute_instance_iam_binding"},
@@ -36,6 +38,8 @@ func TestIAMFetchFullResource(t *testing.T) {
 		{name: "example_organization_iam_member"},
 		{name: "example_project_iam_binding"},
 		{name: "example_project_iam_member"},
+		{name: "example_pubsub_subscription_iam_binding"},
+		{name: "example_pubsub_subscription_iam_member"},
 		{name: "example_secret_manager_secret_iam_binding"},
 		{name: "example_secret_manager_secret_iam_member"},
 		{name: "example_spanner_database_iam_binding"},
