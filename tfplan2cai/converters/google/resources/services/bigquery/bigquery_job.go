@@ -101,13 +101,6 @@ func expandBigQueryJobConfiguration(v interface{}, d tpgresource.TerraformResour
 		transformed["jobTimeoutMs"] = transformedJobTimeoutMs
 	}
 
-	transformedLabels, err := expandBigQueryJobConfigurationLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["labels"] = transformedLabels
-	}
-
 	transformedQuery, err := expandBigQueryJobConfigurationQuery(d.Get("query"), d, config)
 	if err != nil {
 		return nil, err
@@ -136,6 +129,13 @@ func expandBigQueryJobConfiguration(v interface{}, d tpgresource.TerraformResour
 		transformed["extract"] = transformedExtract
 	}
 
+	transformedEffectiveLabels, err := expandBigQueryJobConfigurationEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEffectiveLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labels"] = transformedEffectiveLabels
+	}
+
 	return transformed, nil
 }
 
@@ -145,17 +145,6 @@ func expandBigQueryJobConfigurationJobType(v interface{}, d tpgresource.Terrafor
 
 func expandBigQueryJobConfigurationJobTimeoutMs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandBigQueryJobConfigurationLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandBigQueryJobConfigurationQuery(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1213,6 +1202,17 @@ func expandBigQueryJobConfigurationExtractSourceModelDatasetId(v interface{}, d 
 
 func expandBigQueryJobConfigurationExtractSourceModelModelId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandBigQueryJobConfigurationEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandBigQueryJobJobReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

@@ -37,27 +37,6 @@ func revisionNameCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v i
 	return nil
 }
 
-var cloudRunGoogleProvidedAnnotations = regexp.MustCompile(`serving\.knative\.dev/(?:(?:creator)|(?:lastModifier))$|run\.googleapis\.com/(?:(?:ingress-status)|(?:operation-id))$|cloud\.googleapis\.com/(?:(?:location))`)
-
-func cloudrunAnnotationDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
-	// Suppress diffs for the annotations provided by Google
-	if cloudRunGoogleProvidedAnnotations.MatchString(k) && new == "" {
-		return true
-	}
-
-	if strings.HasSuffix(k, "run.googleapis.com/ingress") {
-		return old == "all" && new == ""
-	}
-
-	// Let diff be determined by annotations (above)
-	if strings.Contains(k, "annotations.%") {
-		return true
-	}
-
-	// For other keys, don't suppress diff.
-	return false
-}
-
 var cloudRunGoogleProvidedTemplateAnnotations = regexp.MustCompile(`template\.0\.metadata\.0\.annotations\.run\.googleapis\.com/sandbox`)
 var cloudRunGoogleProvidedTemplateAnnotations_autoscaling_maxscale = regexp.MustCompile(`template\.0\.metadata\.0\.annotations\.autoscaling\.knative\.dev/maxScale`)
 
@@ -69,23 +48,6 @@ func cloudrunTemplateAnnotationDiffSuppress(k, old, new string, d *schema.Resour
 	}
 
 	if cloudRunGoogleProvidedTemplateAnnotations_autoscaling_maxscale.MatchString(k) && new == "" {
-		return true
-	}
-
-	// For other keys, don't suppress diff.
-	return false
-}
-
-var cloudRunGoogleProvidedLabels = regexp.MustCompile(`cloud\.googleapis\.com/(?:(?:location))`)
-
-func cloudrunLabelDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
-	// Suppress diffs for the labels provided by Google
-	if cloudRunGoogleProvidedLabels.MatchString(k) && new == "" {
-		return true
-	}
-
-	// Let diff be determined by labels (above)
-	if strings.Contains(k, "labels.%") {
 		return true
 	}
 
@@ -1572,13 +1534,6 @@ func expandCloudRunServiceMetadata(v interface{}, d tpgresource.TerraformResourc
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedLabels, err := expandCloudRunServiceMetadataLabels(original["labels"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["labels"] = transformedLabels
-	}
-
 	transformedGeneration, err := expandCloudRunServiceMetadataGeneration(original["generation"], d, config)
 	if err != nil {
 		return nil, err
@@ -1614,25 +1569,21 @@ func expandCloudRunServiceMetadata(v interface{}, d tpgresource.TerraformResourc
 		transformed["namespace"] = transformedNamespace
 	}
 
-	transformedAnnotations, err := expandCloudRunServiceMetadataAnnotations(original["annotations"], d, config)
+	transformedEffectiveLabels, err := expandCloudRunServiceMetadataEffectiveLabels(original["effective_labels"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAnnotations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["annotations"] = transformedAnnotations
+	} else if val := reflect.ValueOf(transformedEffectiveLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labels"] = transformedEffectiveLabels
+	}
+
+	transformedEffectiveAnnotations, err := expandCloudRunServiceMetadataEffectiveAnnotations(original["effective_annotations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEffectiveAnnotations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["annotations"] = transformedEffectiveAnnotations
 	}
 
 	return transformed, nil
-}
-
-func expandCloudRunServiceMetadataLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandCloudRunServiceMetadataGeneration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1662,7 +1613,18 @@ func expandCloudRunServiceMetadataNamespace(v interface{}, d tpgresource.Terrafo
 	return v, nil
 }
 
-func expandCloudRunServiceMetadataAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandCloudRunServiceMetadataEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCloudRunServiceMetadataEffectiveAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
