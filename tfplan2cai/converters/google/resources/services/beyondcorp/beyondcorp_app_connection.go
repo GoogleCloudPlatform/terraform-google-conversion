@@ -60,12 +60,6 @@ func GetBeyondcorpAppConnectionApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
-	labelsProp, err := expandBeyondcorpAppConnectionLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	typeProp, err := expandBeyondcorpAppConnectionType(d.Get("type"), d, config)
 	if err != nil {
 		return nil, err
@@ -90,23 +84,18 @@ func GetBeyondcorpAppConnectionApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("gateway"); !tpgresource.IsEmptyValue(reflect.ValueOf(gatewayProp)) && (ok || !reflect.DeepEqual(v, gatewayProp)) {
 		obj["gateway"] = gatewayProp
 	}
+	labelsProp, err := expandBeyondcorpAppConnectionEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
 }
 
 func expandBeyondcorpAppConnectionDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandBeyondcorpAppConnectionLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandBeyondcorpAppConnectionType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -205,4 +194,15 @@ func expandBeyondcorpAppConnectionGatewayUri(v interface{}, d tpgresource.Terraf
 
 func expandBeyondcorpAppConnectionGatewayIngressPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandBeyondcorpAppConnectionEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

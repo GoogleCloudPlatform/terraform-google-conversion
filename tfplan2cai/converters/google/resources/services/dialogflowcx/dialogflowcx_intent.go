@@ -84,17 +84,17 @@ func GetDialogflowCXIntentApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("is_fallback"); !tpgresource.IsEmptyValue(reflect.ValueOf(isFallbackProp)) && (ok || !reflect.DeepEqual(v, isFallbackProp)) {
 		obj["isFallback"] = isFallbackProp
 	}
-	labelsProp, err := expandDialogflowCXIntentLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	descriptionProp, err := expandDialogflowCXIntentDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
+	}
+	labelsProp, err := expandDialogflowCXIntentEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 	languageCodeProp, err := expandDialogflowCXIntentLanguageCode(d.Get("language_code"), d, config)
 	if err != nil {
@@ -258,7 +258,11 @@ func expandDialogflowCXIntentIsFallback(v interface{}, d tpgresource.TerraformRe
 	return v, nil
 }
 
-func expandDialogflowCXIntentLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandDialogflowCXIntentDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXIntentEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -267,10 +271,6 @@ func expandDialogflowCXIntentLabels(v interface{}, d tpgresource.TerraformResour
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandDialogflowCXIntentDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandDialogflowCXIntentLanguageCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

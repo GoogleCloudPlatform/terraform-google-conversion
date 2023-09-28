@@ -54,12 +54,6 @@ func GetCertificateManagerTrustConfigCaiObject(d tpgresource.TerraformResourceDa
 
 func GetCertificateManagerTrustConfigApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandCertificateManagerTrustConfigLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	descriptionProp, err := expandCertificateManagerTrustConfigDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -72,19 +66,14 @@ func GetCertificateManagerTrustConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("trust_stores"); !tpgresource.IsEmptyValue(reflect.ValueOf(trustStoresProp)) && (ok || !reflect.DeepEqual(v, trustStoresProp)) {
 		obj["trustStores"] = trustStoresProp
 	}
+	labelsProp, err := expandCertificateManagerTrustConfigEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
-}
-
-func expandCertificateManagerTrustConfigLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandCertificateManagerTrustConfigDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -170,4 +159,15 @@ func expandCertificateManagerTrustConfigTrustStoresIntermediateCas(v interface{}
 
 func expandCertificateManagerTrustConfigTrustStoresIntermediateCasPemCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCertificateManagerTrustConfigEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

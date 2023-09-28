@@ -86,17 +86,17 @@ func GetCloudfunctions2functionApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("event_trigger"); !tpgresource.IsEmptyValue(reflect.ValueOf(eventTriggerProp)) && (ok || !reflect.DeepEqual(v, eventTriggerProp)) {
 		obj["eventTrigger"] = eventTriggerProp
 	}
-	labelsProp, err := expandCloudfunctions2functionLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	kmsKeyNameProp, err := expandCloudfunctions2functionKmsKeyName(d.Get("kms_key_name"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("kms_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyNameProp)) && (ok || !reflect.DeepEqual(v, kmsKeyNameProp)) {
 		obj["kmsKeyName"] = kmsKeyNameProp
+	}
+	labelsProp, err := expandCloudfunctions2functionEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 
 	return obj, nil
@@ -845,7 +845,11 @@ func expandCloudfunctions2functionEventTriggerRetryPolicy(v interface{}, d tpgre
 	return v, nil
 }
 
-func expandCloudfunctions2functionLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandCloudfunctions2functionKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -854,8 +858,4 @@ func expandCloudfunctions2functionLabels(v interface{}, d tpgresource.TerraformR
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandCloudfunctions2functionKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }

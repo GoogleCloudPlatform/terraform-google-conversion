@@ -91,10 +91,10 @@ func GetNetworkManagementConnectivityTestApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("related_projects"); !tpgresource.IsEmptyValue(reflect.ValueOf(relatedProjectsProp)) && (ok || !reflect.DeepEqual(v, relatedProjectsProp)) {
 		obj["relatedProjects"] = relatedProjectsProp
 	}
-	labelsProp, err := expandNetworkManagementConnectivityTestLabels(d.Get("labels"), d, config)
+	labelsProp, err := expandNetworkManagementConnectivityTestEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 
@@ -267,7 +267,7 @@ func expandNetworkManagementConnectivityTestRelatedProjects(v interface{}, d tpg
 	return v, nil
 }
 
-func expandNetworkManagementConnectivityTestLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandNetworkManagementConnectivityTestEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

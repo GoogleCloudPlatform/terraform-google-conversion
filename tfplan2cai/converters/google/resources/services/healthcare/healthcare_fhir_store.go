@@ -96,12 +96,6 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("enable_history_import"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableHistoryImportProp)) && (ok || !reflect.DeepEqual(v, enableHistoryImportProp)) {
 		obj["enableHistoryImport"] = enableHistoryImportProp
 	}
-	labelsProp, err := expandHealthcareFhirStoreLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	notificationConfigProp, err := expandHealthcareFhirStoreNotificationConfig(d.Get("notification_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -125,6 +119,12 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 		return nil, err
 	} else if v, ok := d.GetOkExists("notification_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(notificationConfigsProp)) && (ok || !reflect.DeepEqual(v, notificationConfigsProp)) {
 		obj["notificationConfigs"] = notificationConfigsProp
+	}
+	labelsProp, err := expandHealthcareFhirStoreEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 
 	return obj, nil
@@ -156,17 +156,6 @@ func expandHealthcareFhirStoreDisableResourceVersioning(v interface{}, d tpgreso
 
 func expandHealthcareFhirStoreEnableHistoryImport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandHealthcareFhirStoreLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandHealthcareFhirStoreNotificationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -380,4 +369,15 @@ func expandHealthcareFhirStoreNotificationConfigsSendFullResource(v interface{},
 
 func expandHealthcareFhirStoreNotificationConfigsSendPreviousResourceOnDelete(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandHealthcareFhirStoreEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

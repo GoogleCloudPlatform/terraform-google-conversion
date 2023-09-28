@@ -115,12 +115,6 @@ func GetDataFusionInstanceApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("enable_rbac"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableRbacProp)) && (ok || !reflect.DeepEqual(v, enableRbacProp)) {
 		obj["enableRbac"] = enableRbacProp
 	}
-	labelsProp, err := expandDataFusionInstanceLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	optionsProp, err := expandDataFusionInstanceOptions(d.Get("options"), d, config)
 	if err != nil {
 		return nil, err
@@ -181,6 +175,12 @@ func GetDataFusionInstanceApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("accelerators"); !tpgresource.IsEmptyValue(reflect.ValueOf(acceleratorsProp)) && (ok || !reflect.DeepEqual(v, acceleratorsProp)) {
 		obj["accelerators"] = acceleratorsProp
 	}
+	labelsProp, err := expandDataFusionInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
 }
@@ -207,17 +207,6 @@ func expandDataFusionInstanceEnableStackdriverMonitoring(v interface{}, d tpgres
 
 func expandDataFusionInstanceEnableRbac(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandDataFusionInstanceLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandDataFusionInstanceOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
@@ -377,4 +366,15 @@ func expandDataFusionInstanceAcceleratorsAcceleratorType(v interface{}, d tpgres
 
 func expandDataFusionInstanceAcceleratorsState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataFusionInstanceEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

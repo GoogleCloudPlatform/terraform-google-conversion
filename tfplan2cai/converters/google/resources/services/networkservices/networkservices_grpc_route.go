@@ -54,12 +54,6 @@ func GetNetworkServicesGrpcRouteCaiObject(d tpgresource.TerraformResourceData, c
 
 func GetNetworkServicesGrpcRouteApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandNetworkServicesGrpcRouteLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	descriptionProp, err := expandNetworkServicesGrpcRouteDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -90,19 +84,14 @@ func GetNetworkServicesGrpcRouteApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(rulesProp)) && (ok || !reflect.DeepEqual(v, rulesProp)) {
 		obj["rules"] = rulesProp
 	}
+	labelsProp, err := expandNetworkServicesGrpcRouteEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
-}
-
-func expandNetworkServicesGrpcRouteLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandNetworkServicesGrpcRouteDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -479,4 +468,15 @@ func expandNetworkServicesGrpcRouteRulesActionRetryPolicyRetryConditions(v inter
 
 func expandNetworkServicesGrpcRouteRulesActionRetryPolicyNumRetries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandNetworkServicesGrpcRouteEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

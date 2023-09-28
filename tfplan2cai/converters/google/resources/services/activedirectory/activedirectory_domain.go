@@ -56,12 +56,6 @@ func GetActiveDirectoryDomainCaiObject(d tpgresource.TerraformResourceData, conf
 
 func GetActiveDirectoryDomainApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandActiveDirectoryDomainLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	authorizedNetworksProp, err := expandActiveDirectoryDomainAuthorizedNetworks(d.Get("authorized_networks"), d, config)
 	if err != nil {
 		return nil, err
@@ -86,19 +80,14 @@ func GetActiveDirectoryDomainApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("admin"); !tpgresource.IsEmptyValue(reflect.ValueOf(adminProp)) && (ok || !reflect.DeepEqual(v, adminProp)) {
 		obj["admin"] = adminProp
 	}
+	labelsProp, err := expandActiveDirectoryDomainEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
-}
-
-func expandActiveDirectoryDomainLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandActiveDirectoryDomainAuthorizedNetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -116,4 +105,15 @@ func expandActiveDirectoryDomainLocations(v interface{}, d tpgresource.Terraform
 
 func expandActiveDirectoryDomainAdmin(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandActiveDirectoryDomainEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

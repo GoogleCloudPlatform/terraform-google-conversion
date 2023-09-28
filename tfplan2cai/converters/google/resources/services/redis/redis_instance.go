@@ -129,12 +129,6 @@ func GetRedisInstanceApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
-	labelsProp, err := expandRedisInstanceLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	redisConfigsProp, err := expandRedisInstanceRedisConfigs(d.Get("redis_configs"), d, config)
 	if err != nil {
 		return nil, err
@@ -219,6 +213,12 @@ func GetRedisInstanceApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("customer_managed_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(customerManagedKeyProp)) && (ok || !reflect.DeepEqual(v, customerManagedKeyProp)) {
 		obj["customerManagedKey"] = customerManagedKeyProp
 	}
+	labelsProp, err := expandRedisInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return resourceRedisInstanceEncoder(d, config, obj)
 }
@@ -257,17 +257,6 @@ func expandRedisInstanceConnectMode(v interface{}, d tpgresource.TerraformResour
 
 func expandRedisInstanceDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandRedisInstanceLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandRedisInstanceRedisConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
@@ -536,4 +525,15 @@ func expandRedisInstanceSecondaryIpRange(v interface{}, d tpgresource.TerraformR
 
 func expandRedisInstanceCustomerManagedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandRedisInstanceEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

@@ -245,17 +245,17 @@ func GetComputeVpnTunnelApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("remote_traffic_selector"); !tpgresource.IsEmptyValue(reflect.ValueOf(remoteTrafficSelectorProp)) && (ok || !reflect.DeepEqual(v, remoteTrafficSelectorProp)) {
 		obj["remoteTrafficSelector"] = remoteTrafficSelectorProp
 	}
-	labelsProp, err := expandComputeVpnTunnelLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	labelFingerprintProp, err := expandComputeVpnTunnelLabelFingerprint(d.Get("label_fingerprint"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("label_fingerprint"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
 		obj["labelFingerprint"] = labelFingerprintProp
+	}
+	labelsProp, err := expandComputeVpnTunnelEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 	regionProp, err := expandComputeVpnTunnelRegion(d.Get("region"), d, config)
 	if err != nil {
@@ -373,7 +373,11 @@ func expandComputeVpnTunnelRemoteTrafficSelector(v interface{}, d tpgresource.Te
 	return v, nil
 }
 
-func expandComputeVpnTunnelLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandComputeVpnTunnelLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeVpnTunnelEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -382,10 +386,6 @@ func expandComputeVpnTunnelLabels(v interface{}, d tpgresource.TerraformResource
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandComputeVpnTunnelLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandComputeVpnTunnelRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

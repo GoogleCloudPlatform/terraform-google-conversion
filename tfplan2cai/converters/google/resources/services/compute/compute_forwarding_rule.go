@@ -136,12 +136,6 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("allow_global_access"); ok || !reflect.DeepEqual(v, allowGlobalAccessProp) {
 		obj["allowGlobalAccess"] = allowGlobalAccessProp
 	}
-	labelsProp, err := expandComputeForwardingRuleLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	labelFingerprintProp, err := expandComputeForwardingRuleLabelFingerprint(d.Get("label_fingerprint"), d, config)
 	if err != nil {
 		return nil, err
@@ -195,6 +189,12 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 		return nil, err
 	} else if v, ok := d.GetOkExists("ip_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipVersionProp)) && (ok || !reflect.DeepEqual(v, ipVersionProp)) {
 		obj["ipVersion"] = ipVersionProp
+	}
+	labelsProp, err := expandComputeForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 	regionProp, err := expandComputeForwardingRuleRegion(d.Get("region"), d, config)
 	if err != nil {
@@ -324,17 +324,6 @@ func expandComputeForwardingRuleAllowGlobalAccess(v interface{}, d tpgresource.T
 	return v, nil
 }
 
-func expandComputeForwardingRuleLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
 func expandComputeForwardingRuleLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -402,6 +391,17 @@ func expandComputeForwardingRuleNoAutomateDnsZone(v interface{}, d tpgresource.T
 
 func expandComputeForwardingRuleIpVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeForwardingRuleEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandComputeForwardingRuleRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

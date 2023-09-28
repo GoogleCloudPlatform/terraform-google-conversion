@@ -73,12 +73,6 @@ func GetComputeGlobalAddressApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
-	labelsProp, err := expandComputeGlobalAddressLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	labelFingerprintProp, err := expandComputeGlobalAddressLabelFingerprint(d.Get("label_fingerprint"), d, config)
 	if err != nil {
 		return nil, err
@@ -115,6 +109,12 @@ func GetComputeGlobalAddressApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
+	labelsProp, err := expandComputeGlobalAddressEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
 }
@@ -129,17 +129,6 @@ func expandComputeGlobalAddressDescription(v interface{}, d tpgresource.Terrafor
 
 func expandComputeGlobalAddressName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandComputeGlobalAddressLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandComputeGlobalAddressLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -168,4 +157,15 @@ func expandComputeGlobalAddressNetwork(v interface{}, d tpgresource.TerraformRes
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeGlobalAddressEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

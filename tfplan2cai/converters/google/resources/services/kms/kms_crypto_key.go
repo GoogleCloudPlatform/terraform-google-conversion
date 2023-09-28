@@ -56,12 +56,6 @@ func GetKMSCryptoKeyCaiObject(d tpgresource.TerraformResourceData, config *trans
 
 func GetKMSCryptoKeyApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandKMSCryptoKeyLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	purposeProp, err := expandKMSCryptoKeyPurpose(d.Get("purpose"), d, config)
 	if err != nil {
 		return nil, err
@@ -92,6 +86,12 @@ func GetKMSCryptoKeyApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("import_only"); !tpgresource.IsEmptyValue(reflect.ValueOf(importOnlyProp)) && (ok || !reflect.DeepEqual(v, importOnlyProp)) {
 		obj["importOnly"] = importOnlyProp
 	}
+	labelsProp, err := expandKMSCryptoKeyEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return resourceKMSCryptoKeyEncoder(d, config, obj)
 }
@@ -117,17 +117,6 @@ func resourceKMSCryptoKeyEncoder(d tpgresource.TerraformResourceData, meta inter
 	}
 
 	return obj, nil
-}
-
-func expandKMSCryptoKeyLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandKMSCryptoKeyPurpose(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -178,4 +167,15 @@ func expandKMSCryptoKeyDestroyScheduledDuration(v interface{}, d tpgresource.Ter
 
 func expandKMSCryptoKeyImportOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandKMSCryptoKeyEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

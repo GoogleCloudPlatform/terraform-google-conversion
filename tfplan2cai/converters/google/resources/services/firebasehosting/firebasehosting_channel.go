@@ -60,12 +60,6 @@ func GetFirebaseHostingChannelApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("retained_release_count"); !tpgresource.IsEmptyValue(reflect.ValueOf(retainedReleaseCountProp)) && (ok || !reflect.DeepEqual(v, retainedReleaseCountProp)) {
 		obj["retainedReleaseCount"] = retainedReleaseCountProp
 	}
-	labelsProp, err := expandFirebaseHostingChannelLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	expireTimeProp, err := expandFirebaseHostingChannelExpireTime(d.Get("expire_time"), d, config)
 	if err != nil {
 		return nil, err
@@ -78,6 +72,12 @@ func GetFirebaseHostingChannelApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("ttl"); !tpgresource.IsEmptyValue(reflect.ValueOf(ttlProp)) && (ok || !reflect.DeepEqual(v, ttlProp)) {
 		obj["ttl"] = ttlProp
 	}
+	labelsProp, err := expandFirebaseHostingChannelEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
 }
@@ -86,7 +86,15 @@ func expandFirebaseHostingChannelRetainedReleaseCount(v interface{}, d tpgresour
 	return v, nil
 }
 
-func expandFirebaseHostingChannelLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandFirebaseHostingChannelExpireTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseHostingChannelTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseHostingChannelEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -95,12 +103,4 @@ func expandFirebaseHostingChannelLabels(v interface{}, d tpgresource.TerraformRe
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandFirebaseHostingChannelExpireTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirebaseHostingChannelTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }

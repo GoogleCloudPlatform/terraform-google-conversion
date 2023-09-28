@@ -60,17 +60,17 @@ func GetCertificateManagerDnsAuthorizationApiObject(d tpgresource.TerraformResou
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	labelsProp, err := expandCertificateManagerDnsAuthorizationLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	domainProp, err := expandCertificateManagerDnsAuthorizationDomain(d.Get("domain"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("domain"); !tpgresource.IsEmptyValue(reflect.ValueOf(domainProp)) && (ok || !reflect.DeepEqual(v, domainProp)) {
 		obj["domain"] = domainProp
+	}
+	labelsProp, err := expandCertificateManagerDnsAuthorizationEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
 	}
 
 	return obj, nil
@@ -80,7 +80,11 @@ func expandCertificateManagerDnsAuthorizationDescription(v interface{}, d tpgres
 	return v, nil
 }
 
-func expandCertificateManagerDnsAuthorizationLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandCertificateManagerDnsAuthorizationDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateManagerDnsAuthorizationEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
@@ -89,8 +93,4 @@ func expandCertificateManagerDnsAuthorizationLabels(v interface{}, d tpgresource
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandCertificateManagerDnsAuthorizationDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }

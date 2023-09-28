@@ -60,10 +60,10 @@ func GetFilestoreSnapshotApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	labelsProp, err := expandFilestoreSnapshotLabels(d.Get("labels"), d, config)
+	labelsProp, err := expandFilestoreSnapshotEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 
@@ -74,7 +74,7 @@ func expandFilestoreSnapshotDescription(v interface{}, d tpgresource.TerraformRe
 	return v, nil
 }
 
-func expandFilestoreSnapshotLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandFilestoreSnapshotEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}

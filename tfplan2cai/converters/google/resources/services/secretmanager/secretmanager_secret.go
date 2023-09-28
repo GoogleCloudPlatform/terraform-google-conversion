@@ -83,18 +83,6 @@ func GetSecretManagerSecretCaiObject(d tpgresource.TerraformResourceData, config
 
 func GetSecretManagerSecretApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandSecretManagerSecretLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
-	annotationsProp, err := expandSecretManagerSecretAnnotations(d.Get("annotations"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
-	}
 	versionAliasesProp, err := expandSecretManagerSecretVersionAliases(d.Get("version_aliases"), d, config)
 	if err != nil {
 		return nil, err
@@ -131,30 +119,20 @@ func GetSecretManagerSecretApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("rotation"); !tpgresource.IsEmptyValue(reflect.ValueOf(rotationProp)) && (ok || !reflect.DeepEqual(v, rotationProp)) {
 		obj["rotation"] = rotationProp
 	}
+	labelsProp, err := expandSecretManagerSecretEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
+	annotationsProp, err := expandSecretManagerSecretEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
+		obj["annotations"] = annotationsProp
+	}
 
 	return obj, nil
-}
-
-func expandSecretManagerSecretLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
-func expandSecretManagerSecretAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandSecretManagerSecretVersionAliases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
@@ -177,22 +155,11 @@ func expandSecretManagerSecretReplication(v interface{}, d tpgresource.Terraform
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	if _, ok := d.GetOk("replication.0.automatic"); ok {
-		transformedAutomatic, err := expandSecretManagerSecretReplicationAutomatic(original["automatic"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedAutomatic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["automatic"] = transformedAutomatic
-		}
-	}
-
-	if _, ok := d.GetOk("replication.0.auto"); ok {
-		transformedAuto, err := expandSecretManagerSecretReplicationAuto(original["auto"], d, config)
-		if err != nil {
-			return nil, err
-		} else {
-			transformed["automatic"] = transformedAuto
-		}
+	transformedAuto, err := expandSecretManagerSecretReplicationAuto(original["auto"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["automatic"] = transformedAuto
 	}
 
 	transformedUserManaged, err := expandSecretManagerSecretReplicationUserManaged(original["user_managed"], d, config)
@@ -203,14 +170,6 @@ func expandSecretManagerSecretReplication(v interface{}, d tpgresource.Terraform
 	}
 
 	return transformed, nil
-}
-
-func expandSecretManagerSecretReplicationAutomatic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil || !v.(bool) {
-		return nil, nil
-	}
-
-	return struct{}{}, nil
 }
 
 func expandSecretManagerSecretReplicationAuto(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -401,4 +360,26 @@ func expandSecretManagerSecretRotationNextRotationTime(v interface{}, d tpgresou
 
 func expandSecretManagerSecretRotationRotationPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandSecretManagerSecretEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandSecretManagerSecretEffectiveAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

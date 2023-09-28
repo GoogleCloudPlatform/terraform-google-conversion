@@ -90,12 +90,6 @@ func GetDatastreamStreamCaiObject(d tpgresource.TerraformResourceData, config *t
 
 func GetDatastreamStreamApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandDatastreamStreamLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	displayNameProp, err := expandDatastreamStreamDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
@@ -132,6 +126,12 @@ func GetDatastreamStreamApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("customer_managed_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(customerManagedEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, customerManagedEncryptionKeyProp)) {
 		obj["customerManagedEncryptionKey"] = customerManagedEncryptionKeyProp
 	}
+	labelsProp, err := expandDatastreamStreamEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return resourceDatastreamStreamEncoder(d, config, obj)
 }
@@ -141,17 +141,6 @@ func resourceDatastreamStreamEncoder(d tpgresource.TerraformResourceData, meta i
 		obj["state"] = d.Get("desired_state")
 	}
 	return obj, nil
-}
-
-func expandDatastreamStreamLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandDatastreamStreamDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2441,4 +2430,15 @@ func expandDatastreamStreamBackfillNone(v interface{}, d tpgresource.TerraformRe
 
 func expandDatastreamStreamCustomerManagedEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDatastreamStreamEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
