@@ -113,6 +113,12 @@ func GetFirestoreIndexApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("query_scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(queryScopeProp)) && (ok || !reflect.DeepEqual(v, queryScopeProp)) {
 		obj["queryScope"] = queryScopeProp
 	}
+	apiScopeProp, err := expandFirestoreIndexApiScope(d.Get("api_scope"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("api_scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiScopeProp)) && (ok || !reflect.DeepEqual(v, apiScopeProp)) {
+		obj["apiScope"] = apiScopeProp
+	}
 	fieldsProp, err := expandFirestoreIndexFields(d.Get("fields"), d, config)
 	if err != nil {
 		return nil, err
@@ -142,6 +148,10 @@ func expandFirestoreIndexCollection(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandFirestoreIndexQueryScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexApiScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
