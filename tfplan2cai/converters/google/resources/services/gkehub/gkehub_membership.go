@@ -45,7 +45,7 @@ func ResourceConverterGKEHubMembership() cai.ResourceConverter {
 }
 
 func GetGKEHubMembershipCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//gkehub.googleapis.com/projects/{{project}}/locations/global/memberships/{{membership_id}}")
+	name, err := cai.AssetName(d, config, "//gkehub.googleapis.com/projects/{{project}}/locations/{{location}}/memberships/{{membership_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
