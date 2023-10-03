@@ -112,6 +112,9 @@ func newGKEHubMembershipIamAsset(
 
 func FetchGKEHubMembershipIamPolicy(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (cai.Asset, error) {
 	// Check if the identity field returns a value
+	if _, ok := d.GetOk("location"); !ok {
+		return cai.Asset{}, cai.ErrEmptyIdentityField
+	}
 	if _, ok := d.GetOk("membership_id"); !ok {
 		return cai.Asset{}, cai.ErrEmptyIdentityField
 	}
