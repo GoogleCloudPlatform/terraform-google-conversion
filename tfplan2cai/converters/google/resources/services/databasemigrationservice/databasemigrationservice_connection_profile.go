@@ -72,6 +72,12 @@ func GetDatabaseMigrationServiceConnectionProfileApiObject(d tpgresource.Terrafo
 	} else if v, ok := d.GetOkExists("postgresql"); !tpgresource.IsEmptyValue(reflect.ValueOf(postgresqlProp)) && (ok || !reflect.DeepEqual(v, postgresqlProp)) {
 		obj["postgresql"] = postgresqlProp
 	}
+	oracleProp, err := expandDatabaseMigrationServiceConnectionProfileOracle(d.Get("oracle"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("oracle"); !tpgresource.IsEmptyValue(reflect.ValueOf(oracleProp)) && (ok || !reflect.DeepEqual(v, oracleProp)) {
+		obj["oracle"] = oracleProp
+	}
 	cloudsqlProp, err := expandDatabaseMigrationServiceConnectionProfileCloudsql(d.Get("cloudsql"), d, config)
 	if err != nil {
 		return nil, err
@@ -388,6 +394,273 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresqlCloudSqlId(v inter
 }
 
 func expandDatabaseMigrationServiceConnectionProfilePostgresqlNetworkArchitecture(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHost, err := expandDatabaseMigrationServiceConnectionProfileOracleHost(original["host"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHost); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["host"] = transformedHost
+	}
+
+	transformedPort, err := expandDatabaseMigrationServiceConnectionProfileOraclePort(original["port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["port"] = transformedPort
+	}
+
+	transformedUsername, err := expandDatabaseMigrationServiceConnectionProfileOracleUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	transformedPassword, err := expandDatabaseMigrationServiceConnectionProfileOraclePassword(original["password"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["password"] = transformedPassword
+	}
+
+	transformedPasswordSet, err := expandDatabaseMigrationServiceConnectionProfileOraclePasswordSet(original["password_set"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPasswordSet); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["passwordSet"] = transformedPasswordSet
+	}
+
+	transformedDatabaseService, err := expandDatabaseMigrationServiceConnectionProfileOracleDatabaseService(original["database_service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabaseService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["databaseService"] = transformedDatabaseService
+	}
+
+	transformedSsl, err := expandDatabaseMigrationServiceConnectionProfileOracleSsl(original["ssl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSsl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ssl"] = transformedSsl
+	}
+
+	transformedStaticServiceIpConnectivity, err := expandDatabaseMigrationServiceConnectionProfileOracleStaticServiceIpConnectivity(original["static_service_ip_connectivity"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["staticServiceIpConnectivity"] = transformedStaticServiceIpConnectivity
+	}
+
+	transformedForwardSshConnectivity, err := expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivity(original["forward_ssh_connectivity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedForwardSshConnectivity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["forwardSshConnectivity"] = transformedForwardSshConnectivity
+	}
+
+	transformedPrivateConnectivity, err := expandDatabaseMigrationServiceConnectionProfileOraclePrivateConnectivity(original["private_connectivity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateConnectivity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateConnectivity"] = transformedPrivateConnectivity
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleHost(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOraclePort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOraclePassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOraclePasswordSet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleDatabaseService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleSsl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandDatabaseMigrationServiceConnectionProfileOracleSslType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	transformedClientKey, err := expandDatabaseMigrationServiceConnectionProfileOracleSslClientKey(original["client_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientKey"] = transformedClientKey
+	}
+
+	transformedClientCertificate, err := expandDatabaseMigrationServiceConnectionProfileOracleSslClientCertificate(original["client_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientCertificate"] = transformedClientCertificate
+	}
+
+	transformedCaCertificate, err := expandDatabaseMigrationServiceConnectionProfileOracleSslCaCertificate(original["ca_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCaCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["caCertificate"] = transformedCaCertificate
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleSslType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleSslClientKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleSslClientCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleSslCaCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleStaticServiceIpConnectivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHostname, err := expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityHostname(original["hostname"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostname); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hostname"] = transformedHostname
+	}
+
+	transformedUsername, err := expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	transformedPort, err := expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityPort(original["port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["port"] = transformedPort
+	}
+
+	transformedPassword, err := expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityPassword(original["password"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["password"] = transformedPassword
+	}
+
+	transformedPrivateKey, err := expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityPrivateKey(original["private_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateKey"] = transformedPrivateKey
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityHostname(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivityPrivateKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOraclePrivateConnectivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPrivateConnection, err := expandDatabaseMigrationServiceConnectionProfileOraclePrivateConnectivityPrivateConnection(original["private_connection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateConnection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateConnection"] = transformedPrivateConnection
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileOraclePrivateConnectivityPrivateConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
