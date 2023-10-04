@@ -27,7 +27,7 @@ make test-integration
 
 # Specific integration test
 make build
-go test -v -run=<test name or prefix> ./test
+go test -v -run=<test name or prefix> ./tfplan2cai/test
 ```
 
 ### Docker
