@@ -158,6 +158,12 @@ func GetComputeSubnetworkApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("ipv6_access_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipv6AccessTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6AccessTypeProp)) {
 		obj["ipv6AccessType"] = ipv6AccessTypeProp
 	}
+	allowSubnetCidrRoutesOverlapProp, err := expandComputeSubnetworkAllowSubnetCidrRoutesOverlap(d.Get("allow_subnet_cidr_routes_overlap"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_subnet_cidr_routes_overlap"); ok || !reflect.DeepEqual(v, allowSubnetCidrRoutesOverlapProp) {
+		obj["allowSubnetCidrRoutesOverlap"] = allowSubnetCidrRoutesOverlapProp
+	}
 
 	return obj, nil
 }
@@ -279,5 +285,9 @@ func expandComputeSubnetworkStackType(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandComputeSubnetworkIpv6AccessType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkAllowSubnetCidrRoutesOverlap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
