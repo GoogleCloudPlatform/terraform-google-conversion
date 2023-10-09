@@ -15,7 +15,9 @@
 package compute
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"reflect"
 	"strings"
 
@@ -25,6 +27,23 @@ import (
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func forwardingRuleCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
+	log.Println("[DEBUG] [PSC] Reached forwardingRuleCustomizeDiff function")
+
+	// if target is not a string it's not set so no PSC connection
+	if target, ok := diff.Get("target").(string); ok {
+		if strings.Contains(target, "/serviceAttachments/") {
+			recreateClosedPsc, _ := diff.Get("recreate_closed_psc").(bool)
+			if pscConnectionStatus, ok := diff.Get("psc_connection_status").(string); ok && recreateClosedPsc && pscConnectionStatus == "CLOSED" {
+				// https://discuss.hashicorp.com/t/force-new-resource-based-on-api-read-difference/29759/6
+				diff.SetNewComputed("psc_connection_status")
+				diff.ForceNew("psc_connection_status")
+			}
+		}
+	}
+	return nil
+}
 
 const ComputeForwardingRuleAssetType string = "compute.googleapis.com/ForwardingRule"
 
