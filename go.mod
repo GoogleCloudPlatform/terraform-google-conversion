@@ -11,7 +11,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.14.1
 	github.com/hashicorp/terraform-json v0.14.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20231009212503-4da9fda97457
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20231009230605-b7f557391304
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.3
@@ -93,11 +93,11 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
-	golang.org/x/crypto v0.13.0 // indirect
-	golang.org/x/net v0.15.0 // indirect
-	golang.org/x/oauth2 v0.12.0 // indirect
+	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/net v0.16.0 // indirect
+	golang.org/x/oauth2 v0.13.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
