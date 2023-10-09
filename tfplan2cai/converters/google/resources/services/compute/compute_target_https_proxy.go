@@ -16,7 +16,10 @@ package compute
 
 import (
 	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"strings"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
@@ -73,6 +76,12 @@ func GetComputeTargetHttpsProxyApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("quic_override"); !tpgresource.IsEmptyValue(reflect.ValueOf(quicOverrideProp)) && (ok || !reflect.DeepEqual(v, quicOverrideProp)) {
 		obj["quicOverride"] = quicOverrideProp
 	}
+	certificateManagerCertificatesProp, err := expandComputeTargetHttpsProxyCertificateManagerCertificates(d.Get("certificate_manager_certificates"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("certificate_manager_certificates"); !tpgresource.IsEmptyValue(reflect.ValueOf(certificateManagerCertificatesProp)) && (ok || !reflect.DeepEqual(v, certificateManagerCertificatesProp)) {
+		obj["certificateManagerCertificates"] = certificateManagerCertificatesProp
+	}
 	sslCertificatesProp, err := expandComputeTargetHttpsProxySslCertificates(d.Get("ssl_certificates"), d, config)
 	if err != nil {
 		return nil, err
@@ -116,6 +125,19 @@ func GetComputeTargetHttpsProxyApiObject(d tpgresource.TerraformResourceData, co
 		obj["serverTlsPolicy"] = serverTlsPolicyProp
 	}
 
+	return resourceComputeTargetHttpsProxyEncoder(d, config, obj)
+}
+
+func resourceComputeTargetHttpsProxyEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+
+	if _, ok := obj["certificateManagerCertificates"]; ok {
+		// The field certificateManagerCertificates should not be included in the API request, and it should be renamed to `sslCertificates`
+		// The API does not allow using both certificate manager certificates and sslCertificates. If that changes
+		// in the future, the encoder logic should change accordingly because this will mean that both fields are no longer mutual exclusive.
+		log.Printf("[DEBUG] converting the field CertificateManagerCertificates to sslCertificates before sending the request")
+		obj["sslCertificates"] = obj["certificateManagerCertificates"]
+		delete(obj, "certificateManagerCertificates")
+	}
 	return obj, nil
 }
 
@@ -129,6 +151,31 @@ func expandComputeTargetHttpsProxyName(v interface{}, d tpgresource.TerraformRes
 
 func expandComputeTargetHttpsProxyQuicOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeTargetHttpsProxyCertificateManagerCertificates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			return nil, fmt.Errorf("Invalid value for certificate_manager_certificates: nil")
+		}
+		if strings.HasPrefix(raw.(string), "//") || strings.HasPrefix(raw.(string), "https://") {
+			// Any full URL will be passed to the API request (regardless of the resource type). This is to allow self_links of CertificateManagerCeritificate resources.
+			// If the full URL is an invalid reference, that should be handled by the API.
+			req = append(req, raw.(string))
+		} else if reg, _ := regexp.Compile("projects/(.*)/locations/(.*)/certificates/(.*)"); reg.MatchString(raw.(string)) {
+			// If the input is the id pattern of CertificateManagerCertificate resource, a prefix will be added to construct the full URL before constructing the API request.
+			self_link := "https://certificatemanager.googleapis.com/v1/" + raw.(string)
+			req = append(req, self_link)
+		} else {
+			return nil, fmt.Errorf("Invalid value for certificate_manager_certificates: %v is an invalid format for a certificateManagerCertificate resource", raw.(string))
+		}
+	}
+	return req, nil
 }
 
 func expandComputeTargetHttpsProxySslCertificates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
