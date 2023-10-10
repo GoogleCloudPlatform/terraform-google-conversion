@@ -72,6 +72,12 @@ func GetDataformRepositoryApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("workspace_compilation_overrides"); !tpgresource.IsEmptyValue(reflect.ValueOf(workspaceCompilationOverridesProp)) && (ok || !reflect.DeepEqual(v, workspaceCompilationOverridesProp)) {
 		obj["workspaceCompilationOverrides"] = workspaceCompilationOverridesProp
 	}
+	serviceAccountProp, err := expandDataformRepositoryServiceAccount(d.Get("service_account"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("service_account"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceAccountProp)) && (ok || !reflect.DeepEqual(v, serviceAccountProp)) {
+		obj["serviceAccount"] = serviceAccountProp
+	}
 
 	return obj, nil
 }
@@ -110,6 +116,13 @@ func expandDataformRepositoryGitRemoteSettings(v interface{}, d tpgresource.Terr
 		transformed["authenticationTokenSecretVersion"] = transformedAuthenticationTokenSecretVersion
 	}
 
+	transformedSshAuthenticationConfig, err := expandDataformRepositoryGitRemoteSettingsSshAuthenticationConfig(original["ssh_authentication_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSshAuthenticationConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sshAuthenticationConfig"] = transformedSshAuthenticationConfig
+	}
+
 	transformedTokenStatus, err := expandDataformRepositoryGitRemoteSettingsTokenStatus(original["token_status"], d, config)
 	if err != nil {
 		return nil, err
@@ -129,6 +142,40 @@ func expandDataformRepositoryGitRemoteSettingsDefaultBranch(v interface{}, d tpg
 }
 
 func expandDataformRepositoryGitRemoteSettingsAuthenticationTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataformRepositoryGitRemoteSettingsSshAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserPrivateKeySecretVersion, err := expandDataformRepositoryGitRemoteSettingsSshAuthenticationConfigUserPrivateKeySecretVersion(original["user_private_key_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserPrivateKeySecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userPrivateKeySecretVersion"] = transformedUserPrivateKeySecretVersion
+	}
+
+	transformedHostPublicKey, err := expandDataformRepositoryGitRemoteSettingsSshAuthenticationConfigHostPublicKey(original["host_public_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostPublicKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hostPublicKey"] = transformedHostPublicKey
+	}
+
+	return transformed, nil
+}
+
+func expandDataformRepositoryGitRemoteSettingsSshAuthenticationConfigUserPrivateKeySecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataformRepositoryGitRemoteSettingsSshAuthenticationConfigHostPublicKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -178,5 +225,9 @@ func expandDataformRepositoryWorkspaceCompilationOverridesSchemaSuffix(v interfa
 }
 
 func expandDataformRepositoryWorkspaceCompilationOverridesTablePrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataformRepositoryServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
