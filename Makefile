@@ -1,5 +1,3 @@
-TERRAFORM_VERSION=0.12.31
-
 build_dir=./bin
 
 build:
@@ -11,17 +9,22 @@ test:
 test-integration:
 	go version
 	terraform --version
+	. ./tf-dev-override.sh
 	go test -run=CLI ./...
 
 test-go-licenses:
 	cd .. && go version && go install github.com/google/go-licenses@latest
 	$$(go env GOPATH)/bin/go-licenses check ./... --ignore github.com/dnaeon/go-vcr
 
-build-docker:
-	docker build --build-arg TERRAFORM_VERSION=$(TERRAFORM_VERSION) -f ./Dockerfile -t terraform-google-conversion .
-
 run-docker:
-	docker run -it -v `pwd`:/terraform-google-conversion -v ${GOOGLE_APPLICATION_CREDENTIALS}:/terraform-google-conversion/credentials.json --entrypoint=/bin/bash --env TEST_PROJECT=${PROJECT_ID} --env GOOGLE_APPLICATION_CREDENTIALS=/terraform-google-conversion/credentials.json terraform-google-conversion;
+	docker run -it \
+	-v `pwd`:/terraform-google-conversion \
+	-v ${GOOGLE_APPLICATION_CREDENTIALS}:/terraform-google-conversion/credentials.json \
+	-w /terraform-google-conversion \
+	--entrypoint=/bin/bash \
+	--env TEST_PROJECT=${PROJECT_ID} \
+	--env GOOGLE_APPLICATION_CREDENTIALS=/terraform-google-conversion/credentials.json \
+	gcr.io/graphite-docker-images/go-plus;
 
 release:
 	./release.sh ${VERSION}
