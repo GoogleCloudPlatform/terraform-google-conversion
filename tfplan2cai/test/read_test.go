@@ -25,6 +25,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_project_iam_binding"},
 		{name: "example_project_iam_member"},
 		{name: "example_storage_bucket"},
+		{name: "example_storage_bucket_empty_project_id"},
 		{name: "example_storage_bucket_iam_binding"},
 		{name: "example_storage_bucket_iam_member"},
 		{name: "example_project_create_empty_project_id"},
@@ -183,7 +184,7 @@ func TestReadPlannedAssetsCoverage_WithoutDefaultProject(t *testing.T) {
 		name string
 	}{
 		{name: "example_project_create_empty_project_id"},
-		{name: "example_storage_bucket"},
+		{name: "example_storage_bucket_empty_project_id"},
 		{name: "example_project_iam_member_empty_project"},
 	}
 	for i := range cases {
