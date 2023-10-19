@@ -31,6 +31,8 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_project_create_empty_project_id"},
 		{name: "example_project_iam_member_empty_project"},
 		// auto inserted tests that are not in list above or manually inserted in cli_test.go
+		{name: "bucket"},
+		{name: "disk"},
 		{name: "example_access_context_manager_access_policy"},
 		{name: "example_access_context_manager_service_perimeter"},
 		{name: "example_bigquery_dataset"},
@@ -49,6 +51,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_compute_disk"},
 		{name: "example_compute_disk_empty_image"},
 		{name: "example_compute_firewall"},
+		{name: "example_compute_forwarding_rule"},
 		{name: "example_compute_global_address"},
 		{name: "example_compute_global_forwarding_rule"},
 		{name: "example_compute_instance_iam_binding"},
@@ -117,6 +120,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_storage_bucket_iam_member_random_suffix"},
 		{name: "example_storage_bucket_iam_policy"},
 		{name: "example_vpc_access_connector"},
+		{name: "firewall"},
 		{name: "full_compute_firewall"},
 		{name: "full_compute_instance"},
 		{name: "full_container_cluster"},
@@ -124,6 +128,8 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "full_spanner_instance"},
 		{name: "full_sql_database_instance"},
 		{name: "full_storage_bucket"},
+		{name: "instance"},
+		{name: "sql"},
 	}
 	for i := range cases {
 		// Allocate a variable to make sure test can run in parallel.
