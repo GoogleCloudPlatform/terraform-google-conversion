@@ -273,12 +273,20 @@ type attachedClusterUser struct {
 	Username string `json:"username"`
 }
 
+type attachedClusterGroup struct {
+	Group string `json:"group"`
+}
+
 // The custom expander transforms input into something like this:
 //
 //	authorization {
 //	   admin_users [
 //	     { username = "user1" },
 //	     { username = "user2" }
+//	   ]
+//	   admin_groups [
+//	     { group = "group1" },
+//	     { group = "group2" },
 //	   ]
 //	}
 //
@@ -289,6 +297,10 @@ type attachedClusterUser struct {
 //	     "user1",
 //	     "user2"
 //	   ]
+//	   admin_groups = [
+//	     "group1",
+//	     "group2"
+//	   ],
 //	}
 func expandContainerAttachedClusterAuthorization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
@@ -302,6 +314,13 @@ func expandContainerAttachedClusterAuthorization(v interface{}, d tpgresource.Te
 	for i, u := range orig {
 		if u != nil {
 			transformed["admin_users"][i] = attachedClusterUser{Username: u.(string)}
+		}
+	}
+	orig = raw.(map[string]interface{})["admin_groups"].([]interface{})
+	transformed["admin_groups"] = make([]interface{}, len(orig))
+	for i, u := range orig {
+		if u != nil {
+			transformed["admin_groups"][i] = attachedClusterGroup{Group: u.(string)}
 		}
 	}
 	return transformed, nil
