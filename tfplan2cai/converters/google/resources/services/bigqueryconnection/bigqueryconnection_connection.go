@@ -386,6 +386,27 @@ func expandBigqueryConnectionConnectionCloudSpanner(v interface{}, d tpgresource
 		transformed["useParallelism"] = transformedUseParallelism
 	}
 
+	transformedMaxParallelism, err := expandBigqueryConnectionConnectionCloudSpannerMaxParallelism(original["max_parallelism"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxParallelism); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxParallelism"] = transformedMaxParallelism
+	}
+
+	transformedUseDataBoost, err := expandBigqueryConnectionConnectionCloudSpannerUseDataBoost(original["use_data_boost"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseDataBoost); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useDataBoost"] = transformedUseDataBoost
+	}
+
+	transformedDatabaseRole, err := expandBigqueryConnectionConnectionCloudSpannerDatabaseRole(original["database_role"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabaseRole); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["databaseRole"] = transformedDatabaseRole
+	}
+
 	transformedUseServerlessAnalytics, err := expandBigqueryConnectionConnectionCloudSpannerUseServerlessAnalytics(original["use_serverless_analytics"], d, config)
 	if err != nil {
 		return nil, err
@@ -401,6 +422,18 @@ func expandBigqueryConnectionConnectionCloudSpannerDatabase(v interface{}, d tpg
 }
 
 func expandBigqueryConnectionConnectionCloudSpannerUseParallelism(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionCloudSpannerMaxParallelism(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionCloudSpannerUseDataBoost(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionCloudSpannerDatabaseRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
