@@ -209,6 +209,13 @@ func expandBigQueryDatasetAccess(v interface{}, d tpgresource.TerraformResourceD
 			transformed["specialGroup"] = transformedSpecialGroup
 		}
 
+		transformedIamMember, err := expandBigQueryDatasetAccessIamMember(original["iam_member"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIamMember); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["iamMember"] = transformedIamMember
+		}
+
 		transformedUserByEmail, err := expandBigQueryDatasetAccessUserByEmail(original["user_by_email"], d, config)
 		if err != nil {
 			return nil, err
@@ -255,6 +262,10 @@ func expandBigQueryDatasetAccessRole(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandBigQueryDatasetAccessSpecialGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryDatasetAccessIamMember(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
