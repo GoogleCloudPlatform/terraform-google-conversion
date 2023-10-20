@@ -483,6 +483,20 @@ func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFrom(v 
 		transformed["identityType"] = transformedIdentityType
 	}
 
+	transformedSources, err := expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFromSources(original["sources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSources); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sources"] = transformedSources
+	}
+
+	transformedSourceRestriction, err := expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFromSourceRestriction(original["source_restriction"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceRestriction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceRestriction"] = transformedSourceRestriction
+	}
+
 	transformedIdentities, err := expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFromIdentities(original["identities"], d, config)
 	if err != nil {
 		return nil, err
@@ -494,6 +508,36 @@ func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFrom(v 
 }
 
 func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFromIdentityType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFromSources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAccessLevel, err := expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFromSourcesAccessLevel(original["access_level"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAccessLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["accessLevel"] = transformedAccessLevel
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFromSourcesAccessLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressFromSourceRestriction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -973,6 +1017,20 @@ func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFrom(v in
 		transformed["identityType"] = transformedIdentityType
 	}
 
+	transformedSources, err := expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFromSources(original["sources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSources); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sources"] = transformedSources
+	}
+
+	transformedSourceRestriction, err := expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFromSourceRestriction(original["source_restriction"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceRestriction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceRestriction"] = transformedSourceRestriction
+	}
+
 	transformedIdentities, err := expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFromIdentities(original["identities"], d, config)
 	if err != nil {
 		return nil, err
@@ -984,6 +1042,36 @@ func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFrom(v in
 }
 
 func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFromIdentityType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFromSources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAccessLevel, err := expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFromSourcesAccessLevel(original["access_level"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAccessLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["accessLevel"] = transformedAccessLevel
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFromSourcesAccessLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressFromSourceRestriction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

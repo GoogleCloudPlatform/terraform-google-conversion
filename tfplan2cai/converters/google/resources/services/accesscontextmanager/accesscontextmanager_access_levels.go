@@ -211,6 +211,13 @@ func expandAccessContextManagerAccessLevelsAccessLevelsBasicConditions(v interfa
 			transformed["regions"] = transformedRegions
 		}
 
+		transformedVpcNetworkSources, err := expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsVpcNetworkSources(original["vpc_network_sources"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVpcNetworkSources); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["vpcNetworkSources"] = transformedVpcNetworkSources
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -344,6 +351,62 @@ func expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsDevicePoli
 }
 
 func expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsVpcNetworkSources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedVpcSubnetwork, err := expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsVpcNetworkSourcesVpcSubnetwork(original["vpc_subnetwork"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVpcSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["vpcSubnetwork"] = transformedVpcSubnetwork
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsVpcNetworkSourcesVpcSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNetwork, err := expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsVpcNetworkSourcesVpcSubnetworkNetwork(original["network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["network"] = transformedNetwork
+	}
+
+	transformedVpcIpSubnetworks, err := expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsVpcNetworkSourcesVpcSubnetworkVpcIpSubnetworks(original["vpc_ip_subnetworks"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVpcIpSubnetworks); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["vpcIpSubnetworks"] = transformedVpcIpSubnetworks
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsVpcNetworkSourcesVpcSubnetworkNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerAccessLevelsAccessLevelsBasicConditionsVpcNetworkSourcesVpcSubnetworkVpcIpSubnetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
