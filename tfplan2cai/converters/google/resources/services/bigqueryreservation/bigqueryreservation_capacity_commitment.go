@@ -41,7 +41,7 @@ func ResourceConverterBigqueryReservationCapacityCommitment() cai.ResourceConver
 }
 
 func GetBigqueryReservationCapacityCommitmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/capacityCommitments/{{capacity_commitment_id}}")
+	name, err := cai.AssetName(d, config, "//bigqueryreservation.googleapis.com/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
