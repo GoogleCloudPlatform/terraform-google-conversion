@@ -1,4 +1,5 @@
 build_dir=./bin
+TF_CONFIG_FILE=tf-dev-override.tfrc
 
 build:
 	GO111MODULE=on go build -o ${build_dir}/tfplan2cai ./cmd/tfplan2cai
@@ -9,8 +10,8 @@ test:
 test-integration:
 	go version
 	terraform --version
-	. ./tf-dev-override.sh
-	go test -run=CLI ./...
+	./tf-dev-override.sh
+	TF_CLI_CONFIG_FILE="/tmp/${TF_CONFIG_FILE}" go test -run=CLI ./...
 
 test-go-licenses:
 	cd .. && go version && go install github.com/google/go-licenses@latest
@@ -29,4 +30,4 @@ run-docker:
 release:
 	./release.sh ${VERSION}
 
-.PHONY: test test-integration test-go-licenses build-docker run-docker release
+.PHONY: build test test-integration test-go-licenses run-docker release
