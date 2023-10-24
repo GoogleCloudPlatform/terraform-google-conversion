@@ -99,6 +99,12 @@ func GetComputeNodeGroupApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("share_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(shareSettingsProp)) && (ok || !reflect.DeepEqual(v, shareSettingsProp)) {
 		obj["shareSettings"] = shareSettingsProp
 	}
+	maintenanceIntervalProp, err := expandComputeNodeGroupMaintenanceInterval(d.Get("maintenance_interval"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("maintenance_interval"); !tpgresource.IsEmptyValue(reflect.ValueOf(maintenanceIntervalProp)) && (ok || !reflect.DeepEqual(v, maintenanceIntervalProp)) {
+		obj["maintenanceInterval"] = maintenanceIntervalProp
+	}
 	zoneProp, err := expandComputeNodeGroupZone(d.Get("zone"), d, config)
 	if err != nil {
 		return nil, err
@@ -253,6 +259,10 @@ func expandComputeNodeGroupShareSettingsProjectMap(v interface{}, d tpgresource.
 }
 
 func expandComputeNodeGroupShareSettingsProjectMapProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNodeGroupMaintenanceInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
