@@ -87,6 +87,12 @@ func GetWorkflowsWorkflowApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("crypto_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(cryptoKeyNameProp)) && (ok || !reflect.DeepEqual(v, cryptoKeyNameProp)) {
 		obj["cryptoKeyName"] = cryptoKeyNameProp
 	}
+	userEnvVarsProp, err := expandWorkflowsWorkflowUserEnvVars(d.Get("user_env_vars"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("user_env_vars"); !tpgresource.IsEmptyValue(reflect.ValueOf(userEnvVarsProp)) && (ok || !reflect.DeepEqual(v, userEnvVarsProp)) {
+		obj["userEnvVars"] = userEnvVarsProp
+	}
 	labelsProp, err := expandWorkflowsWorkflowEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -132,6 +138,17 @@ func expandWorkflowsWorkflowSourceContents(v interface{}, d tpgresource.Terrafor
 
 func expandWorkflowsWorkflowCryptoKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandWorkflowsWorkflowUserEnvVars(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandWorkflowsWorkflowEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
