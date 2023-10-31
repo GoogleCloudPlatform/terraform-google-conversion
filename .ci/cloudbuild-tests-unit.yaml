@@ -17,7 +17,7 @@
 timeout: 1800s
 steps:
   - id: test
-    name: "gcr.io/cloud-builders/go:1.18"
+    name: "gcr.io/graphite-docker-images/go-plus"
     entrypoint: /usr/bin/make
     args: ["test"]
 tags:
