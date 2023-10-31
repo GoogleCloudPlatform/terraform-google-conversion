@@ -966,6 +966,13 @@ func expandMonitoringAlertPolicyDocumentation(v interface{}, d tpgresource.Terra
 		transformed["mimeType"] = transformedMimeType
 	}
 
+	transformedSubject, err := expandMonitoringAlertPolicyDocumentationSubject(original["subject"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subject"] = transformedSubject
+	}
+
 	return transformed, nil
 }
 
@@ -974,5 +981,9 @@ func expandMonitoringAlertPolicyDocumentationContent(v interface{}, d tpgresourc
 }
 
 func expandMonitoringAlertPolicyDocumentationMimeType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyDocumentationSubject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
