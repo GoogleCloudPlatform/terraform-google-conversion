@@ -96,6 +96,12 @@ func GetMonitoringUptimeCheckConfigApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("checker_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(checkerTypeProp)) && (ok || !reflect.DeepEqual(v, checkerTypeProp)) {
 		obj["checkerType"] = checkerTypeProp
 	}
+	userLabelsProp, err := expandMonitoringUptimeCheckConfigUserLabels(d.Get("user_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("user_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(userLabelsProp)) && (ok || !reflect.DeepEqual(v, userLabelsProp)) {
+		obj["userLabels"] = userLabelsProp
+	}
 	httpCheckProp, err := expandMonitoringUptimeCheckConfigHttpCheck(d.Get("http_check"), d, config)
 	if err != nil {
 		return nil, err
@@ -228,6 +234,17 @@ func expandMonitoringUptimeCheckConfigCheckerType(v interface{}, d tpgresource.T
 	return v, nil
 }
 
+func expandMonitoringUptimeCheckConfigUserLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
 func expandMonitoringUptimeCheckConfigHttpCheck(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -249,6 +266,13 @@ func expandMonitoringUptimeCheckConfigHttpCheck(v interface{}, d tpgresource.Ter
 		return nil, err
 	} else if val := reflect.ValueOf(transformedContentType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["contentType"] = transformedContentType
+	}
+
+	transformedCustomContentType, err := expandMonitoringUptimeCheckConfigHttpCheckCustomContentType(original["custom_content_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCustomContentType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["customContentType"] = transformedCustomContentType
 	}
 
 	transformedAuthInfo, err := expandMonitoringUptimeCheckConfigHttpCheckAuthInfo(original["auth_info"], d, config)
@@ -314,6 +338,13 @@ func expandMonitoringUptimeCheckConfigHttpCheck(v interface{}, d tpgresource.Ter
 		transformed["acceptedResponseStatusCodes"] = transformedAcceptedResponseStatusCodes
 	}
 
+	transformedPingConfig, err := expandMonitoringUptimeCheckConfigHttpCheckPingConfig(original["ping_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pingConfig"] = transformedPingConfig
+	}
+
 	return transformed, nil
 }
 
@@ -322,6 +353,10 @@ func expandMonitoringUptimeCheckConfigHttpCheckRequestMethod(v interface{}, d tp
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckContentType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringUptimeCheckConfigHttpCheckCustomContentType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -431,6 +466,29 @@ func expandMonitoringUptimeCheckConfigHttpCheckAcceptedResponseStatusCodesStatus
 	return v, nil
 }
 
+func expandMonitoringUptimeCheckConfigHttpCheckPingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPingsCount, err := expandMonitoringUptimeCheckConfigHttpCheckPingConfigPingsCount(original["pings_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPingsCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pingsCount"] = transformedPingsCount
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringUptimeCheckConfigHttpCheckPingConfigPingsCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandMonitoringUptimeCheckConfigTcpCheck(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -447,10 +505,40 @@ func expandMonitoringUptimeCheckConfigTcpCheck(v interface{}, d tpgresource.Terr
 		transformed["port"] = transformedPort
 	}
 
+	transformedPingConfig, err := expandMonitoringUptimeCheckConfigTcpCheckPingConfig(original["ping_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pingConfig"] = transformedPingConfig
+	}
+
 	return transformed, nil
 }
 
 func expandMonitoringUptimeCheckConfigTcpCheckPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringUptimeCheckConfigTcpCheckPingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPingsCount, err := expandMonitoringUptimeCheckConfigTcpCheckPingConfigPingsCount(original["pings_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPingsCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pingsCount"] = transformedPingsCount
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringUptimeCheckConfigTcpCheckPingConfigPingsCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
