@@ -26,5 +26,3 @@ if ! [ -f $TF_CONFIG_FILE ];then
   }
 EOF
 fi
-
-cp $TF_CONFIG_FILE /tmp/$TF_CONFIG_FILE
