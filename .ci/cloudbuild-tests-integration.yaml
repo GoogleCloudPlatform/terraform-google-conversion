@@ -22,14 +22,13 @@ steps:
     args:
       [
         "-c",
-        "mv /terraform/$_TERRAFORM_VERSION /bin/terraform && /usr/bin/make test-integration",
+        "/usr/bin/make test-integration",
       ]
     env:
       - TEST_PROJECT=$_TEST_PROJECT
       - TEST_FOLDER_ID=$_TEST_FOLDER
       - TEST_ANCESTRY=$_TEST_ANCESTRY
       - TEST_ORG_ID=$_TEST_ORG
-      - TERRAFORM_VERSION=$_TERRAFORM_VERSION
 tags:
   - "ci"
   - "integration"
