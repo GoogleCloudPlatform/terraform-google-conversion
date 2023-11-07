@@ -84,6 +84,12 @@ func GetWorkstationsWorkstationClusterApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("private_cluster_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(privateClusterConfigProp)) && (ok || !reflect.DeepEqual(v, privateClusterConfigProp)) {
 		obj["privateClusterConfig"] = privateClusterConfigProp
 	}
+	domainConfigProp, err := expandWorkstationsWorkstationClusterDomainConfig(d.Get("domain_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("domain_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(domainConfigProp)) && (ok || !reflect.DeepEqual(v, domainConfigProp)) {
+		obj["domainConfig"] = domainConfigProp
+	}
 	labelsProp, err := expandWorkstationsWorkstationClusterEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -169,6 +175,29 @@ func expandWorkstationsWorkstationClusterPrivateClusterConfigServiceAttachmentUr
 }
 
 func expandWorkstationsWorkstationClusterPrivateClusterConfigAllowedProjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationClusterDomainConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDomain, err := expandWorkstationsWorkstationClusterDomainConfigDomain(original["domain"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["domain"] = transformedDomain
+	}
+
+	return transformed, nil
+}
+
+func expandWorkstationsWorkstationClusterDomainConfigDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
