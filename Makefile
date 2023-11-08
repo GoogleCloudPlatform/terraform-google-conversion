@@ -10,6 +10,7 @@ test:
 
 test-integration:
 	env
+	ls ~/.config/gcloud
 	go version
 	terraform --version
 	go test -v -run=CLI ./...
