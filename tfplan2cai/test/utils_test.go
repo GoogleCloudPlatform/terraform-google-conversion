@@ -52,6 +52,8 @@ func terraformWorkflow(t *testing.T, dir, name string) {
 	terraformInit(t, "terraform", dir)
 	terraformPlan(t, "terraform", dir, name+".tfplan")
 	payload := terraformShow(t, "terraform", dir, name+".tfplan")
+	c, _ := os.ReadFile(filepath.Join(dir, name+".tf"))
+	fmt.Println(string(c))
 	saveFile(t, dir, name+".tfplan.json", payload)
 }
 
@@ -61,7 +63,6 @@ func terraformInit(t *testing.T, executable, dir string) {
 
 func terraformPlan(t *testing.T, executable, dir, tfplan string) {
 	terraformExec(t, executable, dir, "plan", "-input=false", "-refresh=false", "-out", tfplan)
-	terraformExec(t, "cat", strings.ReplaceAll(tfplan, ".tfplan", ".tf"))
 }
 
 func terraformShow(t *testing.T, executable, dir, tfplan string) []byte {
