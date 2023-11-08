@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -52,6 +53,8 @@ func getTestCredsFromEnv() string {
 	} else {
 		log.Printf("missing env var TEST_CREDENTIALS, will try to use Application Default Credentials")
 	}
+
+	fmt.Printf("credentials = %v", credentials)
 
 	return credentials
 }
