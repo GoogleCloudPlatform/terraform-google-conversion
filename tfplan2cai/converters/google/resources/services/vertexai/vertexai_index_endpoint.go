@@ -72,6 +72,12 @@ func GetVertexAIIndexEndpointApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
+	privateServiceConnectConfigProp, err := expandVertexAIIndexEndpointPrivateServiceConnectConfig(d.Get("private_service_connect_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("private_service_connect_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(privateServiceConnectConfigProp)) && (ok || !reflect.DeepEqual(v, privateServiceConnectConfigProp)) {
+		obj["privateServiceConnectConfig"] = privateServiceConnectConfigProp
+	}
 	publicEndpointEnabledProp, err := expandVertexAIIndexEndpointPublicEndpointEnabled(d.Get("public_endpoint_enabled"), d, config)
 	if err != nil {
 		return nil, err
@@ -97,6 +103,40 @@ func expandVertexAIIndexEndpointDescription(v interface{}, d tpgresource.Terrafo
 }
 
 func expandVertexAIIndexEndpointNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIIndexEndpointPrivateServiceConnectConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnablePrivateServiceConnect, err := expandVertexAIIndexEndpointPrivateServiceConnectConfigEnablePrivateServiceConnect(original["enable_private_service_connect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnablePrivateServiceConnect); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enablePrivateServiceConnect"] = transformedEnablePrivateServiceConnect
+	}
+
+	transformedProjectAllowlist, err := expandVertexAIIndexEndpointPrivateServiceConnectConfigProjectAllowlist(original["project_allowlist"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectAllowlist); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectAllowlist"] = transformedProjectAllowlist
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIIndexEndpointPrivateServiceConnectConfigEnablePrivateServiceConnect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIIndexEndpointPrivateServiceConnectConfigProjectAllowlist(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
