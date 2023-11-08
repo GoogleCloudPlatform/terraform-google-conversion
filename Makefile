@@ -5,7 +5,10 @@ build:
 	GO111MODULE=on go build -o ${build_dir}/tfplan2cai ./cmd/tfplan2cai
 
 test:
-	GO111MODULE=on go test -short ./...
+	go version
+	terraform --version
+	./config-tf-dev-override.sh
+	TF_CLI_CONFIG_FILE="${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -short ./...
 
 test-integration:
 	go version
