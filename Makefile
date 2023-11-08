@@ -9,6 +9,7 @@ test:
 	GO111MODULE=on go test -short ./...
 
 test-integration:
+	env
 	go version
 	terraform --version
 	go test -v -run=CLI ./...
