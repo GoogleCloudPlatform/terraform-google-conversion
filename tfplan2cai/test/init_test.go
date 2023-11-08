@@ -82,6 +82,7 @@ func init() {
 		FolderID: folder,
 		Ancestry: ancestry,
 	}
+	fmt.Println("data = %v", *data)
 }
 
 func generateTestFiles(t *testing.T, sourceDir string, targetDir string, selector string) {

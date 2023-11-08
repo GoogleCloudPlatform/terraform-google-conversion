@@ -61,6 +61,7 @@ func terraformInit(t *testing.T, executable, dir string) {
 
 func terraformPlan(t *testing.T, executable, dir, tfplan string) {
 	terraformExec(t, executable, dir, "plan", "-input=false", "-refresh=false", "-out", tfplan)
+	exec.Command("cat", filepath.Join(dir, tfplan))
 }
 
 func terraformShow(t *testing.T, executable, dir, tfplan string) []byte {

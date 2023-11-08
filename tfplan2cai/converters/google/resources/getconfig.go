@@ -2,6 +2,7 @@ package google
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -24,6 +25,8 @@ func NewConfig(ctx context.Context, project, zone, region string, offline bool, 
 		"GCLOUD_KEYFILE_JSON",
 	})
 
+	fmt.Printf("cfg.Credentials = %v\n", cfg.Credentials)
+
 	cfg.AccessToken = transport_tpg.MultiEnvSearch([]string{
 		"GOOGLE_OAUTH_ACCESS_TOKEN",
 	})
@@ -34,6 +37,7 @@ func NewConfig(ctx context.Context, project, zone, region string, offline bool, 
 
 	transport_tpg.ConfigureBasePaths(cfg)
 	if !offline {
+		fmt.Println("online....")
 		if err := cfg.LoadAndValidate(ctx); err != nil {
 			return nil, errors.Wrap(err, "load and validate config")
 		}
