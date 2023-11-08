@@ -3,10 +3,19 @@ set -ex
 
 TF_CONFIG_FILE="tf-dev-override.tfrc"
 
-# required for go install terraform-provider-google-beta
-go mod download github.com/hashicorp/terraform-plugin-mux
+go clean --modcache
+go list -json  -m github.com/hashicorp/terraform-provider-google-beta
+REPLACE_DIR=`go list -json  -m github.com/hashicorp/terraform-provider-google-beta | jq -r '.Dir // empty'`
+VERSION=`go list -json  -m github.com/hashicorp/terraform-provider-google-beta | jq -r .Version`
 
-go install github.com/hashicorp/terraform-provider-google-beta
+if [ ! -z "$REPLACE_DIR" ]
+then
+  pushd $REPLACE_DIR
+    go install
+  popd
+else
+  go install github.com/hashicorp/terraform-provider-google-beta@$VERSION
+fi
 
 # create terraform configuration file
 if ! [ -f $TF_CONFIG_FILE ];then
