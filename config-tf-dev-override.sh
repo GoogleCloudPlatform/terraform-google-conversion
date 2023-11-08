@@ -4,16 +4,18 @@ set -ex
 TF_CONFIG_FILE="tf-dev-override.tfrc"
 
 go clean --modcache
-go list -json  -m github.com/hashicorp/terraform-provider-google-beta
-REPLACE_DIR=`go list -json  -m github.com/hashicorp/terraform-provider-google-beta | jq -r '.Dir // empty'`
-VERSION=`go list -json  -m github.com/hashicorp/terraform-provider-google-beta | jq -r .Version`
+go list -json -m github.com/hashicorp/terraform-provider-google-beta
+REPLACE_DIR=`go list -json -m github.com/hashicorp/terraform-provider-google-beta | jq -r '.Dir // empty'`
+VERSION=`go list -json -m github.com/hashicorp/terraform-provider-google-beta | jq -r .Version`
 
 if [ ! -z "$REPLACE_DIR" ]
 then
+  # for tests triggered by magic-module CI which replaces tpgb module
   pushd $REPLACE_DIR
     go install
   popd
 else
+  # for tests triggered in tgc CI
   go install github.com/hashicorp/terraform-provider-google-beta@$VERSION
 fi
 

@@ -10,7 +10,7 @@ test:
 test-integration:
 	go version
 	terraform --version
-	./tf-dev-override.sh
+	./config-tf-dev-override.sh
 	TF_CLI_CONFIG_FILE="${PWD}/${TF_CONFIG_FILE}" go test -run=CLI ./...
 
 test-go-licenses:
