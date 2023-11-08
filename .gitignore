@@ -17,3 +17,6 @@ examples/*.tfstate*
 # binary
 ./cmd
 bin/
+
+# terraform config file for integration test
+tf-dev-override.tfrc
