@@ -9,9 +9,10 @@ test:
 	GO111MODULE=on go test -short ./...
 
 test-integration:
+	env
 	go version
 	terraform --version
-	go test -run=CLI ./...
+	go test -v -run=CLI ./...
 
 test-go-licenses:
 	cd .. && go version && go install github.com/google/go-licenses@latest

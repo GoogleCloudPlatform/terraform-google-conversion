@@ -52,7 +52,6 @@ func getTestCredsFromEnv() string {
 	} else {
 		log.Printf("missing env var TEST_CREDENTIALS, will try to use Application Default Credentials")
 	}
-
 	return credentials
 }
 
