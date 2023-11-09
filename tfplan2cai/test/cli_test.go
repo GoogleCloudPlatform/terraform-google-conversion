@@ -15,6 +15,7 @@
 package test
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -22,6 +23,7 @@ import (
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
+	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -31,6 +33,13 @@ func TestCLI(t *testing.T) {
 		t.Skip("skipping integration test in short mode.")
 		return
 	}
+
+	_, err := resources.NewConfig(context.Background(), "random-project", "", "", false, "", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log("resources.NewConfig passed")
 
 	// Test cases for each type of resource is defined here.
 	cases := []struct {

@@ -8,11 +8,19 @@ import (
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai"
+	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai/converters/google/resources"
 	"github.com/google/go-cmp/cmp"
 	"go.uber.org/zap/zaptest"
 )
 
 func TestReadPlannedAssetsCoverage(t *testing.T) {
+	_, err := resources.NewConfig(context.Background(), "random-project", "", "", false, "", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log("resources.NewConfig passed")
+
 	cases := []struct {
 		name string
 	}{
