@@ -75,6 +75,12 @@ func GetBigtableAppProfileApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("single_cluster_routing"); !tpgresource.IsEmptyValue(reflect.ValueOf(singleClusterRoutingProp)) && (ok || !reflect.DeepEqual(v, singleClusterRoutingProp)) {
 		obj["singleClusterRouting"] = singleClusterRoutingProp
 	}
+	standardIsolationProp, err := expandBigtableAppProfileStandardIsolation(d.Get("standard_isolation"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("standard_isolation"); !tpgresource.IsEmptyValue(reflect.ValueOf(standardIsolationProp)) && (ok || !reflect.DeepEqual(v, standardIsolationProp)) {
+		obj["standardIsolation"] = standardIsolationProp
+	}
 
 	return resourceBigtableAppProfileEncoder(d, config, obj)
 }
@@ -138,5 +144,28 @@ func expandBigtableAppProfileSingleClusterRoutingClusterId(v interface{}, d tpgr
 }
 
 func expandBigtableAppProfileSingleClusterRoutingAllowTransactionalWrites(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigtableAppProfileStandardIsolation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPriority, err := expandBigtableAppProfileStandardIsolationPriority(original["priority"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPriority); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["priority"] = transformedPriority
+	}
+
+	return transformed, nil
+}
+
+func expandBigtableAppProfileStandardIsolationPriority(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
