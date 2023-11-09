@@ -2,6 +2,7 @@ package google
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -34,6 +35,7 @@ func NewConfig(ctx context.Context, project, zone, region string, offline bool, 
 
 	transport_tpg.ConfigureBasePaths(cfg)
 	if !offline {
+		fmt.Printf("running LoadAndValidate: cfg = %+v", *cfg)
 		if err := cfg.LoadAndValidate(ctx); err != nil {
 			return nil, errors.Wrap(err, "load and validate config")
 		}
