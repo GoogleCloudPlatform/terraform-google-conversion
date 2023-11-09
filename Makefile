@@ -6,12 +6,12 @@ build:
 	GO111MODULE=on go build -o ${build_dir}/tfplan2cai ./cmd/tfplan2cai
 
 test:
-	GO111MODULE=on go test -short ./...
+	GO111MODULE=on go test -v -short ./...
 
 test-integration:
 	go version
 	terraform --version
-	go test -run=CLI ./...
+	go test -v -run=CLI ./...
 
 test-go-licenses:
 	cd .. && go version && go install github.com/google/go-licenses@latest
