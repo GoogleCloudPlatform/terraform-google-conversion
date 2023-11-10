@@ -14,16 +14,19 @@ If you want to contribute to Terraform Google Conversion, check out the
 
 ## Testing
 
-The read test(one of the unit tests) and integration test installs the provider
-binary and creates a terraform dev override file tf-dev-override.tfrc.
-[Dev override](https://googlecloudplatform.github.io/magic-modules/develop/run-tests/#optional-test-manually)
-is to make sure the test runs against the provider version specified in the go
-module. You can place your own config to point to a different go binary
-destination within tf-dev-override.tfrc. If the file already exists, it will not
-be overwritten.
+The [read test](../../tfplan2cai/test/read_test.go) and integration test apply
+[dev override](https://googlecloudplatform.github.io/magic-modules/develop/run-tests/#optional-test-manually)
+to make sure the test runs against the provider version specified in the go
+module.
 
-It is better to run both the unit test and integration tests inside a Docker
-container to match the CI/CD pipeline.
+The dev override configuration installs the provider binary into GOPATH/bin and
+creates a terraform dev override file tf-dev-override.tfrc. You can create your
+tf-dev-override.tfrc with your go binary destination. If the file already
+exists, it will not be overwritten.
+
+It is better to run both the unit test and integration tests inside the Docker
+container to match the CI/CD pipeline, where the docker image has a
+pre-installed terraform binary.
 
 **Note:** Integration tests require a test project.
 
@@ -41,8 +44,8 @@ make run-docker
 
 ### Unit Test
 
-The read test(tfplan2cai/test/read_test.go) runs terraform binary to generate
-`.tfplan.json` files. It requires gcloud credential during that process.
+Unit tests include [read test](../../tfplan2cai/test/read_test.go), which runs
+terraform binary to generate `.tfplan.json` files.
 
 ```bash
 # Inside the docker container,
