@@ -127,6 +127,12 @@ func GetContainerAttachedClusterApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("binary_authorization"); !tpgresource.IsEmptyValue(reflect.ValueOf(binaryAuthorizationProp)) && (ok || !reflect.DeepEqual(v, binaryAuthorizationProp)) {
 		obj["binaryAuthorization"] = binaryAuthorizationProp
 	}
+	proxyConfigProp, err := expandContainerAttachedClusterProxyConfig(d.Get("proxy_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("proxy_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(proxyConfigProp)) && (ok || !reflect.DeepEqual(v, proxyConfigProp)) {
+		obj["proxyConfig"] = proxyConfigProp
+	}
 	annotationsProp, err := expandContainerAttachedClusterEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
@@ -403,6 +409,59 @@ func expandContainerAttachedClusterBinaryAuthorization(v interface{}, d tpgresou
 }
 
 func expandContainerAttachedClusterBinaryAuthorizationEvaluationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandContainerAttachedClusterProxyConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKubernetesSecret, err := expandContainerAttachedClusterProxyConfigKubernetesSecret(original["kubernetes_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKubernetesSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kubernetesSecret"] = transformedKubernetesSecret
+	}
+
+	return transformed, nil
+}
+
+func expandContainerAttachedClusterProxyConfigKubernetesSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandContainerAttachedClusterProxyConfigKubernetesSecretName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedNamespace, err := expandContainerAttachedClusterProxyConfigKubernetesSecretNamespace(original["namespace"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNamespace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["namespace"] = transformedNamespace
+	}
+
+	return transformed, nil
+}
+
+func expandContainerAttachedClusterProxyConfigKubernetesSecretName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandContainerAttachedClusterProxyConfigKubernetesSecretNamespace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
