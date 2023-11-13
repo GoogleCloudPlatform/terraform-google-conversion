@@ -144,7 +144,27 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 			defer os.RemoveAll(dir)
 
 			generateTestFiles(t, "../testdata/templates", dir, c.name+".json")
-			generateTestFiles(t, "../testdata/templates", dir, c.name+".tfplan.json")
+			generateTestFiles(t, "../testdata/templates", dir, c.name+".tf")
+
+			// tfstate files are for cases testing updates, eg. project update.
+			// Uses glob matching to match generateTestFiles internals.
+			tfstateMatches, err := filepath.Glob(filepath.Join("../testdata/templates", c.name+".tfstate"))
+			if err != nil {
+				t.Fatalf("malformed glob: %v", err)
+			}
+			if tfstateMatches != nil {
+				generateTestFiles(t, "../testdata/templates", dir, c.name+".tfstate")
+				err = os.Rename(
+					filepath.Join(dir, c.name+".tfstate"),
+					filepath.Join(dir, "terraform.tfstate"),
+				)
+				if err != nil {
+					t.Fatalf("renaming tfstate: %v", err)
+				}
+			}
+
+			// Run terraform init and terraform apply to generate tfplan.json files
+			terraformWorkflow(t, dir, c.name)
 
 			// Unmarshal payload from testfile into `want` variable.
 			f := filepath.Join(dir, c.name+".json")
@@ -174,7 +194,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 				AncestryCache:    ancestryCache,
 			})
 			if err != nil {
-				t.Fatalf("ReadPlannedAssets(%s, %s, \"\", \"\", %s, %t): %v", planfile, data.Provider["project"], ancestryCache, true, err)
+				t.Fatalf("Convert(%s, %s, \"\", \"\", %s, offline): %v", planfile, data.Provider["project"], ancestryCache, err)
 			}
 			expectedAssets := normalizeAssets(t, want, true)
 			actualAssets := normalizeAssets(t, got, true)
@@ -206,7 +226,10 @@ func TestReadPlannedAssetsCoverage_WithoutDefaultProject(t *testing.T) {
 			defer os.RemoveAll(dir)
 
 			generateTestFiles(t, "../testdata/templates", dir, c.name+"_without_default_project.json")
-			generateTestFiles(t, "../testdata/templates", dir, c.name+".tfplan.json")
+			generateTestFiles(t, "../testdata/templates", dir, c.name+".tf")
+
+			// Run terraform init and terraform plan to generate tfplan.json files
+			terraformWorkflow(t, dir, c.name)
 
 			// Unmarshal payload from testfile into `want` variable.
 			f := filepath.Join(dir, c.name+"_without_default_project.json")
@@ -217,9 +240,6 @@ func TestReadPlannedAssetsCoverage_WithoutDefaultProject(t *testing.T) {
 
 			planfile := filepath.Join(dir, c.name+".tfplan.json")
 			ctx := context.Background()
-			ancestryCache := map[string]string{
-				// data.Provider["project"]: data.Ancestry,
-			}
 
 			jsonPlan, err := os.ReadFile(planfile)
 			if err != nil {
@@ -233,10 +253,10 @@ func TestReadPlannedAssetsCoverage_WithoutDefaultProject(t *testing.T) {
 				DefaultRegion:    "",
 				DefaultZone:      "",
 				UserAgent:        "",
-				AncestryCache:    ancestryCache,
+				AncestryCache:    map[string]string{},
 			})
 			if err != nil {
-				t.Fatalf("ReadPlannedAssets(%s, %s, \"\", \"\", %s, %t): %v", planfile, data.Provider["project"], ancestryCache, true, err)
+				t.Fatalf("WithoutProject: Convert(%s, offline): %v", planfile, err)
 			}
 			expectedAssets := normalizeAssets(t, want, true)
 			actualAssets := normalizeAssets(t, got, true)
