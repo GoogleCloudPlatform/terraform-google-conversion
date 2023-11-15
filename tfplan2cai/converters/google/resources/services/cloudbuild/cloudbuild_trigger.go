@@ -1701,6 +1701,27 @@ func expandCloudBuildTriggerBuildArtifacts(v interface{}, d tpgresource.Terrafor
 		transformed["objects"] = transformedObjects
 	}
 
+	transformedMavenArtifacts, err := expandCloudBuildTriggerBuildArtifactsMavenArtifacts(original["maven_artifacts"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMavenArtifacts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mavenArtifacts"] = transformedMavenArtifacts
+	}
+
+	transformedPythonPackages, err := expandCloudBuildTriggerBuildArtifactsPythonPackages(original["python_packages"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPythonPackages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pythonPackages"] = transformedPythonPackages
+	}
+
+	transformedNpmPackages, err := expandCloudBuildTriggerBuildArtifactsNpmPackages(original["npm_packages"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNpmPackages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["npmPackages"] = transformedNpmPackages
+	}
+
 	return transformed, nil
 }
 
@@ -1780,6 +1801,150 @@ func expandCloudBuildTriggerBuildArtifactsObjectsTimingStartTime(v interface{}, 
 }
 
 func expandCloudBuildTriggerBuildArtifactsObjectsTimingEndTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsMavenArtifacts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedRepository, err := expandCloudBuildTriggerBuildArtifactsMavenArtifactsRepository(original["repository"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["repository"] = transformedRepository
+		}
+
+		transformedPath, err := expandCloudBuildTriggerBuildArtifactsMavenArtifactsPath(original["path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["path"] = transformedPath
+		}
+
+		transformedArtifactId, err := expandCloudBuildTriggerBuildArtifactsMavenArtifactsArtifactId(original["artifact_id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedArtifactId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["artifactId"] = transformedArtifactId
+		}
+
+		transformedGroupId, err := expandCloudBuildTriggerBuildArtifactsMavenArtifactsGroupId(original["group_id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedGroupId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["groupId"] = transformedGroupId
+		}
+
+		transformedVersion, err := expandCloudBuildTriggerBuildArtifactsMavenArtifactsVersion(original["version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["version"] = transformedVersion
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsMavenArtifactsRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsMavenArtifactsPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsMavenArtifactsArtifactId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsMavenArtifactsGroupId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsMavenArtifactsVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsPythonPackages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedRepository, err := expandCloudBuildTriggerBuildArtifactsPythonPackagesRepository(original["repository"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["repository"] = transformedRepository
+		}
+
+		transformedPaths, err := expandCloudBuildTriggerBuildArtifactsPythonPackagesPaths(original["paths"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPaths); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["paths"] = transformedPaths
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsPythonPackagesRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsPythonPackagesPaths(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsNpmPackages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedRepository, err := expandCloudBuildTriggerBuildArtifactsNpmPackagesRepository(original["repository"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["repository"] = transformedRepository
+		}
+
+		transformedPackagePath, err := expandCloudBuildTriggerBuildArtifactsNpmPackagesPackagePath(original["package_path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPackagePath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["packagePath"] = transformedPackagePath
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsNpmPackagesRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildArtifactsNpmPackagesPackagePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
