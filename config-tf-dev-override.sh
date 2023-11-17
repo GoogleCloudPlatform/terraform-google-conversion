@@ -3,7 +3,6 @@ set -ex
 
 TF_CONFIG_FILE="tf-dev-override.tfrc"
 
-go clean --modcache
 go list -json -m github.com/hashicorp/terraform-provider-google-beta
 REPLACE_DIR=`go list -json -m github.com/hashicorp/terraform-provider-google-beta | jq -r '.Dir // empty'`
 VERSION=`go list -json -m github.com/hashicorp/terraform-provider-google-beta | jq -r .Version`
