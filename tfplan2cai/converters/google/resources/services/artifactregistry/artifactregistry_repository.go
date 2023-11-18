@@ -499,6 +499,13 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d tpg
 		transformed["yumRepository"] = transformedYumRepository
 	}
 
+	transformedUpstreamCredentials, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentials(original["upstream_credentials"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUpstreamCredentials); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["upstreamCredentials"] = transformedUpstreamCredentials
+	}
+
 	return transformed, nil
 }
 
@@ -701,6 +708,59 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRe
 }
 
 func expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepositoryRepositoryPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentials(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUsernamePasswordCredentials, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentials(original["username_password_credentials"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsernamePasswordCredentials); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["usernamePasswordCredentials"] = transformedUsernamePasswordCredentials
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentials(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUsername, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentialsUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	transformedPasswordSecretVersion, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentialsPasswordSecretVersion(original["password_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPasswordSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["passwordSecretVersion"] = transformedPasswordSecretVersion
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentialsUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentialsPasswordSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
