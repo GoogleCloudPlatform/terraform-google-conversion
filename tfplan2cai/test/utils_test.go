@@ -63,8 +63,28 @@ func terraformPlan(t *testing.T, executable, dir, tfplan string) {
 	terraformExec(t, executable, dir, "plan", "-input=false", "-refresh=false", "-out", tfplan)
 }
 
+func terraformApply(t *testing.T, executable, dir, statePath string) {
+	if statePath != "" {
+		terraformExec(t, executable, dir, "apply", "-auto-approve", "-state="+statePath)
+		return
+	}
+	terraformExec(t, executable, dir, "apply", "-auto-approve")
+}
+
+func terraformDestroy(t *testing.T, executable, dir string, statePath string) {
+	if statePath != "" {
+		terraformExec(t, executable, dir, "destroy", "-state="+statePath, "-auto-approve")
+		return
+	}
+	terraformExec(t, executable, dir, "destroy", "-state="+statePath, "-auto-approve")
+}
+
 func terraformShow(t *testing.T, executable, dir, tfplan string) []byte {
-	return terraformExec(t, executable, dir, "show", "--json", tfplan)
+	if tfplan != "" {
+		return terraformExec(t, executable, dir, "show", "-json", tfplan)
+	}
+	// If no tfplan provided, default to show terraform.tfstate file.
+	return terraformExec(t, executable, dir, "show", "-json")
 }
 
 func terraformExec(t *testing.T, executable, dir string, args ...string) []byte {

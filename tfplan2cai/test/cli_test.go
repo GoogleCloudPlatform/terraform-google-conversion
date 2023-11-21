@@ -15,6 +15,7 @@
 package test
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -23,6 +24,7 @@ import (
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/caiasset"
 	"github.com/google/go-cmp/cmp"
+	terraformJSON "github.com/hashicorp/terraform-json"
 )
 
 // TestCLI tests the "convert" and "validate" subcommand against a generated .tfplan file.
@@ -30,6 +32,19 @@ func TestCLI(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping integration test in short mode.")
 		return
+	}
+
+	if os.Getenv("CREATE_TEST_PROJECT") != "" && os.Getenv("TEST_ORG_ID") != "" {
+		orgID := os.Getenv("TEST_ORG_ID")
+		dir, err := os.MkdirTemp(t.TempDir(), "terraform")
+		if err != nil {
+			t.Fatalf("os.MkdirTemp = %v", err)
+		}
+		// Do not use defer since it will execute before t.Parallel()
+		t.Cleanup(func() {
+			terraformDestroy(t, "terraform", dir, "")
+		})
+		createTestProject(t, dir, orgID)
 	}
 
 	// Test cases for each type of resource is defined here.
@@ -175,4 +190,35 @@ func compareMergedIamBindingOutput(t *testing.T, expected []caiasset.Asset, actu
 	if diff := cmp.Diff(expectedAssets, actualAssets); diff != "" {
 		t.Errorf("%v diff(-want, +got):\n%s", t.Name(), diff)
 	}
+}
+
+func createTestProject(t *testing.T, dir string, orgID string) {
+	generateTestFiles(t, "./", dir, "create_test_project.tf")
+	// any terraform execute failure will trigger t.Fatal
+	terraformInit(t, "terraform", dir)
+	terraformPlan(t, "terraform", dir, "create_test_project.tfplan")
+	terraformApply(t, "terraform", dir, "")
+	// terraform show result contains format_version field which is required in unmarshal.
+	b := terraformShow(t, "terraform", dir, "")
+	var state terraformJSON.State
+	err := json.Unmarshal(b, &state)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var ok bool
+	for _, resource := range state.Values.RootModule.Resources {
+		if resource.Type == "google_project" {
+			data.FolderID, ok = resource.AttributeValues["folder_id"].(string)
+			if !ok {
+				t.Fatalf("Failed to get folder ID from value %v", resource.AttributeValues["folder_id"])
+			}
+			data.Project["project"], ok = resource.AttributeValues["project_id"].(string)
+			if !ok {
+				t.Fatalf("Failed to get project ID from value %v", resource.AttributeValues["project_id"])
+			}
+		}
+	}
+	data.Ancestry = fmt.Sprintf("organizations/%s/folders/%s", orgID, data.FolderID)
+	t.Logf("Successfully created folder_id=%v, project_id=%v", data.FolderID, data.Project["project"])
 }
