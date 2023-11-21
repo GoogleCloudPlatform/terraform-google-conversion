@@ -108,6 +108,12 @@ func GetIAMWorkforcePoolWorkforcePoolApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("session_duration"); !tpgresource.IsEmptyValue(reflect.ValueOf(sessionDurationProp)) && (ok || !reflect.DeepEqual(v, sessionDurationProp)) {
 		obj["sessionDuration"] = sessionDurationProp
 	}
+	accessRestrictionsProp, err := expandIAMWorkforcePoolWorkforcePoolAccessRestrictions(d.Get("access_restrictions"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("access_restrictions"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessRestrictionsProp)) && (ok || !reflect.DeepEqual(v, accessRestrictionsProp)) {
+		obj["accessRestrictions"] = accessRestrictionsProp
+	}
 
 	return obj, nil
 }
@@ -129,5 +135,61 @@ func expandIAMWorkforcePoolWorkforcePoolDisabled(v interface{}, d tpgresource.Te
 }
 
 func expandIAMWorkforcePoolWorkforcePoolSessionDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolAccessRestrictions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedServices, err := expandIAMWorkforcePoolWorkforcePoolAccessRestrictionsAllowedServices(original["allowed_services"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedServices); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedServices"] = transformedAllowedServices
+	}
+
+	transformedDisableProgrammaticSignin, err := expandIAMWorkforcePoolWorkforcePoolAccessRestrictionsDisableProgrammaticSignin(original["disable_programmatic_signin"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableProgrammaticSignin); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableProgrammaticSignin"] = transformedDisableProgrammaticSignin
+	}
+
+	return transformed, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolAccessRestrictionsAllowedServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDomain, err := expandIAMWorkforcePoolWorkforcePoolAccessRestrictionsAllowedServicesDomain(original["domain"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["domain"] = transformedDomain
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolAccessRestrictionsAllowedServicesDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolAccessRestrictionsDisableProgrammaticSignin(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
