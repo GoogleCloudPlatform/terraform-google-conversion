@@ -1,6 +1,6 @@
 module github.com/GoogleCloudPlatform/terraform-google-conversion/v2
 
-go 1.20
+go 1.18
 
 require (
 	github.com/apparentlymart/go-cidr v1.1.0
