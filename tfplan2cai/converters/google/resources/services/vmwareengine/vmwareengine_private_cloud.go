@@ -119,6 +119,13 @@ func expandVmwareenginePrivateCloudNetworkConfig(v interface{}, d tpgresource.Te
 		transformed["managementIpAddressLayoutVersion"] = transformedManagementIpAddressLayoutVersion
 	}
 
+	transformedDnsServerIp, err := expandVmwareenginePrivateCloudNetworkConfigDnsServerIp(original["dns_server_ip"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDnsServerIp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dnsServerIp"] = transformedDnsServerIp
+	}
+
 	return transformed, nil
 }
 
@@ -135,6 +142,10 @@ func expandVmwareenginePrivateCloudNetworkConfigVmwareEngineNetworkCanonical(v i
 }
 
 func expandVmwareenginePrivateCloudNetworkConfigManagementIpAddressLayoutVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareenginePrivateCloudNetworkConfigDnsServerIp(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
