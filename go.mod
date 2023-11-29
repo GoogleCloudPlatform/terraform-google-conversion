@@ -1,4 +1,4 @@
-module github.com/GoogleCloudPlatform/terraform-google-conversion/v2
+module github.com/GoogleCloudPlatform/terraform-google-conversion/v5
 
 go 1.18
 
