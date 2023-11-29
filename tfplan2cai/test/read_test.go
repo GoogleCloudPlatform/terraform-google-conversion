@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v2/tfplan2cai"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai"
 	"github.com/google/go-cmp/cmp"
 	"go.uber.org/zap/zaptest"
 )
