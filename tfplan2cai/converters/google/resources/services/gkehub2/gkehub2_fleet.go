@@ -83,6 +83,13 @@ func expandGKEHub2FleetDefaultClusterConfig(v interface{}, d tpgresource.Terrafo
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedBinaryAuthorizationConfig, err := expandGKEHub2FleetDefaultClusterConfigBinaryAuthorizationConfig(original["binary_authorization_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBinaryAuthorizationConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["binaryAuthorizationConfig"] = transformedBinaryAuthorizationConfig
+	}
+
 	transformedSecurityPostureConfig, err := expandGKEHub2FleetDefaultClusterConfigSecurityPostureConfig(original["security_posture_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -91,6 +98,62 @@ func expandGKEHub2FleetDefaultClusterConfig(v interface{}, d tpgresource.Terrafo
 	}
 
 	return transformed, nil
+}
+
+func expandGKEHub2FleetDefaultClusterConfigBinaryAuthorizationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEvaluationMode, err := expandGKEHub2FleetDefaultClusterConfigBinaryAuthorizationConfigEvaluationMode(original["evaluation_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEvaluationMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["evaluationMode"] = transformedEvaluationMode
+	}
+
+	transformedPolicyBindings, err := expandGKEHub2FleetDefaultClusterConfigBinaryAuthorizationConfigPolicyBindings(original["policy_bindings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPolicyBindings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["policyBindings"] = transformedPolicyBindings
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FleetDefaultClusterConfigBinaryAuthorizationConfigEvaluationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FleetDefaultClusterConfigBinaryAuthorizationConfigPolicyBindings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandGKEHub2FleetDefaultClusterConfigBinaryAuthorizationConfigPolicyBindingsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandGKEHub2FleetDefaultClusterConfigBinaryAuthorizationConfigPolicyBindingsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandGKEHub2FleetDefaultClusterConfigSecurityPostureConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
