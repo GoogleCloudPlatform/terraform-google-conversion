@@ -120,6 +120,12 @@ func GetBigQueryDatasetApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	externalDatasetReferenceProp, err := expandBigQueryDatasetExternalDatasetReference(d.Get("external_dataset_reference"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("external_dataset_reference"); !tpgresource.IsEmptyValue(reflect.ValueOf(externalDatasetReferenceProp)) && (ok || !reflect.DeepEqual(v, externalDatasetReferenceProp)) {
+		obj["externalDatasetReference"] = externalDatasetReferenceProp
+	}
 	friendlyNameProp, err := expandBigQueryDatasetFriendlyName(d.Get("friendly_name"), d, config)
 	if err != nil {
 		return nil, err
@@ -452,6 +458,40 @@ func expandBigQueryDatasetDefaultPartitionExpirationMs(v interface{}, d tpgresou
 }
 
 func expandBigQueryDatasetDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryDatasetExternalDatasetReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExternalSource, err := expandBigQueryDatasetExternalDatasetReferenceExternalSource(original["external_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExternalSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["externalSource"] = transformedExternalSource
+	}
+
+	transformedConnection, err := expandBigQueryDatasetExternalDatasetReferenceConnection(original["connection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connection"] = transformedConnection
+	}
+
+	return transformed, nil
+}
+
+func expandBigQueryDatasetExternalDatasetReferenceExternalSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryDatasetExternalDatasetReferenceConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
