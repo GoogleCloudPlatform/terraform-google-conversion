@@ -72,8 +72,8 @@ func GetIAMBetaWorkloadIdentityPoolProviderCaiObject(d tpgresource.TerraformReso
 			Name: name,
 			Type: IAMBetaWorkloadIdentityPoolProviderAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1beta",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/iam/v1beta/rest",
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/iam/v1/rest",
 				DiscoveryName:        "WorkloadIdentityPoolProvider",
 				Data:                 obj,
 			},
@@ -126,6 +126,12 @@ func GetIAMBetaWorkloadIdentityPoolProviderApiObject(d tpgresource.TerraformReso
 		return nil, err
 	} else if v, ok := d.GetOkExists("oidc"); !tpgresource.IsEmptyValue(reflect.ValueOf(oidcProp)) && (ok || !reflect.DeepEqual(v, oidcProp)) {
 		obj["oidc"] = oidcProp
+	}
+	samlProp, err := expandIAMBetaWorkloadIdentityPoolProviderSaml(d.Get("saml"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("saml"); !tpgresource.IsEmptyValue(reflect.ValueOf(samlProp)) && (ok || !reflect.DeepEqual(v, samlProp)) {
+		obj["saml"] = samlProp
 	}
 
 	return obj, nil
@@ -223,5 +229,28 @@ func expandIAMBetaWorkloadIdentityPoolProviderOidcIssuerUri(v interface{}, d tpg
 }
 
 func expandIAMBetaWorkloadIdentityPoolProviderOidcJwksJson(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolProviderSaml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdpMetadataXml, err := expandIAMBetaWorkloadIdentityPoolProviderSamlIdpMetadataXml(original["idp_metadata_xml"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdpMetadataXml); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idpMetadataXml"] = transformedIdpMetadataXml
+	}
+
+	return transformed, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolProviderSamlIdpMetadataXml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
