@@ -103,6 +103,11 @@ func GetComputeNetworkApiObject(d tpgresource.TerraformResourceData, config *tra
 		obj["networkFirewallPolicyEnforcementOrder"] = networkFirewallPolicyEnforcementOrderProp
 	}
 
+	return resourceComputeNetworkEncoder(d, config, obj)
+}
+
+func resourceComputeNetworkEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	delete(obj, "numeric_id") // Field doesn't exist in the API
 	return obj, nil
 }
 
