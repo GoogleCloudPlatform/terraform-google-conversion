@@ -78,6 +78,24 @@ func GetDataformRepositoryApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("service_account"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceAccountProp)) && (ok || !reflect.DeepEqual(v, serviceAccountProp)) {
 		obj["serviceAccount"] = serviceAccountProp
 	}
+	npmrcEnvironmentVariablesSecretVersionProp, err := expandDataformRepositoryNpmrcEnvironmentVariablesSecretVersion(d.Get("npmrc_environment_variables_secret_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("npmrc_environment_variables_secret_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(npmrcEnvironmentVariablesSecretVersionProp)) && (ok || !reflect.DeepEqual(v, npmrcEnvironmentVariablesSecretVersionProp)) {
+		obj["npmrcEnvironmentVariablesSecretVersion"] = npmrcEnvironmentVariablesSecretVersionProp
+	}
+	displayNameProp, err := expandDataformRepositoryDisplayName(d.Get("display_name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
+		obj["displayName"] = displayNameProp
+	}
+	labelsProp, err := expandDataformRepositoryEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
 }
@@ -230,4 +248,23 @@ func expandDataformRepositoryWorkspaceCompilationOverridesTablePrefix(v interfac
 
 func expandDataformRepositoryServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataformRepositoryNpmrcEnvironmentVariablesSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataformRepositoryDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataformRepositoryEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
