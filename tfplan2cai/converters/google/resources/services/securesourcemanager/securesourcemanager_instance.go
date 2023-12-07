@@ -54,6 +54,18 @@ func GetSecureSourceManagerInstanceCaiObject(d tpgresource.TerraformResourceData
 
 func GetSecureSourceManagerInstanceApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	kmsKeyProp, err := expandSecureSourceManagerInstanceKmsKey(d.Get("kms_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
+		obj["kmsKey"] = kmsKeyProp
+	}
+	privateConfigProp, err := expandSecureSourceManagerInstancePrivateConfig(d.Get("private_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("private_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(privateConfigProp)) && (ok || !reflect.DeepEqual(v, privateConfigProp)) {
+		obj["privateConfig"] = privateConfigProp
+	}
 	labelsProp, err := expandSecureSourceManagerInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -62,6 +74,66 @@ func GetSecureSourceManagerInstanceApiObject(d tpgresource.TerraformResourceData
 	}
 
 	return obj, nil
+}
+
+func expandSecureSourceManagerInstanceKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIsPrivate, err := expandSecureSourceManagerInstancePrivateConfigIsPrivate(original["is_private"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIsPrivate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["isPrivate"] = transformedIsPrivate
+	}
+
+	transformedCaPool, err := expandSecureSourceManagerInstancePrivateConfigCaPool(original["ca_pool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCaPool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["caPool"] = transformedCaPool
+	}
+
+	transformedHttpServiceAttachment, err := expandSecureSourceManagerInstancePrivateConfigHttpServiceAttachment(original["http_service_attachment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHttpServiceAttachment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["httpServiceAttachment"] = transformedHttpServiceAttachment
+	}
+
+	transformedSshServiceAttachment, err := expandSecureSourceManagerInstancePrivateConfigSshServiceAttachment(original["ssh_service_attachment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSshServiceAttachment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sshServiceAttachment"] = transformedSshServiceAttachment
+	}
+
+	return transformed, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigIsPrivate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigCaPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigHttpServiceAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigSshServiceAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSecureSourceManagerInstanceEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
