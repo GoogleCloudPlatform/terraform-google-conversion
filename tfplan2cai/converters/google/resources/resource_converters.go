@@ -59,6 +59,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/sql"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/vertexai"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/vpcaccess"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/workbench"
 )
 
 // ResourceConverter returns a map of terraform resource types (i.e. `google_project`)
@@ -313,6 +314,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_vertex_ai_featurestore_entitytype_iam_policy":     {vertexai.ResourceConverterVertexAIFeaturestoreEntitytypeIamPolicy()},
 		"google_vertex_ai_featurestore_entitytype_iam_binding":    {vertexai.ResourceConverterVertexAIFeaturestoreEntitytypeIamBinding()},
 		"google_vertex_ai_featurestore_entitytype_iam_member":     {vertexai.ResourceConverterVertexAIFeaturestoreEntitytypeIamMember()},
+		"google_workbench_instance_iam_policy":                    {workbench.ResourceConverterWorkbenchInstanceIamPolicy()},
+		"google_workbench_instance_iam_binding":                   {workbench.ResourceConverterWorkbenchInstanceIamBinding()},
+		"google_workbench_instance_iam_member":                    {workbench.ResourceConverterWorkbenchInstanceIamMember()},
 		"google_project": {
 			resourceConverterProject(),
 			resourceConverterProjectBillingInfo(),
