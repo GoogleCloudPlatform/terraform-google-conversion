@@ -103,6 +103,12 @@ func GetMonitoringAlertPolicyApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("user_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(userLabelsProp)) && (ok || !reflect.DeepEqual(v, userLabelsProp)) {
 		obj["userLabels"] = userLabelsProp
 	}
+	severityProp, err := expandMonitoringAlertPolicySeverity(d.Get("severity"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("severity"); !tpgresource.IsEmptyValue(reflect.ValueOf(severityProp)) && (ok || !reflect.DeepEqual(v, severityProp)) {
+		obj["severity"] = severityProp
+	}
 	documentationProp, err := expandMonitoringAlertPolicyDocumentation(d.Get("documentation"), d, config)
 	if err != nil {
 		return nil, err
@@ -941,6 +947,10 @@ func expandMonitoringAlertPolicyUserLabels(v interface{}, d tpgresource.Terrafor
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandMonitoringAlertPolicySeverity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandMonitoringAlertPolicyDocumentation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
