@@ -74,6 +74,12 @@ func GetVmwareenginePrivateCloudApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("management_cluster"); !tpgresource.IsEmptyValue(reflect.ValueOf(managementClusterProp)) && (ok || !reflect.DeepEqual(v, managementClusterProp)) {
 		obj["managementCluster"] = managementClusterProp
 	}
+	typeProp, err := expandVmwareenginePrivateCloudType(d.Get("type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
+		obj["type"] = typeProp
+	}
 
 	return obj, nil
 }
@@ -216,5 +222,9 @@ func expandVmwareenginePrivateCloudManagementClusterNodeTypeConfigsNodeCount(v i
 }
 
 func expandVmwareenginePrivateCloudManagementClusterNodeTypeConfigsCustomCoreCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareenginePrivateCloudType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
