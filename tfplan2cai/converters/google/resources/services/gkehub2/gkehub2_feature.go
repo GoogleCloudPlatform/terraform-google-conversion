@@ -283,6 +283,13 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagement(v interface{},
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedVersion, err := expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
 	transformedConfigSync, err := expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSync(original["config_sync"], d, config)
 	if err != nil {
 		return nil, err
@@ -291,6 +298,10 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagement(v interface{},
 	}
 
 	return transformed, nil
+}
+
+func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSync(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
