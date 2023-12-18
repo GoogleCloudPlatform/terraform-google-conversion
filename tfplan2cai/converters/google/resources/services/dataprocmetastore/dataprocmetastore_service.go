@@ -434,6 +434,13 @@ func expandDataprocMetastoreServiceNetworkConfig(v interface{}, d tpgresource.Te
 		transformed["consumers"] = transformedConsumers
 	}
 
+	transformedCustomRoutesEnabled, err := expandDataprocMetastoreServiceNetworkConfigCustomRoutesEnabled(original["custom_routes_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCustomRoutesEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["customRoutesEnabled"] = transformedCustomRoutesEnabled
+	}
+
 	return transformed, nil
 }
 
@@ -471,6 +478,10 @@ func expandDataprocMetastoreServiceNetworkConfigConsumersEndpointUri(v interface
 }
 
 func expandDataprocMetastoreServiceNetworkConfigConsumersSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceNetworkConfigCustomRoutesEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
