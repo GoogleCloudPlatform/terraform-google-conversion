@@ -114,6 +114,12 @@ func GetBigqueryAnalyticsHubListingApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("bigquery_dataset"); !tpgresource.IsEmptyValue(reflect.ValueOf(bigqueryDatasetProp)) && (ok || !reflect.DeepEqual(v, bigqueryDatasetProp)) {
 		obj["bigqueryDataset"] = bigqueryDatasetProp
 	}
+	restrictedExportConfigProp, err := expandBigqueryAnalyticsHubListingRestrictedExportConfig(d.Get("restricted_export_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restricted_export_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(restrictedExportConfigProp)) && (ok || !reflect.DeepEqual(v, restrictedExportConfigProp)) {
+		obj["restrictedExportConfig"] = restrictedExportConfigProp
+	}
 
 	return obj, nil
 }
@@ -234,5 +240,39 @@ func expandBigqueryAnalyticsHubListingBigqueryDataset(v interface{}, d tpgresour
 }
 
 func expandBigqueryAnalyticsHubListingBigqueryDatasetDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingRestrictedExportConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandBigqueryAnalyticsHubListingRestrictedExportConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedRestrictQueryResult, err := expandBigqueryAnalyticsHubListingRestrictedExportConfigRestrictQueryResult(original["restrict_query_result"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRestrictQueryResult); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["restrictQueryResult"] = transformedRestrictQueryResult
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingRestrictedExportConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingRestrictedExportConfigRestrictQueryResult(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
