@@ -54,17 +54,29 @@ func GetVertexAIFeatureOnlineStoreCaiObject(d tpgresource.TerraformResourceData,
 
 func GetVertexAIFeatureOnlineStoreApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	nameProp, err := expandVertexAIFeatureOnlineStoreName(d.Get("name"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
-		obj["name"] = nameProp
-	}
 	bigtableProp, err := expandVertexAIFeatureOnlineStoreBigtable(d.Get("bigtable"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("bigtable"); !tpgresource.IsEmptyValue(reflect.ValueOf(bigtableProp)) && (ok || !reflect.DeepEqual(v, bigtableProp)) {
 		obj["bigtable"] = bigtableProp
+	}
+	optimizedProp, err := expandVertexAIFeatureOnlineStoreOptimized(d.Get("optimized"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("optimized"); ok || !reflect.DeepEqual(v, optimizedProp) {
+		obj["optimized"] = optimizedProp
+	}
+	dedicatedServingEndpointProp, err := expandVertexAIFeatureOnlineStoreDedicatedServingEndpoint(d.Get("dedicated_serving_endpoint"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dedicated_serving_endpoint"); !tpgresource.IsEmptyValue(reflect.ValueOf(dedicatedServingEndpointProp)) && (ok || !reflect.DeepEqual(v, dedicatedServingEndpointProp)) {
+		obj["dedicatedServingEndpoint"] = dedicatedServingEndpointProp
+	}
+	embeddingManagementProp, err := expandVertexAIFeatureOnlineStoreEmbeddingManagement(d.Get("embedding_management"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("embedding_management"); !tpgresource.IsEmptyValue(reflect.ValueOf(embeddingManagementProp)) && (ok || !reflect.DeepEqual(v, embeddingManagementProp)) {
+		obj["embeddingManagement"] = embeddingManagementProp
 	}
 	labelsProp, err := expandVertexAIFeatureOnlineStoreEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -74,10 +86,6 @@ func GetVertexAIFeatureOnlineStoreApiObject(d tpgresource.TerraformResourceData,
 	}
 
 	return obj, nil
-}
-
-func expandVertexAIFeatureOnlineStoreName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandVertexAIFeatureOnlineStoreBigtable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -141,6 +149,119 @@ func expandVertexAIFeatureOnlineStoreBigtableAutoScalingMaxNodeCount(v interface
 }
 
 func expandVertexAIFeatureOnlineStoreBigtableAutoScalingCpuUtilizationTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreOptimized(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandVertexAIFeatureOnlineStoreDedicatedServingEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPublicEndpointDomainName, err := expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPublicEndpointDomainName(original["public_endpoint_domain_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPublicEndpointDomainName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["publicEndpointDomainName"] = transformedPublicEndpointDomainName
+	}
+
+	transformedServiceAttachment, err := expandVertexAIFeatureOnlineStoreDedicatedServingEndpointServiceAttachment(original["service_attachment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAttachment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAttachment"] = transformedServiceAttachment
+	}
+
+	transformedPrivateServiceConnectConfig, err := expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPrivateServiceConnectConfig(original["private_service_connect_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateServiceConnectConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateServiceConnectConfig"] = transformedPrivateServiceConnectConfig
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPublicEndpointDomainName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreDedicatedServingEndpointServiceAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPrivateServiceConnectConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnablePrivateServiceConnect, err := expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPrivateServiceConnectConfigEnablePrivateServiceConnect(original["enable_private_service_connect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnablePrivateServiceConnect); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enablePrivateServiceConnect"] = transformedEnablePrivateServiceConnect
+	}
+
+	transformedProjectAllowlist, err := expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPrivateServiceConnectConfigProjectAllowlist(original["project_allowlist"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectAllowlist); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectAllowlist"] = transformedProjectAllowlist
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPrivateServiceConnectConfigEnablePrivateServiceConnect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPrivateServiceConnectConfigProjectAllowlist(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreEmbeddingManagement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandVertexAIFeatureOnlineStoreEmbeddingManagementEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIFeatureOnlineStoreEmbeddingManagementEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
