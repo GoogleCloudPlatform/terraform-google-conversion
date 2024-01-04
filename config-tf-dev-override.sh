@@ -25,7 +25,7 @@ if ! [ -f $TF_CONFIG_FILE ];then
     # Developer overrides will stop Terraform from downloading the listed
     # providers their origin provider registries.
     dev_overrides {
-        "hashicorp/google-beta" = "$GOPATH/bin"
+        "hashicorp/google-beta" = "$(go env GOPATH)/bin"
     }
     # For all other providers, install them directly from their origin provider
     # registries as normal. If you omit this, Terraform will _only_ use
