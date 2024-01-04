@@ -308,6 +308,13 @@ func expandGkeonpremVmwareNodePoolConfigVsphereConfig(v interface{}, d tpgresour
 		transformed["tags"] = transformedTags
 	}
 
+	transformedHostGroups, err := expandGkeonpremVmwareNodePoolConfigVsphereConfigHostGroups(original["host_groups"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostGroups); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hostGroups"] = transformedHostGroups
+	}
+
 	return transformed, nil
 }
 
@@ -349,6 +356,10 @@ func expandGkeonpremVmwareNodePoolConfigVsphereConfigTagsCategory(v interface{},
 }
 
 func expandGkeonpremVmwareNodePoolConfigVsphereConfigTagsTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareNodePoolConfigVsphereConfigHostGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
