@@ -101,6 +101,13 @@ func expandGKEHub2FeatureSpec(v interface{}, d tpgresource.TerraformResourceData
 		transformed["fleetobservability"] = transformedFleetobservability
 	}
 
+	transformedClusterupgrade, err := expandGKEHub2FeatureSpecClusterupgrade(original["clusterupgrade"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClusterupgrade); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clusterupgrade"] = transformedClusterupgrade
+	}
+
 	return transformed, nil
 }
 
@@ -215,6 +222,152 @@ func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigFleetScopeLogsConfig
 }
 
 func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigFleetScopeLogsConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgrade(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUpstreamFleets, err := expandGKEHub2FeatureSpecClusterupgradeUpstreamFleets(original["upstream_fleets"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUpstreamFleets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["upstreamFleets"] = transformedUpstreamFleets
+	}
+
+	transformedPostConditions, err := expandGKEHub2FeatureSpecClusterupgradePostConditions(original["post_conditions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPostConditions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["postConditions"] = transformedPostConditions
+	}
+
+	transformedGkeUpgradeOverrides, err := expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverrides(original["gke_upgrade_overrides"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGkeUpgradeOverrides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gkeUpgradeOverrides"] = transformedGkeUpgradeOverrides
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradeUpstreamFleets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradePostConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSoaking, err := expandGKEHub2FeatureSpecClusterupgradePostConditionsSoaking(original["soaking"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSoaking); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["soaking"] = transformedSoaking
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradePostConditionsSoaking(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedUpgrade, err := expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesUpgrade(original["upgrade"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUpgrade); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["upgrade"] = transformedUpgrade
+		}
+
+		transformedPostConditions, err := expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesPostConditions(original["post_conditions"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPostConditions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["postConditions"] = transformedPostConditions
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesUpgrade(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesUpgradeName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedVersion, err := expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesUpgradeVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesUpgradeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesUpgradeVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesPostConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSoaking, err := expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesPostConditionsSoaking(original["soaking"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSoaking); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["soaking"] = transformedSoaking
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesPostConditionsSoaking(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
