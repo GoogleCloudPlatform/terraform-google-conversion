@@ -54,8 +54,8 @@ func GetGKEHubMembershipCaiObject(d tpgresource.TerraformResourceData, config *t
 			Name: name,
 			Type: GKEHubMembershipAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1beta1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gkehub/v1beta1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/gkehub/v1beta/rest",
 				DiscoveryName:        "Membership",
 				Data:                 obj,
 			},
