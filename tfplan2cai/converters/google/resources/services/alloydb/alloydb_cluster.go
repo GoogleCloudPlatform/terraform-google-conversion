@@ -84,6 +84,12 @@ func GetAlloydbClusterApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
 		obj["etag"] = etagProp
 	}
+	databaseVersionProp, err := expandAlloydbClusterDatabaseVersion(d.Get("database_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("database_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(databaseVersionProp)) && (ok || !reflect.DeepEqual(v, databaseVersionProp)) {
+		obj["databaseVersion"] = databaseVersionProp
+	}
 	initialUserProp, err := expandAlloydbClusterInitialUser(d.Get("initial_user"), d, config)
 	if err != nil {
 		return nil, err
@@ -208,6 +214,10 @@ func expandAlloydbClusterDisplayName(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandAlloydbClusterEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterDatabaseVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
