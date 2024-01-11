@@ -144,6 +144,10 @@ func resourceComputeBackendBucketEncoder(d tpgresource.TerraformResourceData, me
 		if _, ok := futureCdnPolicy["maxTtl"]; ok {
 			delete(futureCdnPolicy, "maxTtl")
 		}
+	case "FORCE_CACHE_ALL":
+		if _, ok := futureCdnPolicy["maxTtl"]; ok {
+			delete(futureCdnPolicy, "maxTtl")
+		}
 	}
 
 	return obj, nil
