@@ -114,6 +114,12 @@ func GetWorkstationsWorkstationConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionKeyProp)) && (ok || !reflect.DeepEqual(v, encryptionKeyProp)) {
 		obj["encryptionKey"] = encryptionKeyProp
 	}
+	disableTcpConnectionsProp, err := expandWorkstationsWorkstationConfigDisableTcpConnections(d.Get("disable_tcp_connections"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disable_tcp_connections"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableTcpConnectionsProp)) && (ok || !reflect.DeepEqual(v, disableTcpConnectionsProp)) {
+		obj["disableTcpConnections"] = disableTcpConnectionsProp
+	}
 	labelsProp, err := expandWorkstationsWorkstationConfigEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -615,6 +621,10 @@ func expandWorkstationsWorkstationConfigEncryptionKeyKmsKey(v interface{}, d tpg
 }
 
 func expandWorkstationsWorkstationConfigEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigDisableTcpConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
