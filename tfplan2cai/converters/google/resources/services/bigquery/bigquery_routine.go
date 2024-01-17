@@ -115,6 +115,12 @@ func GetBigQueryRoutineApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("determinism_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(determinismLevelProp)) && (ok || !reflect.DeepEqual(v, determinismLevelProp)) {
 		obj["determinismLevel"] = determinismLevelProp
 	}
+	sparkOptionsProp, err := expandBigQueryRoutineSparkOptions(d.Get("spark_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("spark_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(sparkOptionsProp)) && (ok || !reflect.DeepEqual(v, sparkOptionsProp)) {
+		obj["sparkOptions"] = sparkOptionsProp
+	}
 
 	return obj, nil
 }
@@ -242,5 +248,134 @@ func expandBigQueryRoutineDescription(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandBigQueryRoutineDeterminismLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConnection, err := expandBigQueryRoutineSparkOptionsConnection(original["connection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connection"] = transformedConnection
+	}
+
+	transformedRuntimeVersion, err := expandBigQueryRoutineSparkOptionsRuntimeVersion(original["runtime_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRuntimeVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["runtimeVersion"] = transformedRuntimeVersion
+	}
+
+	transformedContainerImage, err := expandBigQueryRoutineSparkOptionsContainerImage(original["container_image"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContainerImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["containerImage"] = transformedContainerImage
+	}
+
+	transformedProperties, err := expandBigQueryRoutineSparkOptionsProperties(original["properties"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProperties); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["properties"] = transformedProperties
+	}
+
+	transformedMainFileUri, err := expandBigQueryRoutineSparkOptionsMainFileUri(original["main_file_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMainFileUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mainFileUri"] = transformedMainFileUri
+	}
+
+	transformedPyFileUris, err := expandBigQueryRoutineSparkOptionsPyFileUris(original["py_file_uris"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPyFileUris); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pyFileUris"] = transformedPyFileUris
+	}
+
+	transformedJarUris, err := expandBigQueryRoutineSparkOptionsJarUris(original["jar_uris"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJarUris); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jarUris"] = transformedJarUris
+	}
+
+	transformedFileUris, err := expandBigQueryRoutineSparkOptionsFileUris(original["file_uris"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFileUris); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fileUris"] = transformedFileUris
+	}
+
+	transformedArchiveUris, err := expandBigQueryRoutineSparkOptionsArchiveUris(original["archive_uris"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedArchiveUris); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["archiveUris"] = transformedArchiveUris
+	}
+
+	transformedMainClass, err := expandBigQueryRoutineSparkOptionsMainClass(original["main_class"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMainClass); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mainClass"] = transformedMainClass
+	}
+
+	return transformed, nil
+}
+
+func expandBigQueryRoutineSparkOptionsConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptionsRuntimeVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptionsContainerImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptionsProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandBigQueryRoutineSparkOptionsMainFileUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptionsPyFileUris(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptionsJarUris(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptionsFileUris(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptionsArchiveUris(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSparkOptionsMainClass(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
