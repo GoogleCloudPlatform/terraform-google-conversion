@@ -96,6 +96,12 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("enable_history_import"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableHistoryImportProp)) && (ok || !reflect.DeepEqual(v, enableHistoryImportProp)) {
 		obj["enableHistoryImport"] = enableHistoryImportProp
 	}
+	enableHistoryModificationsProp, err := expandHealthcareFhirStoreEnableHistoryModifications(d.Get("enable_history_modifications"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_history_modifications"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableHistoryModificationsProp)) && (ok || !reflect.DeepEqual(v, enableHistoryModificationsProp)) {
+		obj["enableHistoryModifications"] = enableHistoryModificationsProp
+	}
 	notificationConfigProp, err := expandHealthcareFhirStoreNotificationConfig(d.Get("notification_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -155,6 +161,10 @@ func expandHealthcareFhirStoreDisableResourceVersioning(v interface{}, d tpgreso
 }
 
 func expandHealthcareFhirStoreEnableHistoryImport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreEnableHistoryModifications(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
