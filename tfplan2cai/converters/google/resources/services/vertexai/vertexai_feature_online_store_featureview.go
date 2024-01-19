@@ -66,6 +66,12 @@ func GetVertexAIFeatureOnlineStoreFeatureviewApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("big_query_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(bigQuerySourceProp)) && (ok || !reflect.DeepEqual(v, bigQuerySourceProp)) {
 		obj["bigQuerySource"] = bigQuerySourceProp
 	}
+	vectorSearchConfigProp, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfig(d.Get("vector_search_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("vector_search_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(vectorSearchConfigProp)) && (ok || !reflect.DeepEqual(v, vectorSearchConfigProp)) {
+		obj["vectorSearchConfig"] = vectorSearchConfigProp
+	}
 	labelsProp, err := expandVertexAIFeatureOnlineStoreFeatureviewEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -130,6 +136,125 @@ func expandVertexAIFeatureOnlineStoreFeatureviewBigQuerySourceUri(v interface{},
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewBigQuerySourceEntityIdColumns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEmbeddingColumn, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigEmbeddingColumn(original["embedding_column"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEmbeddingColumn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["embeddingColumn"] = transformedEmbeddingColumn
+	}
+
+	transformedFilterColumns, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigFilterColumns(original["filter_columns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilterColumns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filterColumns"] = transformedFilterColumns
+	}
+
+	transformedCrowdingColumn, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigCrowdingColumn(original["crowding_column"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCrowdingColumn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["crowdingColumn"] = transformedCrowdingColumn
+	}
+
+	transformedDistanceMeasureType, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigDistanceMeasureType(original["distance_measure_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDistanceMeasureType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["distanceMeasureType"] = transformedDistanceMeasureType
+	}
+
+	transformedTreeAhConfig, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigTreeAhConfig(original["tree_ah_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTreeAhConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["treeAhConfig"] = transformedTreeAhConfig
+	}
+
+	transformedBruteForceConfig, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigBruteForceConfig(original["brute_force_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["bruteForceConfig"] = transformedBruteForceConfig
+	}
+
+	transformedEmbeddingDimension, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigEmbeddingDimension(original["embedding_dimension"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEmbeddingDimension); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["embeddingDimension"] = transformedEmbeddingDimension
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigEmbeddingColumn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigFilterColumns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigCrowdingColumn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigDistanceMeasureType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigTreeAhConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLeafNodeEmbeddingCount, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigTreeAhConfigLeafNodeEmbeddingCount(original["leaf_node_embedding_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLeafNodeEmbeddingCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["leafNodeEmbeddingCount"] = transformedLeafNodeEmbeddingCount
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigTreeAhConfigLeafNodeEmbeddingCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigBruteForceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigEmbeddingDimension(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
