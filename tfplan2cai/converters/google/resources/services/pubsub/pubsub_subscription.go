@@ -219,6 +219,13 @@ func expandPubsubSubscriptionBigqueryConfig(v interface{}, d tpgresource.Terrafo
 		transformed["useTopicSchema"] = transformedUseTopicSchema
 	}
 
+	transformedUseTableSchema, err := expandPubsubSubscriptionBigqueryConfigUseTableSchema(original["use_table_schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseTableSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useTableSchema"] = transformedUseTableSchema
+	}
+
 	transformedWriteMetadata, err := expandPubsubSubscriptionBigqueryConfigWriteMetadata(original["write_metadata"], d, config)
 	if err != nil {
 		return nil, err
@@ -241,6 +248,10 @@ func expandPubsubSubscriptionBigqueryConfigTable(v interface{}, d tpgresource.Te
 }
 
 func expandPubsubSubscriptionBigqueryConfigUseTopicSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionBigqueryConfigUseTableSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
