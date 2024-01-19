@@ -87,6 +87,12 @@ func GetWorkflowsWorkflowApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("crypto_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(cryptoKeyNameProp)) && (ok || !reflect.DeepEqual(v, cryptoKeyNameProp)) {
 		obj["cryptoKeyName"] = cryptoKeyNameProp
 	}
+	callLogLevelProp, err := expandWorkflowsWorkflowCallLogLevel(d.Get("call_log_level"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("call_log_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(callLogLevelProp)) && (ok || !reflect.DeepEqual(v, callLogLevelProp)) {
+		obj["callLogLevel"] = callLogLevelProp
+	}
 	userEnvVarsProp, err := expandWorkflowsWorkflowUserEnvVars(d.Get("user_env_vars"), d, config)
 	if err != nil {
 		return nil, err
@@ -137,6 +143,10 @@ func expandWorkflowsWorkflowSourceContents(v interface{}, d tpgresource.Terrafor
 }
 
 func expandWorkflowsWorkflowCryptoKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkflowsWorkflowCallLogLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
