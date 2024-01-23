@@ -114,6 +114,12 @@ func GetWorkstationsWorkstationConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionKeyProp)) && (ok || !reflect.DeepEqual(v, encryptionKeyProp)) {
 		obj["encryptionKey"] = encryptionKeyProp
 	}
+	readinessChecksProp, err := expandWorkstationsWorkstationConfigReadinessChecks(d.Get("readiness_checks"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("readiness_checks"); !tpgresource.IsEmptyValue(reflect.ValueOf(readinessChecksProp)) && (ok || !reflect.DeepEqual(v, readinessChecksProp)) {
+		obj["readinessChecks"] = readinessChecksProp
+	}
 	disableTcpConnectionsProp, err := expandWorkstationsWorkstationConfigDisableTcpConnections(d.Get("disable_tcp_connections"), d, config)
 	if err != nil {
 		return nil, err
@@ -621,6 +627,43 @@ func expandWorkstationsWorkstationConfigEncryptionKeyKmsKey(v interface{}, d tpg
 }
 
 func expandWorkstationsWorkstationConfigEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigReadinessChecks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPath, err := expandWorkstationsWorkstationConfigReadinessChecksPath(original["path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["path"] = transformedPath
+		}
+
+		transformedPort, err := expandWorkstationsWorkstationConfigReadinessChecksPort(original["port"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["port"] = transformedPort
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandWorkstationsWorkstationConfigReadinessChecksPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigReadinessChecksPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
