@@ -28,7 +28,7 @@ import (
 
 // Compute revision_id for changes in posture fields.
 func revisionIdCustomizeDiff(ctx context.Context, d *schema.ResourceDiff, meta interface{}) error {
-	if d.HasChanges("annotations", "description", "state", "policy_sets") {
+	if d.HasChanges("description", "state", "policy_sets") {
 		err := d.SetNewComputed("revision_id")
 		if err != nil {
 			return fmt.Errorf("Error re-setting revision_id: %s", err)
@@ -92,12 +92,6 @@ func GetSecurityposturePostureApiObject(d tpgresource.TerraformResourceData, con
 		return nil, err
 	} else if v, ok := d.GetOkExists("policy_sets"); !tpgresource.IsEmptyValue(reflect.ValueOf(policySetsProp)) && (ok || !reflect.DeepEqual(v, policySetsProp)) {
 		obj["policySets"] = policySetsProp
-	}
-	annotationsProp, err := expandSecurityposturePostureEffectiveAnnotations(d.Get("effective_annotations"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
 	}
 
 	return obj, nil
@@ -1073,15 +1067,4 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintSecurityHealthAnaly
 
 func expandSecurityposturePosturePolicySetsPoliciesConstraintSecurityHealthAnalyticsCustomModuleConfigRecommendation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandSecurityposturePostureEffectiveAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
