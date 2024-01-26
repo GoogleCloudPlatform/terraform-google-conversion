@@ -1155,13 +1155,6 @@ func expandComputeBackendServiceIap(v interface{}, d tpgresource.TerraformResour
 		transformed["oauth2ClientSecretSha256"] = transformedOauth2ClientSecretSha256
 	}
 
-	transformedEnabled, err := expandComputeBackendServiceIapEnabled(original["enabled"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["enabled"] = transformedEnabled
-	}
-
 	return transformed, nil
 }
 
@@ -1174,10 +1167,6 @@ func expandComputeBackendServiceIapOauth2ClientSecret(v interface{}, d tpgresour
 }
 
 func expandComputeBackendServiceIapOauth2ClientSecretSha256(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceIapEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
