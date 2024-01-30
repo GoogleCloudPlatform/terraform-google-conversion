@@ -133,6 +133,12 @@ func GetComputeInterconnectAttachmentApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("encryption"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionProp)) && (ok || !reflect.DeepEqual(v, encryptionProp)) {
 		obj["encryption"] = encryptionProp
 	}
+	stackTypeProp, err := expandComputeInterconnectAttachmentStackType(d.Get("stack_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("stack_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(stackTypeProp)) && (ok || !reflect.DeepEqual(v, stackTypeProp)) {
+		obj["stackType"] = stackTypeProp
+	}
 	regionProp, err := expandComputeInterconnectAttachmentRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -208,6 +214,10 @@ func expandComputeInterconnectAttachmentIpsecInternalAddresses(v interface{}, d 
 }
 
 func expandComputeInterconnectAttachmentEncryption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAttachmentStackType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
