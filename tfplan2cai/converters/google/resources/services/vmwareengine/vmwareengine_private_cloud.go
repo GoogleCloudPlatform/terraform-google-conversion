@@ -24,6 +24,13 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
+func vmwareenginePrivateCloudStandardTypeDiffSuppressFunc(_, old, new string, _ *schema.ResourceData) bool {
+	if (old == "STANDARD" && new == "") || (old == "" && new == "STANDARD") {
+		return true
+	}
+	return false
+}
+
 const VmwareenginePrivateCloudAssetType string = "vmwareengine.googleapis.com/PrivateCloud"
 
 func ResourceConverterVmwareenginePrivateCloud() cai.ResourceConverter {
