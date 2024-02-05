@@ -23,6 +23,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/bigqueryconnection"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/bigquerydatapolicy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/binaryauthorization"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/cloudfunctions"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/cloudrun"
@@ -158,6 +159,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_binary_authorization_attestor_iam_policy":         {binaryauthorization.ResourceConverterBinaryAuthorizationAttestorIamPolicy()},
 		"google_binary_authorization_attestor_iam_binding":        {binaryauthorization.ResourceConverterBinaryAuthorizationAttestorIamBinding()},
 		"google_binary_authorization_attestor_iam_member":         {binaryauthorization.ResourceConverterBinaryAuthorizationAttestorIamMember()},
+		"google_clouddeploy_delivery_pipeline_iam_policy":         {clouddeploy.ResourceConverterClouddeployDeliveryPipelineIamPolicy()},
+		"google_clouddeploy_delivery_pipeline_iam_binding":        {clouddeploy.ResourceConverterClouddeployDeliveryPipelineIamBinding()},
+		"google_clouddeploy_delivery_pipeline_iam_member":         {clouddeploy.ResourceConverterClouddeployDeliveryPipelineIamMember()},
 		"google_cloudfunctions_function_iam_policy":               {cloudfunctions.ResourceConverterCloudFunctionsCloudFunctionIamPolicy()},
 		"google_cloudfunctions_function_iam_binding":              {cloudfunctions.ResourceConverterCloudFunctionsCloudFunctionIamBinding()},
 		"google_cloudfunctions_function_iam_member":               {cloudfunctions.ResourceConverterCloudFunctionsCloudFunctionIamMember()},
