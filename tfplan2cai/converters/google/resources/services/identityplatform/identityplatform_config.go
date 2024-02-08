@@ -92,6 +92,30 @@ func GetIdentityPlatformConfigApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("sms_region_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(smsRegionConfigProp)) && (ok || !reflect.DeepEqual(v, smsRegionConfigProp)) {
 		obj["smsRegionConfig"] = smsRegionConfigProp
 	}
+	clientProp, err := expandIdentityPlatformConfigClient(d.Get("client"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("client"); !tpgresource.IsEmptyValue(reflect.ValueOf(clientProp)) && (ok || !reflect.DeepEqual(v, clientProp)) {
+		obj["client"] = clientProp
+	}
+	mfaProp, err := expandIdentityPlatformConfigMfa(d.Get("mfa"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mfa"); !tpgresource.IsEmptyValue(reflect.ValueOf(mfaProp)) && (ok || !reflect.DeepEqual(v, mfaProp)) {
+		obj["mfa"] = mfaProp
+	}
+	multiTenantProp, err := expandIdentityPlatformConfigMultiTenant(d.Get("multi_tenant"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("multi_tenant"); !tpgresource.IsEmptyValue(reflect.ValueOf(multiTenantProp)) && (ok || !reflect.DeepEqual(v, multiTenantProp)) {
+		obj["multiTenant"] = multiTenantProp
+	}
+	monitoringProp, err := expandIdentityPlatformConfigMonitoring(d.Get("monitoring"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("monitoring"); !tpgresource.IsEmptyValue(reflect.ValueOf(monitoringProp)) && (ok || !reflect.DeepEqual(v, monitoringProp)) {
+		obj["monitoring"] = monitoringProp
+	}
 
 	return obj, nil
 }
@@ -564,5 +588,253 @@ func expandIdentityPlatformConfigSmsRegionConfigAllowlistOnly(v interface{}, d t
 }
 
 func expandIdentityPlatformConfigSmsRegionConfigAllowlistOnlyAllowedRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigClient(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPermissions, err := expandIdentityPlatformConfigClientPermissions(original["permissions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPermissions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["permissions"] = transformedPermissions
+	}
+
+	transformedApiKey, err := expandIdentityPlatformConfigClientApiKey(original["api_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApiKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["apiKey"] = transformedApiKey
+	}
+
+	transformedFirebaseSubdomain, err := expandIdentityPlatformConfigClientFirebaseSubdomain(original["firebase_subdomain"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFirebaseSubdomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["firebaseSubdomain"] = transformedFirebaseSubdomain
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigClientPermissions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisabledUserSignup, err := expandIdentityPlatformConfigClientPermissionsDisabledUserSignup(original["disabled_user_signup"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisabledUserSignup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disabledUserSignup"] = transformedDisabledUserSignup
+	}
+
+	transformedDisabledUserDeletion, err := expandIdentityPlatformConfigClientPermissionsDisabledUserDeletion(original["disabled_user_deletion"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisabledUserDeletion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disabledUserDeletion"] = transformedDisabledUserDeletion
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigClientPermissionsDisabledUserSignup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigClientPermissionsDisabledUserDeletion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigClientApiKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigClientFirebaseSubdomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigMfa(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedState, err := expandIdentityPlatformConfigMfaState(original["state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["state"] = transformedState
+	}
+
+	transformedEnabledProviders, err := expandIdentityPlatformConfigMfaEnabledProviders(original["enabled_providers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabledProviders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabledProviders"] = transformedEnabledProviders
+	}
+
+	transformedProviderConfigs, err := expandIdentityPlatformConfigMfaProviderConfigs(original["provider_configs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProviderConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["providerConfigs"] = transformedProviderConfigs
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigMfaState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigMfaEnabledProviders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigMfaProviderConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedState, err := expandIdentityPlatformConfigMfaProviderConfigsState(original["state"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["state"] = transformedState
+		}
+
+		transformedTotpProviderConfig, err := expandIdentityPlatformConfigMfaProviderConfigsTotpProviderConfig(original["totp_provider_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTotpProviderConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["totpProviderConfig"] = transformedTotpProviderConfig
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandIdentityPlatformConfigMfaProviderConfigsState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigMfaProviderConfigsTotpProviderConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAdjacentIntervals, err := expandIdentityPlatformConfigMfaProviderConfigsTotpProviderConfigAdjacentIntervals(original["adjacent_intervals"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAdjacentIntervals); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["adjacentIntervals"] = transformedAdjacentIntervals
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigMfaProviderConfigsTotpProviderConfigAdjacentIntervals(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigMultiTenant(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowTenants, err := expandIdentityPlatformConfigMultiTenantAllowTenants(original["allow_tenants"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowTenants); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowTenants"] = transformedAllowTenants
+	}
+
+	transformedDefaultTenantLocation, err := expandIdentityPlatformConfigMultiTenantDefaultTenantLocation(original["default_tenant_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultTenantLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultTenantLocation"] = transformedDefaultTenantLocation
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigMultiTenantAllowTenants(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigMultiTenantDefaultTenantLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformConfigMonitoring(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRequestLogging, err := expandIdentityPlatformConfigMonitoringRequestLogging(original["request_logging"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["requestLogging"] = transformedRequestLogging
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigMonitoringRequestLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandIdentityPlatformConfigMonitoringRequestLoggingEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformConfigMonitoringRequestLoggingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
