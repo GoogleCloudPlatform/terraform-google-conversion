@@ -243,6 +243,13 @@ func expandWorkstationsWorkstationConfigHostGceInstance(v interface{}, d tpgreso
 		transformed["disablePublicIpAddresses"] = transformedDisablePublicIpAddresses
 	}
 
+	transformedDisableSsh, err := expandWorkstationsWorkstationConfigHostGceInstanceDisableSsh(original["disable_ssh"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableSsh); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableSsh"] = transformedDisableSsh
+	}
+
 	transformedEnableNestedVirtualization, err := expandWorkstationsWorkstationConfigHostGceInstanceEnableNestedVirtualization(original["enable_nested_virtualization"], d, config)
 	if err != nil {
 		return nil, err
@@ -299,6 +306,10 @@ func expandWorkstationsWorkstationConfigHostGceInstanceTags(v interface{}, d tpg
 }
 
 func expandWorkstationsWorkstationConfigHostGceInstanceDisablePublicIpAddresses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceDisableSsh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
