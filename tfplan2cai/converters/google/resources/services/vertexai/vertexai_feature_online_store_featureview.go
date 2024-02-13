@@ -66,6 +66,12 @@ func GetVertexAIFeatureOnlineStoreFeatureviewApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("big_query_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(bigQuerySourceProp)) && (ok || !reflect.DeepEqual(v, bigQuerySourceProp)) {
 		obj["bigQuerySource"] = bigQuerySourceProp
 	}
+	featureRegistrySourceProp, err := expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySource(d.Get("feature_registry_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("feature_registry_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(featureRegistrySourceProp)) && (ok || !reflect.DeepEqual(v, featureRegistrySourceProp)) {
+		obj["featureRegistrySource"] = featureRegistrySourceProp
+	}
 	vectorSearchConfigProp, err := expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfig(d.Get("vector_search_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -136,6 +142,62 @@ func expandVertexAIFeatureOnlineStoreFeatureviewBigQuerySourceUri(v interface{},
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewBigQuerySourceEntityIdColumns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFeatureGroups, err := expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGroups(original["feature_groups"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFeatureGroups); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["featureGroups"] = transformedFeatureGroups
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedFeatureGroupId, err := expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGroupsFeatureGroupId(original["feature_group_id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFeatureGroupId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["featureGroupId"] = transformedFeatureGroupId
+		}
+
+		transformedFeatureIds, err := expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGroupsFeatureIds(original["feature_ids"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFeatureIds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["featureIds"] = transformedFeatureIds
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGroupsFeatureGroupId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGroupsFeatureIds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
