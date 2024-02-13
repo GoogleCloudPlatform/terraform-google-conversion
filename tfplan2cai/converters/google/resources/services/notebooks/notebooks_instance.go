@@ -15,6 +15,7 @@
 package notebooks
 
 import (
+	"fmt"
 	"reflect"
 	"sort"
 	"strings"
@@ -60,6 +61,25 @@ func NotebooksInstanceKmsDiffSuppress(_, old, new string, _ *schema.ResourceData
 		return true
 	}
 	return false
+}
+
+func modifyNotebooksInstanceState(config *transport_tpg.Config, d *schema.ResourceData, project string, billingProject string, userAgent string, state string) (map[string]interface{}, error) {
+	url, err := tpgresource.ReplaceVars(d, config, "{{NotebooksBasePath}}projects/{{project}}/locations/{{location}}/instances/{{name}}:"+state)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+		Config:    config,
+		Method:    "POST",
+		Project:   billingProject,
+		RawURL:    url,
+		UserAgent: userAgent,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("Unable to %q google_notebooks_instance %q: %s", state, d.Id(), err)
+	}
+	return res, nil
 }
 
 const NotebooksInstanceAssetType string = "notebooks.googleapis.com/Instance"
