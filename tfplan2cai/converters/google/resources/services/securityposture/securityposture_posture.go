@@ -349,11 +349,11 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 			transformed["enforce"] = transformedEnforce
 		}
 
-		transformedExpr, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExpr(original["expr"], d, config)
+		transformedCondition, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesCondition(original["condition"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedExpr); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["expr"] = transformedExpr
+		} else if val := reflect.ValueOf(transformedCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["condition"] = transformedCondition
 		}
 
 		req = append(req, transformed)
@@ -407,7 +407,7 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 	return v, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExpr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -416,28 +416,28 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedExpression, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExprExpression(original["expression"], d, config)
+	transformedExpression, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesConditionExpression(original["expression"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedExpression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["expression"] = transformedExpression
 	}
 
-	transformedTitle, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExprTitle(original["title"], d, config)
+	transformedTitle, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesConditionTitle(original["title"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["title"] = transformedTitle
 	}
 
-	transformedDescription, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExprDescription(original["description"], d, config)
+	transformedDescription, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesConditionDescription(original["description"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["description"] = transformedDescription
 	}
 
-	transformedLocation, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExprLocation(original["location"], d, config)
+	transformedLocation, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesConditionLocation(original["location"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
@@ -447,19 +447,19 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 	return transformed, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExprExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesConditionExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExprTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesConditionTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExprDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesConditionDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesExprLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesConditionLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -616,11 +616,11 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 			transformed["enforce"] = transformedEnforce
 		}
 
-		transformedExpr, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExpr(original["expr"], d, config)
+		transformedCondition, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesCondition(original["condition"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedExpr); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["expr"] = transformedExpr
+		} else if val := reflect.ValueOf(transformedCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["condition"] = transformedCondition
 		}
 
 		req = append(req, transformed)
@@ -674,7 +674,7 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 	return v, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExpr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -683,28 +683,28 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedExpression, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExprExpression(original["expression"], d, config)
+	transformedExpression, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesConditionExpression(original["expression"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedExpression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["expression"] = transformedExpression
 	}
 
-	transformedTitle, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExprTitle(original["title"], d, config)
+	transformedTitle, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesConditionTitle(original["title"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["title"] = transformedTitle
 	}
 
-	transformedDescription, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExprDescription(original["description"], d, config)
+	transformedDescription, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesConditionDescription(original["description"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["description"] = transformedDescription
 	}
 
-	transformedLocation, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExprLocation(original["location"], d, config)
+	transformedLocation, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesConditionLocation(original["location"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
@@ -714,19 +714,19 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 	return transformed, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExprExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesConditionExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExprTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesConditionTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExprDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesConditionDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesExprLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintCustomPolicyRulesConditionLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
