@@ -15,6 +15,7 @@
 package workbench
 
 import (
+	"fmt"
 	"reflect"
 	"sort"
 	"strings"
@@ -141,6 +142,32 @@ func WorkbenchInstanceTagsDiffSuppress(_, _, _ string, d *schema.ResourceData) b
 	sort.Strings(oldValueList)
 	sort.Strings(newValueList)
 	if reflect.DeepEqual(oldValueList, newValueList) {
+		return true
+	}
+	return false
+}
+
+func modifyWorkbenchInstanceState(config *transport_tpg.Config, d *schema.ResourceData, project string, billingProject string, userAgent string, state string) (map[string]interface{}, error) {
+	url, err := tpgresource.ReplaceVars(d, config, "{{WorkbenchBasePath}}projects/{{project}}/locations/{{location}}/instances/{{name}}:"+state)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+		Config:    config,
+		Method:    "POST",
+		Project:   billingProject,
+		RawURL:    url,
+		UserAgent: userAgent,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("Unable to %q google_workbench_instance %q: %s", state, d.Id(), err)
+	}
+	return res, nil
+}
+
+func WorkbenchInstanceKmsDiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
+	if strings.HasPrefix(old, new) {
 		return true
 	}
 	return false
