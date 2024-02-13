@@ -61,6 +61,12 @@ func GetHealthcareHl7V2StoreApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
+	rejectDuplicateMessageProp, err := expandHealthcareHl7V2StoreRejectDuplicateMessage(d.Get("reject_duplicate_message"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("reject_duplicate_message"); !tpgresource.IsEmptyValue(reflect.ValueOf(rejectDuplicateMessageProp)) && (ok || !reflect.DeepEqual(v, rejectDuplicateMessageProp)) {
+		obj["rejectDuplicateMessage"] = rejectDuplicateMessageProp
+	}
 	parserConfigProp, err := expandHealthcareHl7V2StoreParserConfig(d.Get("parser_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -90,6 +96,10 @@ func GetHealthcareHl7V2StoreApiObject(d tpgresource.TerraformResourceData, confi
 }
 
 func expandHealthcareHl7V2StoreName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareHl7V2StoreRejectDuplicateMessage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
