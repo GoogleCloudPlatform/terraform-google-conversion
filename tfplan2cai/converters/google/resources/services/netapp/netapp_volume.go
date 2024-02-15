@@ -120,6 +120,12 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("kerberos_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(kerberosEnabledProp)) && (ok || !reflect.DeepEqual(v, kerberosEnabledProp)) {
 		obj["kerberosEnabled"] = kerberosEnabledProp
 	}
+	restoreParametersProp, err := expandNetappVolumeRestoreParameters(d.Get("restore_parameters"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restore_parameters"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreParametersProp)) && (ok || !reflect.DeepEqual(v, restoreParametersProp)) {
+		obj["restoreParameters"] = restoreParametersProp
+	}
 	restrictedActionsProp, err := expandNetappVolumeRestrictedActions(d.Get("restricted_actions"), d, config)
 	if err != nil {
 		return nil, err
@@ -334,6 +340,40 @@ func expandNetappVolumeSecurityStyle(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandNetappVolumeKerberosEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeRestoreParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSourceSnapshot, err := expandNetappVolumeRestoreParametersSourceSnapshot(original["source_snapshot"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceSnapshot); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceSnapshot"] = transformedSourceSnapshot
+	}
+
+	transformedSourceBackup, err := expandNetappVolumeRestoreParametersSourceBackup(original["source_backup"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceBackup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceBackup"] = transformedSourceBackup
+	}
+
+	return transformed, nil
+}
+
+func expandNetappVolumeRestoreParametersSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeRestoreParametersSourceBackup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
