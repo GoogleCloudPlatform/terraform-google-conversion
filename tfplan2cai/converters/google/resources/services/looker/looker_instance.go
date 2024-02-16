@@ -120,6 +120,12 @@ func GetLookerInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("user_metadata"); !tpgresource.IsEmptyValue(reflect.ValueOf(userMetadataProp)) && (ok || !reflect.DeepEqual(v, userMetadataProp)) {
 		obj["userMetadata"] = userMetadataProp
 	}
+	customDomainProp, err := expandLookerInstanceCustomDomain(d.Get("custom_domain"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_domain"); !tpgresource.IsEmptyValue(reflect.ValueOf(customDomainProp)) && (ok || !reflect.DeepEqual(v, customDomainProp)) {
+		obj["customDomain"] = customDomainProp
+	}
 
 	return obj, nil
 }
@@ -553,5 +559,39 @@ func expandLookerInstanceUserMetadataAdditionalStandardUserCount(v interface{}, 
 }
 
 func expandLookerInstanceUserMetadataAdditionalDeveloperUserCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstanceCustomDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDomain, err := expandLookerInstanceCustomDomainDomain(original["domain"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["domain"] = transformedDomain
+	}
+
+	transformedState, err := expandLookerInstanceCustomDomainState(original["state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["state"] = transformedState
+	}
+
+	return transformed, nil
+}
+
+func expandLookerInstanceCustomDomainDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstanceCustomDomainState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
