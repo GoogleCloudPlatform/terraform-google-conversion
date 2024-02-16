@@ -256,6 +256,13 @@ func expandWorkbenchInstanceGceSetup(v interface{}, d tpgresource.TerraformResou
 		transformed["acceleratorConfigs"] = transformedAcceleratorConfigs
 	}
 
+	transformedShieldedInstanceConfig, err := expandWorkbenchInstanceGceSetupShieldedInstanceConfig(original["shielded_instance_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["shieldedInstanceConfig"] = transformedShieldedInstanceConfig
+	}
+
 	transformedServiceAccounts, err := expandWorkbenchInstanceGceSetupServiceAccounts(original["service_accounts"], d, config)
 	if err != nil {
 		return nil, err
@@ -360,6 +367,56 @@ func expandWorkbenchInstanceGceSetupAcceleratorConfigsType(v interface{}, d tpgr
 }
 
 func expandWorkbenchInstanceGceSetupAcceleratorConfigsCoreCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupShieldedInstanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableSecureBoot, err := expandWorkbenchInstanceGceSetupShieldedInstanceConfigEnableSecureBoot(original["enable_secure_boot"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableSecureBoot); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableSecureBoot"] = transformedEnableSecureBoot
+	}
+
+	transformedEnableVtpm, err := expandWorkbenchInstanceGceSetupShieldedInstanceConfigEnableVtpm(original["enable_vtpm"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableVtpm); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableVtpm"] = transformedEnableVtpm
+	}
+
+	transformedEnableIntegrityMonitoring, err := expandWorkbenchInstanceGceSetupShieldedInstanceConfigEnableIntegrityMonitoring(original["enable_integrity_monitoring"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableIntegrityMonitoring); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableIntegrityMonitoring"] = transformedEnableIntegrityMonitoring
+	}
+
+	return transformed, nil
+}
+
+func expandWorkbenchInstanceGceSetupShieldedInstanceConfigEnableSecureBoot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupShieldedInstanceConfigEnableVtpm(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupShieldedInstanceConfigEnableIntegrityMonitoring(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
