@@ -277,6 +277,13 @@ func expandWorkbenchInstanceGceSetup(v interface{}, d tpgresource.TerraformResou
 		transformed["vmImage"] = transformedVmImage
 	}
 
+	transformedContainerImage, err := expandWorkbenchInstanceGceSetupContainerImage(original["container_image"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContainerImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["containerImage"] = transformedContainerImage
+	}
+
 	transformedBootDisk, err := expandWorkbenchInstanceGceSetupBootDisk(original["boot_disk"], d, config)
 	if err != nil {
 		return nil, err
@@ -499,6 +506,40 @@ func expandWorkbenchInstanceGceSetupVmImageName(v interface{}, d tpgresource.Ter
 }
 
 func expandWorkbenchInstanceGceSetupVmImageFamily(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupContainerImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRepository, err := expandWorkbenchInstanceGceSetupContainerImageRepository(original["repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repository"] = transformedRepository
+	}
+
+	transformedTag, err := expandWorkbenchInstanceGceSetupContainerImageTag(original["tag"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tag"] = transformedTag
+	}
+
+	return transformed, nil
+}
+
+func expandWorkbenchInstanceGceSetupContainerImageRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupContainerImageTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
