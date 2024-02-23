@@ -121,6 +121,12 @@ func GetBigQueryRoutineApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("spark_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(sparkOptionsProp)) && (ok || !reflect.DeepEqual(v, sparkOptionsProp)) {
 		obj["sparkOptions"] = sparkOptionsProp
 	}
+	remoteFunctionOptionsProp, err := expandBigQueryRoutineRemoteFunctionOptions(d.Get("remote_function_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("remote_function_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(remoteFunctionOptionsProp)) && (ok || !reflect.DeepEqual(v, remoteFunctionOptionsProp)) {
+		obj["remoteFunctionOptions"] = remoteFunctionOptionsProp
+	}
 
 	return obj, nil
 }
@@ -377,5 +383,68 @@ func expandBigQueryRoutineSparkOptionsArchiveUris(v interface{}, d tpgresource.T
 }
 
 func expandBigQueryRoutineSparkOptionsMainClass(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineRemoteFunctionOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEndpoint, err := expandBigQueryRoutineRemoteFunctionOptionsEndpoint(original["endpoint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndpoint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endpoint"] = transformedEndpoint
+	}
+
+	transformedConnection, err := expandBigQueryRoutineRemoteFunctionOptionsConnection(original["connection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connection"] = transformedConnection
+	}
+
+	transformedUserDefinedContext, err := expandBigQueryRoutineRemoteFunctionOptionsUserDefinedContext(original["user_defined_context"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserDefinedContext); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userDefinedContext"] = transformedUserDefinedContext
+	}
+
+	transformedMaxBatchingRows, err := expandBigQueryRoutineRemoteFunctionOptionsMaxBatchingRows(original["max_batching_rows"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxBatchingRows); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxBatchingRows"] = transformedMaxBatchingRows
+	}
+
+	return transformed, nil
+}
+
+func expandBigQueryRoutineRemoteFunctionOptionsEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineRemoteFunctionOptionsConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineRemoteFunctionOptionsUserDefinedContext(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandBigQueryRoutineRemoteFunctionOptionsMaxBatchingRows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
