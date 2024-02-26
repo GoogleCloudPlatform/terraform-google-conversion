@@ -54,6 +54,12 @@ func GetGKEHub2ScopeCaiObject(d tpgresource.TerraformResourceData, config *trans
 
 func GetGKEHub2ScopeApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	namespaceLabelsProp, err := expandGKEHub2ScopeNamespaceLabels(d.Get("namespace_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("namespace_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(namespaceLabelsProp)) && (ok || !reflect.DeepEqual(v, namespaceLabelsProp)) {
+		obj["namespaceLabels"] = namespaceLabelsProp
+	}
 	labelsProp, err := expandGKEHub2ScopeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -62,6 +68,17 @@ func GetGKEHub2ScopeApiObject(d tpgresource.TerraformResourceData, config *trans
 	}
 
 	return obj, nil
+}
+
+func expandGKEHub2ScopeNamespaceLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandGKEHub2ScopeEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
