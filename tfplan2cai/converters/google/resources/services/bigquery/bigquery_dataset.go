@@ -26,7 +26,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const datasetIdRegexp = `[0-9A-Za-z_]+`
+const datasetIdRegexp = `^[0-9A-Za-z_]+$`
 
 func validateDatasetId(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
