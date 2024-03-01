@@ -66,6 +66,12 @@ func GetCertificateManagerDnsAuthorizationApiObject(d tpgresource.TerraformResou
 	} else if v, ok := d.GetOkExists("domain"); !tpgresource.IsEmptyValue(reflect.ValueOf(domainProp)) && (ok || !reflect.DeepEqual(v, domainProp)) {
 		obj["domain"] = domainProp
 	}
+	typeProp, err := expandCertificateManagerDnsAuthorizationType(d.Get("type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
+		obj["type"] = typeProp
+	}
 	labelsProp, err := expandCertificateManagerDnsAuthorizationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -81,6 +87,10 @@ func expandCertificateManagerDnsAuthorizationDescription(v interface{}, d tpgres
 }
 
 func expandCertificateManagerDnsAuthorizationDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateManagerDnsAuthorizationType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
