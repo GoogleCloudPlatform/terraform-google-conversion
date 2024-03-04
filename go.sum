@@ -15,8 +15,8 @@ cloud.google.com/go/longrunning v0.5.5 h1:GOE6pZFdSrTb4KAiKnXsJBtlE6mEyaW44oKyMI
 cloud.google.com/go/longrunning v0.5.5/go.mod h1:WV2LAxD8/rg5Z1cNW6FJ/ZpX4E4VnDnoTk0yawPBB7s=
 dario.cat/mergo v1.0.0 h1:AGCNq9Evsj31mOgNPcLyXc+4PNABt905YmuqPYYpBWk=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/GoogleCloudPlatform/declarative-resource-client-library v1.62.0 h1:s4Y6r6RrYLBnqosGXLwR0h1Gqr0VT3wgd6rqvHsD9OE=
-github.com/GoogleCloudPlatform/declarative-resource-client-library v1.62.0/go.mod h1:pL2Qt5HT+x6xrTd806oMiM3awW6kNIXB/iiuClz6m6k=
+github.com/GoogleCloudPlatform/declarative-resource-client-library v1.63.0 h1:eSOBYPZVnU2fZul9sAJFGLVCgv6stNVKkmsogKF7UeY=
+github.com/GoogleCloudPlatform/declarative-resource-client-library v1.63.0/go.mod h1:pL2Qt5HT+x6xrTd806oMiM3awW6kNIXB/iiuClz6m6k=
 github.com/Microsoft/go-winio v0.6.1 h1:9/kr64B9VUZrLm5YYwbGtUJnMgqWVOdUAXu6Migciow=
 github.com/ProtonMail/go-crypto v0.0.0-20230923063757-afb1ddc0824c h1:kMFnB0vCcX7IL/m9Y5LO+KQYv+t1CQOiFe6+SV2J7bE=
 github.com/ProtonMail/go-crypto v0.0.0-20230923063757-afb1ddc0824c/go.mod h1:EjAoLdwvbIOoOQr3ihjnSoLZRtE8azugULFRteWMNc0=
@@ -175,8 +175,8 @@ github.com/hashicorp/terraform-plugin-log v0.9.0/go.mod h1:rKL8egZQ/eXSyDqzLUuwU
 github.com/hashicorp/terraform-plugin-mux v0.13.0 h1:79U401/3nd8CWwDGtTHc8F3miSCAS9XGtVarxSTDgwA=
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.31.0 h1:Bl3e2ei2j/Z3Hc2HIS15Gal2KMKyLAZ2om1HCEvK6es=
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.31.0/go.mod h1:i2C41tszDjiWfziPQDL5R/f3Zp0gahXe5No/MIO9rCE=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20240304213606-a36b852d3c96 h1:1naQh3i8+HiYqX8uvdVd2jcX9/EU0UnflzvdhS9aQjo=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20240304213606-a36b852d3c96/go.mod h1:vJFmOnOpcf+5wEYfWdY0hXALTVCUdbj1PZmM0VHG48I=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20240304225333-eb392a2433cb h1:Bg6QKCe2+K6NLkiQlyQn8wSCoA7CfsjRFV3Fm3L5Nlg=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20240304225333-eb392a2433cb/go.mod h1:xqktgz44XcXx24WFlm6lYZEri5YeyyFGL+qBamSShDc=
 github.com/hashicorp/terraform-registry-address v0.2.3 h1:2TAiKJ1A3MAkZlH1YI/aTVcLZRu7JseiXNRHbOAyoTI=
 github.com/hashicorp/terraform-registry-address v0.2.3/go.mod h1:lFHA76T8jfQteVfT7caREqguFrW3c4MFSPhZB7HHgUM=
 github.com/hashicorp/terraform-svchost v0.1.1 h1:EZZimZ1GxdqFRinZ1tpJwVxxt49xc/S52uzrw4x0jKQ=
