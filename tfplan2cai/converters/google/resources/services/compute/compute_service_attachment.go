@@ -15,7 +15,9 @@
 package compute
 
 import (
+	"bytes"
 	"fmt"
+	"log"
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -24,6 +26,42 @@ import (
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+// Hash based on key, which is either project_id_or_num or network_url.
+func computeServiceAttachmentConsumerAcceptListsHash(v interface{}) int {
+	if v == nil {
+		return 0
+	}
+
+	var buf bytes.Buffer
+	m := v.(map[string]interface{})
+	log.Printf("[DEBUG] hashing %v", m)
+
+	if v, ok := m["project_id_or_num"]; ok {
+		if v == nil {
+			v = ""
+		}
+
+		buf.WriteString(fmt.Sprintf("%v-", v))
+	}
+
+	if v, ok := m["network_url"]; ok {
+		if v == nil {
+			v = ""
+		} else {
+			if networkUrl, err := tpgresource.GetRelativePath(v.(string)); err != nil {
+				log.Printf("[WARN] Error on retrieving relative path of network url: %s", err)
+			} else {
+				v = networkUrl
+			}
+		}
+
+		buf.WriteString(fmt.Sprintf("%v-", v))
+	}
+
+	log.Printf("[DEBUG] computed hash value of %v from %v", tpgresource.Hashcode(buf.String()), buf.String())
+	return tpgresource.Hashcode(buf.String())
+}
 
 const ComputeServiceAttachmentAssetType string = "compute.googleapis.com/ServiceAttachment"
 
@@ -203,6 +241,13 @@ func expandComputeServiceAttachmentConsumerAcceptLists(v interface{}, d tpgresou
 			transformed["projectIdOrNum"] = transformedProjectIdOrNum
 		}
 
+		transformedNetworkUrl, err := expandComputeServiceAttachmentConsumerAcceptListsNetworkUrl(original["network_url"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetworkUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["networkUrl"] = transformedNetworkUrl
+		}
+
 		transformedConnectionLimit, err := expandComputeServiceAttachmentConsumerAcceptListsConnectionLimit(original["connection_limit"], d, config)
 		if err != nil {
 			return nil, err
@@ -216,6 +261,10 @@ func expandComputeServiceAttachmentConsumerAcceptLists(v interface{}, d tpgresou
 }
 
 func expandComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeServiceAttachmentConsumerAcceptListsNetworkUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
