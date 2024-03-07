@@ -102,6 +102,12 @@ func GetWorkstationsWorkstationConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("persistent_directories"); !tpgresource.IsEmptyValue(reflect.ValueOf(persistentDirectoriesProp)) && (ok || !reflect.DeepEqual(v, persistentDirectoriesProp)) {
 		obj["persistentDirectories"] = persistentDirectoriesProp
 	}
+	ephemeralDirectoriesProp, err := expandWorkstationsWorkstationConfigEphemeralDirectories(d.Get("ephemeral_directories"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ephemeral_directories"); !tpgresource.IsEmptyValue(reflect.ValueOf(ephemeralDirectoriesProp)) && (ok || !reflect.DeepEqual(v, ephemeralDirectoriesProp)) {
+		obj["ephemeralDirectories"] = ephemeralDirectoriesProp
+	}
 	containerProp, err := expandWorkstationsWorkstationConfigContainer(d.Get("container"), d, config)
 	if err != nil {
 		return nil, err
@@ -519,6 +525,95 @@ func expandWorkstationsWorkstationConfigPersistentDirectoriesGcePdReclaimPolicy(
 }
 
 func expandWorkstationsWorkstationConfigPersistentDirectoriesGcePdSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigEphemeralDirectories(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedMountPath, err := expandWorkstationsWorkstationConfigEphemeralDirectoriesMountPath(original["mount_path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMountPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["mountPath"] = transformedMountPath
+		}
+
+		transformedGcePd, err := expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePd(original["gce_pd"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedGcePd); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["gcePd"] = transformedGcePd
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandWorkstationsWorkstationConfigEphemeralDirectoriesMountPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDiskType, err := expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePdDiskType(original["disk_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDiskType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["diskType"] = transformedDiskType
+	}
+
+	transformedSourceSnapshot, err := expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePdSourceSnapshot(original["source_snapshot"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceSnapshot); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceSnapshot"] = transformedSourceSnapshot
+	}
+
+	transformedSourceImage, err := expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePdSourceImage(original["source_image"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceImage"] = transformedSourceImage
+	}
+
+	transformedReadOnly, err := expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePdReadOnly(original["read_only"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReadOnly); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["readOnly"] = transformedReadOnly
+	}
+
+	return transformed, nil
+}
+
+func expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePdDiskType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePdSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePdSourceImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigEphemeralDirectoriesGcePdReadOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
