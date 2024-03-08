@@ -98,6 +98,12 @@ func GetCloudRunV2ServiceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("custom_audiences"); !tpgresource.IsEmptyValue(reflect.ValueOf(customAudiencesProp)) && (ok || !reflect.DeepEqual(v, customAudiencesProp)) {
 		obj["customAudiences"] = customAudiencesProp
 	}
+	scalingProp, err := expandCloudRunV2ServiceScaling(d.Get("scaling"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scaling"); !tpgresource.IsEmptyValue(reflect.ValueOf(scalingProp)) && (ok || !reflect.DeepEqual(v, scalingProp)) {
+		obj["scaling"] = scalingProp
+	}
 	templateProp, err := expandCloudRunV2ServiceTemplate(d.Get("template"), d, config)
 	if err != nil {
 		return nil, err
@@ -181,6 +187,29 @@ func expandCloudRunV2ServiceBinaryAuthorizationUseDefault(v interface{}, d tpgre
 }
 
 func expandCloudRunV2ServiceCustomAudiences(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceScaling(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMinInstanceCount, err := expandCloudRunV2ServiceScalingMinInstanceCount(original["min_instance_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinInstanceCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minInstanceCount"] = transformedMinInstanceCount
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2ServiceScalingMinInstanceCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
