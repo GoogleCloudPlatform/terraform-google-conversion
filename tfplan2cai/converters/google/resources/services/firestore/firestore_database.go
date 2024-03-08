@@ -102,6 +102,12 @@ func GetFirestoreDatabaseApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
 		obj["etag"] = etagProp
 	}
+	cmekConfigProp, err := expandFirestoreDatabaseCmekConfig(d.Get("cmek_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cmek_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(cmekConfigProp)) && (ok || !reflect.DeepEqual(v, cmekConfigProp)) {
+		obj["cmekConfig"] = cmekConfigProp
+	}
 
 	return obj, nil
 }
@@ -135,5 +141,39 @@ func expandFirestoreDatabaseDeleteProtectionState(v interface{}, d tpgresource.T
 }
 
 func expandFirestoreDatabaseEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreDatabaseCmekConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsKeyName, err := expandFirestoreDatabaseCmekConfigKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	transformedActiveKeyVersion, err := expandFirestoreDatabaseCmekConfigActiveKeyVersion(original["active_key_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedActiveKeyVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["activeKeyVersion"] = transformedActiveKeyVersion
+	}
+
+	return transformed, nil
+}
+
+func expandFirestoreDatabaseCmekConfigKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreDatabaseCmekConfigActiveKeyVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
