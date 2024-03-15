@@ -536,6 +536,13 @@ func expandComputeRegionUrlMapPathMatcherRouteRulesMatchRules(v interface{}, d t
 			transformed["regexMatch"] = transformedRegexMatch
 		}
 
+		transformedPathTemplateMatch, err := expandComputeRegionUrlMapPathMatcherRouteRulesMatchRulesPathTemplateMatch(original["path_template_match"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPathTemplateMatch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pathTemplateMatch"] = transformedPathTemplateMatch
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -816,6 +823,10 @@ func expandComputeRegionUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatch
 }
 
 func expandComputeRegionUrlMapPathMatcherRouteRulesMatchRulesRegexMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherRouteRulesMatchRulesPathTemplateMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1263,6 +1274,13 @@ func expandComputeRegionUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(v inter
 		transformed["pathPrefixRewrite"] = transformedPathPrefixRewrite
 	}
 
+	transformedPathTemplateRewrite, err := expandComputeRegionUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathTemplateRewrite(original["path_template_rewrite"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPathTemplateRewrite); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pathTemplateRewrite"] = transformedPathTemplateRewrite
+	}
+
 	return transformed, nil
 }
 
@@ -1271,6 +1289,10 @@ func expandComputeRegionUrlMapPathMatcherRouteRulesRouteActionUrlRewriteHostRewr
 }
 
 func expandComputeRegionUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathPrefixRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathTemplateRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
