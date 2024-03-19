@@ -284,6 +284,13 @@ func expandWorkstationsWorkstationConfigHostGceInstance(v interface{}, d tpgreso
 		transformed["accelerators"] = transformedAccelerators
 	}
 
+	transformedBoostConfigs, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigs(original["boost_configs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBoostConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["boostConfigs"] = transformedBoostConfigs
+	}
+
 	return transformed, nil
 }
 
@@ -425,6 +432,87 @@ func expandWorkstationsWorkstationConfigHostGceInstanceAcceleratorsType(v interf
 }
 
 func expandWorkstationsWorkstationConfigHostGceInstanceAcceleratorsCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedId, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsId(original["id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["id"] = transformedId
+		}
+
+		transformedMachineType, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsMachineType(original["machine_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMachineType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["machineType"] = transformedMachineType
+		}
+
+		transformedAccelerators, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAccelerators(original["accelerators"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAccelerators); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["accelerators"] = transformedAccelerators
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAccelerators(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedType, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAcceleratorsType(original["type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["type"] = transformedType
+		}
+
+		transformedCount, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAcceleratorsCount(original["count"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["count"] = transformedCount
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAcceleratorsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAcceleratorsCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
