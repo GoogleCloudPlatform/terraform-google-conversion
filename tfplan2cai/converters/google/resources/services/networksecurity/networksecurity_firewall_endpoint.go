@@ -54,6 +54,12 @@ func GetNetworkSecurityFirewallEndpointCaiObject(d tpgresource.TerraformResource
 
 func GetNetworkSecurityFirewallEndpointApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	billingProjectIdProp, err := expandNetworkSecurityFirewallEndpointBillingProjectId(d.Get("billing_project_id"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("billing_project_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(billingProjectIdProp)) && (ok || !reflect.DeepEqual(v, billingProjectIdProp)) {
+		obj["billingProjectId"] = billingProjectIdProp
+	}
 	labelsProp, err := expandNetworkSecurityFirewallEndpointEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -62,6 +68,10 @@ func GetNetworkSecurityFirewallEndpointApiObject(d tpgresource.TerraformResource
 	}
 
 	return obj, nil
+}
+
+func expandNetworkSecurityFirewallEndpointBillingProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandNetworkSecurityFirewallEndpointEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
