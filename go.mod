@@ -11,7 +11,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.19.1
 	github.com/hashicorp/terraform-json v0.21.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.33.0
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20240323132419-145eef430c01
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20240325181751-4300f1ddf3d9
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
@@ -69,9 +69,9 @@ require (
 	github.com/hashicorp/hc-install v0.6.3 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/terraform-exec v0.20.0 // indirect
-	github.com/hashicorp/terraform-plugin-framework v1.6.1 // indirect
+	github.com/hashicorp/terraform-plugin-framework v1.7.0 // indirect
 	github.com/hashicorp/terraform-plugin-framework-validators v0.12.0 // indirect
-	github.com/hashicorp/terraform-plugin-go v0.22.0 // indirect
+	github.com/hashicorp/terraform-plugin-go v0.22.1 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
 	github.com/hashicorp/terraform-registry-address v0.2.3 // indirect
 	github.com/hashicorp/terraform-svchost v0.1.1 // indirect
@@ -113,7 +113,7 @@ require (
 	google.golang.org/genproto v0.0.0-20240205150955-31a09d347014 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240205150955-31a09d347014 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240213162025-012b6fc9bca9 // indirect
-	google.golang.org/grpc v1.62.0 // indirect
-	google.golang.org/protobuf v1.32.0 // indirect
+	google.golang.org/grpc v1.62.1 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
