@@ -628,6 +628,13 @@ func expandCloudRunV2JobTemplateTemplateVolumes(v interface{}, d tpgresource.Ter
 			transformed["emptyDir"] = transformedEmptyDir
 		}
 
+		transformedGcs, err := expandCloudRunV2JobTemplateTemplateVolumesGcs(original["gcs"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedGcs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["gcs"] = transformedGcs
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -780,6 +787,40 @@ func expandCloudRunV2JobTemplateTemplateVolumesEmptyDirMedium(v interface{}, d t
 }
 
 func expandCloudRunV2JobTemplateTemplateVolumesEmptyDirSizeLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesGcs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBucket, err := expandCloudRunV2JobTemplateTemplateVolumesGcsBucket(original["bucket"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucket); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bucket"] = transformedBucket
+	}
+
+	transformedReadOnly, err := expandCloudRunV2JobTemplateTemplateVolumesGcsReadOnly(original["read_only"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReadOnly); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["readOnly"] = transformedReadOnly
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesGcsBucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesGcsReadOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
