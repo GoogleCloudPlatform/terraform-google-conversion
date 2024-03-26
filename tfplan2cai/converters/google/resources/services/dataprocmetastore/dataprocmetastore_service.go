@@ -80,6 +80,12 @@ func GetDataprocMetastoreServiceApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("scaling_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(scalingConfigProp)) && (ok || !reflect.DeepEqual(v, scalingConfigProp)) {
 		obj["scalingConfig"] = scalingConfigProp
 	}
+	scheduledBackupProp, err := expandDataprocMetastoreServiceScheduledBackup(d.Get("scheduled_backup"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scheduled_backup"); !tpgresource.IsEmptyValue(reflect.ValueOf(scheduledBackupProp)) && (ok || !reflect.DeepEqual(v, scheduledBackupProp)) {
+		obj["scheduledBackup"] = scheduledBackupProp
+	}
 	maintenanceWindowProp, err := expandDataprocMetastoreServiceMaintenanceWindow(d.Get("maintenance_window"), d, config)
 	if err != nil {
 		return nil, err
@@ -181,6 +187,62 @@ func expandDataprocMetastoreServiceScalingConfigInstanceSize(v interface{}, d tp
 }
 
 func expandDataprocMetastoreServiceScalingConfigScalingFactor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceScheduledBackup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandDataprocMetastoreServiceScheduledBackupEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedCronSchedule, err := expandDataprocMetastoreServiceScheduledBackupCronSchedule(original["cron_schedule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCronSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cronSchedule"] = transformedCronSchedule
+	}
+
+	transformedTimeZone, err := expandDataprocMetastoreServiceScheduledBackupTimeZone(original["time_zone"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTimeZone); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["timeZone"] = transformedTimeZone
+	}
+
+	transformedBackupLocation, err := expandDataprocMetastoreServiceScheduledBackupBackupLocation(original["backup_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackupLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backupLocation"] = transformedBackupLocation
+	}
+
+	return transformed, nil
+}
+
+func expandDataprocMetastoreServiceScheduledBackupEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceScheduledBackupCronSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceScheduledBackupTimeZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceScheduledBackupBackupLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
