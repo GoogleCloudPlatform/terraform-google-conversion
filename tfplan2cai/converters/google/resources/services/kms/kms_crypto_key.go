@@ -86,6 +86,12 @@ func GetKMSCryptoKeyApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("import_only"); !tpgresource.IsEmptyValue(reflect.ValueOf(importOnlyProp)) && (ok || !reflect.DeepEqual(v, importOnlyProp)) {
 		obj["importOnly"] = importOnlyProp
 	}
+	cryptoKeyBackendProp, err := expandKMSCryptoKeyCryptoKeyBackend(d.Get("crypto_key_backend"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("crypto_key_backend"); !tpgresource.IsEmptyValue(reflect.ValueOf(cryptoKeyBackendProp)) && (ok || !reflect.DeepEqual(v, cryptoKeyBackendProp)) {
+		obj["cryptoKeyBackend"] = cryptoKeyBackendProp
+	}
 	labelsProp, err := expandKMSCryptoKeyEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -166,6 +172,10 @@ func expandKMSCryptoKeyDestroyScheduledDuration(v interface{}, d tpgresource.Ter
 }
 
 func expandKMSCryptoKeyImportOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandKMSCryptoKeyCryptoKeyBackend(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

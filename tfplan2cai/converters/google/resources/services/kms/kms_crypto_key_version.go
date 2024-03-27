@@ -60,10 +60,50 @@ func GetKMSCryptoKeyVersionApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("state"); !tpgresource.IsEmptyValue(reflect.ValueOf(stateProp)) && (ok || !reflect.DeepEqual(v, stateProp)) {
 		obj["state"] = stateProp
 	}
+	externalProtectionLevelOptionsProp, err := expandKMSCryptoKeyVersionExternalProtectionLevelOptions(d.Get("external_protection_level_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("external_protection_level_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(externalProtectionLevelOptionsProp)) && (ok || !reflect.DeepEqual(v, externalProtectionLevelOptionsProp)) {
+		obj["externalProtectionLevelOptions"] = externalProtectionLevelOptionsProp
+	}
 
 	return obj, nil
 }
 
 func expandKMSCryptoKeyVersionState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandKMSCryptoKeyVersionExternalProtectionLevelOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExternalKeyUri, err := expandKMSCryptoKeyVersionExternalProtectionLevelOptionsExternalKeyUri(original["external_key_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExternalKeyUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["externalKeyUri"] = transformedExternalKeyUri
+	}
+
+	transformedEkmConnectionKeyPath, err := expandKMSCryptoKeyVersionExternalProtectionLevelOptionsEkmConnectionKeyPath(original["ekm_connection_key_path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEkmConnectionKeyPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ekmConnectionKeyPath"] = transformedEkmConnectionKeyPath
+	}
+
+	return transformed, nil
+}
+
+func expandKMSCryptoKeyVersionExternalProtectionLevelOptionsExternalKeyUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandKMSCryptoKeyVersionExternalProtectionLevelOptionsEkmConnectionKeyPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
