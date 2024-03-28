@@ -15,6 +15,8 @@
 package integrations
 
 import (
+	"reflect"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -52,6 +54,109 @@ func GetIntegrationsClientCaiObject(d tpgresource.TerraformResourceData, config 
 
 func GetIntegrationsClientApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	cloudKmsConfigProp, err := expandIntegrationsClientCloudKmsConfig(d.Get("cloud_kms_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cloud_kms_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(cloudKmsConfigProp)) && (ok || !reflect.DeepEqual(v, cloudKmsConfigProp)) {
+		obj["cloudKmsConfig"] = cloudKmsConfigProp
+	}
+	createSampleWorkflowsProp, err := expandIntegrationsClientCreateSampleWorkflows(d.Get("create_sample_workflows"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("create_sample_workflows"); !tpgresource.IsEmptyValue(reflect.ValueOf(createSampleWorkflowsProp)) && (ok || !reflect.DeepEqual(v, createSampleWorkflowsProp)) {
+		obj["createSampleWorkflows"] = createSampleWorkflowsProp
+	}
+	provisionGmekProp, err := expandIntegrationsClientProvisionGmek(d.Get("provision_gmek"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("provision_gmek"); !tpgresource.IsEmptyValue(reflect.ValueOf(provisionGmekProp)) && (ok || !reflect.DeepEqual(v, provisionGmekProp)) {
+		obj["provisionGmek"] = provisionGmekProp
+	}
+	runAsServiceAccountProp, err := expandIntegrationsClientRunAsServiceAccount(d.Get("run_as_service_account"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("run_as_service_account"); !tpgresource.IsEmptyValue(reflect.ValueOf(runAsServiceAccountProp)) && (ok || !reflect.DeepEqual(v, runAsServiceAccountProp)) {
+		obj["runAsServiceAccount"] = runAsServiceAccountProp
+	}
 
 	return obj, nil
+}
+
+func expandIntegrationsClientCloudKmsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsLocation, err := expandIntegrationsClientCloudKmsConfigKmsLocation(original["kms_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsLocation"] = transformedKmsLocation
+	}
+
+	transformedKmsRing, err := expandIntegrationsClientCloudKmsConfigKmsRing(original["kms_ring"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsRing); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsRing"] = transformedKmsRing
+	}
+
+	transformedKey, err := expandIntegrationsClientCloudKmsConfigKey(original["key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["key"] = transformedKey
+	}
+
+	transformedKeyVersion, err := expandIntegrationsClientCloudKmsConfigKeyVersion(original["key_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKeyVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["keyVersion"] = transformedKeyVersion
+	}
+
+	transformedKmsProjectId, err := expandIntegrationsClientCloudKmsConfigKmsProjectId(original["kms_project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsProjectId"] = transformedKmsProjectId
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsClientCloudKmsConfigKmsLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsClientCloudKmsConfigKmsRing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsClientCloudKmsConfigKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsClientCloudKmsConfigKeyVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsClientCloudKmsConfigKmsProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsClientCreateSampleWorkflows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsClientProvisionGmek(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsClientRunAsServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
