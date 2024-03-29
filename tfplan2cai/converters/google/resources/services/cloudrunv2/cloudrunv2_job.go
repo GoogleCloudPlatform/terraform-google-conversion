@@ -635,6 +635,13 @@ func expandCloudRunV2JobTemplateTemplateVolumes(v interface{}, d tpgresource.Ter
 			transformed["gcs"] = transformedGcs
 		}
 
+		transformedNfs, err := expandCloudRunV2JobTemplateTemplateVolumesNfs(original["nfs"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNfs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["nfs"] = transformedNfs
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -821,6 +828,51 @@ func expandCloudRunV2JobTemplateTemplateVolumesGcsBucket(v interface{}, d tpgres
 }
 
 func expandCloudRunV2JobTemplateTemplateVolumesGcsReadOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesNfs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServer, err := expandCloudRunV2JobTemplateTemplateVolumesNfsServer(original["server"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["server"] = transformedServer
+	}
+
+	transformedPath, err := expandCloudRunV2JobTemplateTemplateVolumesNfsPath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	transformedReadOnly, err := expandCloudRunV2JobTemplateTemplateVolumesNfsReadOnly(original["read_only"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReadOnly); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["readOnly"] = transformedReadOnly
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesNfsServer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesNfsPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesNfsReadOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
