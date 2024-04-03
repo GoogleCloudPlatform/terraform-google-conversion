@@ -186,6 +186,13 @@ func expandFirestoreIndexFields(v interface{}, d tpgresource.TerraformResourceDa
 			transformed["arrayConfig"] = transformedArrayConfig
 		}
 
+		transformedVectorConfig, err := expandFirestoreIndexFieldsVectorConfig(original["vector_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVectorConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["vectorConfig"] = transformedVectorConfig
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -201,4 +208,49 @@ func expandFirestoreIndexFieldsOrder(v interface{}, d tpgresource.TerraformResou
 
 func expandFirestoreIndexFieldsArrayConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandFirestoreIndexFieldsVectorConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDimension, err := expandFirestoreIndexFieldsVectorConfigDimension(original["dimension"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDimension); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dimension"] = transformedDimension
+	}
+
+	transformedFlat, err := expandFirestoreIndexFieldsVectorConfigFlat(original["flat"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["flat"] = transformedFlat
+	}
+
+	return transformed, nil
+}
+
+func expandFirestoreIndexFieldsVectorConfigDimension(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexFieldsVectorConfigFlat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
