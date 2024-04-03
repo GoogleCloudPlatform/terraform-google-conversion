@@ -72,6 +72,12 @@ func GetNetworkSecurityFirewallEndpointAssociationApiObject(d tpgresource.Terraf
 	} else if v, ok := d.GetOkExists("tls_inspection_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(tlsInspectionPolicyProp)) && (ok || !reflect.DeepEqual(v, tlsInspectionPolicyProp)) {
 		obj["tlsInspectionPolicy"] = tlsInspectionPolicyProp
 	}
+	disabledProp, err := expandNetworkSecurityFirewallEndpointAssociationDisabled(d.Get("disabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
+		obj["disabled"] = disabledProp
+	}
 	labelsProp, err := expandNetworkSecurityFirewallEndpointAssociationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -91,6 +97,10 @@ func expandNetworkSecurityFirewallEndpointAssociationNetwork(v interface{}, d tp
 }
 
 func expandNetworkSecurityFirewallEndpointAssociationTlsInspectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointAssociationDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
