@@ -186,6 +186,13 @@ func expandGKEBackupBackupPlanBackupSchedule(v interface{}, d tpgresource.Terraf
 		transformed["paused"] = transformedPaused
 	}
 
+	transformedRpoConfig, err := expandGKEBackupBackupPlanBackupScheduleRpoConfig(original["rpo_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRpoConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rpoConfig"] = transformedRpoConfig
+	}
+
 	return transformed, nil
 }
 
@@ -194,6 +201,218 @@ func expandGKEBackupBackupPlanBackupScheduleCronSchedule(v interface{}, d tpgres
 }
 
 func expandGKEBackupBackupPlanBackupSchedulePaused(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTargetRpoMinutes, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigTargetRpoMinutes(original["target_rpo_minutes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetRpoMinutes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["targetRpoMinutes"] = transformedTargetRpoMinutes
+	}
+
+	transformedExclusionWindows, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindows(original["exclusion_windows"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExclusionWindows); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exclusionWindows"] = transformedExclusionWindows
+	}
+
+	return transformed, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigTargetRpoMinutes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedStartTime, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTime(original["start_time"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["startTime"] = transformedStartTime
+		}
+
+		transformedDuration, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsDuration(original["duration"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["duration"] = transformedDuration
+		}
+
+		transformedSingleOccurrenceDate, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsSingleOccurrenceDate(original["single_occurrence_date"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSingleOccurrenceDate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["singleOccurrenceDate"] = transformedSingleOccurrenceDate
+		}
+
+		transformedDaily, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsDaily(original["daily"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDaily); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["daily"] = transformedDaily
+		}
+
+		transformedDaysOfWeek, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsDaysOfWeek(original["days_of_week"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDaysOfWeek); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["daysOfWeek"] = transformedDaysOfWeek
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHours, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTimeHours(original["hours"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHours); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hours"] = transformedHours
+	}
+
+	transformedMinutes, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTimeMinutes(original["minutes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinutes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minutes"] = transformedMinutes
+	}
+
+	transformedSeconds, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTimeSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	transformedNanos, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTimeNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	return transformed, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTimeHours(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTimeMinutes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTimeSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsStartTimeNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsSingleOccurrenceDate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedYear, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsSingleOccurrenceDateYear(original["year"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedYear); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["year"] = transformedYear
+	}
+
+	transformedMonth, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsSingleOccurrenceDateMonth(original["month"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMonth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["month"] = transformedMonth
+	}
+
+	transformedDay, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsSingleOccurrenceDateDay(original["day"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDay); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["day"] = transformedDay
+	}
+
+	return transformed, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsSingleOccurrenceDateYear(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsSingleOccurrenceDateMonth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsSingleOccurrenceDateDay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsDaily(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsDaysOfWeek(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDaysOfWeek, err := expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsDaysOfWeekDaysOfWeek(original["days_of_week"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDaysOfWeek); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["daysOfWeek"] = transformedDaysOfWeek
+	}
+
+	return transformed, nil
+}
+
+func expandGKEBackupBackupPlanBackupScheduleRpoConfigExclusionWindowsDaysOfWeekDaysOfWeek(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
