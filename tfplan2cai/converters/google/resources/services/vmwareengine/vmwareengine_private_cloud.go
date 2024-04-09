@@ -87,6 +87,18 @@ func GetVmwareenginePrivateCloudApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
+	preferredZoneProp, err := expandVmwareenginePrivateCloudPreferredZone(d.Get("preferred_zone"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("preferred_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(preferredZoneProp)) && (ok || !reflect.DeepEqual(v, preferredZoneProp)) {
+		obj["preferredZone"] = preferredZoneProp
+	}
+	secondaryZoneProp, err := expandVmwareenginePrivateCloudSecondaryZone(d.Get("secondary_zone"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("secondary_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(secondaryZoneProp)) && (ok || !reflect.DeepEqual(v, secondaryZoneProp)) {
+		obj["secondaryZone"] = secondaryZoneProp
+	}
 
 	return obj, nil
 }
@@ -233,5 +245,13 @@ func expandVmwareenginePrivateCloudManagementClusterNodeTypeConfigsCustomCoreCou
 }
 
 func expandVmwareenginePrivateCloudType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareenginePrivateCloudPreferredZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareenginePrivateCloudSecondaryZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
