@@ -97,6 +97,12 @@ func GetBillingBudgetApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("all_updates_rule"); !tpgresource.IsEmptyValue(reflect.ValueOf(notificationsRuleProp)) && (ok || !reflect.DeepEqual(v, notificationsRuleProp)) {
 		obj["notificationsRule"] = notificationsRuleProp
 	}
+	ownershipScopeProp, err := expandBillingBudgetOwnershipScope(d.Get("ownership_scope"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ownership_scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(ownershipScopeProp)) && (ok || !reflect.DeepEqual(v, ownershipScopeProp)) {
+		obj["ownershipScope"] = ownershipScopeProp
+	}
 
 	return obj, nil
 }
@@ -506,5 +512,9 @@ func expandBillingBudgetAllUpdatesRuleMonitoringNotificationChannels(v interface
 }
 
 func expandBillingBudgetAllUpdatesRuleDisableDefaultIamRecipients(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBillingBudgetOwnershipScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
