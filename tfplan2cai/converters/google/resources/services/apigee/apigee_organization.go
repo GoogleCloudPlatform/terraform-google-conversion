@@ -72,6 +72,24 @@ func GetApigeeOrganizationApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("analytics_region"); !tpgresource.IsEmptyValue(reflect.ValueOf(analyticsRegionProp)) && (ok || !reflect.DeepEqual(v, analyticsRegionProp)) {
 		obj["analyticsRegion"] = analyticsRegionProp
 	}
+	apiConsumerDataLocationProp, err := expandApigeeOrganizationApiConsumerDataLocation(d.Get("api_consumer_data_location"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("api_consumer_data_location"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiConsumerDataLocationProp)) && (ok || !reflect.DeepEqual(v, apiConsumerDataLocationProp)) {
+		obj["apiConsumerDataLocation"] = apiConsumerDataLocationProp
+	}
+	apiConsumerDataEncryptionKeyNameProp, err := expandApigeeOrganizationApiConsumerDataEncryptionKeyName(d.Get("api_consumer_data_encryption_key_name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("api_consumer_data_encryption_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiConsumerDataEncryptionKeyNameProp)) && (ok || !reflect.DeepEqual(v, apiConsumerDataEncryptionKeyNameProp)) {
+		obj["apiConsumerDataEncryptionKeyName"] = apiConsumerDataEncryptionKeyNameProp
+	}
+	controlPlaneEncryptionKeyNameProp, err := expandApigeeOrganizationControlPlaneEncryptionKeyName(d.Get("control_plane_encryption_key_name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("control_plane_encryption_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(controlPlaneEncryptionKeyNameProp)) && (ok || !reflect.DeepEqual(v, controlPlaneEncryptionKeyNameProp)) {
+		obj["controlPlaneEncryptionKeyName"] = controlPlaneEncryptionKeyNameProp
+	}
 	authorizedNetworkProp, err := expandApigeeOrganizationAuthorizedNetwork(d.Get("authorized_network"), d, config)
 	if err != nil {
 		return nil, err
@@ -126,6 +144,18 @@ func expandApigeeOrganizationDescription(v interface{}, d tpgresource.TerraformR
 }
 
 func expandApigeeOrganizationAnalyticsRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeOrganizationApiConsumerDataLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeOrganizationApiConsumerDataEncryptionKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeOrganizationControlPlaneEncryptionKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
