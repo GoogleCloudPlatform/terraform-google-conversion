@@ -110,9 +110,20 @@ func expandBigqueryDatapolicyDataPolicyDataMaskingPolicy(v interface{}, d tpgres
 		transformed["predefinedExpression"] = transformedPredefinedExpression
 	}
 
+	transformedRoutine, err := expandBigqueryDatapolicyDataPolicyDataMaskingPolicyRoutine(original["routine"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRoutine); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["routine"] = transformedRoutine
+	}
+
 	return transformed, nil
 }
 
 func expandBigqueryDatapolicyDataPolicyDataMaskingPolicyPredefinedExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryDatapolicyDataPolicyDataMaskingPolicyRoutine(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
