@@ -89,6 +89,12 @@ func GetSecretManagerSecretApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("version_aliases"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionAliasesProp)) && (ok || !reflect.DeepEqual(v, versionAliasesProp)) {
 		obj["versionAliases"] = versionAliasesProp
 	}
+	versionDestroyTtlProp, err := expandSecretManagerSecretVersionDestroyTtl(d.Get("version_destroy_ttl"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("version_destroy_ttl"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionDestroyTtlProp)) && (ok || !reflect.DeepEqual(v, versionDestroyTtlProp)) {
+		obj["versionDestroyTtl"] = versionDestroyTtlProp
+	}
 	replicationProp, err := expandSecretManagerSecretReplication(d.Get("replication"), d, config)
 	if err != nil {
 		return nil, err
@@ -144,6 +150,10 @@ func expandSecretManagerSecretVersionAliases(v interface{}, d tpgresource.Terraf
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandSecretManagerSecretVersionDestroyTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSecretManagerSecretReplication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
