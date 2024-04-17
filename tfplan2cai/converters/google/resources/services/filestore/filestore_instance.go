@@ -66,6 +66,12 @@ func GetFilestoreInstanceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("tier"); !tpgresource.IsEmptyValue(reflect.ValueOf(tierProp)) && (ok || !reflect.DeepEqual(v, tierProp)) {
 		obj["tier"] = tierProp
 	}
+	protocolProp, err := expandFilestoreInstanceProtocol(d.Get("protocol"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("protocol"); !tpgresource.IsEmptyValue(reflect.ValueOf(protocolProp)) && (ok || !reflect.DeepEqual(v, protocolProp)) {
+		obj["protocol"] = protocolProp
+	}
 	fileSharesProp, err := expandFilestoreInstanceFileShares(d.Get("file_shares"), d, config)
 	if err != nil {
 		return nil, err
@@ -99,6 +105,10 @@ func expandFilestoreInstanceDescription(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandFilestoreInstanceTier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceProtocol(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
