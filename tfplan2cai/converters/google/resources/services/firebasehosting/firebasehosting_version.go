@@ -114,6 +114,13 @@ func expandFirebaseHostingVersionConfigRewrites(v interface{}, d tpgresource.Ter
 			transformed["regex"] = transformedRegex
 		}
 
+		transformedPath, err := expandFirebaseHostingVersionConfigRewritesPath(original["path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["path"] = transformedPath
+		}
+
 		transformedFunction, err := expandFirebaseHostingVersionConfigRewritesFunction(original["function"], d, config)
 		if err != nil {
 			return nil, err
@@ -138,6 +145,10 @@ func expandFirebaseHostingVersionConfigRewritesGlob(v interface{}, d tpgresource
 }
 
 func expandFirebaseHostingVersionConfigRewritesRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseHostingVersionConfigRewritesPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
