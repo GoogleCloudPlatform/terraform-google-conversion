@@ -96,6 +96,12 @@ func GetApigeeEnvironmentApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
+	forwardProxyUriProp, err := expandApigeeEnvironmentForwardProxyUri(d.Get("forward_proxy_uri"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("forward_proxy_uri"); !tpgresource.IsEmptyValue(reflect.ValueOf(forwardProxyUriProp)) && (ok || !reflect.DeepEqual(v, forwardProxyUriProp)) {
+		obj["forwardProxyUri"] = forwardProxyUriProp
+	}
 
 	return obj, nil
 }
@@ -166,5 +172,9 @@ func expandApigeeEnvironmentNodeConfigCurrentAggregateNodeCount(v interface{}, d
 }
 
 func expandApigeeEnvironmentType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeEnvironmentForwardProxyUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
