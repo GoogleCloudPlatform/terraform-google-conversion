@@ -123,6 +123,13 @@ func expandPrivatecaCertificateConfig(v interface{}, d tpgresource.TerraformReso
 		transformed["subjectConfig"] = transformedSubjectConfig
 	}
 
+	transformedSubjectKeyId, err := expandPrivatecaCertificateConfigSubjectKeyId(original["subject_key_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubjectKeyId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subjectKeyId"] = transformedSubjectKeyId
+	}
+
 	transformedPublicKey, err := expandPrivatecaCertificateConfigPublicKey(original["public_key"], d, config)
 	if err != nil {
 		return nil, err
@@ -365,6 +372,29 @@ func expandPrivatecaCertificateConfigSubjectConfigSubjectAltNameEmailAddresses(v
 }
 
 func expandPrivatecaCertificateConfigSubjectConfigSubjectAltNameIpAddresses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCertificateConfigSubjectKeyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKeyId, err := expandPrivatecaCertificateConfigSubjectKeyIdKeyId(original["key_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKeyId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["keyId"] = transformedKeyId
+	}
+
+	return transformed, nil
+}
+
+func expandPrivatecaCertificateConfigSubjectKeyIdKeyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
