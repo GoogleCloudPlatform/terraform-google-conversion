@@ -282,6 +282,13 @@ func expandMonitoringUptimeCheckConfigHttpCheck(v interface{}, d tpgresource.Ter
 		transformed["authInfo"] = transformedAuthInfo
 	}
 
+	transformedServiceAgentAuthentication, err := expandMonitoringUptimeCheckConfigHttpCheckServiceAgentAuthentication(original["service_agent_authentication"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAgentAuthentication); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAgentAuthentication"] = transformedServiceAgentAuthentication
+	}
+
 	transformedPort, err := expandMonitoringUptimeCheckConfigHttpCheckPort(original["port"], d, config)
 	if err != nil {
 		return nil, err
@@ -391,6 +398,29 @@ func expandMonitoringUptimeCheckConfigHttpCheckAuthInfoPassword(v interface{}, d
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckAuthInfoUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringUptimeCheckConfigHttpCheckServiceAgentAuthentication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandMonitoringUptimeCheckConfigHttpCheckServiceAgentAuthenticationType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringUptimeCheckConfigHttpCheckServiceAgentAuthenticationType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
