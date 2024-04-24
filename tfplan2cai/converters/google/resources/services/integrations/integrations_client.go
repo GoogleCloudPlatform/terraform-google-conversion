@@ -66,6 +66,12 @@ func GetIntegrationsClientApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("create_sample_workflows"); !tpgresource.IsEmptyValue(reflect.ValueOf(createSampleWorkflowsProp)) && (ok || !reflect.DeepEqual(v, createSampleWorkflowsProp)) {
 		obj["createSampleWorkflows"] = createSampleWorkflowsProp
 	}
+	createSampleIntegrationsProp, err := expandIntegrationsClientCreateSampleIntegrations(d.Get("create_sample_integrations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("create_sample_integrations"); !tpgresource.IsEmptyValue(reflect.ValueOf(createSampleIntegrationsProp)) && (ok || !reflect.DeepEqual(v, createSampleIntegrationsProp)) {
+		obj["createSampleIntegrations"] = createSampleIntegrationsProp
+	}
 	provisionGmekProp, err := expandIntegrationsClientProvisionGmek(d.Get("provision_gmek"), d, config)
 	if err != nil {
 		return nil, err
@@ -150,6 +156,10 @@ func expandIntegrationsClientCloudKmsConfigKmsProjectId(v interface{}, d tpgreso
 }
 
 func expandIntegrationsClientCreateSampleWorkflows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsClientCreateSampleIntegrations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
