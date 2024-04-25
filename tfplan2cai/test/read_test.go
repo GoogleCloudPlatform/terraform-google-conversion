@@ -58,6 +58,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_compute_instance_iam_member"},
 		{name: "example_compute_instance_iam_policy"},
 		{name: "example_compute_network"},
+		{name: "example_compute_route"},
 		{name: "example_compute_security_policy"},
 		{name: "example_compute_snapshot"},
 		{name: "example_compute_ssl_policy"},
