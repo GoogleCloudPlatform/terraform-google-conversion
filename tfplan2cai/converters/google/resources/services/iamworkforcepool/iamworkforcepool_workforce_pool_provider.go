@@ -118,6 +118,12 @@ func GetIAMWorkforcePoolWorkforcePoolProviderApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("oidc"); !tpgresource.IsEmptyValue(reflect.ValueOf(oidcProp)) && (ok || !reflect.DeepEqual(v, oidcProp)) {
 		obj["oidc"] = oidcProp
 	}
+	extraAttributesOauth2ClientProp, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2Client(d.Get("extra_attributes_oauth2_client"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("extra_attributes_oauth2_client"); !tpgresource.IsEmptyValue(reflect.ValueOf(extraAttributesOauth2ClientProp)) && (ok || !reflect.DeepEqual(v, extraAttributesOauth2ClientProp)) {
+		obj["extraAttributesOauth2Client"] = extraAttributesOauth2ClientProp
+	}
 
 	return obj, nil
 }
@@ -326,5 +332,140 @@ func expandIAMWorkforcePoolWorkforcePoolProviderOidcWebSsoConfigAdditionalScopes
 }
 
 func expandIAMWorkforcePoolWorkforcePoolProviderOidcJwksJson(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2Client(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIssuerUri, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientIssuerUri(original["issuer_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIssuerUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["issuerUri"] = transformedIssuerUri
+	}
+
+	transformedClientId, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientId(original["client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientId"] = transformedClientId
+	}
+
+	transformedClientSecret, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientSecret(original["client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecret"] = transformedClientSecret
+	}
+
+	transformedAttributesType, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientAttributesType(original["attributes_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAttributesType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["attributesType"] = transformedAttributesType
+	}
+
+	transformedQueryParameters, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientQueryParameters(original["query_parameters"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedQueryParameters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["queryParameters"] = transformedQueryParameters
+	}
+
+	return transformed, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientIssuerUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedValue, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientSecretValue(original["value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["value"] = transformedValue
+	}
+
+	return transformed, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientSecretValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPlainText, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientSecretValuePlainText(original["plain_text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPlainText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["plainText"] = transformedPlainText
+	}
+
+	transformedThumbprint, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientSecretValueThumbprint(original["thumbprint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThumbprint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thumbprint"] = transformedThumbprint
+	}
+
+	return transformed, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientSecretValuePlainText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientClientSecretValueThumbprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientAttributesType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientQueryParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFilter, err := expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientQueryParametersFilter(original["filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filter"] = transformedFilter
+	}
+
+	return transformed, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderExtraAttributesOauth2ClientQueryParametersFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
