@@ -158,6 +158,13 @@ func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModules(v inte
 			transformed["googleCloudStorage"] = transformedGoogleCloudStorage
 		}
 
+		transformedGoogleCloudBuildRepo, err := expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepo(original["google_cloud_build_repo"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedGoogleCloudBuildRepo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["googleCloudBuildRepo"] = transformedGoogleCloudBuildRepo
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -243,6 +250,51 @@ func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleC
 }
 
 func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudStoragePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRepository, err := expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoRepository(original["repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repository"] = transformedRepository
+	}
+
+	transformedPath, err := expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoPath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	transformedRef, err := expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoRef(original["ref"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRef); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ref"] = transformedRef
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoRef(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
