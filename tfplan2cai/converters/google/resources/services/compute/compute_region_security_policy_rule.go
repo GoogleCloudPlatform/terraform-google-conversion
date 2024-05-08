@@ -130,6 +130,13 @@ func expandComputeRegionSecurityPolicyRuleMatch(v interface{}, d tpgresource.Ter
 		transformed["versionedExpr"] = transformedVersionedExpr
 	}
 
+	transformedExpr, err := expandComputeRegionSecurityPolicyRuleMatchExpr(original["expr"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpr); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expr"] = transformedExpr
+	}
+
 	transformedConfig, err := expandComputeRegionSecurityPolicyRuleMatchConfig(original["config"], d, config)
 	if err != nil {
 		return nil, err
@@ -141,6 +148,29 @@ func expandComputeRegionSecurityPolicyRuleMatch(v interface{}, d tpgresource.Ter
 }
 
 func expandComputeRegionSecurityPolicyRuleMatchVersionedExpr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRuleMatchExpr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpression, err := expandComputeRegionSecurityPolicyRuleMatchExprExpression(original["expression"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expression"] = transformedExpression
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRuleMatchExprExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
