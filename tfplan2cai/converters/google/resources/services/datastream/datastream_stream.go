@@ -184,6 +184,13 @@ func expandDatastreamStreamSourceConfig(v interface{}, d tpgresource.TerraformRe
 		transformed["postgresqlSourceConfig"] = transformedPostgresqlSourceConfig
 	}
 
+	transformedSqlServerSourceConfig, err := expandDatastreamStreamSourceConfigSqlServerSourceConfig(original["sql_server_source_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["sqlServerSourceConfig"] = transformedSqlServerSourceConfig
+	}
+
 	return transformed, nil
 }
 
@@ -1533,6 +1540,435 @@ func expandDatastreamStreamSourceConfigPostgresqlSourceConfigMaxConcurrentBackfi
 	return v, nil
 }
 
+func expandDatastreamStreamSourceConfigSqlServerSourceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIncludeObjects, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjects(original["include_objects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeObjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeObjects"] = transformedIncludeObjects
+	}
+
+	transformedExcludeObjects, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjects(original["exclude_objects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExcludeObjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["excludeObjects"] = transformedExcludeObjects
+	}
+
+	transformedMaxConcurrentCdcTasks, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigMaxConcurrentCdcTasks(original["max_concurrent_cdc_tasks"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["maxConcurrentCdcTasks"] = transformedMaxConcurrentCdcTasks
+	}
+
+	transformedMaxConcurrentBackfillTasks, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigMaxConcurrentBackfillTasks(original["max_concurrent_backfill_tasks"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["maxConcurrentBackfillTasks"] = transformedMaxConcurrentBackfillTasks
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSchemas, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemas(original["schemas"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchemas); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["schemas"] = transformedSchemas
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedSchema, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasSchema(original["schema"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["schema"] = transformedSchema
+		}
+
+		transformedTables, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTables(original["tables"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTables); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tables"] = transformedTables
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTable, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesTable(original["table"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["table"] = transformedTable
+		}
+
+		transformedColumns, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumns(original["columns"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedColumns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["columns"] = transformedColumns
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedColumn, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsColumn(original["column"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedColumn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["column"] = transformedColumn
+		}
+
+		transformedDataType, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsDataType(original["data_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDataType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dataType"] = transformedDataType
+		}
+
+		transformedLength, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsLength(original["length"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLength); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["length"] = transformedLength
+		}
+
+		transformedPrecision, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsPrecision(original["precision"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrecision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["precision"] = transformedPrecision
+		}
+
+		transformedScale, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsScale(original["scale"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedScale); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["scale"] = transformedScale
+		}
+
+		transformedPrimaryKey, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsPrimaryKey(original["primary_key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrimaryKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["primaryKey"] = transformedPrimaryKey
+		}
+
+		transformedNullable, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsNullable(original["nullable"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNullable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["nullable"] = transformedNullable
+		}
+
+		transformedOrdinalPosition, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsOrdinalPosition(original["ordinal_position"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOrdinalPosition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ordinalPosition"] = transformedOrdinalPosition
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsColumn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsDataType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsPrecision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsScale(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsPrimaryKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsNullable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsOrdinalPosition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSchemas, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemas(original["schemas"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchemas); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["schemas"] = transformedSchemas
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedSchema, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasSchema(original["schema"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["schema"] = transformedSchema
+		}
+
+		transformedTables, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTables(original["tables"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTables); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tables"] = transformedTables
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTable, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesTable(original["table"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["table"] = transformedTable
+		}
+
+		transformedColumns, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumns(original["columns"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedColumns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["columns"] = transformedColumns
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedColumn, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsColumn(original["column"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedColumn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["column"] = transformedColumn
+		}
+
+		transformedDataType, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsDataType(original["data_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDataType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dataType"] = transformedDataType
+		}
+
+		transformedLength, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsLength(original["length"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLength); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["length"] = transformedLength
+		}
+
+		transformedPrecision, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsPrecision(original["precision"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrecision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["precision"] = transformedPrecision
+		}
+
+		transformedScale, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsScale(original["scale"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedScale); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["scale"] = transformedScale
+		}
+
+		transformedPrimaryKey, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsPrimaryKey(original["primary_key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrimaryKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["primaryKey"] = transformedPrimaryKey
+		}
+
+		transformedNullable, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsNullable(original["nullable"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNullable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["nullable"] = transformedNullable
+		}
+
+		transformedOrdinalPosition, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsOrdinalPosition(original["ordinal_position"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOrdinalPosition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ordinalPosition"] = transformedOrdinalPosition
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsColumn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsDataType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsPrecision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsScale(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsPrimaryKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsNullable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsOrdinalPosition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigMaxConcurrentCdcTasks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigMaxConcurrentBackfillTasks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDatastreamStreamDestinationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -1844,6 +2280,13 @@ func expandDatastreamStreamBackfillAll(v interface{}, d tpgresource.TerraformRes
 		return nil, err
 	} else if val := reflect.ValueOf(transformedOracleExcludedObjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["oracleExcludedObjects"] = transformedOracleExcludedObjects
+	}
+
+	transformedSqlServerExcludedObjects, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjects(original["sql_server_excluded_objects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSqlServerExcludedObjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sqlServerExcludedObjects"] = transformedSqlServerExcludedObjects
 	}
 
 	return transformed, nil
@@ -2410,6 +2853,194 @@ func expandDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemasOracleTa
 }
 
 func expandDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsOrdinalPosition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSchemas, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemas(original["schemas"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchemas); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["schemas"] = transformedSchemas
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedSchema, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasSchema(original["schema"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["schema"] = transformedSchema
+		}
+
+		transformedTables, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTables(original["tables"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTables); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tables"] = transformedTables
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTable, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesTable(original["table"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["table"] = transformedTable
+		}
+
+		transformedColumns, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumns(original["columns"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedColumns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["columns"] = transformedColumns
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedColumn, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsColumn(original["column"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedColumn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["column"] = transformedColumn
+		}
+
+		transformedDataType, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsDataType(original["data_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDataType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dataType"] = transformedDataType
+		}
+
+		transformedLength, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsLength(original["length"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLength); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["length"] = transformedLength
+		}
+
+		transformedPrecision, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsPrecision(original["precision"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrecision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["precision"] = transformedPrecision
+		}
+
+		transformedScale, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsScale(original["scale"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedScale); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["scale"] = transformedScale
+		}
+
+		transformedPrimaryKey, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsPrimaryKey(original["primary_key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrimaryKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["primaryKey"] = transformedPrimaryKey
+		}
+
+		transformedNullable, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsNullable(original["nullable"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNullable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["nullable"] = transformedNullable
+		}
+
+		transformedOrdinalPosition, err := expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsOrdinalPosition(original["ordinal_position"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOrdinalPosition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ordinalPosition"] = transformedOrdinalPosition
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsColumn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsDataType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsPrecision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsScale(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsPrimaryKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsNullable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsOrdinalPosition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
