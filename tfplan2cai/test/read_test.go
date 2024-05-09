@@ -83,6 +83,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_kms_crypto_key_iam_binding"},
 		{name: "example_kms_crypto_key_iam_member"},
 		{name: "example_kms_crypto_key_iam_policy"},
+		{name: "example_kms_import_job"},
 		{name: "example_kms_key_ring"},
 		{name: "example_kms_key_ring_iam_binding"},
 		{name: "example_kms_key_ring_iam_member"},
