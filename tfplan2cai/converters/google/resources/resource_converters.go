@@ -36,6 +36,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/dataplex"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/dataprocmetastore"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/dns"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/gkebackup"
@@ -101,6 +102,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_bigquery_dataset_iam_binding":                     {bigquery.ResourceConverterBigqueryDatasetIamBinding()},
 		"google_bigquery_dataset_iam_member":                      {bigquery.ResourceConverterBigqueryDatasetIamMember()},
 		"google_bigquery_table":                                   {resourceConverterBigQueryTable()},
+		"google_datastream_connection_profile":                    {datastream.ResourceConverterDatastreamConnectionProfile()},
 		"google_org_policy_policy":                                {resourceConverterOrgPolicyPolicy()},
 		"google_redis_instance":                                   {redis.ResourceConverterRedisInstance()},
 		"google_spanner_database":                                 {spanner.ResourceConverterSpannerDatabase()},
