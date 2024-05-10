@@ -48,6 +48,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_cloud_run_service_iam_binding"},
 		{name: "example_cloud_run_service_iam_member"},
 		{name: "example_cloud_run_service_iam_policy"},
+		{name: "example_cloud_run_v2_job"},
 		{name: "example_cloud_tasks_queue"},
 		{name: "example_compute_address"},
 		{name: "example_compute_disk"},
