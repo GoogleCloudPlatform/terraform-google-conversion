@@ -78,6 +78,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_google_cloudfunctions_function"},
 		{name: "example_google_compute_autoscaler"},
 		{name: "example_google_compute_network_endpoint_group"},
+		{name: "example_google_compute_node_template"},
 		{name: "example_google_compute_resource_policy"},
 		{name: "example_google_compute_target_http_proxy"},
 		{name: "example_google_dataproc_autoscaling_policy"},
