@@ -66,6 +66,30 @@ func GetNetworkSecurityTlsInspectionPolicyApiObject(d tpgresource.TerraformResou
 	} else if v, ok := d.GetOkExists("ca_pool"); !tpgresource.IsEmptyValue(reflect.ValueOf(caPoolProp)) && (ok || !reflect.DeepEqual(v, caPoolProp)) {
 		obj["caPool"] = caPoolProp
 	}
+	trustConfigProp, err := expandNetworkSecurityTlsInspectionPolicyTrustConfig(d.Get("trust_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("trust_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(trustConfigProp)) && (ok || !reflect.DeepEqual(v, trustConfigProp)) {
+		obj["trustConfig"] = trustConfigProp
+	}
+	minTlsVersionProp, err := expandNetworkSecurityTlsInspectionPolicyMinTlsVersion(d.Get("min_tls_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("min_tls_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(minTlsVersionProp)) && (ok || !reflect.DeepEqual(v, minTlsVersionProp)) {
+		obj["minTlsVersion"] = minTlsVersionProp
+	}
+	tlsFeatureProfileProp, err := expandNetworkSecurityTlsInspectionPolicyTlsFeatureProfile(d.Get("tls_feature_profile"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tls_feature_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(tlsFeatureProfileProp)) && (ok || !reflect.DeepEqual(v, tlsFeatureProfileProp)) {
+		obj["tlsFeatureProfile"] = tlsFeatureProfileProp
+	}
+	customTlsFeaturesProp, err := expandNetworkSecurityTlsInspectionPolicyCustomTlsFeatures(d.Get("custom_tls_features"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_tls_features"); !tpgresource.IsEmptyValue(reflect.ValueOf(customTlsFeaturesProp)) && (ok || !reflect.DeepEqual(v, customTlsFeaturesProp)) {
+		obj["customTlsFeatures"] = customTlsFeaturesProp
+	}
 	excludePublicCaSetProp, err := expandNetworkSecurityTlsInspectionPolicyExcludePublicCaSet(d.Get("exclude_public_ca_set"), d, config)
 	if err != nil {
 		return nil, err
@@ -81,6 +105,22 @@ func expandNetworkSecurityTlsInspectionPolicyDescription(v interface{}, d tpgres
 }
 
 func expandNetworkSecurityTlsInspectionPolicyCaPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityTlsInspectionPolicyTrustConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityTlsInspectionPolicyMinTlsVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityTlsInspectionPolicyTlsFeatureProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityTlsInspectionPolicyCustomTlsFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
