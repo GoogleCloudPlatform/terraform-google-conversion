@@ -124,6 +124,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_secret_manager_secret_iam_member"},
 		{name: "example_secret_manager_secret_iam_policy"},
 		{name: "example_service_account"},
+		{name: "example_service_account_key"},
 		{name: "example_service_account_update"},
 		{name: "example_spanner_database"},
 		{name: "example_spanner_database_iam_binding"},
