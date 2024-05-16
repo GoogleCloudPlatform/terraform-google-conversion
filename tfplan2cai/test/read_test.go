@@ -57,6 +57,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_compute_forwarding_rule"},
 		{name: "example_compute_global_address"},
 		{name: "example_compute_global_forwarding_rule"},
+		{name: "example_compute_health_check"},
 		{name: "example_compute_instance_iam_binding"},
 		{name: "example_compute_instance_iam_member"},
 		{name: "example_compute_instance_iam_policy"},
