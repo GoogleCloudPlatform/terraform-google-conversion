@@ -17,26 +17,10 @@ package appengine
 import (
 	"reflect"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
-
-func sslSettingsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
-	// If certificate id is empty, and ssl management type is `MANUAL`, then
-	// ssl settings will not be configured, and ssl_settings block is not returned
-
-	if k == "ssl_settings.#" &&
-		old == "0" && new == "1" &&
-		d.Get("ssl_settings.0.certificate_id") == "" &&
-		d.Get("ssl_settings.0.ssl_management_type") == "MANUAL" {
-		return true
-	}
-
-	return false
-}
 
 const AppEngineDomainMappingAssetType string = "appengine.googleapis.com/DomainMapping"
 
@@ -57,8 +41,8 @@ func GetAppEngineDomainMappingCaiObject(d tpgresource.TerraformResourceData, con
 			Name: name,
 			Type: AppEngineDomainMappingAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta/rest",
 				DiscoveryName:        "DomainMapping",
 				Data:                 obj,
 			},

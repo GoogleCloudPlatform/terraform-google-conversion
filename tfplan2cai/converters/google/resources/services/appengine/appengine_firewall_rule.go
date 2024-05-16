@@ -41,8 +41,8 @@ func GetAppEngineFirewallRuleCaiObject(d tpgresource.TerraformResourceData, conf
 			Name: name,
 			Type: AppEngineFirewallRuleAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta/rest",
 				DiscoveryName:        "FirewallRule",
 				Data:                 obj,
 			},

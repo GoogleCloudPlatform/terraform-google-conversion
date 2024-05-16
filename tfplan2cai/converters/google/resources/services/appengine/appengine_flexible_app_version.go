@@ -43,8 +43,8 @@ func GetAppEngineFlexibleAppVersionCaiObject(d tpgresource.TerraformResourceData
 			Name: name,
 			Type: AppEngineFlexibleAppVersionAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta/rest",
 				DiscoveryName:        "FlexibleAppVersion",
 				Data:                 obj,
 			},
@@ -244,6 +244,13 @@ func expandAppEngineFlexibleAppVersionNetwork(v interface{}, d tpgresource.Terra
 		transformed["forwardedPorts"] = transformedForwardedPorts
 	}
 
+	transformedInstanceIpMode, err := expandAppEngineFlexibleAppVersionNetworkInstanceIpMode(original["instance_ip_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstanceIpMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instanceIpMode"] = transformedInstanceIpMode
+	}
+
 	transformedInstanceTag, err := expandAppEngineFlexibleAppVersionNetworkInstanceTag(original["instance_tag"], d, config)
 	if err != nil {
 		return nil, err
@@ -276,6 +283,10 @@ func expandAppEngineFlexibleAppVersionNetwork(v interface{}, d tpgresource.Terra
 }
 
 func expandAppEngineFlexibleAppVersionNetworkForwardedPorts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionNetworkInstanceIpMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
