@@ -43,8 +43,8 @@ func GetAppEngineStandardAppVersionCaiObject(d tpgresource.TerraformResourceData
 			Name: name,
 			Type: AppEngineStandardAppVersionAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta/rest",
 				DiscoveryName:        "StandardAppVersion",
 				Data:                 obj,
 			},
