@@ -1396,6 +1396,13 @@ func expandCloudRunServiceSpecTemplateSpecVolumes(v interface{}, d tpgresource.T
 			transformed["csi"] = transformedCsi
 		}
 
+		transformedNfs, err := expandCloudRunServiceSpecTemplateSpecVolumesNfs(original["nfs"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNfs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["nfs"] = transformedNfs
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1578,6 +1585,51 @@ func expandCloudRunServiceSpecTemplateSpecVolumesCsiVolumeAttributes(v interface
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecVolumesNfs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServer, err := expandCloudRunServiceSpecTemplateSpecVolumesNfsServer(original["server"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["server"] = transformedServer
+	}
+
+	transformedPath, err := expandCloudRunServiceSpecTemplateSpecVolumesNfsPath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	transformedReadOnly, err := expandCloudRunServiceSpecTemplateSpecVolumesNfsReadOnly(original["read_only"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReadOnly); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["readOnly"] = transformedReadOnly
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecVolumesNfsServer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecVolumesNfsPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecVolumesNfsReadOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCloudRunServiceSpecTemplateSpecServingState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
