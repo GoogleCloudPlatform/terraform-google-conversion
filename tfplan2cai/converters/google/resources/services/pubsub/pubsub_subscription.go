@@ -293,6 +293,13 @@ func expandPubsubSubscriptionCloudStorageConfig(v interface{}, d tpgresource.Ter
 		transformed["filenameSuffix"] = transformedFilenameSuffix
 	}
 
+	transformedFilenameDatetimeFormat, err := expandPubsubSubscriptionCloudStorageConfigFilenameDatetimeFormat(original["filename_datetime_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilenameDatetimeFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filenameDatetimeFormat"] = transformedFilenameDatetimeFormat
+	}
+
 	transformedMaxDuration, err := expandPubsubSubscriptionCloudStorageConfigMaxDuration(original["max_duration"], d, config)
 	if err != nil {
 		return nil, err
@@ -333,6 +340,10 @@ func expandPubsubSubscriptionCloudStorageConfigFilenamePrefix(v interface{}, d t
 }
 
 func expandPubsubSubscriptionCloudStorageConfigFilenameSuffix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigFilenameDatetimeFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
