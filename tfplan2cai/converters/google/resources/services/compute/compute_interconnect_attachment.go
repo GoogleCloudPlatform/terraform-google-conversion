@@ -139,6 +139,12 @@ func GetComputeInterconnectAttachmentApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("stack_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(stackTypeProp)) && (ok || !reflect.DeepEqual(v, stackTypeProp)) {
 		obj["stackType"] = stackTypeProp
 	}
+	subnetLengthProp, err := expandComputeInterconnectAttachmentSubnetLength(d.Get("subnet_length"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("subnet_length"); !tpgresource.IsEmptyValue(reflect.ValueOf(subnetLengthProp)) && (ok || !reflect.DeepEqual(v, subnetLengthProp)) {
+		obj["subnetLength"] = subnetLengthProp
+	}
 	regionProp, err := expandComputeInterconnectAttachmentRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -218,6 +224,10 @@ func expandComputeInterconnectAttachmentEncryption(v interface{}, d tpgresource.
 }
 
 func expandComputeInterconnectAttachmentStackType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAttachmentSubnetLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
