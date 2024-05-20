@@ -131,9 +131,6 @@ func expandScheduling(v interface{}) (*compute.Scheduling, error) {
 	}
 	if v, ok := original["max_run_duration"]; ok {
 		transformedMaxRunDuration, err := expandComputeMaxRunDuration(v)
-		if scheduling.InstanceTerminationAction == "STOP" && transformedMaxRunDuration != nil {
-			return nil, fmt.Errorf("Can not set MaxRunDuration on instance with STOP InstanceTerminationAction, it is not supported by terraform.")
-		}
 		if err != nil {
 			return nil, err
 		}
@@ -142,6 +139,15 @@ func expandScheduling(v interface{}) (*compute.Scheduling, error) {
 	}
 	if v, ok := original["maintenance_interval"]; ok {
 		scheduling.MaintenanceInterval = v.(string)
+	}
+
+	if v, ok := original["on_instance_stop_action"]; ok {
+		transformedOnInstanceStopAction, err := expandComputeOnInstanceStopAction(v)
+		if err != nil {
+			return nil, err
+		}
+		scheduling.OnInstanceStopAction = transformedOnInstanceStopAction
+		scheduling.ForceSendFields = append(scheduling.ForceSendFields, "OnInstanceStopAction")
 	}
 	if v, ok := original["local_ssd_recovery_timeout"]; ok {
 		transformedLocalSsdRecoveryTimeout, err := expandComputeLocalSsdRecoveryTimeout(v)
@@ -186,6 +192,24 @@ func expandComputeMaxRunDurationNanos(v interface{}) (interface{}, error) {
 
 func expandComputeMaxRunDurationSeconds(v interface{}) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeOnInstanceStopAction(v interface{}) (*compute.SchedulingOnInstanceStopAction, error) {
+	l := v.([]interface{})
+	onInstanceStopAction := compute.SchedulingOnInstanceStopAction{}
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+
+	if d, ok := original["discard_local_ssd"]; ok {
+		onInstanceStopAction.DiscardLocalSsd = d.(bool)
+	} else {
+		return nil, nil
+	}
+
+	return &onInstanceStopAction, nil
 }
 
 func expandComputeLocalSsdRecoveryTimeout(v interface{}) (*compute.Duration, error) {
@@ -240,6 +264,9 @@ func flattenScheduling(resp *compute.Scheduling) []map[string]interface{} {
 	if resp.MaintenanceInterval != "" {
 		schedulingMap["maintenance_interval"] = resp.MaintenanceInterval
 	}
+	if resp.OnInstanceStopAction != nil {
+		schedulingMap["on_instance_stop_action"] = flattenOnInstanceStopAction(resp.OnInstanceStopAction)
+	}
 
 	if resp.LocalSsdRecoveryTimeout != nil {
 		schedulingMap["local_ssd_recovery_timeout"] = flattenComputeLocalSsdRecoveryTimeout(resp.LocalSsdRecoveryTimeout)
@@ -265,6 +292,15 @@ func flattenComputeMaxRunDuration(v *compute.Duration) []interface{} {
 	transformed := make(map[string]interface{})
 	transformed["nanos"] = v.Nanos
 	transformed["seconds"] = v.Seconds
+	return []interface{}{transformed}
+}
+
+func flattenOnInstanceStopAction(v *compute.SchedulingOnInstanceStopAction) []interface{} {
+	if v == nil {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["discard_local_ssd"] = v.DiscardLocalSsd
 	return []interface{}{transformed}
 }
 
@@ -617,7 +653,7 @@ func schedulingHasChangeRequiringReboot(d *schema.ResourceData) bool {
 	oScheduling := o.([]interface{})[0].(map[string]interface{})
 	newScheduling := n.([]interface{})[0].(map[string]interface{})
 
-	return hasNodeAffinitiesChanged(oScheduling, newScheduling)
+	return hasNodeAffinitiesChanged(oScheduling, newScheduling) || hasMaxRunDurationChanged(oScheduling, newScheduling)
 }
 
 // Terraform doesn't correctly calculate changes on schema.Set, so we do it manually
@@ -657,6 +693,30 @@ func schedulingHasChangeWithoutReboot(d *schema.ResourceData) bool {
 	}
 
 	if oScheduling["instance_termination_action"] != newScheduling["instance_termination_action"] {
+		return true
+	}
+
+	return false
+}
+
+func hasMaxRunDurationChanged(oScheduling, nScheduling map[string]interface{}) bool {
+	oMrd := oScheduling["max_run_duration"].([]interface{})
+	nMrd := nScheduling["max_run_duration"].([]interface{})
+
+	if (len(oMrd) == 0 || oMrd[0] == nil) && (len(nMrd) == 0 || nMrd[0] == nil) {
+		return false
+	}
+	if (len(oMrd) == 0 || oMrd[0] == nil) || (len(nMrd) == 0 || nMrd[0] == nil) {
+		return true
+	}
+
+	oldMrd := oMrd[0].(map[string]interface{})
+	newMrd := nMrd[0].(map[string]interface{})
+
+	if oldMrd["seconds"] != newMrd["seconds"] {
+		return true
+	}
+	if oldMrd["nanos"] != newMrd["nanos"] {
 		return true
 	}
 
