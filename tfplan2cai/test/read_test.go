@@ -86,6 +86,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_google_compute_router"},
 		{name: "example_google_compute_ssl_certificate"},
 		{name: "example_google_compute_target_http_proxy"},
+		{name: "example_google_compute_target_pool"},
 		{name: "example_google_dataproc_autoscaling_policy"},
 		{name: "example_google_datastream_connection_profile"},
 		{name: "example_google_datastream_private_connection"},
