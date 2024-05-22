@@ -214,7 +214,7 @@ You will also need to add an entry to [`resource_converters.go.erb`](https://git
 To generate terraform-google-conversion code locally, run the following from the root of the `magic-modules` repository:
 
 ```
-make tgc OUTPUT_PATH="/path/to/your/terraform-google-conversion/tfplan2cai"
+make tgc OUTPUT_PATH="/path/to/your/terraform-google-conversion"
 ```
 It might require to install relevant ruby versions and ruby gems for this to run successfully. Follow the [Before you begin](https://googlecloudplatform.github.io/magic-modules/get-started/generate-providers/#before-you-begin) and [Setup your development environment](https://googlecloudplatform.github.io/magic-modules/get-started/generate-providers/#set-up-your-development-environment) sections from the [Magic Modules documentation](https://googlecloudplatform.github.io/magic-modules/get-started/generate-providers/).
 
@@ -262,7 +262,7 @@ By default, the tests will compare the expected `example_product_resource.json` 
 Run the following from the root of the `magic-modules` repository again, it should auto-generate an entry with the name of your files (i.e. `example_product_resource`) to the lists of test cases in [test/cli_test.go](https://github.com/GoogleCloudPlatform/terraform-google-conversion/blob/main/tfplan2cai/test/cli_test.go) and [test/read_test.go](https://github.com/GoogleCloudPlatform/terraform-google-conversion/blob/main/tfplan2cai/test/read_test.go), along with your test files copied to terraform-google-conversion repository.
 
 ```
-make tgc OUTPUT_PATH="/path/to/your/terraform-google-conversion/tfplan2cai"
+make tgc OUTPUT_PATH="/path/to/your/terraform-google-conversion"
 ```
 
 Now [run your tests](./index.md#testing) and make sure they pass locally before proceeding. (But you can also go ahead and open PRs if you're running into issues you can't figure out how to resolve.)
