@@ -244,7 +244,7 @@ It's easiest to set up a [test project](https://cloud.google.com/docs/terraform/
   ./bin/tfplan2cai convert example_product_resource.tfplan.json --project=[YOUR-PROJECT] > example_product_resource.json
 ```
 
-Once you have initial versions completed, you need to make the following replacements in the .tf and .json(not including the .tfplan.json) files:
+Once you have initial versions completed, you need to make the following replacements in the .tf and .json (not including the .tfplan.json) files:
 
 1. Test project ancestry => `{{.Ancestry}}/project/{{.Provider.project}}`
 1. Test project id (without ancestry) => `{{.Provider.project}}`
