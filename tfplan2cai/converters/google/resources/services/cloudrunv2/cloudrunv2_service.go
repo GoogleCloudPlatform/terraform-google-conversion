@@ -104,6 +104,12 @@ func GetCloudRunV2ServiceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("scaling"); !tpgresource.IsEmptyValue(reflect.ValueOf(scalingProp)) && (ok || !reflect.DeepEqual(v, scalingProp)) {
 		obj["scaling"] = scalingProp
 	}
+	defaultUriDisabledProp, err := expandCloudRunV2ServiceDefaultUriDisabled(d.Get("default_uri_disabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("default_uri_disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultUriDisabledProp)) && (ok || !reflect.DeepEqual(v, defaultUriDisabledProp)) {
+		obj["defaultUriDisabled"] = defaultUriDisabledProp
+	}
 	templateProp, err := expandCloudRunV2ServiceTemplate(d.Get("template"), d, config)
 	if err != nil {
 		return nil, err
@@ -210,6 +216,10 @@ func expandCloudRunV2ServiceScaling(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandCloudRunV2ServiceScalingMinInstanceCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceDefaultUriDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
