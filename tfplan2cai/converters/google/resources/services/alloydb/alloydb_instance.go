@@ -108,6 +108,12 @@ func GetAlloydbInstanceApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("client_connection_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(clientConnectionConfigProp)) && (ok || !reflect.DeepEqual(v, clientConnectionConfigProp)) {
 		obj["clientConnectionConfig"] = clientConnectionConfigProp
 	}
+	pscInstanceConfigProp, err := expandAlloydbInstancePscInstanceConfig(d.Get("psc_instance_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("psc_instance_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(pscInstanceConfigProp)) && (ok || !reflect.DeepEqual(v, pscInstanceConfigProp)) {
+		obj["pscInstanceConfig"] = pscInstanceConfigProp
+	}
 	networkConfigProp, err := expandAlloydbInstanceNetworkConfig(d.Get("network_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -309,6 +315,51 @@ func expandAlloydbInstanceClientConnectionConfigSslConfig(v interface{}, d tpgre
 }
 
 func expandAlloydbInstanceClientConnectionConfigSslConfigSslMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceAttachmentLink, err := expandAlloydbInstancePscInstanceConfigServiceAttachmentLink(original["service_attachment_link"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAttachmentLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAttachmentLink"] = transformedServiceAttachmentLink
+	}
+
+	transformedAllowedConsumerProjects, err := expandAlloydbInstancePscInstanceConfigAllowedConsumerProjects(original["allowed_consumer_projects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedConsumerProjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedConsumerProjects"] = transformedAllowedConsumerProjects
+	}
+
+	transformedPscDnsName, err := expandAlloydbInstancePscInstanceConfigPscDnsName(original["psc_dns_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscDnsName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscDnsName"] = transformedPscDnsName
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigServiceAttachmentLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigAllowedConsumerProjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscDnsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
