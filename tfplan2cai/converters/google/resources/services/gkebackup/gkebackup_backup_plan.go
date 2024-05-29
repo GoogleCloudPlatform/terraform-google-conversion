@@ -471,6 +471,13 @@ func expandGKEBackupBackupPlanBackupConfig(v interface{}, d tpgresource.Terrafor
 		transformed["selectedApplications"] = transformedSelectedApplications
 	}
 
+	transformedPermissiveMode, err := expandGKEBackupBackupPlanBackupConfigPermissiveMode(original["permissive_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPermissiveMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["permissiveMode"] = transformedPermissiveMode
+	}
+
 	return transformed, nil
 }
 
@@ -585,6 +592,10 @@ func expandGKEBackupBackupPlanBackupConfigSelectedApplicationsNamespacedNamesNam
 }
 
 func expandGKEBackupBackupPlanBackupConfigSelectedApplicationsNamespacedNamesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEBackupBackupPlanBackupConfigPermissiveMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
