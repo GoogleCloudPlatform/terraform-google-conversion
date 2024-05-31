@@ -66,6 +66,12 @@ func GetIntegrationConnectorsEndpointAttachmentApiObject(d tpgresource.Terraform
 	} else if v, ok := d.GetOkExists("service_attachment"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceAttachmentProp)) && (ok || !reflect.DeepEqual(v, serviceAttachmentProp)) {
 		obj["serviceAttachment"] = serviceAttachmentProp
 	}
+	endpointGlobalAccessProp, err := expandIntegrationConnectorsEndpointAttachmentEndpointGlobalAccess(d.Get("endpoint_global_access"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("endpoint_global_access"); !tpgresource.IsEmptyValue(reflect.ValueOf(endpointGlobalAccessProp)) && (ok || !reflect.DeepEqual(v, endpointGlobalAccessProp)) {
+		obj["endpointGlobalAccess"] = endpointGlobalAccessProp
+	}
 	labelsProp, err := expandIntegrationConnectorsEndpointAttachmentEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -81,6 +87,10 @@ func expandIntegrationConnectorsEndpointAttachmentDescription(v interface{}, d t
 }
 
 func expandIntegrationConnectorsEndpointAttachmentServiceAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsEndpointAttachmentEndpointGlobalAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
