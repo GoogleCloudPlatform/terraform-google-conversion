@@ -138,6 +138,12 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("snapshot_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(snapshotPolicyProp)) && (ok || !reflect.DeepEqual(v, snapshotPolicyProp)) {
 		obj["snapshotPolicy"] = snapshotPolicyProp
 	}
+	backupConfigProp, err := expandNetappVolumeBackupConfig(d.Get("backup_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("backup_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupConfigProp)) && (ok || !reflect.DeepEqual(v, backupConfigProp)) {
+		obj["backupConfig"] = backupConfigProp
+	}
 	labelsProp, err := expandNetappVolumeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -620,6 +626,51 @@ func expandNetappVolumeSnapshotPolicyMonthlyScheduleHour(v interface{}, d tpgres
 }
 
 func expandNetappVolumeSnapshotPolicyMonthlyScheduleDaysOfMonth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBackupConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBackupPolicies, err := expandNetappVolumeBackupConfigBackupPolicies(original["backup_policies"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackupPolicies); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backupPolicies"] = transformedBackupPolicies
+	}
+
+	transformedBackupVault, err := expandNetappVolumeBackupConfigBackupVault(original["backup_vault"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackupVault); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backupVault"] = transformedBackupVault
+	}
+
+	transformedScheduledBackupEnabled, err := expandNetappVolumeBackupConfigScheduledBackupEnabled(original["scheduled_backup_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScheduledBackupEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scheduledBackupEnabled"] = transformedScheduledBackupEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandNetappVolumeBackupConfigBackupPolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBackupConfigBackupVault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBackupConfigScheduledBackupEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
