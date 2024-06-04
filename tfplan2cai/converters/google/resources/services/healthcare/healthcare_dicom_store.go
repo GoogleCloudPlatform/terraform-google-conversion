@@ -102,10 +102,21 @@ func expandHealthcareDicomStoreNotificationConfig(v interface{}, d tpgresource.T
 		transformed["pubsubTopic"] = transformedPubsubTopic
 	}
 
+	transformedSendForBulkImport, err := expandHealthcareDicomStoreNotificationConfigSendForBulkImport(original["send_for_bulk_import"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSendForBulkImport); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sendForBulkImport"] = transformedSendForBulkImport
+	}
+
 	return transformed, nil
 }
 
 func expandHealthcareDicomStoreNotificationConfigPubsubTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareDicomStoreNotificationConfigSendForBulkImport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
