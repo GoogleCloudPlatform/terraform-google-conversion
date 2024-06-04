@@ -459,6 +459,27 @@ func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigs(v interface{
 			transformed["machineType"] = transformedMachineType
 		}
 
+		transformedBootDiskSizeGb, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsBootDiskSizeGb(original["boot_disk_size_gb"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBootDiskSizeGb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["bootDiskSizeGb"] = transformedBootDiskSizeGb
+		}
+
+		transformedEnableNestedVirtualization, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsEnableNestedVirtualization(original["enable_nested_virtualization"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEnableNestedVirtualization); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["enableNestedVirtualization"] = transformedEnableNestedVirtualization
+		}
+
+		transformedPoolSize, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsPoolSize(original["pool_size"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPoolSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["poolSize"] = transformedPoolSize
+		}
+
 		transformedAccelerators, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAccelerators(original["accelerators"], d, config)
 		if err != nil {
 			return nil, err
@@ -476,6 +497,18 @@ func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsId(v interfac
 }
 
 func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsBootDiskSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsEnableNestedVirtualization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsPoolSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
