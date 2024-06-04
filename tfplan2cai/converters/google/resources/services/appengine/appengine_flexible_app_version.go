@@ -98,6 +98,12 @@ func GetAppEngineFlexibleAppVersionApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("runtime_channel"); !tpgresource.IsEmptyValue(reflect.ValueOf(runtimeChannelProp)) && (ok || !reflect.DeepEqual(v, runtimeChannelProp)) {
 		obj["runtimeChannel"] = runtimeChannelProp
 	}
+	flexibleRuntimeSettingsProp, err := expandAppEngineFlexibleAppVersionFlexibleRuntimeSettings(d.Get("flexible_runtime_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("flexible_runtime_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(flexibleRuntimeSettingsProp)) && (ok || !reflect.DeepEqual(v, flexibleRuntimeSettingsProp)) {
+		obj["flexibleRuntimeSettings"] = flexibleRuntimeSettingsProp
+	}
 	betaSettingsProp, err := expandAppEngineFlexibleAppVersionBetaSettings(d.Get("beta_settings"), d, config)
 	if err != nil {
 		return nil, err
@@ -411,6 +417,40 @@ func expandAppEngineFlexibleAppVersionRuntime(v interface{}, d tpgresource.Terra
 }
 
 func expandAppEngineFlexibleAppVersionRuntimeChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionFlexibleRuntimeSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOperatingSystem, err := expandAppEngineFlexibleAppVersionFlexibleRuntimeSettingsOperatingSystem(original["operating_system"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOperatingSystem); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["operatingSystem"] = transformedOperatingSystem
+	}
+
+	transformedRuntimeVersion, err := expandAppEngineFlexibleAppVersionFlexibleRuntimeSettingsRuntimeVersion(original["runtime_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRuntimeVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["runtimeVersion"] = transformedRuntimeVersion
+	}
+
+	return transformed, nil
+}
+
+func expandAppEngineFlexibleAppVersionFlexibleRuntimeSettingsOperatingSystem(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineFlexibleAppVersionFlexibleRuntimeSettingsRuntimeVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
