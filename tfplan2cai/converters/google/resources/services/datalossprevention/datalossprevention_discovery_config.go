@@ -427,6 +427,13 @@ func expandDataLossPreventionDiscoveryConfigTargets(v interface{}, d tpgresource
 			transformed["cloudSqlTarget"] = transformedCloudSqlTarget
 		}
 
+		transformedSecretsTarget, err := expandDataLossPreventionDiscoveryConfigTargetsSecretsTarget(original["secrets_target"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["secretsTarget"] = transformedSecretsTarget
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -493,6 +500,13 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilter(v interf
 		return nil, err
 	} else {
 		transformed["otherTables"] = transformedOtherTables
+	}
+
+	transformedTableReference, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReference(original["table_reference"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTableReference); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tableReference"] = transformedTableReference
 	}
 
 	return transformed, nil
@@ -597,6 +611,40 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterOtherTabl
 	transformed := make(map[string]interface{})
 
 	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDatasetId, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReferenceDatasetId(original["dataset_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["datasetId"] = transformedDatasetId
+	}
+
+	transformedTableId, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReferenceTableId(original["table_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTableId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tableId"] = transformedTableId
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReferenceDatasetId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReferenceTableId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -876,6 +924,13 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilter(v interf
 		transformed["others"] = transformedOthers
 	}
 
+	transformedDatabaseResourceReference, err := expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReference(original["database_resource_reference"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabaseResourceReference); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["databaseResourceReference"] = transformedDatabaseResourceReference
+	}
+
 	return transformed, nil
 }
 
@@ -991,6 +1046,62 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterOthers(v 
 	return transformed, nil
 }
 
+func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedProjectId, err := expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReferenceProjectId(original["project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectId"] = transformedProjectId
+	}
+
+	transformedInstance, err := expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReferenceInstance(original["instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instance"] = transformedInstance
+	}
+
+	transformedDatabase, err := expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReferenceDatabase(original["database"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["database"] = transformedDatabase
+	}
+
+	transformedDatabaseResource, err := expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReferenceDatabaseResource(original["database_resource"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabaseResource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["databaseResource"] = transformedDatabaseResource
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReferenceProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReferenceInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReferenceDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReferenceDatabaseResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -1090,6 +1201,21 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCaden
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsSecretsTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
