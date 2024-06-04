@@ -86,6 +86,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_google_compute_network_endpoint_group"},
 		{name: "example_google_compute_node_group"},
 		{name: "example_google_compute_node_template"},
+		{name: "example_google_compute_region_commitment"},
 		{name: "example_google_compute_resource_policy"},
 		{name: "example_google_compute_router"},
 		{name: "example_google_compute_ssl_certificate"},
