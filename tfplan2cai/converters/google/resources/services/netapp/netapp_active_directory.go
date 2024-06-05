@@ -108,6 +108,12 @@ func GetNetappactiveDirectoryApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("backup_operators"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupOperatorsProp)) && (ok || !reflect.DeepEqual(v, backupOperatorsProp)) {
 		obj["backupOperators"] = backupOperatorsProp
 	}
+	administratorsProp, err := expandNetappactiveDirectoryAdministrators(d.Get("administrators"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("administrators"); !tpgresource.IsEmptyValue(reflect.ValueOf(administratorsProp)) && (ok || !reflect.DeepEqual(v, administratorsProp)) {
+		obj["administrators"] = administratorsProp
+	}
 	securityOperatorsProp, err := expandNetappactiveDirectorySecurityOperators(d.Get("security_operators"), d, config)
 	if err != nil {
 		return nil, err
@@ -193,6 +199,10 @@ func expandNetappactiveDirectoryPassword(v interface{}, d tpgresource.TerraformR
 }
 
 func expandNetappactiveDirectoryBackupOperators(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappactiveDirectoryAdministrators(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
