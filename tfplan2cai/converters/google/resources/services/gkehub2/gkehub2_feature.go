@@ -473,6 +473,13 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSync(v in
 		transformed["sourceFormat"] = transformedSourceFormat
 	}
 
+	transformedPreventDrift, err := expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncPreventDrift(original["prevent_drift"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPreventDrift); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["preventDrift"] = transformedPreventDrift
+	}
+
 	transformedGit, err := expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncGit(original["git"], d, config)
 	if err != nil {
 		return nil, err
@@ -491,6 +498,10 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSync(v in
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncSourceFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncPreventDrift(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
