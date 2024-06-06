@@ -17,6 +17,8 @@ package discoveryengine
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -78,6 +80,12 @@ func GetDiscoveryEngineDataStoreApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("content_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(contentConfigProp)) && (ok || !reflect.DeepEqual(v, contentConfigProp)) {
 		obj["contentConfig"] = contentConfigProp
 	}
+	documentProcessingConfigProp, err := expandDiscoveryEngineDataStoreDocumentProcessingConfig(d.Get("document_processing_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("document_processing_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(documentProcessingConfigProp)) && (ok || !reflect.DeepEqual(v, documentProcessingConfigProp)) {
+		obj["documentProcessingConfig"] = documentProcessingConfigProp
+	}
 
 	return obj, nil
 }
@@ -95,5 +103,176 @@ func expandDiscoveryEngineDataStoreSolutionTypes(v interface{}, d tpgresource.Te
 }
 
 func expandDiscoveryEngineDataStoreContentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedDefaultParsingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfig(original["default_parsing_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultParsingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultParsingConfig"] = transformedDefaultParsingConfig
+	}
+
+	transformedParsingConfigOverrides, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverrides(original["parsing_config_overrides"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParsingConfigOverrides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parsingConfigOverrides"] = transformedParsingConfigOverrides
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDigitalParsingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigDigitalParsingConfig(original["digital_parsing_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["digitalParsingConfig"] = transformedDigitalParsingConfig
+	}
+
+	transformedOcrParsingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigOcrParsingConfig(original["ocr_parsing_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOcrParsingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ocrParsingConfig"] = transformedOcrParsingConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigDigitalParsingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigOcrParsingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUseNativeText, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigOcrParsingConfigUseNativeText(original["use_native_text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseNativeText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useNativeText"] = transformedUseNativeText
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigOcrParsingConfigUseNativeText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+	if v == nil {
+		return map[string]interface{}{}, nil
+	}
+	m := make(map[string]interface{})
+	for _, raw := range v.(*schema.Set).List() {
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDigitalParsingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesDigitalParsingConfig(original["digital_parsing_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["digitalParsingConfig"] = transformedDigitalParsingConfig
+		}
+
+		transformedOcrParsingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesOcrParsingConfig(original["ocr_parsing_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOcrParsingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ocrParsingConfig"] = transformedOcrParsingConfig
+		}
+
+		transformedFileType, err := tpgresource.ExpandString(original["file_type"], d, config)
+		if err != nil {
+			return nil, err
+		}
+		m[transformedFileType] = transformed
+	}
+	return m, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesDigitalParsingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesOcrParsingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUseNativeText, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesOcrParsingConfigUseNativeText(original["use_native_text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseNativeText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useNativeText"] = transformedUseNativeText
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesOcrParsingConfigUseNativeText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
