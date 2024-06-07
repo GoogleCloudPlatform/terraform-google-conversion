@@ -22,7 +22,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const VertexAIIndexEndpointAssetType string = "{{region}}-aiplatform.googleapis.com/IndexEndpoint"
+const VertexAIIndexEndpointAssetType string = "aiplatform.googleapis.com/IndexEndpoint"
 
 func ResourceConverterVertexAIIndexEndpoint() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -32,7 +32,7 @@ func ResourceConverterVertexAIIndexEndpoint() cai.ResourceConverter {
 }
 
 func GetVertexAIIndexEndpointCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/indexEndpoints/{{name}}")
+	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/indexEndpoints/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -42,7 +42,7 @@ func GetVertexAIIndexEndpointCaiObject(d tpgresource.TerraformResourceData, conf
 			Type: VertexAIIndexEndpointAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/aiplatform/v1beta1/rest",
 				DiscoveryName:        "IndexEndpoint",
 				Data:                 obj,
 			},

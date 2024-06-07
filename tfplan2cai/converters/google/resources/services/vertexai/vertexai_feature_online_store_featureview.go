@@ -22,7 +22,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const VertexAIFeatureOnlineStoreFeatureviewAssetType string = "{{region}}-aiplatform.googleapis.com/FeatureOnlineStoreFeatureview"
+const VertexAIFeatureOnlineStoreFeatureviewAssetType string = "aiplatform.googleapis.com/FeatureOnlineStoreFeatureview"
 
 func ResourceConverterVertexAIFeatureOnlineStoreFeatureview() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -32,7 +32,7 @@ func ResourceConverterVertexAIFeatureOnlineStoreFeatureview() cai.ResourceConver
 }
 
 func GetVertexAIFeatureOnlineStoreFeatureviewCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/featureOnlineStores/{{feature_online_store}}/featureViews/{{name}}")
+	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/featureOnlineStores/{{feature_online_store}}/featureViews/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -42,7 +42,7 @@ func GetVertexAIFeatureOnlineStoreFeatureviewCaiObject(d tpgresource.TerraformRe
 			Type: VertexAIFeatureOnlineStoreFeatureviewAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/aiplatform/v1beta1/rest",
 				DiscoveryName:        "FeatureOnlineStoreFeatureview",
 				Data:                 obj,
 			},

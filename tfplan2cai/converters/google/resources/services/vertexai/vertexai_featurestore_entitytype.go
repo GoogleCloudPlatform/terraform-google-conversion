@@ -23,7 +23,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const VertexAIFeaturestoreEntitytypeAssetType string = "{{region}}-aiplatform.googleapis.com/FeaturestoreEntitytype"
+const VertexAIFeaturestoreEntitytypeAssetType string = "aiplatform.googleapis.com/FeaturestoreEntitytype"
 
 func ResourceConverterVertexAIFeaturestoreEntitytype() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -33,7 +33,7 @@ func ResourceConverterVertexAIFeaturestoreEntitytype() cai.ResourceConverter {
 }
 
 func GetVertexAIFeaturestoreEntitytypeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{name}}")
+	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -43,7 +43,7 @@ func GetVertexAIFeaturestoreEntitytypeCaiObject(d tpgresource.TerraformResourceD
 			Type: VertexAIFeaturestoreEntitytypeAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/aiplatform/v1beta1/rest",
 				DiscoveryName:        "FeaturestoreEntitytype",
 				Data:                 obj,
 			},

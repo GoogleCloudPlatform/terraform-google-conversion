@@ -23,7 +23,7 @@ import (
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
-const VertexAIFeaturestoreEntitytypeIAMAssetType string = "{{region}}-aiplatform.googleapis.com/FeaturestoreEntitytype"
+const VertexAIFeaturestoreEntitytypeIAMAssetType string = "aiplatform.googleapis.com/FeaturestoreEntitytype"
 
 func ResourceConverterVertexAIFeaturestoreEntitytypeIamPolicy() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -96,7 +96,7 @@ func newVertexAIFeaturestoreEntitytypeIamAsset(
 		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{entitytype}}")
+	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{entitytype}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -123,7 +123,7 @@ func FetchVertexAIFeaturestoreEntitytypeIamPolicy(d tpgresource.TerraformResourc
 		VertexAIFeaturestoreEntitytypeIamUpdaterProducer,
 		d,
 		config,
-		"//{{region}}-aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{entitytype}}",
+		"//aiplatform.googleapis.com/{{featurestore}}/entityTypes/{{entitytype}}",
 		VertexAIFeaturestoreEntitytypeIAMAssetType,
 	)
 }
