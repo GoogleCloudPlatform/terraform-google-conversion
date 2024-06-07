@@ -22,7 +22,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const VertexAITensorboardAssetType string = "{{region}}-aiplatform.googleapis.com/Tensorboard"
+const VertexAITensorboardAssetType string = "aiplatform.googleapis.com/Tensorboard"
 
 func ResourceConverterVertexAITensorboard() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -32,7 +32,7 @@ func ResourceConverterVertexAITensorboard() cai.ResourceConverter {
 }
 
 func GetVertexAITensorboardCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/{{name}}")
+	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -42,7 +42,7 @@ func GetVertexAITensorboardCaiObject(d tpgresource.TerraformResourceData, config
 			Type: VertexAITensorboardAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/aiplatform/v1beta1/rest",
 				DiscoveryName:        "Tensorboard",
 				Data:                 obj,
 			},

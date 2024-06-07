@@ -22,7 +22,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const VertexAIFeatureGroupAssetType string = "{{region}}-aiplatform.googleapis.com/FeatureGroup"
+const VertexAIFeatureGroupAssetType string = "aiplatform.googleapis.com/FeatureGroup"
 
 func ResourceConverterVertexAIFeatureGroup() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -32,7 +32,7 @@ func ResourceConverterVertexAIFeatureGroup() cai.ResourceConverter {
 }
 
 func GetVertexAIFeatureGroupCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{region}}-aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/featureGroups/{{name}}")
+	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/featureGroups/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -42,7 +42,7 @@ func GetVertexAIFeatureGroupCaiObject(d tpgresource.TerraformResourceData, confi
 			Type: VertexAIFeatureGroupAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{region}}-aiplatform/v1beta1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/aiplatform/v1beta1/rest",
 				DiscoveryName:        "FeatureGroup",
 				Data:                 obj,
 			},

@@ -151,6 +151,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_sql_database_instance"},
 		{name: "example_storage_bucket_iam_member_random_suffix"},
 		{name: "example_storage_bucket_iam_policy"},
+		{name: "example_vertex_ai_dataset"},
 		{name: "example_vpc_access_connector"},
 		{name: "firewall"},
 		{name: "full_compute_firewall"},
