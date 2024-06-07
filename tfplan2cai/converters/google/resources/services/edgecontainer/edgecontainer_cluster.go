@@ -293,6 +293,13 @@ func expandEdgecontainerClusterMaintenancePolicy(v interface{}, d tpgresource.Te
 		transformed["window"] = transformedWindow
 	}
 
+	transformedMaintenanceExclusions, err := expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusions(original["maintenance_exclusions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaintenanceExclusions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maintenanceExclusions"] = transformedMaintenanceExclusions
+	}
+
 	return transformed, nil
 }
 
@@ -376,6 +383,73 @@ func expandEdgecontainerClusterMaintenancePolicyWindowRecurringWindowWindowEndTi
 }
 
 func expandEdgecontainerClusterMaintenancePolicyWindowRecurringWindowRecurrence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedWindow, err := expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusionsWindow(original["window"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedWindow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["window"] = transformedWindow
+		}
+
+		transformedId, err := expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusionsId(original["id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["id"] = transformedId
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusionsWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStartTime, err := expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusionsWindowStartTime(original["start_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["startTime"] = transformedStartTime
+	}
+
+	transformedEndTime, err := expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusionsWindowEndTime(original["end_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endTime"] = transformedEndTime
+	}
+
+	return transformed, nil
+}
+
+func expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusionsWindowStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusionsWindowEndTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandEdgecontainerClusterMaintenancePolicyMaintenanceExclusionsId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
