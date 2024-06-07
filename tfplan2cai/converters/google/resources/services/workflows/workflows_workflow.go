@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
@@ -114,9 +114,9 @@ func resourceWorkflowsWorkflowEncoder(d tpgresource.TerraformResourceData, meta 
 	if v, ok := d.GetOk("name"); ok {
 		ResName = v.(string)
 	} else if v, ok := d.GetOk("name_prefix"); ok {
-		ResName = resource.PrefixedUniqueId(v.(string))
+		ResName = id.PrefixedUniqueId(v.(string))
 	} else {
-		ResName = resource.UniqueId()
+		ResName = id.UniqueId()
 	}
 
 	if err := d.Set("name", ResName); err != nil {
