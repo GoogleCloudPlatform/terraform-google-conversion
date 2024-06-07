@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
@@ -102,9 +102,9 @@ func resourceApiGatewayApiConfigEncoder(d tpgresource.TerraformResourceData, met
 	if v, ok := d.GetOk("api_config_id"); ok {
 		apiConfigId = v.(string)
 	} else if v, ok := d.GetOk("api_config_id_prefix"); ok {
-		apiConfigId = resource.PrefixedUniqueId(v.(string))
+		apiConfigId = id.PrefixedUniqueId(v.(string))
 	} else {
-		apiConfigId = resource.UniqueId()
+		apiConfigId = id.UniqueId()
 	}
 
 	if err := d.Set("api_config_id", apiConfigId); err != nil {
