@@ -159,6 +159,12 @@ func GetRedisInstanceApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("maintenance_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(maintenancePolicyProp)) && (ok || !reflect.DeepEqual(v, maintenancePolicyProp)) {
 		obj["maintenancePolicy"] = maintenancePolicyProp
 	}
+	maintenanceVersionProp, err := expandRedisInstanceMaintenanceVersion(d.Get("maintenance_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("maintenance_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(maintenanceVersionProp)) && (ok || !reflect.DeepEqual(v, maintenanceVersionProp)) {
+		obj["maintenanceVersion"] = maintenanceVersionProp
+	}
 	memorySizeGbProp, err := expandRedisInstanceMemorySizeGb(d.Get("memory_size_gb"), d, config)
 	if err != nil {
 		return nil, err
@@ -488,6 +494,10 @@ func expandRedisInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeSeconds
 }
 
 func expandRedisInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTimeNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisInstanceMaintenanceVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
