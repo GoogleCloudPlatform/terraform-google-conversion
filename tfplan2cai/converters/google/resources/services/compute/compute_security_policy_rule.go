@@ -131,6 +131,13 @@ func expandComputeSecurityPolicyRuleMatch(v interface{}, d tpgresource.Terraform
 		transformed["expr"] = transformedExpr
 	}
 
+	transformedExprOptions, err := expandComputeSecurityPolicyRuleMatchExprOptions(original["expr_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExprOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exprOptions"] = transformedExprOptions
+	}
+
 	transformedConfig, err := expandComputeSecurityPolicyRuleMatchConfig(original["config"], d, config)
 	if err != nil {
 		return nil, err
@@ -165,6 +172,59 @@ func expandComputeSecurityPolicyRuleMatchExpr(v interface{}, d tpgresource.Terra
 }
 
 func expandComputeSecurityPolicyRuleMatchExprExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSecurityPolicyRuleMatchExprOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRecaptchaOptions, err := expandComputeSecurityPolicyRuleMatchExprOptionsRecaptchaOptions(original["recaptcha_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRecaptchaOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["recaptchaOptions"] = transformedRecaptchaOptions
+	}
+
+	return transformed, nil
+}
+
+func expandComputeSecurityPolicyRuleMatchExprOptionsRecaptchaOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedActionTokenSiteKeys, err := expandComputeSecurityPolicyRuleMatchExprOptionsRecaptchaOptionsActionTokenSiteKeys(original["action_token_site_keys"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedActionTokenSiteKeys); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["actionTokenSiteKeys"] = transformedActionTokenSiteKeys
+	}
+
+	transformedSessionTokenSiteKeys, err := expandComputeSecurityPolicyRuleMatchExprOptionsRecaptchaOptionsSessionTokenSiteKeys(original["session_token_site_keys"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSessionTokenSiteKeys); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sessionTokenSiteKeys"] = transformedSessionTokenSiteKeys
+	}
+
+	return transformed, nil
+}
+
+func expandComputeSecurityPolicyRuleMatchExprOptionsRecaptchaOptionsActionTokenSiteKeys(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSecurityPolicyRuleMatchExprOptionsRecaptchaOptionsSessionTokenSiteKeys(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
