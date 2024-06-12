@@ -78,6 +78,18 @@ func GetCloudRunV2JobApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("binary_authorization"); !tpgresource.IsEmptyValue(reflect.ValueOf(binaryAuthorizationProp)) && (ok || !reflect.DeepEqual(v, binaryAuthorizationProp)) {
 		obj["binaryAuthorization"] = binaryAuthorizationProp
 	}
+	startExecutionTokenProp, err := expandCloudRunV2JobStartExecutionToken(d.Get("start_execution_token"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("start_execution_token"); !tpgresource.IsEmptyValue(reflect.ValueOf(startExecutionTokenProp)) && (ok || !reflect.DeepEqual(v, startExecutionTokenProp)) {
+		obj["startExecutionToken"] = startExecutionTokenProp
+	}
+	runExecutionTokenProp, err := expandCloudRunV2JobRunExecutionToken(d.Get("run_execution_token"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("run_execution_token"); !tpgresource.IsEmptyValue(reflect.ValueOf(runExecutionTokenProp)) && (ok || !reflect.DeepEqual(v, runExecutionTokenProp)) {
+		obj["runExecutionToken"] = runExecutionTokenProp
+	}
 	templateProp, err := expandCloudRunV2JobTemplate(d.Get("template"), d, config)
 	if err != nil {
 		return nil, err
@@ -143,6 +155,14 @@ func expandCloudRunV2JobBinaryAuthorizationBreakglassJustification(v interface{}
 }
 
 func expandCloudRunV2JobBinaryAuthorizationUseDefault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobStartExecutionToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobRunExecutionToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
