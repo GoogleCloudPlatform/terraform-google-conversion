@@ -37,6 +37,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_access_context_manager_service_perimeter"},
 		{name: "example_alloydb_instance"},
 		{name: "example_apikeys_key"},
+		{name: "example_app_engine_application"},
 		{name: "example_artifact_registry_repository"},
 		{name: "example_bigquery_dataset"},
 		{name: "example_bigquery_dataset_iam_binding"},
