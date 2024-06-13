@@ -496,6 +496,13 @@ func expandBillingBudgetAllUpdatesRule(v interface{}, d tpgresource.TerraformRes
 		transformed["disableDefaultIamRecipients"] = transformedDisableDefaultIamRecipients
 	}
 
+	transformedEnableProjectLevelRecipients, err := expandBillingBudgetAllUpdatesRuleEnableProjectLevelRecipients(original["enable_project_level_recipients"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableProjectLevelRecipients); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableProjectLevelRecipients"] = transformedEnableProjectLevelRecipients
+	}
+
 	return transformed, nil
 }
 
@@ -512,6 +519,10 @@ func expandBillingBudgetAllUpdatesRuleMonitoringNotificationChannels(v interface
 }
 
 func expandBillingBudgetAllUpdatesRuleDisableDefaultIamRecipients(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBillingBudgetAllUpdatesRuleEnableProjectLevelRecipients(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
