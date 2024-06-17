@@ -153,6 +153,16 @@ func WorkbenchInstanceTagsDiffSuppress(_, _, _ string, d *schema.ResourceData) b
 	return false
 }
 
+func WorkbenchInstanceAcceleratorDiffSuppress(_, _, _ string, d *schema.ResourceData) bool {
+	old, new := d.GetChange("gce_setup.0.accelerator_configs")
+	oldInterface := old.([]interface{})
+	newInterface := new.([]interface{})
+	if len(oldInterface) == 0 && len(newInterface) == 1 && newInterface[0] == nil {
+		return true
+	}
+	return false
+}
+
 func modifyWorkbenchInstanceState(config *transport_tpg.Config, d *schema.ResourceData, project string, billingProject string, userAgent string, state string) (map[string]interface{}, error) {
 	url, err := tpgresource.ReplaceVars(d, config, "{{WorkbenchBasePath}}projects/{{project}}/locations/{{location}}/instances/{{name}}:"+state)
 	if err != nil {
