@@ -162,6 +162,12 @@ func GetBigQueryDatasetApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("storage_billing_model"); !tpgresource.IsEmptyValue(reflect.ValueOf(storageBillingModelProp)) && (ok || !reflect.DeepEqual(v, storageBillingModelProp)) {
 		obj["storageBillingModel"] = storageBillingModelProp
 	}
+	resourceTagsProp, err := expandBigQueryDatasetResourceTags(d.Get("resource_tags"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("resource_tags"); !tpgresource.IsEmptyValue(reflect.ValueOf(resourceTagsProp)) && (ok || !reflect.DeepEqual(v, resourceTagsProp)) {
+		obj["resourceTags"] = resourceTagsProp
+	}
 	labelsProp, err := expandBigQueryDatasetEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -536,6 +542,17 @@ func expandBigQueryDatasetDefaultCollation(v interface{}, d tpgresource.Terrafor
 
 func expandBigQueryDatasetStorageBillingModel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandBigQueryDatasetResourceTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandBigQueryDatasetEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
