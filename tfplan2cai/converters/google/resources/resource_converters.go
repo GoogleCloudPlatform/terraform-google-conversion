@@ -154,6 +154,8 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_storage_bucket_iam_binding":                       {resourceConverterStorageBucketIamBinding()},
 		"google_storage_bucket_iam_member":                        {resourceConverterStorageBucketIamMember()},
 		"google_compute_node_group":                               {compute.ResourceConverterComputeNodeGroup()},
+		"google_logging_folder_bucket_config":                     {resourceConverterLogFolderBucket()},
+		"google_logging_organization_bucket_config":               {resourceConverterLogOrganizationBucket()},
 		"google_cloud_tasks_queue":                                {cloudtasks.ResourceConverterCloudTasksQueue()},
 		"google_pubsub_topic":                                     {pubsub.ResourceConverterPubsubTopic()},
 		"google_kms_crypto_key":                                   {kms.ResourceConverterKMSCryptoKey()},
