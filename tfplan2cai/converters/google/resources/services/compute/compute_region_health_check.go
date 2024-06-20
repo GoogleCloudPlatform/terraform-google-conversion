@@ -144,7 +144,6 @@ func GetComputeRegionHealthCheckApiObject(d tpgresource.TerraformResourceData, c
 }
 
 func resourceComputeRegionHealthCheckEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-
 	if _, ok := d.GetOk("http_health_check"); ok {
 		hc := d.Get("http_health_check").([]interface{})[0]
 		ps := hc.(map[string]interface{})["port_specification"]
