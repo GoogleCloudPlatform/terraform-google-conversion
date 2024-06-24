@@ -255,6 +255,20 @@ func expandDataFusionInstanceNetworkConfig(v interface{}, d tpgresource.Terrafor
 		transformed["network"] = transformedNetwork
 	}
 
+	transformedConnectionType, err := expandDataFusionInstanceNetworkConfigConnectionType(original["connection_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectionType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectionType"] = transformedConnectionType
+	}
+
+	transformedPrivateServiceConnectConfig, err := expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfig(original["private_service_connect_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateServiceConnectConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateServiceConnectConfig"] = transformedPrivateServiceConnectConfig
+	}
+
 	return transformed, nil
 }
 
@@ -263,6 +277,55 @@ func expandDataFusionInstanceNetworkConfigIpAllocation(v interface{}, d tpgresou
 }
 
 func expandDataFusionInstanceNetworkConfigNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataFusionInstanceNetworkConfigConnectionType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNetworkAttachment, err := expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfigNetworkAttachment(original["network_attachment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkAttachment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkAttachment"] = transformedNetworkAttachment
+	}
+
+	transformedUnreachableCidrBlock, err := expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfigUnreachableCidrBlock(original["unreachable_cidr_block"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUnreachableCidrBlock); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["unreachableCidrBlock"] = transformedUnreachableCidrBlock
+	}
+
+	transformedEffectiveUnreachableCidrBlock, err := expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfigEffectiveUnreachableCidrBlock(original["effective_unreachable_cidr_block"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEffectiveUnreachableCidrBlock); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["effectiveUnreachableCidrBlock"] = transformedEffectiveUnreachableCidrBlock
+	}
+
+	return transformed, nil
+}
+
+func expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfigNetworkAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfigUnreachableCidrBlock(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfigEffectiveUnreachableCidrBlock(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
