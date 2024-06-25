@@ -99,6 +99,24 @@ func GetCloudfunctions2functionApiObject(d tpgresource.TerraformResourceData, co
 		obj["labels"] = labelsProp
 	}
 
+	return resourceCloudfunctions2functionEncoder(d, config, obj)
+}
+
+func resourceCloudfunctions2functionEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	if obj == nil || obj["buildConfig"] == nil {
+		return obj, nil
+	}
+
+	build_config := obj["buildConfig"].(map[string]interface{})
+
+	// Automatic Update policy is the default from API, unset it if the data
+	// contains the on-deploy policy.
+	if build_config["onDeployUpdatePolicy"] != nil {
+		delete(build_config, "automaticUpdatePolicy")
+	}
+
+	obj["buildConfig"] = build_config
+
 	return obj, nil
 }
 
@@ -173,6 +191,20 @@ func expandCloudfunctions2functionBuildConfig(v interface{}, d tpgresource.Terra
 		return nil, err
 	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	transformedAutomaticUpdatePolicy, err := expandCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(original["automatic_update_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["automaticUpdatePolicy"] = transformedAutomaticUpdatePolicy
+	}
+
+	transformedOnDeployUpdatePolicy, err := expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicy(original["on_deploy_update_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["onDeployUpdatePolicy"] = transformedOnDeployUpdatePolicy
 	}
 
 	return transformed, nil
@@ -370,6 +402,49 @@ func expandCloudfunctions2functionBuildConfigDockerRepository(v interface{}, d t
 }
 
 func expandCloudfunctions2functionBuildConfigServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRuntimeVersion, err := expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicyRuntimeVersion(original["runtime_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRuntimeVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["runtimeVersion"] = transformedRuntimeVersion
+	}
+
+	return transformed, nil
+}
+
+func expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicyRuntimeVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
