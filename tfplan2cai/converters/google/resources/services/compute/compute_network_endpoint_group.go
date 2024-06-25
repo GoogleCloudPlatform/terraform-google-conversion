@@ -18,10 +18,22 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+// Use this method when subnet is optioanl and auto_create_subnetworks = true
+// API sometimes choose a subnet so the diff needs to be ignored
+func compareOptionalSubnet(_, old, new string, _ *schema.ResourceData) bool {
+	if tpgresource.IsEmptyValue(reflect.ValueOf(new)) {
+		return true
+	}
+	// otherwise compare as self links
+	return tpgresource.CompareSelfLinkOrResourceName("", old, new, nil)
+}
 
 const ComputeNetworkEndpointGroupAssetType string = "compute.googleapis.com/NetworkEndpointGroup"
 
