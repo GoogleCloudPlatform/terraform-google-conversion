@@ -15,15 +15,24 @@
 package compute
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"reflect"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+// sha256DiffSuppress
+// if old is the hex-encoded sha256 sum of new, treat them as equal
+func sha256DiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
+	return hex.EncodeToString(sha256.New().Sum([]byte(old))) == new
+}
 
 const ComputeRegionSslCertificateAssetType string = "compute.googleapis.com/RegionSslCertificate"
 
