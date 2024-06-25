@@ -983,6 +983,13 @@ func expandMonitoringAlertPolicyDocumentation(v interface{}, d tpgresource.Terra
 		transformed["subject"] = transformedSubject
 	}
 
+	transformedLinks, err := expandMonitoringAlertPolicyDocumentationLinks(original["links"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLinks); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["links"] = transformedLinks
+	}
+
 	return transformed, nil
 }
 
@@ -995,5 +1002,42 @@ func expandMonitoringAlertPolicyDocumentationMimeType(v interface{}, d tpgresour
 }
 
 func expandMonitoringAlertPolicyDocumentationSubject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyDocumentationLinks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDisplayName, err := expandMonitoringAlertPolicyDocumentationLinksDisplayName(original["display_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["displayName"] = transformedDisplayName
+		}
+
+		transformedUrl, err := expandMonitoringAlertPolicyDocumentationLinksUrl(original["url"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["url"] = transformedUrl
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandMonitoringAlertPolicyDocumentationLinksDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyDocumentationLinksUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
