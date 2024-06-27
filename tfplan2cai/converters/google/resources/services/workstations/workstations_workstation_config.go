@@ -291,6 +291,13 @@ func expandWorkstationsWorkstationConfigHostGceInstance(v interface{}, d tpgreso
 		transformed["boostConfigs"] = transformedBoostConfigs
 	}
 
+	transformedVmTags, err := expandWorkstationsWorkstationConfigHostGceInstanceVmTags(original["vm_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVmTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["vmTags"] = transformedVmTags
+	}
+
 	return transformed, nil
 }
 
@@ -547,6 +554,17 @@ func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAcceleratorsT
 
 func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAcceleratorsCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceVmTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandWorkstationsWorkstationConfigPersistentDirectories(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
