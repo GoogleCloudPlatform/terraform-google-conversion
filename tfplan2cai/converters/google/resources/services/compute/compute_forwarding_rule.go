@@ -202,17 +202,17 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("target"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetProp)) && (ok || !reflect.DeepEqual(v, targetProp)) {
 		obj["target"] = targetProp
 	}
-	allowGlobalAccessProp, err := expandComputeForwardingRuleAllowGlobalAccess(d.Get("allow_global_access"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("allow_global_access"); ok || !reflect.DeepEqual(v, allowGlobalAccessProp) {
-		obj["allowGlobalAccess"] = allowGlobalAccessProp
-	}
 	labelFingerprintProp, err := expandComputeForwardingRuleLabelFingerprint(d.Get("label_fingerprint"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("label_fingerprint"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
 		obj["labelFingerprint"] = labelFingerprintProp
+	}
+	allowGlobalAccessProp, err := expandComputeForwardingRuleAllowGlobalAccess(d.Get("allow_global_access"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_global_access"); ok || !reflect.DeepEqual(v, allowGlobalAccessProp) {
+		obj["allowGlobalAccess"] = allowGlobalAccessProp
 	}
 	allPortsProp, err := expandComputeForwardingRuleAllPorts(d.Get("all_ports"), d, config)
 	if err != nil {
@@ -392,11 +392,11 @@ func expandComputeForwardingRuleTarget(v interface{}, d tpgresource.TerraformRes
 	return url + v.(string), nil
 }
 
-func expandComputeForwardingRuleAllowGlobalAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeForwardingRuleLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandComputeForwardingRuleLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandComputeForwardingRuleAllowGlobalAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
