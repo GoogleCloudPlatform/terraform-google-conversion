@@ -161,6 +161,13 @@ func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySource(v interfac
 		transformed["featureGroups"] = transformedFeatureGroups
 	}
 
+	transformedProjectNumber, err := expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceProjectNumber(original["project_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectNumber"] = transformedProjectNumber
+	}
+
 	return transformed, nil
 }
 
@@ -198,6 +205,10 @@ func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGrou
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGroupsFeatureIds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceProjectNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
