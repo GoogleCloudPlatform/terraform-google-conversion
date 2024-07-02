@@ -16,11 +16,22 @@ package compute
 
 import (
 	"reflect"
+	"strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+// For managed SSL certs, if new is an absolute FQDN (trailing '.') but old isn't, treat them as equals.
+func AbsoluteDomainSuppress(k, old, new string, _ *schema.ResourceData) bool {
+	if strings.HasPrefix(k, "managed.0.domains.") {
+		return old == strings.TrimRight(new, ".") || new == strings.TrimRight(old, ".")
+	}
+	return false
+}
 
 const ComputeManagedSslCertificateAssetType string = "compute.googleapis.com/ManagedSslCertificate"
 

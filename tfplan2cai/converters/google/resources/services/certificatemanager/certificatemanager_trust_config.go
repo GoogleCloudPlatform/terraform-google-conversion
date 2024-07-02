@@ -66,6 +66,12 @@ func GetCertificateManagerTrustConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("trust_stores"); !tpgresource.IsEmptyValue(reflect.ValueOf(trustStoresProp)) && (ok || !reflect.DeepEqual(v, trustStoresProp)) {
 		obj["trustStores"] = trustStoresProp
 	}
+	allowlistedCertificatesProp, err := expandCertificateManagerTrustConfigAllowlistedCertificates(d.Get("allowlisted_certificates"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allowlisted_certificates"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowlistedCertificatesProp)) && (ok || !reflect.DeepEqual(v, allowlistedCertificatesProp)) {
+		obj["allowlistedCertificates"] = allowlistedCertificatesProp
+	}
 	labelsProp, err := expandCertificateManagerTrustConfigEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -158,6 +164,32 @@ func expandCertificateManagerTrustConfigTrustStoresIntermediateCas(v interface{}
 }
 
 func expandCertificateManagerTrustConfigTrustStoresIntermediateCasPemCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateManagerTrustConfigAllowlistedCertificates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPemCertificate, err := expandCertificateManagerTrustConfigAllowlistedCertificatesPemCertificate(original["pem_certificate"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPemCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pemCertificate"] = transformedPemCertificate
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCertificateManagerTrustConfigAllowlistedCertificatesPemCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
