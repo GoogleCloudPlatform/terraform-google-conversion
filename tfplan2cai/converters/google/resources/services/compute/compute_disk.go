@@ -28,6 +28,11 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
+// Suppress all diffs, used for Disk.Interface which is a nonfunctional field
+func AlwaysDiffSuppress(_, _, _ string, _ *schema.ResourceData) bool {
+	return true
+}
+
 // diffsupress for beta and to check change in source_disk attribute
 func sourceDiskDiffSupress(_, old, new string, _ *schema.ResourceData) bool {
 	s1 := strings.TrimPrefix(old, "https://www.googleapis.com/compute/beta")

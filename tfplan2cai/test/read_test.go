@@ -82,6 +82,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_folder_iam_policy"},
 		{name: "example_folder_organization_policy"},
 		{name: "example_gke_hub_feature"},
+		{name: "example_google_app_engine_standard_app_version"},
 		{name: "example_google_cloudfunctions_function"},
 		{name: "example_google_composer_environment"},
 		{name: "example_google_compute_autoscaler"},

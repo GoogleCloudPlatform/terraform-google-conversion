@@ -173,6 +173,12 @@ func GetComputeHealthCheckApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("timeout_sec"); !tpgresource.IsEmptyValue(reflect.ValueOf(timeoutSecProp)) && (ok || !reflect.DeepEqual(v, timeoutSecProp)) {
 		obj["timeoutSec"] = timeoutSecProp
 	}
+	sourceRegionsProp, err := expandComputeHealthCheckSourceRegions(d.Get("source_regions"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_regions"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceRegionsProp)) && (ok || !reflect.DeepEqual(v, sourceRegionsProp)) {
+		obj["sourceRegions"] = sourceRegionsProp
+	}
 	unhealthyThresholdProp, err := expandComputeHealthCheckUnhealthyThreshold(d.Get("unhealthy_threshold"), d, config)
 	if err != nil {
 		return nil, err
@@ -332,6 +338,10 @@ func expandComputeHealthCheckName(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandComputeHealthCheckTimeoutSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHealthCheckSourceRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
