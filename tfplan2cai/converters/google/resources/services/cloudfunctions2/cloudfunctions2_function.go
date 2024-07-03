@@ -16,6 +16,7 @@ package cloudfunctions2
 
 import (
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -23,6 +24,21 @@ import (
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+// Suppress diffs for the system environment variables
+func environmentVariablesDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	if k == "service_config.0.environment_variables.LOG_EXECUTION_ID" && new == "" {
+		return true
+	}
+
+	// Let diff be determined by environment_variables (above)
+	if strings.HasPrefix(k, "service_config.0.environment_variables.%") {
+		return true
+	}
+
+	// For other keys, don't suppress diff.
+	return false
+}
 
 const Cloudfunctions2functionAssetType string = "cloudfunctions.googleapis.com/function"
 
