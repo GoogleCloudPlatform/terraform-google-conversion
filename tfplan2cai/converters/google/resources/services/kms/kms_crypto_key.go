@@ -92,6 +92,12 @@ func GetKMSCryptoKeyApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("crypto_key_backend"); !tpgresource.IsEmptyValue(reflect.ValueOf(cryptoKeyBackendProp)) && (ok || !reflect.DeepEqual(v, cryptoKeyBackendProp)) {
 		obj["cryptoKeyBackend"] = cryptoKeyBackendProp
 	}
+	keyAccessJustificationsPolicyProp, err := expandKMSCryptoKeyKeyAccessJustificationsPolicy(d.Get("key_access_justifications_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("key_access_justifications_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(keyAccessJustificationsPolicyProp)) && (ok || !reflect.DeepEqual(v, keyAccessJustificationsPolicyProp)) {
+		obj["keyAccessJustificationsPolicy"] = keyAccessJustificationsPolicyProp
+	}
 	labelsProp, err := expandKMSCryptoKeyEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -176,6 +182,29 @@ func expandKMSCryptoKeyImportOnly(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandKMSCryptoKeyCryptoKeyBackend(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandKMSCryptoKeyKeyAccessJustificationsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedAccessReasons, err := expandKMSCryptoKeyKeyAccessJustificationsPolicyAllowedAccessReasons(original["allowed_access_reasons"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedAccessReasons); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedAccessReasons"] = transformedAllowedAccessReasons
+	}
+
+	return transformed, nil
+}
+
+func expandKMSCryptoKeyKeyAccessJustificationsPolicyAllowedAccessReasons(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
