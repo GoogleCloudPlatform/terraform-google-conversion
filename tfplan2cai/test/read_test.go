@@ -102,6 +102,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_google_datastream_connection_profile"},
 		{name: "example_google_datastream_private_connection"},
 		{name: "example_google_datastream_stream"},
+		{name: "example_google_datastream_stream_append_only"},
 		{name: "example_google_firebase_project"},
 		{name: "example_google_gke_hub_membership"},
 		{name: "example_google_logging_billing_account_bucket_config"},
