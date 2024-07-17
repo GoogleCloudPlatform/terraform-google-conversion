@@ -705,6 +705,13 @@ func expandWorkbenchInstanceGceSetupNetworkInterfaces(v interface{}, d tpgresour
 			transformed["nicType"] = transformedNicType
 		}
 
+		transformedAccessConfigs, err := expandWorkbenchInstanceGceSetupNetworkInterfacesAccessConfigs(original["access_configs"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAccessConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["accessConfigs"] = transformedAccessConfigs
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -719,6 +726,32 @@ func expandWorkbenchInstanceGceSetupNetworkInterfacesSubnet(v interface{}, d tpg
 }
 
 func expandWorkbenchInstanceGceSetupNetworkInterfacesNicType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupNetworkInterfacesAccessConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedExternalIp, err := expandWorkbenchInstanceGceSetupNetworkInterfacesAccessConfigsExternalIp(original["external_ip"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExternalIp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["externalIp"] = transformedExternalIp
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandWorkbenchInstanceGceSetupNetworkInterfacesAccessConfigsExternalIp(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
