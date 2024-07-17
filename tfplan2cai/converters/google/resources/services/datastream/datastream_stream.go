@@ -2144,6 +2144,20 @@ func expandDatastreamStreamDestinationConfigBigqueryDestinationConfig(v interfac
 		transformed["sourceHierarchyDatasets"] = transformedSourceHierarchyDatasets
 	}
 
+	transformedMerge, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigMerge(original["merge"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["merge"] = transformedMerge
+	}
+
+	transformedAppendOnly, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigAppendOnly(original["append_only"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["appendOnly"] = transformedAppendOnly
+	}
+
 	return transformed, nil
 }
 
@@ -2245,6 +2259,36 @@ func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHiera
 
 func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplateKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigMerge(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigAppendOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandDatastreamStreamBackfillAll(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
