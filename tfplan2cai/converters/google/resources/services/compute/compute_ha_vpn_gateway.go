@@ -79,6 +79,12 @@ func GetComputeHaVpnGatewayApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("stack_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(stackTypeProp)) && (ok || !reflect.DeepEqual(v, stackTypeProp)) {
 		obj["stackType"] = stackTypeProp
 	}
+	gatewayIpVersionProp, err := expandComputeHaVpnGatewayGatewayIpVersion(d.Get("gateway_ip_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gateway_ip_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(gatewayIpVersionProp)) && (ok || !reflect.DeepEqual(v, gatewayIpVersionProp)) {
+		obj["gatewayIpVersion"] = gatewayIpVersionProp
+	}
 	vpnInterfacesProp, err := expandComputeHaVpnGatewayVpnInterfaces(d.Get("vpn_interfaces"), d, config)
 	if err != nil {
 		return nil, err
@@ -112,6 +118,10 @@ func expandComputeHaVpnGatewayNetwork(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandComputeHaVpnGatewayStackType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeHaVpnGatewayGatewayIpVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
