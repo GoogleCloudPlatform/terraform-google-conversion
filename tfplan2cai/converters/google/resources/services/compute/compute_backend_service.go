@@ -1499,18 +1499,77 @@ func expandComputeBackendServiceSecuritySettings(v interface{}, d tpgresource.Te
 		transformed["subjectAltNames"] = transformedSubjectAltNames
 	}
 
+	transformedAwsV4Authentication, err := expandComputeBackendServiceSecuritySettingsAwsV4Authentication(original["aws_v4_authentication"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAwsV4Authentication); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["awsV4Authentication"] = transformedAwsV4Authentication
+	}
+
 	return transformed, nil
 }
 
 func expandComputeBackendServiceSecuritySettingsClientTlsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseGlobalFieldValue("regions", v.(string), "project", d, config, true)
-	if err != nil {
-		return nil, fmt.Errorf("Invalid value for client_tls_policy: %s", err)
-	}
-	return f.RelativeLink(), nil
+	return v, nil
 }
 
 func expandComputeBackendServiceSecuritySettingsSubjectAltNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceSecuritySettingsAwsV4Authentication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAccessKeyId, err := expandComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyId(original["access_key_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccessKeyId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accessKeyId"] = transformedAccessKeyId
+	}
+
+	transformedAccessKey, err := expandComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKey(original["access_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["accessKey"] = transformedAccessKey
+	}
+
+	transformedAccessKeyVersion, err := expandComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyVersion(original["access_key_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccessKeyVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accessKeyVersion"] = transformedAccessKeyVersion
+	}
+
+	transformedOriginRegion, err := expandComputeBackendServiceSecuritySettingsAwsV4AuthenticationOriginRegion(original["origin_region"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOriginRegion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["originRegion"] = transformedOriginRegion
+	}
+
+	return transformed, nil
+}
+
+func expandComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceSecuritySettingsAwsV4AuthenticationOriginRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
