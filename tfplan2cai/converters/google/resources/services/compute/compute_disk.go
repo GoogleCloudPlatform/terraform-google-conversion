@@ -409,6 +409,12 @@ func GetComputeDiskApiObject(d tpgresource.TerraformResourceData, config *transp
 	} else if v, ok := d.GetOkExists("storage_pool"); !tpgresource.IsEmptyValue(reflect.ValueOf(storagePoolProp)) && (ok || !reflect.DeepEqual(v, storagePoolProp)) {
 		obj["storagePool"] = storagePoolProp
 	}
+	accessModeProp, err := expandComputeDiskAccessMode(d.Get("access_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("access_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessModeProp)) && (ok || !reflect.DeepEqual(v, accessModeProp)) {
+		obj["accessMode"] = accessModeProp
+	}
 	labelsProp, err := expandComputeDiskEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -625,6 +631,10 @@ func expandComputeDiskLicenses(v interface{}, d tpgresource.TerraformResourceDat
 }
 
 func expandComputeDiskStoragePool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeDiskAccessMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
