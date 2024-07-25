@@ -599,6 +599,7 @@ func expandCloudRunV2ServiceTemplateContainersArgs(v interface{}, d tpgresource.
 }
 
 func expandCloudRunV2ServiceTemplateContainersEnv(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
