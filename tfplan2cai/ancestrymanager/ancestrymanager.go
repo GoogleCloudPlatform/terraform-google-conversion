@@ -80,8 +80,11 @@ func (m *manager) initAncestryCache(entries map[string]string) error {
 			if err != nil {
 				return err
 			}
-			// ancestry path should include the item itself
-			if ancestors[0] != key {
+			// The ancestry path should include the item itself, unless both the key and ancestor
+			// have the projects/ prefix, indicating the key is a project ID and the ancestry is
+			// project number. CAI ancestors use the project number, so that is preferred if it
+			// is available.
+			if ancestors[0] != key && !(strings.HasPrefix(key, projectPrefix) && strings.HasPrefix(ancestors[0], projectPrefix)) {
 				ancestors = append([]string{key}, ancestors...)
 			}
 			m.store(key, ancestors)
