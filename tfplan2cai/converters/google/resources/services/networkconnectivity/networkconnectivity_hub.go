@@ -66,6 +66,12 @@ func GetNetworkConnectivityHubApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	exportPscProp, err := expandNetworkConnectivityHubExportPsc(d.Get("export_psc"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("export_psc"); !tpgresource.IsEmptyValue(reflect.ValueOf(exportPscProp)) && (ok || !reflect.DeepEqual(v, exportPscProp)) {
+		obj["exportPsc"] = exportPscProp
+	}
 	labelsProp, err := expandNetworkConnectivityHubEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -81,6 +87,10 @@ func expandNetworkConnectivityHubName(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandNetworkConnectivityHubDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityHubExportPsc(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

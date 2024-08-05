@@ -81,6 +81,12 @@ func GetBigtableAppProfileApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("standard_isolation"); !tpgresource.IsEmptyValue(reflect.ValueOf(standardIsolationProp)) && (ok || !reflect.DeepEqual(v, standardIsolationProp)) {
 		obj["standardIsolation"] = standardIsolationProp
 	}
+	dataBoostIsolationReadOnlyProp, err := expandBigtableAppProfileDataBoostIsolationReadOnly(d.Get("data_boost_isolation_read_only"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("data_boost_isolation_read_only"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataBoostIsolationReadOnlyProp)) && (ok || !reflect.DeepEqual(v, dataBoostIsolationReadOnlyProp)) {
+		obj["dataBoostIsolationReadOnly"] = dataBoostIsolationReadOnlyProp
+	}
 
 	return resourceBigtableAppProfileEncoder(d, config, obj)
 }
@@ -167,5 +173,28 @@ func expandBigtableAppProfileStandardIsolation(v interface{}, d tpgresource.Terr
 }
 
 func expandBigtableAppProfileStandardIsolationPriority(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigtableAppProfileDataBoostIsolationReadOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedComputeBillingOwner, err := expandBigtableAppProfileDataBoostIsolationReadOnlyComputeBillingOwner(original["compute_billing_owner"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedComputeBillingOwner); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["computeBillingOwner"] = transformedComputeBillingOwner
+	}
+
+	return transformed, nil
+}
+
+func expandBigtableAppProfileDataBoostIsolationReadOnlyComputeBillingOwner(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
