@@ -18,6 +18,13 @@ import (
 	"go.uber.org/zap"
 )
 
+const (
+	projectPrefix = "projects/"
+	folderPrefix  = "folders/"
+	orgPrefix     = "organizations/"
+	unknownOrg    = orgPrefix + "unknown"
+)
+
 // AncestryManager is the interface that fetch ancestors for a resource.
 type AncestryManager interface {
 	// Ancestors returns a list of ancestors.
@@ -88,7 +95,7 @@ func parseAncestryKey(val string) (string, error) {
 	ix := strings.LastIndex(key, "/")
 	if ix == -1 {
 		// If not containing /, then treat it as a project.
-		return fmt.Sprintf("projects/%s", key), nil
+		return projectPrefix + key, nil
 	} else {
 		k := key[:ix]
 		if k == "projects" || k == "folders" || k == "organizations" {
@@ -127,24 +134,15 @@ func (m *manager) fetchAncestors(config *transport_tpg.Config, tfData tpgresourc
 
 	orgID, orgOK := getOrganizationFromResource(tfData)
 	if orgOK {
-		orgKey = orgID
-		if !strings.HasPrefix(orgKey, "organizations/") {
-			orgKey = fmt.Sprintf("organizations/%s", orgKey)
-		}
+		orgKey = ensurePrefix(orgID, orgPrefix)
 	}
 	folderID, folderOK := getFolderFromResource(tfData)
 	if folderOK {
-		folderKey = folderID
-		if !strings.HasPrefix(folderKey, "folders/") {
-			folderKey = fmt.Sprintf("folders/%s", folderKey)
-		}
+		folderKey = ensurePrefix(folderID, folderPrefix)
 	}
 	project, _ := m.getProjectFromResource(tfData, config, cai)
 	if project != "" {
-		projectKey = project
-		if !strings.HasPrefix(projectKey, "projects/") {
-			projectKey = fmt.Sprintf("projects/%s", project)
-		}
+		projectKey = ensurePrefix(project, projectPrefix)
 	}
 
 	switch cai.Type {
@@ -154,7 +152,7 @@ func (m *manager) fetchAncestors(config *transport_tpg.Config, tfData tpgresourc
 		} else if orgOK {
 			key = orgKey
 		} else {
-			return []string{"organizations/unknown"}, nil
+			return []string{unknownOrg}, nil
 		}
 	case "cloudresourcemanager.googleapis.com/Organization":
 		if !orgOK {
@@ -168,7 +166,7 @@ func (m *manager) fetchAncestors(config *transport_tpg.Config, tfData tpgresourc
 		} else if projectKey != "" {
 			key = projectKey
 		} else {
-			return []string{"organizations/unknown"}, nil
+			return []string{unknownOrg}, nil
 		}
 	case "cloudresourcemanager.googleapis.com/Project", "cloudbilling.googleapis.com/ProjectBillingInfo":
 		// for google_project and google_project_iam resources
@@ -183,7 +181,7 @@ func (m *manager) fetchAncestors(config *transport_tpg.Config, tfData tpgresourc
 		// only folder_id or org_id is allowed for google_project
 		if orgOK {
 			// no need to use API to fetch ancestors
-			ancestors = append(ancestors, fmt.Sprintf("organizations/%s", orgID))
+			ancestors = append(ancestors, orgPrefix+orgID)
 			return ancestors, nil
 		}
 		if folderOK {
@@ -199,13 +197,13 @@ func (m *manager) fetchAncestors(config *transport_tpg.Config, tfData tpgresourc
 
 		// neither folder_id nor org_id is specified
 		if projectKey == "" {
-			return []string{"organizations/unknown"}, nil
+			return []string{unknownOrg}, nil
 		}
 		key = projectKey
 
 	default:
 		if projectKey == "" {
-			return []string{"organizations/unknown"}, nil
+			return []string{unknownOrg}, nil
 		}
 		key = projectKey
 	}
@@ -220,16 +218,16 @@ func (m *manager) getAncestorsWithCache(key string) ([]string, error) {
 			ancestors = append(ancestors, cachedAncestors...)
 			break
 		}
-		if strings.HasPrefix(cur, "organizations/") {
+		if strings.HasPrefix(cur, orgPrefix) {
 			ancestors = append(ancestors, cur)
 			break
 		}
 		if m.resourceManagerV3 == nil || m.resourceManagerV1 == nil {
 			return nil, fmt.Errorf("resourceManager required to fetch ancestry for %s from the API", cur)
 		}
-		if strings.HasPrefix(cur, "projects") {
+		if strings.HasPrefix(cur, projectPrefix) {
 			// fall back to use v1 API GetAncestry to avoid requiring extra folder permission
-			projectID := strings.TrimPrefix(cur, "projects/")
+			projectID := strings.TrimPrefix(cur, projectPrefix)
 			var resp *crmv1.GetAncestryResponse
 			var err error
 			err = transport_tpg.Retry(transport_tpg.RetryOptions{
@@ -325,9 +323,9 @@ func normalizeAncestry(val string) string {
 		old string
 		new string
 	}{
-		{"organization/", "organizations/"},
-		{"folder/", "folders/"},
-		{"project/", "projects/"},
+		{"organization/", orgPrefix},
+		{"folder/", folderPrefix},
+		{"project/", projectPrefix},
 	} {
 		val = strings.ReplaceAll(val, r.old, r.new)
 	}
@@ -382,4 +380,11 @@ type NoOpAncestryManager struct{}
 
 func (*NoOpAncestryManager) Ancestors(config *transport_tpg.Config, tfData tpgresource.TerraformResourceData, cai *resources.Asset) ([]string, string, error) {
 	return nil, "", nil
+}
+
+func ensurePrefix(s, pre string) string {
+	if strings.HasPrefix(s, pre) {
+		return s
+	}
+	return pre + s
 }
