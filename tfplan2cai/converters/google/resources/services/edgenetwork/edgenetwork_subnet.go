@@ -55,12 +55,6 @@ func GetEdgenetworkSubnetCaiObject(d tpgresource.TerraformResourceData, config *
 
 func GetEdgenetworkSubnetApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	labelsProp, err := expandEdgenetworkSubnetLabels(d.Get("labels"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
 	descriptionProp, err := expandEdgenetworkSubnetDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -91,19 +85,14 @@ func GetEdgenetworkSubnetApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("vlan_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(vlanIdProp)) && (ok || !reflect.DeepEqual(v, vlanIdProp)) {
 		obj["vlanId"] = vlanIdProp
 	}
+	labelsProp, err := expandEdgenetworkSubnetEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 
 	return obj, nil
-}
-
-func expandEdgenetworkSubnetLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandEdgenetworkSubnetDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -128,4 +117,15 @@ func expandEdgenetworkSubnetIpv6Cidr(v interface{}, d tpgresource.TerraformResou
 
 func expandEdgenetworkSubnetVlanId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandEdgenetworkSubnetEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
