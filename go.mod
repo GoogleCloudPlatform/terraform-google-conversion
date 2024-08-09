@@ -11,13 +11,13 @@ require (
 	github.com/hashicorp/hcl/v2 v2.20.1
 	github.com/hashicorp/terraform-json v0.22.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.33.0
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20240809161150-306a821f7d63
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20240809171910-b44d6e9b3cea
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.9.0
 	github.com/zclconf/go-cty v1.14.4
 	go.uber.org/zap v1.21.0
-	google.golang.org/api v0.189.0
+	google.golang.org/api v0.190.0
 )
 
 require github.com/spf13/cobra v1.7.0
@@ -26,13 +26,14 @@ require (
 	bitbucket.org/creachadair/stringset v0.0.11 // indirect
 	cel.dev/expr v0.15.0 // indirect
 	cloud.google.com/go v0.115.0 // indirect
-	cloud.google.com/go/auth v0.7.2 // indirect
+	cloud.google.com/go/auth v0.7.3 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.3 // indirect
-	cloud.google.com/go/bigtable v1.26.0 // indirect
+	cloud.google.com/go/bigtable v1.27.2-0.20240730134218-123c88616251 // indirect
 	cloud.google.com/go/compute/metadata v0.5.0 // indirect
-	cloud.google.com/go/iam v1.1.10 // indirect
-	cloud.google.com/go/longrunning v0.5.9 // indirect
-	github.com/GoogleCloudPlatform/declarative-resource-client-library v1.68.0 // indirect
+	cloud.google.com/go/iam v1.1.12 // indirect
+	cloud.google.com/go/longrunning v0.5.11 // indirect
+	cloud.google.com/go/monitoring v1.20.3 // indirect
+	github.com/GoogleCloudPlatform/declarative-resource-client-library v1.70.0 // indirect
 	github.com/ProtonMail/go-crypto v1.1.0-alpha.2 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
@@ -55,7 +56,7 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/go-cpy v0.0.0-20211218193943-a9c933c06932 // indirect
-	github.com/google/s2a-go v0.1.7 // indirect
+	github.com/google/s2a-go v0.1.8 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.13.0 // indirect
@@ -100,6 +101,8 @@ require (
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0 // indirect
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
+	go.opentelemetry.io/otel/sdk v1.24.0 // indirect
+	go.opentelemetry.io/otel/sdk/metric v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
@@ -115,9 +118,9 @@ require (
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto v0.0.0-20240722135656-d784300faade // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240722135656-d784300faade // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240722135656-d784300faade // indirect
+	google.golang.org/genproto v0.0.0-20240730163845-b1a4ccb954bf // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240725223205-93522f1f2a9f // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240730163845-b1a4ccb954bf // indirect
 	google.golang.org/grpc v1.64.1 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

@@ -120,6 +120,14 @@ func resourceComputeRegionTargetHttpsProxyEncoder(d tpgresource.TerraformResourc
 		obj["sslCertificates"] = obj["certificateManagerCertificates"]
 		delete(obj, "certificateManagerCertificates")
 	}
+
+	// Send null if serverTlsPolicy is not set. Without this, Terraform would not send any value for `serverTlsPolicy`
+	// in the "PATCH" payload so if you were to remove a server TLS policy from a target HTTPS proxy, it would NOT remove
+	// the association.
+	if _, ok := obj["serverTlsPolicy"]; !ok {
+		obj["serverTlsPolicy"] = nil
+	}
+
 	return obj, nil
 }
 

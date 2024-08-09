@@ -181,6 +181,13 @@ func expandCloudRunV2ServiceBinaryAuthorization(v interface{}, d tpgresource.Ter
 		transformed["useDefault"] = transformedUseDefault
 	}
 
+	transformedPolicy, err := expandCloudRunV2ServiceBinaryAuthorizationPolicy(original["policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["policy"] = transformedPolicy
+	}
+
 	return transformed, nil
 }
 
@@ -189,6 +196,10 @@ func expandCloudRunV2ServiceBinaryAuthorizationBreakglassJustification(v interfa
 }
 
 func expandCloudRunV2ServiceBinaryAuthorizationUseDefault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBinaryAuthorizationPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
