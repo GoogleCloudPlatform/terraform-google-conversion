@@ -252,7 +252,7 @@ func expandWorkstationsWorkstationConfigHostGceInstance(v interface{}, d tpgreso
 	transformedDisableSsh, err := expandWorkstationsWorkstationConfigHostGceInstanceDisableSsh(original["disable_ssh"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDisableSsh); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["disableSsh"] = transformedDisableSsh
 	}
 
