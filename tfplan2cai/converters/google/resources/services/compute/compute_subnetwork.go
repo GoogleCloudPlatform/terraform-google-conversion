@@ -17,6 +17,7 @@ package compute
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 	"reflect"
 
@@ -46,6 +47,37 @@ func IsShrinkageIpCidr(_ context.Context, old, new, _ interface{}) bool {
 	}
 
 	return true
+}
+
+func sendSecondaryIpRangeIfEmptyDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	// on create, return immediately as we don't need to determine if the value is empty or not
+	if diff.Id() == "" {
+		return nil
+	}
+
+	sendZero := diff.Get("send_secondary_ip_range_if_empty").(bool)
+	if !sendZero {
+		return nil
+	}
+
+	configSecondaryIpRange := diff.GetRawConfig().GetAttr("secondary_ip_range")
+	if !configSecondaryIpRange.IsKnown() {
+		return nil
+	}
+	configValueIsEmpty := configSecondaryIpRange.IsNull() || configSecondaryIpRange.LengthInt() == 0
+
+	stateSecondaryIpRange := diff.GetRawState().GetAttr("secondary_ip_range")
+	if !stateSecondaryIpRange.IsKnown() {
+		return nil
+	}
+	stateValueIsEmpty := stateSecondaryIpRange.IsNull() || stateSecondaryIpRange.LengthInt() == 0
+
+	if configValueIsEmpty && !stateValueIsEmpty {
+		log.Printf("[DEBUG] setting secondary_ip_range to newly empty")
+		diff.SetNew("secondary_ip_range", make([]interface{}, 0))
+	}
+
+	return nil
 }
 
 const ComputeSubnetworkAssetType string = "compute.googleapis.com/Subnetwork"
