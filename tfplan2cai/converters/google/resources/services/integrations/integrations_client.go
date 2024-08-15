@@ -60,23 +60,11 @@ func GetIntegrationsClientApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("cloud_kms_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(cloudKmsConfigProp)) && (ok || !reflect.DeepEqual(v, cloudKmsConfigProp)) {
 		obj["cloudKmsConfig"] = cloudKmsConfigProp
 	}
-	createSampleWorkflowsProp, err := expandIntegrationsClientCreateSampleWorkflows(d.Get("create_sample_workflows"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("create_sample_workflows"); !tpgresource.IsEmptyValue(reflect.ValueOf(createSampleWorkflowsProp)) && (ok || !reflect.DeepEqual(v, createSampleWorkflowsProp)) {
-		obj["createSampleWorkflows"] = createSampleWorkflowsProp
-	}
 	createSampleIntegrationsProp, err := expandIntegrationsClientCreateSampleIntegrations(d.Get("create_sample_integrations"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("create_sample_integrations"); !tpgresource.IsEmptyValue(reflect.ValueOf(createSampleIntegrationsProp)) && (ok || !reflect.DeepEqual(v, createSampleIntegrationsProp)) {
 		obj["createSampleIntegrations"] = createSampleIntegrationsProp
-	}
-	provisionGmekProp, err := expandIntegrationsClientProvisionGmek(d.Get("provision_gmek"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("provision_gmek"); !tpgresource.IsEmptyValue(reflect.ValueOf(provisionGmekProp)) && (ok || !reflect.DeepEqual(v, provisionGmekProp)) {
-		obj["provisionGmek"] = provisionGmekProp
 	}
 	runAsServiceAccountProp, err := expandIntegrationsClientRunAsServiceAccount(d.Get("run_as_service_account"), d, config)
 	if err != nil {
@@ -155,15 +143,7 @@ func expandIntegrationsClientCloudKmsConfigKmsProjectId(v interface{}, d tpgreso
 	return v, nil
 }
 
-func expandIntegrationsClientCreateSampleWorkflows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandIntegrationsClientCreateSampleIntegrations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandIntegrationsClientProvisionGmek(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
