@@ -189,6 +189,13 @@ func expandNetworkServicesTcpRouteRulesAction(v interface{}, d tpgresource.Terra
 		transformed["originalDestination"] = transformedOriginalDestination
 	}
 
+	transformedIdleTimeout, err := expandNetworkServicesTcpRouteRulesActionIdleTimeout(original["idle_timeout"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleTimeout"] = transformedIdleTimeout
+	}
+
 	return transformed, nil
 }
 
@@ -230,6 +237,10 @@ func expandNetworkServicesTcpRouteRulesActionDestinationsWeight(v interface{}, d
 }
 
 func expandNetworkServicesTcpRouteRulesActionOriginalDestination(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesTcpRouteRulesActionIdleTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
