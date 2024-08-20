@@ -78,6 +78,18 @@ func GetParallelstoreInstanceApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("reserved_ip_range"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservedIpRangeProp)) && (ok || !reflect.DeepEqual(v, reservedIpRangeProp)) {
 		obj["reservedIpRange"] = reservedIpRangeProp
 	}
+	fileStripeLevelProp, err := expandParallelstoreInstanceFileStripeLevel(d.Get("file_stripe_level"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("file_stripe_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(fileStripeLevelProp)) && (ok || !reflect.DeepEqual(v, fileStripeLevelProp)) {
+		obj["fileStripeLevel"] = fileStripeLevelProp
+	}
+	directoryStripeLevelProp, err := expandParallelstoreInstanceDirectoryStripeLevel(d.Get("directory_stripe_level"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("directory_stripe_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(directoryStripeLevelProp)) && (ok || !reflect.DeepEqual(v, directoryStripeLevelProp)) {
+		obj["directoryStripeLevel"] = directoryStripeLevelProp
+	}
 	labelsProp, err := expandParallelstoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -101,6 +113,14 @@ func expandParallelstoreInstanceNetwork(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandParallelstoreInstanceReservedIpRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandParallelstoreInstanceFileStripeLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandParallelstoreInstanceDirectoryStripeLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
