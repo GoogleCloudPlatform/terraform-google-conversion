@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------------
 
-package bigquery
+package kms
 
 import (
 	"fmt"
@@ -26,19 +26,20 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-var BigQueryTableIamSchema = map[string]*schema.Schema{
+var KMSEkmConnectionIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,
 		Computed: true,
 		Optional: true,
 		ForceNew: true,
 	},
-	"dataset_id": {
+	"location": {
 		Type:     schema.TypeString,
-		Required: true,
+		Computed: true,
+		Optional: true,
 		ForceNew: true,
 	},
-	"table_id": {
+	"name": {
 		Type:             schema.TypeString,
 		Required:         true,
 		ForceNew:         true,
@@ -46,15 +47,15 @@ var BigQueryTableIamSchema = map[string]*schema.Schema{
 	},
 }
 
-type BigQueryTableIamUpdater struct {
-	project   string
-	datasetId string
-	tableId   string
-	d         tpgresource.TerraformResourceData
-	Config    *transport_tpg.Config
+type KMSEkmConnectionIamUpdater struct {
+	project  string
+	location string
+	name     string
+	d        tpgresource.TerraformResourceData
+	Config   *transport_tpg.Config
 }
 
-func BigQueryTableIamUpdaterProducer(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgiamresource.ResourceIamUpdater, error) {
+func KMSEkmConnectionIamUpdaterProducer(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (tpgiamresource.ResourceIamUpdater, error) {
 	values := make(map[string]string)
 
 	project, _ := tpgresource.GetProject(d, config)
@@ -64,16 +65,19 @@ func BigQueryTableIamUpdaterProducer(d tpgresource.TerraformResourceData, config
 		}
 	}
 	values["project"] = project
-	if v, ok := d.GetOk("dataset_id"); ok {
-		values["dataset_id"] = v.(string)
+	location, _ := tpgresource.GetLocation(d, config)
+	if location != "" {
+		if err := d.Set("location", location); err != nil {
+			return nil, fmt.Errorf("Error setting location: %s", err)
+		}
 	}
-
-	if v, ok := d.GetOk("table_id"); ok {
-		values["table_id"] = v.(string)
+	values["location"] = location
+	if v, ok := d.GetOk("name"); ok {
+		values["name"] = v.(string)
 	}
 
 	// We may have gotten either a long or short name, so attempt to parse long name if possible
-	m, err := tpgresource.GetImportIdQualifiers([]string{"projects/(?P<project>[^/]+)/datasets/(?P<dataset_id>[^/]+)/tables/(?P<table_id>[^/]+)", "(?P<project>[^/]+)/(?P<dataset_id>[^/]+)/(?P<table_id>[^/]+)", "(?P<dataset_id>[^/]+)/(?P<table_id>[^/]+)", "(?P<table_id>[^/]+)"}, d, config, d.Get("table_id").(string))
+	m, err := tpgresource.GetImportIdQualifiers([]string{"projects/(?P<project>[^/]+)/locations/(?P<location>[^/]+)/ekmConnections/(?P<name>[^/]+)", "(?P<project>[^/]+)/(?P<location>[^/]+)/(?P<name>[^/]+)", "(?P<location>[^/]+)/(?P<name>[^/]+)"}, d, config, d.Get("name").(string))
 	if err != nil {
 		return nil, err
 	}
@@ -82,28 +86,28 @@ func BigQueryTableIamUpdaterProducer(d tpgresource.TerraformResourceData, config
 		values[k] = v
 	}
 
-	u := &BigQueryTableIamUpdater{
-		project:   values["project"],
-		datasetId: values["dataset_id"],
-		tableId:   values["table_id"],
-		d:         d,
-		Config:    config,
+	u := &KMSEkmConnectionIamUpdater{
+		project:  values["project"],
+		location: values["location"],
+		name:     values["name"],
+		d:        d,
+		Config:   config,
 	}
 
 	if err := d.Set("project", u.project); err != nil {
 		return nil, fmt.Errorf("Error setting project: %s", err)
 	}
-	if err := d.Set("dataset_id", u.datasetId); err != nil {
-		return nil, fmt.Errorf("Error setting dataset_id: %s", err)
+	if err := d.Set("location", u.location); err != nil {
+		return nil, fmt.Errorf("Error setting location: %s", err)
 	}
-	if err := d.Set("table_id", u.GetResourceId()); err != nil {
-		return nil, fmt.Errorf("Error setting table_id: %s", err)
+	if err := d.Set("name", u.GetResourceId()); err != nil {
+		return nil, fmt.Errorf("Error setting name: %s", err)
 	}
 
 	return u, nil
 }
 
-func BigQueryTableIdParseFunc(d *schema.ResourceData, config *transport_tpg.Config) error {
+func KMSEkmConnectionIdParseFunc(d *schema.ResourceData, config *transport_tpg.Config) error {
 	values := make(map[string]string)
 
 	project, _ := tpgresource.GetProject(d, config)
@@ -111,7 +115,12 @@ func BigQueryTableIdParseFunc(d *schema.ResourceData, config *transport_tpg.Conf
 		values["project"] = project
 	}
 
-	m, err := tpgresource.GetImportIdQualifiers([]string{"projects/(?P<project>[^/]+)/datasets/(?P<dataset_id>[^/]+)/tables/(?P<table_id>[^/]+)", "(?P<project>[^/]+)/(?P<dataset_id>[^/]+)/(?P<table_id>[^/]+)", "(?P<dataset_id>[^/]+)/(?P<table_id>[^/]+)", "(?P<table_id>[^/]+)"}, d, config, d.Id())
+	location, _ := tpgresource.GetLocation(d, config)
+	if location != "" {
+		values["location"] = location
+	}
+
+	m, err := tpgresource.GetImportIdQualifiers([]string{"projects/(?P<project>[^/]+)/locations/(?P<location>[^/]+)/ekmConnections/(?P<name>[^/]+)", "(?P<project>[^/]+)/(?P<location>[^/]+)/(?P<name>[^/]+)", "(?P<location>[^/]+)/(?P<name>[^/]+)"}, d, config, d.Id())
 	if err != nil {
 		return err
 	}
@@ -120,22 +129,22 @@ func BigQueryTableIdParseFunc(d *schema.ResourceData, config *transport_tpg.Conf
 		values[k] = v
 	}
 
-	u := &BigQueryTableIamUpdater{
-		project:   values["project"],
-		datasetId: values["dataset_id"],
-		tableId:   values["table_id"],
-		d:         d,
-		Config:    config,
+	u := &KMSEkmConnectionIamUpdater{
+		project:  values["project"],
+		location: values["location"],
+		name:     values["name"],
+		d:        d,
+		Config:   config,
 	}
-	if err := d.Set("table_id", u.GetResourceId()); err != nil {
-		return fmt.Errorf("Error setting table_id: %s", err)
+	if err := d.Set("name", u.GetResourceId()); err != nil {
+		return fmt.Errorf("Error setting name: %s", err)
 	}
 	d.SetId(u.GetResourceId())
 	return nil
 }
 
-func (u *BigQueryTableIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.Policy, error) {
-	url, err := u.qualifyTableUrl("getIamPolicy")
+func (u *KMSEkmConnectionIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.Policy, error) {
+	url, err := u.qualifyEkmConnectionUrl("getIamPolicy")
 	if err != nil {
 		return nil, err
 	}
@@ -145,6 +154,10 @@ func (u *BigQueryTableIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.
 		return nil, err
 	}
 	var obj map[string]interface{}
+	url, err = transport_tpg.AddQueryParams(url, map[string]string{"options.requestedPolicyVersion": fmt.Sprintf("%d", tpgiamresource.IamPolicyVersion)})
+	if err != nil {
+		return nil, err
+	}
 
 	userAgent, err := tpgresource.GenerateUserAgentString(u.d, u.Config.UserAgent)
 	if err != nil {
@@ -153,7 +166,7 @@ func (u *BigQueryTableIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.
 
 	policy, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
 		Config:    u.Config,
-		Method:    "POST",
+		Method:    "GET",
 		Project:   project,
 		RawURL:    url,
 		UserAgent: userAgent,
@@ -172,18 +185,16 @@ func (u *BigQueryTableIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.
 	return out, nil
 }
 
-func (u *BigQueryTableIamUpdater) SetResourceIamPolicy(policy *cloudresourcemanager.Policy) error {
+func (u *KMSEkmConnectionIamUpdater) SetResourceIamPolicy(policy *cloudresourcemanager.Policy) error {
 	json, err := tpgresource.ConvertToMap(policy)
 	if err != nil {
 		return err
 	}
 
-	// This is an override of the existing version that might have been set in the resource_iam_member|policy|binding code
-	json["version"] = 1
 	obj := make(map[string]interface{})
 	obj["policy"] = json
 
-	url, err := u.qualifyTableUrl("setIamPolicy")
+	url, err := u.qualifyEkmConnectionUrl("setIamPolicy")
 	if err != nil {
 		return err
 	}
@@ -213,8 +224,8 @@ func (u *BigQueryTableIamUpdater) SetResourceIamPolicy(policy *cloudresourcemana
 	return nil
 }
 
-func (u *BigQueryTableIamUpdater) qualifyTableUrl(methodIdentifier string) (string, error) {
-	urlTemplate := fmt.Sprintf("{{BigQueryBasePath}}%s:%s", fmt.Sprintf("projects/%s/datasets/%s/tables/%s", u.project, u.datasetId, u.tableId), methodIdentifier)
+func (u *KMSEkmConnectionIamUpdater) qualifyEkmConnectionUrl(methodIdentifier string) (string, error) {
+	urlTemplate := fmt.Sprintf("{{KMSBasePath}}%s:%s", fmt.Sprintf("projects/%s/locations/%s/ekmConnections/%s", u.project, u.location, u.name), methodIdentifier)
 	url, err := tpgresource.ReplaceVars(u.d, u.Config, urlTemplate)
 	if err != nil {
 		return "", err
@@ -222,14 +233,14 @@ func (u *BigQueryTableIamUpdater) qualifyTableUrl(methodIdentifier string) (stri
 	return url, nil
 }
 
-func (u *BigQueryTableIamUpdater) GetResourceId() string {
-	return fmt.Sprintf("projects/%s/datasets/%s/tables/%s", u.project, u.datasetId, u.tableId)
+func (u *KMSEkmConnectionIamUpdater) GetResourceId() string {
+	return fmt.Sprintf("projects/%s/locations/%s/ekmConnections/%s", u.project, u.location, u.name)
 }
 
-func (u *BigQueryTableIamUpdater) GetMutexKey() string {
-	return fmt.Sprintf("iam-bigquery-table-%s", u.GetResourceId())
+func (u *KMSEkmConnectionIamUpdater) GetMutexKey() string {
+	return fmt.Sprintf("iam-kms-ekmconnection-%s", u.GetResourceId())
 }
 
-func (u *BigQueryTableIamUpdater) DescribeResource() string {
-	return fmt.Sprintf("bigquery table %q", u.GetResourceId())
+func (u *KMSEkmConnectionIamUpdater) DescribeResource() string {
+	return fmt.Sprintf("kms ekmconnection %q", u.GetResourceId())
 }
