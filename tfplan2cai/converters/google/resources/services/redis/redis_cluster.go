@@ -96,6 +96,12 @@ func GetRedisClusterApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("shard_count"); !tpgresource.IsEmptyValue(reflect.ValueOf(shardCountProp)) && (ok || !reflect.DeepEqual(v, shardCountProp)) {
 		obj["shardCount"] = shardCountProp
 	}
+	deletionProtectionEnabledProp, err := expandRedisClusterDeletionProtectionEnabled(d.Get("deletion_protection_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deletion_protection_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(deletionProtectionEnabledProp)) && (ok || !reflect.DeepEqual(v, deletionProtectionEnabledProp)) {
+		obj["deletionProtectionEnabled"] = deletionProtectionEnabledProp
+	}
 	redisConfigsProp, err := expandRedisClusterRedisConfigs(d.Get("redis_configs"), d, config)
 	if err != nil {
 		return nil, err
@@ -183,6 +189,10 @@ func expandRedisClusterReplicaCount(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandRedisClusterShardCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterDeletionProtectionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

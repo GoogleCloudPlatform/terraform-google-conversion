@@ -380,24 +380,6 @@ func GetComputeBackendServiceApiObject(d tpgresource.TerraformResourceData, conf
 }
 
 func resourceComputeBackendServiceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	// The BackendService API's Update / PUT API is badly formed and behaves like
-	// a PATCH field for at least IAP. When sent a `null` `iap` field, the API
-	// doesn't disable an existing field. To work around this, we need to emulate
-	// the old Terraform behaviour of always sending the block (at both update and
-	// create), and force sending each subfield as empty when the block isn't
-	// present in config.
-
-	iapVal := obj["iap"]
-	if iapVal == nil {
-		data := map[string]interface{}{}
-		data["enabled"] = false
-		obj["iap"] = data
-	} else {
-		iap := iapVal.(map[string]interface{})
-		iap["enabled"] = true
-		obj["iap"] = iap
-	}
-
 	backendsRaw, ok := obj["backends"]
 	if !ok {
 		return obj, nil
@@ -1140,6 +1122,13 @@ func expandComputeBackendServiceIap(v interface{}, d tpgresource.TerraformResour
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedEnabled, err := expandComputeBackendServiceIapEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
 	transformedOauth2ClientId, err := expandComputeBackendServiceIapOauth2ClientId(original["oauth2_client_id"], d, config)
 	if err != nil {
 		return nil, err
@@ -1162,6 +1151,10 @@ func expandComputeBackendServiceIap(v interface{}, d tpgresource.TerraformResour
 	}
 
 	return transformed, nil
+}
+
+func expandComputeBackendServiceIapEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeBackendServiceIapOauth2ClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

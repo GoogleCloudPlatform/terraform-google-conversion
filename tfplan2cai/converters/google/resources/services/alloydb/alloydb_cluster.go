@@ -60,12 +60,6 @@ func GetAlloydbClusterApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("encryption_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionConfigProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigProp)) {
 		obj["encryptionConfig"] = encryptionConfigProp
 	}
-	networkProp, err := expandAlloydbClusterNetwork(d.Get("network"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
-		obj["network"] = networkProp
-	}
 	networkConfigProp, err := expandAlloydbClusterNetworkConfig(d.Get("network_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -180,10 +174,6 @@ func expandAlloydbClusterEncryptionConfig(v interface{}, d tpgresource.Terraform
 }
 
 func expandAlloydbClusterEncryptionConfigKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandAlloydbClusterNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

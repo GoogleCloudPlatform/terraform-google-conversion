@@ -72,12 +72,6 @@ func GetBigqueryReservationReservationApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("concurrency"); !tpgresource.IsEmptyValue(reflect.ValueOf(concurrencyProp)) && (ok || !reflect.DeepEqual(v, concurrencyProp)) {
 		obj["concurrency"] = concurrencyProp
 	}
-	multiRegionAuxiliaryProp, err := expandBigqueryReservationReservationMultiRegionAuxiliary(d.Get("multi_region_auxiliary"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("multi_region_auxiliary"); !tpgresource.IsEmptyValue(reflect.ValueOf(multiRegionAuxiliaryProp)) && (ok || !reflect.DeepEqual(v, multiRegionAuxiliaryProp)) {
-		obj["multiRegionAuxiliary"] = multiRegionAuxiliaryProp
-	}
 	editionProp, err := expandBigqueryReservationReservationEdition(d.Get("edition"), d, config)
 	if err != nil {
 		return nil, err
@@ -103,10 +97,6 @@ func expandBigqueryReservationReservationIgnoreIdleSlots(v interface{}, d tpgres
 }
 
 func expandBigqueryReservationReservationConcurrency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBigqueryReservationReservationMultiRegionAuxiliary(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
