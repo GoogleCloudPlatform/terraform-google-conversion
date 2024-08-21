@@ -124,6 +124,12 @@ func GetComputeSubnetworkApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("ip_cidr_range"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipCidrRangeProp)) && (ok || !reflect.DeepEqual(v, ipCidrRangeProp)) {
 		obj["ipCidrRange"] = ipCidrRangeProp
 	}
+	reservedInternalRangeProp, err := expandComputeSubnetworkReservedInternalRange(d.Get("reserved_internal_range"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("reserved_internal_range"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservedInternalRangeProp)) && (ok || !reflect.DeepEqual(v, reservedInternalRangeProp)) {
+		obj["reservedInternalRange"] = reservedInternalRangeProp
+	}
 	nameProp, err := expandComputeSubnetworkName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
@@ -214,6 +220,10 @@ func expandComputeSubnetworkIpCidrRange(v interface{}, d tpgresource.TerraformRe
 	return v, nil
 }
 
+func expandComputeSubnetworkReservedInternalRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeSubnetworkName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -258,6 +268,13 @@ func expandComputeSubnetworkSecondaryIpRange(v interface{}, d tpgresource.Terraf
 			transformed["ipCidrRange"] = transformedIpCidrRange
 		}
 
+		transformedReservedInternalRange, err := expandComputeSubnetworkSecondaryIpRangeReservedInternalRange(original["reserved_internal_range"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedReservedInternalRange); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["reservedInternalRange"] = transformedReservedInternalRange
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -268,6 +285,10 @@ func expandComputeSubnetworkSecondaryIpRangeRangeName(v interface{}, d tpgresour
 }
 
 func expandComputeSubnetworkSecondaryIpRangeIpCidrRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkSecondaryIpRangeReservedInternalRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -113,7 +113,12 @@ func expandComputeRegionSslCertificateName(v interface{}, d tpgresource.Terrafor
 	if v, ok := d.GetOk("name"); ok {
 		certName = v.(string)
 	} else if v, ok := d.GetOk("name_prefix"); ok {
-		certName = id.PrefixedUniqueId(v.(string))
+		prefix := v.(string)
+		if len(prefix) > 37 {
+			certName = tpgresource.ReducedPrefixedUniqueId(prefix)
+		} else {
+			certName = id.PrefixedUniqueId(prefix)
+		}
 	} else {
 		certName = id.UniqueId()
 	}
