@@ -236,10 +236,43 @@ func expandBigqueryAnalyticsHubListingBigqueryDataset(v interface{}, d tpgresour
 		transformed["dataset"] = transformedDataset
 	}
 
+	transformedSelectedResources, err := expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResources(original["selected_resources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSelectedResources); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["selectedResources"] = transformedSelectedResources
+	}
+
 	return transformed, nil
 }
 
 func expandBigqueryAnalyticsHubListingBigqueryDatasetDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTable, err := expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResourcesTable(original["table"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["table"] = transformedTable
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResourcesTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -259,6 +292,13 @@ func expandBigqueryAnalyticsHubListingRestrictedExportConfig(v interface{}, d tp
 		transformed["enabled"] = transformedEnabled
 	}
 
+	transformedRestrictDirectTableAccess, err := expandBigqueryAnalyticsHubListingRestrictedExportConfigRestrictDirectTableAccess(original["restrict_direct_table_access"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRestrictDirectTableAccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["restrictDirectTableAccess"] = transformedRestrictDirectTableAccess
+	}
+
 	transformedRestrictQueryResult, err := expandBigqueryAnalyticsHubListingRestrictedExportConfigRestrictQueryResult(original["restrict_query_result"], d, config)
 	if err != nil {
 		return nil, err
@@ -270,6 +310,10 @@ func expandBigqueryAnalyticsHubListingRestrictedExportConfig(v interface{}, d tp
 }
 
 func expandBigqueryAnalyticsHubListingRestrictedExportConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingRestrictedExportConfigRestrictDirectTableAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
