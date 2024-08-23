@@ -1582,6 +1582,20 @@ func expandDatastreamStreamSourceConfigSqlServerSourceConfig(v interface{}, d tp
 		transformed["maxConcurrentBackfillTasks"] = transformedMaxConcurrentBackfillTasks
 	}
 
+	transformedTransactionLogs, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigTransactionLogs(original["transaction_logs"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["transactionLogs"] = transformedTransactionLogs
+	}
+
+	transformedChangeTables, err := expandDatastreamStreamSourceConfigSqlServerSourceConfigChangeTables(original["change_tables"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["changeTables"] = transformedChangeTables
+	}
+
 	return transformed, nil
 }
 
@@ -1967,6 +1981,36 @@ func expandDatastreamStreamSourceConfigSqlServerSourceConfigMaxConcurrentCdcTask
 
 func expandDatastreamStreamSourceConfigSqlServerSourceConfigMaxConcurrentBackfillTasks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigTransactionLogs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamSourceConfigSqlServerSourceConfigChangeTables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandDatastreamStreamDestinationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
