@@ -138,6 +138,12 @@ func GetAlloydbClusterApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("maintenance_update_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(maintenanceUpdatePolicyProp)) && (ok || !reflect.DeepEqual(v, maintenanceUpdatePolicyProp)) {
 		obj["maintenanceUpdatePolicy"] = maintenanceUpdatePolicyProp
 	}
+	subscriptionTypeProp, err := expandAlloydbClusterSubscriptionType(d.Get("subscription_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("subscription_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(subscriptionTypeProp)) && (ok || !reflect.DeepEqual(v, subscriptionTypeProp)) {
+		obj["subscriptionType"] = subscriptionTypeProp
+	}
 	labelsProp, err := expandAlloydbClusterEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -782,6 +788,10 @@ func expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeSecon
 }
 
 func expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterSubscriptionType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
