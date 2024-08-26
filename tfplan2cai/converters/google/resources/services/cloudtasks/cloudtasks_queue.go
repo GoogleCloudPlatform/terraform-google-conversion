@@ -95,6 +95,12 @@ func GetCloudTasksQueueApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("stackdriver_logging_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(stackdriverLoggingConfigProp)) && (ok || !reflect.DeepEqual(v, stackdriverLoggingConfigProp)) {
 		obj["stackdriverLoggingConfig"] = stackdriverLoggingConfigProp
 	}
+	httpTargetProp, err := expandCloudTasksQueueHttpTarget(d.Get("http_target"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("http_target"); !tpgresource.IsEmptyValue(reflect.ValueOf(httpTargetProp)) && (ok || !reflect.DeepEqual(v, httpTargetProp)) {
+		obj["httpTarget"] = httpTargetProp
+	}
 
 	return obj, nil
 }
@@ -291,5 +297,296 @@ func expandCloudTasksQueueStackdriverLoggingConfig(v interface{}, d tpgresource.
 }
 
 func expandCloudTasksQueueStackdriverLoggingConfigSamplingRatio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHttpMethod, err := expandCloudTasksQueueHttpTargetHttpMethod(original["http_method"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHttpMethod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["httpMethod"] = transformedHttpMethod
+	}
+
+	transformedUriOverride, err := expandCloudTasksQueueHttpTargetUriOverride(original["uri_override"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUriOverride); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uriOverride"] = transformedUriOverride
+	}
+
+	transformedHeaderOverrides, err := expandCloudTasksQueueHttpTargetHeaderOverrides(original["header_overrides"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHeaderOverrides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["headerOverrides"] = transformedHeaderOverrides
+	}
+
+	transformedOauthToken, err := expandCloudTasksQueueHttpTargetOauthToken(original["oauth_token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauthToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauthToken"] = transformedOauthToken
+	}
+
+	transformedOidcToken, err := expandCloudTasksQueueHttpTargetOidcToken(original["oidc_token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOidcToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oidcToken"] = transformedOidcToken
+	}
+
+	return transformed, nil
+}
+
+func expandCloudTasksQueueHttpTargetHttpMethod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedScheme, err := expandCloudTasksQueueHttpTargetUriOverrideScheme(original["scheme"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScheme); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scheme"] = transformedScheme
+	}
+
+	transformedHost, err := expandCloudTasksQueueHttpTargetUriOverrideHost(original["host"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHost); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["host"] = transformedHost
+	}
+
+	transformedPort, err := expandCloudTasksQueueHttpTargetUriOverridePort(original["port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["port"] = transformedPort
+	}
+
+	transformedPathOverride, err := expandCloudTasksQueueHttpTargetUriOverridePathOverride(original["path_override"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPathOverride); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pathOverride"] = transformedPathOverride
+	}
+
+	transformedQueryOverride, err := expandCloudTasksQueueHttpTargetUriOverrideQueryOverride(original["query_override"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedQueryOverride); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["queryOverride"] = transformedQueryOverride
+	}
+
+	transformedUriOverrideEnforceMode, err := expandCloudTasksQueueHttpTargetUriOverrideUriOverrideEnforceMode(original["uri_override_enforce_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUriOverrideEnforceMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uriOverrideEnforceMode"] = transformedUriOverrideEnforceMode
+	}
+
+	return transformed, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverrideScheme(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverrideHost(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverridePort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverridePathOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPath, err := expandCloudTasksQueueHttpTargetUriOverridePathOverridePath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	return transformed, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverridePathOverridePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverrideQueryOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedQueryParams, err := expandCloudTasksQueueHttpTargetUriOverrideQueryOverrideQueryParams(original["query_params"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedQueryParams); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["queryParams"] = transformedQueryParams
+	}
+
+	return transformed, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverrideQueryOverrideQueryParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetUriOverrideUriOverrideEnforceMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetHeaderOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHeader, err := expandCloudTasksQueueHttpTargetHeaderOverridesHeader(original["header"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeader); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["header"] = transformedHeader
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudTasksQueueHttpTargetHeaderOverridesHeader(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKey, err := expandCloudTasksQueueHttpTargetHeaderOverridesHeaderKey(original["key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["key"] = transformedKey
+	}
+
+	transformedValue, err := expandCloudTasksQueueHttpTargetHeaderOverridesHeaderValue(original["value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["value"] = transformedValue
+	}
+
+	return transformed, nil
+}
+
+func expandCloudTasksQueueHttpTargetHeaderOverridesHeaderKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetHeaderOverridesHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetOauthToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceAccountEmail, err := expandCloudTasksQueueHttpTargetOauthTokenServiceAccountEmail(original["service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
+	}
+
+	transformedScope, err := expandCloudTasksQueueHttpTargetOauthTokenScope(original["scope"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScope); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scope"] = transformedScope
+	}
+
+	return transformed, nil
+}
+
+func expandCloudTasksQueueHttpTargetOauthTokenServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetOauthTokenScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetOidcToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceAccountEmail, err := expandCloudTasksQueueHttpTargetOidcTokenServiceAccountEmail(original["service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
+	}
+
+	transformedAudience, err := expandCloudTasksQueueHttpTargetOidcTokenAudience(original["audience"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudience); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["audience"] = transformedAudience
+	}
+
+	return transformed, nil
+}
+
+func expandCloudTasksQueueHttpTargetOidcTokenServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudTasksQueueHttpTargetOidcTokenAudience(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
