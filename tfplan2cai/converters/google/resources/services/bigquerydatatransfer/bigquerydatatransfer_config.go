@@ -169,6 +169,12 @@ func GetBigqueryDataTransferConfigApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("data_refresh_window_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataRefreshWindowDaysProp)) && (ok || !reflect.DeepEqual(v, dataRefreshWindowDaysProp)) {
 		obj["dataRefreshWindowDays"] = dataRefreshWindowDaysProp
 	}
+	encryptionConfigurationProp, err := expandBigqueryDataTransferConfigEncryptionConfiguration(d.Get("encryption_configuration"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("encryption_configuration"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionConfigurationProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigurationProp)) {
+		obj["encryptionConfiguration"] = encryptionConfigurationProp
+	}
 	disabledProp, err := expandBigqueryDataTransferConfigDisabled(d.Get("disabled"), d, config)
 	if err != nil {
 		return nil, err
@@ -310,6 +316,29 @@ func expandBigqueryDataTransferConfigNotificationPubsubTopic(v interface{}, d tp
 }
 
 func expandBigqueryDataTransferConfigDataRefreshWindowDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryDataTransferConfigEncryptionConfiguration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsKeyName, err := expandBigqueryDataTransferConfigEncryptionConfigurationKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryDataTransferConfigEncryptionConfigurationKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
