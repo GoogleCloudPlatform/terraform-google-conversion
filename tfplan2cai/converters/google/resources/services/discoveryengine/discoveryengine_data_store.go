@@ -122,6 +122,13 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfig(v interface{}, d tpg
 		transformed["name"] = transformedName
 	}
 
+	transformedChunkingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigChunkingConfig(original["chunking_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedChunkingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["chunkingConfig"] = transformedChunkingConfig
+	}
+
 	transformedDefaultParsingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfig(original["default_parsing_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -140,6 +147,64 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfig(v interface{}, d tpg
 }
 
 func expandDiscoveryEngineDataStoreDocumentProcessingConfigName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigChunkingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLayoutBasedChunkingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig(original["layout_based_chunking_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["layoutBasedChunkingConfig"] = transformedLayoutBasedChunkingConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedChunkSize, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfigChunkSize(original["chunk_size"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedChunkSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["chunkSize"] = transformedChunkSize
+	}
+
+	transformedIncludeAncestorHeadings, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfigIncludeAncestorHeadings(original["include_ancestor_headings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeAncestorHeadings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeAncestorHeadings"] = transformedIncludeAncestorHeadings
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfigChunkSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfigIncludeAncestorHeadings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -164,6 +229,13 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfig(
 		return nil, err
 	} else if val := reflect.ValueOf(transformedOcrParsingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["ocrParsingConfig"] = transformedOcrParsingConfig
+	}
+
+	transformedLayoutParsingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigLayoutParsingConfig(original["layout_parsing_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["layoutParsingConfig"] = transformedLayoutParsingConfig
 	}
 
 	return transformed, nil
@@ -207,6 +279,21 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigO
 	return v, nil
 }
 
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigLayoutParsingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
 func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	if v == nil {
 		return map[string]interface{}{}, nil
@@ -228,6 +315,13 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverride
 			return nil, err
 		} else if val := reflect.ValueOf(transformedOcrParsingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["ocrParsingConfig"] = transformedOcrParsingConfig
+		}
+
+		transformedLayoutParsingConfig, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesLayoutParsingConfig(original["layout_parsing_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["layoutParsingConfig"] = transformedLayoutParsingConfig
 		}
 
 		transformedFileType, err := tpgresource.ExpandString(original["file_type"], d, config)
@@ -275,4 +369,19 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverride
 
 func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesOcrParsingConfigUseNativeText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesLayoutParsingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
