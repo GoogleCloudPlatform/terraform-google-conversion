@@ -196,6 +196,13 @@ func expandDataLossPreventionDiscoveryConfigActions(v interface{}, d tpgresource
 			transformed["pubSubNotification"] = transformedPubSubNotification
 		}
 
+		transformedTagResources, err := expandDataLossPreventionDiscoveryConfigActionsTagResources(original["tag_resources"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTagResources); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tagResources"] = transformedTagResources
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -400,6 +407,122 @@ func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationPubsubCondi
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationDetailOfMessage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsTagResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTagConditions, err := expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditions(original["tag_conditions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTagConditions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tagConditions"] = transformedTagConditions
+	}
+
+	transformedProfileGenerationsToTag, err := expandDataLossPreventionDiscoveryConfigActionsTagResourcesProfileGenerationsToTag(original["profile_generations_to_tag"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProfileGenerationsToTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["profileGenerationsToTag"] = transformedProfileGenerationsToTag
+	}
+
+	transformedLowerDataRiskToLow, err := expandDataLossPreventionDiscoveryConfigActionsTagResourcesLowerDataRiskToLow(original["lower_data_risk_to_low"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLowerDataRiskToLow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["lowerDataRiskToLow"] = transformedLowerDataRiskToLow
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTag, err := expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsTag(original["tag"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tag"] = transformedTag
+		}
+
+		transformedSensitivityScore, err := expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsSensitivityScore(original["sensitivity_score"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSensitivityScore); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sensitivityScore"] = transformedSensitivityScore
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNamespacedValue, err := expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsTagNamespacedValue(original["namespaced_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNamespacedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["namespacedValue"] = transformedNamespacedValue
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsTagNamespacedValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsSensitivityScore(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedScore, err := expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsSensitivityScoreScore(original["score"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScore); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["score"] = transformedScore
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsSensitivityScoreScore(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsTagResourcesProfileGenerationsToTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsTagResourcesLowerDataRiskToLow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -782,6 +905,13 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadence(v inter
 		transformed["tableModifiedCadence"] = transformedTableModifiedCadence
 	}
 
+	transformedInspectTemplateModifiedCadence, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceInspectTemplateModifiedCadence(original["inspect_template_modified_cadence"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInspectTemplateModifiedCadence); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["inspectTemplateModifiedCadence"] = transformedInspectTemplateModifiedCadence
+	}
+
 	return transformed, nil
 }
 
@@ -850,6 +980,29 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceTableMod
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceTableModifiedCadenceFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceInspectTemplateModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFrequency, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceInspectTemplateModifiedCadenceFrequency(original["frequency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFrequency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["frequency"] = transformedFrequency
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceInspectTemplateModifiedCadenceFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1166,6 +1319,13 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCaden
 		transformed["refreshFrequency"] = transformedRefreshFrequency
 	}
 
+	transformedInspectTemplateModifiedCadence, err := expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCadenceInspectTemplateModifiedCadence(original["inspect_template_modified_cadence"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInspectTemplateModifiedCadence); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["inspectTemplateModifiedCadence"] = transformedInspectTemplateModifiedCadence
+	}
+
 	return transformed, nil
 }
 
@@ -1204,6 +1364,29 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCaden
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCadenceRefreshFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCadenceInspectTemplateModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFrequency, err := expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCadenceInspectTemplateModifiedCadenceFrequency(original["frequency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFrequency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["frequency"] = transformedFrequency
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCadenceInspectTemplateModifiedCadenceFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
