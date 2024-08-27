@@ -91,6 +91,12 @@ func GetComputeNodeTemplateApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("server_binding"); !tpgresource.IsEmptyValue(reflect.ValueOf(serverBindingProp)) && (ok || !reflect.DeepEqual(v, serverBindingProp)) {
 		obj["serverBinding"] = serverBindingProp
 	}
+	acceleratorsProp, err := expandComputeNodeTemplateAccelerators(d.Get("accelerators"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("accelerators"); !tpgresource.IsEmptyValue(reflect.ValueOf(acceleratorsProp)) && (ok || !reflect.DeepEqual(v, acceleratorsProp)) {
+		obj["accelerators"] = acceleratorsProp
+	}
 	cpuOvercommitTypeProp, err := expandComputeNodeTemplateCpuOvercommitType(d.Get("cpu_overcommit_type"), d, config)
 	if err != nil {
 		return nil, err
@@ -195,6 +201,43 @@ func expandComputeNodeTemplateServerBinding(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputeNodeTemplateServerBindingType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNodeTemplateAccelerators(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAcceleratorCount, err := expandComputeNodeTemplateAcceleratorsAcceleratorCount(original["accelerator_count"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAcceleratorCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["acceleratorCount"] = transformedAcceleratorCount
+		}
+
+		transformedAcceleratorType, err := expandComputeNodeTemplateAcceleratorsAcceleratorType(original["accelerator_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAcceleratorType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["acceleratorType"] = transformedAcceleratorType
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeNodeTemplateAcceleratorsAcceleratorCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNodeTemplateAcceleratorsAcceleratorType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
