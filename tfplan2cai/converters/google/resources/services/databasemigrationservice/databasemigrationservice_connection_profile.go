@@ -303,6 +303,13 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresql(v interface{}, d 
 		transformed["cloudSqlId"] = transformedCloudSqlId
 	}
 
+	transformedAlloydbClusterId, err := expandDatabaseMigrationServiceConnectionProfilePostgresqlAlloydbClusterId(original["alloydb_cluster_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAlloydbClusterId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["alloydbClusterId"] = transformedAlloydbClusterId
+	}
+
 	transformedNetworkArchitecture, err := expandDatabaseMigrationServiceConnectionProfilePostgresqlNetworkArchitecture(original["network_architecture"], d, config)
 	if err != nil {
 		return nil, err
@@ -390,6 +397,10 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresqlSslCaCertificate(v
 }
 
 func expandDatabaseMigrationServiceConnectionProfilePostgresqlCloudSqlId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlAlloydbClusterId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
