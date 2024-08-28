@@ -25,6 +25,12 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
+// Suppresses a diff on cases like 1:00 when it should be 01:00.
+// Because API will normalize this value
+func HourlyFormatSuppressDiff(_, old, new string, _ *schema.ResourceData) bool {
+	return old == "0"+new
+}
+
 const ComputeResourcePolicyAssetType string = "compute.googleapis.com/ResourcePolicy"
 
 func ResourceConverterComputeResourcePolicy() cai.ResourceConverter {
