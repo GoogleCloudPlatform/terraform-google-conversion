@@ -349,6 +349,13 @@ func expandPubsubSubscriptionCloudStorageConfig(v interface{}, d tpgresource.Ter
 		transformed["maxBytes"] = transformedMaxBytes
 	}
 
+	transformedMaxMessages, err := expandPubsubSubscriptionCloudStorageConfigMaxMessages(original["max_messages"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxMessages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxMessages"] = transformedMaxMessages
+	}
+
 	transformedState, err := expandPubsubSubscriptionCloudStorageConfigState(original["state"], d, config)
 	if err != nil {
 		return nil, err
@@ -397,6 +404,10 @@ func expandPubsubSubscriptionCloudStorageConfigMaxBytes(v interface{}, d tpgreso
 	return v, nil
 }
 
+func expandPubsubSubscriptionCloudStorageConfigMaxMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandPubsubSubscriptionCloudStorageConfigState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -417,10 +428,21 @@ func expandPubsubSubscriptionCloudStorageConfigAvroConfig(v interface{}, d tpgre
 		transformed["writeMetadata"] = transformedWriteMetadata
 	}
 
+	transformedUseTopicSchema, err := expandPubsubSubscriptionCloudStorageConfigAvroConfigUseTopicSchema(original["use_topic_schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseTopicSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useTopicSchema"] = transformedUseTopicSchema
+	}
+
 	return transformed, nil
 }
 
 func expandPubsubSubscriptionCloudStorageConfigAvroConfigWriteMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigAvroConfigUseTopicSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
