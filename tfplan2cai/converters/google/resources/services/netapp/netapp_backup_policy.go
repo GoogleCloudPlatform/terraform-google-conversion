@@ -22,28 +22,28 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const NetappbackupPolicyAssetType string = "netapp.googleapis.com/backupPolicy"
+const NetappBackupPolicyAssetType string = "netapp.googleapis.com/BackupPolicy"
 
-func ResourceConverterNetappbackupPolicy() cai.ResourceConverter {
+func ResourceConverterNetappBackupPolicy() cai.ResourceConverter {
 	return cai.ResourceConverter{
-		AssetType: NetappbackupPolicyAssetType,
-		Convert:   GetNetappbackupPolicyCaiObject,
+		AssetType: NetappBackupPolicyAssetType,
+		Convert:   GetNetappBackupPolicyCaiObject,
 	}
 }
 
-func GetNetappbackupPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+func GetNetappBackupPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
 	name, err := cai.AssetName(d, config, "//netapp.googleapis.com/projects/{{project}}/locations/{{location}}/backupPolicies/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
-	if obj, err := GetNetappbackupPolicyApiObject(d, config); err == nil {
+	if obj, err := GetNetappBackupPolicyApiObject(d, config); err == nil {
 		return []cai.Asset{{
 			Name: name,
-			Type: NetappbackupPolicyAssetType,
+			Type: NetappBackupPolicyAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/netapp/v1beta1/rest",
-				DiscoveryName:        "backupPolicy",
+				DiscoveryName:        "BackupPolicy",
 				Data:                 obj,
 			},
 		}}, nil
@@ -52,39 +52,39 @@ func GetNetappbackupPolicyCaiObject(d tpgresource.TerraformResourceData, config 
 	}
 }
 
-func GetNetappbackupPolicyApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetNetappBackupPolicyApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	dailyBackupLimitProp, err := expandNetappbackupPolicyDailyBackupLimit(d.Get("daily_backup_limit"), d, config)
+	dailyBackupLimitProp, err := expandNetappBackupPolicyDailyBackupLimit(d.Get("daily_backup_limit"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("daily_backup_limit"); !tpgresource.IsEmptyValue(reflect.ValueOf(dailyBackupLimitProp)) && (ok || !reflect.DeepEqual(v, dailyBackupLimitProp)) {
 		obj["dailyBackupLimit"] = dailyBackupLimitProp
 	}
-	weeklyBackupLimitProp, err := expandNetappbackupPolicyWeeklyBackupLimit(d.Get("weekly_backup_limit"), d, config)
+	weeklyBackupLimitProp, err := expandNetappBackupPolicyWeeklyBackupLimit(d.Get("weekly_backup_limit"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("weekly_backup_limit"); !tpgresource.IsEmptyValue(reflect.ValueOf(weeklyBackupLimitProp)) && (ok || !reflect.DeepEqual(v, weeklyBackupLimitProp)) {
 		obj["weeklyBackupLimit"] = weeklyBackupLimitProp
 	}
-	monthlyBackupLimitProp, err := expandNetappbackupPolicyMonthlyBackupLimit(d.Get("monthly_backup_limit"), d, config)
+	monthlyBackupLimitProp, err := expandNetappBackupPolicyMonthlyBackupLimit(d.Get("monthly_backup_limit"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("monthly_backup_limit"); !tpgresource.IsEmptyValue(reflect.ValueOf(monthlyBackupLimitProp)) && (ok || !reflect.DeepEqual(v, monthlyBackupLimitProp)) {
 		obj["monthlyBackupLimit"] = monthlyBackupLimitProp
 	}
-	descriptionProp, err := expandNetappbackupPolicyDescription(d.Get("description"), d, config)
+	descriptionProp, err := expandNetappBackupPolicyDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	enabledProp, err := expandNetappbackupPolicyEnabled(d.Get("enabled"), d, config)
+	enabledProp, err := expandNetappBackupPolicyEnabled(d.Get("enabled"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("enabled"); ok || !reflect.DeepEqual(v, enabledProp) {
 		obj["enabled"] = enabledProp
 	}
-	labelsProp, err := expandNetappbackupPolicyEffectiveLabels(d.Get("effective_labels"), d, config)
+	labelsProp, err := expandNetappBackupPolicyEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
@@ -94,27 +94,27 @@ func GetNetappbackupPolicyApiObject(d tpgresource.TerraformResourceData, config 
 	return obj, nil
 }
 
-func expandNetappbackupPolicyDailyBackupLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetappBackupPolicyDailyBackupLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetappbackupPolicyWeeklyBackupLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetappBackupPolicyWeeklyBackupLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetappbackupPolicyMonthlyBackupLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetappBackupPolicyMonthlyBackupLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetappbackupPolicyDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetappBackupPolicyDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetappbackupPolicyEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetappBackupPolicyEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetappbackupPolicyEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandNetappBackupPolicyEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
