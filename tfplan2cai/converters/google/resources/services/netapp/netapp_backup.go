@@ -22,28 +22,28 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const NetappbackupAssetType string = "netapp.googleapis.com/backup"
+const NetappBackupAssetType string = "netapp.googleapis.com/Backup"
 
-func ResourceConverterNetappbackup() cai.ResourceConverter {
+func ResourceConverterNetappBackup() cai.ResourceConverter {
 	return cai.ResourceConverter{
-		AssetType: NetappbackupAssetType,
-		Convert:   GetNetappbackupCaiObject,
+		AssetType: NetappBackupAssetType,
+		Convert:   GetNetappBackupCaiObject,
 	}
 }
 
-func GetNetappbackupCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+func GetNetappBackupCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
 	name, err := cai.AssetName(d, config, "//netapp.googleapis.com/projects/{{project}}/locations/{{location}}/backupVaults/{{vault_name}}/backups/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
-	if obj, err := GetNetappbackupApiObject(d, config); err == nil {
+	if obj, err := GetNetappBackupApiObject(d, config); err == nil {
 		return []cai.Asset{{
 			Name: name,
-			Type: NetappbackupAssetType,
+			Type: NetappBackupAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1beta1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/netapp/v1beta1/rest",
-				DiscoveryName:        "backup",
+				DiscoveryName:        "Backup",
 				Data:                 obj,
 			},
 		}}, nil
@@ -52,27 +52,27 @@ func GetNetappbackupCaiObject(d tpgresource.TerraformResourceData, config *trans
 	}
 }
 
-func GetNetappbackupApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetNetappBackupApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	descriptionProp, err := expandNetappbackupDescription(d.Get("description"), d, config)
+	descriptionProp, err := expandNetappBackupDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	sourceVolumeProp, err := expandNetappbackupSourceVolume(d.Get("source_volume"), d, config)
+	sourceVolumeProp, err := expandNetappBackupSourceVolume(d.Get("source_volume"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("source_volume"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceVolumeProp)) && (ok || !reflect.DeepEqual(v, sourceVolumeProp)) {
 		obj["sourceVolume"] = sourceVolumeProp
 	}
-	sourceSnapshotProp, err := expandNetappbackupSourceSnapshot(d.Get("source_snapshot"), d, config)
+	sourceSnapshotProp, err := expandNetappBackupSourceSnapshot(d.Get("source_snapshot"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("source_snapshot"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceSnapshotProp)) && (ok || !reflect.DeepEqual(v, sourceSnapshotProp)) {
 		obj["sourceSnapshot"] = sourceSnapshotProp
 	}
-	labelsProp, err := expandNetappbackupEffectiveLabels(d.Get("effective_labels"), d, config)
+	labelsProp, err := expandNetappBackupEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
@@ -82,19 +82,19 @@ func GetNetappbackupApiObject(d tpgresource.TerraformResourceData, config *trans
 	return obj, nil
 }
 
-func expandNetappbackupDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetappBackupDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetappbackupSourceVolume(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetappBackupSourceVolume(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetappbackupSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetappBackupSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandNetappbackupEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandNetappBackupEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
