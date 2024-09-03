@@ -276,6 +276,13 @@ func expandNetworkConnectivitySpokeLinkedVpcNetwork(v interface{}, d tpgresource
 		transformed["excludeExportRanges"] = transformedExcludeExportRanges
 	}
 
+	transformedIncludeExportRanges, err := expandNetworkConnectivitySpokeLinkedVpcNetworkIncludeExportRanges(original["include_export_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeExportRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeExportRanges"] = transformedIncludeExportRanges
+	}
+
 	return transformed, nil
 }
 
@@ -284,6 +291,10 @@ func expandNetworkConnectivitySpokeLinkedVpcNetworkUri(v interface{}, d tpgresou
 }
 
 func expandNetworkConnectivitySpokeLinkedVpcNetworkExcludeExportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedVpcNetworkIncludeExportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
