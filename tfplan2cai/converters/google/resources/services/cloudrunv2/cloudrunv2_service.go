@@ -334,6 +334,13 @@ func expandCloudRunV2ServiceTemplate(v interface{}, d tpgresource.TerraformResou
 		transformed["sessionAffinity"] = transformedSessionAffinity
 	}
 
+	transformedServiceMesh, err := expandCloudRunV2ServiceTemplateServiceMesh(original["service_mesh"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceMesh); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceMesh"] = transformedServiceMesh
+	}
+
 	return transformed, nil
 }
 
@@ -1590,6 +1597,29 @@ func expandCloudRunV2ServiceTemplateMaxInstanceRequestConcurrency(v interface{},
 }
 
 func expandCloudRunV2ServiceTemplateSessionAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateServiceMesh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMesh, err := expandCloudRunV2ServiceTemplateServiceMeshMesh(original["mesh"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMesh); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mesh"] = transformedMesh
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2ServiceTemplateServiceMeshMesh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
