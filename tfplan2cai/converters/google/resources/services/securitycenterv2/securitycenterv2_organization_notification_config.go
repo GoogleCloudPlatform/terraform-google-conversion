@@ -69,7 +69,7 @@ func GetSecurityCenterV2OrganizationNotificationConfigApiObject(d tpgresource.Te
 	streamingConfigProp, err := expandSecurityCenterV2OrganizationNotificationConfigStreamingConfig(d.Get("streaming_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("streaming_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(streamingConfigProp)) && (ok || !reflect.DeepEqual(v, streamingConfigProp)) {
+	} else if v, ok := d.GetOkExists("streaming_config"); ok || !reflect.DeepEqual(v, streamingConfigProp) {
 		obj["streamingConfig"] = streamingConfigProp
 	}
 
@@ -86,8 +86,13 @@ func expandSecurityCenterV2OrganizationNotificationConfigPubsubTopic(v interface
 
 func expandSecurityCenterV2OrganizationNotificationConfigStreamingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
+	if len(l) == 0 {
 		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})
@@ -96,7 +101,7 @@ func expandSecurityCenterV2OrganizationNotificationConfigStreamingConfig(v inter
 	transformedFilter, err := expandSecurityCenterV2OrganizationNotificationConfigStreamingConfigFilter(original["filter"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["filter"] = transformedFilter
 	}
 
