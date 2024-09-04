@@ -17,10 +17,17 @@ package kms
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func folderPrefixSuppress(_, old, new string, d *schema.ResourceData) bool {
+	prefix := "folders/"
+	return prefix+old == new || prefix+new == old
+}
 
 const KMSAutokeyConfigAssetType string = "cloudkms.googleapis.com/AutokeyConfig"
 
