@@ -144,6 +144,18 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("backup_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupConfigProp)) && (ok || !reflect.DeepEqual(v, backupConfigProp)) {
 		obj["backupConfig"] = backupConfigProp
 	}
+	largeCapacityProp, err := expandNetappVolumeLargeCapacity(d.Get("large_capacity"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("large_capacity"); !tpgresource.IsEmptyValue(reflect.ValueOf(largeCapacityProp)) && (ok || !reflect.DeepEqual(v, largeCapacityProp)) {
+		obj["largeCapacity"] = largeCapacityProp
+	}
+	multipleEndpointsProp, err := expandNetappVolumeMultipleEndpoints(d.Get("multiple_endpoints"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("multiple_endpoints"); !tpgresource.IsEmptyValue(reflect.ValueOf(multipleEndpointsProp)) && (ok || !reflect.DeepEqual(v, multipleEndpointsProp)) {
+		obj["multipleEndpoints"] = multipleEndpointsProp
+	}
 	labelsProp, err := expandNetappVolumeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -671,6 +683,14 @@ func expandNetappVolumeBackupConfigBackupVault(v interface{}, d tpgresource.Terr
 }
 
 func expandNetappVolumeBackupConfigScheduledBackupEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeLargeCapacity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeMultipleEndpoints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
