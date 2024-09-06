@@ -133,6 +133,12 @@ func GetContainerAttachedClusterApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("proxy_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(proxyConfigProp)) && (ok || !reflect.DeepEqual(v, proxyConfigProp)) {
 		obj["proxyConfig"] = proxyConfigProp
 	}
+	securityPostureConfigProp, err := expandContainerAttachedClusterSecurityPostureConfig(d.Get("security_posture_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("security_posture_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(securityPostureConfigProp)) && (ok || !reflect.DeepEqual(v, securityPostureConfigProp)) {
+		obj["securityPostureConfig"] = securityPostureConfigProp
+	}
 	annotationsProp, err := expandContainerAttachedClusterEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
@@ -462,6 +468,29 @@ func expandContainerAttachedClusterProxyConfigKubernetesSecretName(v interface{}
 }
 
 func expandContainerAttachedClusterProxyConfigKubernetesSecretNamespace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandContainerAttachedClusterSecurityPostureConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedVulnerabilityMode, err := expandContainerAttachedClusterSecurityPostureConfigVulnerabilityMode(original["vulnerability_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVulnerabilityMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["vulnerabilityMode"] = transformedVulnerabilityMode
+	}
+
+	return transformed, nil
+}
+
+func expandContainerAttachedClusterSecurityPostureConfigVulnerabilityMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
