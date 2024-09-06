@@ -22,28 +22,28 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const SecurityCenterV2ProjectSccBigQueryExportsAssetType string = "securitycenter.googleapis.com/ProjectSccBigQueryExports"
+const SecurityCenterV2ProjectSccBigQueryExportAssetType string = "securitycenter.googleapis.com/ProjectSccBigQueryExport"
 
-func ResourceConverterSecurityCenterV2ProjectSccBigQueryExports() cai.ResourceConverter {
+func ResourceConverterSecurityCenterV2ProjectSccBigQueryExport() cai.ResourceConverter {
 	return cai.ResourceConverter{
-		AssetType: SecurityCenterV2ProjectSccBigQueryExportsAssetType,
-		Convert:   GetSecurityCenterV2ProjectSccBigQueryExportsCaiObject,
+		AssetType: SecurityCenterV2ProjectSccBigQueryExportAssetType,
+		Convert:   GetSecurityCenterV2ProjectSccBigQueryExportCaiObject,
 	}
 }
 
-func GetSecurityCenterV2ProjectSccBigQueryExportsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+func GetSecurityCenterV2ProjectSccBigQueryExportCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
 	name, err := cai.AssetName(d, config, "//securitycenter.googleapis.com/projects/{{project}}/locations/{{location}}/bigQueryExports/{{big_query_export_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
-	if obj, err := GetSecurityCenterV2ProjectSccBigQueryExportsApiObject(d, config); err == nil {
+	if obj, err := GetSecurityCenterV2ProjectSccBigQueryExportApiObject(d, config); err == nil {
 		return []cai.Asset{{
 			Name: name,
-			Type: SecurityCenterV2ProjectSccBigQueryExportsAssetType,
+			Type: SecurityCenterV2ProjectSccBigQueryExportAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v2",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/securitycenter/v2/rest",
-				DiscoveryName:        "ProjectSccBigQueryExports",
+				DiscoveryName:        "ProjectSccBigQueryExport",
 				Data:                 obj,
 			},
 		}}, nil
@@ -52,21 +52,21 @@ func GetSecurityCenterV2ProjectSccBigQueryExportsCaiObject(d tpgresource.Terrafo
 	}
 }
 
-func GetSecurityCenterV2ProjectSccBigQueryExportsApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetSecurityCenterV2ProjectSccBigQueryExportApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	descriptionProp, err := expandSecurityCenterV2ProjectSccBigQueryExportsDescription(d.Get("description"), d, config)
+	descriptionProp, err := expandSecurityCenterV2ProjectSccBigQueryExportDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	datasetProp, err := expandSecurityCenterV2ProjectSccBigQueryExportsDataset(d.Get("dataset"), d, config)
+	datasetProp, err := expandSecurityCenterV2ProjectSccBigQueryExportDataset(d.Get("dataset"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("dataset"); !tpgresource.IsEmptyValue(reflect.ValueOf(datasetProp)) && (ok || !reflect.DeepEqual(v, datasetProp)) {
 		obj["dataset"] = datasetProp
 	}
-	filterProp, err := expandSecurityCenterV2ProjectSccBigQueryExportsFilter(d.Get("filter"), d, config)
+	filterProp, err := expandSecurityCenterV2ProjectSccBigQueryExportFilter(d.Get("filter"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("filter"); !tpgresource.IsEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
@@ -76,14 +76,14 @@ func GetSecurityCenterV2ProjectSccBigQueryExportsApiObject(d tpgresource.Terrafo
 	return obj, nil
 }
 
-func expandSecurityCenterV2ProjectSccBigQueryExportsDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityCenterV2ProjectSccBigQueryExportDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityCenterV2ProjectSccBigQueryExportsDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityCenterV2ProjectSccBigQueryExportDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandSecurityCenterV2ProjectSccBigQueryExportsFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandSecurityCenterV2ProjectSccBigQueryExportFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
