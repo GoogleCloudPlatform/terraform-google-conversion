@@ -161,6 +161,12 @@ func GetComputeServiceAttachmentApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("reconcile_connections"); ok || !reflect.DeepEqual(v, reconcileConnectionsProp) {
 		obj["reconcileConnections"] = reconcileConnectionsProp
 	}
+	propagatedConnectionLimitProp, err := expandComputeServiceAttachmentPropagatedConnectionLimit(d.Get("propagated_connection_limit"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("propagated_connection_limit"); !tpgresource.IsEmptyValue(reflect.ValueOf(propagatedConnectionLimitProp)) && (ok || !reflect.DeepEqual(v, propagatedConnectionLimitProp)) {
+		obj["propagatedConnectionLimit"] = propagatedConnectionLimitProp
+	}
 	regionProp, err := expandComputeServiceAttachmentRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -269,6 +275,10 @@ func expandComputeServiceAttachmentConsumerAcceptListsConnectionLimit(v interfac
 }
 
 func expandComputeServiceAttachmentReconcileConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeServiceAttachmentPropagatedConnectionLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
