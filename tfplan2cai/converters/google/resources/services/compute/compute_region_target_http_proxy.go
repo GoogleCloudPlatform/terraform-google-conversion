@@ -73,6 +73,12 @@ func GetComputeRegionTargetHttpProxyApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("url_map"); !tpgresource.IsEmptyValue(reflect.ValueOf(urlMapProp)) && (ok || !reflect.DeepEqual(v, urlMapProp)) {
 		obj["urlMap"] = urlMapProp
 	}
+	httpKeepAliveTimeoutSecProp, err := expandComputeRegionTargetHttpProxyHttpKeepAliveTimeoutSec(d.Get("http_keep_alive_timeout_sec"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("http_keep_alive_timeout_sec"); !tpgresource.IsEmptyValue(reflect.ValueOf(httpKeepAliveTimeoutSecProp)) && (ok || !reflect.DeepEqual(v, httpKeepAliveTimeoutSecProp)) {
+		obj["httpKeepAliveTimeoutSec"] = httpKeepAliveTimeoutSecProp
+	}
 	regionProp, err := expandComputeRegionTargetHttpProxyRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -97,6 +103,10 @@ func expandComputeRegionTargetHttpProxyUrlMap(v interface{}, d tpgresource.Terra
 		return nil, fmt.Errorf("Invalid value for url_map: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeRegionTargetHttpProxyHttpKeepAliveTimeoutSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeRegionTargetHttpProxyRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
