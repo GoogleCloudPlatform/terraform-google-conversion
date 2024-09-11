@@ -90,6 +90,18 @@ func GetFilestoreInstanceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("kms_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyNameProp)) && (ok || !reflect.DeepEqual(v, kmsKeyNameProp)) {
 		obj["kmsKeyName"] = kmsKeyNameProp
 	}
+	deletionProtectionEnabledProp, err := expandFilestoreInstanceDeletionProtectionEnabled(d.Get("deletion_protection_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deletion_protection_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(deletionProtectionEnabledProp)) && (ok || !reflect.DeepEqual(v, deletionProtectionEnabledProp)) {
+		obj["deletionProtectionEnabled"] = deletionProtectionEnabledProp
+	}
+	deletionProtectionReasonProp, err := expandFilestoreInstanceDeletionProtectionReason(d.Get("deletion_protection_reason"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deletion_protection_reason"); !tpgresource.IsEmptyValue(reflect.ValueOf(deletionProtectionReasonProp)) && (ok || !reflect.DeepEqual(v, deletionProtectionReasonProp)) {
+		obj["deletionProtectionReason"] = deletionProtectionReasonProp
+	}
 	labelsProp, err := expandFilestoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -308,6 +320,14 @@ func expandFilestoreInstanceNetworksConnectMode(v interface{}, d tpgresource.Ter
 }
 
 func expandFilestoreInstanceKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceDeletionProtectionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceDeletionProtectionReason(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
