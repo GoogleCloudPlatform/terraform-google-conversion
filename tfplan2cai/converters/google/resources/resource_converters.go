@@ -55,6 +55,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/secretmanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/secretmanagerregional"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/securesourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/securitycenter"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/securitycenterv2"
@@ -366,6 +367,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_secret_manager_secret_iam_policy":                 {secretmanager.ResourceConverterSecretManagerSecretIamPolicy()},
 		"google_secret_manager_secret_iam_binding":                {secretmanager.ResourceConverterSecretManagerSecretIamBinding()},
 		"google_secret_manager_secret_iam_member":                 {secretmanager.ResourceConverterSecretManagerSecretIamMember()},
+		"google_secret_manager_regional_secret_iam_policy":        {secretmanagerregional.ResourceConverterSecretManagerRegionalRegionalSecretIamPolicy()},
+		"google_secret_manager_regional_secret_iam_binding":       {secretmanagerregional.ResourceConverterSecretManagerRegionalRegionalSecretIamBinding()},
+		"google_secret_manager_regional_secret_iam_member":        {secretmanagerregional.ResourceConverterSecretManagerRegionalRegionalSecretIamMember()},
 		"google_secure_source_manager_instance_iam_policy":        {securesourcemanager.ResourceConverterSecureSourceManagerInstanceIamPolicy()},
 		"google_secure_source_manager_instance_iam_binding":       {securesourcemanager.ResourceConverterSecureSourceManagerInstanceIamBinding()},
 		"google_secure_source_manager_instance_iam_member":        {securesourcemanager.ResourceConverterSecureSourceManagerInstanceIamMember()},
