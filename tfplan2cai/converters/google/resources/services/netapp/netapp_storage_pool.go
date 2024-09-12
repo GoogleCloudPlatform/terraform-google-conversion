@@ -108,6 +108,12 @@ func GetNetappStoragePoolApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("replica_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(replicaZoneProp)) && (ok || !reflect.DeepEqual(v, replicaZoneProp)) {
 		obj["replicaZone"] = replicaZoneProp
 	}
+	allowAutoTieringProp, err := expandNetappStoragePoolAllowAutoTiering(d.Get("allow_auto_tiering"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_auto_tiering"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowAutoTieringProp)) && (ok || !reflect.DeepEqual(v, allowAutoTieringProp)) {
+		obj["allowAutoTiering"] = allowAutoTieringProp
+	}
 	labelsProp, err := expandNetappStoragePoolEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -151,6 +157,10 @@ func expandNetappStoragePoolZone(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandNetappStoragePoolReplicaZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolAllowAutoTiering(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
