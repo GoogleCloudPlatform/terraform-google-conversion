@@ -156,6 +156,12 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("multiple_endpoints"); !tpgresource.IsEmptyValue(reflect.ValueOf(multipleEndpointsProp)) && (ok || !reflect.DeepEqual(v, multipleEndpointsProp)) {
 		obj["multipleEndpoints"] = multipleEndpointsProp
 	}
+	tieringPolicyProp, err := expandNetappVolumeTieringPolicy(d.Get("tiering_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tiering_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(tieringPolicyProp)) && (ok || !reflect.DeepEqual(v, tieringPolicyProp)) {
+		obj["tieringPolicy"] = tieringPolicyProp
+	}
 	labelsProp, err := expandNetappVolumeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -691,6 +697,40 @@ func expandNetappVolumeLargeCapacity(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandNetappVolumeMultipleEndpoints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeTieringPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCoolingThresholdDays, err := expandNetappVolumeTieringPolicyCoolingThresholdDays(original["cooling_threshold_days"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCoolingThresholdDays); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["coolingThresholdDays"] = transformedCoolingThresholdDays
+	}
+
+	transformedTierAction, err := expandNetappVolumeTieringPolicyTierAction(original["tier_action"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTierAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tierAction"] = transformedTierAction
+	}
+
+	return transformed, nil
+}
+
+func expandNetappVolumeTieringPolicyCoolingThresholdDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeTieringPolicyTierAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
