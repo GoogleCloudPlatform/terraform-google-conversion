@@ -153,6 +153,12 @@ func GetSpannerInstanceApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("autoscaling_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(autoscalingConfigProp)) && (ok || !reflect.DeepEqual(v, autoscalingConfigProp)) {
 		obj["autoscalingConfig"] = autoscalingConfigProp
 	}
+	editionProp, err := expandSpannerInstanceEdition(d.Get("edition"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("edition"); !tpgresource.IsEmptyValue(reflect.ValueOf(editionProp)) && (ok || !reflect.DeepEqual(v, editionProp)) {
+		obj["edition"] = editionProp
+	}
 	labelsProp, err := expandSpannerInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -325,6 +331,10 @@ func expandSpannerInstanceAutoscalingConfigAutoscalingTargetsHighPriorityCpuUtil
 }
 
 func expandSpannerInstanceAutoscalingConfigAutoscalingTargetsStorageUtilizationPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceEdition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
