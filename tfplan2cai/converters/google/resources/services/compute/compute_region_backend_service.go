@@ -309,7 +309,6 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 }
 
 func resourceComputeRegionBackendServiceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-
 	if d.Get("load_balancing_scheme").(string) == "EXTERNAL_MANAGED" || d.Get("load_balancing_scheme").(string) == "INTERNAL_MANAGED" {
 		return obj, nil
 	}
