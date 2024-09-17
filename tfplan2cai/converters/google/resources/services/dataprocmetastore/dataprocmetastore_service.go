@@ -86,6 +86,12 @@ func GetDataprocMetastoreServiceApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("scheduled_backup"); !tpgresource.IsEmptyValue(reflect.ValueOf(scheduledBackupProp)) && (ok || !reflect.DeepEqual(v, scheduledBackupProp)) {
 		obj["scheduledBackup"] = scheduledBackupProp
 	}
+	deletionProtectionProp, err := expandDataprocMetastoreServiceDeletionProtection(d.Get("deletion_protection"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deletion_protection"); !tpgresource.IsEmptyValue(reflect.ValueOf(deletionProtectionProp)) && (ok || !reflect.DeepEqual(v, deletionProtectionProp)) {
+		obj["deletionProtection"] = deletionProtectionProp
+	}
 	maintenanceWindowProp, err := expandDataprocMetastoreServiceMaintenanceWindow(d.Get("maintenance_window"), d, config)
 	if err != nil {
 		return nil, err
@@ -314,6 +320,10 @@ func expandDataprocMetastoreServiceScheduledBackupTimeZone(v interface{}, d tpgr
 }
 
 func expandDataprocMetastoreServiceScheduledBackupBackupLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceDeletionProtection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
