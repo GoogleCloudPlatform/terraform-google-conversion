@@ -54,6 +54,12 @@ func GetSecretManagerRegionalRegionalSecretCaiObject(d tpgresource.TerraformReso
 
 func GetSecretManagerRegionalRegionalSecretApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	versionAliasesProp, err := expandSecretManagerRegionalRegionalSecretVersionAliases(d.Get("version_aliases"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("version_aliases"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionAliasesProp)) && (ok || !reflect.DeepEqual(v, versionAliasesProp)) {
+		obj["versionAliases"] = versionAliasesProp
+	}
 	customerManagedEncryptionProp, err := expandSecretManagerRegionalRegionalSecretCustomerManagedEncryption(d.Get("customer_managed_encryption"), d, config)
 	if err != nil {
 		return nil, err
@@ -104,6 +110,17 @@ func GetSecretManagerRegionalRegionalSecretApiObject(d tpgresource.TerraformReso
 	}
 
 	return obj, nil
+}
+
+func expandSecretManagerRegionalRegionalSecretVersionAliases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandSecretManagerRegionalRegionalSecretCustomerManagedEncryption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
