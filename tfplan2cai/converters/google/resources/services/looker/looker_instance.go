@@ -108,6 +108,18 @@ func GetLookerInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("private_ip_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(privateIpEnabledProp)) && (ok || !reflect.DeepEqual(v, privateIpEnabledProp)) {
 		obj["privateIpEnabled"] = privateIpEnabledProp
 	}
+	pscConfigProp, err := expandLookerInstancePscConfig(d.Get("psc_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("psc_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(pscConfigProp)) && (ok || !reflect.DeepEqual(v, pscConfigProp)) {
+		obj["pscConfig"] = pscConfigProp
+	}
+	pscEnabledProp, err := expandLookerInstancePscEnabled(d.Get("psc_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("psc_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(pscEnabledProp)) && (ok || !reflect.DeepEqual(v, pscEnabledProp)) {
+		obj["pscEnabled"] = pscEnabledProp
+	}
 	publicIpEnabledProp, err := expandLookerInstancePublicIpEnabled(d.Get("public_ip_enabled"), d, config)
 	if err != nil {
 		return nil, err
@@ -516,6 +528,99 @@ func expandLookerInstancePlatformEdition(v interface{}, d tpgresource.TerraformR
 }
 
 func expandLookerInstancePrivateIpEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstancePscConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedVpcs, err := expandLookerInstancePscConfigAllowedVpcs(original["allowed_vpcs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedVpcs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedVpcs"] = transformedAllowedVpcs
+	}
+
+	transformedLookerServiceAttachmentUri, err := expandLookerInstancePscConfigLookerServiceAttachmentUri(original["looker_service_attachment_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLookerServiceAttachmentUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["lookerServiceAttachmentUri"] = transformedLookerServiceAttachmentUri
+	}
+
+	transformedServiceAttachments, err := expandLookerInstancePscConfigServiceAttachments(original["service_attachments"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAttachments); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAttachments"] = transformedServiceAttachments
+	}
+
+	return transformed, nil
+}
+
+func expandLookerInstancePscConfigAllowedVpcs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstancePscConfigLookerServiceAttachmentUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstancePscConfigServiceAttachments(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedConnectionStatus, err := expandLookerInstancePscConfigServiceAttachmentsConnectionStatus(original["connection_status"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConnectionStatus); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["connectionStatus"] = transformedConnectionStatus
+		}
+
+		transformedLocalFqdn, err := expandLookerInstancePscConfigServiceAttachmentsLocalFqdn(original["local_fqdn"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLocalFqdn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["localFqdn"] = transformedLocalFqdn
+		}
+
+		transformedTargetServiceAttachmentUri, err := expandLookerInstancePscConfigServiceAttachmentsTargetServiceAttachmentUri(original["target_service_attachment_uri"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetServiceAttachmentUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetServiceAttachmentUri"] = transformedTargetServiceAttachmentUri
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandLookerInstancePscConfigServiceAttachmentsConnectionStatus(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstancePscConfigServiceAttachmentsLocalFqdn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstancePscConfigServiceAttachmentsTargetServiceAttachmentUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstancePscEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
