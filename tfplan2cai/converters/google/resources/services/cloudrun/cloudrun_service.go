@@ -393,6 +393,13 @@ func expandCloudRunServiceSpecTemplateSpec(v interface{}, d tpgresource.Terrafor
 		transformed["containers"] = transformedContainers
 	}
 
+	transformedNodeSelector, err := expandCloudRunServiceSpecTemplateSpecNodeSelector(original["node_selector"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNodeSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nodeSelector"] = transformedNodeSelector
+	}
+
 	transformedContainerConcurrency, err := expandCloudRunServiceSpecTemplateSpecContainerConcurrency(original["container_concurrency"], d, config)
 	if err != nil {
 		return nil, err
@@ -1344,6 +1351,17 @@ func expandCloudRunServiceSpecTemplateSpecContainersLivenessProbeGrpcPort(v inte
 
 func expandCloudRunServiceSpecTemplateSpecContainersLivenessProbeGrpcService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecNodeSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandCloudRunServiceSpecTemplateSpecContainerConcurrency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
