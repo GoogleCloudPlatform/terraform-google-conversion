@@ -141,6 +141,13 @@ func expandNetworkConnectivitySpokeLinkedVpnTunnels(v interface{}, d tpgresource
 		transformed["siteToSiteDataTransfer"] = transformedSiteToSiteDataTransfer
 	}
 
+	transformedIncludeImportRanges, err := expandNetworkConnectivitySpokeLinkedVpnTunnelsIncludeImportRanges(original["include_import_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeImportRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeImportRanges"] = transformedIncludeImportRanges
+	}
+
 	return transformed, nil
 }
 
@@ -149,6 +156,10 @@ func expandNetworkConnectivitySpokeLinkedVpnTunnelsUris(v interface{}, d tpgreso
 }
 
 func expandNetworkConnectivitySpokeLinkedVpnTunnelsSiteToSiteDataTransfer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedVpnTunnelsIncludeImportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -175,6 +186,13 @@ func expandNetworkConnectivitySpokeLinkedInterconnectAttachments(v interface{}, 
 		transformed["siteToSiteDataTransfer"] = transformedSiteToSiteDataTransfer
 	}
 
+	transformedIncludeImportRanges, err := expandNetworkConnectivitySpokeLinkedInterconnectAttachmentsIncludeImportRanges(original["include_import_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeImportRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeImportRanges"] = transformedIncludeImportRanges
+	}
+
 	return transformed, nil
 }
 
@@ -183,6 +201,10 @@ func expandNetworkConnectivitySpokeLinkedInterconnectAttachmentsUris(v interface
 }
 
 func expandNetworkConnectivitySpokeLinkedInterconnectAttachmentsSiteToSiteDataTransfer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedInterconnectAttachmentsIncludeImportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -207,6 +229,13 @@ func expandNetworkConnectivitySpokeLinkedRouterApplianceInstances(v interface{},
 		return nil, err
 	} else if val := reflect.ValueOf(transformedSiteToSiteDataTransfer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["siteToSiteDataTransfer"] = transformedSiteToSiteDataTransfer
+	}
+
+	transformedIncludeImportRanges, err := expandNetworkConnectivitySpokeLinkedRouterApplianceInstancesIncludeImportRanges(original["include_import_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeImportRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeImportRanges"] = transformedIncludeImportRanges
 	}
 
 	return transformed, nil
@@ -250,6 +279,10 @@ func expandNetworkConnectivitySpokeLinkedRouterApplianceInstancesInstancesIpAddr
 }
 
 func expandNetworkConnectivitySpokeLinkedRouterApplianceInstancesSiteToSiteDataTransfer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedRouterApplianceInstancesIncludeImportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
