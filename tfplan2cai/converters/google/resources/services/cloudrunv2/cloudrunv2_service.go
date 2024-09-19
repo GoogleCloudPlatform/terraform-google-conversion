@@ -341,6 +341,13 @@ func expandCloudRunV2ServiceTemplate(v interface{}, d tpgresource.TerraformResou
 		transformed["serviceMesh"] = transformedServiceMesh
 	}
 
+	transformedNodeSelector, err := expandCloudRunV2ServiceTemplateNodeSelector(original["node_selector"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNodeSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nodeSelector"] = transformedNodeSelector
+	}
+
 	return transformed, nil
 }
 
@@ -1620,6 +1627,29 @@ func expandCloudRunV2ServiceTemplateServiceMesh(v interface{}, d tpgresource.Ter
 }
 
 func expandCloudRunV2ServiceTemplateServiceMeshMesh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateNodeSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAccelerator, err := expandCloudRunV2ServiceTemplateNodeSelectorAccelerator(original["accelerator"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccelerator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accelerator"] = transformedAccelerator
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2ServiceTemplateNodeSelectorAccelerator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
