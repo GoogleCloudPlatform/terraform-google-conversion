@@ -210,6 +210,13 @@ func expandComputeInterconnectMacsec(v interface{}, d tpgresource.TerraformResou
 		transformed["preSharedKeys"] = transformedPreSharedKeys
 	}
 
+	transformedFailOpen, err := expandComputeInterconnectMacsecFailOpen(original["fail_open"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFailOpen); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["failOpen"] = transformedFailOpen
+	}
+
 	return transformed, nil
 }
 
@@ -258,6 +265,10 @@ func expandComputeInterconnectMacsecPreSharedKeysStartTime(v interface{}, d tpgr
 }
 
 func expandComputeInterconnectMacsecPreSharedKeysFailOpen(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectMacsecFailOpen(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
