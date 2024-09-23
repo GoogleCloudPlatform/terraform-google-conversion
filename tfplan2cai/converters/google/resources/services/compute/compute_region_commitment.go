@@ -103,6 +103,12 @@ func GetComputeRegionCommitmentApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("auto_renew"); !tpgresource.IsEmptyValue(reflect.ValueOf(autoRenewProp)) && (ok || !reflect.DeepEqual(v, autoRenewProp)) {
 		obj["autoRenew"] = autoRenewProp
 	}
+	existingReservationsProp, err := expandComputeRegionCommitmentExistingReservations(d.Get("existing_reservations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("existing_reservations"); !tpgresource.IsEmptyValue(reflect.ValueOf(existingReservationsProp)) && (ok || !reflect.DeepEqual(v, existingReservationsProp)) {
+		obj["existingReservations"] = existingReservationsProp
+	}
 	regionProp, err := expandComputeRegionCommitmentRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -227,6 +233,10 @@ func expandComputeRegionCommitmentLicenseResourceCoresPerLicense(v interface{}, 
 }
 
 func expandComputeRegionCommitmentAutoRenew(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionCommitmentExistingReservations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
