@@ -60,10 +60,26 @@ func GetApigeeNatAddressApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
+	activateProp, err := expandApigeeNatAddressActivate(d.Get("activate"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("activate"); !tpgresource.IsEmptyValue(reflect.ValueOf(activateProp)) && (ok || !reflect.DeepEqual(v, activateProp)) {
+		obj["activate"] = activateProp
+	}
 
+	return resourceApigeeNatAddressEncoder(d, config, obj)
+}
+
+func resourceApigeeNatAddressEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// cannot include activate prop in the body
+	delete(obj, "activate")
 	return obj, nil
 }
 
 func expandApigeeNatAddressName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeNatAddressActivate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
