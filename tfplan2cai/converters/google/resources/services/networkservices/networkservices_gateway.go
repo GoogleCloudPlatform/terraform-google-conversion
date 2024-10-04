@@ -233,6 +233,12 @@ func GetNetworkServicesGatewayApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("certificate_urls"); !tpgresource.IsEmptyValue(reflect.ValueOf(certificateUrlsProp)) && (ok || !reflect.DeepEqual(v, certificateUrlsProp)) {
 		obj["certificateUrls"] = certificateUrlsProp
 	}
+	routingModeProp, err := expandNetworkServicesGatewayRoutingMode(d.Get("routing_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("routing_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(routingModeProp)) && (ok || !reflect.DeepEqual(v, routingModeProp)) {
+		obj["routingMode"] = routingModeProp
+	}
 	labelsProp, err := expandNetworkServicesGatewayEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -280,6 +286,10 @@ func expandNetworkServicesGatewayGatewaySecurityPolicy(v interface{}, d tpgresou
 }
 
 func expandNetworkServicesGatewayCertificateUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesGatewayRoutingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
