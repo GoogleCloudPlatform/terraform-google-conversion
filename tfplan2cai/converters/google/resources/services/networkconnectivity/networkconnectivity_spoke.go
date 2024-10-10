@@ -96,6 +96,12 @@ func GetNetworkConnectivitySpokeApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("linked_vpc_network"); !tpgresource.IsEmptyValue(reflect.ValueOf(linkedVpcNetworkProp)) && (ok || !reflect.DeepEqual(v, linkedVpcNetworkProp)) {
 		obj["linkedVpcNetwork"] = linkedVpcNetworkProp
 	}
+	linkedProducerVpcNetworkProp, err := expandNetworkConnectivitySpokeLinkedProducerVpcNetwork(d.Get("linked_producer_vpc_network"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("linked_producer_vpc_network"); !tpgresource.IsEmptyValue(reflect.ValueOf(linkedProducerVpcNetworkProp)) && (ok || !reflect.DeepEqual(v, linkedProducerVpcNetworkProp)) {
+		obj["linkedProducerVpcNetwork"] = linkedProducerVpcNetworkProp
+	}
 	labelsProp, err := expandNetworkConnectivitySpokeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -328,6 +334,73 @@ func expandNetworkConnectivitySpokeLinkedVpcNetworkExcludeExportRanges(v interfa
 }
 
 func expandNetworkConnectivitySpokeLinkedVpcNetworkIncludeExportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedProducerVpcNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNetwork, err := expandNetworkConnectivitySpokeLinkedProducerVpcNetworkNetwork(original["network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["network"] = transformedNetwork
+	}
+
+	transformedPeering, err := expandNetworkConnectivitySpokeLinkedProducerVpcNetworkPeering(original["peering"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeering); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peering"] = transformedPeering
+	}
+
+	transformedProducerNetwork, err := expandNetworkConnectivitySpokeLinkedProducerVpcNetworkProducerNetwork(original["producer_network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProducerNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["producerNetwork"] = transformedProducerNetwork
+	}
+
+	transformedIncludeExportRanges, err := expandNetworkConnectivitySpokeLinkedProducerVpcNetworkIncludeExportRanges(original["include_export_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeExportRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeExportRanges"] = transformedIncludeExportRanges
+	}
+
+	transformedExcludeExportRanges, err := expandNetworkConnectivitySpokeLinkedProducerVpcNetworkExcludeExportRanges(original["exclude_export_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExcludeExportRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["excludeExportRanges"] = transformedExcludeExportRanges
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedProducerVpcNetworkNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedProducerVpcNetworkPeering(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedProducerVpcNetworkProducerNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedProducerVpcNetworkIncludeExportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeLinkedProducerVpcNetworkExcludeExportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
