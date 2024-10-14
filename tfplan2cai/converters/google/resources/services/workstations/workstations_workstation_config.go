@@ -132,6 +132,12 @@ func GetWorkstationsWorkstationConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("disable_tcp_connections"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableTcpConnectionsProp)) && (ok || !reflect.DeepEqual(v, disableTcpConnectionsProp)) {
 		obj["disableTcpConnections"] = disableTcpConnectionsProp
 	}
+	allowedPortsProp, err := expandWorkstationsWorkstationConfigAllowedPorts(d.Get("allowed_ports"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allowed_ports"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowedPortsProp)) && (ok || !reflect.DeepEqual(v, allowedPortsProp)) {
+		obj["allowedPorts"] = allowedPortsProp
+	}
 	labelsProp, err := expandWorkstationsWorkstationConfigEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -913,6 +919,43 @@ func expandWorkstationsWorkstationConfigReadinessChecksPort(v interface{}, d tpg
 }
 
 func expandWorkstationsWorkstationConfigDisableTcpConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigAllowedPorts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedFirst, err := expandWorkstationsWorkstationConfigAllowedPortsFirst(original["first"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFirst); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["first"] = transformedFirst
+		}
+
+		transformedLast, err := expandWorkstationsWorkstationConfigAllowedPortsLast(original["last"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLast); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["last"] = transformedLast
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandWorkstationsWorkstationConfigAllowedPortsFirst(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigAllowedPortsLast(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
