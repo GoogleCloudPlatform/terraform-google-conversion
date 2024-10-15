@@ -132,6 +132,12 @@ func GetWorkstationsWorkstationConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("disable_tcp_connections"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableTcpConnectionsProp)) && (ok || !reflect.DeepEqual(v, disableTcpConnectionsProp)) {
 		obj["disableTcpConnections"] = disableTcpConnectionsProp
 	}
+	maxUsableWorkstationsProp, err := expandWorkstationsWorkstationConfigMaxUsableWorkstations(d.Get("max_usable_workstations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("max_usable_workstations"); !tpgresource.IsEmptyValue(reflect.ValueOf(maxUsableWorkstationsProp)) && (ok || !reflect.DeepEqual(v, maxUsableWorkstationsProp)) {
+		obj["maxUsableWorkstations"] = maxUsableWorkstationsProp
+	}
 	allowedPortsProp, err := expandWorkstationsWorkstationConfigAllowedPorts(d.Get("allowed_ports"), d, config)
 	if err != nil {
 		return nil, err
@@ -919,6 +925,10 @@ func expandWorkstationsWorkstationConfigReadinessChecksPort(v interface{}, d tpg
 }
 
 func expandWorkstationsWorkstationConfigDisableTcpConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigMaxUsableWorkstations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
