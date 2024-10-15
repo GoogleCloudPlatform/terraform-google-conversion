@@ -291,6 +291,12 @@ func GetComputeBackendServiceApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("iap"); ok || !reflect.DeepEqual(v, iapProp) {
 		obj["iap"] = iapProp
 	}
+	ipAddressSelectionPolicyProp, err := expandComputeBackendServiceIpAddressSelectionPolicy(d.Get("ip_address_selection_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ip_address_selection_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipAddressSelectionPolicyProp)) && (ok || !reflect.DeepEqual(v, ipAddressSelectionPolicyProp)) {
+		obj["ipAddressSelectionPolicy"] = ipAddressSelectionPolicyProp
+	}
 	loadBalancingSchemeProp, err := expandComputeBackendServiceLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
 	if err != nil {
 		return nil, err
@@ -1172,6 +1178,10 @@ func expandComputeBackendServiceIapOauth2ClientSecret(v interface{}, d tpgresour
 }
 
 func expandComputeBackendServiceIapOauth2ClientSecretSha256(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceIpAddressSelectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
