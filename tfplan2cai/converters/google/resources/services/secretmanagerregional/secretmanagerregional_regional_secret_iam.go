@@ -23,7 +23,7 @@ import (
 )
 
 // Provide a separate asset type constant so we don't have to worry about name conflicts between IAM and non-IAM converter files
-const SecretManagerRegionalRegionalSecretIAMAssetType string = "secretmanager.{{location}}.rep.googleapis.com/RegionalSecret"
+const SecretManagerRegionalRegionalSecretIAMAssetType string = "secretmanager.googleapis.com/RegionalSecret"
 
 func ResourceConverterSecretManagerRegionalRegionalSecretIamPolicy() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -96,7 +96,7 @@ func newSecretManagerRegionalRegionalSecretIamAsset(
 		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := cai.AssetName(d, config, "//secretmanager.{{location}}.rep.googleapis.com/projects/{{project}}/locations/{{location}}/secrets/{{secret_id}}")
+	name, err := cai.AssetName(d, config, "//secretmanager.googleapis.com/projects/{{project}}/locations/{{location}}/secrets/{{secret_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -123,7 +123,7 @@ func FetchSecretManagerRegionalRegionalSecretIamPolicy(d tpgresource.TerraformRe
 		SecretManagerRegionalRegionalSecretIamUpdaterProducer,
 		d,
 		config,
-		"//secretmanager.{{location}}.rep.googleapis.com/projects/{{project}}/locations/{{location}}/secrets/{{secret_id}}",
+		"//secretmanager.googleapis.com/projects/{{project}}/locations/{{location}}/secrets/{{secret_id}}",
 		SecretManagerRegionalRegionalSecretIAMAssetType,
 	)
 }
