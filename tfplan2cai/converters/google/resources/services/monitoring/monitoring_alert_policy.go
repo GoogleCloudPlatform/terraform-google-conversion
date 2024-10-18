@@ -864,6 +864,13 @@ func expandMonitoringAlertPolicyAlertStrategy(v interface{}, d tpgresource.Terra
 		transformed["autoClose"] = transformedAutoClose
 	}
 
+	transformedNotificationPrompts, err := expandMonitoringAlertPolicyAlertStrategyNotificationPrompts(original["notification_prompts"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNotificationPrompts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["notificationPrompts"] = transformedNotificationPrompts
+	}
+
 	transformedNotificationChannelStrategy, err := expandMonitoringAlertPolicyAlertStrategyNotificationChannelStrategy(original["notification_channel_strategy"], d, config)
 	if err != nil {
 		return nil, err
@@ -898,6 +905,10 @@ func expandMonitoringAlertPolicyAlertStrategyNotificationRateLimitPeriod(v inter
 }
 
 func expandMonitoringAlertPolicyAlertStrategyAutoClose(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyAlertStrategyNotificationPrompts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
