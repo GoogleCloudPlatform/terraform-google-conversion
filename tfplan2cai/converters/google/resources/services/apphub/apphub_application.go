@@ -15,12 +15,34 @@
 package apphub
 
 import (
+	"context"
+	"fmt"
 	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func apphubApplicationCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	if diff.HasChange("location") || diff.HasChange("scope.0.type") {
+		location := diff.Get("location")
+		scope_type := diff.Get("scope.0.type")
+
+		if scope_type == "GLOBAL" {
+			if location != "global" {
+				return fmt.Errorf("Error validating location %s with %s scope type", location, scope_type)
+			}
+		} else {
+			if location == "global" {
+				return fmt.Errorf("Error validating location %s with %s scope type", location, scope_type)
+			}
+		}
+	}
+	return nil
+}
 
 const ApphubApplicationAssetType string = "apphub.googleapis.com/Application"
 
