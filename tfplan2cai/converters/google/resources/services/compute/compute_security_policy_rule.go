@@ -90,6 +90,18 @@ func GetComputeSecurityPolicyRuleApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("rate_limit_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(rateLimitOptionsProp)) && (ok || !reflect.DeepEqual(v, rateLimitOptionsProp)) {
 		obj["rateLimitOptions"] = rateLimitOptionsProp
 	}
+	redirectOptionsProp, err := expandComputeSecurityPolicyRuleRedirectOptions(d.Get("redirect_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("redirect_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(redirectOptionsProp)) && (ok || !reflect.DeepEqual(v, redirectOptionsProp)) {
+		obj["redirectOptions"] = redirectOptionsProp
+	}
+	headerActionProp, err := expandComputeSecurityPolicyRuleHeaderAction(d.Get("header_action"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("header_action"); !tpgresource.IsEmptyValue(reflect.ValueOf(headerActionProp)) && (ok || !reflect.DeepEqual(v, headerActionProp)) {
+		obj["headerAction"] = headerActionProp
+	}
 	previewProp, err := expandComputeSecurityPolicyRulePreview(d.Get("preview"), d, config)
 	if err != nil {
 		return nil, err
@@ -718,6 +730,96 @@ func expandComputeSecurityPolicyRuleRateLimitOptionsBanThresholdIntervalSec(v in
 }
 
 func expandComputeSecurityPolicyRuleRateLimitOptionsBanDurationSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSecurityPolicyRuleRedirectOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandComputeSecurityPolicyRuleRedirectOptionsType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	transformedTarget, err := expandComputeSecurityPolicyRuleRedirectOptionsTarget(original["target"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTarget); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["target"] = transformedTarget
+	}
+
+	return transformed, nil
+}
+
+func expandComputeSecurityPolicyRuleRedirectOptionsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSecurityPolicyRuleRedirectOptionsTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSecurityPolicyRuleHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRequestHeadersToAdds, err := expandComputeSecurityPolicyRuleHeaderActionRequestHeadersToAdds(original["request_headers_to_adds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestHeadersToAdds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestHeadersToAdds"] = transformedRequestHeadersToAdds
+	}
+
+	return transformed, nil
+}
+
+func expandComputeSecurityPolicyRuleHeaderActionRequestHeadersToAdds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHeaderName, err := expandComputeSecurityPolicyRuleHeaderActionRequestHeadersToAddsHeaderName(original["header_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerName"] = transformedHeaderName
+		}
+
+		transformedHeaderValue, err := expandComputeSecurityPolicyRuleHeaderActionRequestHeadersToAddsHeaderValue(original["header_value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerValue"] = transformedHeaderValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeSecurityPolicyRuleHeaderActionRequestHeadersToAddsHeaderName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSecurityPolicyRuleHeaderActionRequestHeadersToAddsHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
