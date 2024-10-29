@@ -15,6 +15,7 @@
 package bigquery
 
 import (
+	"fmt"
 	"reflect"
 	"regexp"
 
@@ -312,6 +313,20 @@ func expandBigQueryJobConfigurationQueryDestinationTable(v interface{}, d tpgres
 		transformed["tableId"] = parts[3]
 	}
 
+	configError := "Invalid BigQuery job destination_table configuration. You must either:\n" +
+		"1. Set all of project_id, dataset_id, and table_id separately, or\n" +
+		"2. Provide table_id in the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}'"
+
+	// Validate required fields
+	if projectId, ok := transformed["projectId"]; !ok || projectId == nil ||
+		reflect.ValueOf(projectId).IsZero() {
+		return nil, fmt.Errorf("%s\nMissing or empty projectId", configError)
+	}
+
+	if datasetId, ok := transformed["datasetId"]; !ok || datasetId == nil ||
+		reflect.ValueOf(datasetId).IsZero() {
+		return nil, fmt.Errorf("%s\nMissing or empty datasetId", configError)
+	}
 	return transformed, nil
 }
 
@@ -695,6 +710,20 @@ func expandBigQueryJobConfigurationLoadDestinationTable(v interface{}, d tpgreso
 		transformed["tableId"] = parts[3]
 	}
 
+	configError := "Invalid BigQuery job destination_table configuration. You must either:\n" +
+		"1. Set all of project_id, dataset_id, and table_id separately, or\n" +
+		"2. Provide table_id in the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}'"
+
+	// Validate required fields
+	if projectId, ok := transformed["projectId"]; !ok || projectId == nil ||
+		reflect.ValueOf(projectId).IsZero() {
+		return nil, fmt.Errorf("%s\nMissing or empty projectId", configError)
+	}
+
+	if datasetId, ok := transformed["datasetId"]; !ok || datasetId == nil ||
+		reflect.ValueOf(datasetId).IsZero() {
+		return nil, fmt.Errorf("%s\nMissing or empty datasetId", configError)
+	}
 	return transformed, nil
 }
 
@@ -989,6 +1018,20 @@ func expandBigQueryJobConfigurationCopyDestinationTable(v interface{}, d tpgreso
 		transformed["tableId"] = parts[3]
 	}
 
+	configError := "Invalid BigQuery job destination_table configuration. You must either:\n" +
+		"1. Set all of project_id, dataset_id, and table_id separately, or\n" +
+		"2. Provide table_id in the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}'"
+
+	// Validate required fields
+	if projectId, ok := transformed["projectId"]; !ok || projectId == nil ||
+		reflect.ValueOf(projectId).IsZero() {
+		return nil, fmt.Errorf("%s\nMissing or empty projectId", configError)
+	}
+
+	if datasetId, ok := transformed["datasetId"]; !ok || datasetId == nil ||
+		reflect.ValueOf(datasetId).IsZero() {
+		return nil, fmt.Errorf("%s\nMissing or empty datasetId", configError)
+	}
 	return transformed, nil
 }
 
@@ -1156,6 +1199,20 @@ func expandBigQueryJobConfigurationExtractSourceTable(v interface{}, d tpgresour
 		transformed["tableId"] = parts[3]
 	}
 
+	configError := "Invalid BigQuery job destination_table configuration. You must either:\n" +
+		"1. Set all of project_id, dataset_id, and table_id separately, or\n" +
+		"2. Provide table_id in the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}'"
+
+	// Validate required fields
+	if projectId, ok := transformed["projectId"]; !ok || projectId == nil ||
+		reflect.ValueOf(projectId).IsZero() {
+		return nil, fmt.Errorf("%s\nMissing or empty projectId", configError)
+	}
+
+	if datasetId, ok := transformed["datasetId"]; !ok || datasetId == nil ||
+		reflect.ValueOf(datasetId).IsZero() {
+		return nil, fmt.Errorf("%s\nMissing or empty datasetId", configError)
+	}
 	return transformed, nil
 }
 
