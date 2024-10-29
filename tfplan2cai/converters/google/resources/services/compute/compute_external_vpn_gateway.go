@@ -134,6 +134,13 @@ func expandComputeExternalVpnGatewayInterface(v interface{}, d tpgresource.Terra
 			transformed["ipAddress"] = transformedIpAddress
 		}
 
+		transformedIpv6Address, err := expandComputeExternalVpnGatewayInterfaceIpv6Address(original["ipv6_address"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpv6Address); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipv6Address"] = transformedIpv6Address
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -144,6 +151,10 @@ func expandComputeExternalVpnGatewayInterfaceId(v interface{}, d tpgresource.Ter
 }
 
 func expandComputeExternalVpnGatewayInterfaceIpAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeExternalVpnGatewayInterfaceIpv6Address(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
