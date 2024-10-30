@@ -91,6 +91,12 @@ func GetComputeRegionSecurityPolicyApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("user_defined_fields"); !tpgresource.IsEmptyValue(reflect.ValueOf(userDefinedFieldsProp)) && (ok || !reflect.DeepEqual(v, userDefinedFieldsProp)) {
 		obj["userDefinedFields"] = userDefinedFieldsProp
 	}
+	rulesProp, err := expandComputeRegionSecurityPolicyRules(d.Get("rules"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(rulesProp)) && (ok || !reflect.DeepEqual(v, rulesProp)) {
+		obj["rules"] = rulesProp
+	}
 	regionProp, err := expandComputeRegionSecurityPolicyRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -207,6 +213,734 @@ func expandComputeRegionSecurityPolicyUserDefinedFieldsSize(v interface{}, d tpg
 }
 
 func expandComputeRegionSecurityPolicyUserDefinedFieldsMask(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDescription, err := expandComputeRegionSecurityPolicyRulesDescription(original["description"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["description"] = transformedDescription
+		}
+
+		transformedPriority, err := expandComputeRegionSecurityPolicyRulesPriority(original["priority"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPriority); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["priority"] = transformedPriority
+		}
+
+		transformedMatch, err := expandComputeRegionSecurityPolicyRulesMatch(original["match"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMatch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["match"] = transformedMatch
+		}
+
+		transformedPreconfiguredWafConfig, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfig(original["preconfigured_waf_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPreconfiguredWafConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["preconfiguredWafConfig"] = transformedPreconfiguredWafConfig
+		}
+
+		transformedAction, err := expandComputeRegionSecurityPolicyRulesAction(original["action"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["action"] = transformedAction
+		}
+
+		transformedRateLimitOptions, err := expandComputeRegionSecurityPolicyRulesRateLimitOptions(original["rate_limit_options"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRateLimitOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["rateLimitOptions"] = transformedRateLimitOptions
+		}
+
+		transformedPreview, err := expandComputeRegionSecurityPolicyRulesPreview(original["preview"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPreview); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["preview"] = transformedPreview
+		}
+
+		transformedNetworkMatch, err := expandComputeRegionSecurityPolicyRulesNetworkMatch(original["network_match"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetworkMatch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["networkMatch"] = transformedNetworkMatch
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPriority(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedVersionedExpr, err := expandComputeRegionSecurityPolicyRulesMatchVersionedExpr(original["versioned_expr"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersionedExpr); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["versionedExpr"] = transformedVersionedExpr
+	}
+
+	transformedExpr, err := expandComputeRegionSecurityPolicyRulesMatchExpr(original["expr"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpr); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expr"] = transformedExpr
+	}
+
+	transformedConfig, err := expandComputeRegionSecurityPolicyRulesMatchConfig(original["config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["config"] = transformedConfig
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesMatchVersionedExpr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesMatchExpr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpression, err := expandComputeRegionSecurityPolicyRulesMatchExprExpression(original["expression"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expression"] = transformedExpression
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesMatchExprExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesMatchConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSrcIpRanges, err := expandComputeRegionSecurityPolicyRulesMatchConfigSrcIpRanges(original["src_ip_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcIpRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcIpRanges"] = transformedSrcIpRanges
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesMatchConfigSrcIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExclusion, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusion(original["exclusion"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExclusion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exclusions"] = transformedExclusion
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTargetRuleSet, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionTargetRuleSet(original["target_rule_set"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetRuleSet); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetRuleSet"] = transformedTargetRuleSet
+		}
+
+		transformedTargetRuleIds, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionTargetRuleIds(original["target_rule_ids"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetRuleIds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetRuleIds"] = transformedTargetRuleIds
+		}
+
+		transformedRequestHeader, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestHeader(original["request_header"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestHeader); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestHeadersToExclude"] = transformedRequestHeader
+		}
+
+		transformedRequestCookie, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestCookie(original["request_cookie"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestCookie); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestCookiesToExclude"] = transformedRequestCookie
+		}
+
+		transformedRequestUri, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUri(original["request_uri"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestUrisToExclude"] = transformedRequestUri
+		}
+
+		transformedRequestQueryParam, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestQueryParam(original["request_query_param"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestQueryParam); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestQueryParamsToExclude"] = transformedRequestQueryParam
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionTargetRuleSet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionTargetRuleIds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestHeader(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestHeaderOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestHeaderValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestHeaderOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestCookie(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestCookieOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestCookieValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestCookieOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestCookieValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUriOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUriValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUriOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUriValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestQueryParam(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestQueryParamOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestQueryParamValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestQueryParamOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestQueryParamValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRateLimitThreshold, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsRateLimitThreshold(original["rate_limit_threshold"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRateLimitThreshold); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rateLimitThreshold"] = transformedRateLimitThreshold
+	}
+
+	transformedConformAction, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsConformAction(original["conform_action"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConformAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conformAction"] = transformedConformAction
+	}
+
+	transformedExceedAction, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsExceedAction(original["exceed_action"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExceedAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exceedAction"] = transformedExceedAction
+	}
+
+	transformedEnforceOnKey, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKey(original["enforce_on_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnforceOnKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enforceOnKey"] = transformedEnforceOnKey
+	}
+
+	transformedEnforceOnKeyName, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyName(original["enforce_on_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnforceOnKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enforceOnKeyName"] = transformedEnforceOnKeyName
+	}
+
+	transformedEnforceOnKeyConfigs, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyConfigs(original["enforce_on_key_configs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnforceOnKeyConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enforceOnKeyConfigs"] = transformedEnforceOnKeyConfigs
+	}
+
+	transformedBanThreshold, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsBanThreshold(original["ban_threshold"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBanThreshold); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["banThreshold"] = transformedBanThreshold
+	}
+
+	transformedBanDurationSec, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsBanDurationSec(original["ban_duration_sec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBanDurationSec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["banDurationSec"] = transformedBanDurationSec
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsRateLimitThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCount, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsRateLimitThresholdCount(original["count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["count"] = transformedCount
+	}
+
+	transformedIntervalSec, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsRateLimitThresholdIntervalSec(original["interval_sec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIntervalSec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["intervalSec"] = transformedIntervalSec
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsRateLimitThresholdCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsRateLimitThresholdIntervalSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsConformAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsExceedAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedEnforceOnKeyType, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyConfigsEnforceOnKeyType(original["enforce_on_key_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEnforceOnKeyType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["enforceOnKeyType"] = transformedEnforceOnKeyType
+		}
+
+		transformedEnforceOnKeyName, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyConfigsEnforceOnKeyName(original["enforce_on_key_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEnforceOnKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["enforceOnKeyName"] = transformedEnforceOnKeyName
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyConfigsEnforceOnKeyType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyConfigsEnforceOnKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsBanThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCount, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsBanThresholdCount(original["count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["count"] = transformedCount
+	}
+
+	transformedIntervalSec, err := expandComputeRegionSecurityPolicyRulesRateLimitOptionsBanThresholdIntervalSec(original["interval_sec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIntervalSec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["intervalSec"] = transformedIntervalSec
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsBanThresholdCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsBanThresholdIntervalSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesRateLimitOptionsBanDurationSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesPreview(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserDefinedFields, err := expandComputeRegionSecurityPolicyRulesNetworkMatchUserDefinedFields(original["user_defined_fields"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserDefinedFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userDefinedFields"] = transformedUserDefinedFields
+	}
+
+	transformedSrcIpRanges, err := expandComputeRegionSecurityPolicyRulesNetworkMatchSrcIpRanges(original["src_ip_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcIpRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcIpRanges"] = transformedSrcIpRanges
+	}
+
+	transformedDestIpRanges, err := expandComputeRegionSecurityPolicyRulesNetworkMatchDestIpRanges(original["dest_ip_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDestIpRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["destIpRanges"] = transformedDestIpRanges
+	}
+
+	transformedIpProtocols, err := expandComputeRegionSecurityPolicyRulesNetworkMatchIpProtocols(original["ip_protocols"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIpProtocols); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ipProtocols"] = transformedIpProtocols
+	}
+
+	transformedSrcPorts, err := expandComputeRegionSecurityPolicyRulesNetworkMatchSrcPorts(original["src_ports"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcPorts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcPorts"] = transformedSrcPorts
+	}
+
+	transformedDestPorts, err := expandComputeRegionSecurityPolicyRulesNetworkMatchDestPorts(original["dest_ports"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDestPorts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["destPorts"] = transformedDestPorts
+	}
+
+	transformedSrcRegionCodes, err := expandComputeRegionSecurityPolicyRulesNetworkMatchSrcRegionCodes(original["src_region_codes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcRegionCodes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcRegionCodes"] = transformedSrcRegionCodes
+	}
+
+	transformedSrcAsns, err := expandComputeRegionSecurityPolicyRulesNetworkMatchSrcAsns(original["src_asns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcAsns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcAsns"] = transformedSrcAsns
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchUserDefinedFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandComputeRegionSecurityPolicyRulesNetworkMatchUserDefinedFieldsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedValues, err := expandComputeRegionSecurityPolicyRulesNetworkMatchUserDefinedFieldsValues(original["values"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValues); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["values"] = transformedValues
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchUserDefinedFieldsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchUserDefinedFieldsValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchSrcIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchDestIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchIpProtocols(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchSrcPorts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchDestPorts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchSrcRegionCodes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulesNetworkMatchSrcAsns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
