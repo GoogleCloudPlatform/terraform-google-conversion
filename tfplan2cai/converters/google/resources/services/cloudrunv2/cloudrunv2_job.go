@@ -854,6 +854,13 @@ func expandCloudRunV2JobTemplateTemplateVolumesGcs(v interface{}, d tpgresource.
 		transformed["readOnly"] = transformedReadOnly
 	}
 
+	transformedMountOptions, err := expandCloudRunV2JobTemplateTemplateVolumesGcsMountOptions(original["mount_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMountOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mountOptions"] = transformedMountOptions
+	}
+
 	return transformed, nil
 }
 
@@ -862,6 +869,10 @@ func expandCloudRunV2JobTemplateTemplateVolumesGcsBucket(v interface{}, d tpgres
 }
 
 func expandCloudRunV2JobTemplateTemplateVolumesGcsReadOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateVolumesGcsMountOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
