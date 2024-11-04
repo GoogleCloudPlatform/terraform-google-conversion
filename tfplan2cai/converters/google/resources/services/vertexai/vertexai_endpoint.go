@@ -15,6 +15,7 @@
 package vertexai
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
@@ -66,6 +67,12 @@ func GetVertexAIEndpointApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	trafficSplitProp, err := expandVertexAIEndpointTrafficSplit(d.Get("traffic_split"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("traffic_split"); !tpgresource.IsEmptyValue(reflect.ValueOf(trafficSplitProp)) && (ok || !reflect.DeepEqual(v, trafficSplitProp)) {
+		obj["trafficSplit"] = trafficSplitProp
+	}
 	encryptionSpecProp, err := expandVertexAIEndpointEncryptionSpec(d.Get("encryption_spec"), d, config)
 	if err != nil {
 		return nil, err
@@ -77,6 +84,24 @@ func GetVertexAIEndpointApiObject(d tpgresource.TerraformResourceData, config *t
 		return nil, err
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
+	}
+	privateServiceConnectConfigProp, err := expandVertexAIEndpointPrivateServiceConnectConfig(d.Get("private_service_connect_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("private_service_connect_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(privateServiceConnectConfigProp)) && (ok || !reflect.DeepEqual(v, privateServiceConnectConfigProp)) {
+		obj["privateServiceConnectConfig"] = privateServiceConnectConfigProp
+	}
+	predictRequestResponseLoggingConfigProp, err := expandVertexAIEndpointPredictRequestResponseLoggingConfig(d.Get("predict_request_response_logging_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("predict_request_response_logging_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(predictRequestResponseLoggingConfigProp)) && (ok || !reflect.DeepEqual(v, predictRequestResponseLoggingConfigProp)) {
+		obj["predictRequestResponseLoggingConfig"] = predictRequestResponseLoggingConfigProp
+	}
+	dedicatedEndpointEnabledProp, err := expandVertexAIEndpointDedicatedEndpointEnabled(d.Get("dedicated_endpoint_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dedicated_endpoint_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(dedicatedEndpointEnabledProp)) && (ok || !reflect.DeepEqual(v, dedicatedEndpointEnabledProp)) {
+		obj["dedicatedEndpointEnabled"] = dedicatedEndpointEnabledProp
 	}
 	labelsProp, err := expandVertexAIEndpointEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -94,6 +119,18 @@ func expandVertexAIEndpointDisplayName(v interface{}, d tpgresource.TerraformRes
 
 func expandVertexAIEndpointDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandVertexAIEndpointTrafficSplit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func expandVertexAIEndpointEncryptionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -120,6 +157,119 @@ func expandVertexAIEndpointEncryptionSpecKmsKeyName(v interface{}, d tpgresource
 }
 
 func expandVertexAIEndpointNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnablePrivateServiceConnect, err := expandVertexAIEndpointPrivateServiceConnectConfigEnablePrivateServiceConnect(original["enable_private_service_connect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnablePrivateServiceConnect); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enablePrivateServiceConnect"] = transformedEnablePrivateServiceConnect
+	}
+
+	transformedProjectAllowlist, err := expandVertexAIEndpointPrivateServiceConnectConfigProjectAllowlist(original["project_allowlist"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectAllowlist); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectAllowlist"] = transformedProjectAllowlist
+	}
+
+	transformedEnableSecurePrivateServiceConnect, err := expandVertexAIEndpointPrivateServiceConnectConfigEnableSecurePrivateServiceConnect(original["enable_secure_private_service_connect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableSecurePrivateServiceConnect); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableSecurePrivateServiceConnect"] = transformedEnableSecurePrivateServiceConnect
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigEnablePrivateServiceConnect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigProjectAllowlist(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigEnableSecurePrivateServiceConnect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPredictRequestResponseLoggingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandVertexAIEndpointPredictRequestResponseLoggingConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedSamplingRate, err := expandVertexAIEndpointPredictRequestResponseLoggingConfigSamplingRate(original["sampling_rate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSamplingRate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["samplingRate"] = transformedSamplingRate
+	}
+
+	transformedBigqueryDestination, err := expandVertexAIEndpointPredictRequestResponseLoggingConfigBigqueryDestination(original["bigquery_destination"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBigqueryDestination); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bigqueryDestination"] = transformedBigqueryDestination
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIEndpointPredictRequestResponseLoggingConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPredictRequestResponseLoggingConfigSamplingRate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPredictRequestResponseLoggingConfigBigqueryDestination(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOutputUri, err := expandVertexAIEndpointPredictRequestResponseLoggingConfigBigqueryDestinationOutputUri(original["output_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutputUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outputUri"] = transformedOutputUri
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIEndpointPredictRequestResponseLoggingConfigBigqueryDestinationOutputUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointDedicatedEndpointEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
