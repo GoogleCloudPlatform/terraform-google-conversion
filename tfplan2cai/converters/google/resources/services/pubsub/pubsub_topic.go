@@ -190,6 +190,20 @@ func expandPubsubTopicIngestionDataSourceSettings(v interface{}, d tpgresource.T
 		transformed["awsKinesis"] = transformedAwsKinesis
 	}
 
+	transformedCloudStorage, err := expandPubsubTopicIngestionDataSourceSettingsCloudStorage(original["cloud_storage"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudStorage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cloudStorage"] = transformedCloudStorage
+	}
+
+	transformedPlatformLogsSettings, err := expandPubsubTopicIngestionDataSourceSettingsPlatformLogsSettings(original["platform_logs_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPlatformLogsSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["platformLogsSettings"] = transformedPlatformLogsSettings
+	}
+
 	return transformed, nil
 }
 
@@ -246,6 +260,148 @@ func expandPubsubTopicIngestionDataSourceSettingsAwsKinesisAwsRoleArn(v interfac
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsAwsKinesisGcpServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsCloudStorage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBucket, err := expandPubsubTopicIngestionDataSourceSettingsCloudStorageBucket(original["bucket"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucket); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bucket"] = transformedBucket
+	}
+
+	transformedTextFormat, err := expandPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormat(original["text_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTextFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["textFormat"] = transformedTextFormat
+	}
+
+	transformedAvroFormat, err := expandPubsubTopicIngestionDataSourceSettingsCloudStorageAvroFormat(original["avro_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["avroFormat"] = transformedAvroFormat
+	}
+
+	transformedPubsubAvroFormat, err := expandPubsubTopicIngestionDataSourceSettingsCloudStoragePubsubAvroFormat(original["pubsub_avro_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["pubsubAvroFormat"] = transformedPubsubAvroFormat
+	}
+
+	transformedMinimumObjectCreateTime, err := expandPubsubTopicIngestionDataSourceSettingsCloudStorageMinimumObjectCreateTime(original["minimum_object_create_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinimumObjectCreateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minimumObjectCreateTime"] = transformedMinimumObjectCreateTime
+	}
+
+	transformedMatchGlob, err := expandPubsubTopicIngestionDataSourceSettingsCloudStorageMatchGlob(original["match_glob"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMatchGlob); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["matchGlob"] = transformedMatchGlob
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsCloudStorageBucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDelimiter, err := expandPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormatDelimiter(original["delimiter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDelimiter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["delimiter"] = transformedDelimiter
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormatDelimiter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsCloudStorageAvroFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsCloudStoragePubsubAvroFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsCloudStorageMinimumObjectCreateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsCloudStorageMatchGlob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsPlatformLogsSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSeverity, err := expandPubsubTopicIngestionDataSourceSettingsPlatformLogsSettingsSeverity(original["severity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeverity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["severity"] = transformedSeverity
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsPlatformLogsSettingsSeverity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

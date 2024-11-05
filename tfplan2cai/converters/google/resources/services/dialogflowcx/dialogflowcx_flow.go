@@ -1183,11 +1183,25 @@ func expandDialogflowCXFlowAdvancedSettings(v interface{}, d tpgresource.Terrafo
 		transformed["audioExportGcsDestination"] = transformedAudioExportGcsDestination
 	}
 
+	transformedSpeechSettings, err := expandDialogflowCXFlowAdvancedSettingsSpeechSettings(original["speech_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSpeechSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["speechSettings"] = transformedSpeechSettings
+	}
+
 	transformedDtmfSettings, err := expandDialogflowCXFlowAdvancedSettingsDtmfSettings(original["dtmf_settings"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedDtmfSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["dtmfSettings"] = transformedDtmfSettings
+	}
+
+	transformedLoggingSettings, err := expandDialogflowCXFlowAdvancedSettingsLoggingSettings(original["logging_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLoggingSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["loggingSettings"] = transformedLoggingSettings
 	}
 
 	return transformed, nil
@@ -1214,6 +1228,69 @@ func expandDialogflowCXFlowAdvancedSettingsAudioExportGcsDestination(v interface
 
 func expandDialogflowCXFlowAdvancedSettingsAudioExportGcsDestinationUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsSpeechSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEndpointerSensitivity, err := expandDialogflowCXFlowAdvancedSettingsSpeechSettingsEndpointerSensitivity(original["endpointer_sensitivity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndpointerSensitivity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endpointerSensitivity"] = transformedEndpointerSensitivity
+	}
+
+	transformedNoSpeechTimeout, err := expandDialogflowCXFlowAdvancedSettingsSpeechSettingsNoSpeechTimeout(original["no_speech_timeout"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNoSpeechTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["noSpeechTimeout"] = transformedNoSpeechTimeout
+	}
+
+	transformedUseTimeoutBasedEndpointing, err := expandDialogflowCXFlowAdvancedSettingsSpeechSettingsUseTimeoutBasedEndpointing(original["use_timeout_based_endpointing"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseTimeoutBasedEndpointing); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useTimeoutBasedEndpointing"] = transformedUseTimeoutBasedEndpointing
+	}
+
+	transformedModels, err := expandDialogflowCXFlowAdvancedSettingsSpeechSettingsModels(original["models"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedModels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["models"] = transformedModels
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsSpeechSettingsEndpointerSensitivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsSpeechSettingsNoSpeechTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsSpeechSettingsUseTimeoutBasedEndpointing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsSpeechSettingsModels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandDialogflowCXFlowAdvancedSettingsDtmfSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1258,6 +1335,51 @@ func expandDialogflowCXFlowAdvancedSettingsDtmfSettingsMaxDigits(v interface{}, 
 }
 
 func expandDialogflowCXFlowAdvancedSettingsDtmfSettingsFinishDigit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsLoggingSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableStackdriverLogging, err := expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableStackdriverLogging(original["enable_stackdriver_logging"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableStackdriverLogging); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableStackdriverLogging"] = transformedEnableStackdriverLogging
+	}
+
+	transformedEnableInteractionLogging, err := expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableInteractionLogging(original["enable_interaction_logging"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableInteractionLogging); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableInteractionLogging"] = transformedEnableInteractionLogging
+	}
+
+	transformedEnableConsentBasedRedaction, err := expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableConsentBasedRedaction(original["enable_consent_based_redaction"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableConsentBasedRedaction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableConsentBasedRedaction"] = transformedEnableConsentBasedRedaction
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableStackdriverLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableInteractionLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableConsentBasedRedaction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -168,6 +168,12 @@ func GetBigQueryDatasetApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("resource_tags"); !tpgresource.IsEmptyValue(reflect.ValueOf(resourceTagsProp)) && (ok || !reflect.DeepEqual(v, resourceTagsProp)) {
 		obj["resourceTags"] = resourceTagsProp
 	}
+	externalCatalogDatasetOptionsProp, err := expandBigQueryDatasetExternalCatalogDatasetOptions(d.Get("external_catalog_dataset_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("external_catalog_dataset_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(externalCatalogDatasetOptionsProp)) && (ok || !reflect.DeepEqual(v, externalCatalogDatasetOptionsProp)) {
+		obj["externalCatalogDatasetOptions"] = externalCatalogDatasetOptionsProp
+	}
 	labelsProp, err := expandBigQueryDatasetEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -553,6 +559,47 @@ func expandBigQueryDatasetResourceTags(v interface{}, d tpgresource.TerraformRes
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandBigQueryDatasetExternalCatalogDatasetOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedParameters, err := expandBigQueryDatasetExternalCatalogDatasetOptionsParameters(original["parameters"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParameters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parameters"] = transformedParameters
+	}
+
+	transformedDefaultStorageLocationUri, err := expandBigQueryDatasetExternalCatalogDatasetOptionsDefaultStorageLocationUri(original["default_storage_location_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultStorageLocationUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultStorageLocationUri"] = transformedDefaultStorageLocationUri
+	}
+
+	return transformed, nil
+}
+
+func expandBigQueryDatasetExternalCatalogDatasetOptionsParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandBigQueryDatasetExternalCatalogDatasetOptionsDefaultStorageLocationUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandBigQueryDatasetEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {

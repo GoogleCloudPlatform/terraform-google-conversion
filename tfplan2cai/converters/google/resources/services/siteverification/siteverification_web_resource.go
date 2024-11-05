@@ -22,7 +22,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const SiteVerificationWebResourceAssetType string = "www.googleapis.com/WebResource"
+const SiteVerificationWebResourceAssetType string = "siteverification.googleapis.com/WebResource"
 
 func ResourceConverterSiteVerificationWebResource() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -32,7 +32,7 @@ func ResourceConverterSiteVerificationWebResource() cai.ResourceConverter {
 }
 
 func GetSiteVerificationWebResourceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//www.googleapis.com/webResource/{{web_resource_id}}")
+	name, err := cai.AssetName(d, config, "//siteverification.googleapis.com/webResource/{{web_resource_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -42,7 +42,7 @@ func GetSiteVerificationWebResourceCaiObject(d tpgresource.TerraformResourceData
 			Type: SiteVerificationWebResourceAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/www/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/siteverification/v1/rest",
 				DiscoveryName:        "WebResource",
 				Data:                 obj,
 			},

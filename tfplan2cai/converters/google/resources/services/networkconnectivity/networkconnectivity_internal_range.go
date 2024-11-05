@@ -102,6 +102,12 @@ func GetNetworkConnectivityInternalRangeApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("overlaps"); !tpgresource.IsEmptyValue(reflect.ValueOf(overlapsProp)) && (ok || !reflect.DeepEqual(v, overlapsProp)) {
 		obj["overlaps"] = overlapsProp
 	}
+	migrationProp, err := expandNetworkConnectivityInternalRangeMigration(d.Get("migration"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("migration"); !tpgresource.IsEmptyValue(reflect.ValueOf(migrationProp)) && (ok || !reflect.DeepEqual(v, migrationProp)) {
+		obj["migration"] = migrationProp
+	}
 	labelsProp, err := expandNetworkConnectivityInternalRangeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -141,6 +147,40 @@ func expandNetworkConnectivityInternalRangeTargetCidrRange(v interface{}, d tpgr
 }
 
 func expandNetworkConnectivityInternalRangeOverlaps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityInternalRangeMigration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSource, err := expandNetworkConnectivityInternalRangeMigrationSource(original["source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["source"] = transformedSource
+	}
+
+	transformedTarget, err := expandNetworkConnectivityInternalRangeMigrationTarget(original["target"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTarget); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["target"] = transformedTarget
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkConnectivityInternalRangeMigrationSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityInternalRangeMigrationTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -132,10 +132,43 @@ func expandComputeNetworkRoutingConfig(v interface{}, d tpgresource.TerraformRes
 		transformed["routingMode"] = transformedRoutingMode
 	}
 
+	transformedBgpBestPathSelectionMode, err := expandComputeNetworkRoutingConfigBgpBestPathSelectionMode(d.Get("bgp_best_path_selection_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBgpBestPathSelectionMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bgpBestPathSelectionMode"] = transformedBgpBestPathSelectionMode
+	}
+
+	transformedBgpAlwaysCompareMed, err := expandComputeNetworkRoutingConfigBgpAlwaysCompareMed(d.Get("bgp_always_compare_med"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBgpAlwaysCompareMed); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bgpAlwaysCompareMed"] = transformedBgpAlwaysCompareMed
+	}
+
+	transformedBgpInterRegionCost, err := expandComputeNetworkRoutingConfigBgpInterRegionCost(d.Get("bgp_inter_region_cost"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBgpInterRegionCost); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bgpInterRegionCost"] = transformedBgpInterRegionCost
+	}
+
 	return transformed, nil
 }
 
 func expandComputeNetworkRoutingConfigRoutingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNetworkRoutingConfigBgpBestPathSelectionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNetworkRoutingConfigBgpAlwaysCompareMed(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNetworkRoutingConfigBgpInterRegionCost(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

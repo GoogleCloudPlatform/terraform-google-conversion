@@ -25,7 +25,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const SecretManagerRegionalRegionalSecretVersionAssetType string = "secretmanager.{{location}}.rep.googleapis.com/RegionalSecretVersion"
+const SecretManagerRegionalRegionalSecretVersionAssetType string = "secretmanager.googleapis.com/RegionalSecretVersion"
 
 func ResourceConverterSecretManagerRegionalRegionalSecretVersion() cai.ResourceConverter {
 	return cai.ResourceConverter{
@@ -35,7 +35,7 @@ func ResourceConverterSecretManagerRegionalRegionalSecretVersion() cai.ResourceC
 }
 
 func GetSecretManagerRegionalRegionalSecretVersionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//secretmanager.{{location}}.rep.googleapis.com/{{name}}")
+	name, err := cai.AssetName(d, config, "//secretmanager.googleapis.com/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -45,7 +45,7 @@ func GetSecretManagerRegionalRegionalSecretVersionCaiObject(d tpgresource.Terraf
 			Type: SecretManagerRegionalRegionalSecretVersionAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/secretmanager.{{location}}.rep/v1/rest",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/secretmanager/v1/rest",
 				DiscoveryName:        "RegionalSecretVersion",
 				Data:                 obj,
 			},
