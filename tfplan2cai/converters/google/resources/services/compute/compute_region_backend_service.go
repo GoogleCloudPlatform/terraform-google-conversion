@@ -220,6 +220,12 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("iap"); ok || !reflect.DeepEqual(v, iapProp) {
 		obj["iap"] = iapProp
 	}
+	ipAddressSelectionPolicyProp, err := expandComputeRegionBackendServiceIpAddressSelectionPolicy(d.Get("ip_address_selection_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ip_address_selection_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipAddressSelectionPolicyProp)) && (ok || !reflect.DeepEqual(v, ipAddressSelectionPolicyProp)) {
+		obj["ipAddressSelectionPolicy"] = ipAddressSelectionPolicyProp
+	}
 	loadBalancingSchemeProp, err := expandComputeRegionBackendServiceLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
 	if err != nil {
 		return nil, err
@@ -267,6 +273,12 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 		return nil, err
 	} else if v, ok := d.GetOkExists("session_affinity"); !tpgresource.IsEmptyValue(reflect.ValueOf(sessionAffinityProp)) && (ok || !reflect.DeepEqual(v, sessionAffinityProp)) {
 		obj["sessionAffinity"] = sessionAffinityProp
+	}
+	strongSessionAffinityCookieProp, err := expandComputeRegionBackendServiceStrongSessionAffinityCookie(d.Get("strong_session_affinity_cookie"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("strong_session_affinity_cookie"); !tpgresource.IsEmptyValue(reflect.ValueOf(strongSessionAffinityCookieProp)) && (ok || !reflect.DeepEqual(v, strongSessionAffinityCookieProp)) {
+		obj["strongSessionAffinityCookie"] = strongSessionAffinityCookieProp
 	}
 	connectionTrackingPolicyProp, err := expandComputeRegionBackendServiceConnectionTrackingPolicy(d.Get("connection_tracking_policy"), d, config)
 	if err != nil {
@@ -1045,7 +1057,7 @@ func expandComputeRegionBackendServiceIap(v interface{}, d tpgresource.Terraform
 	transformedEnabled, err := expandComputeRegionBackendServiceIapEnabled(original["enabled"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["enabled"] = transformedEnabled
 	}
 
@@ -1086,6 +1098,10 @@ func expandComputeRegionBackendServiceIapOauth2ClientSecret(v interface{}, d tpg
 }
 
 func expandComputeRegionBackendServiceIapOauth2ClientSecretSha256(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceIpAddressSelectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1307,6 +1323,81 @@ func expandComputeRegionBackendServiceSecurityPolicy(v interface{}, d tpgresourc
 }
 
 func expandComputeRegionBackendServiceSessionAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceStrongSessionAffinityCookie(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTtl, err := expandComputeRegionBackendServiceStrongSessionAffinityCookieTtl(original["ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ttl"] = transformedTtl
+	}
+
+	transformedName, err := expandComputeRegionBackendServiceStrongSessionAffinityCookieName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedPath, err := expandComputeRegionBackendServiceStrongSessionAffinityCookiePath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceStrongSessionAffinityCookieTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSeconds, err := expandComputeRegionBackendServiceStrongSessionAffinityCookieTtlSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	transformedNanos, err := expandComputeRegionBackendServiceStrongSessionAffinityCookieTtlNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceStrongSessionAffinityCookieTtlSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceStrongSessionAffinityCookieTtlNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceStrongSessionAffinityCookieName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceStrongSessionAffinityCookiePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

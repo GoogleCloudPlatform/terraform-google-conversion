@@ -198,10 +198,21 @@ func expandSpannerDatabaseEncryptionConfig(v interface{}, d tpgresource.Terrafor
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
+	transformedKmsKeyNames, err := expandSpannerDatabaseEncryptionConfigKmsKeyNames(original["kms_key_names"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyNames); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyNames"] = transformedKmsKeyNames
+	}
+
 	return transformed, nil
 }
 
 func expandSpannerDatabaseEncryptionConfigKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerDatabaseEncryptionConfigKmsKeyNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

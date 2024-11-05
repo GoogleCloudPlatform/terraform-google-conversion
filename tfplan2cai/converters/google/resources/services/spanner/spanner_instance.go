@@ -241,6 +241,13 @@ func expandSpannerInstanceAutoscalingConfig(v interface{}, d tpgresource.Terrafo
 		transformed["autoscalingTargets"] = transformedAutoscalingTargets
 	}
 
+	transformedAsymmetricAutoscalingOptions, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptions(original["asymmetric_autoscaling_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAsymmetricAutoscalingOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["asymmetricAutoscalingOptions"] = transformedAsymmetricAutoscalingOptions
+	}
+
 	return transformed, nil
 }
 
@@ -331,6 +338,111 @@ func expandSpannerInstanceAutoscalingConfigAutoscalingTargetsHighPriorityCpuUtil
 }
 
 func expandSpannerInstanceAutoscalingConfigAutoscalingTargetsStorageUtilizationPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedReplicaSelection, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaSelection(original["replica_selection"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedReplicaSelection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["replicaSelection"] = transformedReplicaSelection
+		}
+
+		transformedOverrides, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverrides(original["overrides"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOverrides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["overrides"] = transformedOverrides
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaSelection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLocation, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaSelectionLocation(original["location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["location"] = transformedLocation
+	}
+
+	return transformed, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaSelectionLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAutoscalingLimits, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimits(original["autoscaling_limits"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAutoscalingLimits); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["autoscalingLimits"] = transformedAutoscalingLimits
+	}
+
+	return transformed, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMinNodes, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMinNodes(original["min_nodes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinNodes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minNodes"] = transformedMinNodes
+	}
+
+	transformedMaxNodes, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMaxNodes(original["max_nodes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxNodes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxNodes"] = transformedMaxNodes
+	}
+
+	return transformed, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMinNodes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMaxNodes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

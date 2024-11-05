@@ -164,7 +164,7 @@ func GetPubsubSubscriptionApiObject(d tpgresource.TerraformResourceData, config 
 	retryPolicyProp, err := expandPubsubSubscriptionRetryPolicy(d.Get("retry_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("retry_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(retryPolicyProp)) && (ok || !reflect.DeepEqual(v, retryPolicyProp)) {
+	} else if v, ok := d.GetOkExists("retry_policy"); ok || !reflect.DeepEqual(v, retryPolicyProp) {
 		obj["retryPolicy"] = retryPolicyProp
 	}
 	enableMessageOrderingProp, err := expandPubsubSubscriptionEnableMessageOrdering(d.Get("enable_message_ordering"), d, config)
@@ -642,8 +642,13 @@ func expandPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(v interface{}, 
 
 func expandPubsubSubscriptionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
+	if len(l) == 0 {
 		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})

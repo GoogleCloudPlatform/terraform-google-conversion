@@ -122,6 +122,13 @@ func expandDiscoveryEngineChatEngineChatEngineConfig(v interface{}, d tpgresourc
 		transformed["agentCreationConfig"] = transformedAgentCreationConfig
 	}
 
+	transformedDialogflowAgentToLink, err := expandDiscoveryEngineChatEngineChatEngineConfigDialogflowAgentToLink(original["dialogflow_agent_to_link"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDialogflowAgentToLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dialogflowAgentToLink"] = transformedDialogflowAgentToLink
+	}
+
 	return transformed, nil
 }
 
@@ -178,6 +185,10 @@ func expandDiscoveryEngineChatEngineChatEngineConfigAgentCreationConfigTimeZone(
 }
 
 func expandDiscoveryEngineChatEngineChatEngineConfigAgentCreationConfigLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineChatEngineChatEngineConfigDialogflowAgentToLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

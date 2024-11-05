@@ -42,8 +42,8 @@ func GetNetworkManagementConnectivityTestCaiObject(d tpgresource.TerraformResour
 			Name: name,
 			Type: NetworkManagementConnectivityTestAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkmanagement/v1/rest",
+				Version:              "v1beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkmanagement/v1beta1/rest",
 				DiscoveryName:        "ConnectivityTest",
 				Data:                 obj,
 			},
