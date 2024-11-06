@@ -108,6 +108,12 @@ func GetRedisClusterApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("redis_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(redisConfigsProp)) && (ok || !reflect.DeepEqual(v, redisConfigsProp)) {
 		obj["redisConfigs"] = redisConfigsProp
 	}
+	persistenceConfigProp, err := expandRedisClusterPersistenceConfig(d.Get("persistence_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("persistence_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(persistenceConfigProp)) && (ok || !reflect.DeepEqual(v, persistenceConfigProp)) {
+		obj["persistenceConfig"] = persistenceConfigProp
+	}
 	maintenancePolicyProp, err := expandRedisClusterMaintenancePolicy(d.Get("maintenance_policy"), d, config)
 	if err != nil {
 		return nil, err
@@ -211,6 +217,100 @@ func expandRedisClusterRedisConfigs(v interface{}, d tpgresource.TerraformResour
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandRedisClusterPersistenceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMode, err := expandRedisClusterPersistenceConfigMode(original["mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mode"] = transformedMode
+	}
+
+	transformedRdbConfig, err := expandRedisClusterPersistenceConfigRdbConfig(original["rdb_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRdbConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rdbConfig"] = transformedRdbConfig
+	}
+
+	transformedAofConfig, err := expandRedisClusterPersistenceConfigAofConfig(original["aof_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAofConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["aofConfig"] = transformedAofConfig
+	}
+
+	return transformed, nil
+}
+
+func expandRedisClusterPersistenceConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterPersistenceConfigRdbConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRdbSnapshotPeriod, err := expandRedisClusterPersistenceConfigRdbConfigRdbSnapshotPeriod(original["rdb_snapshot_period"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRdbSnapshotPeriod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rdbSnapshotPeriod"] = transformedRdbSnapshotPeriod
+	}
+
+	transformedRdbSnapshotStartTime, err := expandRedisClusterPersistenceConfigRdbConfigRdbSnapshotStartTime(original["rdb_snapshot_start_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRdbSnapshotStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rdbSnapshotStartTime"] = transformedRdbSnapshotStartTime
+	}
+
+	return transformed, nil
+}
+
+func expandRedisClusterPersistenceConfigRdbConfigRdbSnapshotPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterPersistenceConfigRdbConfigRdbSnapshotStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterPersistenceConfigAofConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAppendFsync, err := expandRedisClusterPersistenceConfigAofConfigAppendFsync(original["append_fsync"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAppendFsync); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["appendFsync"] = transformedAppendFsync
+	}
+
+	return transformed, nil
+}
+
+func expandRedisClusterPersistenceConfigAofConfigAppendFsync(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandRedisClusterMaintenancePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
