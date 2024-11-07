@@ -15,7 +15,10 @@
 package accesscontextmanager
 
 import (
+	"log"
 	"reflect"
+	"slices"
+	"sort"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -23,6 +26,56 @@ import (
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func AccessContextManagerServicePerimeterEgressToResourcesDiffSupressFunc(_, _, _ string, d *schema.ResourceData) bool {
+	old, new := d.GetChange("egress_to.0.resources")
+
+	oldResources, err := tpgresource.InterfaceSliceToStringSlice(old)
+	if err != nil {
+		log.Printf("[ERROR] Failed to convert config value: %s", err)
+		return false
+	}
+
+	newResources, err := tpgresource.InterfaceSliceToStringSlice(new)
+	if err != nil {
+		log.Printf("[ERROR] Failed to convert config value: %s", err)
+		return false
+	}
+
+	sort.Strings(oldResources)
+	sort.Strings(newResources)
+
+	return slices.Equal(oldResources, newResources)
+}
+
+func AccessContextManagerServicePerimeterIngressToResourcesDiffSupressFunc(_, _, _ string, d *schema.ResourceData) bool {
+	old, new := d.GetChange("ingress_to.0.resources")
+
+	oldResources, err := tpgresource.InterfaceSliceToStringSlice(old)
+	if err != nil {
+		log.Printf("[ERROR] Failed to convert config value: %s", err)
+		return false
+	}
+
+	newResources, err := tpgresource.InterfaceSliceToStringSlice(new)
+	if err != nil {
+		log.Printf("[ERROR] Failed to convert config value: %s", err)
+		return false
+	}
+
+	sort.Strings(oldResources)
+	sort.Strings(newResources)
+
+	return slices.Equal(oldResources, newResources)
+}
+
+func AccessContextManagerServicePerimeterIdentityTypeDiffSupressFunc(_, old, new string, _ *schema.ResourceData) bool {
+	if old == "" && new == "IDENTITY_TYPE_UNSPECIFIED" {
+		return true
+	}
+
+	return old == new
+}
 
 const AccessContextManagerServicePerimeterAssetType string = "accesscontextmanager.googleapis.com/ServicePerimeter"
 
