@@ -102,6 +102,12 @@ func GetFilestoreInstanceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("deletion_protection_reason"); !tpgresource.IsEmptyValue(reflect.ValueOf(deletionProtectionReasonProp)) && (ok || !reflect.DeepEqual(v, deletionProtectionReasonProp)) {
 		obj["deletionProtectionReason"] = deletionProtectionReasonProp
 	}
+	performanceConfigProp, err := expandFilestoreInstancePerformanceConfig(d.Get("performance_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("performance_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(performanceConfigProp)) && (ok || !reflect.DeepEqual(v, performanceConfigProp)) {
+		obj["performanceConfig"] = performanceConfigProp
+	}
 	labelsProp, err := expandFilestoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -328,6 +334,78 @@ func expandFilestoreInstanceDeletionProtectionEnabled(v interface{}, d tpgresour
 }
 
 func expandFilestoreInstanceDeletionProtectionReason(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstancePerformanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIopsPerTb, err := expandFilestoreInstancePerformanceConfigIopsPerTb(original["iops_per_tb"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIopsPerTb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["iopsPerTb"] = transformedIopsPerTb
+	}
+
+	transformedFixedIops, err := expandFilestoreInstancePerformanceConfigFixedIops(original["fixed_iops"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFixedIops); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fixedIops"] = transformedFixedIops
+	}
+
+	return transformed, nil
+}
+
+func expandFilestoreInstancePerformanceConfigIopsPerTb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMaxIopsPerTb, err := expandFilestoreInstancePerformanceConfigIopsPerTbMaxIopsPerTb(original["max_iops_per_tb"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxIopsPerTb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxIopsPerTb"] = transformedMaxIopsPerTb
+	}
+
+	return transformed, nil
+}
+
+func expandFilestoreInstancePerformanceConfigIopsPerTbMaxIopsPerTb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstancePerformanceConfigFixedIops(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMaxIops, err := expandFilestoreInstancePerformanceConfigFixedIopsMaxIops(original["max_iops"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxIops); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxIops"] = transformedMaxIops
+	}
+
+	return transformed, nil
+}
+
+func expandFilestoreInstancePerformanceConfigFixedIopsMaxIops(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
