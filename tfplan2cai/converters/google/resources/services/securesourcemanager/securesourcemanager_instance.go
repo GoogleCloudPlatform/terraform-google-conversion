@@ -66,6 +66,12 @@ func GetSecureSourceManagerInstanceApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("private_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(privateConfigProp)) && (ok || !reflect.DeepEqual(v, privateConfigProp)) {
 		obj["privateConfig"] = privateConfigProp
 	}
+	workforceIdentityFederationConfigProp, err := expandSecureSourceManagerInstanceWorkforceIdentityFederationConfig(d.Get("workforce_identity_federation_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("workforce_identity_federation_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(workforceIdentityFederationConfigProp)) && (ok || !reflect.DeepEqual(v, workforceIdentityFederationConfigProp)) {
+		obj["workforceIdentityFederationConfig"] = workforceIdentityFederationConfigProp
+	}
 	labelsProp, err := expandSecureSourceManagerInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -133,6 +139,29 @@ func expandSecureSourceManagerInstancePrivateConfigHttpServiceAttachment(v inter
 }
 
 func expandSecureSourceManagerInstancePrivateConfigSshServiceAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstanceWorkforceIdentityFederationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandSecureSourceManagerInstanceWorkforceIdentityFederationConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandSecureSourceManagerInstanceWorkforceIdentityFederationConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
