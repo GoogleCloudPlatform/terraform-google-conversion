@@ -538,6 +538,13 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d tpg
 		transformed["yumRepository"] = transformedYumRepository
 	}
 
+	transformedCommonRepository, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigCommonRepository(original["common_repository"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCommonRepository); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["commonRepository"] = transformedCommonRepository
+	}
+
 	transformedUpstreamCredentials, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentials(original["upstream_credentials"], d, config)
 	if err != nil {
 		return nil, err
@@ -874,6 +881,29 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRe
 }
 
 func expandArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepositoryRepositoryPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigCommonRepository(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUri, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigCommonRepositoryUri(original["uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uri"] = transformedUri
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigCommonRepositoryUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
