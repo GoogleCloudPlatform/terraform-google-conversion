@@ -120,6 +120,12 @@ func GetRedisClusterApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("maintenance_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(maintenancePolicyProp)) && (ok || !reflect.DeepEqual(v, maintenancePolicyProp)) {
 		obj["maintenancePolicy"] = maintenancePolicyProp
 	}
+	crossClusterReplicationConfigProp, err := expandRedisClusterCrossClusterReplicationConfig(d.Get("cross_cluster_replication_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cross_cluster_replication_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(crossClusterReplicationConfigProp)) && (ok || !reflect.DeepEqual(v, crossClusterReplicationConfigProp)) {
+		obj["crossClusterReplicationConfig"] = crossClusterReplicationConfigProp
+	}
 
 	return obj, nil
 }
@@ -456,5 +462,228 @@ func expandRedisClusterMaintenancePolicyWeeklyMaintenanceWindowStartTimeSeconds(
 }
 
 func expandRedisClusterMaintenancePolicyWeeklyMaintenanceWindowStartTimeNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedClusterRole, err := expandRedisClusterCrossClusterReplicationConfigClusterRole(original["cluster_role"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClusterRole); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clusterRole"] = transformedClusterRole
+	}
+
+	transformedPrimaryCluster, err := expandRedisClusterCrossClusterReplicationConfigPrimaryCluster(original["primary_cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrimaryCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["primaryCluster"] = transformedPrimaryCluster
+	}
+
+	transformedSecondaryClusters, err := expandRedisClusterCrossClusterReplicationConfigSecondaryClusters(original["secondary_clusters"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecondaryClusters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secondaryClusters"] = transformedSecondaryClusters
+	}
+
+	transformedMembership, err := expandRedisClusterCrossClusterReplicationConfigMembership(original["membership"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMembership); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["membership"] = transformedMembership
+	}
+
+	transformedUpdateTime, err := expandRedisClusterCrossClusterReplicationConfigUpdateTime(original["update_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUpdateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["updateTime"] = transformedUpdateTime
+	}
+
+	return transformed, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigClusterRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigPrimaryCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCluster, err := expandRedisClusterCrossClusterReplicationConfigPrimaryClusterCluster(original["cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cluster"] = transformedCluster
+	}
+
+	transformedUid, err := expandRedisClusterCrossClusterReplicationConfigPrimaryClusterUid(original["uid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uid"] = transformedUid
+	}
+
+	return transformed, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigPrimaryClusterCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigPrimaryClusterUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigSecondaryClusters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCluster, err := expandRedisClusterCrossClusterReplicationConfigSecondaryClustersCluster(original["cluster"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cluster"] = transformedCluster
+		}
+
+		transformedUid, err := expandRedisClusterCrossClusterReplicationConfigSecondaryClustersUid(original["uid"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["uid"] = transformedUid
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigSecondaryClustersCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigSecondaryClustersUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigMembership(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPrimaryCluster, err := expandRedisClusterCrossClusterReplicationConfigMembershipPrimaryCluster(original["primary_cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrimaryCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["primaryCluster"] = transformedPrimaryCluster
+	}
+
+	transformedSecondaryClusters, err := expandRedisClusterCrossClusterReplicationConfigMembershipSecondaryClusters(original["secondary_clusters"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecondaryClusters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secondaryClusters"] = transformedSecondaryClusters
+	}
+
+	return transformed, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigMembershipPrimaryCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCluster, err := expandRedisClusterCrossClusterReplicationConfigMembershipPrimaryClusterCluster(original["cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cluster"] = transformedCluster
+	}
+
+	transformedUid, err := expandRedisClusterCrossClusterReplicationConfigMembershipPrimaryClusterUid(original["uid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uid"] = transformedUid
+	}
+
+	return transformed, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigMembershipPrimaryClusterCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigMembershipPrimaryClusterUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigMembershipSecondaryClusters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCluster, err := expandRedisClusterCrossClusterReplicationConfigMembershipSecondaryClustersCluster(original["cluster"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cluster"] = transformedCluster
+		}
+
+		transformedUid, err := expandRedisClusterCrossClusterReplicationConfigMembershipSecondaryClustersUid(original["uid"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["uid"] = transformedUid
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigMembershipSecondaryClustersCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigMembershipSecondaryClustersUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterCrossClusterReplicationConfigUpdateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
