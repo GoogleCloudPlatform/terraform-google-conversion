@@ -156,6 +156,20 @@ func expandDataprocBatchRuntimeConfig(v interface{}, d tpgresource.TerraformReso
 		transformed["effective_properties"] = transformedEffectiveProperties
 	}
 
+	transformedAutotuningConfig, err := expandDataprocBatchRuntimeConfigAutotuningConfig(original["autotuning_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAutotuningConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["autotuningConfig"] = transformedAutotuningConfig
+	}
+
+	transformedCohort, err := expandDataprocBatchRuntimeConfigCohort(original["cohort"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCohort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cohort"] = transformedCohort
+	}
+
 	return transformed, nil
 }
 
@@ -187,6 +201,33 @@ func expandDataprocBatchRuntimeConfigEffectiveProperties(v interface{}, d tpgres
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandDataprocBatchRuntimeConfigAutotuningConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedScenarios, err := expandDataprocBatchRuntimeConfigAutotuningConfigScenarios(original["scenarios"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScenarios); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scenarios"] = transformedScenarios
+	}
+
+	return transformed, nil
+}
+
+func expandDataprocBatchRuntimeConfigAutotuningConfigScenarios(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocBatchRuntimeConfigCohort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDataprocBatchEnvironmentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
