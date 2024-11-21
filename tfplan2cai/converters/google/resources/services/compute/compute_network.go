@@ -102,6 +102,12 @@ func GetComputeNetworkApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("network_firewall_policy_enforcement_order"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkFirewallPolicyEnforcementOrderProp)) && (ok || !reflect.DeepEqual(v, networkFirewallPolicyEnforcementOrderProp)) {
 		obj["networkFirewallPolicyEnforcementOrder"] = networkFirewallPolicyEnforcementOrderProp
 	}
+	networkProfileProp, err := expandComputeNetworkNetworkProfile(d.Get("network_profile"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProfileProp)) && (ok || !reflect.DeepEqual(v, networkProfileProp)) {
+		obj["networkProfile"] = networkProfileProp
+	}
 
 	return resourceComputeNetworkEncoder(d, config, obj)
 }
@@ -185,5 +191,9 @@ func expandComputeNetworkInternalIpv6Range(v interface{}, d tpgresource.Terrafor
 }
 
 func expandComputeNetworkNetworkFirewallPolicyEnforcementOrder(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNetworkNetworkProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

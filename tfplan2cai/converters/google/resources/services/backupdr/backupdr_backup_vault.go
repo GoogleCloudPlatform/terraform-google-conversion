@@ -72,6 +72,12 @@ func GetBackupDRBackupVaultApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("effective_time"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveTimeProp)) && (ok || !reflect.DeepEqual(v, effectiveTimeProp)) {
 		obj["effectiveTime"] = effectiveTimeProp
 	}
+	accessRestrictionProp, err := expandBackupDRBackupVaultAccessRestriction(d.Get("access_restriction"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("access_restriction"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessRestrictionProp)) && (ok || !reflect.DeepEqual(v, accessRestrictionProp)) {
+		obj["accessRestriction"] = accessRestrictionProp
+	}
 	labelsProp, err := expandBackupDRBackupVaultEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -97,6 +103,10 @@ func expandBackupDRBackupVaultBackupMinimumEnforcedRetentionDuration(v interface
 }
 
 func expandBackupDRBackupVaultEffectiveTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRBackupVaultAccessRestriction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
