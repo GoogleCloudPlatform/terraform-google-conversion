@@ -90,12 +90,6 @@ func GetParallelstoreInstanceApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("directory_stripe_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(directoryStripeLevelProp)) && (ok || !reflect.DeepEqual(v, directoryStripeLevelProp)) {
 		obj["directoryStripeLevel"] = directoryStripeLevelProp
 	}
-	deploymentTypeProp, err := expandParallelstoreInstanceDeploymentType(d.Get("deployment_type"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("deployment_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(deploymentTypeProp)) && (ok || !reflect.DeepEqual(v, deploymentTypeProp)) {
-		obj["deploymentType"] = deploymentTypeProp
-	}
 	labelsProp, err := expandParallelstoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -127,10 +121,6 @@ func expandParallelstoreInstanceFileStripeLevel(v interface{}, d tpgresource.Ter
 }
 
 func expandParallelstoreInstanceDirectoryStripeLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandParallelstoreInstanceDeploymentType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
