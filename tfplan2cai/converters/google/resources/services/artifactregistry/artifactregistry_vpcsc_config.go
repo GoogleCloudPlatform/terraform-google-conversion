@@ -68,7 +68,7 @@ func GetArtifactRegistryVPCSCConfigApiObject(d tpgresource.TerraformResourceData
 func resourceArtifactRegistryVPCSCConfigEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	config := meta.(*transport_tpg.Config)
 	if _, ok := d.GetOk("location"); !ok {
-		location, err := tpgresource.GetRegionFromSchema("region", "zone", d, config)
+		location, err := tpgresource.GetRegion(d, config)
 		if err != nil {
 			return nil, fmt.Errorf("Cannot determine location: set in this resource, or set provider-level 'region' or 'zone'.")
 		}
