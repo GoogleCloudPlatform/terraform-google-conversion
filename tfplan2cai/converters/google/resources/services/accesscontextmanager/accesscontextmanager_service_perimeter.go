@@ -145,6 +145,12 @@ func GetAccessContextManagerServicePerimeterApiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("use_explicit_dry_run_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(useExplicitDryRunSpecProp)) && (ok || !reflect.DeepEqual(v, useExplicitDryRunSpecProp)) {
 		obj["useExplicitDryRunSpec"] = useExplicitDryRunSpecProp
 	}
+	etagProp, err := expandAccessContextManagerServicePerimeterEtag(d.Get("etag"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
+		obj["etag"] = etagProp
+	}
 	parentProp, err := expandAccessContextManagerServicePerimeterParent(d.Get("parent"), d, config)
 	if err != nil {
 		return nil, err
@@ -1247,6 +1253,10 @@ func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressToOperati
 }
 
 func expandAccessContextManagerServicePerimeterUseExplicitDryRunSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
