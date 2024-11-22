@@ -91,6 +91,12 @@ func GetComputeRegionNetworkEndpointGroupApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("subnetwork"); !tpgresource.IsEmptyValue(reflect.ValueOf(subnetworkProp)) && (ok || !reflect.DeepEqual(v, subnetworkProp)) {
 		obj["subnetwork"] = subnetworkProp
 	}
+	pscDataProp, err := expandComputeRegionNetworkEndpointGroupPscData(d.Get("psc_data"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("psc_data"); !tpgresource.IsEmptyValue(reflect.ValueOf(pscDataProp)) && (ok || !reflect.DeepEqual(v, pscDataProp)) {
+		obj["pscData"] = pscDataProp
+	}
 	cloudRunProp, err := expandComputeRegionNetworkEndpointGroupCloudRun(d.Get("cloud_run"), d, config)
 	if err != nil {
 		return nil, err
@@ -155,6 +161,29 @@ func expandComputeRegionNetworkEndpointGroupSubnetwork(v interface{}, d tpgresou
 		return nil, fmt.Errorf("Invalid value for subnetwork: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeRegionNetworkEndpointGroupPscData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedProducerPort, err := expandComputeRegionNetworkEndpointGroupPscDataProducerPort(original["producer_port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProducerPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["producerPort"] = transformedProducerPort
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupPscDataProducerPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeRegionNetworkEndpointGroupCloudRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
