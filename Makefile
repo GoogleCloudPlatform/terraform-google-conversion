@@ -1,14 +1,18 @@
-build_dir=./bin
+build_dir=bin
 TF_CONFIG_FILE=tf-dev-override.tfrc
 
 build:
-	GO111MODULE=on go build -o ${build_dir}/tfplan2cai ./cmd/tfplan2cai
+	GO111MODULE=on go build -o ./${build_dir}/tfplan2cai ./cmd/tfplan2cai
+	cd v6;\
+		GO111MODULE=on go build -o ../${build_dir}/tgc .
 
 test:
 	go version
 	terraform --version
 	./config-tf-dev-override.sh
 	TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -short ./...
+	cd v6;\
+		TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -short ./...
 
 test-integration:
 	go version
