@@ -803,6 +803,13 @@ func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguage(v int
 		transformed["alertRule"] = transformedAlertRule
 	}
 
+	transformedDisableMetricValidation, err := expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageDisableMetricValidation(original["disable_metric_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableMetricValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableMetricValidation"] = transformedDisableMetricValidation
+	}
+
 	return transformed, nil
 }
 
@@ -834,6 +841,10 @@ func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageRuleGr
 }
 
 func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageAlertRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageDisableMetricValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
