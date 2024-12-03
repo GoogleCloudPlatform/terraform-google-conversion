@@ -27,7 +27,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-func AccessContextManagerServicePerimeterEgressToResourcesDiffSupressFunc(_, _, _ string, d *schema.ResourceData) bool {
+func AccessContextManagerServicePerimeterEgressToResourcesDiffSuppressFunc(_, _, _ string, d *schema.ResourceData) bool {
 	old, new := d.GetChange("egress_to.0.resources")
 
 	oldResources, err := tpgresource.InterfaceSliceToStringSlice(old)
@@ -48,7 +48,7 @@ func AccessContextManagerServicePerimeterEgressToResourcesDiffSupressFunc(_, _, 
 	return slices.Equal(oldResources, newResources)
 }
 
-func AccessContextManagerServicePerimeterIngressToResourcesDiffSupressFunc(_, _, _ string, d *schema.ResourceData) bool {
+func AccessContextManagerServicePerimeterIngressToResourcesDiffSuppressFunc(_, _, _ string, d *schema.ResourceData) bool {
 	old, new := d.GetChange("ingress_to.0.resources")
 
 	oldResources, err := tpgresource.InterfaceSliceToStringSlice(old)
@@ -69,7 +69,7 @@ func AccessContextManagerServicePerimeterIngressToResourcesDiffSupressFunc(_, _,
 	return slices.Equal(oldResources, newResources)
 }
 
-func AccessContextManagerServicePerimeterIdentityTypeDiffSupressFunc(_, old, new string, _ *schema.ResourceData) bool {
+func AccessContextManagerServicePerimeterIdentityTypeDiffSuppressFunc(_, old, new string, _ *schema.ResourceData) bool {
 	if old == "" && new == "IDENTITY_TYPE_UNSPECIFIED" {
 		return true
 	}

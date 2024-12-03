@@ -33,8 +33,8 @@ func AlwaysDiffSuppress(_, _, _ string, _ *schema.ResourceData) bool {
 	return true
 }
 
-// diffsupress for beta and to check change in source_disk attribute
-func sourceDiskDiffSupress(_, old, new string, _ *schema.ResourceData) bool {
+// diffsuppress for beta and to check change in source_disk attribute
+func sourceDiskDiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
 	s1 := strings.TrimPrefix(old, "https://www.googleapis.com/compute/beta")
 	s2 := strings.TrimPrefix(new, "https://www.googleapis.com/compute/v1")
 	if strings.HasSuffix(s1, s2) {
