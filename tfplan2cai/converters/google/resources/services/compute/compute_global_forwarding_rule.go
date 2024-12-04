@@ -127,6 +127,12 @@ func GetComputeGlobalForwardingRuleApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("target"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetProp)) && (ok || !reflect.DeepEqual(v, targetProp)) {
 		obj["target"] = targetProp
 	}
+	networkTierProp, err := expandComputeGlobalForwardingRuleNetworkTier(d.Get("network_tier"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network_tier"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkTierProp)) && (ok || !reflect.DeepEqual(v, networkTierProp)) {
+		obj["networkTier"] = networkTierProp
+	}
 	serviceDirectoryRegistrationsProp, err := expandComputeGlobalForwardingRuleServiceDirectoryRegistrations(d.Get("service_directory_registrations"), d, config)
 	if err != nil {
 		return nil, err
@@ -280,6 +286,10 @@ func expandComputeGlobalForwardingRuleSubnetwork(v interface{}, d tpgresource.Te
 }
 
 func expandComputeGlobalForwardingRuleTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeGlobalForwardingRuleNetworkTier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
