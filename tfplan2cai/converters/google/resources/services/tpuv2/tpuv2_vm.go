@@ -140,6 +140,12 @@ func GetTpuV2VmApiObject(d tpgresource.TerraformResourceData, config *transport_
 	} else if v, ok := d.GetOkExists("network_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkConfigProp)) && (ok || !reflect.DeepEqual(v, networkConfigProp)) {
 		obj["networkConfig"] = networkConfigProp
 	}
+	networkConfigsProp, err := expandTpuV2VmNetworkConfigs(d.Get("network_configs"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkConfigsProp)) && (ok || !reflect.DeepEqual(v, networkConfigsProp)) {
+		obj["networkConfigs"] = networkConfigsProp
+	}
 	serviceAccountProp, err := expandTpuV2VmServiceAccount(d.Get("service_account"), d, config)
 	if err != nil {
 		return nil, err
@@ -249,6 +255,13 @@ func expandTpuV2VmNetworkConfig(v interface{}, d tpgresource.TerraformResourceDa
 		transformed["canIpForward"] = transformedCanIpForward
 	}
 
+	transformedQueueCount, err := expandTpuV2VmNetworkConfigQueueCount(original["queue_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedQueueCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["queueCount"] = transformedQueueCount
+	}
+
 	return transformed, nil
 }
 
@@ -265,6 +278,80 @@ func expandTpuV2VmNetworkConfigEnableExternalIps(v interface{}, d tpgresource.Te
 }
 
 func expandTpuV2VmNetworkConfigCanIpForward(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2VmNetworkConfigQueueCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2VmNetworkConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedNetwork, err := expandTpuV2VmNetworkConfigsNetwork(original["network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["network"] = transformedNetwork
+		}
+
+		transformedSubnetwork, err := expandTpuV2VmNetworkConfigsSubnetwork(original["subnetwork"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["subnetwork"] = transformedSubnetwork
+		}
+
+		transformedEnableExternalIps, err := expandTpuV2VmNetworkConfigsEnableExternalIps(original["enable_external_ips"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["enableExternalIps"] = transformedEnableExternalIps
+		}
+
+		transformedCanIpForward, err := expandTpuV2VmNetworkConfigsCanIpForward(original["can_ip_forward"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["canIpForward"] = transformedCanIpForward
+		}
+
+		transformedQueueCount, err := expandTpuV2VmNetworkConfigsQueueCount(original["queue_count"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedQueueCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["queueCount"] = transformedQueueCount
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandTpuV2VmNetworkConfigsNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2VmNetworkConfigsSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2VmNetworkConfigsEnableExternalIps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2VmNetworkConfigsCanIpForward(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2VmNetworkConfigsQueueCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
