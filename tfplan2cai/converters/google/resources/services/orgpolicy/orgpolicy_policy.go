@@ -15,6 +15,7 @@
 package orgpolicy
 
 import (
+	"encoding/json"
 	"reflect"
 	"strconv"
 	"strings"
@@ -189,6 +190,13 @@ func expandOrgPolicyPolicySpecRules(v interface{}, d tpgresource.TerraformResour
 			transformed["enforce"] = transformedEnforce
 		}
 
+		transformedParameters, err := expandOrgPolicyPolicySpecRulesParameters(original["parameters"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParameters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["parameters"] = transformedParameters
+		}
+
 		transformedCondition, err := expandOrgPolicyPolicySpecRulesCondition(original["condition"], d, config)
 		if err != nil {
 			return nil, err
@@ -269,6 +277,18 @@ func expandOrgPolicyPolicySpecRulesEnforce(v interface{}, d tpgresource.Terrafor
 		return nil, nil
 	}
 	return b, nil
+}
+
+func expandOrgPolicyPolicySpecRulesParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func expandOrgPolicyPolicySpecRulesCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -428,6 +448,13 @@ func expandOrgPolicyPolicyDryRunSpecRules(v interface{}, d tpgresource.Terraform
 			transformed["enforce"] = transformedEnforce
 		}
 
+		transformedParameters, err := expandOrgPolicyPolicyDryRunSpecRulesParameters(original["parameters"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParameters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["parameters"] = transformedParameters
+		}
+
 		transformedCondition, err := expandOrgPolicyPolicyDryRunSpecRulesCondition(original["condition"], d, config)
 		if err != nil {
 			return nil, err
@@ -508,6 +535,18 @@ func expandOrgPolicyPolicyDryRunSpecRulesEnforce(v interface{}, d tpgresource.Te
 		return nil, nil
 	}
 	return b, nil
+}
+
+func expandOrgPolicyPolicyDryRunSpecRulesParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func expandOrgPolicyPolicyDryRunSpecRulesCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
