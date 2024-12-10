@@ -87,6 +87,13 @@ func expandFirebaseHostingVersionConfig(v interface{}, d tpgresource.TerraformRe
 		transformed["redirects"] = transformedRedirects
 	}
 
+	transformedHeaders, err := expandFirebaseHostingVersionConfigHeaders(original["headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["headers"] = transformedHeaders
+	}
+
 	return transformed, nil
 }
 
@@ -247,4 +254,59 @@ func expandFirebaseHostingVersionConfigRedirectsStatusCode(v interface{}, d tpgr
 
 func expandFirebaseHostingVersionConfigRedirectsLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandFirebaseHostingVersionConfigHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedGlob, err := expandFirebaseHostingVersionConfigHeadersGlob(original["glob"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedGlob); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["glob"] = transformedGlob
+		}
+
+		transformedRegex, err := expandFirebaseHostingVersionConfigHeadersRegex(original["regex"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["regex"] = transformedRegex
+		}
+
+		transformedHeaders, err := expandFirebaseHostingVersionConfigHeadersHeaders(original["headers"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headers"] = transformedHeaders
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandFirebaseHostingVersionConfigHeadersGlob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseHostingVersionConfigHeadersRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseHostingVersionConfigHeadersHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
