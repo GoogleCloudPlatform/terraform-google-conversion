@@ -72,6 +72,12 @@ func GetNetworkConnectivitySpokeApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("hub"); !tpgresource.IsEmptyValue(reflect.ValueOf(hubProp)) && (ok || !reflect.DeepEqual(v, hubProp)) {
 		obj["hub"] = hubProp
 	}
+	groupProp, err := expandNetworkConnectivitySpokeGroup(d.Get("group"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("group"); !tpgresource.IsEmptyValue(reflect.ValueOf(groupProp)) && (ok || !reflect.DeepEqual(v, groupProp)) {
+		obj["group"] = groupProp
+	}
 	linkedVpnTunnelsProp, err := expandNetworkConnectivitySpokeLinkedVpnTunnels(d.Get("linked_vpn_tunnels"), d, config)
 	if err != nil {
 		return nil, err
@@ -121,6 +127,10 @@ func expandNetworkConnectivitySpokeDescription(v interface{}, d tpgresource.Terr
 }
 
 func expandNetworkConnectivitySpokeHub(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
