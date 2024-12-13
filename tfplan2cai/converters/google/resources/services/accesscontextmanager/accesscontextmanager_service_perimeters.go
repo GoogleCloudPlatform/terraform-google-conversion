@@ -103,13 +103,6 @@ func expandAccessContextManagerServicePerimetersServicePerimeters(v interface{},
 			transformed["description"] = transformedDescription
 		}
 
-		transformedEtag, err := expandAccessContextManagerServicePerimetersServicePerimetersEtag(original["etag"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedEtag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["etag"] = transformedEtag
-		}
-
 		transformedCreateTime, err := expandAccessContextManagerServicePerimetersServicePerimetersCreateTime(original["create_time"], d, config)
 		if err != nil {
 			return nil, err
@@ -166,10 +159,6 @@ func expandAccessContextManagerServicePerimetersServicePerimetersTitle(v interfa
 }
 
 func expandAccessContextManagerServicePerimetersServicePerimetersDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandAccessContextManagerServicePerimetersServicePerimetersEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
