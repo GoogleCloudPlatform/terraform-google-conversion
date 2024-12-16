@@ -262,6 +262,13 @@ func expandBigQueryDatasetAccess(v interface{}, d tpgresource.TerraformResourceD
 			transformed["routine"] = transformedRoutine
 		}
 
+		transformedCondition, err := expandBigQueryDatasetAccessCondition(original["condition"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["condition"] = transformedCondition
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -442,6 +449,62 @@ func expandBigQueryDatasetAccessRoutineProjectId(v interface{}, d tpgresource.Te
 }
 
 func expandBigQueryDatasetAccessRoutineRoutineId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryDatasetAccessCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpression, err := expandBigQueryDatasetAccessConditionExpression(original["expression"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expression"] = transformedExpression
+	}
+
+	transformedTitle, err := expandBigQueryDatasetAccessConditionTitle(original["title"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["title"] = transformedTitle
+	}
+
+	transformedDescription, err := expandBigQueryDatasetAccessConditionDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedLocation, err := expandBigQueryDatasetAccessConditionLocation(original["location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["location"] = transformedLocation
+	}
+
+	return transformed, nil
+}
+
+func expandBigQueryDatasetAccessConditionExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryDatasetAccessConditionTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryDatasetAccessConditionDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryDatasetAccessConditionLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
