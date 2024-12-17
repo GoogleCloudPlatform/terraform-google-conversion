@@ -72,6 +72,12 @@ func GetFilestoreBackupApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("source_file_share"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceFileShareProp)) && (ok || !reflect.DeepEqual(v, sourceFileShareProp)) {
 		obj["sourceFileShare"] = sourceFileShareProp
 	}
+	tagsProp, err := expandFilestoreBackupTags(d.Get("tags"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tags"); !tpgresource.IsEmptyValue(reflect.ValueOf(tagsProp)) && (ok || !reflect.DeepEqual(v, tagsProp)) {
+		obj["tags"] = tagsProp
+	}
 	labelsProp, err := expandFilestoreBackupEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -92,6 +98,17 @@ func expandFilestoreBackupSourceInstance(v interface{}, d tpgresource.TerraformR
 
 func expandFilestoreBackupSourceFileShare(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandFilestoreBackupTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandFilestoreBackupEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
