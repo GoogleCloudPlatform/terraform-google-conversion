@@ -66,6 +66,12 @@ func GetNetworkConnectivityHubApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	presetTopologyProp, err := expandNetworkConnectivityHubPresetTopology(d.Get("preset_topology"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("preset_topology"); !tpgresource.IsEmptyValue(reflect.ValueOf(presetTopologyProp)) && (ok || !reflect.DeepEqual(v, presetTopologyProp)) {
+		obj["presetTopology"] = presetTopologyProp
+	}
 	exportPscProp, err := expandNetworkConnectivityHubExportPsc(d.Get("export_psc"), d, config)
 	if err != nil {
 		return nil, err
@@ -87,6 +93,10 @@ func expandNetworkConnectivityHubName(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandNetworkConnectivityHubDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityHubPresetTopology(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
