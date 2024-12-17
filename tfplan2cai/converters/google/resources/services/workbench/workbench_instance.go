@@ -70,7 +70,6 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"dataproc-service-account",
 	"disable-check-xsrf",
 	"framework",
-	"gcs-data-bucket",
 	"generate-diagnostics-bucket",
 	"generate-diagnostics-file",
 	"generate-diagnostics-options",
