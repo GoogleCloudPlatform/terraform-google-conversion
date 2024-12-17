@@ -66,6 +66,12 @@ func GetWorkstationsWorkstationApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("env"); !tpgresource.IsEmptyValue(reflect.ValueOf(envProp)) && (ok || !reflect.DeepEqual(v, envProp)) {
 		obj["env"] = envProp
 	}
+	source_workstationProp, err := expandWorkstationsWorkstationSourceWorkstation(d.Get("source_workstation"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_workstation"); !tpgresource.IsEmptyValue(reflect.ValueOf(source_workstationProp)) && (ok || !reflect.DeepEqual(v, source_workstationProp)) {
+		obj["source_workstation"] = source_workstationProp
+	}
 	labelsProp, err := expandWorkstationsWorkstationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -95,6 +101,10 @@ func expandWorkstationsWorkstationEnv(v interface{}, d tpgresource.TerraformReso
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandWorkstationsWorkstationSourceWorkstation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandWorkstationsWorkstationEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
