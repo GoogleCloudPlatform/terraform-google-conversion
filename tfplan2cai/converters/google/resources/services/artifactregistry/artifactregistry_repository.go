@@ -151,6 +151,12 @@ func GetArtifactRegistryRepositoryApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("cleanup_policy_dry_run"); !tpgresource.IsEmptyValue(reflect.ValueOf(cleanupPolicyDryRunProp)) && (ok || !reflect.DeepEqual(v, cleanupPolicyDryRunProp)) {
 		obj["cleanupPolicyDryRun"] = cleanupPolicyDryRunProp
 	}
+	vulnerabilityScanningConfigProp, err := expandArtifactRegistryRepositoryVulnerabilityScanningConfig(d.Get("vulnerability_scanning_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("vulnerability_scanning_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(vulnerabilityScanningConfigProp)) && (ok || !reflect.DeepEqual(v, vulnerabilityScanningConfigProp)) {
+		obj["vulnerabilityScanningConfig"] = vulnerabilityScanningConfigProp
+	}
 	labelsProp, err := expandArtifactRegistryRepositoryEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -965,6 +971,51 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfigDisableUpstreamValida
 }
 
 func expandArtifactRegistryRepositoryCleanupPolicyDryRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryVulnerabilityScanningConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnablementConfig, err := expandArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementConfig(original["enablement_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnablementConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enablementConfig"] = transformedEnablementConfig
+	}
+
+	transformedEnablementState, err := expandArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementState(original["enablement_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnablementState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enablementState"] = transformedEnablementState
+	}
+
+	transformedEnablementStateReason, err := expandArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementStateReason(original["enablement_state_reason"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnablementStateReason); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enablementStateReason"] = transformedEnablementStateReason
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementStateReason(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
