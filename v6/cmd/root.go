@@ -24,6 +24,7 @@ import (
 	"go.uber.org/zap/zapcore"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/common"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/tfplan2cai"
 )
 
 const rootCmdDesc = `
@@ -73,6 +74,8 @@ func newRootCmd() (*cobra.Command, *common.RootOptions, error) {
 	}
 
 	cmd.PersistentFlags().StringVar(&o.Verbosity, "verbosity", "info", "Set verbosity level. One of: debug, info, warning, error, critical, none.")
+
+	cmd.AddCommand(tfplan2cai.NewCmd(o))
 
 	return cmd, o, nil
 }
