@@ -361,17 +361,6 @@ func expandBigQueryRoutineSparkOptionsContainerImage(v interface{}, d tpgresourc
 	return v, nil
 }
 
-func expandBigQueryRoutineSparkOptionsProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
 func expandBigQueryRoutineSparkOptionsMainFileUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -442,17 +431,6 @@ func expandBigQueryRoutineRemoteFunctionOptionsEndpoint(v interface{}, d tpgreso
 
 func expandBigQueryRoutineRemoteFunctionOptionsConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandBigQueryRoutineRemoteFunctionOptionsUserDefinedContext(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandBigQueryRoutineRemoteFunctionOptionsMaxBatchingRows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

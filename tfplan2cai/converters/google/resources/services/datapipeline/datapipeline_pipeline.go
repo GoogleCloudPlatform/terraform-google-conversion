@@ -254,17 +254,6 @@ func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParame
 	return v, nil
 }
 
-func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParametersParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
 func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParametersEnvironment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -429,17 +418,6 @@ func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParame
 	return v, nil
 }
 
-func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParametersEnvironmentAdditionalUserLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
 func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParametersEnvironmentKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -462,17 +440,6 @@ func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParame
 
 func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParametersUpdate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLaunchParametersTransformNameMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandDataPipelinePipelineWorkloadDataflowLaunchTemplateRequestLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -590,28 +557,6 @@ func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParamete
 
 func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterJobName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
-func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterLaunchOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterEnvironment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -774,17 +719,6 @@ func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParamete
 	return v, nil
 }
 
-func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterEnvironmentAdditionalUserLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
 func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterEnvironmentKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -811,17 +745,6 @@ func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParamete
 
 func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterUpdate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterTransformNameMappings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandDataPipelinePipelineWorkloadDataflowFlexTemplateRequestLaunchParameterContainerSpecGcsPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

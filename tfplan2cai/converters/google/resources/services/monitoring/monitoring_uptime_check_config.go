@@ -438,17 +438,6 @@ func expandMonitoringUptimeCheckConfigHttpCheckPort(v interface{}, d tpgresource
 	return v, nil
 }
 
-func expandMonitoringUptimeCheckConfigHttpCheckHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
-}
-
 func expandMonitoringUptimeCheckConfigHttpCheckPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -644,17 +633,6 @@ func expandMonitoringUptimeCheckConfigMonitoredResource(v interface{}, d tpgreso
 
 func expandMonitoringUptimeCheckConfigMonitoredResourceType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
-}
-
-func expandMonitoringUptimeCheckConfigMonitoredResourceLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
-	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
-	}
-	return m, nil
 }
 
 func expandMonitoringUptimeCheckConfigSyntheticMonitor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
