@@ -240,6 +240,20 @@ func expandDatastreamStreamSourceConfigMysqlSourceConfig(v interface{}, d tpgres
 		transformed["maxConcurrentBackfillTasks"] = transformedMaxConcurrentBackfillTasks
 	}
 
+	transformedBinaryLogPosition, err := expandDatastreamStreamSourceConfigMysqlSourceConfigBinaryLogPosition(original["binary_log_position"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["binaryLogPosition"] = transformedBinaryLogPosition
+	}
+
+	transformedGtid, err := expandDatastreamStreamSourceConfigMysqlSourceConfigGtid(original["gtid"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["gtid"] = transformedGtid
+	}
+
 	return transformed, nil
 }
 
@@ -603,6 +617,36 @@ func expandDatastreamStreamSourceConfigMysqlSourceConfigMaxConcurrentCdcTasks(v 
 
 func expandDatastreamStreamSourceConfigMysqlSourceConfigMaxConcurrentBackfillTasks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigMysqlSourceConfigBinaryLogPosition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamSourceConfigMysqlSourceConfigGtid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandDatastreamStreamSourceConfigOracleSourceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
