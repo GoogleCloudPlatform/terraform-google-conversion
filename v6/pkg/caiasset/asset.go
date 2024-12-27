@@ -11,10 +11,10 @@ type Asset struct {
 	// The name, in a peculiar format: `\\<api>.googleapis.com/<self_link>`
 	Name string `json:"name"`
 	// The type name in `google.<api>.<resourcename>` format.
-	Type          string           `json:"asset_type"`
+	Type          string           `json:"assetType"`
 	Resource      *AssetResource   `json:"resource,omitempty"`
-	IAMPolicy     *IAMPolicy       `json:"iam_policy,omitempty"`
-	OrgPolicy     []*OrgPolicy     `json:"org_policy,omitempty"`
+	IAMPolicy     *IAMPolicy       `json:"iamPolicy,omitempty"`
+	OrgPolicy     []*OrgPolicy     `json:"orgPolicy,omitempty"`
 	V2OrgPolicies []*V2OrgPolicies `json:"v2_org_policies,omitempty"`
 	Ancestors     []string         `json:"ancestors"`
 }
