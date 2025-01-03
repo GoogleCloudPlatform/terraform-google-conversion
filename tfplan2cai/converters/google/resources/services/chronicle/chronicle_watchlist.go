@@ -84,7 +84,19 @@ func GetChronicleWatchlistApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("watchlist_user_preferences"); !tpgresource.IsEmptyValue(reflect.ValueOf(watchlistUserPreferencesProp)) && (ok || !reflect.DeepEqual(v, watchlistUserPreferencesProp)) {
 		obj["watchlistUserPreferences"] = watchlistUserPreferencesProp
 	}
+	watchlistIdProp, err := expandChronicleWatchlistWatchlistId(d.Get("watchlist_id"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("watchlist_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(watchlistIdProp)) && (ok || !reflect.DeepEqual(v, watchlistIdProp)) {
+		obj["watchlistId"] = watchlistIdProp
+	}
 
+	return resourceChronicleWatchlistEncoder(d, config, obj)
+}
+
+func resourceChronicleWatchlistEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// watchlist_id is needed to qualify the URL but cannot be sent in the body
+	delete(obj, "watchlistId")
 	return obj, nil
 }
 
@@ -154,5 +166,9 @@ func expandChronicleWatchlistWatchlistUserPreferences(v interface{}, d tpgresour
 }
 
 func expandChronicleWatchlistWatchlistUserPreferencesPinned(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleWatchlistWatchlistId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
