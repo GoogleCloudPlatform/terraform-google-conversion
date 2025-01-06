@@ -60,17 +60,41 @@ func GetDeveloperConnectConnectionApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("github_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(githubConfigProp)) && (ok || !reflect.DeepEqual(v, githubConfigProp)) {
 		obj["githubConfig"] = githubConfigProp
 	}
-	disabledProp, err := expandDeveloperConnectConnectionDisabled(d.Get("disabled"), d, config)
+	githubEnterpriseConfigProp, err := expandDeveloperConnectConnectionGithubEnterpriseConfig(d.Get("github_enterprise_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
-		obj["disabled"] = disabledProp
+	} else if v, ok := d.GetOkExists("github_enterprise_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(githubEnterpriseConfigProp)) && (ok || !reflect.DeepEqual(v, githubEnterpriseConfigProp)) {
+		obj["githubEnterpriseConfig"] = githubEnterpriseConfigProp
 	}
 	etagProp, err := expandDeveloperConnectConnectionEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
 		obj["etag"] = etagProp
+	}
+	gitlabEnterpriseConfigProp, err := expandDeveloperConnectConnectionGitlabEnterpriseConfig(d.Get("gitlab_enterprise_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gitlab_enterprise_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(gitlabEnterpriseConfigProp)) && (ok || !reflect.DeepEqual(v, gitlabEnterpriseConfigProp)) {
+		obj["gitlabEnterpriseConfig"] = gitlabEnterpriseConfigProp
+	}
+	disabledProp, err := expandDeveloperConnectConnectionDisabled(d.Get("disabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
+		obj["disabled"] = disabledProp
+	}
+	gitlabConfigProp, err := expandDeveloperConnectConnectionGitlabConfig(d.Get("gitlab_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gitlab_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(gitlabConfigProp)) && (ok || !reflect.DeepEqual(v, gitlabConfigProp)) {
+		obj["gitlabConfig"] = gitlabConfigProp
+	}
+	cryptoKeyConfigProp, err := expandDeveloperConnectConnectionCryptoKeyConfig(d.Get("crypto_key_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("crypto_key_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(cryptoKeyConfigProp)) && (ok || !reflect.DeepEqual(v, cryptoKeyConfigProp)) {
+		obj["cryptoKeyConfig"] = cryptoKeyConfigProp
 	}
 	labelsProp, err := expandDeveloperConnectConnectionEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -97,6 +121,13 @@ func expandDeveloperConnectConnectionGithubConfig(v interface{}, d tpgresource.T
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedInstallationUri, err := expandDeveloperConnectConnectionGithubConfigInstallationUri(original["installation_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstallationUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["installationUri"] = transformedInstallationUri
+	}
+
 	transformedGithubApp, err := expandDeveloperConnectConnectionGithubConfigGithubApp(original["github_app"], d, config)
 	if err != nil {
 		return nil, err
@@ -118,14 +149,11 @@ func expandDeveloperConnectConnectionGithubConfig(v interface{}, d tpgresource.T
 		transformed["appInstallationId"] = transformedAppInstallationId
 	}
 
-	transformedInstallationUri, err := expandDeveloperConnectConnectionGithubConfigInstallationUri(original["installation_uri"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedInstallationUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["installationUri"] = transformedInstallationUri
-	}
-
 	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGithubConfigInstallationUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDeveloperConnectConnectionGithubConfigGithubApp(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -170,7 +198,316 @@ func expandDeveloperConnectConnectionGithubConfigAppInstallationId(v interface{}
 	return v, nil
 }
 
-func expandDeveloperConnectConnectionGithubConfigInstallationUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeveloperConnectConnectionGithubEnterpriseConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAppSlug, err := expandDeveloperConnectConnectionGithubEnterpriseConfigAppSlug(original["app_slug"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAppSlug); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["appSlug"] = transformedAppSlug
+	}
+
+	transformedPrivateKeySecretVersion, err := expandDeveloperConnectConnectionGithubEnterpriseConfigPrivateKeySecretVersion(original["private_key_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateKeySecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateKeySecretVersion"] = transformedPrivateKeySecretVersion
+	}
+
+	transformedInstallationUri, err := expandDeveloperConnectConnectionGithubEnterpriseConfigInstallationUri(original["installation_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstallationUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["installationUri"] = transformedInstallationUri
+	}
+
+	transformedServiceDirectoryConfig, err := expandDeveloperConnectConnectionGithubEnterpriseConfigServiceDirectoryConfig(original["service_directory_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceDirectoryConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceDirectoryConfig"] = transformedServiceDirectoryConfig
+	}
+
+	transformedServerVersion, err := expandDeveloperConnectConnectionGithubEnterpriseConfigServerVersion(original["server_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServerVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serverVersion"] = transformedServerVersion
+	}
+
+	transformedSslCaCertificate, err := expandDeveloperConnectConnectionGithubEnterpriseConfigSslCaCertificate(original["ssl_ca_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSslCaCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sslCaCertificate"] = transformedSslCaCertificate
+	}
+
+	transformedHostUri, err := expandDeveloperConnectConnectionGithubEnterpriseConfigHostUri(original["host_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hostUri"] = transformedHostUri
+	}
+
+	transformedAppId, err := expandDeveloperConnectConnectionGithubEnterpriseConfigAppId(original["app_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAppId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["appId"] = transformedAppId
+	}
+
+	transformedWebhookSecretSecretVersion, err := expandDeveloperConnectConnectionGithubEnterpriseConfigWebhookSecretSecretVersion(original["webhook_secret_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhookSecretSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhookSecretSecretVersion"] = transformedWebhookSecretSecretVersion
+	}
+
+	transformedAppInstallationId, err := expandDeveloperConnectConnectionGithubEnterpriseConfigAppInstallationId(original["app_installation_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAppInstallationId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["appInstallationId"] = transformedAppInstallationId
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigAppSlug(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigPrivateKeySecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigInstallationUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedService, err := expandDeveloperConnectConnectionGithubEnterpriseConfigServiceDirectoryConfigService(original["service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service"] = transformedService
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigServiceDirectoryConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigServerVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigSslCaCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigHostUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigAppId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigWebhookSecretSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGithubEnterpriseConfigAppInstallationId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAuthorizerCredential, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigAuthorizerCredential(original["authorizer_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthorizerCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authorizerCredential"] = transformedAuthorizerCredential
+	}
+
+	transformedServiceDirectoryConfig, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigServiceDirectoryConfig(original["service_directory_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceDirectoryConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceDirectoryConfig"] = transformedServiceDirectoryConfig
+	}
+
+	transformedSslCaCertificate, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigSslCaCertificate(original["ssl_ca_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSslCaCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sslCaCertificate"] = transformedSslCaCertificate
+	}
+
+	transformedServerVersion, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigServerVersion(original["server_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServerVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serverVersion"] = transformedServerVersion
+	}
+
+	transformedHostUri, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigHostUri(original["host_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hostUri"] = transformedHostUri
+	}
+
+	transformedWebhookSecretSecretVersion, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigWebhookSecretSecretVersion(original["webhook_secret_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhookSecretSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhookSecretSecretVersion"] = transformedWebhookSecretSecretVersion
+	}
+
+	transformedReadAuthorizerCredential, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigReadAuthorizerCredential(original["read_authorizer_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReadAuthorizerCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["readAuthorizerCredential"] = transformedReadAuthorizerCredential
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigAuthorizerCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserTokenSecretVersion, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigAuthorizerCredentialUserTokenSecretVersion(original["user_token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userTokenSecretVersion"] = transformedUserTokenSecretVersion
+	}
+
+	transformedUsername, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigAuthorizerCredentialUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigAuthorizerCredentialUserTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedService, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigServiceDirectoryConfigService(original["service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service"] = transformedService
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigServiceDirectoryConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigSslCaCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigServerVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigHostUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigWebhookSecretSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigReadAuthorizerCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserTokenSecretVersion, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigReadAuthorizerCredentialUserTokenSecretVersion(original["user_token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userTokenSecretVersion"] = transformedUserTokenSecretVersion
+	}
+
+	transformedUsername, err := expandDeveloperConnectConnectionGitlabEnterpriseConfigReadAuthorizerCredentialUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigReadAuthorizerCredentialUserTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabEnterpriseConfigReadAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -178,7 +515,131 @@ func expandDeveloperConnectConnectionDisabled(v interface{}, d tpgresource.Terra
 	return v, nil
 }
 
-func expandDeveloperConnectConnectionEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeveloperConnectConnectionGitlabConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWebhookSecretSecretVersion, err := expandDeveloperConnectConnectionGitlabConfigWebhookSecretSecretVersion(original["webhook_secret_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhookSecretSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhookSecretSecretVersion"] = transformedWebhookSecretSecretVersion
+	}
+
+	transformedReadAuthorizerCredential, err := expandDeveloperConnectConnectionGitlabConfigReadAuthorizerCredential(original["read_authorizer_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReadAuthorizerCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["readAuthorizerCredential"] = transformedReadAuthorizerCredential
+	}
+
+	transformedAuthorizerCredential, err := expandDeveloperConnectConnectionGitlabConfigAuthorizerCredential(original["authorizer_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthorizerCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authorizerCredential"] = transformedAuthorizerCredential
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGitlabConfigWebhookSecretSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabConfigReadAuthorizerCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserTokenSecretVersion, err := expandDeveloperConnectConnectionGitlabConfigReadAuthorizerCredentialUserTokenSecretVersion(original["user_token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userTokenSecretVersion"] = transformedUserTokenSecretVersion
+	}
+
+	transformedUsername, err := expandDeveloperConnectConnectionGitlabConfigReadAuthorizerCredentialUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGitlabConfigReadAuthorizerCredentialUserTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabConfigReadAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabConfigAuthorizerCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserTokenSecretVersion, err := expandDeveloperConnectConnectionGitlabConfigAuthorizerCredentialUserTokenSecretVersion(original["user_token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userTokenSecretVersion"] = transformedUserTokenSecretVersion
+	}
+
+	transformedUsername, err := expandDeveloperConnectConnectionGitlabConfigAuthorizerCredentialUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionGitlabConfigAuthorizerCredentialUserTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionGitlabConfigAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionCryptoKeyConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKeyReference, err := expandDeveloperConnectConnectionCryptoKeyConfigKeyReference(original["key_reference"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKeyReference); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["keyReference"] = transformedKeyReference
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionCryptoKeyConfigKeyReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
