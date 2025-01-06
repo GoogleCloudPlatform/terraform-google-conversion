@@ -24,6 +24,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+
+	tpgcompute "github.com/hashicorp/terraform-provider-google-beta/google-beta/services/compute"
 )
 
 // Checks if there is another gateway under the same location.
@@ -120,7 +122,7 @@ func deleteSWGAutoGenRouter(d *schema.ResourceData, config *transport_tpg.Config
 		return err
 	}
 
-	_, err = transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+	res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
 		Config:               config,
 		Method:               "DELETE",
 		Project:              billingProject,
@@ -137,6 +139,10 @@ func deleteSWGAutoGenRouter(d *schema.ResourceData, config *transport_tpg.Config
 
 		return err
 	}
+
+	err = tpgcompute.ComputeOperationWaitTime(
+		config, res, billingProject, "Deleting autogen router", userAgent,
+		d.Timeout(schema.TimeoutDelete))
 
 	return nil
 }
