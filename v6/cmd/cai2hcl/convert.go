@@ -16,6 +16,8 @@ package cai2hcl
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -24,6 +26,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/common"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
 )
 
 const convertDesc = `
@@ -45,8 +49,19 @@ type convertOptions struct {
 }
 
 var origConvertFunc = func(ctx context.Context, path string, errorLogger *zap.Logger) ([]byte, error) {
-	// TODO: add implementation
-	return nil, nil
+	assetPayload, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("error reading file %s: %s", path, err)
+	}
+
+	var assets []*caiasset.Asset
+	if err := json.Unmarshal(assetPayload, &assets); err != nil {
+		return nil, err
+	}
+
+	return cai2hcl.Convert(assets, &cai2hcl.Options{
+		ErrorLogger: errorLogger,
+	})
 }
 
 var convertFunc = origConvertFunc
@@ -86,10 +101,10 @@ func (o *convertOptions) validateArgs(args []string) error {
 	return nil
 }
 
-func (o *convertOptions) run(assets string) error {
+func (o *convertOptions) run(path string) error {
 	ctx := context.Background()
 
-	hclBlocks, err := convertFunc(ctx, assets, o.rootOptions.ErrorLogger)
+	hclBlocks, err := convertFunc(ctx, path, o.rootOptions.ErrorLogger)
 	if err != nil {
 		return err
 	}
