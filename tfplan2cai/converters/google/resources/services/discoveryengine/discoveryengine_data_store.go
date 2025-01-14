@@ -80,6 +80,12 @@ func GetDiscoveryEngineDataStoreApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("content_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(contentConfigProp)) && (ok || !reflect.DeepEqual(v, contentConfigProp)) {
 		obj["contentConfig"] = contentConfigProp
 	}
+	advancedSiteSearchConfigProp, err := expandDiscoveryEngineDataStoreAdvancedSiteSearchConfig(d.Get("advanced_site_search_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("advanced_site_search_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(advancedSiteSearchConfigProp)) && (ok || !reflect.DeepEqual(v, advancedSiteSearchConfigProp)) {
+		obj["advancedSiteSearchConfig"] = advancedSiteSearchConfigProp
+	}
 	documentProcessingConfigProp, err := expandDiscoveryEngineDataStoreDocumentProcessingConfig(d.Get("document_processing_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -103,6 +109,40 @@ func expandDiscoveryEngineDataStoreSolutionTypes(v interface{}, d tpgresource.Te
 }
 
 func expandDiscoveryEngineDataStoreContentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreAdvancedSiteSearchConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisableInitialIndex, err := expandDiscoveryEngineDataStoreAdvancedSiteSearchConfigDisableInitialIndex(original["disable_initial_index"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableInitialIndex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableInitialIndex"] = transformedDisableInitialIndex
+	}
+
+	transformedDisableAutomaticRefresh, err := expandDiscoveryEngineDataStoreAdvancedSiteSearchConfigDisableAutomaticRefresh(original["disable_automatic_refresh"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableAutomaticRefresh); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableAutomaticRefresh"] = transformedDisableAutomaticRefresh
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataStoreAdvancedSiteSearchConfigDisableInitialIndex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreAdvancedSiteSearchConfigDisableAutomaticRefresh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
