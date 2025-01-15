@@ -14,6 +14,7 @@
 package converters
 
 import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 
@@ -26,4 +27,5 @@ var provider *schema.Provider = tpg_provider.Provider()
 // ConverterMap is a collection of converters instances, indexed by cai asset type.
 var ConverterMap = map[string]models.Converter{
 	resourcemanager.ProjectAssetType: resourcemanager.NewProjectConverter(provider),
+	compute.ComputeInstanceAssetType: compute.NewComputeInstanceConverter(provider),
 }
