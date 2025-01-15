@@ -129,10 +129,21 @@ func expandPubsubTopicMessageStoragePolicy(v interface{}, d tpgresource.Terrafor
 		transformed["allowedPersistenceRegions"] = transformedAllowedPersistenceRegions
 	}
 
+	transformedEnforceInTransit, err := expandPubsubTopicMessageStoragePolicyEnforceInTransit(original["enforce_in_transit"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnforceInTransit); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enforceInTransit"] = transformedEnforceInTransit
+	}
+
 	return transformed, nil
 }
 
 func expandPubsubTopicMessageStoragePolicyAllowedPersistenceRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicMessageStoragePolicyEnforceInTransit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
