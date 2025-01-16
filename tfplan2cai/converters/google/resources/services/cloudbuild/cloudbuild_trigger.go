@@ -1322,6 +1322,17 @@ func expandCloudBuildTriggerBuildSourceRepoSourceInvertRegex(v interface{}, d tp
 	return v, nil
 }
 
+func expandCloudBuildTriggerBuildSourceRepoSourceSubstitutions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
 func expandCloudBuildTriggerBuildSourceRepoSourceBranchName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -1340,6 +1351,17 @@ func expandCloudBuildTriggerBuildTags(v interface{}, d tpgresource.TerraformReso
 
 func expandCloudBuildTriggerBuildImages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSubstitutions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandCloudBuildTriggerBuildQueueTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1385,6 +1407,17 @@ func expandCloudBuildTriggerBuildSecret(v interface{}, d tpgresource.TerraformRe
 
 func expandCloudBuildTriggerBuildSecretKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudBuildTriggerBuildSecretSecretEnv(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandCloudBuildTriggerBuildAvailableSecrets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
