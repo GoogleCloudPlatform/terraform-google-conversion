@@ -47,6 +47,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/dns"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/firebase"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/gemini"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/gkebackup"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/gkehub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/gkehub2"
@@ -318,6 +319,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_dns_managed_zone_iam_policy":                      {dns.ResourceConverterDNSManagedZoneIamPolicy()},
 		"google_dns_managed_zone_iam_binding":                     {dns.ResourceConverterDNSManagedZoneIamBinding()},
 		"google_dns_managed_zone_iam_member":                      {dns.ResourceConverterDNSManagedZoneIamMember()},
+		"google_gemini_repository_group_iam_policy":               {gemini.ResourceConverterGeminiRepositoryGroupIamPolicy()},
+		"google_gemini_repository_group_iam_binding":              {gemini.ResourceConverterGeminiRepositoryGroupIamBinding()},
+		"google_gemini_repository_group_iam_member":               {gemini.ResourceConverterGeminiRepositoryGroupIamMember()},
 		"google_gke_backup_backup_plan_iam_policy":                {gkebackup.ResourceConverterGKEBackupBackupPlanIamPolicy()},
 		"google_gke_backup_backup_plan_iam_binding":               {gkebackup.ResourceConverterGKEBackupBackupPlanIamBinding()},
 		"google_gke_backup_backup_plan_iam_member":                {gkebackup.ResourceConverterGKEBackupBackupPlanIamMember()},
