@@ -162,6 +162,27 @@ func expandComputeFirewallPolicyRuleMatch(v interface{}, d tpgresource.Terraform
 		transformed["destIpRanges"] = transformedDestIpRanges
 	}
 
+	transformedSrcNetworkScope, err := expandComputeFirewallPolicyRuleMatchSrcNetworkScope(original["src_network_scope"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcNetworkScope); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcNetworkScope"] = transformedSrcNetworkScope
+	}
+
+	transformedSrcNetworks, err := expandComputeFirewallPolicyRuleMatchSrcNetworks(original["src_networks"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcNetworks); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcNetworks"] = transformedSrcNetworks
+	}
+
+	transformedDestNetworkScope, err := expandComputeFirewallPolicyRuleMatchDestNetworkScope(original["dest_network_scope"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDestNetworkScope); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["destNetworkScope"] = transformedDestNetworkScope
+	}
+
 	transformedLayer4Configs, err := expandComputeFirewallPolicyRuleMatchLayer4Configs(original["layer4_configs"], d, config)
 	if err != nil {
 		return nil, err
@@ -233,6 +254,18 @@ func expandComputeFirewallPolicyRuleMatchSrcIpRanges(v interface{}, d tpgresourc
 }
 
 func expandComputeFirewallPolicyRuleMatchDestIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeFirewallPolicyRuleMatchSrcNetworkScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeFirewallPolicyRuleMatchSrcNetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeFirewallPolicyRuleMatchDestNetworkScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
