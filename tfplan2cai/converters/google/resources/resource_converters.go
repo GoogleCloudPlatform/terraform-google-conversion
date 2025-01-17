@@ -33,6 +33,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/cloudrun"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/cloudrunv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/cloudtasks"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/composer"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/container"
@@ -238,6 +239,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_cloud_tasks_queue_iam_policy":                     {cloudtasks.ResourceConverterCloudTasksQueueIamPolicy()},
 		"google_cloud_tasks_queue_iam_binding":                    {cloudtasks.ResourceConverterCloudTasksQueueIamBinding()},
 		"google_cloud_tasks_queue_iam_member":                     {cloudtasks.ResourceConverterCloudTasksQueueIamMember()},
+		"google_colab_runtime_template_iam_policy":                {colab.ResourceConverterColabRuntimeTemplateIamPolicy()},
+		"google_colab_runtime_template_iam_binding":               {colab.ResourceConverterColabRuntimeTemplateIamBinding()},
+		"google_colab_runtime_template_iam_member":                {colab.ResourceConverterColabRuntimeTemplateIamMember()},
 		"google_compute_backend_bucket_iam_policy":                {compute.ResourceConverterComputeBackendBucketIamPolicy()},
 		"google_compute_backend_bucket_iam_binding":               {compute.ResourceConverterComputeBackendBucketIamBinding()},
 		"google_compute_backend_bucket_iam_member":                {compute.ResourceConverterComputeBackendBucketIamMember()},
