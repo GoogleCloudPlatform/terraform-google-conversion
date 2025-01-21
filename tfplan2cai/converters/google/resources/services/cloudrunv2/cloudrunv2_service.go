@@ -128,6 +128,12 @@ func GetCloudRunV2ServiceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("invoker_iam_disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(invokerIamDisabledProp)) && (ok || !reflect.DeepEqual(v, invokerIamDisabledProp)) {
 		obj["invokerIamDisabled"] = invokerIamDisabledProp
 	}
+	buildConfigProp, err := expandCloudRunV2ServiceBuildConfig(d.Get("build_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("build_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(buildConfigProp)) && (ok || !reflect.DeepEqual(v, buildConfigProp)) {
+		obj["buildConfig"] = buildConfigProp
+	}
 	labelsProp, err := expandCloudRunV2ServiceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -1730,6 +1736,124 @@ func expandCloudRunV2ServiceTrafficTag(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandCloudRunV2ServiceInvokerIamDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBuildConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandCloudRunV2ServiceBuildConfigName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedSourceLocation, err := expandCloudRunV2ServiceBuildConfigSourceLocation(original["source_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceLocation"] = transformedSourceLocation
+	}
+
+	transformedFunctionTarget, err := expandCloudRunV2ServiceBuildConfigFunctionTarget(original["function_target"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFunctionTarget); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["functionTarget"] = transformedFunctionTarget
+	}
+
+	transformedImageUri, err := expandCloudRunV2ServiceBuildConfigImageUri(original["image_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedImageUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["imageUri"] = transformedImageUri
+	}
+
+	transformedBaseImage, err := expandCloudRunV2ServiceBuildConfigBaseImage(original["base_image"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBaseImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["baseImage"] = transformedBaseImage
+	}
+
+	transformedEnableAutomaticUpdates, err := expandCloudRunV2ServiceBuildConfigEnableAutomaticUpdates(original["enable_automatic_updates"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableAutomaticUpdates); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableAutomaticUpdates"] = transformedEnableAutomaticUpdates
+	}
+
+	transformedWorkerPool, err := expandCloudRunV2ServiceBuildConfigWorkerPool(original["worker_pool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWorkerPool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["workerPool"] = transformedWorkerPool
+	}
+
+	transformedEnvironmentVariables, err := expandCloudRunV2ServiceBuildConfigEnvironmentVariables(original["environment_variables"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnvironmentVariables); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["environmentVariables"] = transformedEnvironmentVariables
+	}
+
+	transformedServiceAccount, err := expandCloudRunV2ServiceBuildConfigServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigSourceLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigFunctionTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigImageUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigBaseImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigEnableAutomaticUpdates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigWorkerPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigEnvironmentVariables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCloudRunV2ServiceBuildConfigServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
