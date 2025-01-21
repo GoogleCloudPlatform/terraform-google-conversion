@@ -145,6 +145,18 @@ func GetComputeInterconnectAttachmentApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("subnet_length"); !tpgresource.IsEmptyValue(reflect.ValueOf(subnetLengthProp)) && (ok || !reflect.DeepEqual(v, subnetLengthProp)) {
 		obj["subnetLength"] = subnetLengthProp
 	}
+	labelFingerprintProp, err := expandComputeInterconnectAttachmentLabelFingerprint(d.Get("label_fingerprint"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("label_fingerprint"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
+		obj["labelFingerprint"] = labelFingerprintProp
+	}
+	labelsProp, err := expandComputeInterconnectAttachmentEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
+		obj["labels"] = labelsProp
+	}
 	regionProp, err := expandComputeInterconnectAttachmentRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -229,6 +241,21 @@ func expandComputeInterconnectAttachmentStackType(v interface{}, d tpgresource.T
 
 func expandComputeInterconnectAttachmentSubnetLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeInterconnectAttachmentLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAttachmentEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandComputeInterconnectAttachmentRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
