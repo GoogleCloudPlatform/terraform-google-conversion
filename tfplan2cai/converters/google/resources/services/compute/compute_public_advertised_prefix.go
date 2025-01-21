@@ -78,6 +78,12 @@ func GetComputePublicAdvertisedPrefixApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("ip_cidr_range"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipCidrRangeProp)) && (ok || !reflect.DeepEqual(v, ipCidrRangeProp)) {
 		obj["ipCidrRange"] = ipCidrRangeProp
 	}
+	pdpScopeProp, err := expandComputePublicAdvertisedPrefixPdpScope(d.Get("pdp_scope"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("pdp_scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(pdpScopeProp)) && (ok || !reflect.DeepEqual(v, pdpScopeProp)) {
+		obj["pdpScope"] = pdpScopeProp
+	}
 
 	return obj, nil
 }
@@ -95,5 +101,9 @@ func expandComputePublicAdvertisedPrefixDnsVerificationIp(v interface{}, d tpgre
 }
 
 func expandComputePublicAdvertisedPrefixIpCidrRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputePublicAdvertisedPrefixPdpScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
