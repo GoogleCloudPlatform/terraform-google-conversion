@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -110,6 +111,25 @@ func durationDiffSuppress(k, oldr, newr string, d *schema.ResourceData) bool {
 func mapHashID(v any) int {
 	obj := v.(map[string]any)
 	return schema.HashString(obj["id"])
+}
+
+func isDefaultEnum(val any) bool {
+	s, ok := val.(string)
+	if !ok {
+		return false
+	}
+	return s == "" || strings.HasSuffix(s, "_UNSPECIFIED")
+}
+
+// emptyMavenConfigDiffSuppress generates a config from defaults if it or any
+// properties are unset. Missing, empty and default configs are all equivalent.
+func emptyMavenConfigDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	oSnap, nSnap := d.GetChange("maven_config.0.allow_snapshot_overwrites")
+	if oSnap.(bool) != nSnap.(bool) {
+		return false
+	}
+	oPolicy, nPolicy := d.GetChange("maven_config.0.version_policy")
+	return isDefaultEnum(oPolicy) && isDefaultEnum(nPolicy)
 }
 
 const ArtifactRegistryRepositoryAssetType string = "artifactregistry.googleapis.com/Repository"
