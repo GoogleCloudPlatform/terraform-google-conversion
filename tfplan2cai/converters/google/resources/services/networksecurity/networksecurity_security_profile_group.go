@@ -66,6 +66,18 @@ func GetNetworkSecuritySecurityProfileGroupApiObject(d tpgresource.TerraformReso
 	} else if v, ok := d.GetOkExists("threat_prevention_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(threatPreventionProfileProp)) && (ok || !reflect.DeepEqual(v, threatPreventionProfileProp)) {
 		obj["threatPreventionProfile"] = threatPreventionProfileProp
 	}
+	customMirroringProfileProp, err := expandNetworkSecuritySecurityProfileGroupCustomMirroringProfile(d.Get("custom_mirroring_profile"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_mirroring_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(customMirroringProfileProp)) && (ok || !reflect.DeepEqual(v, customMirroringProfileProp)) {
+		obj["customMirroringProfile"] = customMirroringProfileProp
+	}
+	customInterceptProfileProp, err := expandNetworkSecuritySecurityProfileGroupCustomInterceptProfile(d.Get("custom_intercept_profile"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_intercept_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(customInterceptProfileProp)) && (ok || !reflect.DeepEqual(v, customInterceptProfileProp)) {
+		obj["customInterceptProfile"] = customInterceptProfileProp
+	}
 	labelsProp, err := expandNetworkSecuritySecurityProfileGroupEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -81,6 +93,14 @@ func expandNetworkSecuritySecurityProfileGroupDescription(v interface{}, d tpgre
 }
 
 func expandNetworkSecuritySecurityProfileGroupThreatPreventionProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileGroupCustomMirroringProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileGroupCustomInterceptProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
