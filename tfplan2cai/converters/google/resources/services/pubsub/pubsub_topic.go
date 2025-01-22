@@ -222,6 +222,20 @@ func expandPubsubTopicIngestionDataSourceSettings(v interface{}, d tpgresource.T
 		transformed["azureEventHubs"] = transformedAzureEventHubs
 	}
 
+	transformedAwsMsk, err := expandPubsubTopicIngestionDataSourceSettingsAwsMsk(original["aws_msk"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAwsMsk); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["awsMsk"] = transformedAwsMsk
+	}
+
+	transformedConfluentCloud, err := expandPubsubTopicIngestionDataSourceSettingsConfluentCloud(original["confluent_cloud"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConfluentCloud); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["confluentCloud"] = transformedConfluentCloud
+	}
+
 	return transformed, nil
 }
 
@@ -509,6 +523,129 @@ func expandPubsubTopicIngestionDataSourceSettingsAzureEventHubsSubscriptionId(v 
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsAzureEventHubsGcpServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsAwsMsk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedClusterArn, err := expandPubsubTopicIngestionDataSourceSettingsAwsMskClusterArn(original["cluster_arn"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClusterArn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clusterArn"] = transformedClusterArn
+	}
+
+	transformedTopic, err := expandPubsubTopicIngestionDataSourceSettingsAwsMskTopic(original["topic"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTopic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["topic"] = transformedTopic
+	}
+
+	transformedAwsRoleArn, err := expandPubsubTopicIngestionDataSourceSettingsAwsMskAwsRoleArn(original["aws_role_arn"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAwsRoleArn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["awsRoleArn"] = transformedAwsRoleArn
+	}
+
+	transformedGcpServiceAccount, err := expandPubsubTopicIngestionDataSourceSettingsAwsMskGcpServiceAccount(original["gcp_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGcpServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gcpServiceAccount"] = transformedGcpServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsAwsMskClusterArn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsAwsMskTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsAwsMskAwsRoleArn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsAwsMskGcpServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsConfluentCloud(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBootstrapServer, err := expandPubsubTopicIngestionDataSourceSettingsConfluentCloudBootstrapServer(original["bootstrap_server"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBootstrapServer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bootstrapServer"] = transformedBootstrapServer
+	}
+
+	transformedClusterId, err := expandPubsubTopicIngestionDataSourceSettingsConfluentCloudClusterId(original["cluster_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClusterId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clusterId"] = transformedClusterId
+	}
+
+	transformedTopic, err := expandPubsubTopicIngestionDataSourceSettingsConfluentCloudTopic(original["topic"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTopic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["topic"] = transformedTopic
+	}
+
+	transformedIdentityPoolId, err := expandPubsubTopicIngestionDataSourceSettingsConfluentCloudIdentityPoolId(original["identity_pool_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentityPoolId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["identityPoolId"] = transformedIdentityPoolId
+	}
+
+	transformedGcpServiceAccount, err := expandPubsubTopicIngestionDataSourceSettingsConfluentCloudGcpServiceAccount(original["gcp_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGcpServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gcpServiceAccount"] = transformedGcpServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsConfluentCloudBootstrapServer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsConfluentCloudClusterId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsConfluentCloudTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsConfluentCloudIdentityPoolId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicIngestionDataSourceSettingsConfluentCloudGcpServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
