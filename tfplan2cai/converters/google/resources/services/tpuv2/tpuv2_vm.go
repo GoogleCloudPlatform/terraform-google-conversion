@@ -91,8 +91,8 @@ func GetTpuV2VmCaiObject(d tpgresource.TerraformResourceData, config *transport_
 			Name: name,
 			Type: TpuV2VmAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/tpu/v2/rest",
+				Version:              "v2alpha1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/tpu/v2alpha1/rest",
 				DiscoveryName:        "Vm",
 				Data:                 obj,
 			},

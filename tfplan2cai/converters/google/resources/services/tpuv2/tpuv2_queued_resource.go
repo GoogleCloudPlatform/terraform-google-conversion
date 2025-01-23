@@ -41,8 +41,8 @@ func GetTpuV2QueuedResourceCaiObject(d tpgresource.TerraformResourceData, config
 			Name: name,
 			Type: TpuV2QueuedResourceAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/tpu/v2/rest",
+				Version:              "v2alpha1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/tpu/v2alpha1/rest",
 				DiscoveryName:        "QueuedResource",
 				Data:                 obj,
 			},
