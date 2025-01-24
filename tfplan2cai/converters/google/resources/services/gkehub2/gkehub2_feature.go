@@ -498,6 +498,13 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSync(v in
 		transformed["preventDrift"] = transformedPreventDrift
 	}
 
+	transformedMetricsGcpServiceAccountEmail, err := expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncMetricsGcpServiceAccountEmail(original["metrics_gcp_service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetricsGcpServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metricsGcpServiceAccountEmail"] = transformedMetricsGcpServiceAccountEmail
+	}
+
 	transformedGit, err := expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncGit(original["git"], d, config)
 	if err != nil {
 		return nil, err
@@ -524,6 +531,10 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncEnabl
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncPreventDrift(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncMetricsGcpServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
