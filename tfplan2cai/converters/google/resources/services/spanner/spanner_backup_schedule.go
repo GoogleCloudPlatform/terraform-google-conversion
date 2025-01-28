@@ -87,6 +87,12 @@ func GetSpannerBackupScheduleApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("incremental_backup_spec"); ok || !reflect.DeepEqual(v, incrementalBackupSpecProp) {
 		obj["incrementalBackupSpec"] = incrementalBackupSpecProp
 	}
+	encryptionConfigProp, err := expandSpannerBackupScheduleEncryptionConfig(d.Get("encryption_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("encryption_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionConfigProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigProp)) {
+		obj["encryptionConfig"] = encryptionConfigProp
+	}
 
 	return resourceSpannerBackupScheduleEncoder(d, config, obj)
 }
@@ -192,4 +198,38 @@ func expandSpannerBackupScheduleIncrementalBackupSpec(v interface{}, d tpgresour
 	transformed := make(map[string]interface{})
 
 	return transformed, nil
+}
+
+func expandSpannerBackupScheduleEncryptionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEncryptionType, err := expandSpannerBackupScheduleEncryptionConfigEncryptionType(original["encryption_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncryptionType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["encryptionType"] = transformedEncryptionType
+	}
+
+	transformedKmsKeyName, err := expandSpannerBackupScheduleEncryptionConfigKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	return transformed, nil
+}
+
+func expandSpannerBackupScheduleEncryptionConfigEncryptionType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerBackupScheduleEncryptionConfigKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
