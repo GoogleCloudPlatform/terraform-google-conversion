@@ -21,6 +21,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/apikeys"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/appengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/artifactregistry"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/bigqueryanalyticshub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/services/bigqueryconnection"
@@ -194,6 +195,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_artifact_registry_repository_iam_policy":          {artifactregistry.ResourceConverterArtifactRegistryRepositoryIamPolicy()},
 		"google_artifact_registry_repository_iam_binding":         {artifactregistry.ResourceConverterArtifactRegistryRepositoryIamBinding()},
 		"google_artifact_registry_repository_iam_member":          {artifactregistry.ResourceConverterArtifactRegistryRepositoryIamMember()},
+		"google_beyondcorp_security_gateway_iam_policy":           {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamPolicy()},
+		"google_beyondcorp_security_gateway_iam_binding":          {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamBinding()},
+		"google_beyondcorp_security_gateway_iam_member":           {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamMember()},
 		"google_bigquery_table_iam_policy":                        {bigquery.ResourceConverterBigQueryTableIamPolicy()},
 		"google_bigquery_table_iam_binding":                       {bigquery.ResourceConverterBigQueryTableIamBinding()},
 		"google_bigquery_table_iam_member":                        {bigquery.ResourceConverterBigQueryTableIamMember()},
