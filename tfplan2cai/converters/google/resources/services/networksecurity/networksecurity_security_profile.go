@@ -17,6 +17,8 @@ package networksecurity
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -125,6 +127,7 @@ func expandNetworkSecuritySecurityProfileThreatPreventionProfile(v interface{}, 
 }
 
 func expandNetworkSecuritySecurityProfileThreatPreventionProfileSeverityOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -162,6 +165,7 @@ func expandNetworkSecuritySecurityProfileThreatPreventionProfileSeverityOverride
 }
 
 func expandNetworkSecuritySecurityProfileThreatPreventionProfileThreatOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
