@@ -82,8 +82,8 @@ github.com/go-test/deep v1.0.3/go.mod h1:wGDj63lr65AM2AQyKZd/NYHGb0R+1RLqB8NKt3a
 github.com/gogo/protobuf v1.3.2 h1:Ov1cvc58UF3b5XjBnZv7+opcTcQFZebYjWzi34vdm4Q=
 github.com/gogo/protobuf v1.3.2/go.mod h1:P1XiOD3dCwIKUDQYPy72D8LYyHL2YPYrpS2s69NZV8Q=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
-github.com/golang/glog v1.2.2 h1:1+mZ9upx1Dh6FmUTFR1naJ77miKiXgALjWOZ3NVFPmY=
-github.com/golang/glog v1.2.2/go.mod h1:6AhwSGph0fcJtXVM/PEHPqZlFeoLxhs7/t5UDAwmO+w=
+github.com/golang/glog v1.2.4 h1:CNNw5U8lSiiBk7druxtSHHTsRWcxKoac6kZKm2peBBc=
+github.com/golang/glog v1.2.4/go.mod h1:6AhwSGph0fcJtXVM/PEHPqZlFeoLxhs7/t5UDAwmO+w=
 github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
 github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da h1:oI5xCqsCo564l8iNU+DwB5epxmsaqB+rhGL0m5jtYqE=
 github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
@@ -172,8 +172,8 @@ github.com/hashicorp/terraform-plugin-sdk/v2 v2.33.0 h1:qHprzXy/As0rxedphECBEQAh
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.33.0/go.mod h1:H+8tjs9TjV2w57QFVSMBQacf8k/E1XwLXGCARgViC6A=
 github.com/hashicorp/terraform-plugin-testing v1.5.1 h1:T4aQh9JAhmWo4+t1A7x+rnxAJHCDIYW9kXyo4sVO92c=
 github.com/hashicorp/terraform-plugin-testing v1.5.1/go.mod h1:dg8clO6K59rZ8w9EshBmDp1CxTIPu3yA4iaDpX1h5u0=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250130210222-dc9fc76b3836 h1:SPo+FzERH7gPLIfwD5DC6FjwSZJ2xo1EskmHax6PlR0=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250130210222-dc9fc76b3836/go.mod h1:T6t0Tv2yw5RfAOL01fprnwybq7ghsTqORSwgKoE/8/8=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250131003709-ba9733665e1e h1:1yzccmQAqRKM1TG6PPJ0KlXdXd/xjhjy/pvztZa9AFE=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250131003709-ba9733665e1e/go.mod h1:IkJf/cFmSb0kvMORnXqL/PqiMSLMSAuOKHzH60Fea58=
 github.com/hashicorp/terraform-registry-address v0.2.3 h1:2TAiKJ1A3MAkZlH1YI/aTVcLZRu7JseiXNRHbOAyoTI=
 github.com/hashicorp/terraform-registry-address v0.2.3/go.mod h1:lFHA76T8jfQteVfT7caREqguFrW3c4MFSPhZB7HHgUM=
 github.com/hashicorp/terraform-svchost v0.1.1 h1:EZZimZ1GxdqFRinZ1tpJwVxxt49xc/S52uzrw4x0jKQ=
