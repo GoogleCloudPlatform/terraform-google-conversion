@@ -291,6 +291,13 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRule(v interfac
 			transformed["matchRules"] = transformedMatchRule
 		}
 
+		transformedRouteMethods, err := expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteMethods(original["route_methods"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRouteMethods); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["routeMethods"] = transformedRouteMethods
+		}
+
 		transformedHeaderAction, err := expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleHeaderAction(original["header_action"], d, config)
 		if err != nil {
 			return nil, err
@@ -534,6 +541,29 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleFu
 	return v, nil
 }
 
+func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteMethods(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedMethods, err := expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteMethodsAllowedMethods(original["allowed_methods"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedMethods); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedMethods"] = transformedAllowedMethods
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteMethodsAllowedMethods(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -750,6 +780,13 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteAction
 		return nil, err
 	} else if val := reflect.ValueOf(transformedCorsPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["corsPolicy"] = transformedCorsPolicy
+	}
+
+	transformedCompressionMode, err := expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteActionCompressionMode(original["compression_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionMode"] = transformedCompressionMode
 	}
 
 	return transformed, nil
@@ -1215,6 +1252,10 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteAction
 }
 
 func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteActionCorsPolicyDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteActionCompressionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
