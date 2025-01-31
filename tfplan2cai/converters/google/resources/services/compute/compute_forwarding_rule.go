@@ -53,6 +53,24 @@ func PortRangeDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	return old == new+"-"+new
 }
 
+// Compare only the relative path from 'regions' of two IP collection links
+func IpCollectionDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
+	oldStripped, err := GetRelativePathFromRegions(old)
+	if err != nil {
+		return false
+	}
+
+	newStripped, err := GetRelativePathFromRegions(new)
+	if err != nil {
+		return false
+	}
+
+	if oldStripped == newStripped {
+		return true
+	}
+	return false
+}
+
 // Suppresses diff for IPv4 and IPv6 different formats.
 // It also suppresses diffs if an IP is changing to a reference.
 func InternalIpDiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
@@ -95,6 +113,15 @@ func InternalIpDiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
 	}
 
 	return addr_equality && netmask_equality
+}
+
+func GetRelativePathFromRegions(resourceLink string) (string, error) {
+	stringParts := strings.SplitAfterN(resourceLink, "regions/", 2)
+	if len(stringParts) != 2 {
+		return "", fmt.Errorf("String is not a valid link: %s", resourceLink)
+	}
+
+	return "regions/" + stringParts[1], nil
 }
 
 const ComputeForwardingRuleAssetType string = "compute.googleapis.com/ForwardingRule"
@@ -260,6 +287,12 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 		return nil, err
 	} else if v, ok := d.GetOkExists("ip_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipVersionProp)) && (ok || !reflect.DeepEqual(v, ipVersionProp)) {
 		obj["ipVersion"] = ipVersionProp
+	}
+	ipCollectionProp, err := expandComputeForwardingRuleIpCollection(d.Get("ip_collection"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ip_collection"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipCollectionProp)) && (ok || !reflect.DeepEqual(v, ipCollectionProp)) {
+		obj["ipCollection"] = ipCollectionProp
 	}
 	labelsProp, err := expandComputeForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -461,6 +494,10 @@ func expandComputeForwardingRuleNoAutomateDnsZone(v interface{}, d tpgresource.T
 }
 
 func expandComputeForwardingRuleIpVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeForwardingRuleIpCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
