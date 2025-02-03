@@ -78,6 +78,18 @@ func GetComputePublicDelegatedPrefixApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("parent_prefix"); !tpgresource.IsEmptyValue(reflect.ValueOf(parentPrefixProp)) && (ok || !reflect.DeepEqual(v, parentPrefixProp)) {
 		obj["parentPrefix"] = parentPrefixProp
 	}
+	modeProp, err := expandComputePublicDelegatedPrefixMode(d.Get("mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(modeProp)) && (ok || !reflect.DeepEqual(v, modeProp)) {
+		obj["mode"] = modeProp
+	}
+	allocatablePrefixLengthProp, err := expandComputePublicDelegatedPrefixAllocatablePrefixLength(d.Get("allocatable_prefix_length"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allocatable_prefix_length"); !tpgresource.IsEmptyValue(reflect.ValueOf(allocatablePrefixLengthProp)) && (ok || !reflect.DeepEqual(v, allocatablePrefixLengthProp)) {
+		obj["allocatablePrefixLength"] = allocatablePrefixLengthProp
+	}
 	ipCidrRangeProp, err := expandComputePublicDelegatedPrefixIpCidrRange(d.Get("ip_cidr_range"), d, config)
 	if err != nil {
 		return nil, err
@@ -101,6 +113,14 @@ func expandComputePublicDelegatedPrefixName(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputePublicDelegatedPrefixParentPrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputePublicDelegatedPrefixMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputePublicDelegatedPrefixAllocatablePrefixLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
