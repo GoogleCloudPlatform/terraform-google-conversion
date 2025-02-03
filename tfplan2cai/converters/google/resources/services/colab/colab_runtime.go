@@ -15,12 +15,34 @@
 package colab
 
 import (
+	"fmt"
 	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func ModifyColabRuntimeOperation(config *transport_tpg.Config, d *schema.ResourceData, project string, billingProject string, userAgent string, method string) (map[string]interface{}, error) {
+	url, err := tpgresource.ReplaceVars(d, config, "{{ColabBasePath}}projects/{{project}}/locations/{{location}}/notebookRuntimes/{{name}}:"+method)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+		Config:    config,
+		Method:    "POST",
+		Project:   billingProject,
+		RawURL:    url,
+		UserAgent: userAgent,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("Unable to %q google_colab_runtime %q: %s", method, d.Id(), err)
+	}
+	return res, nil
+}
 
 const ColabRuntimeAssetType string = "aiplatform.googleapis.com/Runtime"
 
