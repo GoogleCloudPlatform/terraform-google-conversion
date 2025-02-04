@@ -614,6 +614,20 @@ func expandCloudRunV2ServiceTemplateContainers(v interface{}, d tpgresource.Terr
 			transformed["dependsOn"] = transformedDependsOn
 		}
 
+		transformedBaseImageUri, err := expandCloudRunV2ServiceTemplateContainersBaseImageUri(original["base_image_uri"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBaseImageUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["baseImageUri"] = transformedBaseImageUri
+		}
+
+		transformedBuildInfo, err := expandCloudRunV2ServiceTemplateContainersBuildInfo(original["build_info"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBuildInfo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["buildInfo"] = transformedBuildInfo
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1313,6 +1327,44 @@ func expandCloudRunV2ServiceTemplateContainersStartupProbeGrpcService(v interfac
 }
 
 func expandCloudRunV2ServiceTemplateContainersDependsOn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateContainersBaseImageUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateContainersBuildInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFunctionTarget, err := expandCloudRunV2ServiceTemplateContainersBuildInfoFunctionTarget(original["function_target"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFunctionTarget); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["functionTarget"] = transformedFunctionTarget
+	}
+
+	transformedSourceLocation, err := expandCloudRunV2ServiceTemplateContainersBuildInfoSourceLocation(original["source_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["source_location"] = transformedSourceLocation
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2ServiceTemplateContainersBuildInfoFunctionTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateContainersBuildInfoSourceLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
