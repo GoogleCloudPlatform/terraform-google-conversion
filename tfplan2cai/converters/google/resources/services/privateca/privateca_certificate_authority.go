@@ -111,6 +111,12 @@ func GetPrivatecaCertificateAuthorityApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("gcs_bucket"); !tpgresource.IsEmptyValue(reflect.ValueOf(gcsBucketProp)) && (ok || !reflect.DeepEqual(v, gcsBucketProp)) {
 		obj["gcsBucket"] = gcsBucketProp
 	}
+	userDefinedAccessUrlsProp, err := expandPrivatecaCertificateAuthorityUserDefinedAccessUrls(d.Get("user_defined_access_urls"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("user_defined_access_urls"); !tpgresource.IsEmptyValue(reflect.ValueOf(userDefinedAccessUrlsProp)) && (ok || !reflect.DeepEqual(v, userDefinedAccessUrlsProp)) {
+		obj["userDefinedAccessUrls"] = userDefinedAccessUrlsProp
+	}
 	labelsProp, err := expandPrivatecaCertificateAuthorityEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -508,6 +514,40 @@ func expandPrivatecaCertificateAuthoritySubordinateConfigPemIssuerChainPemCertif
 }
 
 func expandPrivatecaCertificateAuthorityGcsBucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCertificateAuthorityUserDefinedAccessUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAiaIssuingCertificateUrls, err := expandPrivatecaCertificateAuthorityUserDefinedAccessUrlsAiaIssuingCertificateUrls(original["aia_issuing_certificate_urls"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAiaIssuingCertificateUrls); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["aiaIssuingCertificateUrls"] = transformedAiaIssuingCertificateUrls
+	}
+
+	transformedCrlAccessUrls, err := expandPrivatecaCertificateAuthorityUserDefinedAccessUrlsCrlAccessUrls(original["crl_access_urls"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCrlAccessUrls); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["crlAccessUrls"] = transformedCrlAccessUrls
+	}
+
+	return transformed, nil
+}
+
+func expandPrivatecaCertificateAuthorityUserDefinedAccessUrlsAiaIssuingCertificateUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCertificateAuthorityUserDefinedAccessUrlsCrlAccessUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
