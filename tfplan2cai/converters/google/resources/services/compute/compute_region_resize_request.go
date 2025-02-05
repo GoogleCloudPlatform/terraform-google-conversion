@@ -15,6 +15,7 @@
 package compute
 
 import (
+	"fmt"
 	"reflect"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
@@ -78,6 +79,12 @@ func GetComputeRegionResizeRequestApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("requested_run_duration"); !tpgresource.IsEmptyValue(reflect.ValueOf(requestedRunDurationProp)) && (ok || !reflect.DeepEqual(v, requestedRunDurationProp)) {
 		obj["requestedRunDuration"] = requestedRunDurationProp
 	}
+	regionProp, err := expandComputeRegionResizeRequestRegion(d.Get("region"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("region"); !tpgresource.IsEmptyValue(reflect.ValueOf(regionProp)) && (ok || !reflect.DeepEqual(v, regionProp)) {
+		obj["region"] = regionProp
+	}
 
 	return obj, nil
 }
@@ -126,4 +133,12 @@ func expandComputeRegionResizeRequestRequestedRunDurationSeconds(v interface{}, 
 
 func expandComputeRegionResizeRequestRequestedRunDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeRegionResizeRequestRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("regions", v.(string), "project", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for region: %s", err)
+	}
+	return f.RelativeLink(), nil
 }
