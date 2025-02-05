@@ -15,6 +15,7 @@
 package compute
 
 import (
+	"fmt"
 	"reflect"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai/converters/google/resources/cai"
@@ -78,6 +79,12 @@ func GetComputeResizeRequestApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("requested_run_duration"); !tpgresource.IsEmptyValue(reflect.ValueOf(requestedRunDurationProp)) && (ok || !reflect.DeepEqual(v, requestedRunDurationProp)) {
 		obj["requestedRunDuration"] = requestedRunDurationProp
 	}
+	zoneProp, err := expandComputeResizeRequestZone(d.Get("zone"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(zoneProp)) && (ok || !reflect.DeepEqual(v, zoneProp)) {
+		obj["zone"] = zoneProp
+	}
 
 	return obj, nil
 }
@@ -126,4 +133,12 @@ func expandComputeResizeRequestRequestedRunDurationSeconds(v interface{}, d tpgr
 
 func expandComputeResizeRequestRequestedRunDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeResizeRequestZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("zones", v.(string), "project", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for zone: %s", err)
+	}
+	return f.RelativeLink(), nil
 }
