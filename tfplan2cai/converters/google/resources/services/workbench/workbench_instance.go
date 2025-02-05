@@ -242,6 +242,12 @@ func GetWorkbenchInstanceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("disable_proxy_access"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableProxyAccessProp)) && (ok || !reflect.DeepEqual(v, disableProxyAccessProp)) {
 		obj["disableProxyAccess"] = disableProxyAccessProp
 	}
+	enableThirdPartyIdentityProp, err := expandWorkbenchInstanceEnableThirdPartyIdentity(d.Get("enable_third_party_identity"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_third_party_identity"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableThirdPartyIdentityProp)) && (ok || !reflect.DeepEqual(v, enableThirdPartyIdentityProp)) {
+		obj["enableThirdPartyIdentity"] = enableThirdPartyIdentityProp
+	}
 	labelsProp, err := expandWorkbenchInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -786,6 +792,10 @@ func expandWorkbenchInstanceInstanceOwners(v interface{}, d tpgresource.Terrafor
 }
 
 func expandWorkbenchInstanceDisableProxyAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceEnableThirdPartyIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
