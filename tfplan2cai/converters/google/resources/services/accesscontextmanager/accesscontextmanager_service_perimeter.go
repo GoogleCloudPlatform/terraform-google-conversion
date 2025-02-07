@@ -348,6 +348,13 @@ func expandAccessContextManagerServicePerimeterStatusIngressPolicies(v interface
 			transformed["ingressTo"] = transformedIngressTo
 		}
 
+		transformedTitle, err := expandAccessContextManagerServicePerimeterStatusIngressPoliciesTitle(original["title"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["title"] = transformedTitle
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -533,6 +540,10 @@ func expandAccessContextManagerServicePerimeterStatusIngressPoliciesIngressToOpe
 	return v, nil
 }
 
+func expandAccessContextManagerServicePerimeterStatusIngressPoliciesTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandAccessContextManagerServicePerimeterStatusEgressPolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -555,6 +566,13 @@ func expandAccessContextManagerServicePerimeterStatusEgressPolicies(v interface{
 			return nil, err
 		} else if val := reflect.ValueOf(transformedEgressTo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["egressTo"] = transformedEgressTo
+		}
+
+		transformedTitle, err := expandAccessContextManagerServicePerimeterStatusEgressPoliciesTitle(original["title"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["title"] = transformedTitle
 		}
 
 		req = append(req, transformed)
@@ -765,6 +783,10 @@ func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressToOpera
 	return v, nil
 }
 
+func expandAccessContextManagerServicePerimeterStatusEgressPoliciesTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandAccessContextManagerServicePerimeterSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -891,6 +913,13 @@ func expandAccessContextManagerServicePerimeterSpecIngressPolicies(v interface{}
 			return nil, err
 		} else if val := reflect.ValueOf(transformedIngressTo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["ingressTo"] = transformedIngressTo
+		}
+
+		transformedTitle, err := expandAccessContextManagerServicePerimeterSpecIngressPoliciesTitle(original["title"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["title"] = transformedTitle
 		}
 
 		req = append(req, transformed)
@@ -1078,6 +1107,10 @@ func expandAccessContextManagerServicePerimeterSpecIngressPoliciesIngressToOpera
 	return v, nil
 }
 
+func expandAccessContextManagerServicePerimeterSpecIngressPoliciesTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandAccessContextManagerServicePerimeterSpecEgressPolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -1100,6 +1133,13 @@ func expandAccessContextManagerServicePerimeterSpecEgressPolicies(v interface{},
 			return nil, err
 		} else if val := reflect.ValueOf(transformedEgressTo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["egressTo"] = transformedEgressTo
+		}
+
+		transformedTitle, err := expandAccessContextManagerServicePerimeterSpecEgressPoliciesTitle(original["title"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["title"] = transformedTitle
 		}
 
 		req = append(req, transformed)
@@ -1307,6 +1347,10 @@ func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressToOperati
 }
 
 func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressToOperationsMethodSelectorsPermission(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecEgressPoliciesTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
