@@ -66,6 +66,18 @@ func GetSecurityCenterMuteConfigApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("filter"); !tpgresource.IsEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
 		obj["filter"] = filterProp
 	}
+	typeProp, err := expandSecurityCenterMuteConfigType(d.Get("type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
+		obj["type"] = typeProp
+	}
+	expiryTimeProp, err := expandSecurityCenterMuteConfigExpiryTime(d.Get("expiry_time"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("expiry_time"); !tpgresource.IsEmptyValue(reflect.ValueOf(expiryTimeProp)) && (ok || !reflect.DeepEqual(v, expiryTimeProp)) {
+		obj["expiryTime"] = expiryTimeProp
+	}
 
 	return obj, nil
 }
@@ -75,5 +87,13 @@ func expandSecurityCenterMuteConfigDescription(v interface{}, d tpgresource.Terr
 }
 
 func expandSecurityCenterMuteConfigFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecurityCenterMuteConfigType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecurityCenterMuteConfigExpiryTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
