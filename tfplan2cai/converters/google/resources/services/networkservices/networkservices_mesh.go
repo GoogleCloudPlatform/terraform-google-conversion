@@ -32,7 +32,7 @@ func ResourceConverterNetworkServicesMesh() cai.ResourceConverter {
 }
 
 func GetNetworkServicesMeshCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/meshes/{{name}}")
+	name, err := cai.AssetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/{{location}}/meshes/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
