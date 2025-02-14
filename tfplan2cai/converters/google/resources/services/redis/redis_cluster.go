@@ -126,6 +126,12 @@ func GetRedisClusterApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("cross_cluster_replication_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(crossClusterReplicationConfigProp)) && (ok || !reflect.DeepEqual(v, crossClusterReplicationConfigProp)) {
 		obj["crossClusterReplicationConfig"] = crossClusterReplicationConfigProp
 	}
+	kmsKeyProp, err := expandRedisClusterKmsKey(d.Get("kms_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
+		obj["kmsKey"] = kmsKeyProp
+	}
 
 	return obj, nil
 }
@@ -685,5 +691,9 @@ func expandRedisClusterCrossClusterReplicationConfigMembershipSecondaryClustersU
 }
 
 func expandRedisClusterCrossClusterReplicationConfigUpdateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
