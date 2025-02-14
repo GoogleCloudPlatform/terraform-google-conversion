@@ -78,6 +78,18 @@ func GetDeveloperConnectConnectionApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("gitlab_enterprise_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(gitlabEnterpriseConfigProp)) && (ok || !reflect.DeepEqual(v, gitlabEnterpriseConfigProp)) {
 		obj["gitlabEnterpriseConfig"] = gitlabEnterpriseConfigProp
 	}
+	bitbucketCloudConfigProp, err := expandDeveloperConnectConnectionBitbucketCloudConfig(d.Get("bitbucket_cloud_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("bitbucket_cloud_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(bitbucketCloudConfigProp)) && (ok || !reflect.DeepEqual(v, bitbucketCloudConfigProp)) {
+		obj["bitbucketCloudConfig"] = bitbucketCloudConfigProp
+	}
+	bitbucketDataCenterConfigProp, err := expandDeveloperConnectConnectionBitbucketDataCenterConfig(d.Get("bitbucket_data_center_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("bitbucket_data_center_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(bitbucketDataCenterConfigProp)) && (ok || !reflect.DeepEqual(v, bitbucketDataCenterConfigProp)) {
+		obj["bitbucketDataCenterConfig"] = bitbucketDataCenterConfigProp
+	}
 	disabledProp, err := expandDeveloperConnectConnectionDisabled(d.Get("disabled"), d, config)
 	if err != nil {
 		return nil, err
@@ -508,6 +520,290 @@ func expandDeveloperConnectConnectionGitlabEnterpriseConfigReadAuthorizerCredent
 }
 
 func expandDeveloperConnectConnectionGitlabEnterpriseConfigReadAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWorkspace, err := expandDeveloperConnectConnectionBitbucketCloudConfigWorkspace(original["workspace"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWorkspace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["workspace"] = transformedWorkspace
+	}
+
+	transformedWebhookSecretSecretVersion, err := expandDeveloperConnectConnectionBitbucketCloudConfigWebhookSecretSecretVersion(original["webhook_secret_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhookSecretSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhookSecretSecretVersion"] = transformedWebhookSecretSecretVersion
+	}
+
+	transformedReadAuthorizerCredential, err := expandDeveloperConnectConnectionBitbucketCloudConfigReadAuthorizerCredential(original["read_authorizer_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReadAuthorizerCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["readAuthorizerCredential"] = transformedReadAuthorizerCredential
+	}
+
+	transformedAuthorizerCredential, err := expandDeveloperConnectConnectionBitbucketCloudConfigAuthorizerCredential(original["authorizer_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthorizerCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authorizerCredential"] = transformedAuthorizerCredential
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfigWorkspace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfigWebhookSecretSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfigReadAuthorizerCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserTokenSecretVersion, err := expandDeveloperConnectConnectionBitbucketCloudConfigReadAuthorizerCredentialUserTokenSecretVersion(original["user_token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userTokenSecretVersion"] = transformedUserTokenSecretVersion
+	}
+
+	transformedUsername, err := expandDeveloperConnectConnectionBitbucketCloudConfigReadAuthorizerCredentialUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfigReadAuthorizerCredentialUserTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfigReadAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfigAuthorizerCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserTokenSecretVersion, err := expandDeveloperConnectConnectionBitbucketCloudConfigAuthorizerCredentialUserTokenSecretVersion(original["user_token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userTokenSecretVersion"] = transformedUserTokenSecretVersion
+	}
+
+	transformedUsername, err := expandDeveloperConnectConnectionBitbucketCloudConfigAuthorizerCredentialUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfigAuthorizerCredentialUserTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketCloudConfigAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWebhookSecretSecretVersion, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigWebhookSecretSecretVersion(original["webhook_secret_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhookSecretSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhookSecretSecretVersion"] = transformedWebhookSecretSecretVersion
+	}
+
+	transformedReadAuthorizerCredential, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigReadAuthorizerCredential(original["read_authorizer_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReadAuthorizerCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["readAuthorizerCredential"] = transformedReadAuthorizerCredential
+	}
+
+	transformedAuthorizerCredential, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigAuthorizerCredential(original["authorizer_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthorizerCredential); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authorizerCredential"] = transformedAuthorizerCredential
+	}
+
+	transformedServiceDirectoryConfig, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigServiceDirectoryConfig(original["service_directory_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceDirectoryConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceDirectoryConfig"] = transformedServiceDirectoryConfig
+	}
+
+	transformedSslCaCertificate, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigSslCaCertificate(original["ssl_ca_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSslCaCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sslCaCertificate"] = transformedSslCaCertificate
+	}
+
+	transformedServerVersion, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigServerVersion(original["server_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServerVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serverVersion"] = transformedServerVersion
+	}
+
+	transformedHostUri, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigHostUri(original["host_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hostUri"] = transformedHostUri
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigWebhookSecretSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigReadAuthorizerCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserTokenSecretVersion, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigReadAuthorizerCredentialUserTokenSecretVersion(original["user_token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userTokenSecretVersion"] = transformedUserTokenSecretVersion
+	}
+
+	transformedUsername, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigReadAuthorizerCredentialUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigReadAuthorizerCredentialUserTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigReadAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigAuthorizerCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUsername, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigAuthorizerCredentialUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	transformedUserTokenSecretVersion, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigAuthorizerCredentialUserTokenSecretVersion(original["user_token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userTokenSecretVersion"] = transformedUserTokenSecretVersion
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigAuthorizerCredentialUserTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedService, err := expandDeveloperConnectConnectionBitbucketDataCenterConfigServiceDirectoryConfigService(original["service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service"] = transformedService
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigServiceDirectoryConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigSslCaCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigServerVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionBitbucketDataCenterConfigHostUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
