@@ -167,6 +167,13 @@ func expandTpuV2QueuedResourceTpuNodeSpecNode(v interface{}, d tpgresource.Terra
 		transformed["description"] = transformedDescription
 	}
 
+	transformedNetworkConfig, err := expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfig(original["network_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkConfig"] = transformedNetworkConfig
+	}
+
 	return transformed, nil
 }
 
@@ -179,5 +186,72 @@ func expandTpuV2QueuedResourceTpuNodeSpecNodeAcceleratorType(v interface{}, d tp
 }
 
 func expandTpuV2QueuedResourceTpuNodeSpecNodeDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNetwork, err := expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigNetwork(original["network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["network"] = transformedNetwork
+	}
+
+	transformedSubnetwork, err := expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigSubnetwork(original["subnetwork"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subnetwork"] = transformedSubnetwork
+	}
+
+	transformedEnableExternalIps, err := expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigEnableExternalIps(original["enable_external_ips"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enableExternalIps"] = transformedEnableExternalIps
+	}
+
+	transformedCanIpForward, err := expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigCanIpForward(original["can_ip_forward"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["canIpForward"] = transformedCanIpForward
+	}
+
+	transformedQueueCount, err := expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigQueueCount(original["queue_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedQueueCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["queueCount"] = transformedQueueCount
+	}
+
+	return transformed, nil
+}
+
+func expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigEnableExternalIps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigCanIpForward(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfigQueueCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
