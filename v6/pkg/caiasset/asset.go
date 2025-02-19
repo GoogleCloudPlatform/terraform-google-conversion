@@ -17,6 +17,7 @@ type Asset struct {
 	OrgPolicy     []*OrgPolicy     `json:"orgPolicy,omitempty"`
 	V2OrgPolicies []*V2OrgPolicies `json:"v2_org_policies,omitempty"`
 	Ancestors     []string         `json:"ancestors"`
+	TfplanAddress []string         `json:"tfplanAddress,omitempty"`
 }
 
 // IAMPolicy is the representation of a Cloud IAM policy set on a cloud resource.
@@ -33,8 +34,8 @@ type IAMBinding struct {
 // AssetResource is nested within the Asset type.
 type AssetResource struct {
 	Version              string                 `json:"version"`
-	DiscoveryDocumentURI string                 `json:"discovery_document_uri"`
-	DiscoveryName        string                 `json:"discovery_name"`
+	DiscoveryDocumentURI string                 `json:"discoveryDocumentURI"`
+	DiscoveryName        string                 `json:"discoveryName"`
 	Parent               string                 `json:"parent"`
 	Data                 map[string]interface{} `json:"data"`
 }
