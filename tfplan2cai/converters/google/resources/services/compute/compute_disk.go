@@ -608,11 +608,39 @@ func expandComputeDiskDiskEncryptionKey(v interface{}, d tpgresource.TerraformRe
 		transformed["rawKey"] = transformedRawKey
 	}
 
+	transformedRawKeyWoVersion, err := expandComputeDiskDiskEncryptionKeyRawKeyWoVersion(original["raw_key_wo_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRawKeyWoVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rawKeyWoVersion"] = transformedRawKeyWoVersion
+	}
+
+	transformedRawKeyWo, err := expandComputeDiskDiskEncryptionKeyRawKeyWo(original["raw_key_wo"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRawKeyWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rawKeyWo"] = transformedRawKeyWo
+	}
+
+	transformedRsaEncryptedKeyWoVersion, err := expandComputeDiskDiskEncryptionKeyRsaEncryptedKeyWoVersion(original["rsa_encrypted_key_wo_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRsaEncryptedKeyWoVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rsaEncryptedKeyWoVersion"] = transformedRsaEncryptedKeyWoVersion
+	}
+
 	transformedRsaEncryptedKey, err := expandComputeDiskDiskEncryptionKeyRsaEncryptedKey(original["rsa_encrypted_key"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedRsaEncryptedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["rsaEncryptedKey"] = transformedRsaEncryptedKey
+	}
+
+	transformedRsaEncryptedKeyWo, err := expandComputeDiskDiskEncryptionKeyRsaEncryptedKeyWo(original["rsa_encrypted_key_wo"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRsaEncryptedKeyWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rsaEncryptedKeyWo"] = transformedRsaEncryptedKeyWo
 	}
 
 	transformedSha256, err := expandComputeDiskDiskEncryptionKeySha256(original["sha256"], d, config)
@@ -643,7 +671,23 @@ func expandComputeDiskDiskEncryptionKeyRawKey(v interface{}, d tpgresource.Terra
 	return v, nil
 }
 
+func expandComputeDiskDiskEncryptionKeyRawKeyWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeDiskDiskEncryptionKeyRawKeyWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeDiskDiskEncryptionKeyRsaEncryptedKeyWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeDiskDiskEncryptionKeyRsaEncryptedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeDiskDiskEncryptionKeyRsaEncryptedKeyWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
