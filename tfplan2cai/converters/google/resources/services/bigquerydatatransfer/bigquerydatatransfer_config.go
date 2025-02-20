@@ -30,7 +30,6 @@ import (
 )
 
 var sensitiveParams = []string{"secret_access_key"}
-var sensitiveWoParams = []string{"secret_access_key_wo"}
 
 func sensitiveParamCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
 	for _, sp := range sensitiveParams {
@@ -189,12 +188,6 @@ func GetBigqueryDataTransferConfigApiObject(d tpgresource.TerraformResourceData,
 		return nil, err
 	} else if v, ok := d.GetOkExists("params"); !tpgresource.IsEmptyValue(reflect.ValueOf(paramsProp)) && (ok || !reflect.DeepEqual(v, paramsProp)) {
 		obj["params"] = paramsProp
-	}
-	sensitiveParamsWoVersionProp, err := expandBigqueryDataTransferConfigSensitiveParamsWoVersion(d.Get("sensitive_params_wo_version"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("sensitive_params_wo_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(sensitiveParamsWoVersionProp)) && (ok || !reflect.DeepEqual(v, sensitiveParamsWoVersionProp)) {
-		obj["sensitiveParamsWoVersion"] = sensitiveParamsWoVersionProp
 	}
 
 	return resourceBigqueryDataTransferConfigEncoder(d, config, obj)
@@ -364,8 +357,4 @@ func expandBigqueryDataTransferConfigParams(v interface{}, d tpgresource.Terrafo
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandBigqueryDataTransferConfigSensitiveParamsWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
