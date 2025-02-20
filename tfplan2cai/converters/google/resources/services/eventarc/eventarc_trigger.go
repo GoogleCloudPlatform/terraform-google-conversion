@@ -111,7 +111,7 @@ func GetEventarcTriggerApiObject(d tpgresource.TerraformResourceData, config *tr
 }
 
 func expandEventarcTriggerName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
+	return expandToRegionalLongForm("projects/%s/locations/%s/triggers/%s", v, d, config)
 }
 
 func expandEventarcTriggerMatchingCriteria(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
