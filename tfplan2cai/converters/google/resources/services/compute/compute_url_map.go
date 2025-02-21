@@ -916,6 +916,13 @@ func expandComputeUrlMapPathMatcherPathRuleRouteAction(v interface{}, d tpgresou
 		transformed["timeout"] = transformedTimeout
 	}
 
+	transformedMaxStreamDuration, err := expandComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDuration(original["max_stream_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxStreamDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxStreamDuration"] = transformedMaxStreamDuration
+	}
+
 	transformedUrlRewrite, err := expandComputeUrlMapPathMatcherPathRuleRouteActionUrlRewrite(original["url_rewrite"], d, config)
 	if err != nil {
 		return nil, err
@@ -1314,6 +1321,40 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionTimeoutNanos(v interface{}
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionTimeoutSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNanos, err := expandComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	transformedSeconds, err := expandComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -2279,6 +2320,13 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteAction(v interface{}, d tpgres
 		transformed["timeout"] = transformedTimeout
 	}
 
+	transformedMaxStreamDuration, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDuration(original["max_stream_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxStreamDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxStreamDuration"] = transformedMaxStreamDuration
+	}
+
 	transformedUrlRewrite, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(original["url_rewrite"], d, config)
 	if err != nil {
 		return nil, err
@@ -2677,6 +2725,40 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionTimeoutNanos(v interface
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionTimeoutSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNanos, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	transformedSeconds, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -3127,6 +3209,13 @@ func expandComputeUrlMapPathMatcherDefaultRouteAction(v interface{}, d tpgresour
 		transformed["timeout"] = transformedTimeout
 	}
 
+	transformedMaxStreamDuration, err := expandComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDuration(original["max_stream_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxStreamDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxStreamDuration"] = transformedMaxStreamDuration
+	}
+
 	transformedRetryPolicy, err := expandComputeUrlMapPathMatcherDefaultRouteActionRetryPolicy(original["retry_policy"], d, config)
 	if err != nil {
 		return nil, err
@@ -3439,6 +3528,40 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionTimeoutSeconds(v interface{
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionTimeoutNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNanos, err := expandComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	transformedSeconds, err := expandComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -4065,6 +4188,13 @@ func expandComputeUrlMapDefaultRouteAction(v interface{}, d tpgresource.Terrafor
 		transformed["timeout"] = transformedTimeout
 	}
 
+	transformedMaxStreamDuration, err := expandComputeUrlMapDefaultRouteActionMaxStreamDuration(original["max_stream_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxStreamDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxStreamDuration"] = transformedMaxStreamDuration
+	}
+
 	transformedRetryPolicy, err := expandComputeUrlMapDefaultRouteActionRetryPolicy(original["retry_policy"], d, config)
 	if err != nil {
 		return nil, err
@@ -4377,6 +4507,40 @@ func expandComputeUrlMapDefaultRouteActionTimeoutSeconds(v interface{}, d tpgres
 }
 
 func expandComputeUrlMapDefaultRouteActionTimeoutNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultRouteActionMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNanos, err := expandComputeUrlMapDefaultRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	transformedSeconds, err := expandComputeUrlMapDefaultRouteActionMaxStreamDurationSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapDefaultRouteActionMaxStreamDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultRouteActionMaxStreamDurationSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
