@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/caiasset"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/tfplan2cai"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
