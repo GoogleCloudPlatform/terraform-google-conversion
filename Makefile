@@ -3,7 +3,7 @@ TF_CONFIG_FILE=tf-dev-override.tfrc
 
 build:
 	GO111MODULE=on go build -o ./${build_dir}/tfplan2cai ./cmd/tfplan2cai
-	cd v6;\
+	cd v7;\
 		GO111MODULE=on go build -o ../${build_dir}/tgc .
 
 test:
@@ -11,7 +11,7 @@ test:
 	terraform --version
 	./config-tf-dev-override.sh
 	TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -short ./...
-	cd v6;\
+	cd v7;\
 		TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -short ./...
 
 test-integration:
