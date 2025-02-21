@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/cmd"
 )
 
 func main() {
