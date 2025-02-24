@@ -17,7 +17,7 @@ package cai2hcl
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/cmd/common"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/tgc/common"
 )
 
 const cmdDesc = `

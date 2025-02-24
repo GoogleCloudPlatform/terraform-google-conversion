@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/cmd/common"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/tgc/common"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
