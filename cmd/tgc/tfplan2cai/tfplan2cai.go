@@ -15,7 +15,7 @@
 package tfplan2cai
 
 import (
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/cmd/common"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/tgc/common"
 	"github.com/spf13/cobra"
 )
 
