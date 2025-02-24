@@ -16,11 +16,14 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
 	github.com/zclconf/go-cty v1.16.2
-	go.uber.org/zap v1.21.0
+	go.uber.org/zap v1.27.0
 	google.golang.org/api v0.220.0
 )
 
-require github.com/spf13/cobra v1.7.0
+require (
+	github.com/GoogleCloudPlatform/terraform-google-conversion/v7 v7.0.0-20250224220416-be2983a5a550
+	github.com/spf13/cobra v1.8.1
+)
 
 require (
 	bitbucket.org/creachadair/stringset v0.0.11 // indirect
@@ -36,7 +39,6 @@ require (
 	github.com/GoogleCloudPlatform/declarative-resource-client-library v1.77.0 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
-	github.com/benbjohnson/clock v1.1.0 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -97,8 +99,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.34.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.32.0 // indirect
 	go.opentelemetry.io/otel/trace v1.34.0 // indirect
-	go.uber.org/atomic v1.9.0 // indirect
-	go.uber.org/multierr v1.8.0 // indirect
+	go.uber.org/multierr v1.10.0 // indirect
 	go4.org/netipx v0.0.0-20231129151722-fdeea329fbba // indirect
 	golang.org/x/crypto v0.32.0 // indirect
 	golang.org/x/exp v0.0.0-20240409090435-93d18d7e34b8 // indirect
