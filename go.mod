@@ -20,10 +20,7 @@ require (
 	google.golang.org/api v0.220.0
 )
 
-require (
-	github.com/GoogleCloudPlatform/terraform-google-conversion/v7 v7.0.0-20250224220416-be2983a5a550
-	github.com/spf13/cobra v1.8.1
-)
+require github.com/spf13/cobra v1.8.1
 
 require (
 	bitbucket.org/creachadair/stringset v0.0.11 // indirect
