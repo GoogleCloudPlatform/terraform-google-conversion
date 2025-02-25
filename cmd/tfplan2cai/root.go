@@ -91,7 +91,7 @@ func Execute() {
 	rootCmd, rootOptions, err := newRootCmd()
 
 	if err != nil {
-		fmt.Printf("Error creating root logger: %s", err)
+		fmt.Printf("error creating root logger: %s", err)
 		os.Exit(1)
 	}
 
