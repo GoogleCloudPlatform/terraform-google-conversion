@@ -19,10 +19,19 @@ package chronicle
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func chronicleRuleDeploymentNilRunFrequencyDiffSuppressFunc(_, old, new string, _ *schema.ResourceData) bool {
+	if new == "" {
+		return true
+	}
+	return false
+}
 
 const ChronicleRuleDeploymentAssetType string = "{{location}}-chronicle.googleapis.com/RuleDeployment"
 
