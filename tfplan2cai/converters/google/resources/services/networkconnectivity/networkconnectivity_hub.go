@@ -74,6 +74,12 @@ func GetNetworkConnectivityHubApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("preset_topology"); !tpgresource.IsEmptyValue(reflect.ValueOf(presetTopologyProp)) && (ok || !reflect.DeepEqual(v, presetTopologyProp)) {
 		obj["presetTopology"] = presetTopologyProp
 	}
+	policyModeProp, err := expandNetworkConnectivityHubPolicyMode(d.Get("policy_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("policy_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(policyModeProp)) && (ok || !reflect.DeepEqual(v, policyModeProp)) {
+		obj["policyMode"] = policyModeProp
+	}
 	exportPscProp, err := expandNetworkConnectivityHubExportPsc(d.Get("export_psc"), d, config)
 	if err != nil {
 		return nil, err
@@ -99,6 +105,10 @@ func expandNetworkConnectivityHubDescription(v interface{}, d tpgresource.Terraf
 }
 
 func expandNetworkConnectivityHubPresetTopology(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityHubPolicyMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
