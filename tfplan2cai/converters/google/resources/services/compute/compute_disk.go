@@ -353,6 +353,12 @@ func GetComputeDiskApiObject(d tpgresource.TerraformResourceData, config *transp
 	} else if v, ok := d.GetOkExists("source_image_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceImageEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, sourceImageEncryptionKeyProp)) {
 		obj["sourceImageEncryptionKey"] = sourceImageEncryptionKeyProp
 	}
+	sourceInstantSnapshotProp, err := expandComputeDiskSourceInstantSnapshot(d.Get("source_instant_snapshot"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_instant_snapshot"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceInstantSnapshotProp)) && (ok || !reflect.DeepEqual(v, sourceInstantSnapshotProp)) {
+		obj["sourceInstantSnapshot"] = sourceInstantSnapshotProp
+	}
 	diskEncryptionKeyProp, err := expandComputeDiskDiskEncryptionKey(d.Get("disk_encryption_key"), d, config)
 	if err != nil {
 		return nil, err
@@ -364,6 +370,12 @@ func GetComputeDiskApiObject(d tpgresource.TerraformResourceData, config *transp
 		return nil, err
 	} else if v, ok := d.GetOkExists("source_snapshot_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceSnapshotEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, sourceSnapshotEncryptionKeyProp)) {
 		obj["sourceSnapshotEncryptionKey"] = sourceSnapshotEncryptionKeyProp
+	}
+	sourceStorageObjectProp, err := expandComputeDiskSourceStorageObject(d.Get("source_storage_object"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_storage_object"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceStorageObjectProp)) && (ok || !reflect.DeepEqual(v, sourceStorageObjectProp)) {
+		obj["sourceStorageObject"] = sourceStorageObjectProp
 	}
 	labelFingerprintProp, err := expandComputeDiskLabelFingerprint(d.Get("label_fingerprint"), d, config)
 	if err != nil {
@@ -448,6 +460,18 @@ func GetComputeDiskApiObject(d tpgresource.TerraformResourceData, config *transp
 		return nil, err
 	} else if v, ok := d.GetOkExists("async_primary_disk"); !tpgresource.IsEmptyValue(reflect.ValueOf(asyncPrimaryDiskProp)) && (ok || !reflect.DeepEqual(v, asyncPrimaryDiskProp)) {
 		obj["asyncPrimaryDisk"] = asyncPrimaryDiskProp
+	}
+	architectureProp, err := expandComputeDiskArchitecture(d.Get("architecture"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("architecture"); !tpgresource.IsEmptyValue(reflect.ValueOf(architectureProp)) && (ok || !reflect.DeepEqual(v, architectureProp)) {
+		obj["architecture"] = architectureProp
+	}
+	paramsProp, err := expandComputeDiskParams(d.Get("params"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("params"); !tpgresource.IsEmptyValue(reflect.ValueOf(paramsProp)) && (ok || !reflect.DeepEqual(v, paramsProp)) {
+		obj["params"] = paramsProp
 	}
 	guestOsFeaturesProp, err := expandComputeDiskGuestOsFeatures(d.Get("guest_os_features"), d, config)
 	if err != nil {
@@ -592,6 +616,10 @@ func expandComputeDiskSourceImageEncryptionKeyKmsKeyServiceAccount(v interface{}
 	return v, nil
 }
 
+func expandComputeDiskSourceInstantSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeDiskDiskEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -715,6 +743,10 @@ func expandComputeDiskSourceSnapshotEncryptionKeyKmsKeyServiceAccount(v interfac
 	return v, nil
 }
 
+func expandComputeDiskSourceStorageObject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeDiskLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -804,6 +836,40 @@ func expandComputeDiskAsyncPrimaryDisk(v interface{}, d tpgresource.TerraformRes
 
 func expandComputeDiskAsyncPrimaryDiskDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeDiskArchitecture(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeDiskParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResourceManagerTags, err := expandComputeDiskParamsResourceManagerTags(original["resource_manager_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResourceManagerTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resourceManagerTags"] = transformedResourceManagerTags
+	}
+
+	return transformed, nil
+}
+
+func expandComputeDiskParamsResourceManagerTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandComputeDiskGuestOsFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
