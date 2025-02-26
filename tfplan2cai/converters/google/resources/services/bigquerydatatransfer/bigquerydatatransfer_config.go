@@ -30,6 +30,7 @@ import (
 )
 
 var sensitiveParams = []string{"secret_access_key"}
+var sensitiveWoParams = []string{"secret_access_key_wo"}
 
 func sensitiveParamCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
 	for _, sp := range sensitiveParams {
