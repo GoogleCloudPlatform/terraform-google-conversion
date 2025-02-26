@@ -34,7 +34,7 @@ func ResourceConverterNetworkServicesGrpcRoute() cai.ResourceConverter {
 }
 
 func GetNetworkServicesGrpcRouteCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/grpcRoutes/{{name}}")
+	name, err := cai.AssetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/{{location}}/grpcRoutes/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
