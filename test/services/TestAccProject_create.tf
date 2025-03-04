@@ -1,0 +1,1 @@
+"resource \"google_project\" \"1040017313340\" {\n  project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  org_id = \"529579013760\"\n  deletion_policy = \"DELETE\"\n}\n"
