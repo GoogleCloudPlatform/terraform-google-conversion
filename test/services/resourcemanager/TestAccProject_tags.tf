@@ -1,1 +1,0 @@
-"\t project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  org_id     = \"529579013760\"\n  deletion_policy = \"DELETE\"\n  tags = {\"529579013760/tf-bootstrap-tagkey-crm-projects-tagkey\" = \"tf-bootstrap-tagvalue-crm-projects-tagvalue\"\n}\n}\n"

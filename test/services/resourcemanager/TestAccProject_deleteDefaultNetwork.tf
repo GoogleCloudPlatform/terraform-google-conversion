@@ -1,1 +1,0 @@
-"resource \"google_project\" \"678722381013\" {\n  project_id          = \"tf-test-tgc\"\n  name                = \"tf-test-tgc\"\n  org_id              = \"529579013760\"\n  billing_account     = \"01129A-55361F-811C70\" # requires billing to enable compute API\n  deletion_policy = \"DELETE\"\n  auto_create_network = false\n}\n"
