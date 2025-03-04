@@ -1,0 +1,1 @@
+"resource \"google_project\" \"178044935624\" {\n  project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  deletion_policy = \"DELETE\"\n\n  folder_id = google_folder.folder1.id\n}\n\nresource \"google_folder\" \"folder1\" {\n  display_name = \"tf-testtgc\"\n  parent       = \"organizations/529579013760\"\n  deletion_protection = false\n}\n"
