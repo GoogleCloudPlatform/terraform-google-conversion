@@ -1,1 +1,0 @@
-"provider \"google\" {\n  add_terraform_attribution_label = false\n}\n\nresource \"google_project\" \"810776189846\" {\n  project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  org_id     = \"529579013760\"\n  deletion_policy = \"DELETE\"\n  labels = {\"test\" = \"that\"\n}\n}\n"
