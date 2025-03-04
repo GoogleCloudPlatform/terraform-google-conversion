@@ -456,6 +456,13 @@ func expandAlloydbInstancePscInstanceConfig(v interface{}, d tpgresource.Terrafo
 		transformed["pscDnsName"] = transformedPscDnsName
 	}
 
+	transformedPscInterfaceConfigs, err := expandAlloydbInstancePscInstanceConfigPscInterfaceConfigs(original["psc_interface_configs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscInterfaceConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscInterfaceConfigs"] = transformedPscInterfaceConfigs
+	}
+
 	return transformed, nil
 }
 
@@ -468,6 +475,32 @@ func expandAlloydbInstancePscInstanceConfigAllowedConsumerProjects(v interface{}
 }
 
 func expandAlloydbInstancePscInstanceConfigPscDnsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscInterfaceConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedNetworkAttachmentResource, err := expandAlloydbInstancePscInstanceConfigPscInterfaceConfigsNetworkAttachmentResource(original["network_attachment_resource"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetworkAttachmentResource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["networkAttachmentResource"] = transformedNetworkAttachmentResource
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscInterfaceConfigsNetworkAttachmentResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
