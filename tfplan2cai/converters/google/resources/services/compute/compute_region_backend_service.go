@@ -246,6 +246,12 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
+	customMetricsProp, err := expandComputeRegionBackendServiceCustomMetrics(d.Get("custom_metrics"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_metrics"); !tpgresource.IsEmptyValue(reflect.ValueOf(customMetricsProp)) && (ok || !reflect.DeepEqual(v, customMetricsProp)) {
+		obj["customMetrics"] = customMetricsProp
+	}
 	outlierDetectionProp, err := expandComputeRegionBackendServiceOutlierDetection(d.Get("outlier_detection"), d, config)
 	if err != nil {
 		return nil, err
@@ -472,6 +478,13 @@ func expandComputeRegionBackendServiceBackend(v interface{}, d tpgresource.Terra
 			transformed["maxUtilization"] = transformedMaxUtilization
 		}
 
+		transformedCustomMetrics, err := expandComputeRegionBackendServiceBackendCustomMetrics(original["custom_metrics"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCustomMetrics); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["customMetrics"] = transformedCustomMetrics
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -522,6 +535,54 @@ func expandComputeRegionBackendServiceBackendMaxRatePerEndpoint(v interface{}, d
 }
 
 func expandComputeRegionBackendServiceBackendMaxUtilization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceBackendCustomMetrics(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandComputeRegionBackendServiceBackendCustomMetricsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedDryRun, err := expandComputeRegionBackendServiceBackendCustomMetricsDryRun(original["dry_run"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDryRun); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dryRun"] = transformedDryRun
+		}
+
+		transformedMaxUtilization, err := expandComputeRegionBackendServiceBackendCustomMetricsMaxUtilization(original["max_utilization"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMaxUtilization); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["maxUtilization"] = transformedMaxUtilization
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionBackendServiceBackendCustomMetricsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceBackendCustomMetricsDryRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceBackendCustomMetricsMaxUtilization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1116,6 +1177,43 @@ func expandComputeRegionBackendServiceLocalityLbPolicy(v interface{}, d tpgresou
 }
 
 func expandComputeRegionBackendServiceName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCustomMetrics(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandComputeRegionBackendServiceCustomMetricsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedDryRun, err := expandComputeRegionBackendServiceCustomMetricsDryRun(original["dry_run"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDryRun); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dryRun"] = transformedDryRun
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionBackendServiceCustomMetricsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceCustomMetricsDryRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
