@@ -1584,6 +1584,20 @@ func expandComputeRegionBackendServiceLogConfig(v interface{}, d tpgresource.Ter
 		transformed["sampleRate"] = transformedSampleRate
 	}
 
+	transformedOptionalMode, err := expandComputeRegionBackendServiceLogConfigOptionalMode(original["optional_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOptionalMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["optionalMode"] = transformedOptionalMode
+	}
+
+	transformedOptionalFields, err := expandComputeRegionBackendServiceLogConfigOptionalFields(original["optional_fields"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOptionalFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["optionalFields"] = transformedOptionalFields
+	}
+
 	return transformed, nil
 }
 
@@ -1592,6 +1606,14 @@ func expandComputeRegionBackendServiceLogConfigEnable(v interface{}, d tpgresour
 }
 
 func expandComputeRegionBackendServiceLogConfigSampleRate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceLogConfigOptionalMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceLogConfigOptionalFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
