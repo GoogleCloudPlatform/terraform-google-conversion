@@ -62,6 +62,12 @@ func GetNetworkSecurityInterceptEndpointGroupApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("intercept_deployment_group"); !tpgresource.IsEmptyValue(reflect.ValueOf(interceptDeploymentGroupProp)) && (ok || !reflect.DeepEqual(v, interceptDeploymentGroupProp)) {
 		obj["interceptDeploymentGroup"] = interceptDeploymentGroupProp
 	}
+	descriptionProp, err := expandNetworkSecurityInterceptEndpointGroupDescription(d.Get("description"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+		obj["description"] = descriptionProp
+	}
 	labelsProp, err := expandNetworkSecurityInterceptEndpointGroupEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -73,6 +79,10 @@ func GetNetworkSecurityInterceptEndpointGroupApiObject(d tpgresource.TerraformRe
 }
 
 func expandNetworkSecurityInterceptEndpointGroupInterceptDeploymentGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityInterceptEndpointGroupDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
