@@ -414,6 +414,13 @@ func expandTpuV2VmSchedulingConfig(v interface{}, d tpgresource.TerraformResourc
 		transformed["reserved"] = transformedReserved
 	}
 
+	transformedSpot, err := expandTpuV2VmSchedulingConfigSpot(original["spot"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSpot); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["spot"] = transformedSpot
+	}
+
 	return transformed, nil
 }
 
@@ -422,6 +429,10 @@ func expandTpuV2VmSchedulingConfigPreemptible(v interface{}, d tpgresource.Terra
 }
 
 func expandTpuV2VmSchedulingConfigReserved(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandTpuV2VmSchedulingConfigSpot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
