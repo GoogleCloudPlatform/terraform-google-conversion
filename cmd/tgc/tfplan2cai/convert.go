@@ -22,6 +22,7 @@ import (
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/tgc/common"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -62,8 +63,20 @@ type convertOptions struct {
 }
 
 var origConvertFunc = func(ctx context.Context, path, project, zone, region string, ancestry map[string]string, offline bool, errorLogger *zap.Logger, userAgent string) ([]caiasset.Asset, error) {
-	// TODO: add implementation
-	return nil, nil
+	jsonPlan, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("error reading file %s: %s", path, err)
+	}
+
+	return tfplan2cai.Convert(ctx, jsonPlan, &tfplan2cai.Options{
+		ErrorLogger:    errorLogger,
+		Offline:        offline,
+		DefaultProject: project,
+		DefaultRegion:  region,
+		DefaultZone:    zone,
+		UserAgent:      userAgent,
+		AncestryCache:  ancestry,
+	})
 }
 
 var convertFunc = origConvertFunc
