@@ -12,3 +12,9 @@
 //
 // ----------------------------------------------------------------------------
 package converters
+
+import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/cai"
+)
+
+var ConverterMap = map[string]cai.ResourceConverter{}
