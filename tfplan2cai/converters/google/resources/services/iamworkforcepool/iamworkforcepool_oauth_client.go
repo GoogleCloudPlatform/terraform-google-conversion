@@ -17,36 +17,12 @@
 package iamworkforcepool
 
 import (
-	"fmt"
 	"reflect"
-	"regexp"
-	"strings"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
-
-const oauthClientIdRegexp = `^[a-z][a-z0-9-]{4,61}[a-z0-9]$`
-
-func ValidateOauthClientId(v interface{}, k string) (ws []string, errors []error) {
-	value := v.(string)
-
-	if strings.HasPrefix(value, "gcp-") {
-		errors = append(errors, fmt.Errorf(
-			"%q (%q) can not start with \"gcp-\". "+
-				"The prefix `gcp-` is reserved for use by Google, and may not be specified.", k, value))
-	}
-
-	if !regexp.MustCompile(oauthClientIdRegexp).MatchString(value) {
-		errors = append(errors, fmt.Errorf(
-			"%q (%q) must contain only lowercase letters [a-z], digits [0-9], and hyphens "+
-				"[-]. The OauthClient ID must be between 6 and 63 characters, begin "+
-				"with a letter, and cannot have a trailing hyphen.", k, value))
-	}
-
-	return
-}
 
 const IAMWorkforcePoolOauthClientAssetType string = "iam.googleapis.com/OauthClient"
 
