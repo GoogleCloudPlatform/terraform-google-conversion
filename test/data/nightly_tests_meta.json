@@ -1,0 +1,321 @@
+{
+  "TestAccProject_abandon": {
+    "test": "TestAccProject_abandon",
+    "rawConfig": "resource \"google_project\" \"470422649745\" {\n  project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  org_id = \"529579013760\"\n  deletion_policy = \"ABANDON\"\n}\n",
+    "service": "resourcemanager",
+    "resource": "google_project",
+    "assetName": "//cloudresourcemanager.googleapis.com/projects/470422649745",
+    "asset": {
+      "update_time": {
+        "seconds": 1740765141,
+        "nanos": 79734000
+      },
+      "name": "//cloudresourcemanager.googleapis.com/projects/470422649745",
+      "asset_type": "cloudresourcemanager.googleapis.com/Project",
+      "resource": {
+        "version": "v1",
+        "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+        "discovery_name": "Project",
+        "parent": "//cloudresourcemanager.googleapis.com/organizations/529579013760",
+        "data": {
+          "createTime": "2025-02-27T20:38:37.259061Z",
+          "labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "lifecycleState": "DELETE_REQUESTED",
+          "name": "tf-test-5075051301211104916",
+          "parent": {
+            "id": "529579013760",
+            "type": "organization"
+          },
+          "projectId": "tf-test-5075051301211104916",
+          "projectNumber": "470422649745"
+        }
+      },
+      "AccessContextPolicy": null,
+      "ancestors": [
+        "projects/470422649745",
+        "organizations/529579013760"
+      ]
+    }
+  },
+  "TestAccProject_billing": {
+    "test": "TestAccProject_billing",
+    "rawConfig": "resource \"google_project\" \"555877046073\" {\n  project_id      = \"tf-test-tgc\"\n  name            = \"tf-test-tgc\"\n  org_id          = \"529579013760\"\n  billing_account = \"01BD15-3BAB95-35F231\"\n  deletion_policy = \"DELETE\"\n}\n",
+    "service": "resourcemanager",
+    "resource": "google_project",
+    "assetName": "//cloudresourcemanager.googleapis.com/projects/555877046073",
+    "asset": {
+      "update_time": {
+        "seconds": 1740688710,
+        "nanos": 429627000
+      },
+      "name": "//cloudresourcemanager.googleapis.com/projects/555877046073",
+      "asset_type": "cloudresourcemanager.googleapis.com/Project",
+      "resource": {
+        "version": "v1",
+        "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+        "discovery_name": "Project",
+        "parent": "//cloudresourcemanager.googleapis.com/organizations/529579013760",
+        "data": {
+          "createTime": "2025-02-27T20:37:27.958148Z",
+          "labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "lifecycleState": "DELETE_REQUESTED",
+          "name": "tf-test-5708006653333890294",
+          "parent": {
+            "id": "529579013760",
+            "type": "organization"
+          },
+          "projectId": "tf-test-5708006653333890294",
+          "projectNumber": "555877046073"
+        }
+      },
+      "AccessContextPolicy": null,
+      "ancestors": [
+        "projects/555877046073",
+        "organizations/529579013760"
+      ]
+    }
+  },
+  "TestAccProject_create": {
+    "test": "TestAccProject_create",
+    "rawConfig": "resource \"google_project\" \"1040017313340\" {\n  project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  org_id = \"529579013760\"\n  deletion_policy = \"DELETE\"\n}\n",
+    "service": "resourcemanager",
+    "resource": "google_project",
+    "assetName": "//cloudresourcemanager.googleapis.com/projects/1040017313340",
+    "asset": {
+      "update_time": {
+        "seconds": 1740688680,
+        "nanos": 879870000
+      },
+      "name": "//cloudresourcemanager.googleapis.com/projects/1040017313340",
+      "asset_type": "cloudresourcemanager.googleapis.com/Project",
+      "resource": {
+        "version": "v1",
+        "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+        "discovery_name": "Project",
+        "parent": "//cloudresourcemanager.googleapis.com/organizations/529579013760",
+        "data": {
+          "createTime": "2025-02-27T20:37:28.924397Z",
+          "labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "lifecycleState": "DELETE_REQUESTED",
+          "name": "tf-test-6016620023873579832",
+          "parent": {
+            "id": "529579013760",
+            "type": "organization"
+          },
+          "projectId": "tf-test-6016620023873579832",
+          "projectNumber": "1040017313340"
+        }
+      },
+      "AccessContextPolicy": null,
+      "ancestors": [
+        "projects/1040017313340",
+        "organizations/529579013760"
+      ]
+    }
+  },
+  "TestAccProject_deleteDefaultNetwork": {
+    "test": "TestAccProject_deleteDefaultNetwork",
+    "rawConfig": "resource \"google_project\" \"678722381013\" {\n  project_id          = \"tf-test-tgc\"\n  name                = \"tf-test-tgc\"\n  org_id              = \"529579013760\"\n  billing_account     = \"01129A-55361F-811C70\" # requires billing to enable compute API\n  deletion_policy = \"DELETE\"\n  auto_create_network = false\n}\n",
+    "service": "resourcemanager",
+    "resource": "google_project",
+    "assetName": "//cloudresourcemanager.googleapis.com/projects/678722381013",
+    "asset": {
+      "update_time": {
+        "seconds": 1740688877,
+        "nanos": 149897000
+      },
+      "name": "//cloudresourcemanager.googleapis.com/projects/678722381013",
+      "asset_type": "cloudresourcemanager.googleapis.com/Project",
+      "resource": {
+        "version": "v1",
+        "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+        "discovery_name": "Project",
+        "parent": "//cloudresourcemanager.googleapis.com/organizations/529579013760",
+        "data": {
+          "createTime": "2025-02-27T20:37:29.821456Z",
+          "labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "lifecycleState": "DELETE_REQUESTED",
+          "name": "tf-test-7064745431977092785",
+          "parent": {
+            "id": "529579013760",
+            "type": "organization"
+          },
+          "projectId": "tf-test-7064745431977092785",
+          "projectNumber": "678722381013"
+        }
+      },
+      "AccessContextPolicy": null,
+      "ancestors": [
+        "projects/678722381013",
+        "organizations/529579013760"
+      ]
+    }
+  },
+  "TestAccProject_labels": {
+    "test": "TestAccProject_labels",
+    "rawConfig": "provider \"google\" {\n  add_terraform_attribution_label = false\n}\n\nresource \"google_project\" \"810776189846\" {\n  project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  org_id     = \"529579013760\"\n  deletion_policy = \"DELETE\"\n  labels = {\"test\" = \"that\"\n}\n}\n",
+    "service": "resourcemanager",
+    "resource": "google_project",
+    "assetName": "//cloudresourcemanager.googleapis.com/projects/810776189846",
+    "asset": {
+      "update_time": {
+        "seconds": 1740688709,
+        "nanos": 402877000
+      },
+      "name": "//cloudresourcemanager.googleapis.com/projects/810776189846",
+      "asset_type": "cloudresourcemanager.googleapis.com/Project",
+      "resource": {
+        "version": "v1",
+        "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+        "discovery_name": "Project",
+        "parent": "//cloudresourcemanager.googleapis.com/organizations/529579013760",
+        "data": {
+          "createTime": "2025-02-27T20:37:29.049556Z",
+          "lifecycleState": "DELETE_REQUESTED",
+          "name": "tf-test-9120943917658594948",
+          "parent": {
+            "id": "529579013760",
+            "type": "organization"
+          },
+          "projectId": "tf-test-9120943917658594948",
+          "projectNumber": "810776189846"
+        }
+      },
+      "AccessContextPolicy": null,
+      "ancestors": [
+        "projects/810776189846",
+        "organizations/529579013760"
+      ]
+    }
+  },
+  "TestAccProject_migrateParent": {
+    "test": "TestAccProject_migrateParent",
+    "rawConfig": "resource \"google_project\" \"178044935624\" {\n  project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  deletion_policy = \"DELETE\"\n\n  folder_id = google_folder.folder1.id\n}\n\nresource \"google_folder\" \"folder1\" {\n  display_name = \"tf-testtgc\"\n  parent       = \"organizations/529579013760\"\n  deletion_protection = false\n}\n",
+    "service": "resourcemanager",
+    "resource": "google_project",
+    "assetName": "//cloudresourcemanager.googleapis.com/projects/178044935624",
+    "asset": {
+      "update_time": {
+        "seconds": 1740688731,
+        "nanos": 118637000
+      },
+      "name": "//cloudresourcemanager.googleapis.com/projects/178044935624",
+      "asset_type": "cloudresourcemanager.googleapis.com/Project",
+      "resource": {
+        "version": "v1",
+        "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+        "discovery_name": "Project",
+        "parent": "//cloudresourcemanager.googleapis.com/folders/47380505061",
+        "data": {
+          "createTime": "2025-02-27T20:37:41.355198Z",
+          "labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "lifecycleState": "DELETE_REQUESTED",
+          "name": "tf-test-7068565001641791289",
+          "parent": {
+            "id": "47380505061",
+            "type": "folder"
+          },
+          "projectId": "tf-test-7068565001641791289",
+          "projectNumber": "178044935624"
+        }
+      },
+      "AccessContextPolicy": null,
+      "ancestors": [
+        "projects/178044935624",
+        "folders/47380505061",
+        "organizations/529579013760"
+      ]
+    }
+  },
+  "TestAccProject_parentFolder": {
+    "test": "TestAccProject_parentFolder",
+    "rawConfig": "resource \"google_project\" \"671259584332\" {\n  project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  deletion_policy = \"DELETE\"\n\n  folder_id = google_folder.folder1.id\n}\n\nresource \"google_folder\" \"folder1\" {\n  display_name = \"tf-testtgc\"\n  parent       = \"organizations/529579013760\"\n  deletion_protection = false\n}\n",
+    "service": "resourcemanager",
+    "resource": "google_project",
+    "assetName": "//cloudresourcemanager.googleapis.com/projects/671259584332",
+    "asset": {
+      "update_time": {
+        "seconds": 1740688694,
+        "nanos": 963087000
+      },
+      "name": "//cloudresourcemanager.googleapis.com/projects/671259584332",
+      "asset_type": "cloudresourcemanager.googleapis.com/Project",
+      "resource": {
+        "version": "v1",
+        "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+        "discovery_name": "Project",
+        "parent": "//cloudresourcemanager.googleapis.com/folders/692411985540",
+        "data": {
+          "createTime": "2025-02-27T20:37:41.2493Z",
+          "labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "lifecycleState": "DELETE_REQUESTED",
+          "name": "tf-test-5942426970233811481",
+          "parent": {
+            "id": "692411985540",
+            "type": "folder"
+          },
+          "projectId": "tf-test-5942426970233811481",
+          "projectNumber": "671259584332"
+        }
+      },
+      "AccessContextPolicy": null,
+      "ancestors": [
+        "projects/671259584332",
+        "folders/692411985540",
+        "organizations/529579013760"
+      ]
+    }
+  },
+  "TestAccProject_tags": {
+    "test": "TestAccProject_tags",
+    "rawConfig": "\t project_id = \"tf-test-tgc\"\n  name       = \"tf-test-tgc\"\n  org_id     = \"529579013760\"\n  deletion_policy = \"DELETE\"\n  tags = {\"529579013760/tf-bootstrap-tagkey-crm-projects-tagkey\" = \"tf-bootstrap-tagvalue-crm-projects-tagvalue\"\n}\n}\n",
+    "service": "resourcemanager",
+    "resource": "google_project",
+    "assetName": "//cloudresourcemanager.googleapis.com/projects/750728609088",
+    "asset": {
+      "update_time": {
+        "seconds": 1740688741,
+        "nanos": 200341000
+      },
+      "name": "//cloudresourcemanager.googleapis.com/projects/750728609088",
+      "asset_type": "cloudresourcemanager.googleapis.com/Project",
+      "resource": {
+        "version": "v1",
+        "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+        "discovery_name": "Project",
+        "parent": "//cloudresourcemanager.googleapis.com/organizations/529579013760",
+        "data": {
+          "createTime": "2025-02-27T20:38:12.214857Z",
+          "labels": {
+            "goog-terraform-provisioned": "true"
+          },
+          "lifecycleState": "DELETE_REQUESTED",
+          "name": "tf-test-2499636653685535216",
+          "parent": {
+            "id": "529579013760",
+            "type": "organization"
+          },
+          "projectId": "tf-test-2499636653685535216",
+          "projectNumber": "750728609088"
+        }
+      },
+      "AccessContextPolicy": null,
+      "ancestors": [
+        "projects/750728609088",
+        "organizations/529579013760"
+      ]
+    }
+  }
+}
