@@ -1,0 +1,34 @@
+{
+  "update_time": {
+    "seconds": 1740688694,
+    "nanos": 963087000
+  },
+  "name": "//cloudresourcemanager.googleapis.com/projects/671259584332",
+  "asset_type": "cloudresourcemanager.googleapis.com/Project",
+  "resource": {
+    "version": "v1",
+    "discovery_document_uri": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
+    "discovery_name": "Project",
+    "parent": "//cloudresourcemanager.googleapis.com/folders/692411985540",
+    "data": {
+      "createTime": "2025-02-27T20:37:41.2493Z",
+      "labels": {
+        "goog-terraform-provisioned": "true"
+      },
+      "lifecycleState": "DELETE_REQUESTED",
+      "name": "tf-test-5942426970233811481",
+      "parent": {
+        "id": "692411985540",
+        "type": "folder"
+      },
+      "projectId": "tf-test-5942426970233811481",
+      "projectNumber": "671259584332"
+    }
+  },
+  "AccessContextPolicy": null,
+  "ancestors": [
+    "projects/671259584332",
+    "folders/692411985540",
+    "organizations/529579013760"
+  ]
+}
