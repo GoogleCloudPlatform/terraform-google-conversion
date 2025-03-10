@@ -193,6 +193,12 @@ func GetNetworkServicesGatewayApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
+	addressesProp, err := expandNetworkServicesGatewayAddresses(d.Get("addresses"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("addresses"); !tpgresource.IsEmptyValue(reflect.ValueOf(addressesProp)) && (ok || !reflect.DeepEqual(v, addressesProp)) {
+		obj["addresses"] = addressesProp
+	}
 	portsProp, err := expandNetworkServicesGatewayPorts(d.Get("ports"), d, config)
 	if err != nil {
 		return nil, err
@@ -211,23 +217,11 @@ func GetNetworkServicesGatewayApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("server_tls_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(serverTlsPolicyProp)) && (ok || !reflect.DeepEqual(v, serverTlsPolicyProp)) {
 		obj["serverTlsPolicy"] = serverTlsPolicyProp
 	}
-	addressesProp, err := expandNetworkServicesGatewayAddresses(d.Get("addresses"), d, config)
+	certificateUrlsProp, err := expandNetworkServicesGatewayCertificateUrls(d.Get("certificate_urls"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("addresses"); !tpgresource.IsEmptyValue(reflect.ValueOf(addressesProp)) && (ok || !reflect.DeepEqual(v, addressesProp)) {
-		obj["addresses"] = addressesProp
-	}
-	subnetworkProp, err := expandNetworkServicesGatewaySubnetwork(d.Get("subnetwork"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("subnetwork"); !tpgresource.IsEmptyValue(reflect.ValueOf(subnetworkProp)) && (ok || !reflect.DeepEqual(v, subnetworkProp)) {
-		obj["subnetwork"] = subnetworkProp
-	}
-	networkProp, err := expandNetworkServicesGatewayNetwork(d.Get("network"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
-		obj["network"] = networkProp
+	} else if v, ok := d.GetOkExists("certificate_urls"); !tpgresource.IsEmptyValue(reflect.ValueOf(certificateUrlsProp)) && (ok || !reflect.DeepEqual(v, certificateUrlsProp)) {
+		obj["certificateUrls"] = certificateUrlsProp
 	}
 	gatewaySecurityPolicyProp, err := expandNetworkServicesGatewayGatewaySecurityPolicy(d.Get("gateway_security_policy"), d, config)
 	if err != nil {
@@ -235,11 +229,29 @@ func GetNetworkServicesGatewayApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("gateway_security_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(gatewaySecurityPolicyProp)) && (ok || !reflect.DeepEqual(v, gatewaySecurityPolicyProp)) {
 		obj["gatewaySecurityPolicy"] = gatewaySecurityPolicyProp
 	}
-	certificateUrlsProp, err := expandNetworkServicesGatewayCertificateUrls(d.Get("certificate_urls"), d, config)
+	networkProp, err := expandNetworkServicesGatewayNetwork(d.Get("network"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("certificate_urls"); !tpgresource.IsEmptyValue(reflect.ValueOf(certificateUrlsProp)) && (ok || !reflect.DeepEqual(v, certificateUrlsProp)) {
-		obj["certificateUrls"] = certificateUrlsProp
+	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
+		obj["network"] = networkProp
+	}
+	subnetworkProp, err := expandNetworkServicesGatewaySubnetwork(d.Get("subnetwork"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("subnetwork"); !tpgresource.IsEmptyValue(reflect.ValueOf(subnetworkProp)) && (ok || !reflect.DeepEqual(v, subnetworkProp)) {
+		obj["subnetwork"] = subnetworkProp
+	}
+	ipVersionProp, err := expandNetworkServicesGatewayIpVersion(d.Get("ip_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ip_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipVersionProp)) && (ok || !reflect.DeepEqual(v, ipVersionProp)) {
+		obj["ipVersion"] = ipVersionProp
+	}
+	envoyHeadersProp, err := expandNetworkServicesGatewayEnvoyHeaders(d.Get("envoy_headers"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("envoy_headers"); !tpgresource.IsEmptyValue(reflect.ValueOf(envoyHeadersProp)) && (ok || !reflect.DeepEqual(v, envoyHeadersProp)) {
+		obj["envoyHeaders"] = envoyHeadersProp
 	}
 	routingModeProp, err := expandNetworkServicesGatewayRoutingMode(d.Get("routing_mode"), d, config)
 	if err != nil {
@@ -265,6 +277,10 @@ func expandNetworkServicesGatewayType(v interface{}, d tpgresource.TerraformReso
 	return v, nil
 }
 
+func expandNetworkServicesGatewayAddresses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandNetworkServicesGatewayPorts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -277,15 +293,7 @@ func expandNetworkServicesGatewayServerTlsPolicy(v interface{}, d tpgresource.Te
 	return v, nil
 }
 
-func expandNetworkServicesGatewayAddresses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetworkServicesGatewaySubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetworkServicesGatewayNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetworkServicesGatewayCertificateUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -293,7 +301,19 @@ func expandNetworkServicesGatewayGatewaySecurityPolicy(v interface{}, d tpgresou
 	return v, nil
 }
 
-func expandNetworkServicesGatewayCertificateUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandNetworkServicesGatewayNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesGatewaySubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesGatewayIpVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesGatewayEnvoyHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
