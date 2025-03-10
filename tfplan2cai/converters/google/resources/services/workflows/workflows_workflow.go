@@ -95,6 +95,12 @@ func GetWorkflowsWorkflowApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("call_log_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(callLogLevelProp)) && (ok || !reflect.DeepEqual(v, callLogLevelProp)) {
 		obj["callLogLevel"] = callLogLevelProp
 	}
+	executionHistoryLevelProp, err := expandWorkflowsWorkflowExecutionHistoryLevel(d.Get("execution_history_level"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("execution_history_level"); !tpgresource.IsEmptyValue(reflect.ValueOf(executionHistoryLevelProp)) && (ok || !reflect.DeepEqual(v, executionHistoryLevelProp)) {
+		obj["executionHistoryLevel"] = executionHistoryLevelProp
+	}
 	userEnvVarsProp, err := expandWorkflowsWorkflowUserEnvVars(d.Get("user_env_vars"), d, config)
 	if err != nil {
 		return nil, err
@@ -160,6 +166,10 @@ func expandWorkflowsWorkflowCryptoKeyName(v interface{}, d tpgresource.Terraform
 }
 
 func expandWorkflowsWorkflowCallLogLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkflowsWorkflowExecutionHistoryLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
