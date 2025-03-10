@@ -655,6 +655,13 @@ func expandNetworkSecurityAuthzPolicyHttpRulesTo(v interface{}, d tpgresource.Te
 		transformed["operations"] = transformedOperations
 	}
 
+	transformedNotOperations, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperations(original["not_operations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNotOperations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["notOperations"] = transformedNotOperations
+	}
+
 	return transformed, nil
 }
 
@@ -961,6 +968,312 @@ func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsPathsContains(v interf
 }
 
 func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMethods(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHeaderSet, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSet(original["header_set"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderSet); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerSet"] = transformedHeaderSet
+		}
+
+		transformedHosts, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHosts(original["hosts"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHosts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["hosts"] = transformedHosts
+		}
+
+		transformedPaths, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPaths(original["paths"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPaths); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["paths"] = transformedPaths
+		}
+
+		transformedMethods, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsMethods(original["methods"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMethods); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["methods"] = transformedMethods
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHeaders, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeaders(original["headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["headers"] = transformedHeaders
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedValue, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIgnoreCase, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueIgnoreCase(original["ignore_case"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIgnoreCase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ignoreCase"] = transformedIgnoreCase
+	}
+
+	transformedExact, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueExact(original["exact"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exact"] = transformedExact
+	}
+
+	transformedPrefix, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValuePrefix(original["prefix"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrefix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["prefix"] = transformedPrefix
+	}
+
+	transformedSuffix, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueSuffix(original["suffix"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSuffix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["suffix"] = transformedSuffix
+	}
+
+	transformedContains, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueContains(original["contains"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContains); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["contains"] = transformedContains
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueIgnoreCase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueExact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValuePrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueSuffix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueContains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHosts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIgnoreCase, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsIgnoreCase(original["ignore_case"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIgnoreCase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ignoreCase"] = transformedIgnoreCase
+		}
+
+		transformedExact, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsExact(original["exact"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["exact"] = transformedExact
+		}
+
+		transformedPrefix, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsPrefix(original["prefix"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrefix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["prefix"] = transformedPrefix
+		}
+
+		transformedSuffix, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsSuffix(original["suffix"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSuffix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["suffix"] = transformedSuffix
+		}
+
+		transformedContains, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsContains(original["contains"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedContains); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["contains"] = transformedContains
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsIgnoreCase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsExact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsPrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsSuffix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsContains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPaths(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIgnoreCase, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsIgnoreCase(original["ignore_case"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIgnoreCase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ignoreCase"] = transformedIgnoreCase
+		}
+
+		transformedExact, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsExact(original["exact"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["exact"] = transformedExact
+		}
+
+		transformedPrefix, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsPrefix(original["prefix"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrefix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["prefix"] = transformedPrefix
+		}
+
+		transformedSuffix, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsSuffix(original["suffix"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSuffix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["suffix"] = transformedSuffix
+		}
+
+		transformedContains, err := expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsContains(original["contains"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedContains); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["contains"] = transformedContains
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsIgnoreCase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsExact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsPrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsSuffix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsContains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsMethods(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
