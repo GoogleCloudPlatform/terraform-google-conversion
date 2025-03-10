@@ -34,10 +34,11 @@ type IAMBinding struct {
 // AssetResource is nested within the Asset type.
 type AssetResource struct {
 	Version              string                 `json:"version"`
-	DiscoveryDocumentURI string                 `json:"discoveryDocumentURI"`
+	DiscoveryDocumentURI string                 `json:"discoveryDocumentUri"`
 	DiscoveryName        string                 `json:"discoveryName"`
 	Parent               string                 `json:"parent"`
 	Data                 map[string]interface{} `json:"data"`
+	Location             string                 `json:"location,omitempty"`
 }
 
 // OrgPolicy is for managing organization policies.
