@@ -62,6 +62,12 @@ func GetStorageInsightsReportConfigApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("frequency_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(frequencyOptionsProp)) && (ok || !reflect.DeepEqual(v, frequencyOptionsProp)) {
 		obj["frequencyOptions"] = frequencyOptionsProp
 	}
+	parquetOptionsProp, err := expandStorageInsightsReportConfigParquetOptions(d.Get("parquet_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("parquet_options"); ok || !reflect.DeepEqual(v, parquetOptionsProp) {
+		obj["parquetOptions"] = parquetOptionsProp
+	}
 	csvOptionsProp, err := expandStorageInsightsReportConfigCsvOptions(d.Get("csv_options"), d, config)
 	if err != nil {
 		return nil, err
@@ -209,6 +215,21 @@ func expandStorageInsightsReportConfigFrequencyOptionsEndDateMonth(v interface{}
 
 func expandStorageInsightsReportConfigFrequencyOptionsEndDateYear(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandStorageInsightsReportConfigParquetOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandStorageInsightsReportConfigCsvOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
