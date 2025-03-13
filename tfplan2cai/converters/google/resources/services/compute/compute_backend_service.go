@@ -395,6 +395,12 @@ func GetComputeBackendServiceApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("service_lb_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceLbPolicyProp)) && (ok || !reflect.DeepEqual(v, serviceLbPolicyProp)) {
 		obj["serviceLbPolicy"] = serviceLbPolicyProp
 	}
+	tlsSettingsProp, err := expandComputeBackendServiceTlsSettings(d.Get("tls_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tls_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(tlsSettingsProp)) && (ok || !reflect.DeepEqual(v, tlsSettingsProp)) {
+		obj["tlsSettings"] = tlsSettingsProp
+	}
 
 	return resourceComputeBackendServiceEncoder(d, config, obj)
 }
@@ -1807,5 +1813,83 @@ func expandComputeBackendServiceLogConfigSampleRate(v interface{}, d tpgresource
 }
 
 func expandComputeBackendServiceServiceLbPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceTlsSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSni, err := expandComputeBackendServiceTlsSettingsSni(original["sni"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSni); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sni"] = transformedSni
+	}
+
+	transformedSubjectAltNames, err := expandComputeBackendServiceTlsSettingsSubjectAltNames(original["subject_alt_names"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubjectAltNames); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subjectAltNames"] = transformedSubjectAltNames
+	}
+
+	transformedAuthenticationConfig, err := expandComputeBackendServiceTlsSettingsAuthenticationConfig(original["authentication_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthenticationConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authenticationConfig"] = transformedAuthenticationConfig
+	}
+
+	return transformed, nil
+}
+
+func expandComputeBackendServiceTlsSettingsSni(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceTlsSettingsSubjectAltNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDnsName, err := expandComputeBackendServiceTlsSettingsSubjectAltNamesDnsName(original["dns_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDnsName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dnsName"] = transformedDnsName
+		}
+
+		transformedUniformResourceIdentifier, err := expandComputeBackendServiceTlsSettingsSubjectAltNamesUniformResourceIdentifier(original["uniform_resource_identifier"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUniformResourceIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["uniformResourceIdentifier"] = transformedUniformResourceIdentifier
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeBackendServiceTlsSettingsSubjectAltNamesDnsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceTlsSettingsSubjectAltNamesUniformResourceIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceTlsSettingsAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
