@@ -247,10 +247,21 @@ func expandAlloydbClusterPscConfig(v interface{}, d tpgresource.TerraformResourc
 		transformed["pscEnabled"] = transformedPscEnabled
 	}
 
+	transformedServiceOwnedProjectNumber, err := expandAlloydbClusterPscConfigServiceOwnedProjectNumber(original["service_owned_project_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceOwnedProjectNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceOwnedProjectNumber"] = transformedServiceOwnedProjectNumber
+	}
+
 	return transformed, nil
 }
 
 func expandAlloydbClusterPscConfigPscEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterPscConfigServiceOwnedProjectNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
