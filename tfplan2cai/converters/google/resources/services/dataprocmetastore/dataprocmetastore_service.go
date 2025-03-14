@@ -221,6 +221,13 @@ func expandDataprocMetastoreServiceScalingConfigAutoscalingConfig(v interface{},
 		transformed["autoscalingEnabled"] = transformedAutoscalingEnabled
 	}
 
+	transformedAutoscalingFactor, err := expandDataprocMetastoreServiceScalingConfigAutoscalingConfigAutoscalingFactor(original["autoscaling_factor"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAutoscalingFactor); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["autoscalingFactor"] = transformedAutoscalingFactor
+	}
+
 	transformedLimitConfig, err := expandDataprocMetastoreServiceScalingConfigAutoscalingConfigLimitConfig(original["limit_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -232,6 +239,10 @@ func expandDataprocMetastoreServiceScalingConfigAutoscalingConfig(v interface{},
 }
 
 func expandDataprocMetastoreServiceScalingConfigAutoscalingConfigAutoscalingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocMetastoreServiceScalingConfigAutoscalingConfigAutoscalingFactor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
