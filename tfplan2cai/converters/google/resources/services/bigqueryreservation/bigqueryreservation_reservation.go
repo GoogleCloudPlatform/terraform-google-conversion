@@ -86,6 +86,12 @@ func GetBigqueryReservationReservationApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("autoscale"); !tpgresource.IsEmptyValue(reflect.ValueOf(autoscaleProp)) && (ok || !reflect.DeepEqual(v, autoscaleProp)) {
 		obj["autoscale"] = autoscaleProp
 	}
+	secondaryLocationProp, err := expandBigqueryReservationReservationSecondaryLocation(d.Get("secondary_location"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("secondary_location"); !tpgresource.IsEmptyValue(reflect.ValueOf(secondaryLocationProp)) && (ok || !reflect.DeepEqual(v, secondaryLocationProp)) {
+		obj["secondaryLocation"] = secondaryLocationProp
+	}
 
 	return obj, nil
 }
@@ -137,5 +143,9 @@ func expandBigqueryReservationReservationAutoscaleCurrentSlots(v interface{}, d 
 }
 
 func expandBigqueryReservationReservationAutoscaleMaxSlots(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationSecondaryLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
