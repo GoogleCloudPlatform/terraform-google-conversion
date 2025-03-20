@@ -93,6 +93,18 @@ func GetNetworkManagementConnectivityTestApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("related_projects"); !tpgresource.IsEmptyValue(reflect.ValueOf(relatedProjectsProp)) && (ok || !reflect.DeepEqual(v, relatedProjectsProp)) {
 		obj["relatedProjects"] = relatedProjectsProp
 	}
+	roundTripProp, err := expandNetworkManagementConnectivityTestRoundTrip(d.Get("round_trip"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("round_trip"); !tpgresource.IsEmptyValue(reflect.ValueOf(roundTripProp)) && (ok || !reflect.DeepEqual(v, roundTripProp)) {
+		obj["roundTrip"] = roundTripProp
+	}
+	bypassFirewallChecksProp, err := expandNetworkManagementConnectivityTestBypassFirewallChecks(d.Get("bypass_firewall_checks"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("bypass_firewall_checks"); !tpgresource.IsEmptyValue(reflect.ValueOf(bypassFirewallChecksProp)) && (ok || !reflect.DeepEqual(v, bypassFirewallChecksProp)) {
+		obj["bypassFirewallChecks"] = bypassFirewallChecksProp
+	}
 	labelsProp, err := expandNetworkManagementConnectivityTestEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -146,6 +158,41 @@ func expandNetworkManagementConnectivityTestSource(v interface{}, d tpgresource.
 		transformed["instance"] = transformedInstance
 	}
 
+	transformedGkeMasterCluster, err := expandNetworkManagementConnectivityTestSourceGkeMasterCluster(original["gke_master_cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGkeMasterCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gkeMasterCluster"] = transformedGkeMasterCluster
+	}
+
+	transformedCloudSqlInstance, err := expandNetworkManagementConnectivityTestSourceCloudSqlInstance(original["cloud_sql_instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudSqlInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cloudSqlInstance"] = transformedCloudSqlInstance
+	}
+
+	transformedCloudFunction, err := expandNetworkManagementConnectivityTestSourceCloudFunction(original["cloud_function"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudFunction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cloudFunction"] = transformedCloudFunction
+	}
+
+	transformedAppEngineVersion, err := expandNetworkManagementConnectivityTestSourceAppEngineVersion(original["app_engine_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAppEngineVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["appEngineVersion"] = transformedAppEngineVersion
+	}
+
+	transformedCloudRunRevision, err := expandNetworkManagementConnectivityTestSourceCloudRunRevision(original["cloud_run_revision"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudRunRevision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cloudRunRevision"] = transformedCloudRunRevision
+	}
+
 	transformedNetwork, err := expandNetworkManagementConnectivityTestSourceNetwork(original["network"], d, config)
 	if err != nil {
 		return nil, err
@@ -179,6 +226,83 @@ func expandNetworkManagementConnectivityTestSourcePort(v interface{}, d tpgresou
 }
 
 func expandNetworkManagementConnectivityTestSourceInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestSourceGkeMasterCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestSourceCloudSqlInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestSourceCloudFunction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUri, err := expandNetworkManagementConnectivityTestSourceCloudFunctionUri(original["uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uri"] = transformedUri
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkManagementConnectivityTestSourceCloudFunctionUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestSourceAppEngineVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUri, err := expandNetworkManagementConnectivityTestSourceAppEngineVersionUri(original["uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uri"] = transformedUri
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkManagementConnectivityTestSourceAppEngineVersionUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestSourceCloudRunRevision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUri, err := expandNetworkManagementConnectivityTestSourceCloudRunRevisionUri(original["uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uri"] = transformedUri
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkManagementConnectivityTestSourceCloudRunRevisionUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -224,6 +348,48 @@ func expandNetworkManagementConnectivityTestDestination(v interface{}, d tpgreso
 		transformed["instance"] = transformedInstance
 	}
 
+	transformedForwardingRule, err := expandNetworkManagementConnectivityTestDestinationForwardingRule(original["forwarding_rule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedForwardingRule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["forwardingRule"] = transformedForwardingRule
+	}
+
+	transformedGkeMasterCluster, err := expandNetworkManagementConnectivityTestDestinationGkeMasterCluster(original["gke_master_cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGkeMasterCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gkeMasterCluster"] = transformedGkeMasterCluster
+	}
+
+	transformedFqdn, err := expandNetworkManagementConnectivityTestDestinationFqdn(original["fqdn"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFqdn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fqdn"] = transformedFqdn
+	}
+
+	transformedCloudSqlInstance, err := expandNetworkManagementConnectivityTestDestinationCloudSqlInstance(original["cloud_sql_instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudSqlInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cloudSqlInstance"] = transformedCloudSqlInstance
+	}
+
+	transformedRedisInstance, err := expandNetworkManagementConnectivityTestDestinationRedisInstance(original["redis_instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRedisInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["redisInstance"] = transformedRedisInstance
+	}
+
+	transformedRedisCluster, err := expandNetworkManagementConnectivityTestDestinationRedisCluster(original["redis_cluster"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRedisCluster); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["redisCluster"] = transformedRedisCluster
+	}
+
 	transformedNetwork, err := expandNetworkManagementConnectivityTestDestinationNetwork(original["network"], d, config)
 	if err != nil {
 		return nil, err
@@ -253,6 +419,30 @@ func expandNetworkManagementConnectivityTestDestinationInstance(v interface{}, d
 	return v, nil
 }
 
+func expandNetworkManagementConnectivityTestDestinationForwardingRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestDestinationGkeMasterCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestDestinationFqdn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestDestinationCloudSqlInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestDestinationRedisInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestDestinationRedisCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandNetworkManagementConnectivityTestDestinationNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -266,6 +456,14 @@ func expandNetworkManagementConnectivityTestProtocol(v interface{}, d tpgresourc
 }
 
 func expandNetworkManagementConnectivityTestRelatedProjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestRoundTrip(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestBypassFirewallChecks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
