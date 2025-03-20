@@ -101,6 +101,12 @@ func GetComputeResourcePolicyApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("disk_consistency_group_policy"); ok || !reflect.DeepEqual(v, diskConsistencyGroupPolicyProp) {
 		obj["diskConsistencyGroupPolicy"] = diskConsistencyGroupPolicyProp
 	}
+	workloadPolicyProp, err := expandComputeResourcePolicyWorkloadPolicy(d.Get("workload_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("workload_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(workloadPolicyProp)) && (ok || !reflect.DeepEqual(v, workloadPolicyProp)) {
+		obj["workloadPolicy"] = workloadPolicyProp
+	}
 	regionProp, err := expandComputeResourcePolicyRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -595,6 +601,51 @@ func expandComputeResourcePolicyDiskConsistencyGroupPolicy(v interface{}, d tpgr
 	}
 	transformed := make(map[string]interface{})
 	return transformed, nil
+}
+
+func expandComputeResourcePolicyWorkloadPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandComputeResourcePolicyWorkloadPolicyType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	transformedMaxTopologyDistance, err := expandComputeResourcePolicyWorkloadPolicyMaxTopologyDistance(original["max_topology_distance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxTopologyDistance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxTopologyDistance"] = transformedMaxTopologyDistance
+	}
+
+	transformedAcceleratorTopology, err := expandComputeResourcePolicyWorkloadPolicyAcceleratorTopology(original["accelerator_topology"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAcceleratorTopology); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["acceleratorTopology"] = transformedAcceleratorTopology
+	}
+
+	return transformed, nil
+}
+
+func expandComputeResourcePolicyWorkloadPolicyType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeResourcePolicyWorkloadPolicyMaxTopologyDistance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeResourcePolicyWorkloadPolicyAcceleratorTopology(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeResourcePolicyRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
