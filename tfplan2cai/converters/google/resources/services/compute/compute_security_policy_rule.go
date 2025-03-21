@@ -107,7 +107,7 @@ func GetComputeSecurityPolicyRuleApiObject(d tpgresource.TerraformResourceData, 
 	previewProp, err := expandComputeSecurityPolicyRulePreview(d.Get("preview"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("preview"); !tpgresource.IsEmptyValue(reflect.ValueOf(previewProp)) && (ok || !reflect.DeepEqual(v, previewProp)) {
+	} else if v, ok := d.GetOkExists("preview"); ok || !reflect.DeepEqual(v, previewProp) {
 		obj["preview"] = previewProp
 	}
 
