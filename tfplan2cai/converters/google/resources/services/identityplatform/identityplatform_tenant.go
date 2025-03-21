@@ -80,6 +80,12 @@ func GetIdentityPlatformTenantApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("disable_auth"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableAuthProp)) && (ok || !reflect.DeepEqual(v, disableAuthProp)) {
 		obj["disableAuth"] = disableAuthProp
 	}
+	clientProp, err := expandIdentityPlatformTenantClient(d.Get("client"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("client"); !tpgresource.IsEmptyValue(reflect.ValueOf(clientProp)) && (ok || !reflect.DeepEqual(v, clientProp)) {
+		obj["client"] = clientProp
+	}
 
 	return obj, nil
 }
@@ -97,5 +103,58 @@ func expandIdentityPlatformTenantEnableEmailLinkSignin(v interface{}, d tpgresou
 }
 
 func expandIdentityPlatformTenantDisableAuth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformTenantClient(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPermissions, err := expandIdentityPlatformTenantClientPermissions(original["permissions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPermissions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["permissions"] = transformedPermissions
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformTenantClientPermissions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisabledUserSignup, err := expandIdentityPlatformTenantClientPermissionsDisabledUserSignup(original["disabled_user_signup"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisabledUserSignup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disabledUserSignup"] = transformedDisabledUserSignup
+	}
+
+	transformedDisabledUserDeletion, err := expandIdentityPlatformTenantClientPermissionsDisabledUserDeletion(original["disabled_user_deletion"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisabledUserDeletion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disabledUserDeletion"] = transformedDisabledUserDeletion
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformTenantClientPermissionsDisabledUserSignup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformTenantClientPermissionsDisabledUserDeletion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
