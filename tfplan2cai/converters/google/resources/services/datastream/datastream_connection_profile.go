@@ -167,6 +167,13 @@ func expandDatastreamConnectionProfileOracleProfile(v interface{}, d tpgresource
 		transformed["password"] = transformedPassword
 	}
 
+	transformedSecretManagerStoredPassword, err := expandDatastreamConnectionProfileOracleProfileSecretManagerStoredPassword(original["secret_manager_stored_password"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretManagerStoredPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretManagerStoredPassword"] = transformedSecretManagerStoredPassword
+	}
+
 	transformedDatabaseService, err := expandDatastreamConnectionProfileOracleProfileDatabaseService(original["database_service"], d, config)
 	if err != nil {
 		return nil, err
@@ -197,6 +204,10 @@ func expandDatastreamConnectionProfileOracleProfileUsername(v interface{}, d tpg
 }
 
 func expandDatastreamConnectionProfileOracleProfilePassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamConnectionProfileOracleProfileSecretManagerStoredPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -286,6 +297,13 @@ func expandDatastreamConnectionProfileMysqlProfile(v interface{}, d tpgresource.
 		transformed["password"] = transformedPassword
 	}
 
+	transformedSecretManagerStoredPassword, err := expandDatastreamConnectionProfileMysqlProfileSecretManagerStoredPassword(original["secret_manager_stored_password"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretManagerStoredPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretManagerStoredPassword"] = transformedSecretManagerStoredPassword
+	}
+
 	transformedSslConfig, err := expandDatastreamConnectionProfileMysqlProfileSslConfig(original["ssl_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -309,6 +327,10 @@ func expandDatastreamConnectionProfileMysqlProfileUsername(v interface{}, d tpgr
 }
 
 func expandDatastreamConnectionProfileMysqlProfilePassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamConnectionProfileMysqlProfileSecretManagerStoredPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -442,6 +464,13 @@ func expandDatastreamConnectionProfilePostgresqlProfile(v interface{}, d tpgreso
 		transformed["password"] = transformedPassword
 	}
 
+	transformedSecretManagerStoredPassword, err := expandDatastreamConnectionProfilePostgresqlProfileSecretManagerStoredPassword(original["secret_manager_stored_password"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretManagerStoredPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretManagerStoredPassword"] = transformedSecretManagerStoredPassword
+	}
+
 	transformedDatabase, err := expandDatastreamConnectionProfilePostgresqlProfileDatabase(original["database"], d, config)
 	if err != nil {
 		return nil, err
@@ -465,6 +494,10 @@ func expandDatastreamConnectionProfilePostgresqlProfileUsername(v interface{}, d
 }
 
 func expandDatastreamConnectionProfilePostgresqlProfilePassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamConnectionProfilePostgresqlProfileSecretManagerStoredPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -658,6 +691,13 @@ func expandDatastreamConnectionProfileSqlServerProfile(v interface{}, d tpgresou
 		transformed["password"] = transformedPassword
 	}
 
+	transformedSecretManagerStoredPassword, err := expandDatastreamConnectionProfileSqlServerProfileSecretManagerStoredPassword(original["secret_manager_stored_password"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretManagerStoredPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretManagerStoredPassword"] = transformedSecretManagerStoredPassword
+	}
+
 	transformedDatabase, err := expandDatastreamConnectionProfileSqlServerProfileDatabase(original["database"], d, config)
 	if err != nil {
 		return nil, err
@@ -681,6 +721,10 @@ func expandDatastreamConnectionProfileSqlServerProfileUsername(v interface{}, d 
 }
 
 func expandDatastreamConnectionProfileSqlServerProfilePassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamConnectionProfileSqlServerProfileSecretManagerStoredPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
