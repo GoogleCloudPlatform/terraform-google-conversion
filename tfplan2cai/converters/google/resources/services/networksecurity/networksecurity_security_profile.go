@@ -125,6 +125,13 @@ func expandNetworkSecuritySecurityProfileThreatPreventionProfile(v interface{}, 
 		transformed["threatOverrides"] = transformedThreatOverrides
 	}
 
+	transformedAntivirusOverrides, err := expandNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverrides(original["antivirus_overrides"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAntivirusOverrides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["antivirusOverrides"] = transformedAntivirusOverrides
+	}
+
 	return transformed, nil
 }
 
@@ -212,6 +219,44 @@ func expandNetworkSecuritySecurityProfileThreatPreventionProfileThreatOverridesT
 }
 
 func expandNetworkSecuritySecurityProfileThreatPreventionProfileThreatOverridesType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedProtocol, err := expandNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverridesProtocol(original["protocol"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProtocol); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["protocol"] = transformedProtocol
+		}
+
+		transformedAction, err := expandNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverridesAction(original["action"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["action"] = transformedAction
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverridesProtocol(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverridesAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
