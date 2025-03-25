@@ -62,6 +62,12 @@ func GetParameterManagerParameterApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("format"); !tpgresource.IsEmptyValue(reflect.ValueOf(formatProp)) && (ok || !reflect.DeepEqual(v, formatProp)) {
 		obj["format"] = formatProp
 	}
+	kmsKeyProp, err := expandParameterManagerParameterKmsKey(d.Get("kms_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
+		obj["kmsKey"] = kmsKeyProp
+	}
 	labelsProp, err := expandParameterManagerParameterEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -73,6 +79,10 @@ func GetParameterManagerParameterApiObject(d tpgresource.TerraformResourceData, 
 }
 
 func expandParameterManagerParameterFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandParameterManagerParameterKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
