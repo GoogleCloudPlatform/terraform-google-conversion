@@ -362,6 +362,13 @@ func expandCloudRunV2ServiceTemplate(v interface{}, d tpgresource.TerraformResou
 		transformed["nodeSelector"] = transformedNodeSelector
 	}
 
+	transformedGpuZonalRedundancyDisabled, err := expandCloudRunV2ServiceTemplateGpuZonalRedundancyDisabled(original["gpu_zonal_redundancy_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGpuZonalRedundancyDisabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gpuZonalRedundancyDisabled"] = transformedGpuZonalRedundancyDisabled
+	}
+
 	return transformed, nil
 }
 
@@ -1727,6 +1734,10 @@ func expandCloudRunV2ServiceTemplateNodeSelector(v interface{}, d tpgresource.Te
 }
 
 func expandCloudRunV2ServiceTemplateNodeSelectorAccelerator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateGpuZonalRedundancyDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
