@@ -219,6 +219,20 @@ func expandComputeImageImageEncryptionKey(v interface{}, d tpgresource.Terraform
 		transformed["kmsKeyServiceAccount"] = transformedKmsKeyServiceAccount
 	}
 
+	transformedRawKey, err := expandComputeImageImageEncryptionKeyRawKey(original["raw_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRawKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rawKey"] = transformedRawKey
+	}
+
+	transformedRsaEncryptedKey, err := expandComputeImageImageEncryptionKeyRsaEncryptedKey(original["rsa_encrypted_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRsaEncryptedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rsaEncryptedKey"] = transformedRsaEncryptedKey
+	}
+
 	return transformed, nil
 }
 
@@ -227,6 +241,14 @@ func expandComputeImageImageEncryptionKeyKmsKeySelfLink(v interface{}, d tpgreso
 }
 
 func expandComputeImageImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageImageEncryptionKeyRawKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageImageEncryptionKeyRsaEncryptedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
