@@ -108,6 +108,12 @@ func GetComputeRouterApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("encrypted_interconnect_router"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptedInterconnectRouterProp)) && (ok || !reflect.DeepEqual(v, encryptedInterconnectRouterProp)) {
 		obj["encryptedInterconnectRouter"] = encryptedInterconnectRouterProp
 	}
+	md5AuthenticationKeysProp, err := expandComputeRouterMd5AuthenticationKeys(d.Get("md5_authentication_keys"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("md5_authentication_keys"); !tpgresource.IsEmptyValue(reflect.ValueOf(md5AuthenticationKeysProp)) && (ok || !reflect.DeepEqual(v, md5AuthenticationKeysProp)) {
+		obj["md5AuthenticationKeys"] = md5AuthenticationKeysProp
+	}
 	regionProp, err := expandComputeRouterRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -246,6 +252,40 @@ func expandComputeRouterBgpIdentifierRange(v interface{}, d tpgresource.Terrafor
 }
 
 func expandComputeRouterEncryptedInterconnectRouter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRouterMd5AuthenticationKeys(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandComputeRouterMd5AuthenticationKeysName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedKey, err := expandComputeRouterMd5AuthenticationKeysKey(original["key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["key"] = transformedKey
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRouterMd5AuthenticationKeysName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRouterMd5AuthenticationKeysKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
