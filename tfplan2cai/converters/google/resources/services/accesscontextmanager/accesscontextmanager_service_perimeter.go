@@ -457,6 +457,13 @@ func expandAccessContextManagerServicePerimeterStatusIngressPoliciesIngressTo(v 
 		transformed["resources"] = transformedResources
 	}
 
+	transformedRoles, err := expandAccessContextManagerServicePerimeterStatusIngressPoliciesIngressToRoles(original["roles"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRoles); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["roles"] = transformedRoles
+	}
+
 	transformedOperations, err := expandAccessContextManagerServicePerimeterStatusIngressPoliciesIngressToOperations(original["operations"], d, config)
 	if err != nil {
 		return nil, err
@@ -469,6 +476,10 @@ func expandAccessContextManagerServicePerimeterStatusIngressPoliciesIngressTo(v 
 
 func expandAccessContextManagerServicePerimeterStatusIngressPoliciesIngressToResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusIngressPoliciesIngressToRoles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -695,6 +706,13 @@ func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressTo(v in
 		transformed["externalResources"] = transformedExternalResources
 	}
 
+	transformedRoles, err := expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressToRoles(original["roles"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRoles); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["roles"] = transformedRoles
+	}
+
 	transformedOperations, err := expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressToOperations(original["operations"], d, config)
 	if err != nil {
 		return nil, err
@@ -712,6 +730,10 @@ func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressToResou
 
 func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressToExternalResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusEgressPoliciesEgressToRoles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1024,6 +1046,13 @@ func expandAccessContextManagerServicePerimeterSpecIngressPoliciesIngressTo(v in
 		transformed["resources"] = transformedResources
 	}
 
+	transformedRoles, err := expandAccessContextManagerServicePerimeterSpecIngressPoliciesIngressToRoles(original["roles"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRoles); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["roles"] = transformedRoles
+	}
+
 	transformedOperations, err := expandAccessContextManagerServicePerimeterSpecIngressPoliciesIngressToOperations(original["operations"], d, config)
 	if err != nil {
 		return nil, err
@@ -1036,6 +1065,10 @@ func expandAccessContextManagerServicePerimeterSpecIngressPoliciesIngressTo(v in
 
 func expandAccessContextManagerServicePerimeterSpecIngressPoliciesIngressToResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecIngressPoliciesIngressToRoles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1262,6 +1295,13 @@ func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressTo(v inte
 		transformed["externalResources"] = transformedExternalResources
 	}
 
+	transformedRoles, err := expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressToRoles(original["roles"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRoles); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["roles"] = transformedRoles
+	}
+
 	transformedOperations, err := expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressToOperations(original["operations"], d, config)
 	if err != nil {
 		return nil, err
@@ -1279,6 +1319,10 @@ func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressToResourc
 
 func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressToExternalResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecEgressPoliciesEgressToRoles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
