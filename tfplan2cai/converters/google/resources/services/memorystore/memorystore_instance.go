@@ -122,6 +122,12 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("deletion_protection_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(deletionProtectionEnabledProp)) && (ok || !reflect.DeepEqual(v, deletionProtectionEnabledProp)) {
 		obj["deletionProtectionEnabled"] = deletionProtectionEnabledProp
 	}
+	crossInstanceReplicationConfigProp, err := expandMemorystoreInstanceCrossInstanceReplicationConfig(d.Get("cross_instance_replication_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cross_instance_replication_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(crossInstanceReplicationConfigProp)) && (ok || !reflect.DeepEqual(v, crossInstanceReplicationConfigProp)) {
+		obj["crossInstanceReplicationConfig"] = crossInstanceReplicationConfigProp
+	}
 	modeProp, err := expandMemorystoreInstanceMode(d.Get("mode"), d, config)
 	if err != nil {
 		return nil, err
@@ -478,6 +484,229 @@ func expandMemorystoreInstanceZoneDistributionConfigMode(v interface{}, d tpgres
 }
 
 func expandMemorystoreInstanceDeletionProtectionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedInstanceRole, err := expandMemorystoreInstanceCrossInstanceReplicationConfigInstanceRole(original["instance_role"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstanceRole); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instanceRole"] = transformedInstanceRole
+	}
+
+	transformedPrimaryInstance, err := expandMemorystoreInstanceCrossInstanceReplicationConfigPrimaryInstance(original["primary_instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrimaryInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["primaryInstance"] = transformedPrimaryInstance
+	}
+
+	transformedSecondaryInstances, err := expandMemorystoreInstanceCrossInstanceReplicationConfigSecondaryInstances(original["secondary_instances"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecondaryInstances); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secondaryInstances"] = transformedSecondaryInstances
+	}
+
+	transformedMembership, err := expandMemorystoreInstanceCrossInstanceReplicationConfigMembership(original["membership"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMembership); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["membership"] = transformedMembership
+	}
+
+	transformedUpdateTime, err := expandMemorystoreInstanceCrossInstanceReplicationConfigUpdateTime(original["update_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUpdateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["updateTime"] = transformedUpdateTime
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigInstanceRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigPrimaryInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedInstance, err := expandMemorystoreInstanceCrossInstanceReplicationConfigPrimaryInstanceInstance(original["instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instance"] = transformedInstance
+	}
+
+	transformedUid, err := expandMemorystoreInstanceCrossInstanceReplicationConfigPrimaryInstanceUid(original["uid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uid"] = transformedUid
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigPrimaryInstanceInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigPrimaryInstanceUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigSecondaryInstances(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedInstance, err := expandMemorystoreInstanceCrossInstanceReplicationConfigSecondaryInstancesInstance(original["instance"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["instance"] = transformedInstance
+		}
+
+		transformedUid, err := expandMemorystoreInstanceCrossInstanceReplicationConfigSecondaryInstancesUid(original["uid"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["uid"] = transformedUid
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigSecondaryInstancesInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigSecondaryInstancesUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigMembership(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPrimaryInstance, err := expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipPrimaryInstance(original["primary_instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrimaryInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["primaryInstance"] = transformedPrimaryInstance
+	}
+
+	transformedSecondaryInstance, err := expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipSecondaryInstance(original["secondary_instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecondaryInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secondaryInstance"] = transformedSecondaryInstance
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipPrimaryInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedInstance, err := expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipPrimaryInstanceInstance(original["instance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instance"] = transformedInstance
+	}
+
+	transformedUid, err := expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipPrimaryInstanceUid(original["uid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uid"] = transformedUid
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipPrimaryInstanceInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipPrimaryInstanceUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipSecondaryInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedInstance, err := expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipSecondaryInstanceInstance(original["instance"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["instance"] = transformedInstance
+		}
+
+		transformedUid, err := expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipSecondaryInstanceUid(original["uid"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["uid"] = transformedUid
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipSecondaryInstanceInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigMembershipSecondaryInstanceUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceCrossInstanceReplicationConfigUpdateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
