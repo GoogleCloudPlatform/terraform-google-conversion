@@ -82,11 +82,13 @@ func sendSecondaryIpRangeIfEmptyDiff(_ context.Context, diff *schema.ResourceDif
 	return nil
 }
 
-// DiffSuppressFunc for fields inside `log_config`.
+// DiffSuppressFunc for `log_config`.
 func subnetworkLogConfigDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
-	// If the enable_flow_logs is not enabled, we don't need to check for differences.
-	if enable_flow_logs := d.Get("enable_flow_logs"); !enable_flow_logs.(bool) {
-		return true
+	// If enable_flow_logs is enabled and log_config is not set, ignore the diff
+	if enable_flow_logs := d.Get("enable_flow_logs"); enable_flow_logs.(bool) {
+		logConfig := d.GetRawConfig().GetAttr("log_config")
+		logConfigIsEmpty := logConfig.IsNull() || logConfig.LengthInt() == 0
+		return logConfigIsEmpty
 	}
 
 	return false
@@ -229,7 +231,7 @@ func GetComputeSubnetworkApiObject(d tpgresource.TerraformResourceData, config *
 	enableFlowLogsProp, err := expandComputeSubnetworkEnableFlowLogs(d.Get("enable_flow_logs"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_flow_logs"); ok || !reflect.DeepEqual(v, enableFlowLogsProp) {
+	} else if v, ok := d.GetOkExists("enable_flow_logs"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableFlowLogsProp)) && (ok || !reflect.DeepEqual(v, enableFlowLogsProp)) {
 		obj["enableFlowLogs"] = enableFlowLogsProp
 	}
 
@@ -343,9 +345,8 @@ func expandComputeSubnetworkLogConfig(v interface{}, d tpgresource.TerraformReso
 			return nil, nil
 		}
 
-		// set enable field basing on the enable_flow_logs field. It's needed for case when enable_flow_logs
-		// is set to true to avoid conflict with the API. In that case API will return default values for log_config
-		transformed["enable"] = d.Get("enable_flow_logs")
+		// send enable = false to ensure logging is disabled if there is no config
+		transformed["enable"] = false
 		return transformed, nil
 	}
 
