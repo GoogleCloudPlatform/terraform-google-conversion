@@ -2234,6 +2234,13 @@ func expandDatastreamStreamDestinationConfigBigqueryDestinationConfig(v interfac
 		transformed["sourceHierarchyDatasets"] = transformedSourceHierarchyDatasets
 	}
 
+	transformedBlmtConfig, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfig(original["blmt_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBlmtConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["blmtConfig"] = transformedBlmtConfig
+	}
+
 	transformedMerge, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigMerge(original["merge"], d, config)
 	if err != nil {
 		return nil, err
@@ -2348,6 +2355,73 @@ func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHiera
 }
 
 func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplateKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBucket, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigBucket(original["bucket"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucket); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bucket"] = transformedBucket
+	}
+
+	transformedConnectionName, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigConnectionName(original["connection_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectionName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectionName"] = transformedConnectionName
+	}
+
+	transformedFileFormat, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigFileFormat(original["file_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFileFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fileFormat"] = transformedFileFormat
+	}
+
+	transformedTableFormat, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigTableFormat(original["table_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTableFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tableFormat"] = transformedTableFormat
+	}
+
+	transformedRootPath, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigRootPath(original["root_path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRootPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rootPath"] = transformedRootPath
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigBucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigConnectionName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigFileFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigTableFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigRootPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
