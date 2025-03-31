@@ -360,6 +360,13 @@ func expandWorkbenchInstanceGceSetup(v interface{}, d tpgresource.TerraformResou
 		transformed["enableIpForwarding"] = transformedEnableIpForwarding
 	}
 
+	transformedConfidentialInstanceConfig, err := expandWorkbenchInstanceGceSetupConfidentialInstanceConfig(original["confidential_instance_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConfidentialInstanceConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["confidentialInstanceConfig"] = transformedConfidentialInstanceConfig
+	}
+
 	return transformed, nil
 }
 
@@ -786,6 +793,29 @@ func expandWorkbenchInstanceGceSetupMetadata(v interface{}, d tpgresource.Terraf
 }
 
 func expandWorkbenchInstanceGceSetupEnableIpForwarding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupConfidentialInstanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConfidentialInstanceType, err := expandWorkbenchInstanceGceSetupConfidentialInstanceConfigConfidentialInstanceType(original["confidential_instance_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConfidentialInstanceType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["confidentialInstanceType"] = transformedConfidentialInstanceType
+	}
+
+	return transformed, nil
+}
+
+func expandWorkbenchInstanceGceSetupConfidentialInstanceConfigConfidentialInstanceType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
