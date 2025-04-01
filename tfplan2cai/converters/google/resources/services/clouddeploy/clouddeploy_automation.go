@@ -201,6 +201,20 @@ func expandClouddeployAutomationRules(v interface{}, d tpgresource.TerraformReso
 			transformed["advanceRolloutRule"] = transformedAdvanceRolloutRule
 		}
 
+		transformedRepairRolloutRule, err := expandClouddeployAutomationRulesRepairRolloutRule(original["repair_rollout_rule"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRepairRolloutRule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["repairRolloutRule"] = transformedRepairRolloutRule
+		}
+
+		transformedTimedPromoteReleaseRule, err := expandClouddeployAutomationRulesTimedPromoteReleaseRule(original["timed_promote_release_rule"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTimedPromoteReleaseRule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["timedPromoteReleaseRule"] = transformedTimedPromoteReleaseRule
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -304,6 +318,233 @@ func expandClouddeployAutomationRulesAdvanceRolloutRuleWait(v interface{}, d tpg
 }
 
 func expandClouddeployAutomationRulesAdvanceRolloutRuleSourcePhases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedId, err := expandClouddeployAutomationRulesRepairRolloutRuleId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedPhases, err := expandClouddeployAutomationRulesRepairRolloutRulePhases(original["phases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phases"] = transformedPhases
+	}
+
+	transformedJobs, err := expandClouddeployAutomationRulesRepairRolloutRuleJobs(original["jobs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJobs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jobs"] = transformedJobs
+	}
+
+	transformedRepairPhases, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhases(original["repair_phases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRepairPhases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["repairPhases"] = transformedRepairPhases
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRulePhases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleJobs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedRetry, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetry(original["retry"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRetry); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["retry"] = transformedRetry
+		}
+
+		transformedRollback, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollback(original["rollback"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRollback); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["rollback"] = transformedRollback
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetry(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAttempts, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryAttempts(original["attempts"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAttempts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["attempts"] = transformedAttempts
+	}
+
+	transformedWait, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryWait(original["wait"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWait); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["wait"] = transformedWait
+	}
+
+	transformedBackoffMode, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryBackoffMode(original["backoff_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackoffMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backoffMode"] = transformedBackoffMode
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryAttempts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryWait(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryBackoffMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollback(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDestinationPhase, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollbackDestinationPhase(original["destination_phase"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDestinationPhase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["destinationPhase"] = transformedDestinationPhase
+	}
+
+	transformedDisableRollbackIfRolloutPending, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollbackDisableRollbackIfRolloutPending(original["disable_rollback_if_rollout_pending"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["disableRollbackIfRolloutPending"] = transformedDisableRollbackIfRolloutPending
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollbackDestinationPhase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollbackDisableRollbackIfRolloutPending(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesTimedPromoteReleaseRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedId, err := expandClouddeployAutomationRulesTimedPromoteReleaseRuleId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedDestinationTargetId, err := expandClouddeployAutomationRulesTimedPromoteReleaseRuleDestinationTargetId(original["destination_target_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDestinationTargetId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["destinationTargetId"] = transformedDestinationTargetId
+	}
+
+	transformedSchedule, err := expandClouddeployAutomationRulesTimedPromoteReleaseRuleSchedule(original["schedule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["schedule"] = transformedSchedule
+	}
+
+	transformedTimeZone, err := expandClouddeployAutomationRulesTimedPromoteReleaseRuleTimeZone(original["time_zone"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTimeZone); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["timeZone"] = transformedTimeZone
+	}
+
+	transformedDestinationPhase, err := expandClouddeployAutomationRulesTimedPromoteReleaseRuleDestinationPhase(original["destination_phase"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDestinationPhase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["destinationPhase"] = transformedDestinationPhase
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployAutomationRulesTimedPromoteReleaseRuleId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesTimedPromoteReleaseRuleDestinationTargetId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesTimedPromoteReleaseRuleSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesTimedPromoteReleaseRuleTimeZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployAutomationRulesTimedPromoteReleaseRuleDestinationPhase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
