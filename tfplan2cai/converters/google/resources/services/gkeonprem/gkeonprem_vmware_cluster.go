@@ -134,6 +134,12 @@ func GetGkeonpremVmwareClusterApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("enable_control_plane_v2"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableControlPlaneV2Prop)) && (ok || !reflect.DeepEqual(v, enableControlPlaneV2Prop)) {
 		obj["enableControlPlaneV2"] = enableControlPlaneV2Prop
 	}
+	enableAdvancedClusterProp, err := expandGkeonpremVmwareClusterEnableAdvancedCluster(d.Get("enable_advanced_cluster"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_advanced_cluster"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableAdvancedClusterProp)) && (ok || !reflect.DeepEqual(v, enableAdvancedClusterProp)) {
+		obj["enableAdvancedCluster"] = enableAdvancedClusterProp
+	}
 	disableBundledIngressProp, err := expandGkeonpremVmwareClusterDisableBundledIngress(d.Get("disable_bundled_ingress"), d, config)
 	if err != nil {
 		return nil, err
@@ -1045,6 +1051,10 @@ func expandGkeonpremVmwareClusterAuthorizationAdminUsersUsername(v interface{}, 
 }
 
 func expandGkeonpremVmwareClusterEnableControlPlaneV2(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareClusterEnableAdvancedCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
