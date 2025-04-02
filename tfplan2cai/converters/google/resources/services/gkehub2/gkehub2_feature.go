@@ -36,7 +36,7 @@ func ResourceConverterGKEHub2Feature() cai.ResourceConverter {
 }
 
 func GetGKEHub2FeatureCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//gkehub.googleapis.com/projects/{{project}}/locations/{{location}}/features/{{name}}")
+	name, err := cai.AssetName(d, config, "//gkehub.googleapis.com/projects/{{project}}/locations/{{location}}/features/{{name}}?return_partial_success=true")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
