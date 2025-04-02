@@ -458,6 +458,13 @@ func expandComputeResourcePolicyGroupPlacementPolicy(v interface{}, d tpgresourc
 		transformed["gpuTopology"] = transformedGpuTopology
 	}
 
+	transformedTpuTopology, err := expandComputeResourcePolicyGroupPlacementPolicyTpuTopology(original["tpu_topology"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTpuTopology); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tpuTopology"] = transformedTpuTopology
+	}
+
 	return transformed, nil
 }
 
@@ -478,6 +485,10 @@ func expandComputeResourcePolicyGroupPlacementPolicyMaxDistance(v interface{}, d
 }
 
 func expandComputeResourcePolicyGroupPlacementPolicyGpuTopology(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeResourcePolicyGroupPlacementPolicyTpuTopology(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
