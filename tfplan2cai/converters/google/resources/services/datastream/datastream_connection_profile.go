@@ -569,21 +569,21 @@ func expandDatastreamConnectionProfileSalesforceProfileUserCredentials(v interfa
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedSecurityToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["security_token"] = transformedSecurityToken
+		transformed["securityToken"] = transformedSecurityToken
 	}
 
 	transformedSecretManagerStoredPassword, err := expandDatastreamConnectionProfileSalesforceProfileUserCredentialsSecretManagerStoredPassword(original["secret_manager_stored_password"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedSecretManagerStoredPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["secret_manager_stored_password"] = transformedSecretManagerStoredPassword
+		transformed["secretManagerStoredPassword"] = transformedSecretManagerStoredPassword
 	}
 
 	transformedSecretManagerStoredSecurityToken, err := expandDatastreamConnectionProfileSalesforceProfileUserCredentialsSecretManagerStoredSecurityToken(original["secret_manager_stored_security_token"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedSecretManagerStoredSecurityToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["secret_manager_stored_security_token"] = transformedSecretManagerStoredSecurityToken
+		transformed["secretManagerStoredSecurityToken"] = transformedSecretManagerStoredSecurityToken
 	}
 
 	return transformed, nil
@@ -629,14 +629,14 @@ func expandDatastreamConnectionProfileSalesforceProfileOauth2ClientCredentials(v
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["client_secret"] = transformedClientSecret
+		transformed["clientSecret"] = transformedClientSecret
 	}
 
 	transformedSecretManagerStoredClientSecret, err := expandDatastreamConnectionProfileSalesforceProfileOauth2ClientCredentialsSecretManagerStoredClientSecret(original["secret_manager_stored_client_secret"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedSecretManagerStoredClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["secret_manager_stored_client_secret"] = transformedSecretManagerStoredClientSecret
+		transformed["secretManagerStoredClientSecret"] = transformedSecretManagerStoredClientSecret
 	}
 
 	return transformed, nil
