@@ -56,6 +56,12 @@ func GetMemorystoreInstanceCaiObject(d tpgresource.TerraformResourceData, config
 
 func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	automatedBackupConfigProp, err := expandMemorystoreInstanceAutomatedBackupConfig(d.Get("automated_backup_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("automated_backup_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(automatedBackupConfigProp)) && (ok || !reflect.DeepEqual(v, automatedBackupConfigProp)) {
+		obj["automatedBackupConfig"] = automatedBackupConfigProp
+	}
 	replicaCountProp, err := expandMemorystoreInstanceReplicaCount(d.Get("replica_count"), d, config)
 	if err != nil {
 		return nil, err
@@ -170,8 +176,95 @@ func resourceMemorystoreInstanceEncoder(d tpgresource.TerraformResourceData, met
 
 		req = append(req, connectionReq)
 	}
+
 	obj["pscAutoConnections"] = req
+	// if the automated_backup_config is not defined, automatedBackupMode needs to be passed and set to DISABLED in the expand
+	if obj["automatedBackupConfig"] == nil {
+		config := meta.(*transport_tpg.Config)
+		automatedBackupConfigProp, _ := expandMemorystoreInstanceAutomatedBackupConfig(d.Get("automated_backup_config"), d, config)
+		obj["automatedBackupConfig"] = automatedBackupConfigProp
+	}
 	return obj, nil
+}
+
+func expandMemorystoreInstanceAutomatedBackupConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+
+	// The automated_backup_config block is not specified, so automatedBackupMode should be DISABLED
+	transformed := make(map[string]interface{})
+	if len(d.Get("automated_backup_config").([]interface{})) < 1 {
+		transformed["automatedBackupMode"] = "DISABLED"
+		return transformed, nil
+	}
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+
+	// The automated_backup_config block is specified, so automatedBackupMode should be ENABLED
+	transformed["automatedBackupMode"] = "ENABLED"
+	transformedFixedFrequencySchedule, err := expandMemorystoreInstanceAutomatedBackupConfigFixedFrequencySchedule(original["fixed_frequency_schedule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFixedFrequencySchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fixedFrequencySchedule"] = transformedFixedFrequencySchedule
+	}
+
+	transformedRetention, err := expandMemorystoreInstanceAutomatedBackupConfigRetention(original["retention"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRetention); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["retention"] = transformedRetention
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceAutomatedBackupConfigFixedFrequencySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStartTime, err := expandMemorystoreInstanceAutomatedBackupConfigFixedFrequencyScheduleStartTime(original["start_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["startTime"] = transformedStartTime
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceAutomatedBackupConfigFixedFrequencyScheduleStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHours, err := expandMemorystoreInstanceAutomatedBackupConfigFixedFrequencyScheduleStartTimeHours(original["hours"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHours); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hours"] = transformedHours
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceAutomatedBackupConfigFixedFrequencyScheduleStartTimeHours(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceAutomatedBackupConfigRetention(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandMemorystoreInstanceReplicaCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
