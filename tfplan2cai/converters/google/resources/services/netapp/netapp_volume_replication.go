@@ -182,6 +182,13 @@ func expandNetappVolumeReplicationDestinationVolumeParameters(v interface{}, d t
 		transformed["description"] = transformedDescription
 	}
 
+	transformedTieringPolicy, err := expandNetappVolumeReplicationDestinationVolumeParametersTieringPolicy(original["tiering_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTieringPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tieringPolicy"] = transformedTieringPolicy
+	}
+
 	return transformed, nil
 }
 
@@ -198,6 +205,40 @@ func expandNetappVolumeReplicationDestinationVolumeParametersShareName(v interfa
 }
 
 func expandNetappVolumeReplicationDestinationVolumeParametersDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeReplicationDestinationVolumeParametersTieringPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCoolingThresholdDays, err := expandNetappVolumeReplicationDestinationVolumeParametersTieringPolicyCoolingThresholdDays(original["cooling_threshold_days"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCoolingThresholdDays); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["coolingThresholdDays"] = transformedCoolingThresholdDays
+	}
+
+	transformedTierAction, err := expandNetappVolumeReplicationDestinationVolumeParametersTieringPolicyTierAction(original["tier_action"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTierAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tierAction"] = transformedTierAction
+	}
+
+	return transformed, nil
+}
+
+func expandNetappVolumeReplicationDestinationVolumeParametersTieringPolicyCoolingThresholdDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeReplicationDestinationVolumeParametersTieringPolicyTierAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
