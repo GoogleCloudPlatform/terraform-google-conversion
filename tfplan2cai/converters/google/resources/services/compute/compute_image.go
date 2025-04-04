@@ -125,11 +125,23 @@ func GetComputeImageApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("source_disk"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceDiskProp)) && (ok || !reflect.DeepEqual(v, sourceDiskProp)) {
 		obj["sourceDisk"] = sourceDiskProp
 	}
+	sourceDiskEncryptionKeyProp, err := expandComputeImageSourceDiskEncryptionKey(d.Get("source_disk_encryption_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_disk_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceDiskEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, sourceDiskEncryptionKeyProp)) {
+		obj["sourceDiskEncryptionKey"] = sourceDiskEncryptionKeyProp
+	}
 	sourceImageProp, err := expandComputeImageSourceImage(d.Get("source_image"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("source_image"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceImageProp)) && (ok || !reflect.DeepEqual(v, sourceImageProp)) {
 		obj["sourceImage"] = sourceImageProp
+	}
+	sourceImageEncryptionKeyProp, err := expandComputeImageSourceImageEncryptionKey(d.Get("source_image_encryption_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_image_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceImageEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, sourceImageEncryptionKeyProp)) {
+		obj["sourceImageEncryptionKey"] = sourceImageEncryptionKeyProp
 	}
 	sourceSnapshotProp, err := expandComputeImageSourceSnapshot(d.Get("source_snapshot"), d, config)
 	if err != nil {
@@ -142,6 +154,12 @@ func GetComputeImageApiObject(d tpgresource.TerraformResourceData, config *trans
 		return nil, err
 	} else if v, ok := d.GetOkExists("shielded_instance_initial_state"); !tpgresource.IsEmptyValue(reflect.ValueOf(shieldedInstanceInitialStateProp)) && (ok || !reflect.DeepEqual(v, shieldedInstanceInitialStateProp)) {
 		obj["shieldedInstanceInitialState"] = shieldedInstanceInitialStateProp
+	}
+	sourceSnapshotEncryptionKeyProp, err := expandComputeImageSourceSnapshotEncryptionKey(d.Get("source_snapshot_encryption_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_snapshot_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceSnapshotEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, sourceSnapshotEncryptionKeyProp)) {
+		obj["sourceSnapshotEncryptionKey"] = sourceSnapshotEncryptionKeyProp
 	}
 	labelsProp, err := expandComputeImageEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -329,12 +347,124 @@ func expandComputeImageSourceDisk(v interface{}, d tpgresource.TerraformResource
 	return f.RelativeLink(), nil
 }
 
+func expandComputeImageSourceDiskEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRawKey, err := expandComputeImageSourceDiskEncryptionKeyRawKey(original["raw_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRawKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rawKey"] = transformedRawKey
+	}
+
+	transformedRsaEncryptedKey, err := expandComputeImageSourceDiskEncryptionKeyRsaEncryptedKey(original["rsa_encrypted_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRsaEncryptedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rsaEncryptedKey"] = transformedRsaEncryptedKey
+	}
+
+	transformedKmsKeySelfLink, err := expandComputeImageSourceDiskEncryptionKeyKmsKeySelfLink(original["kms_key_self_link"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeySelfLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeySelfLink
+	}
+
+	transformedKmsKeyServiceAccount, err := expandComputeImageSourceDiskEncryptionKeyKmsKeyServiceAccount(original["kms_key_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyServiceAccount"] = transformedKmsKeyServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandComputeImageSourceDiskEncryptionKeyRawKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceDiskEncryptionKeyRsaEncryptedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceDiskEncryptionKeyKmsKeySelfLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceDiskEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeImageSourceImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	f, err := tpgresource.ParseGlobalFieldValue("images", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for source_image: %s", err)
 	}
 	return f.RelativeLink(), nil
+}
+
+func expandComputeImageSourceImageEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRawKey, err := expandComputeImageSourceImageEncryptionKeyRawKey(original["raw_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRawKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rawKey"] = transformedRawKey
+	}
+
+	transformedRsaEncryptedKey, err := expandComputeImageSourceImageEncryptionKeyRsaEncryptedKey(original["rsa_encrypted_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRsaEncryptedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rsaEncryptedKey"] = transformedRsaEncryptedKey
+	}
+
+	transformedKmsKeySelfLink, err := expandComputeImageSourceImageEncryptionKeyKmsKeySelfLink(original["kms_key_self_link"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeySelfLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeySelfLink
+	}
+
+	transformedKmsKeyServiceAccount, err := expandComputeImageSourceImageEncryptionKeyKmsKeyServiceAccount(original["kms_key_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyServiceAccount"] = transformedKmsKeyServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandComputeImageSourceImageEncryptionKeyRawKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceImageEncryptionKeyRsaEncryptedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceImageEncryptionKeyKmsKeySelfLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeImageSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -527,6 +657,62 @@ func expandComputeImageShieldedInstanceInitialStateDbxsContent(v interface{}, d 
 }
 
 func expandComputeImageShieldedInstanceInitialStateDbxsFileType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceSnapshotEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRawKey, err := expandComputeImageSourceSnapshotEncryptionKeyRawKey(original["raw_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRawKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rawKey"] = transformedRawKey
+	}
+
+	transformedRsaEncryptedKey, err := expandComputeImageSourceSnapshotEncryptionKeyRsaEncryptedKey(original["rsa_encrypted_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRsaEncryptedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rsaEncryptedKey"] = transformedRsaEncryptedKey
+	}
+
+	transformedKmsKeySelfLink, err := expandComputeImageSourceSnapshotEncryptionKeyKmsKeySelfLink(original["kms_key_self_link"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeySelfLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeySelfLink
+	}
+
+	transformedKmsKeyServiceAccount, err := expandComputeImageSourceSnapshotEncryptionKeyKmsKeyServiceAccount(original["kms_key_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyServiceAccount"] = transformedKmsKeyServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandComputeImageSourceSnapshotEncryptionKeyRawKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceSnapshotEncryptionKeyRsaEncryptedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceSnapshotEncryptionKeyKmsKeySelfLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeImageSourceSnapshotEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
