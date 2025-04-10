@@ -19,6 +19,8 @@ package memorystore
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -139,6 +141,18 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 		return nil, err
 	} else if v, ok := d.GetOkExists("mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(modeProp)) && (ok || !reflect.DeepEqual(v, modeProp)) {
 		obj["mode"] = modeProp
+	}
+	gcsSourceProp, err := expandMemorystoreInstanceGcsSource(d.Get("gcs_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gcs_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(gcsSourceProp)) && (ok || !reflect.DeepEqual(v, gcsSourceProp)) {
+		obj["gcsSource"] = gcsSourceProp
+	}
+	managedBackupSourceProp, err := expandMemorystoreInstanceManagedBackupSource(d.Get("managed_backup_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("managed_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(managedBackupSourceProp)) && (ok || !reflect.DeepEqual(v, managedBackupSourceProp)) {
+		obj["managedBackupSource"] = managedBackupSourceProp
 	}
 	labelsProp, err := expandMemorystoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -804,6 +818,53 @@ func expandMemorystoreInstanceCrossInstanceReplicationConfigUpdateTime(v interfa
 }
 
 func expandMemorystoreInstanceMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceGcsSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUris, err := expandMemorystoreInstanceGcsSourceUris(original["uris"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUris); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uris"] = transformedUris
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceGcsSourceUris(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandMemorystoreInstanceManagedBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBackup, err := expandMemorystoreInstanceManagedBackupSourceBackup(original["backup"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backup"] = transformedBackup
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceManagedBackupSourceBackup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
