@@ -121,6 +121,18 @@ func GetFirestoreIndexApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("api_scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(apiScopeProp)) && (ok || !reflect.DeepEqual(v, apiScopeProp)) {
 		obj["apiScope"] = apiScopeProp
 	}
+	densityProp, err := expandFirestoreIndexDensity(d.Get("density"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("density"); !tpgresource.IsEmptyValue(reflect.ValueOf(densityProp)) && (ok || !reflect.DeepEqual(v, densityProp)) {
+		obj["density"] = densityProp
+	}
+	multikeyProp, err := expandFirestoreIndexMultikey(d.Get("multikey"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("multikey"); !tpgresource.IsEmptyValue(reflect.ValueOf(multikeyProp)) && (ok || !reflect.DeepEqual(v, multikeyProp)) {
+		obj["multikey"] = multikeyProp
+	}
 	fieldsProp, err := expandFirestoreIndexFields(d.Get("fields"), d, config)
 	if err != nil {
 		return nil, err
@@ -154,6 +166,14 @@ func expandFirestoreIndexQueryScope(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandFirestoreIndexApiScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexDensity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexMultikey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
