@@ -74,6 +74,12 @@ func GetFirestoreDatabaseApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
+	databaseEditionProp, err := expandFirestoreDatabaseDatabaseEdition(d.Get("database_edition"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("database_edition"); !tpgresource.IsEmptyValue(reflect.ValueOf(databaseEditionProp)) && (ok || !reflect.DeepEqual(v, databaseEditionProp)) {
+		obj["databaseEdition"] = databaseEditionProp
+	}
 	concurrencyModeProp, err := expandFirestoreDatabaseConcurrencyMode(d.Get("concurrency_mode"), d, config)
 	if err != nil {
 		return nil, err
@@ -123,6 +129,10 @@ func expandFirestoreDatabaseLocationId(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandFirestoreDatabaseType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreDatabaseDatabaseEdition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
