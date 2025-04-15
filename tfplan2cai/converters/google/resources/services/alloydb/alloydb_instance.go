@@ -366,10 +366,21 @@ func expandAlloydbInstanceMachineConfig(v interface{}, d tpgresource.TerraformRe
 		transformed["cpuCount"] = transformedCpuCount
 	}
 
+	transformedMachineType, err := expandAlloydbInstanceMachineConfigMachineType(original["machine_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMachineType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["machineType"] = transformedMachineType
+	}
+
 	return transformed, nil
 }
 
 func expandAlloydbInstanceMachineConfigCpuCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstanceMachineConfigMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
