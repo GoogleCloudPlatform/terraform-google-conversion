@@ -18,11 +18,24 @@ package compute
 
 import (
 	"reflect"
+	"strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func SecurityProfileGroupPrefixSlashes(_, old, new string, _ *schema.ResourceData) bool {
+	if strings.HasPrefix(old, "//") {
+		old = old[1:]
+	}
+	if strings.HasPrefix(new, "//") {
+		new = new[1:]
+	}
+	return old == new
+}
 
 const ComputeNetworkFirewallPolicyRuleAssetType string = "compute.googleapis.com/NetworkFirewallPolicyRule"
 
