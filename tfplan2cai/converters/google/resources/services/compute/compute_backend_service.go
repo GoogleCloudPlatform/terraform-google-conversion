@@ -401,6 +401,12 @@ func GetComputeBackendServiceApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("tls_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(tlsSettingsProp)) && (ok || !reflect.DeepEqual(v, tlsSettingsProp)) {
 		obj["tlsSettings"] = tlsSettingsProp
 	}
+	maxStreamDurationProp, err := expandComputeBackendServiceMaxStreamDuration(d.Get("max_stream_duration"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("max_stream_duration"); !tpgresource.IsEmptyValue(reflect.ValueOf(maxStreamDurationProp)) && (ok || !reflect.DeepEqual(v, maxStreamDurationProp)) {
+		obj["maxStreamDuration"] = maxStreamDurationProp
+	}
 
 	return resourceComputeBackendServiceEncoder(d, config, obj)
 }
@@ -492,6 +498,13 @@ func expandComputeBackendServiceBackend(v interface{}, d tpgresource.TerraformRe
 			transformed["capacityScaler"] = transformedCapacityScaler
 		}
 
+		transformedPreference, err := expandComputeBackendServiceBackendPreference(original["preference"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPreference); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["preference"] = transformedPreference
+		}
+
 		transformedDescription, err := expandComputeBackendServiceBackendDescription(original["description"], d, config)
 		if err != nil {
 			return nil, err
@@ -572,6 +585,10 @@ func expandComputeBackendServiceBackendBalancingMode(v interface{}, d tpgresourc
 }
 
 func expandComputeBackendServiceBackendCapacityScaler(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceBackendPreference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -896,6 +913,13 @@ func expandComputeBackendServiceCdnPolicy(v interface{}, d tpgresource.Terraform
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedRequestCoalescing, err := expandComputeBackendServiceCdnPolicyRequestCoalescing(original["request_coalescing"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["requestCoalescing"] = transformedRequestCoalescing
+	}
+
 	transformedCacheKeyPolicy, err := expandComputeBackendServiceCdnPolicyCacheKeyPolicy(original["cache_key_policy"], d, config)
 	if err != nil {
 		return nil, err
@@ -967,6 +991,10 @@ func expandComputeBackendServiceCdnPolicy(v interface{}, d tpgresource.Terraform
 	}
 
 	return transformed, nil
+}
+
+func expandComputeBackendServiceCdnPolicyRequestCoalescing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1801,6 +1829,20 @@ func expandComputeBackendServiceLogConfig(v interface{}, d tpgresource.Terraform
 		transformed["sampleRate"] = transformedSampleRate
 	}
 
+	transformedOptionalMode, err := expandComputeBackendServiceLogConfigOptionalMode(original["optional_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOptionalMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["optionalMode"] = transformedOptionalMode
+	}
+
+	transformedOptionalFields, err := expandComputeBackendServiceLogConfigOptionalFields(original["optional_fields"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOptionalFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["optionalFields"] = transformedOptionalFields
+	}
+
 	return transformed, nil
 }
 
@@ -1809,6 +1851,14 @@ func expandComputeBackendServiceLogConfigEnable(v interface{}, d tpgresource.Ter
 }
 
 func expandComputeBackendServiceLogConfigSampleRate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceLogConfigOptionalMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceLogConfigOptionalFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1891,5 +1941,39 @@ func expandComputeBackendServiceTlsSettingsSubjectAltNamesUniformResourceIdentif
 }
 
 func expandComputeBackendServiceTlsSettingsAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSeconds, err := expandComputeBackendServiceMaxStreamDurationSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	transformedNanos, err := expandComputeBackendServiceMaxStreamDurationNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	return transformed, nil
+}
+
+func expandComputeBackendServiceMaxStreamDurationSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceMaxStreamDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
