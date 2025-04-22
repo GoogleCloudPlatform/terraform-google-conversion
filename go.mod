@@ -22,7 +22,11 @@ require (
 	google.golang.org/api v0.229.0
 )
 
-require github.com/spf13/cobra v1.8.1
+require (
+	cloud.google.com/go/storage v1.43.0
+	github.com/joselitofilho/hcl-parser-go v0.2.0
+	github.com/spf13/cobra v1.8.1
+)
 
 require (
 	bitbucket.org/creachadair/stringset v0.0.11 // indirect
