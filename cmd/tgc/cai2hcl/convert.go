@@ -54,7 +54,7 @@ var origConvertFunc = func(ctx context.Context, path string, errorLogger *zap.Lo
 		return nil, fmt.Errorf("error reading file %s: %s", path, err)
 	}
 
-	var assets []*caiasset.Asset
+	var assets []caiasset.Asset
 	if err := json.Unmarshal(assetPayload, &assets); err != nil {
 		return nil, err
 	}
