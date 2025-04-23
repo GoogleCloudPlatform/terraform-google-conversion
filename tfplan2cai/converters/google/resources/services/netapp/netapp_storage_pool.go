@@ -116,6 +116,24 @@ func GetNetappStoragePoolApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("allow_auto_tiering"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowAutoTieringProp)) && (ok || !reflect.DeepEqual(v, allowAutoTieringProp)) {
 		obj["allowAutoTiering"] = allowAutoTieringProp
 	}
+	customPerformanceEnabledProp, err := expandNetappStoragePoolCustomPerformanceEnabled(d.Get("custom_performance_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_performance_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(customPerformanceEnabledProp)) && (ok || !reflect.DeepEqual(v, customPerformanceEnabledProp)) {
+		obj["customPerformanceEnabled"] = customPerformanceEnabledProp
+	}
+	totalThroughputMibpsProp, err := expandNetappStoragePoolTotalThroughputMibps(d.Get("total_throughput_mibps"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("total_throughput_mibps"); !tpgresource.IsEmptyValue(reflect.ValueOf(totalThroughputMibpsProp)) && (ok || !reflect.DeepEqual(v, totalThroughputMibpsProp)) {
+		obj["totalThroughputMibps"] = totalThroughputMibpsProp
+	}
+	totalIopsProp, err := expandNetappStoragePoolTotalIops(d.Get("total_iops"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("total_iops"); !tpgresource.IsEmptyValue(reflect.ValueOf(totalIopsProp)) && (ok || !reflect.DeepEqual(v, totalIopsProp)) {
+		obj["totalIops"] = totalIopsProp
+	}
 	labelsProp, err := expandNetappStoragePoolEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -163,6 +181,18 @@ func expandNetappStoragePoolReplicaZone(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandNetappStoragePoolAllowAutoTiering(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolCustomPerformanceEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolTotalThroughputMibps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolTotalIops(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
