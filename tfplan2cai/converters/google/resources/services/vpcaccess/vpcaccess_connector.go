@@ -17,12 +17,22 @@
 package vpcaccess
 
 import (
+	"context"
 	"reflect"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func isInstanceShrinkage(_ context.Context, old, new, _ interface{}) bool {
+	// max and min instances can only increase in-place,
+	// so we must create a new resource if it is decreased.
+	if old == nil || new == nil {
+		return false
+	}
+	return new.(int) < old.(int)
+}
 
 const VPCAccessConnectorAssetType string = "vpcaccess.googleapis.com/Connector"
 
