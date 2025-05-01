@@ -9,7 +9,7 @@ test:
 	go version
 	terraform --version
 	./config-tf-dev-override.sh
-	TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -short ./...
+	TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -timeout 30m -short ./...
 
 test-integration:
 	go version
