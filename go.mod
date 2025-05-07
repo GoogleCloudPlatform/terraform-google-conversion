@@ -14,7 +14,7 @@ require (
 	github.com/hashicorp/terraform-json v0.24.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.0
 	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250507190345-87fd05b21a11
-	github.com/mitchellh/go-homedir v1.1.0 // indirect
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
 	github.com/zclconf/go-cty v1.16.2
@@ -22,7 +22,10 @@ require (
 	google.golang.org/api v0.229.0
 )
 
-require github.com/spf13/cobra v1.8.1
+require (
+	github.com/spf13/cobra v1.8.1
+	golang.org/x/oauth2 v0.29.0
+)
 
 require (
 	bitbucket.org/creachadair/stringset v0.0.11 // indirect
@@ -101,7 +104,6 @@ require (
 	golang.org/x/exp v0.0.0-20240409090435-93d18d7e34b8 // indirect
 	golang.org/x/mod v0.22.0 // indirect
 	golang.org/x/net v0.39.0 // indirect
-	golang.org/x/oauth2 v0.29.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
 	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
