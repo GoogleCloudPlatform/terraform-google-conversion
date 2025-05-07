@@ -62,6 +62,18 @@ func GetNetappBackupVaultApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	backupVaultTypeProp, err := expandNetappBackupVaultBackupVaultType(d.Get("backup_vault_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("backup_vault_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupVaultTypeProp)) && (ok || !reflect.DeepEqual(v, backupVaultTypeProp)) {
+		obj["backupVaultType"] = backupVaultTypeProp
+	}
+	backupRegionProp, err := expandNetappBackupVaultBackupRegion(d.Get("backup_region"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("backup_region"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupRegionProp)) && (ok || !reflect.DeepEqual(v, backupRegionProp)) {
+		obj["backupRegion"] = backupRegionProp
+	}
 	labelsProp, err := expandNetappBackupVaultEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -73,6 +85,14 @@ func GetNetappBackupVaultApiObject(d tpgresource.TerraformResourceData, config *
 }
 
 func expandNetappBackupVaultDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupVaultBackupVaultType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupVaultBackupRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
