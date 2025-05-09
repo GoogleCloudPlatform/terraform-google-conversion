@@ -739,6 +739,13 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d tpgr
 		transformed["conditionalCases"] = transformedConditionalCases
 	}
 
+	transformedEnableGenerativeFallback, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentEnableGenerativeFallback(original["enable_generative_fallback"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableGenerativeFallback); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableGenerativeFallback"] = transformedEnableGenerativeFallback
+	}
+
 	return transformed, nil
 }
 
@@ -1116,6 +1123,10 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentConditionalCasesCases(
 		return nil, err
 	}
 	return j, nil
+}
+
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentEnableGenerativeFallback(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDialogflowCXFlowEventHandlersTargetPage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
