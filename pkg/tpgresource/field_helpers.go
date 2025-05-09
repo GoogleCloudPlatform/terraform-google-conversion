@@ -5,7 +5,7 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 )
 
 const (

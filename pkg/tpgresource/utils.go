@@ -16,7 +16,7 @@ import (
 	"strings"
 	"time"
 
-	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/go-cty/cty"
