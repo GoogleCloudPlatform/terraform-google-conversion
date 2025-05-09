@@ -26,7 +26,7 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 
-	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/verify"
 
 	"golang.org/x/oauth2"
 	googleoauth "golang.org/x/oauth2/google"

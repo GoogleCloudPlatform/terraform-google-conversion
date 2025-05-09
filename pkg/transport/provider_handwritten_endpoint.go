@@ -2,7 +2,7 @@ package transport
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/verify"
 )
 
 // For generated resources, endpoint entries live in product-specific provider

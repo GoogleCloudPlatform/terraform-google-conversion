@@ -9,9 +9,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
-	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
-	"github.com/hashicorp/terraform-provider-google-beta/version"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/verify"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/version"
 )
 
 // Provider returns a *schema.Provider.
