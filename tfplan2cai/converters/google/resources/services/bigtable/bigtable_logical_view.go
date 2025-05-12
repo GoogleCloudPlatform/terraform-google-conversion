@@ -62,10 +62,20 @@ func GetBigtableLogicalViewApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("query"); !tpgresource.IsEmptyValue(reflect.ValueOf(queryProp)) && (ok || !reflect.DeepEqual(v, queryProp)) {
 		obj["query"] = queryProp
 	}
+	deletionProtectionProp, err := expandBigtableLogicalViewDeletionProtection(d.Get("deletion_protection"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deletion_protection"); !tpgresource.IsEmptyValue(reflect.ValueOf(deletionProtectionProp)) && (ok || !reflect.DeepEqual(v, deletionProtectionProp)) {
+		obj["deletionProtection"] = deletionProtectionProp
+	}
 
 	return obj, nil
 }
 
 func expandBigtableLogicalViewQuery(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigtableLogicalViewDeletionProtection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
