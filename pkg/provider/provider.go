@@ -382,11 +382,6 @@ func Provider() *schema.Provider {
 				Optional:     true,
 				ValidateFunc: transport_tpg.ValidateCustomEndpoint,
 			},
-			"contact_center_insights_custom_endpoint": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: transport_tpg.ValidateCustomEndpoint,
-			},
 			"container_analysis_custom_endpoint": {
 				Type:         schema.TypeString,
 				Optional:     true,
@@ -678,16 +673,6 @@ func Provider() *schema.Provider {
 				ValidateFunc: transport_tpg.ValidateCustomEndpoint,
 			},
 			"ml_engine_custom_endpoint": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: transport_tpg.ValidateCustomEndpoint,
-			},
-			"model_armor_custom_endpoint": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: transport_tpg.ValidateCustomEndpoint,
-			},
-			"model_armor_global_custom_endpoint": {
 				Type:         schema.TypeString,
 				Optional:     true,
 				ValidateFunc: transport_tpg.ValidateCustomEndpoint,
@@ -1010,7 +995,6 @@ func ResourceMap() map[string]*schema.Resource {
 func ResourceMapWithErrors() (map[string]*schema.Resource, error) {
 	return mergeResourceMaps(
 		handwrittenTfplan2caiResources,
-		generatedResources,
 	)
 }
 
@@ -1187,7 +1171,6 @@ func ProviderConfigure(ctx context.Context, d *schema.ResourceData, p *schema.Pr
 	config.ColabBasePath = d.Get("colab_custom_endpoint").(string)
 	config.ComposerBasePath = d.Get("composer_custom_endpoint").(string)
 	config.ComputeBasePath = d.Get("compute_custom_endpoint").(string)
-	config.ContactCenterInsightsBasePath = d.Get("contact_center_insights_custom_endpoint").(string)
 	config.ContainerAnalysisBasePath = d.Get("container_analysis_custom_endpoint").(string)
 	config.ContainerAttachedBasePath = d.Get("container_attached_custom_endpoint").(string)
 	config.CoreBillingBasePath = d.Get("core_billing_custom_endpoint").(string)
@@ -1247,8 +1230,6 @@ func ProviderConfigure(ctx context.Context, d *schema.ResourceData, p *schema.Pr
 	config.MemorystoreBasePath = d.Get("memorystore_custom_endpoint").(string)
 	config.MigrationCenterBasePath = d.Get("migration_center_custom_endpoint").(string)
 	config.MLEngineBasePath = d.Get("ml_engine_custom_endpoint").(string)
-	config.ModelArmorBasePath = d.Get("model_armor_custom_endpoint").(string)
-	config.ModelArmorGlobalBasePath = d.Get("model_armor_global_custom_endpoint").(string)
 	config.MonitoringBasePath = d.Get("monitoring_custom_endpoint").(string)
 	config.NetappBasePath = d.Get("netapp_custom_endpoint").(string)
 	config.NetworkConnectivityBasePath = d.Get("network_connectivity_custom_endpoint").(string)
@@ -1329,6 +1310,7 @@ func ProviderConfigure(ctx context.Context, d *schema.ResourceData, p *schema.Pr
 	if err := config.LoadAndValidate(stopCtx); err != nil {
 		return nil, diag.FromErr(err)
 	}
+
 	// Verify that universe domains match between credentials and configuration
 	if v, ok := d.GetOk("universe_domain"); ok {
 		if config.UniverseDomain == "" && v.(string) != "googleapis.com" { // v can't be "", as it wouldn't pass `ok` above

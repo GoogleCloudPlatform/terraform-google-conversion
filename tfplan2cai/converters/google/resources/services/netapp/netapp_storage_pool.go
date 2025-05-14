@@ -134,18 +134,6 @@ func GetNetappStoragePoolApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("total_iops"); !tpgresource.IsEmptyValue(reflect.ValueOf(totalIopsProp)) && (ok || !reflect.DeepEqual(v, totalIopsProp)) {
 		obj["totalIops"] = totalIopsProp
 	}
-	hotTierSizeGibProp, err := expandNetappStoragePoolHotTierSizeGib(d.Get("hot_tier_size_gib"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("hot_tier_size_gib"); !tpgresource.IsEmptyValue(reflect.ValueOf(hotTierSizeGibProp)) && (ok || !reflect.DeepEqual(v, hotTierSizeGibProp)) {
-		obj["hotTierSizeGib"] = hotTierSizeGibProp
-	}
-	enableHotTierAutoResizeProp, err := expandNetappStoragePoolEnableHotTierAutoResize(d.Get("enable_hot_tier_auto_resize"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("enable_hot_tier_auto_resize"); ok || !reflect.DeepEqual(v, enableHotTierAutoResizeProp) {
-		obj["enableHotTierAutoResize"] = enableHotTierAutoResizeProp
-	}
 	labelsProp, err := expandNetappStoragePoolEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -205,14 +193,6 @@ func expandNetappStoragePoolTotalThroughputMibps(v interface{}, d tpgresource.Te
 }
 
 func expandNetappStoragePoolTotalIops(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetappStoragePoolHotTierSizeGib(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetappStoragePoolEnableHotTierAutoResize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

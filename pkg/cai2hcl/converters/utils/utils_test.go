@@ -1,11 +1,10 @@
-package utils_test
+package utils
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/utils"
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/provider"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -19,7 +18,7 @@ func TestSubsetOfFieldsMapsToCtyValue(t *testing.T) {
 		"name": "forwarding-rule-1",
 	}
 
-	val, err := utils.MapToCtyValWithSchema(outputMap, schema)
+	val, err := MapToCtyValWithSchema(outputMap, schema)
 
 	assert.Nil(t, err)
 	assert.Equal(t, "forwarding-rule-1", val.GetAttr("name").AsString())
@@ -32,7 +31,7 @@ func TestWrongFieldTypeBreaksConversion(t *testing.T) {
 		"description": []string{"unknownValue"}, // string is required, not array.
 	}
 
-	val, err := utils.MapToCtyValWithSchema(outputMap, resourceSchema)
+	val, err := MapToCtyValWithSchema(outputMap, resourceSchema)
 
 	assert.True(t, val.IsNull())
 	assert.Contains(t, err.Error(), "string is required")
@@ -45,7 +44,7 @@ func TestNilValue(t *testing.T) {
 		"description": nil,
 	}
 
-	val, err := utils.MapToCtyValWithSchema(outputMap, resourceSchema)
+	val, err := MapToCtyValWithSchema(outputMap, resourceSchema)
 
 	assert.Nil(t, err)
 	assert.Equal(t, cty.Value(cty.StringVal("fr-1")), val.GetAttr("name"))
@@ -58,7 +57,7 @@ func TestNilValueInRequiredField(t *testing.T) {
 		"name": nil,
 	}
 
-	val, err := utils.MapToCtyValWithSchema(outputMap, resourceSchema)
+	val, err := MapToCtyValWithSchema(outputMap, resourceSchema)
 
 	// In future we may want to fail in this case.
 	assert.Nil(t, err)
@@ -72,7 +71,7 @@ func TestFieldsWithTypeSlice(t *testing.T) {
 		"resource_policies": []string{"test"},
 	}
 
-	val, err := utils.MapToCtyValWithSchema(outputMap, resourceSchema)
+	val, err := MapToCtyValWithSchema(outputMap, resourceSchema)
 
 	assert.Nil(t, err)
 
@@ -86,7 +85,7 @@ func TestMissingFieldDoesNotBreakConversionConversion(t *testing.T) {
 		"unknownField": "unknownValue",
 	}
 
-	val, err := utils.MapToCtyValWithSchema(outputMap, resourceSchema)
+	val, err := MapToCtyValWithSchema(outputMap, resourceSchema)
 
 	assert.Nil(t, err)
 
@@ -101,7 +100,7 @@ func TestFieldWithTypeSchemaSet(t *testing.T) {
 		"resource_policies": schema.NewSet(schema.HashString, tpgresource.ConvertStringArrToInterface([]string{"test"})),
 	}
 
-	val, err := utils.MapToCtyValWithSchema(outputMap, resourceSchema)
+	val, err := MapToCtyValWithSchema(outputMap, resourceSchema)
 
 	assert.Nil(t, err)
 	assert.Equal(t, []cty.Value{cty.StringVal("test")}, val.GetAttr("resource_policies").AsValueSlice())
@@ -129,7 +128,7 @@ func TestFieldWithTypeSchemaListAndNestedObject(t *testing.T) {
 		},
 	}
 
-	val, err := utils.MapToCtyValWithSchema(flattenedMap, resourceSchema)
+	val, err := MapToCtyValWithSchema(flattenedMap, resourceSchema)
 
 	assert.Nil(t, err)
 	assert.Equal(t,
@@ -168,7 +167,7 @@ func TestFieldWithTypeSchemaSetAndNestedObject(t *testing.T) {
 		}),
 	}
 
-	val, err := utils.MapToCtyValWithSchema(flattenedMap, resourceSchema)
+	val, err := MapToCtyValWithSchema(flattenedMap, resourceSchema)
 
 	assert.Nil(t, err)
 	assert.Equal(t,

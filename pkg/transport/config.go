@@ -14,9 +14,6 @@ import (
 	"strings"
 	"time"
 
-	"cloud.google.com/go/auth/credentials"
-	"cloud.google.com/go/auth/credentials/impersonate"
-	"cloud.google.com/go/auth/oauth2adapt"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
@@ -285,7 +282,6 @@ type Config struct {
 	ColabBasePath                    string
 	ComposerBasePath                 string
 	ComputeBasePath                  string
-	ContactCenterInsightsBasePath    string
 	ContainerAnalysisBasePath        string
 	ContainerAttachedBasePath        string
 	CoreBillingBasePath              string
@@ -345,8 +341,6 @@ type Config struct {
 	MemorystoreBasePath              string
 	MigrationCenterBasePath          string
 	MLEngineBasePath                 string
-	ModelArmorBasePath               string
-	ModelArmorGlobalBasePath         string
 	MonitoringBasePath               string
 	NetappBasePath                   string
 	NetworkConnectivityBasePath      string
@@ -463,7 +457,6 @@ const CloudTasksBasePathKey = "CloudTasks"
 const ColabBasePathKey = "Colab"
 const ComposerBasePathKey = "Composer"
 const ComputeBasePathKey = "Compute"
-const ContactCenterInsightsBasePathKey = "ContactCenterInsights"
 const ContainerAnalysisBasePathKey = "ContainerAnalysis"
 const ContainerAttachedBasePathKey = "ContainerAttached"
 const CoreBillingBasePathKey = "CoreBilling"
@@ -523,8 +516,6 @@ const MemcacheBasePathKey = "Memcache"
 const MemorystoreBasePathKey = "Memorystore"
 const MigrationCenterBasePathKey = "MigrationCenter"
 const MLEngineBasePathKey = "MLEngine"
-const ModelArmorBasePathKey = "ModelArmor"
-const ModelArmorGlobalBasePathKey = "ModelArmorGlobal"
 const MonitoringBasePathKey = "Monitoring"
 const NetappBasePathKey = "Netapp"
 const NetworkConnectivityBasePathKey = "NetworkConnectivity"
@@ -635,7 +626,6 @@ var DefaultBasePaths = map[string]string{
 	ColabBasePathKey:                    "https://{{location}}-aiplatform.googleapis.com/v1beta1/",
 	ComposerBasePathKey:                 "https://composer.googleapis.com/v1beta1/",
 	ComputeBasePathKey:                  "https://compute.googleapis.com/compute/beta/",
-	ContactCenterInsightsBasePathKey:    "https://contactcenterinsights.googleapis.com/v1/",
 	ContainerAnalysisBasePathKey:        "https://containeranalysis.googleapis.com/v1beta1/",
 	ContainerAttachedBasePathKey:        "https://{{location}}-gkemulticloud.googleapis.com/v1/",
 	CoreBillingBasePathKey:              "https://cloudbilling.googleapis.com/v1/",
@@ -695,8 +685,6 @@ var DefaultBasePaths = map[string]string{
 	MemorystoreBasePathKey:              "https://memorystore.googleapis.com/v1beta/",
 	MigrationCenterBasePathKey:          "https://migrationcenter.googleapis.com/v1/",
 	MLEngineBasePathKey:                 "https://ml.googleapis.com/v1/",
-	ModelArmorBasePathKey:               "https://modelarmor.{{location}}.rep.googleapis.com/v1beta/",
-	ModelArmorGlobalBasePathKey:         "https://modelarmor.googleapis.com/v1beta/",
 	MonitoringBasePathKey:               "https://monitoring.googleapis.com/",
 	NetappBasePathKey:                   "https://netapp.googleapis.com/v1beta1/",
 	NetworkConnectivityBasePathKey:      "https://networkconnectivity.googleapis.com/v1/",
@@ -1046,11 +1034,6 @@ func SetEndpointDefaults(d *schema.ResourceData) error {
 			"GOOGLE_COMPUTE_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[ComputeBasePathKey]))
 	}
-	if d.Get("contact_center_insights_custom_endpoint") == "" {
-		d.Set("contact_center_insights_custom_endpoint", MultiEnvDefault([]string{
-			"GOOGLE_CONTACT_CENTER_INSIGHTS_CUSTOM_ENDPOINT",
-		}, DefaultBasePaths[ContactCenterInsightsBasePathKey]))
-	}
 	if d.Get("container_analysis_custom_endpoint") == "" {
 		d.Set("container_analysis_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_CONTAINER_ANALYSIS_CUSTOM_ENDPOINT",
@@ -1345,16 +1328,6 @@ func SetEndpointDefaults(d *schema.ResourceData) error {
 		d.Set("ml_engine_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_ML_ENGINE_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[MLEngineBasePathKey]))
-	}
-	if d.Get("model_armor_custom_endpoint") == "" {
-		d.Set("model_armor_custom_endpoint", MultiEnvDefault([]string{
-			"GOOGLE_MODEL_ARMOR_CUSTOM_ENDPOINT",
-		}, DefaultBasePaths[ModelArmorBasePathKey]))
-	}
-	if d.Get("model_armor_global_custom_endpoint") == "" {
-		d.Set("model_armor_global_custom_endpoint", MultiEnvDefault([]string{
-			"GOOGLE_MODEL_ARMOR_GLOBAL_CUSTOM_ENDPOINT",
-		}, DefaultBasePaths[ModelArmorGlobalBasePathKey]))
 	}
 	if d.Get("monitoring_custom_endpoint") == "" {
 		d.Set("monitoring_custom_endpoint", MultiEnvDefault([]string{
@@ -1791,9 +1764,10 @@ func (c *Config) LoadAndValidate(ctx context.Context) error {
 		TimestampFormat: "2006/01/02 15:04:05",
 		LogFormat:       "%time% [%lvl%] %msg% \n",
 	})
-	logger.SetOutput(log.Writer())
 
 	alwaysLoggingDeciderClient := func(ctx context.Context, fullMethodName string) bool { return true }
+	grpc_logrus.ReplaceGrpcLogger(logrus.NewEntry(logger))
+
 	c.gRPCLoggingOptions = append(
 		c.gRPCLoggingOptions, option.WithGRPCDialOption(grpc.WithUnaryInterceptor(
 			grpc_logrus.PayloadUnaryClientInterceptor(logrus.NewEntry(logger), alwaysLoggingDeciderClient))),
@@ -2524,33 +2498,10 @@ func (c *Config) GetCredentials(clientScopes []string, initialCredentialsOnly bo
 		}
 
 		if c.ImpersonateServiceAccount != "" && !initialCredentialsOnly {
-			jsonCreds, err := credentials.DetectDefault(&credentials.DetectOptions{
-				Scopes:          clientScopes,
-				CredentialsJSON: []byte(contents),
-			})
+			opts := []option.ClientOption{option.WithCredentialsJSON([]byte(contents)), option.ImpersonateCredentials(c.ImpersonateServiceAccount, c.ImpersonateServiceAccountDelegates...), option.WithScopes(clientScopes...)}
+			creds, err := transport.Creds(context.TODO(), opts...)
 			if err != nil {
-				return googleoauth.Credentials{}, fmt.Errorf("error loading credentials: %s", err)
-			}
-
-			impersonateOpts := &impersonate.CredentialsOptions{
-				TargetPrincipal: c.ImpersonateServiceAccount,
-				Scopes:          clientScopes,
-				Delegates:       c.ImpersonateServiceAccountDelegates,
-				Credentials:     jsonCreds,
-			}
-
-			if c.UniverseDomain != "" && c.UniverseDomain != "googleapis.com" {
-				impersonateOpts.UniverseDomain = c.UniverseDomain
-			}
-
-			authCred, err := impersonate.NewCredentials(impersonateOpts)
-			if err != nil {
-				return googleoauth.Credentials{}, fmt.Errorf("error loading credentials: %s", err)
-			}
-
-			creds := oauth2adapt.Oauth2CredentialsFromAuthCredentials(authCred)
-			if err != nil {
-				return googleoauth.Credentials{}, fmt.Errorf("error loading credentials: %s", err)
+				return googleoauth.Credentials{}, err
 			}
 			return *creds, nil
 		}
@@ -2578,34 +2529,11 @@ func (c *Config) GetCredentials(clientScopes []string, initialCredentialsOnly bo
 	var creds *googleoauth.Credentials
 	var err error
 	if c.ImpersonateServiceAccount != "" && !initialCredentialsOnly {
-		defaultCreds, err := credentials.DetectDefault(&credentials.DetectOptions{
-			Scopes: clientScopes,
-		})
+		opts := option.ImpersonateCredentials(c.ImpersonateServiceAccount, c.ImpersonateServiceAccountDelegates...)
+		creds, err = transport.Creds(context.TODO(), opts, option.WithScopes(clientScopes...))
 		if err != nil {
-			return googleoauth.Credentials{}, fmt.Errorf("error loading credentials: %s", err)
+			return googleoauth.Credentials{}, err
 		}
-
-		impersonateOpts := &impersonate.CredentialsOptions{
-			TargetPrincipal: c.ImpersonateServiceAccount,
-			Scopes:          clientScopes,
-			Delegates:       c.ImpersonateServiceAccountDelegates,
-			Credentials:     defaultCreds,
-		}
-
-		if c.UniverseDomain != "" && c.UniverseDomain != "googleapis.com" {
-			impersonateOpts.UniverseDomain = c.UniverseDomain
-		}
-
-		authCred, err := impersonate.NewCredentials(impersonateOpts)
-		if err != nil {
-			return googleoauth.Credentials{}, fmt.Errorf("error loading credentials: %s", err)
-		}
-
-		creds := oauth2adapt.Oauth2CredentialsFromAuthCredentials(authCred)
-		if err != nil {
-			return googleoauth.Credentials{}, fmt.Errorf("error loading credentials: %s", err)
-		}
-		return *creds, nil
 	} else {
 		log.Printf("[INFO] Authenticating using DefaultClient...")
 		log.Printf("[INFO]   -- Scopes: %s", clientScopes)
@@ -2700,7 +2628,6 @@ func ConfigureBasePaths(c *Config) {
 	c.ColabBasePath = DefaultBasePaths[ColabBasePathKey]
 	c.ComposerBasePath = DefaultBasePaths[ComposerBasePathKey]
 	c.ComputeBasePath = DefaultBasePaths[ComputeBasePathKey]
-	c.ContactCenterInsightsBasePath = DefaultBasePaths[ContactCenterInsightsBasePathKey]
 	c.ContainerAnalysisBasePath = DefaultBasePaths[ContainerAnalysisBasePathKey]
 	c.ContainerAttachedBasePath = DefaultBasePaths[ContainerAttachedBasePathKey]
 	c.CoreBillingBasePath = DefaultBasePaths[CoreBillingBasePathKey]
@@ -2760,8 +2687,6 @@ func ConfigureBasePaths(c *Config) {
 	c.MemorystoreBasePath = DefaultBasePaths[MemorystoreBasePathKey]
 	c.MigrationCenterBasePath = DefaultBasePaths[MigrationCenterBasePathKey]
 	c.MLEngineBasePath = DefaultBasePaths[MLEngineBasePathKey]
-	c.ModelArmorBasePath = DefaultBasePaths[ModelArmorBasePathKey]
-	c.ModelArmorGlobalBasePath = DefaultBasePaths[ModelArmorGlobalBasePathKey]
 	c.MonitoringBasePath = DefaultBasePaths[MonitoringBasePathKey]
 	c.NetappBasePath = DefaultBasePaths[NetappBasePathKey]
 	c.NetworkConnectivityBasePath = DefaultBasePaths[NetworkConnectivityBasePathKey]
