@@ -116,6 +116,12 @@ func GetNetworkConnectivityInternalRangeApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("migration"); !tpgresource.IsEmptyValue(reflect.ValueOf(migrationProp)) && (ok || !reflect.DeepEqual(v, migrationProp)) {
 		obj["migration"] = migrationProp
 	}
+	immutableProp, err := expandNetworkConnectivityInternalRangeImmutable(d.Get("immutable"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("immutable"); !tpgresource.IsEmptyValue(reflect.ValueOf(immutableProp)) && (ok || !reflect.DeepEqual(v, immutableProp)) {
+		obj["immutable"] = immutableProp
+	}
 	labelsProp, err := expandNetworkConnectivityInternalRangeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -193,6 +199,10 @@ func expandNetworkConnectivityInternalRangeMigrationSource(v interface{}, d tpgr
 }
 
 func expandNetworkConnectivityInternalRangeMigrationTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityInternalRangeImmutable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
