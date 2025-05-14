@@ -305,6 +305,18 @@ func GetComputeBackendServiceApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("load_balancing_scheme"); !tpgresource.IsEmptyValue(reflect.ValueOf(loadBalancingSchemeProp)) && (ok || !reflect.DeepEqual(v, loadBalancingSchemeProp)) {
 		obj["loadBalancingScheme"] = loadBalancingSchemeProp
 	}
+	externalManagedMigrationStateProp, err := expandComputeBackendServiceExternalManagedMigrationState(d.Get("external_managed_migration_state"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("external_managed_migration_state"); !tpgresource.IsEmptyValue(reflect.ValueOf(externalManagedMigrationStateProp)) && (ok || !reflect.DeepEqual(v, externalManagedMigrationStateProp)) {
+		obj["externalManagedMigrationState"] = externalManagedMigrationStateProp
+	}
+	externalManagedMigrationTestingPercentageProp, err := expandComputeBackendServiceExternalManagedMigrationTestingPercentage(d.Get("external_managed_migration_testing_percentage"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("external_managed_migration_testing_percentage"); !tpgresource.IsEmptyValue(reflect.ValueOf(externalManagedMigrationTestingPercentageProp)) && (ok || !reflect.DeepEqual(v, externalManagedMigrationTestingPercentageProp)) {
+		obj["externalManagedMigrationTestingPercentage"] = externalManagedMigrationTestingPercentageProp
+	}
 	localityLbPolicyProp, err := expandComputeBackendServiceLocalityLbPolicy(d.Get("locality_lb_policy"), d, config)
 	if err != nil {
 		return nil, err
@@ -1283,6 +1295,14 @@ func expandComputeBackendServiceIpAddressSelectionPolicy(v interface{}, d tpgres
 }
 
 func expandComputeBackendServiceLoadBalancingScheme(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceExternalManagedMigrationState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceExternalManagedMigrationTestingPercentage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
