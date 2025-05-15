@@ -8,11 +8,11 @@ require (
 	github.com/apparentlymart/go-cidr v1.1.0
 	github.com/google/go-cmp v0.7.0
 	github.com/hashicorp/errwrap v1.1.0
-	github.com/hashicorp/go-cty v1.4.1-0.20200414143053-d3edf31b6320
+	github.com/hashicorp/go-cty v1.5.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/hashicorp/hcl/v2 v2.23.0
 	github.com/hashicorp/terraform-json v0.24.0
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.0
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0-beta.1
 	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250514230958-d43e48715564
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
@@ -73,7 +73,7 @@ require (
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
-	github.com/hashicorp/terraform-plugin-go v0.26.0 // indirect
+	github.com/hashicorp/terraform-plugin-go v0.27.0-alpha.1 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
 	github.com/hashicorp/terraform-plugin-testing v1.5.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -104,7 +104,7 @@ require (
 	go.uber.org/multierr v1.10.0 // indirect
 	go4.org/netipx v0.0.0-20231129151722-fdeea329fbba // indirect
 	golang.org/x/crypto v0.37.0 // indirect
-	golang.org/x/mod v0.22.0 // indirect
+	golang.org/x/mod v0.24.0 // indirect
 	golang.org/x/net v0.39.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
 	golang.org/x/sys v0.32.0 // indirect
