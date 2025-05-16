@@ -80,6 +80,12 @@ func GetAlloydbInstanceApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("availability_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(availabilityTypeProp)) && (ok || !reflect.DeepEqual(v, availabilityTypeProp)) {
 		obj["availabilityType"] = availabilityTypeProp
 	}
+	activationPolicyProp, err := expandAlloydbInstanceActivationPolicy(d.Get("activation_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("activation_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(activationPolicyProp)) && (ok || !reflect.DeepEqual(v, activationPolicyProp)) {
+		obj["activationPolicy"] = activationPolicyProp
+	}
 	instanceTypeProp, err := expandAlloydbInstanceInstanceType(d.Get("instance_type"), d, config)
 	if err != nil {
 		return nil, err
@@ -164,6 +170,10 @@ func expandAlloydbInstanceDatabaseFlags(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandAlloydbInstanceAvailabilityType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstanceActivationPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
