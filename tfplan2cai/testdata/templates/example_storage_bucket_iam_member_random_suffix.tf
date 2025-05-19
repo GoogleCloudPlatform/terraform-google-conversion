@@ -45,3 +45,9 @@ resource "google_storage_bucket_iam_member" "member" {
   role = "roles/storage.admin"
   member = "user:jane@example.com"
 }
+
+resource "google_storage_bucket_iam_member" "member1" {
+  bucket = google_storage_bucket.default.name
+  role = "roles/storage.viewer"
+  member = "user:jane1@example.com"
+}
