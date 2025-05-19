@@ -23,21 +23,21 @@
       }
     }
   },
-  {
-    "name": "//storage.googleapis.com/placeholder-c2WD8F2q",
-    "asset_type": "storage.googleapis.com/Bucket",
-    "ancestry_path": "{{.Ancestry}}/project/{{.Provider.project}}",
-    "iam_policy": {
-      "bindings": [
-        {
-          "role": "roles/storage.viewer",
-          "members": [
-            "user:jane1@example.com"
-          ]
-        }
-      ]
-    }
-  },
+  // {
+  //   "name": "//storage.googleapis.com/placeholder-c2WD8F2q",
+  //   "asset_type": "storage.googleapis.com/Bucket",
+  //   "ancestry_path": "{{.Ancestry}}/project/{{.Provider.project}}",
+  //   "iam_policy": {
+  //     "bindings": [
+  //       {
+  //         "role": "roles/storage.viewer",
+  //         "members": [
+  //           "user:jane1@example.com"
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // },
   {
     "name": "//storage.googleapis.com/placeholder-c2WD8F2q",
     "asset_type": "storage.googleapis.com/Bucket",
@@ -48,6 +48,12 @@
           "role": "roles/storage.admin",
           "members": [
             "user:jane@example.com"
+          ]
+        },
+        {
+          "role": "roles/storage.viewer",
+          "members": [
+            "user:jane1@example.com"
           ]
         }
       ]
