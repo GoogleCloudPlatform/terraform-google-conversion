@@ -194,6 +194,13 @@ func expandApigeeTargetServerSSLInfo(v interface{}, d tpgresource.TerraformResou
 		transformed["commonName"] = transformedCommonName
 	}
 
+	transformedEnforce, err := expandApigeeTargetServerSSLInfoEnforce(original["enforce"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnforce); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enforce"] = transformedEnforce
+	}
+
 	return transformed, nil
 }
 
@@ -260,6 +267,10 @@ func expandApigeeTargetServerSSLInfoCommonNameValue(v interface{}, d tpgresource
 }
 
 func expandApigeeTargetServerSSLInfoCommonNameWildcardMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeTargetServerSSLInfoEnforce(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

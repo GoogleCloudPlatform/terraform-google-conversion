@@ -54,6 +54,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/gkehub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/gkehub2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/healthcare"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/iap"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/logging"
@@ -318,6 +319,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_dataplex_entry_type_iam_policy":                         {dataplex.ResourceConverterDataplexEntryTypeIamPolicy()},
 		"google_dataplex_entry_type_iam_binding":                        {dataplex.ResourceConverterDataplexEntryTypeIamBinding()},
 		"google_dataplex_entry_type_iam_member":                         {dataplex.ResourceConverterDataplexEntryTypeIamMember()},
+		"google_dataplex_glossary_iam_policy":                           {dataplex.ResourceConverterDataplexGlossaryIamPolicy()},
+		"google_dataplex_glossary_iam_binding":                          {dataplex.ResourceConverterDataplexGlossaryIamBinding()},
+		"google_dataplex_glossary_iam_member":                           {dataplex.ResourceConverterDataplexGlossaryIamMember()},
 		"google_dataplex_lake_iam_policy":                               {dataplex.ResourceConverterDataplexLakeIamPolicy()},
 		"google_dataplex_lake_iam_binding":                              {dataplex.ResourceConverterDataplexLakeIamBinding()},
 		"google_dataplex_lake_iam_member":                               {dataplex.ResourceConverterDataplexLakeIamMember()},
@@ -366,6 +370,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_healthcare_consent_store_iam_policy":                    {healthcare.ResourceConverterHealthcareConsentStoreIamPolicy()},
 		"google_healthcare_consent_store_iam_binding":                   {healthcare.ResourceConverterHealthcareConsentStoreIamBinding()},
 		"google_healthcare_consent_store_iam_member":                    {healthcare.ResourceConverterHealthcareConsentStoreIamMember()},
+		"google_iam_workload_identity_pool_iam_policy":                  {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamPolicy()},
+		"google_iam_workload_identity_pool_iam_binding":                 {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamBinding()},
+		"google_iam_workload_identity_pool_iam_member":                  {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamMember()},
 		"google_iap_tunnel_iam_policy":                                  {iap.ResourceConverterIapTunnelIamPolicy()},
 		"google_iap_tunnel_iam_binding":                                 {iap.ResourceConverterIapTunnelIamBinding()},
 		"google_iap_tunnel_iam_member":                                  {iap.ResourceConverterIapTunnelIamMember()},
