@@ -116,12 +116,6 @@ func GetFilestoreInstanceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("tags"); !tpgresource.IsEmptyValue(reflect.ValueOf(tagsProp)) && (ok || !reflect.DeepEqual(v, tagsProp)) {
 		obj["tags"] = tagsProp
 	}
-	directoryServicesProp, err := expandFilestoreInstanceDirectoryServices(d.Get("directory_services"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("directory_services"); !tpgresource.IsEmptyValue(reflect.ValueOf(directoryServicesProp)) && (ok || !reflect.DeepEqual(v, directoryServicesProp)) {
-		obj["directoryServices"] = directoryServicesProp
-	}
 	labelsProp, err := expandFilestoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -432,81 +426,6 @@ func expandFilestoreInstanceTags(v interface{}, d tpgresource.TerraformResourceD
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandFilestoreInstanceDirectoryServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedLdap, err := expandFilestoreInstanceDirectoryServicesLdap(original["ldap"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedLdap); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["ldap"] = transformedLdap
-	}
-
-	return transformed, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedDomain, err := expandFilestoreInstanceDirectoryServicesLdapDomain(original["domain"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["domain"] = transformedDomain
-	}
-
-	transformedServers, err := expandFilestoreInstanceDirectoryServicesLdapServers(original["servers"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedServers); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["servers"] = transformedServers
-	}
-
-	transformedUsersOu, err := expandFilestoreInstanceDirectoryServicesLdapUsersOu(original["users_ou"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedUsersOu); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["usersOu"] = transformedUsersOu
-	}
-
-	transformedGroupsOu, err := expandFilestoreInstanceDirectoryServicesLdapGroupsOu(original["groups_ou"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedGroupsOu); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["groupsOu"] = transformedGroupsOu
-	}
-
-	return transformed, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdapDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdapServers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdapUsersOu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdapGroupsOu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandFilestoreInstanceEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
