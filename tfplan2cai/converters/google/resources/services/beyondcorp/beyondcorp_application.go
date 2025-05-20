@@ -68,12 +68,6 @@ func GetBeyondcorpApplicationApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("endpoint_matchers"); !tpgresource.IsEmptyValue(reflect.ValueOf(endpointMatchersProp)) && (ok || !reflect.DeepEqual(v, endpointMatchersProp)) {
 		obj["endpointMatchers"] = endpointMatchersProp
 	}
-	upstreamsProp, err := expandBeyondcorpApplicationUpstreams(d.Get("upstreams"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("upstreams"); !tpgresource.IsEmptyValue(reflect.ValueOf(upstreamsProp)) && (ok || !reflect.DeepEqual(v, upstreamsProp)) {
-		obj["upstreams"] = upstreamsProp
-	}
 
 	return obj, nil
 }
@@ -116,80 +110,5 @@ func expandBeyondcorpApplicationEndpointMatchersHostname(v interface{}, d tpgres
 }
 
 func expandBeyondcorpApplicationEndpointMatchersPorts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBeyondcorpApplicationUpstreams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedEgressPolicy, err := expandBeyondcorpApplicationUpstreamsEgressPolicy(original["egress_policy"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedEgressPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["egressPolicy"] = transformedEgressPolicy
-		}
-
-		transformedNetwork, err := expandBeyondcorpApplicationUpstreamsNetwork(original["network"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["network"] = transformedNetwork
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandBeyondcorpApplicationUpstreamsEgressPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedRegions, err := expandBeyondcorpApplicationUpstreamsEgressPolicyRegions(original["regions"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedRegions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["regions"] = transformedRegions
-	}
-
-	return transformed, nil
-}
-
-func expandBeyondcorpApplicationUpstreamsEgressPolicyRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandBeyondcorpApplicationUpstreamsNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedName, err := expandBeyondcorpApplicationUpstreamsNetworkName(original["name"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["name"] = transformedName
-	}
-
-	return transformed, nil
-}
-
-func expandBeyondcorpApplicationUpstreamsNetworkName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

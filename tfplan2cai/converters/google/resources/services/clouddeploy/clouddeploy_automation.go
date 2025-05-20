@@ -393,7 +393,7 @@ func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhases(v interface{}
 		transformedRollback, err := expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollback(original["rollback"], d, config)
 		if err != nil {
 			return nil, err
-		} else {
+		} else if val := reflect.ValueOf(transformedRollback); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["rollback"] = transformedRollback
 		}
 
@@ -449,13 +449,8 @@ func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryBackoffMo
 
 func expandClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollback(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 {
+	if len(l) == 0 || l[0] == nil {
 		return nil, nil
-	}
-
-	if l[0] == nil {
-		transformed := make(map[string]interface{})
-		return transformed, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})
