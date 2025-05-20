@@ -135,12 +135,6 @@ func GetDialogflowCXAgentApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("text_to_speech_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(textToSpeechSettingsProp)) && (ok || !reflect.DeepEqual(v, textToSpeechSettingsProp)) {
 		obj["textToSpeechSettings"] = textToSpeechSettingsProp
 	}
-	genAppBuilderSettingsProp, err := expandDialogflowCXAgentGenAppBuilderSettings(d.Get("gen_app_builder_settings"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("gen_app_builder_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(genAppBuilderSettingsProp)) && (ok || !reflect.DeepEqual(v, genAppBuilderSettingsProp)) {
-		obj["genAppBuilderSettings"] = genAppBuilderSettingsProp
-	}
 
 	return obj, nil
 }
@@ -545,27 +539,4 @@ func expandDialogflowCXAgentTextToSpeechSettingsSynthesizeSpeechConfigs(v interf
 		return nil, err
 	}
 	return m, nil
-}
-
-func expandDialogflowCXAgentGenAppBuilderSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedEngine, err := expandDialogflowCXAgentGenAppBuilderSettingsEngine(original["engine"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedEngine); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["engine"] = transformedEngine
-	}
-
-	return transformed, nil
-}
-
-func expandDialogflowCXAgentGenAppBuilderSettingsEngine(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
