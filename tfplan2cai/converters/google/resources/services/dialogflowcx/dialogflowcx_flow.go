@@ -99,6 +99,12 @@ func GetDialogflowCXFlowApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("advanced_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(advancedSettingsProp)) && (ok || !reflect.DeepEqual(v, advancedSettingsProp)) {
 		obj["advancedSettings"] = advancedSettingsProp
 	}
+	knowledgeConnectorSettingsProp, err := expandDialogflowCXFlowKnowledgeConnectorSettings(d.Get("knowledge_connector_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("knowledge_connector_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(knowledgeConnectorSettingsProp)) && (ok || !reflect.DeepEqual(v, knowledgeConnectorSettingsProp)) {
+		obj["knowledgeConnectorSettings"] = knowledgeConnectorSettingsProp
+	}
 	languageCodeProp, err := expandDialogflowCXFlowLanguageCode(d.Get("language_code"), d, config)
 	if err != nil {
 		return nil, err
@@ -733,6 +739,13 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d tpgr
 		transformed["conditionalCases"] = transformedConditionalCases
 	}
 
+	transformedEnableGenerativeFallback, err := expandDialogflowCXFlowEventHandlersTriggerFulfillmentEnableGenerativeFallback(original["enable_generative_fallback"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableGenerativeFallback); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableGenerativeFallback"] = transformedEnableGenerativeFallback
+	}
+
 	return transformed, nil
 }
 
@@ -1112,6 +1125,10 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentConditionalCasesCases(
 	return j, nil
 }
 
+func expandDialogflowCXFlowEventHandlersTriggerFulfillmentEnableGenerativeFallback(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDialogflowCXFlowEventHandlersTargetPage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -1382,6 +1399,887 @@ func expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableInteractionLoggi
 }
 
 func expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableConsentBasedRedaction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandDialogflowCXFlowKnowledgeConnectorSettingsEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedTriggerFulfillment, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillment(original["trigger_fulfillment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTriggerFulfillment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["triggerFulfillment"] = transformedTriggerFulfillment
+	}
+
+	transformedDataStoreConnections, err := expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnections(original["data_store_connections"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataStoreConnections); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataStoreConnections"] = transformedDataStoreConnections
+	}
+
+	transformedTargetPage, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTargetPage(original["target_page"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetPage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["targetPage"] = transformedTargetPage
+	}
+
+	transformedTargetFlow, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTargetFlow(original["target_flow"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetFlow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["targetFlow"] = transformedTargetFlow
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMessages, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessages(original["messages"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMessages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["messages"] = transformedMessages
+	}
+
+	transformedWebhook, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentWebhook(original["webhook"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhook); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhook"] = transformedWebhook
+	}
+
+	transformedReturnPartialResponses, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentReturnPartialResponses(original["return_partial_responses"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReturnPartialResponses); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["returnPartialResponses"] = transformedReturnPartialResponses
+	}
+
+	transformedTag, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentTag(original["tag"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tag"] = transformedTag
+	}
+
+	transformedSetParameterActions, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentSetParameterActions(original["set_parameter_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSetParameterActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["setParameterActions"] = transformedSetParameterActions
+	}
+
+	transformedConditionalCases, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentConditionalCases(original["conditional_cases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConditionalCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conditionalCases"] = transformedConditionalCases
+	}
+
+	transformedAdvancedSettings, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettings(original["advanced_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAdvancedSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["advancedSettings"] = transformedAdvancedSettings
+	}
+
+	transformedEnableGenerativeFallback, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentEnableGenerativeFallback(original["enable_generative_fallback"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableGenerativeFallback); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableGenerativeFallback"] = transformedEnableGenerativeFallback
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedChannel, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesChannel(original["channel"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedChannel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["channel"] = transformedChannel
+		}
+
+		transformedText, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesText(original["text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["text"] = transformedText
+		}
+
+		transformedPayload, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPayload(original["payload"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPayload); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["payload"] = transformedPayload
+		}
+
+		transformedConversationSuccess, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesConversationSuccess(original["conversation_success"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConversationSuccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["conversationSuccess"] = transformedConversationSuccess
+		}
+
+		transformedOutputAudioText, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioText(original["output_audio_text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOutputAudioText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["outputAudioText"] = transformedOutputAudioText
+		}
+
+		transformedLiveAgentHandoff, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesLiveAgentHandoff(original["live_agent_handoff"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLiveAgentHandoff); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["liveAgentHandoff"] = transformedLiveAgentHandoff
+		}
+
+		transformedEndInteraction, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesEndInteraction(original["end_interaction"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEndInteraction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["endInteraction"] = transformedEndInteraction
+		}
+
+		transformedPlayAudio, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPlayAudio(original["play_audio"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPlayAudio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["playAudio"] = transformedPlayAudio
+		}
+
+		transformedMixedAudio, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudio(original["mixed_audio"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMixedAudio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["mixedAudio"] = transformedMixedAudio
+		}
+
+		transformedTelephonyTransferCall, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTelephonyTransferCall(original["telephony_transfer_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTelephonyTransferCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["telephonyTransferCall"] = transformedTelephonyTransferCall
+		}
+
+		transformedKnowledgeInfoCard, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesKnowledgeInfoCard(original["knowledge_info_card"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["knowledgeInfoCard"] = transformedKnowledgeInfoCard
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedText, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPayload(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesConversationSuccessMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesConversationSuccessMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	transformedText, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioTextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	transformedSsml, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioTextSsml(original["ssml"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSsml); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ssml"] = transformedSsml
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioTextAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioTextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioTextSsml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMetadata, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesLiveAgentHandoffMetadata(original["metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadata"] = transformedMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesLiveAgentHandoffMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesEndInteraction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAudioUri, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPlayAudioAudioUri(original["audio_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudioUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["audioUri"] = transformedAudioUri
+	}
+
+	transformedAllowPlaybackInterruption, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPlayAudioAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPlayAudioAudioUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPlayAudioAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSegments, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegments(original["segments"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSegments); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["segments"] = transformedSegments
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegments(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAllowPlaybackInterruption, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegmentsAllowPlaybackInterruption(original["allow_playback_interruption"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAllowPlaybackInterruption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["allowPlaybackInterruption"] = transformedAllowPlaybackInterruption
+		}
+
+		transformedAudio, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegmentsAudio(original["audio"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAudio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["audio"] = transformedAudio
+		}
+
+		transformedUri, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegmentsUri(original["uri"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["uri"] = transformedUri
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegmentsAllowPlaybackInterruption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegmentsAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegmentsUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPhoneNumber, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTelephonyTransferCallPhoneNumber(original["phone_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumber"] = transformedPhoneNumber
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTelephonyTransferCallPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesKnowledgeInfoCard(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentWebhook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentReturnPartialResponses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedParameter, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentSetParameterActionsParameter(original["parameter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParameter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["parameter"] = transformedParameter
+		}
+
+		transformedValue, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentSetParameterActionsValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentSetParameterActionsParameter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentSetParameterActionsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCases, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentConditionalCasesCases(original["cases"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cases"] = transformedCases
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentConditionalCasesCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSpeechSettings, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettings(original["speech_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSpeechSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["speechSettings"] = transformedSpeechSettings
+	}
+
+	transformedDtmfSettings, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettings(original["dtmf_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDtmfSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dtmfSettings"] = transformedDtmfSettings
+	}
+
+	transformedLoggingSettings, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettings(original["logging_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLoggingSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["loggingSettings"] = transformedLoggingSettings
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEndpointerSensitivity, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettingsEndpointerSensitivity(original["endpointer_sensitivity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndpointerSensitivity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endpointerSensitivity"] = transformedEndpointerSensitivity
+	}
+
+	transformedNoSpeechTimeout, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettingsNoSpeechTimeout(original["no_speech_timeout"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNoSpeechTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["noSpeechTimeout"] = transformedNoSpeechTimeout
+	}
+
+	transformedUseTimeoutBasedEndpointing, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettingsUseTimeoutBasedEndpointing(original["use_timeout_based_endpointing"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseTimeoutBasedEndpointing); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useTimeoutBasedEndpointing"] = transformedUseTimeoutBasedEndpointing
+	}
+
+	transformedModels, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettingsModels(original["models"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedModels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["models"] = transformedModels
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettingsEndpointerSensitivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettingsNoSpeechTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettingsUseTimeoutBasedEndpointing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettingsModels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedMaxDigits, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsMaxDigits(original["max_digits"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxDigits); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxDigits"] = transformedMaxDigits
+	}
+
+	transformedFinishDigit, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsFinishDigit(original["finish_digit"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFinishDigit); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["finishDigit"] = transformedFinishDigit
+	}
+
+	transformedInterdigitTimeoutDuration, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsInterdigitTimeoutDuration(original["interdigit_timeout_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInterdigitTimeoutDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["interdigitTimeoutDuration"] = transformedInterdigitTimeoutDuration
+	}
+
+	transformedEndpointingTimeoutDuration, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsEndpointingTimeoutDuration(original["endpointing_timeout_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndpointingTimeoutDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endpointingTimeoutDuration"] = transformedEndpointingTimeoutDuration
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsMaxDigits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsFinishDigit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsInterdigitTimeoutDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettingsEndpointingTimeoutDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableStackdriverLogging, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettingsEnableStackdriverLogging(original["enable_stackdriver_logging"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableStackdriverLogging); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableStackdriverLogging"] = transformedEnableStackdriverLogging
+	}
+
+	transformedEnableInteractionLogging, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettingsEnableInteractionLogging(original["enable_interaction_logging"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableInteractionLogging); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableInteractionLogging"] = transformedEnableInteractionLogging
+	}
+
+	transformedEnableConsentBasedRedaction, err := expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettingsEnableConsentBasedRedaction(original["enable_consent_based_redaction"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableConsentBasedRedaction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableConsentBasedRedaction"] = transformedEnableConsentBasedRedaction
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettingsEnableStackdriverLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettingsEnableInteractionLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettingsEnableConsentBasedRedaction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentEnableGenerativeFallback(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDataStoreType, err := expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnectionsDataStoreType(original["data_store_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDataStoreType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dataStoreType"] = transformedDataStoreType
+		}
+
+		transformedDataStore, err := expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnectionsDataStore(original["data_store"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDataStore); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dataStore"] = transformedDataStore
+		}
+
+		transformedDocumentProcessingMode, err := expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnectionsDocumentProcessingMode(original["document_processing_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDocumentProcessingMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["documentProcessingMode"] = transformedDocumentProcessingMode
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnectionsDataStoreType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnectionsDataStore(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnectionsDocumentProcessingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTargetPage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXFlowKnowledgeConnectorSettingsTargetFlow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
