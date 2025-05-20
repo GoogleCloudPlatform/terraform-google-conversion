@@ -22,8 +22,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 
+	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	tpg_provider "github.com/hashicorp/terraform-provider-google-beta/google-beta/provider"
 )
 
 var provider *schema.Provider = tpg_provider.Provider()
