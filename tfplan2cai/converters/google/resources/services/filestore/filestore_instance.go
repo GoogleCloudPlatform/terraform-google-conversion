@@ -244,6 +244,13 @@ func expandFilestoreInstanceFileSharesNfsExportOptions(v interface{}, d tpgresou
 			transformed["anonGid"] = transformedAnonGid
 		}
 
+		transformedNetwork, err := expandFilestoreInstanceFileSharesNfsExportOptionsNetwork(original["network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["network"] = transformedNetwork
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -266,6 +273,10 @@ func expandFilestoreInstanceFileSharesNfsExportOptionsAnonUid(v interface{}, d t
 }
 
 func expandFilestoreInstanceFileSharesNfsExportOptionsAnonGid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceFileSharesNfsExportOptionsNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -314,6 +325,13 @@ func expandFilestoreInstanceNetworks(v interface{}, d tpgresource.TerraformResou
 			transformed["connectMode"] = transformedConnectMode
 		}
 
+		transformedPscConfig, err := expandFilestoreInstanceNetworksPscConfig(original["psc_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPscConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pscConfig"] = transformedPscConfig
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -336,6 +354,29 @@ func expandFilestoreInstanceNetworksIpAddresses(v interface{}, d tpgresource.Ter
 }
 
 func expandFilestoreInstanceNetworksConnectMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceNetworksPscConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEndpointProject, err := expandFilestoreInstanceNetworksPscConfigEndpointProject(original["endpoint_project"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndpointProject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endpointProject"] = transformedEndpointProject
+	}
+
+	return transformed, nil
+}
+
+func expandFilestoreInstanceNetworksPscConfigEndpointProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
