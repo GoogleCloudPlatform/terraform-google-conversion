@@ -11,9 +11,9 @@ require (
 	github.com/hashicorp/go-cty v1.5.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/hashicorp/hcl/v2 v2.23.0
-	github.com/hashicorp/terraform-json v0.24.1-0.20250314103308-f86d5e36f4ab
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.1
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250520225312-ccc3dd2af64b
+	github.com/hashicorp/terraform-json v0.25.0
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250522225255-cbf1a95d2b12
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
@@ -26,14 +26,14 @@ require (
 	cloud.google.com/go/bigtable v1.37.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
-	github.com/hashicorp/terraform-plugin-framework v1.13.0
+	github.com/hashicorp/terraform-plugin-framework v1.15.0
 	github.com/hashicorp/terraform-plugin-framework-validators v0.12.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.8.1
 	golang.org/x/exp v0.0.0-20240409090435-93d18d7e34b8
 	golang.org/x/oauth2 v0.30.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250505200425-f936aa4a68b2
-	google.golang.org/grpc v1.72.0
+	google.golang.org/grpc v1.72.1
 )
 
 require (
@@ -74,7 +74,7 @@ require (
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/hashicorp/go-version v1.7.0 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
-	github.com/hashicorp/terraform-plugin-go v0.27.0-alpha.1.0.20250325210248-fa8d1fe4306b // indirect
+	github.com/hashicorp/terraform-plugin-go v0.27.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
 	github.com/hashicorp/terraform-plugin-testing v1.5.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
