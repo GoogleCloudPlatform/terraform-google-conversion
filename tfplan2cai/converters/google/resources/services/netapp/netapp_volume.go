@@ -164,6 +164,12 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("tiering_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(tieringPolicyProp)) && (ok || !reflect.DeepEqual(v, tieringPolicyProp)) {
 		obj["tieringPolicy"] = tieringPolicyProp
 	}
+	hybridReplicationParametersProp, err := expandNetappVolumeHybridReplicationParameters(d.Get("hybrid_replication_parameters"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("hybrid_replication_parameters"); !tpgresource.IsEmptyValue(reflect.ValueOf(hybridReplicationParametersProp)) && (ok || !reflect.DeepEqual(v, hybridReplicationParametersProp)) {
+		obj["hybridReplicationParameters"] = hybridReplicationParametersProp
+	}
 	labelsProp, err := expandNetappVolumeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -734,6 +740,113 @@ func expandNetappVolumeTieringPolicyCoolingThresholdDays(v interface{}, d tpgres
 
 func expandNetappVolumeTieringPolicyTierAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedReplication, err := expandNetappVolumeHybridReplicationParametersReplication(original["replication"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReplication); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["replication"] = transformedReplication
+	}
+
+	transformedPeerVolumeName, err := expandNetappVolumeHybridReplicationParametersPeerVolumeName(original["peer_volume_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeerVolumeName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peerVolumeName"] = transformedPeerVolumeName
+	}
+
+	transformedPeerClusterName, err := expandNetappVolumeHybridReplicationParametersPeerClusterName(original["peer_cluster_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeerClusterName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peerClusterName"] = transformedPeerClusterName
+	}
+
+	transformedPeerSvmName, err := expandNetappVolumeHybridReplicationParametersPeerSvmName(original["peer_svm_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeerSvmName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peerSvmName"] = transformedPeerSvmName
+	}
+
+	transformedPeerIpAddresses, err := expandNetappVolumeHybridReplicationParametersPeerIpAddresses(original["peer_ip_addresses"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeerIpAddresses); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peerIpAddresses"] = transformedPeerIpAddresses
+	}
+
+	transformedClusterLocation, err := expandNetappVolumeHybridReplicationParametersClusterLocation(original["cluster_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClusterLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clusterLocation"] = transformedClusterLocation
+	}
+
+	transformedDescription, err := expandNetappVolumeHybridReplicationParametersDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedLabels, err := expandNetappVolumeHybridReplicationParametersLabels(original["labels"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labels"] = transformedLabels
+	}
+
+	return transformed, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersReplication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersPeerVolumeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersPeerClusterName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersPeerSvmName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersPeerIpAddresses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersClusterLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandNetappVolumeEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
