@@ -60,6 +60,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/notebooks"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/orgpolicy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/pubsublite"
@@ -144,6 +145,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_datastream_private_connection":                          {datastream.ResourceConverterDatastreamPrivateConnection()},
 		"google_datastream_stream":                                      {datastream.ResourceConverterDatastreamStream()},
 		"google_firebase_project":                                       {firebase.ResourceConverterFirebaseProject()},
+		"google_org_policy_custom_constraint":                           {orgpolicy.ResourceConverterOrgPolicyCustomConstraint()},
 		"google_org_policy_policy":                                      {resourcemanager.ResourceConverterOrgPolicyPolicy()},
 		"google_redis_instance":                                         {redis.ResourceConverterRedisInstance()},
 		"google_spanner_database":                                       {spanner.ResourceConverterSpannerDatabase()},
