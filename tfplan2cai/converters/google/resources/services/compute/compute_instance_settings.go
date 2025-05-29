@@ -80,34 +80,7 @@ func GetComputeInstanceSettingsApiObject(d tpgresource.TerraformResourceData, co
 }
 
 func expandComputeInstanceSettingsFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	project, err := tpgresource.GetProject(d, config)
-	if err != nil {
-		return nil, err
-	}
-
-	userAgent, err := tpgresource.GenerateUserAgentString(d, config.UserAgent)
-	if err != nil {
-		return nil, err
-	}
-
-	url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/zones/{{zone}}/instanceSettings/{{name}}")
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
-		Config:    config,
-		Method:    "GET",
-		Project:   project,
-		RawURL:    url,
-		UserAgent: userAgent,
-	})
-
-	if err != nil {
-		return nil, err
-	}
-
-	return res["fingerprint"], nil
+	return v, nil
 }
 
 func expandComputeInstanceSettingsMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
