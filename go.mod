@@ -5,6 +5,7 @@ go 1.23.0
 toolchain go1.23.5
 
 require (
+	cloud.google.com/go/storage v1.50.0
 	github.com/apparentlymart/go-cidr v1.1.0
 	github.com/google/go-cmp v0.7.0
 	github.com/hashicorp/errwrap v1.1.0
@@ -13,7 +14,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.23.0
 	github.com/hashicorp/terraform-json v0.24.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.0
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250530014058-8b1490d5bb8c
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250530031113-51445de560b4
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
@@ -26,7 +27,6 @@ require (
 	cloud.google.com/go/auth v0.16.1
 	cloud.google.com/go/auth/oauth2adapt v0.2.8
 	cloud.google.com/go/bigtable v1.37.0
-	cloud.google.com/go/storage v1.50.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/terraform-plugin-framework v1.13.0
