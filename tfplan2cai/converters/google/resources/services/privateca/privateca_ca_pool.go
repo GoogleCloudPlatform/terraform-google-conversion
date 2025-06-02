@@ -104,6 +104,13 @@ func expandPrivatecaCaPoolIssuancePolicy(v interface{}, d tpgresource.TerraformR
 		transformed["allowedKeyTypes"] = transformedAllowedKeyTypes
 	}
 
+	transformedBackdateDuration, err := expandPrivatecaCaPoolIssuancePolicyBackdateDuration(original["backdate_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackdateDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backdateDuration"] = transformedBackdateDuration
+	}
+
 	transformedMaximumLifetime, err := expandPrivatecaCaPoolIssuancePolicyMaximumLifetime(original["maximum_lifetime"], d, config)
 	if err != nil {
 		return nil, err
@@ -218,6 +225,10 @@ func expandPrivatecaCaPoolIssuancePolicyAllowedKeyTypesEllipticCurve(v interface
 }
 
 func expandPrivatecaCaPoolIssuancePolicyAllowedKeyTypesEllipticCurveSignatureAlgorithm(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCaPoolIssuancePolicyBackdateDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

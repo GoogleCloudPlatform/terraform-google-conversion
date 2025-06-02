@@ -17,7 +17,10 @@
 package memorystore
 
 import (
+	"log"
 	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
@@ -140,6 +143,18 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(modeProp)) && (ok || !reflect.DeepEqual(v, modeProp)) {
 		obj["mode"] = modeProp
 	}
+	gcsSourceProp, err := expandMemorystoreInstanceGcsSource(d.Get("gcs_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gcs_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(gcsSourceProp)) && (ok || !reflect.DeepEqual(v, gcsSourceProp)) {
+		obj["gcsSource"] = gcsSourceProp
+	}
+	managedBackupSourceProp, err := expandMemorystoreInstanceManagedBackupSource(d.Get("managed_backup_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("managed_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(managedBackupSourceProp)) && (ok || !reflect.DeepEqual(v, managedBackupSourceProp)) {
+		obj["managedBackupSource"] = managedBackupSourceProp
+	}
 	labelsProp, err := expandMemorystoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -151,34 +166,73 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 }
 
 func resourceMemorystoreInstanceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	v, ok := d.GetOk("desired_psc_auto_connections")
-	if !ok {
-		return obj, nil // No desired connections, nothing to update
+	// Handles desired_auto_created_endpoints virtual field
+	v, ok := d.GetOk("desired_auto_created_endpoints")
+	if ok {
+		l := v.([]interface{})
+		if len(l) > 0 {
+			endpoints := make([]interface{}, 1)
+			endpointObj := make(map[string]interface{})
+			connections := make([]interface{}, 0, len(l))
+
+			for _, raw := range l {
+				if raw == nil {
+					continue
+				}
+				desiredEndpoint := raw.(map[string]interface{})
+				connectionObj := make(map[string]interface{})
+				pscAutoConnection := make(map[string]interface{})
+
+				projectId := desiredEndpoint["project_id"]
+				if val := reflect.ValueOf(projectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+					pscAutoConnection["projectId"] = projectId
+				}
+
+				network := desiredEndpoint["network"]
+				if val := reflect.ValueOf(network); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+					pscAutoConnection["network"] = network
+				}
+
+				connectionObj["pscAutoConnection"] = pscAutoConnection
+				connections = append(connections, connectionObj)
+			}
+
+			endpointObj["connections"] = connections
+			endpoints[0] = endpointObj
+			obj["endpoints"] = endpoints
+			log.Printf("[DEBUG] You are setting desired_auto_created_endpoints in encoder %#v", endpoints)
+
+		}
+		// Handles desired_auto_created_endpoints virtual field
+	} else if v, ok := d.GetOk("desired_psc_auto_connections"); ok {
+		l := v.([]interface{})
+		req := make([]interface{}, 0, len(l))
+		for _, raw := range l {
+			if raw == nil {
+				continue
+			}
+			desiredConnection := raw.(map[string]interface{})
+			connectionReq := make(map[string]interface{})
+
+			projectId := desiredConnection["project_id"]
+			if val := reflect.ValueOf(projectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+				connectionReq["projectId"] = projectId
+			}
+
+			network := desiredConnection["network"]
+			if val := reflect.ValueOf(network); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+				connectionReq["network"] = network
+			}
+
+			req = append(req, connectionReq)
+		}
+
+		obj["pscAutoConnections"] = req
+		log.Printf("[DEBUG] You are setting desired_psc_auto_connections in encoder  %#v", req)
+
 	}
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		desiredConnection := raw.(map[string]interface{})
-		connectionReq := make(map[string]interface{})
 
-		projectId := desiredConnection["project_id"]
-		if val := reflect.ValueOf(projectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			connectionReq["projectId"] = projectId
-		}
-
-		network := desiredConnection["network"]
-		if val := reflect.ValueOf(network); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			connectionReq["network"] = network
-		}
-
-		req = append(req, connectionReq)
-	}
-
-	obj["pscAutoConnections"] = req
-	// if the automated_backup_config is not defined, automatedBackupMode needs to be passed and set to DISABLED in the expand
+	// If the automated_backup_config is not defined, automatedBackupMode needs to be passed and set to DISABLED in the expand
 	if obj["automatedBackupConfig"] == nil {
 		config := meta.(*transport_tpg.Config)
 		automatedBackupConfigProp, _ := expandMemorystoreInstanceAutomatedBackupConfig(d.Get("automated_backup_config"), d, config)
@@ -804,6 +858,53 @@ func expandMemorystoreInstanceCrossInstanceReplicationConfigUpdateTime(v interfa
 }
 
 func expandMemorystoreInstanceMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceGcsSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUris, err := expandMemorystoreInstanceGcsSourceUris(original["uris"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUris); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uris"] = transformedUris
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceGcsSourceUris(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandMemorystoreInstanceManagedBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBackup, err := expandMemorystoreInstanceManagedBackupSourceBackup(original["backup"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backup"] = transformedBackup
+	}
+
+	return transformed, nil
+}
+
+func expandMemorystoreInstanceManagedBackupSourceBackup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

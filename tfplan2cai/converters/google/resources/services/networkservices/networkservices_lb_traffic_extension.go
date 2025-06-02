@@ -220,6 +220,13 @@ func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensions(v interfac
 			transformed["supportedEvents"] = transformedSupportedEvents
 		}
 
+		transformedMetadata, err := expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsMetadata(original["metadata"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["metadata"] = transformedMetadata
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -251,6 +258,17 @@ func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsForwardHead
 
 func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsSupportedEvents(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandNetworkServicesLbTrafficExtensionLoadBalancingScheme(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

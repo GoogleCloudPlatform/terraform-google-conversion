@@ -153,6 +153,30 @@ func GetComputeInterconnectAttachmentApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("label_fingerprint"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
 		obj["labelFingerprint"] = labelFingerprintProp
 	}
+	candidateCloudRouterIpAddressProp, err := expandComputeInterconnectAttachmentCandidateCloudRouterIpAddress(d.Get("candidate_cloud_router_ip_address"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("candidate_cloud_router_ip_address"); !tpgresource.IsEmptyValue(reflect.ValueOf(candidateCloudRouterIpAddressProp)) && (ok || !reflect.DeepEqual(v, candidateCloudRouterIpAddressProp)) {
+		obj["candidateCloudRouterIpAddress"] = candidateCloudRouterIpAddressProp
+	}
+	candidateCustomerRouterIpAddressProp, err := expandComputeInterconnectAttachmentCandidateCustomerRouterIpAddress(d.Get("candidate_customer_router_ip_address"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("candidate_customer_router_ip_address"); !tpgresource.IsEmptyValue(reflect.ValueOf(candidateCustomerRouterIpAddressProp)) && (ok || !reflect.DeepEqual(v, candidateCustomerRouterIpAddressProp)) {
+		obj["candidateCustomerRouterIpAddress"] = candidateCustomerRouterIpAddressProp
+	}
+	candidateCloudRouterIpv6AddressProp, err := expandComputeInterconnectAttachmentCandidateCloudRouterIpv6Address(d.Get("candidate_cloud_router_ipv6_address"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("candidate_cloud_router_ipv6_address"); !tpgresource.IsEmptyValue(reflect.ValueOf(candidateCloudRouterIpv6AddressProp)) && (ok || !reflect.DeepEqual(v, candidateCloudRouterIpv6AddressProp)) {
+		obj["candidateCloudRouterIpv6Address"] = candidateCloudRouterIpv6AddressProp
+	}
+	candidateCustomerRouterIpv6AddressProp, err := expandComputeInterconnectAttachmentCandidateCustomerRouterIpv6Address(d.Get("candidate_customer_router_ipv6_address"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("candidate_customer_router_ipv6_address"); !tpgresource.IsEmptyValue(reflect.ValueOf(candidateCustomerRouterIpv6AddressProp)) && (ok || !reflect.DeepEqual(v, candidateCustomerRouterIpv6AddressProp)) {
+		obj["candidateCustomerRouterIpv6Address"] = candidateCustomerRouterIpv6AddressProp
+	}
 	labelsProp, err := expandComputeInterconnectAttachmentEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -246,6 +270,22 @@ func expandComputeInterconnectAttachmentSubnetLength(v interface{}, d tpgresourc
 }
 
 func expandComputeInterconnectAttachmentLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAttachmentCandidateCloudRouterIpAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAttachmentCandidateCustomerRouterIpAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAttachmentCandidateCloudRouterIpv6Address(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAttachmentCandidateCustomerRouterIpv6Address(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

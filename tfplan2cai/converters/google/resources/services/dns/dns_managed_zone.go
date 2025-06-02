@@ -391,6 +391,13 @@ func expandDNSManagedZoneForwardingConfigTargetNameServers(v interface{}, d tpgr
 			transformed["ipv4Address"] = transformedIpv4Address
 		}
 
+		transformedDomainName, err := expandDNSManagedZoneForwardingConfigTargetNameServersDomainName(original["domain_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDomainName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["domainName"] = transformedDomainName
+		}
+
 		transformedForwardingPath, err := expandDNSManagedZoneForwardingConfigTargetNameServersForwardingPath(original["forwarding_path"], d, config)
 		if err != nil {
 			return nil, err
@@ -404,6 +411,10 @@ func expandDNSManagedZoneForwardingConfigTargetNameServers(v interface{}, d tpgr
 }
 
 func expandDNSManagedZoneForwardingConfigTargetNameServersIpv4Address(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDNSManagedZoneForwardingConfigTargetNameServersDomainName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

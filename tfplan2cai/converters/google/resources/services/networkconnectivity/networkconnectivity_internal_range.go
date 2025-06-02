@@ -98,6 +98,12 @@ func GetNetworkConnectivityInternalRangeApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("target_cidr_range"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetCidrRangeProp)) && (ok || !reflect.DeepEqual(v, targetCidrRangeProp)) {
 		obj["targetCidrRange"] = targetCidrRangeProp
 	}
+	excludeCidrRangesProp, err := expandNetworkConnectivityInternalRangeExcludeCidrRanges(d.Get("exclude_cidr_ranges"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("exclude_cidr_ranges"); !tpgresource.IsEmptyValue(reflect.ValueOf(excludeCidrRangesProp)) && (ok || !reflect.DeepEqual(v, excludeCidrRangesProp)) {
+		obj["excludeCidrRanges"] = excludeCidrRangesProp
+	}
 	overlapsProp, err := expandNetworkConnectivityInternalRangeOverlaps(d.Get("overlaps"), d, config)
 	if err != nil {
 		return nil, err
@@ -109,6 +115,12 @@ func GetNetworkConnectivityInternalRangeApiObject(d tpgresource.TerraformResourc
 		return nil, err
 	} else if v, ok := d.GetOkExists("migration"); !tpgresource.IsEmptyValue(reflect.ValueOf(migrationProp)) && (ok || !reflect.DeepEqual(v, migrationProp)) {
 		obj["migration"] = migrationProp
+	}
+	immutableProp, err := expandNetworkConnectivityInternalRangeImmutable(d.Get("immutable"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("immutable"); !tpgresource.IsEmptyValue(reflect.ValueOf(immutableProp)) && (ok || !reflect.DeepEqual(v, immutableProp)) {
+		obj["immutable"] = immutableProp
 	}
 	labelsProp, err := expandNetworkConnectivityInternalRangeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -148,6 +160,10 @@ func expandNetworkConnectivityInternalRangeTargetCidrRange(v interface{}, d tpgr
 	return v, nil
 }
 
+func expandNetworkConnectivityInternalRangeExcludeCidrRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandNetworkConnectivityInternalRangeOverlaps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -183,6 +199,10 @@ func expandNetworkConnectivityInternalRangeMigrationSource(v interface{}, d tpgr
 }
 
 func expandNetworkConnectivityInternalRangeMigrationTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityInternalRangeImmutable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

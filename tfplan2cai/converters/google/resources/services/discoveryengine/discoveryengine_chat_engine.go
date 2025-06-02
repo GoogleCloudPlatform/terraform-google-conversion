@@ -131,6 +131,13 @@ func expandDiscoveryEngineChatEngineChatEngineConfig(v interface{}, d tpgresourc
 		transformed["dialogflowAgentToLink"] = transformedDialogflowAgentToLink
 	}
 
+	transformedAllowCrossRegion, err := expandDiscoveryEngineChatEngineChatEngineConfigAllowCrossRegion(original["allow_cross_region"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowCrossRegion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowCrossRegion"] = transformedAllowCrossRegion
+	}
+
 	return transformed, nil
 }
 
@@ -191,6 +198,10 @@ func expandDiscoveryEngineChatEngineChatEngineConfigAgentCreationConfigLocation(
 }
 
 func expandDiscoveryEngineChatEngineChatEngineConfigDialogflowAgentToLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineChatEngineChatEngineConfigAllowCrossRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

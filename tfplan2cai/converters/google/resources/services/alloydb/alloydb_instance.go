@@ -80,6 +80,12 @@ func GetAlloydbInstanceApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("availability_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(availabilityTypeProp)) && (ok || !reflect.DeepEqual(v, availabilityTypeProp)) {
 		obj["availabilityType"] = availabilityTypeProp
 	}
+	activationPolicyProp, err := expandAlloydbInstanceActivationPolicy(d.Get("activation_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("activation_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(activationPolicyProp)) && (ok || !reflect.DeepEqual(v, activationPolicyProp)) {
+		obj["activationPolicy"] = activationPolicyProp
+	}
 	instanceTypeProp, err := expandAlloydbInstanceInstanceType(d.Get("instance_type"), d, config)
 	if err != nil {
 		return nil, err
@@ -164,6 +170,10 @@ func expandAlloydbInstanceDatabaseFlags(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandAlloydbInstanceAvailabilityType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstanceActivationPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -292,6 +302,13 @@ func expandAlloydbInstanceObservabilityConfig(v interface{}, d tpgresource.Terra
 		transformed["trackActiveQueries"] = transformedTrackActiveQueries
 	}
 
+	transformedAssistiveExperiencesEnabled, err := expandAlloydbInstanceObservabilityConfigAssistiveExperiencesEnabled(original["assistive_experiences_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAssistiveExperiencesEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["assistiveExperiencesEnabled"] = transformedAssistiveExperiencesEnabled
+	}
+
 	return transformed, nil
 }
 
@@ -324,6 +341,10 @@ func expandAlloydbInstanceObservabilityConfigQueryPlansPerMinute(v interface{}, 
 }
 
 func expandAlloydbInstanceObservabilityConfigTrackActiveQueries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstanceObservabilityConfigAssistiveExperiencesEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -366,10 +387,21 @@ func expandAlloydbInstanceMachineConfig(v interface{}, d tpgresource.TerraformRe
 		transformed["cpuCount"] = transformedCpuCount
 	}
 
+	transformedMachineType, err := expandAlloydbInstanceMachineConfigMachineType(original["machine_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMachineType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["machineType"] = transformedMachineType
+	}
+
 	return transformed, nil
 }
 
 func expandAlloydbInstanceMachineConfigCpuCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstanceMachineConfigMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -463,6 +495,13 @@ func expandAlloydbInstancePscInstanceConfig(v interface{}, d tpgresource.Terrafo
 		transformed["pscInterfaceConfigs"] = transformedPscInterfaceConfigs
 	}
 
+	transformedPscAutoConnections, err := expandAlloydbInstancePscInstanceConfigPscAutoConnections(original["psc_auto_connections"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscAutoConnections); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscAutoConnections"] = transformedPscAutoConnections
+	}
+
 	return transformed, nil
 }
 
@@ -501,6 +540,76 @@ func expandAlloydbInstancePscInstanceConfigPscInterfaceConfigs(v interface{}, d 
 }
 
 func expandAlloydbInstancePscInstanceConfigPscInterfaceConfigsNetworkAttachmentResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedConsumerProject, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerProject(original["consumer_project"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConsumerProject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["consumerProject"] = transformedConsumerProject
+		}
+
+		transformedConsumerNetwork, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetwork(original["consumer_network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConsumerNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["consumerNetwork"] = transformedConsumerNetwork
+		}
+
+		transformedIpAddress, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsIpAddress(original["ip_address"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpAddress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipAddress"] = transformedIpAddress
+		}
+
+		transformedStatus, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsStatus(original["status"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedStatus); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["status"] = transformedStatus
+		}
+
+		transformedConsumerNetworkStatus, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetworkStatus(original["consumer_network_status"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConsumerNetworkStatus); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["consumerNetworkStatus"] = transformedConsumerNetworkStatus
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsIpAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsStatus(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetworkStatus(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
