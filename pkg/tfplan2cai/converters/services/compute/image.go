@@ -5,9 +5,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
-	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
-	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/verify"
 
 	"google.golang.org/api/googleapi"
 )
@@ -105,6 +105,9 @@ func ResolveImage(c *transport_tpg.Config, project, name, userAgent string) (str
 			}
 			break
 		}
+	}
+	if c.UniverseDomain != "" && c.UniverseDomain != "googleapis.com" {
+		resolveImageLink = regexp.MustCompile(fmt.Sprintf("^https://compute.%s/compute/[a-z0-9]+/projects/(%s)/global/images/(%s)", c.UniverseDomain, verify.ProjectRegex, resolveImageImageRegex))
 	}
 	switch {
 	case resolveImageLink.MatchString(name): // https://www.googleapis.com/compute/v1/projects/xyz/global/images/xyz

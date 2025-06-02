@@ -116,6 +116,18 @@ func GetFilestoreInstanceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("tags"); !tpgresource.IsEmptyValue(reflect.ValueOf(tagsProp)) && (ok || !reflect.DeepEqual(v, tagsProp)) {
 		obj["tags"] = tagsProp
 	}
+	replicationProp, err := expandFilestoreInstanceInitialReplication(d.Get("initial_replication"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("initial_replication"); !tpgresource.IsEmptyValue(reflect.ValueOf(replicationProp)) && (ok || !reflect.DeepEqual(v, replicationProp)) {
+		obj["replication"] = replicationProp
+	}
+	directoryServicesProp, err := expandFilestoreInstanceDirectoryServices(d.Get("directory_services"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("directory_services"); !tpgresource.IsEmptyValue(reflect.ValueOf(directoryServicesProp)) && (ok || !reflect.DeepEqual(v, directoryServicesProp)) {
+		obj["directoryServices"] = directoryServicesProp
+	}
 	labelsProp, err := expandFilestoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -238,6 +250,13 @@ func expandFilestoreInstanceFileSharesNfsExportOptions(v interface{}, d tpgresou
 			transformed["anonGid"] = transformedAnonGid
 		}
 
+		transformedNetwork, err := expandFilestoreInstanceFileSharesNfsExportOptionsNetwork(original["network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["network"] = transformedNetwork
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -260,6 +279,10 @@ func expandFilestoreInstanceFileSharesNfsExportOptionsAnonUid(v interface{}, d t
 }
 
 func expandFilestoreInstanceFileSharesNfsExportOptionsAnonGid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceFileSharesNfsExportOptionsNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -308,6 +331,13 @@ func expandFilestoreInstanceNetworks(v interface{}, d tpgresource.TerraformResou
 			transformed["connectMode"] = transformedConnectMode
 		}
 
+		transformedPscConfig, err := expandFilestoreInstanceNetworksPscConfig(original["psc_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPscConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pscConfig"] = transformedPscConfig
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -330,6 +360,29 @@ func expandFilestoreInstanceNetworksIpAddresses(v interface{}, d tpgresource.Ter
 }
 
 func expandFilestoreInstanceNetworksConnectMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceNetworksPscConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEndpointProject, err := expandFilestoreInstanceNetworksPscConfigEndpointProject(original["endpoint_project"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndpointProject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endpointProject"] = transformedEndpointProject
+	}
+
+	return transformed, nil
+}
+
+func expandFilestoreInstanceNetworksPscConfigEndpointProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -426,6 +479,137 @@ func expandFilestoreInstanceTags(v interface{}, d tpgresource.TerraformResourceD
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandFilestoreInstanceInitialReplication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRole, err := expandFilestoreInstanceInitialReplicationRole(original["role"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRole); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["role"] = transformedRole
+	}
+
+	transformedReplicas, err := expandFilestoreInstanceInitialReplicationReplicas(original["replicas"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReplicas); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["replicas"] = transformedReplicas
+	}
+
+	return transformed, nil
+}
+
+func expandFilestoreInstanceInitialReplicationRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceInitialReplicationReplicas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPeerInstance, err := expandFilestoreInstanceInitialReplicationReplicasPeerInstance(original["peer_instance"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPeerInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["peerInstance"] = transformedPeerInstance
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandFilestoreInstanceInitialReplicationReplicasPeerInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceDirectoryServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLdap, err := expandFilestoreInstanceDirectoryServicesLdap(original["ldap"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLdap); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ldap"] = transformedLdap
+	}
+
+	return transformed, nil
+}
+
+func expandFilestoreInstanceDirectoryServicesLdap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDomain, err := expandFilestoreInstanceDirectoryServicesLdapDomain(original["domain"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["domain"] = transformedDomain
+	}
+
+	transformedServers, err := expandFilestoreInstanceDirectoryServicesLdapServers(original["servers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServers); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["servers"] = transformedServers
+	}
+
+	transformedUsersOu, err := expandFilestoreInstanceDirectoryServicesLdapUsersOu(original["users_ou"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsersOu); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["usersOu"] = transformedUsersOu
+	}
+
+	transformedGroupsOu, err := expandFilestoreInstanceDirectoryServicesLdapGroupsOu(original["groups_ou"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGroupsOu); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["groupsOu"] = transformedGroupsOu
+	}
+
+	return transformed, nil
+}
+
+func expandFilestoreInstanceDirectoryServicesLdapDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceDirectoryServicesLdapServers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceDirectoryServicesLdapUsersOu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceDirectoryServicesLdapGroupsOu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandFilestoreInstanceEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {

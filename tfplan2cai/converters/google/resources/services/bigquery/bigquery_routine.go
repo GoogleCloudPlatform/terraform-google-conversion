@@ -123,6 +123,12 @@ func GetBigQueryRoutineApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("data_governance_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataGovernanceTypeProp)) && (ok || !reflect.DeepEqual(v, dataGovernanceTypeProp)) {
 		obj["dataGovernanceType"] = dataGovernanceTypeProp
 	}
+	securityModeProp, err := expandBigQueryRoutineSecurityMode(d.Get("security_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("security_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(securityModeProp)) && (ok || !reflect.DeepEqual(v, securityModeProp)) {
+		obj["securityMode"] = securityModeProp
+	}
 	sparkOptionsProp, err := expandBigQueryRoutineSparkOptions(d.Get("spark_options"), d, config)
 	if err != nil {
 		return nil, err
@@ -266,6 +272,10 @@ func expandBigQueryRoutineDeterminismLevel(v interface{}, d tpgresource.Terrafor
 }
 
 func expandBigQueryRoutineDataGovernanceType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineSecurityMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

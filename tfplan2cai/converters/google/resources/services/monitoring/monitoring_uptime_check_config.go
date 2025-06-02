@@ -102,6 +102,12 @@ func GetMonitoringUptimeCheckConfigApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("selected_regions"); !tpgresource.IsEmptyValue(reflect.ValueOf(selectedRegionsProp)) && (ok || !reflect.DeepEqual(v, selectedRegionsProp)) {
 		obj["selectedRegions"] = selectedRegionsProp
 	}
+	logCheckFailuresProp, err := expandMonitoringUptimeCheckConfigLogCheckFailures(d.Get("log_check_failures"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("log_check_failures"); !tpgresource.IsEmptyValue(reflect.ValueOf(logCheckFailuresProp)) && (ok || !reflect.DeepEqual(v, logCheckFailuresProp)) {
+		obj["logCheckFailures"] = logCheckFailuresProp
+	}
 	checkerTypeProp, err := expandMonitoringUptimeCheckConfigCheckerType(d.Get("checker_type"), d, config)
 	if err != nil {
 		return nil, err
@@ -257,6 +263,10 @@ func expandMonitoringUptimeCheckConfigContentMatchersJsonPathMatcherJsonMatcher(
 }
 
 func expandMonitoringUptimeCheckConfigSelectedRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringUptimeCheckConfigLogCheckFailures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

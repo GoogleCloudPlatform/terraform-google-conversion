@@ -135,6 +135,18 @@ func GetComputeGlobalForwardingRuleApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("network_tier"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkTierProp)) && (ok || !reflect.DeepEqual(v, networkTierProp)) {
 		obj["networkTier"] = networkTierProp
 	}
+	externalManagedBackendBucketMigrationStateProp, err := expandComputeGlobalForwardingRuleExternalManagedBackendBucketMigrationState(d.Get("external_managed_backend_bucket_migration_state"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("external_managed_backend_bucket_migration_state"); !tpgresource.IsEmptyValue(reflect.ValueOf(externalManagedBackendBucketMigrationStateProp)) && (ok || !reflect.DeepEqual(v, externalManagedBackendBucketMigrationStateProp)) {
+		obj["externalManagedBackendBucketMigrationState"] = externalManagedBackendBucketMigrationStateProp
+	}
+	externalManagedBackendBucketMigrationTestingPercentageProp, err := expandComputeGlobalForwardingRuleExternalManagedBackendBucketMigrationTestingPercentage(d.Get("external_managed_backend_bucket_migration_testing_percentage"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("external_managed_backend_bucket_migration_testing_percentage"); !tpgresource.IsEmptyValue(reflect.ValueOf(externalManagedBackendBucketMigrationTestingPercentageProp)) && (ok || !reflect.DeepEqual(v, externalManagedBackendBucketMigrationTestingPercentageProp)) {
+		obj["externalManagedBackendBucketMigrationTestingPercentage"] = externalManagedBackendBucketMigrationTestingPercentageProp
+	}
 	serviceDirectoryRegistrationsProp, err := expandComputeGlobalForwardingRuleServiceDirectoryRegistrations(d.Get("service_directory_registrations"), d, config)
 	if err != nil {
 		return nil, err
@@ -292,6 +304,14 @@ func expandComputeGlobalForwardingRuleTarget(v interface{}, d tpgresource.Terraf
 }
 
 func expandComputeGlobalForwardingRuleNetworkTier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeGlobalForwardingRuleExternalManagedBackendBucketMigrationState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeGlobalForwardingRuleExternalManagedBackendBucketMigrationTestingPercentage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
