@@ -14,7 +14,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.23.0
 	github.com/hashicorp/terraform-json v0.24.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.0
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250603011316-0cc543180c60
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250603152349-81a7d35dd88a
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
