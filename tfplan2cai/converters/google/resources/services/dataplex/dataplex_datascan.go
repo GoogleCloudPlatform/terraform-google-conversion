@@ -275,6 +275,13 @@ func expandDataplexDatascanDataQualitySpec(v interface{}, d tpgresource.Terrafor
 		transformed["rules"] = transformedRules
 	}
 
+	transformedCatalogPublishingEnabled, err := expandDataplexDatascanDataQualitySpecCatalogPublishingEnabled(original["catalog_publishing_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCatalogPublishingEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["catalogPublishingEnabled"] = transformedCatalogPublishingEnabled
+	}
+
 	return transformed, nil
 }
 
@@ -860,6 +867,10 @@ func expandDataplexDatascanDataQualitySpecRulesSqlAssertion(v interface{}, d tpg
 }
 
 func expandDataplexDatascanDataQualitySpecRulesSqlAssertionSqlStatement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecCatalogPublishingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
