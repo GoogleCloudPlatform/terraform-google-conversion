@@ -227,6 +227,7 @@ func GetComputeAddressCaiObject(d tpgresource.TerraformResourceData, config *tra
 		return []caiasset.Asset{}, err
 	}
 	if obj, err := GetComputeAddressApiObject(d, config); err == nil {
+		location, _ := tpgresource.GetLocation(d, config)
 		return []caiasset.Asset{{
 			Name: name,
 			Type: ComputeAddressAssetType,
@@ -235,6 +236,7 @@ func GetComputeAddressCaiObject(d tpgresource.TerraformResourceData, config *tra
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
 				DiscoveryName:        "Address",
 				Data:                 obj,
+				Location:             location,
 			},
 		}}, nil
 	} else {
