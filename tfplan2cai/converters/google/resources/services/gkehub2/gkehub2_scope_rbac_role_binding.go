@@ -108,10 +108,21 @@ func expandGKEHub2ScopeRBACRoleBindingRole(v interface{}, d tpgresource.Terrafor
 		transformed["predefinedRole"] = transformedPredefinedRole
 	}
 
+	transformedCustomRole, err := expandGKEHub2ScopeRBACRoleBindingRoleCustomRole(original["custom_role"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCustomRole); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["customRole"] = transformedCustomRole
+	}
+
 	return transformed, nil
 }
 
 func expandGKEHub2ScopeRBACRoleBindingRolePredefinedRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2ScopeRBACRoleBindingRoleCustomRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
