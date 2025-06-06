@@ -731,6 +731,13 @@ func expandNetappVolumeTieringPolicy(v interface{}, d tpgresource.TerraformResou
 		transformed["tierAction"] = transformedTierAction
 	}
 
+	transformedHotTierBypassModeEnabled, err := expandNetappVolumeTieringPolicyHotTierBypassModeEnabled(original["hot_tier_bypass_mode_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHotTierBypassModeEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hotTierBypassModeEnabled"] = transformedHotTierBypassModeEnabled
+	}
+
 	return transformed, nil
 }
 
@@ -739,6 +746,10 @@ func expandNetappVolumeTieringPolicyCoolingThresholdDays(v interface{}, d tpgres
 }
 
 func expandNetappVolumeTieringPolicyTierAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeTieringPolicyHotTierBypassModeEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
