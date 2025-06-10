@@ -1041,10 +1041,21 @@ func expandIntegrationConnectorsConnectionLogConfig(v interface{}, d tpgresource
 		transformed["enabled"] = transformedEnabled
 	}
 
+	transformedLevel, err := expandIntegrationConnectorsConnectionLogConfigLevel(original["level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["level"] = transformedLevel
+	}
+
 	return transformed, nil
 }
 
 func expandIntegrationConnectorsConnectionLogConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionLogConfigLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
