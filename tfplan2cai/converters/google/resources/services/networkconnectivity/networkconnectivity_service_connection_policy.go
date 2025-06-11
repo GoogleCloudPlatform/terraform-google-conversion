@@ -124,6 +124,20 @@ func expandNetworkConnectivityServiceConnectionPolicyPscConfig(v interface{}, d 
 		transformed["subnetworks"] = transformedSubnetworks
 	}
 
+	transformedProducerInstanceLocation, err := expandNetworkConnectivityServiceConnectionPolicyPscConfigProducerInstanceLocation(original["producer_instance_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProducerInstanceLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["producerInstanceLocation"] = transformedProducerInstanceLocation
+	}
+
+	transformedAllowedGoogleProducersResourceHierarchyLevel, err := expandNetworkConnectivityServiceConnectionPolicyPscConfigAllowedGoogleProducersResourceHierarchyLevel(original["allowed_google_producers_resource_hierarchy_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedGoogleProducersResourceHierarchyLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedGoogleProducersResourceHierarchyLevel"] = transformedAllowedGoogleProducersResourceHierarchyLevel
+	}
+
 	transformedLimit, err := expandNetworkConnectivityServiceConnectionPolicyPscConfigLimit(original["limit"], d, config)
 	if err != nil {
 		return nil, err
@@ -135,6 +149,14 @@ func expandNetworkConnectivityServiceConnectionPolicyPscConfig(v interface{}, d 
 }
 
 func expandNetworkConnectivityServiceConnectionPolicyPscConfigSubnetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityServiceConnectionPolicyPscConfigProducerInstanceLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityServiceConnectionPolicyPscConfigAllowedGoogleProducersResourceHierarchyLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
