@@ -122,6 +122,12 @@ func GetBigqueryAnalyticsHubListingApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("restricted_export_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(restrictedExportConfigProp)) && (ok || !reflect.DeepEqual(v, restrictedExportConfigProp)) {
 		obj["restrictedExportConfig"] = restrictedExportConfigProp
 	}
+	logLinkedDatasetQueryUserEmailProp, err := expandBigqueryAnalyticsHubListingLogLinkedDatasetQueryUserEmail(d.Get("log_linked_dataset_query_user_email"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("log_linked_dataset_query_user_email"); !tpgresource.IsEmptyValue(reflect.ValueOf(logLinkedDatasetQueryUserEmailProp)) && (ok || !reflect.DeepEqual(v, logLinkedDatasetQueryUserEmailProp)) {
+		obj["logLinkedDatasetQueryUserEmail"] = logLinkedDatasetQueryUserEmailProp
+	}
 
 	return obj, nil
 }
@@ -320,5 +326,9 @@ func expandBigqueryAnalyticsHubListingRestrictedExportConfigRestrictDirectTableA
 }
 
 func expandBigqueryAnalyticsHubListingRestrictedExportConfigRestrictQueryResult(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingLogLinkedDatasetQueryUserEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
