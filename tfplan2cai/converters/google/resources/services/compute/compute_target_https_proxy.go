@@ -132,6 +132,12 @@ func GetComputeTargetHttpsProxyApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("server_tls_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(serverTlsPolicyProp)) && (ok || !reflect.DeepEqual(v, serverTlsPolicyProp)) {
 		obj["serverTlsPolicy"] = serverTlsPolicyProp
 	}
+	fingerprintProp, err := expandComputeTargetHttpsProxyFingerprint(d.Get("fingerprint"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("fingerprint"); !tpgresource.IsEmptyValue(reflect.ValueOf(fingerprintProp)) && (ok || !reflect.DeepEqual(v, fingerprintProp)) {
+		obj["fingerprint"] = fingerprintProp
+	}
 
 	return resourceComputeTargetHttpsProxyEncoder(d, config, obj)
 }
@@ -243,5 +249,9 @@ func expandComputeTargetHttpsProxyHttpKeepAliveTimeoutSec(v interface{}, d tpgre
 }
 
 func expandComputeTargetHttpsProxyServerTlsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeTargetHttpsProxyFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
