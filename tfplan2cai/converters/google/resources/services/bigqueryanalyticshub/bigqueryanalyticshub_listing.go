@@ -19,6 +19,8 @@ package bigqueryanalyticshub
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -115,6 +117,12 @@ func GetBigqueryAnalyticsHubListingApiObject(d tpgresource.TerraformResourceData
 		return nil, err
 	} else if v, ok := d.GetOkExists("bigquery_dataset"); !tpgresource.IsEmptyValue(reflect.ValueOf(bigqueryDatasetProp)) && (ok || !reflect.DeepEqual(v, bigqueryDatasetProp)) {
 		obj["bigqueryDataset"] = bigqueryDatasetProp
+	}
+	pubsubTopicProp, err := expandBigqueryAnalyticsHubListingPubsubTopic(d.Get("pubsub_topic"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("pubsub_topic"); !tpgresource.IsEmptyValue(reflect.ValueOf(pubsubTopicProp)) && (ok || !reflect.DeepEqual(v, pubsubTopicProp)) {
+		obj["pubsubTopic"] = pubsubTopicProp
 	}
 	restrictedExportConfigProp, err := expandBigqueryAnalyticsHubListingRestrictedExportConfig(d.Get("restricted_export_config"), d, config)
 	if err != nil {
@@ -281,6 +289,41 @@ func expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResources(v interfa
 }
 
 func expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResourcesTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingPubsubTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTopic, err := expandBigqueryAnalyticsHubListingPubsubTopicTopic(original["topic"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTopic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["topic"] = transformedTopic
+	}
+
+	transformedDataAffinityRegions, err := expandBigqueryAnalyticsHubListingPubsubTopicDataAffinityRegions(original["data_affinity_regions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataAffinityRegions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataAffinityRegions"] = transformedDataAffinityRegions
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingPubsubTopicTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingPubsubTopicDataAffinityRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
