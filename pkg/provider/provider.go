@@ -1000,6 +1000,7 @@ func ResourceMap() map[string]*schema.Resource {
 func ResourceMapWithErrors() (map[string]*schema.Resource, error) {
 	return mergeResourceMaps(
 		handwrittenTfplan2caiResources,
+		generatedResources,
 	)
 }
 
