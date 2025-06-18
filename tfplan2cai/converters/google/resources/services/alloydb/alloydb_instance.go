@@ -643,6 +643,13 @@ func expandAlloydbInstanceNetworkConfig(v interface{}, d tpgresource.TerraformRe
 		transformed["enableOutboundPublicIp"] = transformedEnableOutboundPublicIp
 	}
 
+	transformedAllocatedIpRangeOverride, err := expandAlloydbInstanceNetworkConfigAllocatedIpRangeOverride(original["allocated_ip_range_override"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllocatedIpRangeOverride); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allocatedIpRangeOverride"] = transformedAllocatedIpRangeOverride
+	}
+
 	return transformed, nil
 }
 
@@ -677,6 +684,10 @@ func expandAlloydbInstanceNetworkConfigEnablePublicIp(v interface{}, d tpgresour
 }
 
 func expandAlloydbInstanceNetworkConfigEnableOutboundPublicIp(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstanceNetworkConfigAllocatedIpRangeOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
