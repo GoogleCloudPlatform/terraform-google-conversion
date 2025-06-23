@@ -323,6 +323,13 @@ func expandCloudRunV2JobTemplateTemplate(v interface{}, d tpgresource.TerraformR
 		transformed["maxRetries"] = transformedMaxRetries
 	}
 
+	transformedNodeSelector, err := expandCloudRunV2JobTemplateTemplateNodeSelector(original["node_selector"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNodeSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nodeSelector"] = transformedNodeSelector
+	}
+
 	return transformed, nil
 }
 
@@ -1274,6 +1281,29 @@ func expandCloudRunV2JobTemplateTemplateVpcAccessNetworkInterfacesTags(v interfa
 }
 
 func expandCloudRunV2JobTemplateTemplateMaxRetries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateNodeSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAccelerator, err := expandCloudRunV2JobTemplateTemplateNodeSelectorAccelerator(original["accelerator"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccelerator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accelerator"] = transformedAccelerator
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateNodeSelectorAccelerator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
