@@ -225,6 +225,13 @@ func expandSpannerBackupScheduleEncryptionConfig(v interface{}, d tpgresource.Te
 		transformed["kmsKeyName"] = transformedKmsKeyName
 	}
 
+	transformedKmsKeyNames, err := expandSpannerBackupScheduleEncryptionConfigKmsKeyNames(original["kms_key_names"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyNames); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyNames"] = transformedKmsKeyNames
+	}
+
 	return transformed, nil
 }
 
@@ -233,5 +240,9 @@ func expandSpannerBackupScheduleEncryptionConfigEncryptionType(v interface{}, d 
 }
 
 func expandSpannerBackupScheduleEncryptionConfigKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerBackupScheduleEncryptionConfigKmsKeyNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
