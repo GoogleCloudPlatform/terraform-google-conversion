@@ -30,5 +30,6 @@ var ConverterMap = map[string]models.Converter{
 	resourcemanager.ProjectAssetType: resourcemanager.NewProjectConverter(provider),
 	compute.ComputeInstanceAssetType: compute.NewComputeInstanceConverter(provider),
 	// ####### END handwritten resources ###########
-	compute.ComputeAddressAssetType: compute.NewComputeAddressConverter(provider),
+	compute.ComputeAddressAssetType:    compute.NewComputeAddressConverter(provider),
+	compute.ComputeAutoscalerAssetType: compute.NewComputeAutoscalerConverter(provider),
 }
