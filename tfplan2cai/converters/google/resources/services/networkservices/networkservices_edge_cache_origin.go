@@ -122,6 +122,12 @@ func GetNetworkServicesEdgeCacheOriginApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("origin_redirect"); !tpgresource.IsEmptyValue(reflect.ValueOf(originRedirectProp)) && (ok || !reflect.DeepEqual(v, originRedirectProp)) {
 		obj["originRedirect"] = originRedirectProp
 	}
+	flexShieldingProp, err := expandNetworkServicesEdgeCacheOriginFlexShielding(d.Get("flex_shielding"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("flex_shielding"); !tpgresource.IsEmptyValue(reflect.ValueOf(flexShieldingProp)) && (ok || !reflect.DeepEqual(v, flexShieldingProp)) {
+		obj["flexShielding"] = flexShieldingProp
+	}
 	labelsProp, err := expandNetworkServicesEdgeCacheOriginEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -397,6 +403,29 @@ func expandNetworkServicesEdgeCacheOriginOriginRedirect(v interface{}, d tpgreso
 }
 
 func expandNetworkServicesEdgeCacheOriginOriginRedirectRedirectConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesEdgeCacheOriginFlexShielding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFlexShieldingRegions, err := expandNetworkServicesEdgeCacheOriginFlexShieldingFlexShieldingRegions(original["flex_shielding_regions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFlexShieldingRegions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["flexShieldingRegions"] = transformedFlexShieldingRegions
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkServicesEdgeCacheOriginFlexShieldingFlexShieldingRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

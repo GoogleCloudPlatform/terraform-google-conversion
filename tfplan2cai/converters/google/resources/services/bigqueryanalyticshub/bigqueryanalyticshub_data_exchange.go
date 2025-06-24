@@ -92,6 +92,12 @@ func GetBigqueryAnalyticsHubDataExchangeApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("sharing_environment_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(sharingEnvironmentConfigProp)) && (ok || !reflect.DeepEqual(v, sharingEnvironmentConfigProp)) {
 		obj["sharingEnvironmentConfig"] = sharingEnvironmentConfigProp
 	}
+	logLinkedDatasetQueryUserEmailProp, err := expandBigqueryAnalyticsHubDataExchangeLogLinkedDatasetQueryUserEmail(d.Get("log_linked_dataset_query_user_email"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("log_linked_dataset_query_user_email"); !tpgresource.IsEmptyValue(reflect.ValueOf(logLinkedDatasetQueryUserEmailProp)) && (ok || !reflect.DeepEqual(v, logLinkedDatasetQueryUserEmailProp)) {
+		obj["logLinkedDatasetQueryUserEmail"] = logLinkedDatasetQueryUserEmailProp
+	}
 
 	return obj, nil
 }
@@ -170,4 +176,8 @@ func expandBigqueryAnalyticsHubDataExchangeSharingEnvironmentConfigDcrExchangeCo
 	transformed := make(map[string]interface{})
 
 	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubDataExchangeLogLinkedDatasetQueryUserEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }

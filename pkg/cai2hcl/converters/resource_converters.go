@@ -18,14 +18,18 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 
+	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	tpg_provider "github.com/hashicorp/terraform-provider-google-beta/google-beta/provider"
 )
 
 var provider *schema.Provider = tpg_provider.Provider()
 
 // ConverterMap is a collection of converters instances, indexed by cai asset type.
 var ConverterMap = map[string]models.Converter{
+	// ####### START handwritten resources ###########
 	resourcemanager.ProjectAssetType: resourcemanager.NewProjectConverter(provider),
 	compute.ComputeInstanceAssetType: compute.NewComputeInstanceConverter(provider),
+	// ####### END handwritten resources ###########
+	compute.ComputeAddressAssetType:    compute.NewComputeAddressConverter(provider),
+	compute.ComputeAutoscalerAssetType: compute.NewComputeAutoscalerConverter(provider),
 }

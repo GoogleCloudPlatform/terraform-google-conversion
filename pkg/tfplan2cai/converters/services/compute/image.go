@@ -5,16 +5,17 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
-	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
-	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/verify"
 
 	"google.golang.org/api/googleapi"
 )
 
 const (
-	resolveImageFamilyRegex = "[-_a-zA-Z0-9]*"
-	resolveImageImageRegex  = "[-_a-zA-Z0-9]*"
+	resolveImageFamilyRegex   = "[-_a-zA-Z0-9]*"
+	resolveImageImageRegex    = "[-_a-zA-Z0-9]*"
+	resolveImageUniverseRegex = "[-_a-zA-Z0-9.]*"
 )
 
 var (
@@ -28,6 +29,7 @@ var (
 	resolveImageFamily                 = regexp.MustCompile(fmt.Sprintf("^(%s)$", resolveImageFamilyRegex))
 	resolveImageImage                  = regexp.MustCompile(fmt.Sprintf("^(%s)$", resolveImageImageRegex))
 	resolveImageLink                   = regexp.MustCompile(fmt.Sprintf("^https://www.googleapis.com/compute/[a-z0-9]+/projects/(%s)/global/images/(%s)", verify.ProjectRegex, resolveImageImageRegex))
+	resolveImageUniverseLink           = regexp.MustCompile(fmt.Sprintf("^https://compute.%s/compute/[a-z0-9]+/projects/(%s)/global/images/(%s)", resolveImageUniverseRegex, verify.ProjectRegex, resolveImageImageRegex))
 
 	windowsSqlImage         = regexp.MustCompile("^sql-(?:server-)?([0-9]{4})-([a-z]+)-windows-(?:server-)?([0-9]{4})(?:-r([0-9]+))?-dc-v[0-9]+$")
 	canonicalUbuntuLtsImage = regexp.MustCompile("^ubuntu-(minimal-)?([0-9]+)(?:.*(arm64|amd64))?.*$")
@@ -106,8 +108,11 @@ func ResolveImage(c *transport_tpg.Config, project, name, userAgent string) (str
 			break
 		}
 	}
+
 	switch {
 	case resolveImageLink.MatchString(name): // https://www.googleapis.com/compute/v1/projects/xyz/global/images/xyz
+		return name, nil
+	case resolveImageUniverseLink.MatchString(name): // https://compute.xyz/compute/[a-z0-9]+/projects/xyz/global/images/xyz
 		return name, nil
 	case resolveImageProjectImage.MatchString(name): // projects/xyz/global/images/xyz
 		res := resolveImageProjectImage.FindStringSubmatch(name)

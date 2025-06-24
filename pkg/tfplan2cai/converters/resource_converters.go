@@ -20,6 +20,10 @@ import (
 )
 
 var ConverterMap = map[string]cai.ResourceConverter{
+	// ####### START handwritten resources ###########
 	"google_project":          resourcemanager.ResourceConverterProject(),
 	"google_compute_instance": compute.ResourceConverterComputeInstance(),
+	// ####### END handwritten resources ###########
+	"google_compute_address":    compute.ResourceConverterComputeAddress(),
+	"google_compute_autoscaler": compute.ResourceConverterComputeAutoscaler(),
 }

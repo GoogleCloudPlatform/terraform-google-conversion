@@ -18,9 +18,7 @@ package secretmanagerregional
 
 import (
 	"encoding/base64"
-	"fmt"
 	"reflect"
-	"strings"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
@@ -75,42 +73,7 @@ func GetSecretManagerRegionalRegionalSecretVersionApiObject(d tpgresource.Terraf
 	return obj, nil
 }
 
-func expandSecretManagerRegionalRegionalSecretVersionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	name := d.Get("name").(string)
-	if name == "" {
-		return "", nil
-	}
-
-	url, err := tpgresource.ReplaceVars(d, config, "{{SecretManagerRegionalBasePath}}{{name}}")
-	if err != nil {
-		return nil, err
-	}
-
-	if v == true {
-		url = fmt.Sprintf("%s:enable", url)
-	} else {
-		url = fmt.Sprintf("%s:disable", url)
-	}
-
-	parts := strings.Split(name, "/")
-	project := parts[1]
-
-	userAgent, err := tpgresource.GenerateUserAgentString(d, config.UserAgent)
-	if err != nil {
-		return nil, err
-	}
-
-	_, err = transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
-		Config:    config,
-		Method:    "POST",
-		Project:   project,
-		RawURL:    url,
-		UserAgent: userAgent,
-	})
-	if err != nil {
-		return nil, err
-	}
-
+func expandSecretManagerRegionalRegionalSecretVersionEnabled(_ interface{}, _ tpgresource.TerraformResourceData, _ *transport_tpg.Config) (interface{}, error) {
 	return nil, nil
 }
 

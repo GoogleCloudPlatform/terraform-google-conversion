@@ -181,6 +181,12 @@ func GetPubsubSubscriptionApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("enable_exactly_once_delivery"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableExactlyOnceDeliveryProp)) && (ok || !reflect.DeepEqual(v, enableExactlyOnceDeliveryProp)) {
 		obj["enableExactlyOnceDelivery"] = enableExactlyOnceDeliveryProp
 	}
+	messageTransformsProp, err := expandPubsubSubscriptionMessageTransforms(d.Get("message_transforms"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("message_transforms"); !tpgresource.IsEmptyValue(reflect.ValueOf(messageTransformsProp)) && (ok || !reflect.DeepEqual(v, messageTransformsProp)) {
+		obj["messageTransforms"] = messageTransformsProp
+	}
 	labelsProp, err := expandPubsubSubscriptionEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -691,6 +697,73 @@ func expandPubsubSubscriptionEnableMessageOrdering(v interface{}, d tpgresource.
 }
 
 func expandPubsubSubscriptionEnableExactlyOnceDelivery(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionMessageTransforms(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedJavascriptUdf, err := expandPubsubSubscriptionMessageTransformsJavascriptUdf(original["javascript_udf"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedJavascriptUdf); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["javascriptUdf"] = transformedJavascriptUdf
+		}
+
+		transformedDisabled, err := expandPubsubSubscriptionMessageTransformsDisabled(original["disabled"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDisabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["disabled"] = transformedDisabled
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsJavascriptUdf(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFunctionName, err := expandPubsubSubscriptionMessageTransformsJavascriptUdfFunctionName(original["function_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFunctionName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["functionName"] = transformedFunctionName
+	}
+
+	transformedCode, err := expandPubsubSubscriptionMessageTransformsJavascriptUdfCode(original["code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["code"] = transformedCode
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsJavascriptUdfFunctionName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsJavascriptUdfCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
