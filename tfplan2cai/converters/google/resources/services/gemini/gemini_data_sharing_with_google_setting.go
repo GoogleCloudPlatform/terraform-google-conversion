@@ -62,6 +62,12 @@ func GetGeminiDataSharingWithGoogleSettingApiObject(d tpgresource.TerraformResou
 	} else if v, ok := d.GetOkExists("enable_preview_data_sharing"); !tpgresource.IsEmptyValue(reflect.ValueOf(enablePreviewDataSharingProp)) && (ok || !reflect.DeepEqual(v, enablePreviewDataSharingProp)) {
 		obj["enablePreviewDataSharing"] = enablePreviewDataSharingProp
 	}
+	enableDataSharingProp, err := expandGeminiDataSharingWithGoogleSettingEnableDataSharing(d.Get("enable_data_sharing"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_data_sharing"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableDataSharingProp)) && (ok || !reflect.DeepEqual(v, enableDataSharingProp)) {
+		obj["enableDataSharing"] = enableDataSharingProp
+	}
 	labelsProp, err := expandGeminiDataSharingWithGoogleSettingEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -73,6 +79,10 @@ func GetGeminiDataSharingWithGoogleSettingApiObject(d tpgresource.TerraformResou
 }
 
 func expandGeminiDataSharingWithGoogleSettingEnablePreviewDataSharing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGeminiDataSharingWithGoogleSettingEnableDataSharing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

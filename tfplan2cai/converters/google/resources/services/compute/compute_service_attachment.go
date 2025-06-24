@@ -177,6 +177,17 @@ func GetComputeServiceAttachmentApiObject(d tpgresource.TerraformResourceData, c
 		obj["region"] = regionProp
 	}
 
+	return resourceComputeServiceAttachmentEncoder(d, config, obj)
+}
+
+func resourceComputeServiceAttachmentEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	propagatedConnectionLimitProp := d.Get("propagated_connection_limit")
+	if sv, ok := d.GetOk("send_propagated_connection_limit_if_zero"); ok && sv.(bool) {
+		if v, ok := d.GetOkExists("propagated_connection_limit"); ok || !reflect.DeepEqual(v, propagatedConnectionLimitProp) {
+			obj["propagatedConnectionLimit"] = propagatedConnectionLimitProp
+		}
+	}
+
 	return obj, nil
 }
 
@@ -198,11 +209,12 @@ func expandComputeServiceAttachmentConnectionPreference(v interface{}, d tpgreso
 
 func expandComputeServiceAttachmentTargetService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	resource := strings.Split(v.(string), "/")
-	resourceKind := resource[len(resource)-2]
-	resourceBound := resource[len(resource)-4]
 	if len(resource) < 4 {
 		return nil, fmt.Errorf("invalid value for target_service")
 	}
+
+	resourceKind := resource[len(resource)-2]
+	resourceBound := resource[len(resource)-4]
 
 	_, err := tpgresource.ParseRegionalFieldValue(resourceKind, v.(string), "project", resourceBound, "zone", d, config, true)
 	if err != nil {

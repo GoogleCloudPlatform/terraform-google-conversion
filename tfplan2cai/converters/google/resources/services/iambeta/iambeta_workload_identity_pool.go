@@ -22,6 +22,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -105,6 +107,24 @@ func GetIAMBetaWorkloadIdentityPoolApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
 		obj["disabled"] = disabledProp
 	}
+	modeProp, err := expandIAMBetaWorkloadIdentityPoolMode(d.Get("mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(modeProp)) && (ok || !reflect.DeepEqual(v, modeProp)) {
+		obj["mode"] = modeProp
+	}
+	inlineCertificateIssuanceConfigProp, err := expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfig(d.Get("inline_certificate_issuance_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("inline_certificate_issuance_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(inlineCertificateIssuanceConfigProp)) && (ok || !reflect.DeepEqual(v, inlineCertificateIssuanceConfigProp)) {
+		obj["inlineCertificateIssuanceConfig"] = inlineCertificateIssuanceConfigProp
+	}
+	inlineTrustConfigProp, err := expandIAMBetaWorkloadIdentityPoolInlineTrustConfig(d.Get("inline_trust_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("inline_trust_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(inlineTrustConfigProp)) && (ok || !reflect.DeepEqual(v, inlineTrustConfigProp)) {
+		obj["inlineTrustConfig"] = inlineTrustConfigProp
+	}
 
 	return obj, nil
 }
@@ -118,5 +138,142 @@ func expandIAMBetaWorkloadIdentityPoolDescription(v interface{}, d tpgresource.T
 }
 
 func expandIAMBetaWorkloadIdentityPoolDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCaPools, err := expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigCaPools(original["ca_pools"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCaPools); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["caPools"] = transformedCaPools
+	}
+
+	transformedLifetime, err := expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigLifetime(original["lifetime"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLifetime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["lifetime"] = transformedLifetime
+	}
+
+	transformedRotationWindowPercentage, err := expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigRotationWindowPercentage(original["rotation_window_percentage"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRotationWindowPercentage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rotationWindowPercentage"] = transformedRotationWindowPercentage
+	}
+
+	transformedKeyAlgorithm, err := expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigKeyAlgorithm(original["key_algorithm"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKeyAlgorithm); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["keyAlgorithm"] = transformedKeyAlgorithm
+	}
+
+	return transformed, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigCaPools(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigLifetime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigRotationWindowPercentage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigKeyAlgorithm(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineTrustConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAdditionalTrustBundles, err := expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundles(original["additional_trust_bundles"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAdditionalTrustBundles); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["additionalTrustBundles"] = transformedAdditionalTrustBundles
+	}
+
+	return transformed, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+	if v == nil {
+		return map[string]interface{}{}, nil
+	}
+	m := make(map[string]interface{})
+	for _, raw := range v.(*schema.Set).List() {
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTrustAnchors, err := expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchors(original["trust_anchors"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTrustAnchors); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["trustAnchors"] = transformedTrustAnchors
+		}
+
+		transformedTrustDomain, err := tpgresource.ExpandString(original["trust_domain"], d, config)
+		if err != nil {
+			return nil, err
+		}
+		m[transformedTrustDomain] = transformed
+	}
+	return m, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchors(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPemCertificate, err := expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchorsPemCertificate(original["pem_certificate"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPemCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pemCertificate"] = transformedPemCertificate
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchorsPemCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

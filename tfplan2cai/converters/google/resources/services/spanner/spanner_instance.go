@@ -161,6 +161,12 @@ func GetSpannerInstanceApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("edition"); !tpgresource.IsEmptyValue(reflect.ValueOf(editionProp)) && (ok || !reflect.DeepEqual(v, editionProp)) {
 		obj["edition"] = editionProp
 	}
+	instanceTypeProp, err := expandSpannerInstanceInstanceType(d.Get("instance_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("instance_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(instanceTypeProp)) && (ok || !reflect.DeepEqual(v, instanceTypeProp)) {
+		obj["instanceType"] = instanceTypeProp
+	}
 	defaultBackupScheduleTypeProp, err := expandSpannerInstanceDefaultBackupScheduleType(d.Get("default_backup_schedule_type"), d, config)
 	if err != nil {
 		return nil, err
@@ -178,10 +184,18 @@ func GetSpannerInstanceApiObject(d tpgresource.TerraformResourceData, config *tr
 }
 
 func resourceSpannerInstanceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	// Temp Logic to accommodate autoscaling_config, processing_units and num_nodes
-	if obj["processingUnits"] == nil && obj["nodeCount"] == nil && obj["autoscalingConfig"] == nil {
-		obj["nodeCount"] = 1
+	if obj["instanceType"] == "FREE_INSTANCE" {
+		// when provisioning a FREE_INSTANCE, the following fields cannot be specified
+		if obj["nodeCount"] != nil || obj["processingUnits"] != nil || obj["autoscalingConfig"] != nil {
+			return nil, fmt.Errorf("`num_nodes`, `processing_units`, and `autoscaling_config` cannot be specified when instance_type is FREE_INSTANCE")
+		}
+	} else {
+		// Temp Logic to accommodate autoscaling_config, processing_units and num_nodes
+		if obj["processingUnits"] == nil && obj["nodeCount"] == nil && obj["autoscalingConfig"] == nil && obj["instanceType"] != "FREE_INSTANCE" {
+			obj["nodeCount"] = 1
+		}
 	}
+
 	newObj := make(map[string]interface{})
 	newObj["instance"] = obj
 	if obj["name"] == nil {
@@ -455,6 +469,10 @@ func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverrides
 }
 
 func expandSpannerInstanceEdition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceInstanceType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

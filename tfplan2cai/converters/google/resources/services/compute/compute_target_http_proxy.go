@@ -87,6 +87,12 @@ func GetComputeTargetHttpProxyApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("http_keep_alive_timeout_sec"); !tpgresource.IsEmptyValue(reflect.ValueOf(httpKeepAliveTimeoutSecProp)) && (ok || !reflect.DeepEqual(v, httpKeepAliveTimeoutSecProp)) {
 		obj["httpKeepAliveTimeoutSec"] = httpKeepAliveTimeoutSecProp
 	}
+	fingerprintProp, err := expandComputeTargetHttpProxyFingerprint(d.Get("fingerprint"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("fingerprint"); !tpgresource.IsEmptyValue(reflect.ValueOf(fingerprintProp)) && (ok || !reflect.DeepEqual(v, fingerprintProp)) {
+		obj["fingerprint"] = fingerprintProp
+	}
 
 	return obj, nil
 }
@@ -112,5 +118,9 @@ func expandComputeTargetHttpProxyProxyBind(v interface{}, d tpgresource.Terrafor
 }
 
 func expandComputeTargetHttpProxyHttpKeepAliveTimeoutSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeTargetHttpProxyFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
