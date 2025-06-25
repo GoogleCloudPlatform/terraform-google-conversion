@@ -22,6 +22,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -116,6 +118,12 @@ func GetIAMBetaWorkloadIdentityPoolManagedIdentityApiObject(d tpgresource.Terraf
 	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
 		obj["disabled"] = disabledProp
 	}
+	attestationRulesProp, err := expandIAMBetaWorkloadIdentityPoolManagedIdentityAttestationRules(d.Get("attestation_rules"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("attestation_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(attestationRulesProp)) && (ok || !reflect.DeepEqual(v, attestationRulesProp)) {
+		obj["attestationRules"] = attestationRulesProp
+	}
 
 	return obj, nil
 }
@@ -125,5 +133,32 @@ func expandIAMBetaWorkloadIdentityPoolManagedIdentityDescription(v interface{}, 
 }
 
 func expandIAMBetaWorkloadIdentityPoolManagedIdentityDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolManagedIdentityAttestationRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedGoogleCloudResource, err := expandIAMBetaWorkloadIdentityPoolManagedIdentityAttestationRulesGoogleCloudResource(original["google_cloud_resource"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedGoogleCloudResource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["googleCloudResource"] = transformedGoogleCloudResource
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolManagedIdentityAttestationRulesGoogleCloudResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
