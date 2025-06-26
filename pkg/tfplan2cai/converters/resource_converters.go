@@ -26,4 +26,5 @@ var ConverterMap = map[string]cai.ResourceConverter{
 	// ####### END handwritten resources ###########
 	"google_compute_address":    compute.ResourceConverterComputeAddress(),
 	"google_compute_autoscaler": compute.ResourceConverterComputeAutoscaler(),
+	"google_compute_disk":       compute.ResourceConverterComputeDisk(),
 }
