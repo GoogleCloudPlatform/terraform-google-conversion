@@ -32,4 +32,5 @@ var ConverterMap = map[string]models.Converter{
 	// ####### END handwritten resources ###########
 	compute.ComputeAddressAssetType:    compute.NewComputeAddressConverter(provider),
 	compute.ComputeAutoscalerAssetType: compute.NewComputeAutoscalerConverter(provider),
+	compute.ComputeDiskAssetType:       compute.NewComputeDiskConverter(provider),
 }

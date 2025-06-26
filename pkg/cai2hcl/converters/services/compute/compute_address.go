@@ -62,6 +62,7 @@ func (c *ComputeAddressConverter) convertResourceData(asset caiasset.Asset) (*mo
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
 
+	var err error
 	res := asset.Resource.Data
 	config := utils.NewConfig()
 	d := &schema.ResourceData{}

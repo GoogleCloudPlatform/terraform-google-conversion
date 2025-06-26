@@ -422,16 +422,16 @@ character, which cannot be a dash.`,
 
 func ResourceConverterComputeAutoscaler() cai.ResourceConverter {
 	return cai.ResourceConverter{
-		Convert: GetComputeAutoscalerCaiObject,
+		Convert: GetComputeAutoscalerCaiAssets,
 	}
 }
 
-func GetComputeAutoscalerCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]caiasset.Asset, error) {
+func GetComputeAutoscalerCaiAssets(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]caiasset.Asset, error) {
 	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/autoscalers/{{name}}")
 	if err != nil {
 		return []caiasset.Asset{}, err
 	}
-	if obj, err := GetComputeAutoscalerApiObject(d, config); err == nil {
+	if obj, err := GetComputeAutoscalerCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
 		return []caiasset.Asset{{
 			Name: name,
@@ -449,7 +449,7 @@ func GetComputeAutoscalerCaiObject(d tpgresource.TerraformResourceData, config *
 	}
 }
 
-func GetComputeAutoscalerApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeAutoscalerCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	nameProp, err := expandComputeAutoscalerName(d.Get("name"), d, config)
 	if err != nil {

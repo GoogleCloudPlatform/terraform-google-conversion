@@ -218,16 +218,16 @@ internally during updates.`,
 
 func ResourceConverterComputeAddress() cai.ResourceConverter {
 	return cai.ResourceConverter{
-		Convert: GetComputeAddressCaiObject,
+		Convert: GetComputeAddressCaiAssets,
 	}
 }
 
-func GetComputeAddressCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]caiasset.Asset, error) {
+func GetComputeAddressCaiAssets(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]caiasset.Asset, error) {
 	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/addresses/{{name}}")
 	if err != nil {
 		return []caiasset.Asset{}, err
 	}
-	if obj, err := GetComputeAddressApiObject(d, config); err == nil {
+	if obj, err := GetComputeAddressCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
 		return []caiasset.Asset{{
 			Name: name,
@@ -245,7 +245,7 @@ func GetComputeAddressCaiObject(d tpgresource.TerraformResourceData, config *tra
 	}
 }
 
-func GetComputeAddressApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetComputeAddressCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 	addressProp, err := expandComputeAddressAddress(d.Get("address"), d, config)
 	if err != nil {
