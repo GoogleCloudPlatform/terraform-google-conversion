@@ -30,6 +30,7 @@ import (
 )
 
 const ComputeAutoscalerAssetType string = "compute.googleapis.com/Autoscaler"
+
 const ComputeAutoscalerSchemaName string = "google_compute_autoscaler"
 
 type ComputeAutoscalerConverter struct {
@@ -505,5 +506,8 @@ func flattenComputeAutoscalerTarget(v interface{}, d *schema.ResourceData, confi
 }
 
 func flattenComputeAutoscalerZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
+	if v == nil {
+		return v
+	}
+	return tpgresource.GetResourceNameFromSelfLink(v.(string))
 }
