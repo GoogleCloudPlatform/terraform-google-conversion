@@ -30,6 +30,7 @@ import (
 )
 
 const ComputeAddressAssetType string = "compute.googleapis.com/Address"
+
 const ComputeAddressSchemaName string = "google_compute_address"
 
 type ComputeAddressConverter struct {

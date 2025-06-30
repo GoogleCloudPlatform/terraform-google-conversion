@@ -369,11 +369,13 @@ func expandComputeAddressNetworkTier(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandComputeAddressSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseRegionalFieldValue("subnetworks", v.(string), "project", "region", "zone", d, config, true)
+	f, err := tpgresource.ParseProjectFieldValue("subnetworks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for subnetwork: %s", err)
 	}
-	return f.RelativeLink(), nil
+
+	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
+	return fullUrl, nil
 }
 
 func expandComputeAddressLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -381,11 +383,13 @@ func expandComputeAddressLabelFingerprint(v interface{}, d tpgresource.Terraform
 }
 
 func expandComputeAddressNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseGlobalFieldValue("networks", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseProjectFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
 	}
-	return f.RelativeLink(), nil
+
+	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
+	return fullUrl, nil
 }
 
 func expandComputeAddressPrefixLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -412,9 +416,11 @@ func expandComputeAddressEffectiveLabels(v interface{}, d tpgresource.TerraformR
 }
 
 func expandComputeAddressRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseGlobalFieldValue("regions", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseProjectFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
 	}
-	return f.RelativeLink(), nil
+
+	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
+	return fullUrl, nil
 }

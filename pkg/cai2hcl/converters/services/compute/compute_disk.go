@@ -43,6 +43,7 @@ func computeDiskGuestOsFeaturesSchema() *schema.Resource {
 }
 
 const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
+
 const ComputeDiskSchemaName string = "google_compute_disk"
 
 type ComputeDiskConverter struct {

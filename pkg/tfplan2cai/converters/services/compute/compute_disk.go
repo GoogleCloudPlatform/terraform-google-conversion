@@ -1369,11 +1369,13 @@ func expandComputeDiskSourceDisk(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandComputeDiskType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseZonalFieldValue("diskTypes", v.(string), "project", "zone", d, config, true)
+	f, err := tpgresource.ParseProjectFieldValue("diskTypes", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for type: %s", err)
 	}
-	return f.RelativeLink(), nil
+
+	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
+	return fullUrl, nil
 }
 
 func expandComputeDiskImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1542,17 +1544,21 @@ func expandComputeDiskEffectiveLabels(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandComputeDiskZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseGlobalFieldValue("zones", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseProjectFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)
 	}
-	return f.RelativeLink(), nil
+
+	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
+	return fullUrl, nil
 }
 
 func expandComputeDiskSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseGlobalFieldValue("snapshots", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseProjectFieldValue("snapshots", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for snapshot: %s", err)
 	}
-	return f.RelativeLink(), nil
+
+	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
+	return fullUrl, nil
 }
