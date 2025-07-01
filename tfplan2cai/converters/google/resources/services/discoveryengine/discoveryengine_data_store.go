@@ -88,6 +88,12 @@ func GetDiscoveryEngineDataStoreApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("advanced_site_search_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(advancedSiteSearchConfigProp)) && (ok || !reflect.DeepEqual(v, advancedSiteSearchConfigProp)) {
 		obj["advancedSiteSearchConfig"] = advancedSiteSearchConfigProp
 	}
+	kmsKeyNameProp, err := expandDiscoveryEngineDataStoreKmsKeyName(d.Get("kms_key_name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyNameProp)) && (ok || !reflect.DeepEqual(v, kmsKeyNameProp)) {
+		obj["kmsKeyName"] = kmsKeyNameProp
+	}
 	documentProcessingConfigProp, err := expandDiscoveryEngineDataStoreDocumentProcessingConfig(d.Get("document_processing_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -145,6 +151,10 @@ func expandDiscoveryEngineDataStoreAdvancedSiteSearchConfigDisableInitialIndex(v
 }
 
 func expandDiscoveryEngineDataStoreAdvancedSiteSearchConfigDisableAutomaticRefresh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
