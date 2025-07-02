@@ -20,7 +20,18 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
 )
 
-func TestAccComputeAddress_addressBasicExample(t *testing.T) {
+func TestAccComputeBackendBucket_backendBucketBasicExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{},
+		[]string{
+			"RESOURCE.cdnPolicy.signedUrlCacheMaxAgeSec",
+		},
+	)
+}
+func TestAccComputeBackendBucket_backendBucketFullExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -29,7 +40,7 @@ func TestAccComputeAddress_addressBasicExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeAddress_addressWithSubnetworkExample(t *testing.T) {
+func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -38,7 +49,7 @@ func TestAccComputeAddress_addressWithSubnetworkExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeAddress_addressWithGceEndpointExample(t *testing.T) {
+func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -47,7 +58,7 @@ func TestAccComputeAddress_addressWithGceEndpointExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeAddress_addressWithSharedLoadbalancerVipExample(t *testing.T) {
+func TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -56,7 +67,7 @@ func TestAccComputeAddress_addressWithSharedLoadbalancerVipExample(t *testing.T)
 		[]string{},
 	)
 }
-func TestAccComputeAddress_instanceWithIpExample(t *testing.T) {
+func TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -65,7 +76,16 @@ func TestAccComputeAddress_instanceWithIpExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeAddress_computeAddressIpsecInterconnectExample(t *testing.T) {
+func TestAccComputeBackendBucket_backendBucketBypassCacheExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{},
+		[]string{},
+	)
+}
+func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(

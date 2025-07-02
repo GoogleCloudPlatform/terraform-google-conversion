@@ -19,6 +19,7 @@ package compute
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -433,6 +434,9 @@ func GetComputeAutoscalerCaiAssets(d tpgresource.TerraformResourceData, config *
 	}
 	if obj, err := GetComputeAutoscalerCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
+		if location == "" && strings.Contains(name, "/global/") {
+			location = "global"
+		}
 		return []caiasset.Asset{{
 			Name: name,
 			Type: ComputeAutoscalerAssetType,

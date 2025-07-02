@@ -922,6 +922,9 @@ func GetComputeDiskCaiAssets(d tpgresource.TerraformResourceData, config *transp
 	}
 	if obj, err := GetComputeDiskCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
+		if location == "" && strings.Contains(name, "/global/") {
+			location = "global"
+		}
 		return []caiasset.Asset{{
 			Name: name,
 			Type: ComputeDiskAssetType,

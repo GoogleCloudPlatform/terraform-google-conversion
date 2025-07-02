@@ -26,6 +26,7 @@ func TestAccComputeAutoscaler_autoscalerSingleInstanceExample(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{},
+		[]string{},
 	)
 }
 func TestAccComputeAutoscaler_autoscalerBasicExample(t *testing.T) {
@@ -33,6 +34,7 @@ func TestAccComputeAutoscaler_autoscalerBasicExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
+		[]string{},
 		[]string{},
 	)
 }
