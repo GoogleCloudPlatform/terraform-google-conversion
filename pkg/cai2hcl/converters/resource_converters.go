@@ -47,4 +47,7 @@ var ConverterMap = map[string]map[string]models.Converter{
 	compute.ComputeDiskAssetType: {
 		"Default": compute.NewComputeDiskConverter(provider),
 	},
+	compute.ComputeExternalVpnGatewayAssetType: {
+		"Default": compute.NewComputeExternalVpnGatewayConverter(provider),
+	},
 }
