@@ -19,6 +19,7 @@ package compute
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -229,6 +230,9 @@ func GetComputeAddressCaiAssets(d tpgresource.TerraformResourceData, config *tra
 	}
 	if obj, err := GetComputeAddressCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
+		if location == "" && strings.Contains(name, "/global/") {
+			location = "global"
+		}
 		return []caiasset.Asset{{
 			Name: name,
 			Type: ComputeAddressAssetType,

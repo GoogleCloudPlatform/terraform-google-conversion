@@ -41,6 +41,9 @@ var ConverterMap = map[string]map[string]models.Converter{
 		"ComputeAutoscaler":       compute.NewComputeAutoscalerConverter(provider),
 		"ComputeRegionAutoscaler": compute.NewComputeRegionAutoscalerConverter(provider),
 	},
+	compute.ComputeBackendBucketAssetType: {
+		"Default": compute.NewComputeBackendBucketConverter(provider),
+	},
 	compute.ComputeDiskAssetType: {
 		"Default": compute.NewComputeDiskConverter(provider),
 	},

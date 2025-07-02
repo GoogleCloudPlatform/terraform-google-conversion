@@ -30,6 +30,7 @@ func TestAccComputeDisk_diskBasicExample(t *testing.T) {
 			"create_snapshot_before_destroy_prefix",
 			"interface",
 		},
+		[]string{},
 	)
 }
 func TestAccComputeDisk_diskAsyncExample(t *testing.T) {
@@ -42,6 +43,7 @@ func TestAccComputeDisk_diskAsyncExample(t *testing.T) {
 			"create_snapshot_before_destroy_prefix",
 			"interface",
 		},
+		[]string{},
 	)
 }
 func TestAccComputeDisk_diskFeaturesExample(t *testing.T) {
@@ -54,5 +56,6 @@ func TestAccComputeDisk_diskFeaturesExample(t *testing.T) {
 			"create_snapshot_before_destroy_prefix",
 			"interface",
 		},
+		[]string{},
 	)
 }
