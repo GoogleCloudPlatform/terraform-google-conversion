@@ -18,6 +18,7 @@ package compute
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -67,6 +68,9 @@ func (c *ComputeExternalVpnGatewayConverter) convertResourceData(asset caiasset.
 	config := utils.NewConfig()
 	d := &schema.ResourceData{}
 
+	assetNameParts := strings.Split(asset.Name, "/")
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+
 	hclData := make(map[string]interface{})
 
 	hclData["description"] = flattenComputeExternalVpnGatewayDescription(res["description"], d, config)
@@ -80,7 +84,7 @@ func (c *ComputeExternalVpnGatewayConverter) convertResourceData(asset caiasset.
 		return nil, err
 	}
 	return &models.TerraformResourceBlock{
-		Labels: []string{c.name, res["name"].(string)},
+		Labels: []string{c.name, hclBlockName},
 		Value:  ctyVal,
 	}, nil
 }
@@ -92,7 +96,6 @@ func flattenComputeExternalVpnGatewayDescription(v interface{}, d *schema.Resour
 func flattenComputeExternalVpnGatewayLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return utils.RemoveTerraformAttributionLabel(v)
 }
-
 func flattenComputeExternalVpnGatewayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

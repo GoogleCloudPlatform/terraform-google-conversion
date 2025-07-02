@@ -15,6 +15,7 @@ package converters
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/cai"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/services/resourcemanager"
 )
@@ -24,6 +25,7 @@ var ConverterMap = map[string]cai.ResourceConverter{
 	"google_project":          resourcemanager.ResourceConverterProject(),
 	"google_compute_instance": compute.ResourceConverterComputeInstance(),
 	// ####### END handwritten resources ###########
+	"google_bigquery_dataset":             bigquery.ResourceConverterBigQueryDataset(),
 	"google_compute_address":              compute.ResourceConverterComputeAddress(),
 	"google_compute_autoscaler":           compute.ResourceConverterComputeAutoscaler(),
 	"google_compute_backend_bucket":       compute.ResourceConverterComputeBackendBucket(),

@@ -81,6 +81,9 @@ func (c *ComputeDiskConverter) convertResourceData(asset caiasset.Asset) (*model
 	config := utils.NewConfig()
 	d := &schema.ResourceData{}
 
+	assetNameParts := strings.Split(asset.Name, "/")
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+
 	hclData := make(map[string]interface{})
 
 	res, err = resourceComputeDiskDecoder(d, config, res)
@@ -127,7 +130,7 @@ func (c *ComputeDiskConverter) convertResourceData(asset caiasset.Asset) (*model
 		return nil, err
 	}
 	return &models.TerraformResourceBlock{
-		Labels: []string{c.name, res["name"].(string)},
+		Labels: []string{c.name, hclBlockName},
 		Value:  ctyVal,
 	}, nil
 }
@@ -258,7 +261,6 @@ func flattenComputeDiskDescription(v interface{}, d *schema.ResourceData, config
 func flattenComputeDiskLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return utils.RemoveTerraformAttributionLabel(v)
 }
-
 func flattenComputeDiskName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

@@ -18,6 +18,7 @@ package compute
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -67,6 +68,9 @@ func (c *ComputeBackendBucketConverter) convertResourceData(asset caiasset.Asset
 	config := utils.NewConfig()
 	d := &schema.ResourceData{}
 
+	assetNameParts := strings.Split(asset.Name, "/")
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+
 	hclData := make(map[string]interface{})
 
 	hclData["bucket_name"] = flattenComputeBackendBucketBucketName(res["bucketName"], d, config)
@@ -83,7 +87,7 @@ func (c *ComputeBackendBucketConverter) convertResourceData(asset caiasset.Asset
 		return nil, err
 	}
 	return &models.TerraformResourceBlock{
-		Labels: []string{c.name, res["name"].(string)},
+		Labels: []string{c.name, hclBlockName},
 		Value:  ctyVal,
 	}, nil
 }

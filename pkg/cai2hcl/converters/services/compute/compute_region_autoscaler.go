@@ -19,6 +19,7 @@ package compute
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -66,6 +67,9 @@ func (c *ComputeRegionAutoscalerConverter) convertResourceData(asset caiasset.As
 	config := utils.NewConfig()
 	d := &schema.ResourceData{}
 
+	assetNameParts := strings.Split(asset.Name, "/")
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+
 	hclData := make(map[string]interface{})
 
 	hclData["name"] = flattenComputeRegionAutoscalerName(res["name"], d, config)
@@ -79,7 +83,7 @@ func (c *ComputeRegionAutoscalerConverter) convertResourceData(asset caiasset.As
 		return nil, err
 	}
 	return &models.TerraformResourceBlock{
-		Labels: []string{c.name, res["name"].(string)},
+		Labels: []string{c.name, hclBlockName},
 		Value:  ctyVal,
 	}, nil
 }
@@ -499,7 +503,6 @@ func flattenComputeRegionAutoscalerAutoscalingPolicyScalingSchedulesDescription(
 func flattenComputeRegionAutoscalerTarget(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
-
 func flattenComputeRegionAutoscalerRegion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v

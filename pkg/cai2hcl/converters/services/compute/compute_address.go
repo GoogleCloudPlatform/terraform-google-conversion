@@ -19,6 +19,7 @@ package compute
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -68,6 +69,9 @@ func (c *ComputeAddressConverter) convertResourceData(asset caiasset.Asset) (*mo
 	config := utils.NewConfig()
 	d := &schema.ResourceData{}
 
+	assetNameParts := strings.Split(asset.Name, "/")
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+
 	hclData := make(map[string]interface{})
 
 	hclData["address"] = flattenComputeAddressAddress(res["address"], d, config)
@@ -89,7 +93,7 @@ func (c *ComputeAddressConverter) convertResourceData(asset caiasset.Asset) (*mo
 		return nil, err
 	}
 	return &models.TerraformResourceBlock{
-		Labels: []string{c.name, res["name"].(string)},
+		Labels: []string{c.name, hclBlockName},
 		Value:  ctyVal,
 	}, nil
 }
@@ -132,7 +136,6 @@ func flattenComputeAddressSubnetwork(v interface{}, d *schema.ResourceData, conf
 func flattenComputeAddressLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return utils.RemoveTerraformAttributionLabel(v)
 }
-
 func flattenComputeAddressNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v
