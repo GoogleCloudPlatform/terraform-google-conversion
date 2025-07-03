@@ -81,6 +81,7 @@ func (c *ComputeBackendBucketConverter) convertResourceData(asset caiasset.Asset
 	hclData["description"] = flattenComputeBackendBucketDescription(res["description"], d, config)
 	hclData["enable_cdn"] = flattenComputeBackendBucketEnableCdn(res["enableCdn"], d, config)
 	hclData["name"] = flattenComputeBackendBucketName(res["name"], d, config)
+	hclData["load_balancing_scheme"] = flattenComputeBackendBucketLoadBalancingScheme(res["loadBalancingScheme"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -345,5 +346,9 @@ func flattenComputeBackendBucketEnableCdn(v interface{}, d *schema.ResourceData,
 }
 
 func flattenComputeBackendBucketName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeBackendBucketLoadBalancingScheme(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

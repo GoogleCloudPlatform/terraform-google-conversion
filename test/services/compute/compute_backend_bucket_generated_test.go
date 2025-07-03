@@ -94,3 +94,12 @@ func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
 		[]string{},
 	)
 }
+func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{},
+		[]string{},
+	)
+}
