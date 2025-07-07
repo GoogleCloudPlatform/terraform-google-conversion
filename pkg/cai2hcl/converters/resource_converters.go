@@ -14,10 +14,10 @@
 package converters
 
 import (
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/services/bigquery"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/services/compute"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -26,32 +26,32 @@ import (
 var provider *schema.Provider = tpg_provider.Provider()
 
 // ConverterMap is a collection of converters instances, indexed by cai asset type.
-var ConverterMap = map[string]map[string]models.Converter{
+var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	// ####### START handwritten resources ###########
 	resourcemanager.ProjectAssetType: {
-		"Default": resourcemanager.NewProjectConverter(provider),
+		"Default": resourcemanager.NewProjectCai2hclConverter(provider),
 	},
 	compute.ComputeInstanceAssetType: {
-		"Default": compute.NewComputeInstanceConverter(provider),
+		"Default": compute.NewComputeInstanceCai2hclConverter(provider),
 	},
 	// ####### END handwritten resources ###########
 	bigquery.BigQueryDatasetAssetType: {
-		"Default": bigquery.NewBigQueryDatasetConverter(provider),
+		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
 	},
 	compute.ComputeAddressAssetType: {
-		"Default": compute.NewComputeAddressConverter(provider),
+		"Default": compute.NewComputeAddressCai2hclConverter(provider),
 	},
 	compute.ComputeAutoscalerAssetType: {
-		"ComputeAutoscaler":       compute.NewComputeAutoscalerConverter(provider),
-		"ComputeRegionAutoscaler": compute.NewComputeRegionAutoscalerConverter(provider),
+		"ComputeAutoscaler":       compute.NewComputeAutoscalerCai2hclConverter(provider),
+		"ComputeRegionAutoscaler": compute.NewComputeRegionAutoscalerCai2hclConverter(provider),
 	},
 	compute.ComputeBackendBucketAssetType: {
-		"Default": compute.NewComputeBackendBucketConverter(provider),
+		"Default": compute.NewComputeBackendBucketCai2hclConverter(provider),
 	},
 	compute.ComputeDiskAssetType: {
-		"Default": compute.NewComputeDiskConverter(provider),
+		"Default": compute.NewComputeDiskCai2hclConverter(provider),
 	},
 	compute.ComputeExternalVpnGatewayAssetType: {
-		"Default": compute.NewComputeExternalVpnGatewayConverter(provider),
+		"Default": compute.NewComputeExternalVpnGatewayCai2hclConverter(provider),
 	},
 }
