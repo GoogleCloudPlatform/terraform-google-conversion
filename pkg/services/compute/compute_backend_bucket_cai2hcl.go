@@ -26,29 +26,26 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 )
 
-const ComputeBackendBucketAssetType string = "compute.googleapis.com/BackendBucket"
-
-const ComputeBackendBucketSchemaName string = "google_compute_backend_bucket"
-
-type ComputeBackendBucketConverter struct {
+type ComputeBackendBucketCai2hclConverter struct {
 	name   string
 	schema map[string]*schema.Schema
 }
 
-func NewComputeBackendBucketConverter(provider *schema.Provider) models.Converter {
+func NewComputeBackendBucketCai2hclConverter(provider *schema.Provider) models.Cai2hclConverter {
 	schema := provider.ResourcesMap[ComputeBackendBucketSchemaName].Schema
 
-	return &ComputeBackendBucketConverter{
+	return &ComputeBackendBucketCai2hclConverter{
 		name:   ComputeBackendBucketSchemaName,
 		schema: schema,
 	}
 }
 
 // Convert converts asset to HCL resource blocks.
-func (c *ComputeBackendBucketConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
+func (c *ComputeBackendBucketCai2hclConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
 	var blocks []*models.TerraformResourceBlock
 	block, err := c.convertResourceData(asset)
 	if err != nil {
@@ -58,14 +55,14 @@ func (c *ComputeBackendBucketConverter) Convert(asset caiasset.Asset) ([]*models
 	return blocks, nil
 }
 
-func (c *ComputeBackendBucketConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
+func (c *ComputeBackendBucketCai2hclConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
 	if asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
 
 	var err error
 	res := asset.Resource.Data
-	config := utils.NewConfig()
+	config := transport.NewConfig()
 	d := &schema.ResourceData{}
 
 	assetNameParts := strings.Split(asset.Name, "/")

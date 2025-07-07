@@ -25,30 +25,28 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/utils"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 )
 
-const ComputeExternalVpnGatewayAssetType string = "compute.googleapis.com/ExternalVpnGateway"
-
-const ComputeExternalVpnGatewaySchemaName string = "google_compute_external_vpn_gateway"
-
-type ComputeExternalVpnGatewayConverter struct {
+type ComputeExternalVpnGatewayCai2hclConverter struct {
 	name   string
 	schema map[string]*schema.Schema
 }
 
-func NewComputeExternalVpnGatewayConverter(provider *schema.Provider) models.Converter {
+func NewComputeExternalVpnGatewayCai2hclConverter(provider *schema.Provider) models.Cai2hclConverter {
 	schema := provider.ResourcesMap[ComputeExternalVpnGatewaySchemaName].Schema
 
-	return &ComputeExternalVpnGatewayConverter{
+	return &ComputeExternalVpnGatewayCai2hclConverter{
 		name:   ComputeExternalVpnGatewaySchemaName,
 		schema: schema,
 	}
 }
 
 // Convert converts asset to HCL resource blocks.
-func (c *ComputeExternalVpnGatewayConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
+func (c *ComputeExternalVpnGatewayCai2hclConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
 	var blocks []*models.TerraformResourceBlock
 	block, err := c.convertResourceData(asset)
 	if err != nil {
@@ -58,14 +56,14 @@ func (c *ComputeExternalVpnGatewayConverter) Convert(asset caiasset.Asset) ([]*m
 	return blocks, nil
 }
 
-func (c *ComputeExternalVpnGatewayConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
+func (c *ComputeExternalVpnGatewayCai2hclConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
 	if asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
 
 	var err error
 	res := asset.Resource.Data
-	config := utils.NewConfig()
+	config := transport.NewConfig()
 	d := &schema.ResourceData{}
 
 	assetNameParts := strings.Split(asset.Name, "/")
@@ -94,7 +92,7 @@ func flattenComputeExternalVpnGatewayDescription(v interface{}, d *schema.Resour
 }
 
 func flattenComputeExternalVpnGatewayLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return utils.RemoveTerraformAttributionLabel(v)
+	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenComputeExternalVpnGatewayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v

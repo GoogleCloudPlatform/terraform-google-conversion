@@ -3,9 +3,9 @@ package provider
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/services/bigquery"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/services/compute"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/services/resourcemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 )
 
 var handwrittenTfplan2caiResources = map[string]*schema.Resource{

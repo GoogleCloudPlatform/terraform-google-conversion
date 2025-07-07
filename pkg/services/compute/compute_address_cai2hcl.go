@@ -26,30 +26,28 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/utils"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 )
 
-const ComputeAddressAssetType string = "compute.googleapis.com/Address"
-
-const ComputeAddressSchemaName string = "google_compute_address"
-
-type ComputeAddressConverter struct {
+type ComputeAddressCai2hclConverter struct {
 	name   string
 	schema map[string]*schema.Schema
 }
 
-func NewComputeAddressConverter(provider *schema.Provider) models.Converter {
+func NewComputeAddressCai2hclConverter(provider *schema.Provider) models.Cai2hclConverter {
 	schema := provider.ResourcesMap[ComputeAddressSchemaName].Schema
 
-	return &ComputeAddressConverter{
+	return &ComputeAddressCai2hclConverter{
 		name:   ComputeAddressSchemaName,
 		schema: schema,
 	}
 }
 
 // Convert converts asset to HCL resource blocks.
-func (c *ComputeAddressConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
+func (c *ComputeAddressCai2hclConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
 	var blocks []*models.TerraformResourceBlock
 	block, err := c.convertResourceData(asset)
 	if err != nil {
@@ -59,14 +57,14 @@ func (c *ComputeAddressConverter) Convert(asset caiasset.Asset) ([]*models.Terra
 	return blocks, nil
 }
 
-func (c *ComputeAddressConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
+func (c *ComputeAddressCai2hclConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
 	if asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
 
 	var err error
 	res := asset.Resource.Data
-	config := utils.NewConfig()
+	config := transport.NewConfig()
 	d := &schema.ResourceData{}
 
 	assetNameParts := strings.Split(asset.Name, "/")
@@ -134,7 +132,7 @@ func flattenComputeAddressSubnetwork(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenComputeAddressLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return utils.RemoveTerraformAttributionLabel(v)
+	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenComputeAddressNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
