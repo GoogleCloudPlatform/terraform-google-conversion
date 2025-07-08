@@ -139,6 +139,7 @@ func flattenComputeDiskSourceImageEncryptionKey(v interface{}, d *schema.Resourc
 		flattenComputeDiskSourceImageEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeDiskSourceImageEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -180,6 +181,7 @@ func flattenComputeDiskDiskEncryptionKey(v interface{}, d *schema.ResourceData, 
 		flattenComputeDiskDiskEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeDiskDiskEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -219,6 +221,7 @@ func flattenComputeDiskSourceSnapshotEncryptionKey(v interface{}, d *schema.Reso
 		flattenComputeDiskSourceSnapshotEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeDiskSourceSnapshotEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -365,6 +368,7 @@ func flattenComputeDiskAsyncPrimaryDisk(v interface{}, d *schema.ResourceData, c
 		flattenComputeDiskAsyncPrimaryDiskDisk(original["disk"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeDiskAsyncPrimaryDiskDisk(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -376,6 +380,7 @@ func flattenComputeDiskArchitecture(v interface{}, d *schema.ResourceData, confi
 func flattenComputeDiskParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return d.Get("params")
 }
+
 func flattenComputeDiskParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return d.Get("params.0.resource_manager_tags")
 }
@@ -398,6 +403,7 @@ func flattenComputeDiskGuestOsFeatures(v interface{}, d *schema.ResourceData, co
 	}
 	return transformed
 }
+
 func flattenComputeDiskGuestOsFeaturesType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

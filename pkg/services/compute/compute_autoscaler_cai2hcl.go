@@ -126,6 +126,7 @@ func flattenComputeAutoscalerAutoscalingPolicy(v interface{}, d *schema.Resource
 		flattenComputeAutoscalerAutoscalingPolicyScalingSchedules(original["scalingSchedules"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyMinReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
@@ -196,6 +197,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleDownControl(v interface{}, d 
 		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(original["timeWindowSec"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -211,6 +213,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownRepli
 		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(original["percent"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
@@ -277,6 +280,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleInControl(v interface{}, d *s
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlTimeWindowSec(original["timeWindowSec"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -292,6 +296,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicasPercent(original["percent"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicasFixed(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
@@ -358,6 +363,7 @@ func flattenComputeAutoscalerAutoscalingPolicyCpuUtilization(v interface{}, d *s
 		flattenComputeAutoscalerAutoscalingPolicyCpuUtilizationPredictiveMethod(original["predictiveMethod"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyCpuUtilizationTarget(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -392,6 +398,7 @@ func flattenComputeAutoscalerAutoscalingPolicyMetric(v interface{}, d *schema.Re
 	}
 	return transformed
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyMetricName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -425,6 +432,7 @@ func flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilization(v interfa
 		flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilizationTarget(original["utilizationTarget"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilizationTarget(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -449,6 +457,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScalingSchedules(v interface{}, d 
 	}
 	return transformed
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScalingSchedulesMinRequiredReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {

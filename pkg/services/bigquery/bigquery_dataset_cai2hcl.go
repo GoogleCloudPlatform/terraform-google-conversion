@@ -143,6 +143,7 @@ func flattenBigQueryDatasetAccess(v interface{}, d *schema.ResourceData, config 
 	}
 	return transformed
 }
+
 func flattenBigQueryDatasetAccessDomain(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -184,6 +185,7 @@ func flattenBigQueryDatasetAccessView(v interface{}, d *schema.ResourceData, con
 		flattenBigQueryDatasetAccessViewTableId(original["tableId"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetAccessViewDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -211,6 +213,7 @@ func flattenBigQueryDatasetAccessDataset(v interface{}, d *schema.ResourceData, 
 		flattenBigQueryDatasetAccessDatasetTargetTypes(original["targetTypes"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetAccessDatasetDataset(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -226,6 +229,7 @@ func flattenBigQueryDatasetAccessDatasetDataset(v interface{}, d *schema.Resourc
 		flattenBigQueryDatasetAccessDatasetDatasetProjectId(original["projectId"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetAccessDatasetDatasetDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -255,6 +259,7 @@ func flattenBigQueryDatasetAccessRoutine(v interface{}, d *schema.ResourceData, 
 		flattenBigQueryDatasetAccessRoutineRoutineId(original["routineId"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetAccessRoutineDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -286,6 +291,7 @@ func flattenBigQueryDatasetAccessCondition(v interface{}, d *schema.ResourceData
 		flattenBigQueryDatasetAccessConditionLocation(original["location"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetAccessConditionExpression(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -315,6 +321,7 @@ func flattenBigQueryDatasetDatasetReference(v interface{}, d *schema.ResourceDat
 		flattenBigQueryDatasetDatasetReferenceDatasetId(original["datasetId"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetDatasetReferenceDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -372,6 +379,7 @@ func flattenBigQueryDatasetExternalDatasetReference(v interface{}, d *schema.Res
 		flattenBigQueryDatasetExternalDatasetReferenceConnection(original["connection"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetExternalDatasetReferenceExternalSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -411,6 +419,7 @@ func flattenBigQueryDatasetDefaultEncryptionConfiguration(v interface{}, d *sche
 		flattenBigQueryDatasetDefaultEncryptionConfigurationKmsKeyName(original["kmsKeyName"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetDefaultEncryptionConfigurationKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -446,6 +455,7 @@ func flattenBigQueryDatasetExternalCatalogDatasetOptions(v interface{}, d *schem
 		flattenBigQueryDatasetExternalCatalogDatasetOptionsDefaultStorageLocationUri(original["defaultStorageLocationUri"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenBigQueryDatasetExternalCatalogDatasetOptionsParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
