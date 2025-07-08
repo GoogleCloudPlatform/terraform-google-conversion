@@ -48,6 +48,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeBackendBucketAssetType: {
 		"Default": compute.NewComputeBackendBucketCai2hclConverter(provider),
 	},
+	compute.ComputeBackendServiceAssetType: {
+		"Default": compute.NewComputeBackendServiceCai2hclConverter(provider),
+	},
 	compute.ComputeDiskAssetType: {
 		"Default": compute.NewComputeDiskCai2hclConverter(provider),
 	},

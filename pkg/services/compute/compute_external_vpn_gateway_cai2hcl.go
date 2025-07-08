@@ -122,6 +122,7 @@ func flattenComputeExternalVpnGatewayInterface(v interface{}, d *schema.Resource
 	}
 	return transformed
 }
+
 func flattenComputeExternalVpnGatewayInterfaceId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {

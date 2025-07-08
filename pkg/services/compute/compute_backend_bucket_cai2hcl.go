@@ -127,6 +127,7 @@ func flattenComputeBackendBucketCdnPolicy(v interface{}, d *schema.ResourceData,
 		flattenComputeBackendBucketCdnPolicyBypassCacheOnRequestHeaders(original["bypassCacheOnRequestHeaders"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeBackendBucketCdnPolicyCacheKeyPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -142,6 +143,7 @@ func flattenComputeBackendBucketCdnPolicyCacheKeyPolicy(v interface{}, d *schema
 		flattenComputeBackendBucketCdnPolicyCacheKeyPolicyIncludeHttpHeaders(original["includeHttpHeaders"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeBackendBucketCdnPolicyCacheKeyPolicyQueryStringWhitelist(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -241,6 +243,7 @@ func flattenComputeBackendBucketCdnPolicyNegativeCachingPolicy(v interface{}, d 
 	}
 	return transformed
 }
+
 func flattenComputeBackendBucketCdnPolicyNegativeCachingPolicyCode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
@@ -318,6 +321,7 @@ func flattenComputeBackendBucketCdnPolicyBypassCacheOnRequestHeaders(v interface
 	}
 	return transformed
 }
+
 func flattenComputeBackendBucketCdnPolicyBypassCacheOnRequestHeadersHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
