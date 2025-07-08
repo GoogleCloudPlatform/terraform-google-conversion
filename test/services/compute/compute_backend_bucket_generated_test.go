@@ -46,7 +46,9 @@ func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T
 	test.BidirectionalConversion(
 		t,
 		[]string{},
-		[]string{},
+		[]string{
+			"RESOURCE.cdnPolicy.signedUrlCacheMaxAgeSec",
+		},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *testing.T) {
