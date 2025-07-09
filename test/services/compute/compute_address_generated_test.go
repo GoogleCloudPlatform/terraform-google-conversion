@@ -25,7 +25,13 @@ func TestAccComputeAddress_addressBasicExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -34,7 +40,13 @@ func TestAccComputeAddress_addressWithSubnetworkExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -43,7 +55,13 @@ func TestAccComputeAddress_addressWithGceEndpointExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -52,7 +70,13 @@ func TestAccComputeAddress_addressWithSharedLoadbalancerVipExample(t *testing.T)
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -61,7 +85,13 @@ func TestAccComputeAddress_instanceWithIpExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -70,7 +100,13 @@ func TestAccComputeAddress_computeAddressIpsecInterconnectExample(t *testing.T) 
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }

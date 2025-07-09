@@ -42,17 +42,19 @@ func GetComputeExternalVpnGatewayCaiAssets(d tpgresource.TerraformResourceData, 
 		if location == "" && strings.Contains(name, "/global/") {
 			location = "global"
 		}
-		return []caiasset.Asset{{
-			Name: name,
-			Type: ComputeExternalVpnGatewayAssetType,
-			Resource: &caiasset.AssetResource{
-				Version:              "beta",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
-				DiscoveryName:        "ExternalVpnGateway",
-				Data:                 obj,
-				Location:             location,
+		return []caiasset.Asset{
+			{
+				Name: name,
+				Type: ComputeExternalVpnGatewayAssetType,
+				Resource: &caiasset.AssetResource{
+					Version:              "beta",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					DiscoveryName:        "ExternalVpnGateway",
+					Data:                 obj,
+					Location:             location,
+				},
 			},
-		}}, nil
+		}, nil
 	} else {
 		return []caiasset.Asset{}, err
 	}

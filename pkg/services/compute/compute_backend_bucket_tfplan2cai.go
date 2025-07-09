@@ -42,17 +42,19 @@ func GetComputeBackendBucketCaiAssets(d tpgresource.TerraformResourceData, confi
 		if location == "" && strings.Contains(name, "/global/") {
 			location = "global"
 		}
-		return []caiasset.Asset{{
-			Name: name,
-			Type: ComputeBackendBucketAssetType,
-			Resource: &caiasset.AssetResource{
-				Version:              "beta",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
-				DiscoveryName:        "BackendBucket",
-				Data:                 obj,
-				Location:             location,
+		return []caiasset.Asset{
+			{
+				Name: name,
+				Type: ComputeBackendBucketAssetType,
+				Resource: &caiasset.AssetResource{
+					Version:              "beta",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					DiscoveryName:        "BackendBucket",
+					Data:                 obj,
+					Location:             location,
+				},
 			},
-		}}, nil
+		}, nil
 	} else {
 		return []caiasset.Asset{}, err
 	}

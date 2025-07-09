@@ -44,17 +44,19 @@ func GetComputeAddressCaiAssets(d tpgresource.TerraformResourceData, config *tra
 		if location == "" && strings.Contains(name, "/global/") {
 			location = "global"
 		}
-		return []caiasset.Asset{{
-			Name: name,
-			Type: ComputeAddressAssetType,
-			Resource: &caiasset.AssetResource{
-				Version:              "beta",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
-				DiscoveryName:        "Address",
-				Data:                 obj,
-				Location:             location,
+		return []caiasset.Asset{
+			{
+				Name: name,
+				Type: ComputeAddressAssetType,
+				Resource: &caiasset.AssetResource{
+					Version:              "beta",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					DiscoveryName:        "Address",
+					Data:                 obj,
+					Location:             location,
+				},
 			},
-		}}, nil
+		}, nil
 	} else {
 		return []caiasset.Asset{}, err
 	}

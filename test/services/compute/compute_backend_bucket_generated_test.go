@@ -25,7 +25,13 @@ func TestAccComputeBackendBucket_backendBucketBasicExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{
 			"RESOURCE.cdnPolicy.signedUrlCacheMaxAgeSec",
 		},
@@ -36,7 +42,13 @@ func TestAccComputeBackendBucket_backendBucketFullExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -45,7 +57,13 @@ func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{
 			"RESOURCE.cdnPolicy.signedUrlCacheMaxAgeSec",
 		},
@@ -56,7 +74,13 @@ func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *tes
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -65,7 +89,13 @@ func TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample(t *testi
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -74,7 +104,13 @@ func TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample(t *testin
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -83,7 +119,13 @@ func TestAccComputeBackendBucket_backendBucketBypassCacheExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -92,7 +134,13 @@ func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -101,7 +149,13 @@ func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
