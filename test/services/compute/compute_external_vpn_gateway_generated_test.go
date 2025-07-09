@@ -25,7 +25,13 @@ func TestAccComputeExternalVpnGateway_externalVpnGatewayExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }
@@ -34,7 +40,13 @@ func TestAccComputeExternalVpnGateway_onlyExternalVpnGatewayFullExample(t *testi
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }

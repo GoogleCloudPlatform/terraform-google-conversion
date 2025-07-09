@@ -26,9 +26,14 @@ func TestAccComputeDisk_diskBasicExample(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"count",
 			"create_snapshot_before_destroy",
 			"create_snapshot_before_destroy_prefix",
+			"depends_on",
+			"for_each",
 			"interface",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -39,9 +44,14 @@ func TestAccComputeDisk_diskAsyncExample(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"count",
 			"create_snapshot_before_destroy",
 			"create_snapshot_before_destroy_prefix",
+			"depends_on",
+			"for_each",
 			"interface",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -52,9 +62,14 @@ func TestAccComputeDisk_diskFeaturesExample(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"count",
 			"create_snapshot_before_destroy",
 			"create_snapshot_before_destroy_prefix",
+			"depends_on",
+			"for_each",
 			"interface",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)

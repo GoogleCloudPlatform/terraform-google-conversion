@@ -44,17 +44,19 @@ func GetBigQueryDatasetCaiAssets(d tpgresource.TerraformResourceData, config *tr
 		if location == "" && strings.Contains(name, "/global/") {
 			location = "global"
 		}
-		return []caiasset.Asset{{
-			Name: name,
-			Type: BigQueryDatasetAssetType,
-			Resource: &caiasset.AssetResource{
-				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest",
-				DiscoveryName:        "Dataset",
-				Data:                 obj,
-				Location:             location,
+		return []caiasset.Asset{
+			{
+				Name: name,
+				Type: BigQueryDatasetAssetType,
+				Resource: &caiasset.AssetResource{
+					Version:              "v2",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest",
+					DiscoveryName:        "Dataset",
+					Data:                 obj,
+					Location:             location,
+				},
 			},
-		}}, nil
+		}, nil
 	} else {
 		return []caiasset.Asset{}, err
 	}

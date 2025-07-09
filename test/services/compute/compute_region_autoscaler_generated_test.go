@@ -25,7 +25,13 @@ func TestAccComputeRegionAutoscaler_regionAutoscalerBasicExample(t *testing.T) {
 
 	test.BidirectionalConversion(
 		t,
-		[]string{},
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
 		[]string{},
 	)
 }

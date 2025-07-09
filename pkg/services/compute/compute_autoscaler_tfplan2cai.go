@@ -46,17 +46,19 @@ func GetComputeAutoscalerCaiAssets(d tpgresource.TerraformResourceData, config *
 		if location == "" && strings.Contains(name, "/global/") {
 			location = "global"
 		}
-		return []caiasset.Asset{{
-			Name: name,
-			Type: ComputeAutoscalerAssetType,
-			Resource: &caiasset.AssetResource{
-				Version:              "beta",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
-				DiscoveryName:        "Autoscaler",
-				Data:                 obj,
-				Location:             location,
+		return []caiasset.Asset{
+			{
+				Name: name,
+				Type: ComputeAutoscalerAssetType,
+				Resource: &caiasset.AssetResource{
+					Version:              "beta",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					DiscoveryName:        "Autoscaler",
+					Data:                 obj,
+					Location:             location,
+				},
 			},
-		}}, nil
+		}, nil
 	} else {
 		return []caiasset.Asset{}, err
 	}

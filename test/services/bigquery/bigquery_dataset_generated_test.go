@@ -27,7 +27,12 @@ func TestAccBigQueryDataset_bigqueryDatasetBasicExample(t *testing.T) {
 		t,
 		[]string{
 			"access",
+			"count",
 			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -39,7 +44,12 @@ func TestAccBigQueryDataset_bigqueryDatasetWithMaxTimeTravelHoursExample(t *test
 		t,
 		[]string{
 			"access",
+			"count",
 			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -51,7 +61,12 @@ func TestAccBigQueryDataset_bigqueryDatasetAuthorizedDatasetExample(t *testing.T
 		t,
 		[]string{
 			"access",
+			"count",
 			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -63,7 +78,12 @@ func TestAccBigQueryDataset_bigqueryDatasetAuthorizedRoutineExample(t *testing.T
 		t,
 		[]string{
 			"access",
+			"count",
 			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -75,7 +95,12 @@ func TestAccBigQueryDataset_bigqueryDatasetCaseInsensitiveNamesExample(t *testin
 		t,
 		[]string{
 			"access",
+			"count",
 			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -87,7 +112,12 @@ func TestAccBigQueryDataset_bigqueryDatasetDefaultCollationSetExample(t *testing
 		t,
 		[]string{
 			"access",
+			"count",
 			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -99,7 +129,12 @@ func TestAccBigQueryDataset_bigqueryDatasetExternalCatalogDatasetOptionsExample(
 		t,
 		[]string{
 			"access",
+			"count",
 			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
@@ -111,7 +146,12 @@ func TestAccBigQueryDataset_bigqueryDatasetResourceTagsExample(t *testing.T) {
 		t,
 		[]string{
 			"access",
+			"count",
 			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
 		},
 		[]string{},
 	)
