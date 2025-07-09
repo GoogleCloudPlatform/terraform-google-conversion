@@ -144,6 +144,18 @@ func GetComputeRegionDiskApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("access_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessModeProp)) && (ok || !reflect.DeepEqual(v, accessModeProp)) {
 		obj["accessMode"] = accessModeProp
 	}
+	provisionedIopsProp, err := expandComputeRegionDiskProvisionedIops(d.Get("provisioned_iops"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("provisioned_iops"); !tpgresource.IsEmptyValue(reflect.ValueOf(provisionedIopsProp)) && (ok || !reflect.DeepEqual(v, provisionedIopsProp)) {
+		obj["provisionedIops"] = provisionedIopsProp
+	}
+	provisionedThroughputProp, err := expandComputeRegionDiskProvisionedThroughput(d.Get("provisioned_throughput"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("provisioned_throughput"); !tpgresource.IsEmptyValue(reflect.ValueOf(provisionedThroughputProp)) && (ok || !reflect.DeepEqual(v, provisionedThroughputProp)) {
+		obj["provisionedThroughput"] = provisionedThroughputProp
+	}
 	labelsProp, err := expandComputeRegionDiskEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -423,6 +435,14 @@ func expandComputeRegionDiskLicenses(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandComputeRegionDiskAccessMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskProvisionedIops(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskProvisionedThroughput(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
