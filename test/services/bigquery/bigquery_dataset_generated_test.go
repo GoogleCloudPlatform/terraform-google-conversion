@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------------
 
-package compute_test
+package bigquery_test
 
 import (
 	"testing"
@@ -20,13 +20,15 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
 )
 
-func TestAccComputeAddress_addressBasicExample(t *testing.T) {
+func TestAccBigQueryDataset_bigqueryDatasetBasicExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"access",
 			"count",
+			"delete_contents_on_destroy",
 			"depends_on",
 			"for_each",
 			"lifecycle",
@@ -35,13 +37,15 @@ func TestAccComputeAddress_addressBasicExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeAddress_addressWithSubnetworkExample(t *testing.T) {
+func TestAccBigQueryDataset_bigqueryDatasetWithMaxTimeTravelHoursExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"access",
 			"count",
+			"delete_contents_on_destroy",
 			"depends_on",
 			"for_each",
 			"lifecycle",
@@ -50,13 +54,15 @@ func TestAccComputeAddress_addressWithSubnetworkExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeAddress_addressWithGceEndpointExample(t *testing.T) {
+func TestAccBigQueryDataset_bigqueryDatasetAuthorizedDatasetExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"access",
 			"count",
+			"delete_contents_on_destroy",
 			"depends_on",
 			"for_each",
 			"lifecycle",
@@ -65,13 +71,15 @@ func TestAccComputeAddress_addressWithGceEndpointExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeAddress_addressWithSharedLoadbalancerVipExample(t *testing.T) {
+func TestAccBigQueryDataset_bigqueryDatasetAuthorizedRoutineExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"access",
 			"count",
+			"delete_contents_on_destroy",
 			"depends_on",
 			"for_each",
 			"lifecycle",
@@ -80,13 +88,15 @@ func TestAccComputeAddress_addressWithSharedLoadbalancerVipExample(t *testing.T)
 		[]string{},
 	)
 }
-func TestAccComputeAddress_instanceWithIpExample(t *testing.T) {
+func TestAccBigQueryDataset_bigqueryDatasetCaseInsensitiveNamesExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"access",
 			"count",
+			"delete_contents_on_destroy",
 			"depends_on",
 			"for_each",
 			"lifecycle",
@@ -95,13 +105,49 @@ func TestAccComputeAddress_instanceWithIpExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeAddress_computeAddressIpsecInterconnectExample(t *testing.T) {
+func TestAccBigQueryDataset_bigqueryDatasetDefaultCollationSetExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
+			"access",
 			"count",
+			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
+		[]string{},
+	)
+}
+func TestAccBigQueryDataset_bigqueryDatasetExternalCatalogDatasetOptionsExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"access",
+			"count",
+			"delete_contents_on_destroy",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
+		[]string{},
+	)
+}
+func TestAccBigQueryDataset_bigqueryDatasetResourceTagsExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"access",
+			"count",
+			"delete_contents_on_destroy",
 			"depends_on",
 			"for_each",
 			"lifecycle",

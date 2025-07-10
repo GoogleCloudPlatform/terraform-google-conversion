@@ -19,6 +19,7 @@ package compute
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -26,29 +27,26 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 )
 
-const ComputeAutoscalerAssetType string = "compute.googleapis.com/Autoscaler"
-
-const ComputeAutoscalerSchemaName string = "google_compute_autoscaler"
-
-type ComputeAutoscalerConverter struct {
+type ComputeAutoscalerCai2hclConverter struct {
 	name   string
 	schema map[string]*schema.Schema
 }
 
-func NewComputeAutoscalerConverter(provider *schema.Provider) models.Converter {
+func NewComputeAutoscalerCai2hclConverter(provider *schema.Provider) models.Cai2hclConverter {
 	schema := provider.ResourcesMap[ComputeAutoscalerSchemaName].Schema
 
-	return &ComputeAutoscalerConverter{
+	return &ComputeAutoscalerCai2hclConverter{
 		name:   ComputeAutoscalerSchemaName,
 		schema: schema,
 	}
 }
 
 // Convert converts asset to HCL resource blocks.
-func (c *ComputeAutoscalerConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
+func (c *ComputeAutoscalerCai2hclConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
 	var blocks []*models.TerraformResourceBlock
 	block, err := c.convertResourceData(asset)
 	if err != nil {
@@ -58,15 +56,18 @@ func (c *ComputeAutoscalerConverter) Convert(asset caiasset.Asset) ([]*models.Te
 	return blocks, nil
 }
 
-func (c *ComputeAutoscalerConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
+func (c *ComputeAutoscalerCai2hclConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
 	if asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
 
 	var err error
 	res := asset.Resource.Data
-	config := utils.NewConfig()
+	config := transport.NewConfig()
 	d := &schema.ResourceData{}
+
+	assetNameParts := strings.Split(asset.Name, "/")
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
 
 	hclData := make(map[string]interface{})
 
@@ -81,7 +82,7 @@ func (c *ComputeAutoscalerConverter) convertResourceData(asset caiasset.Asset) (
 		return nil, err
 	}
 	return &models.TerraformResourceBlock{
-		Labels: []string{c.name, res["name"].(string)},
+		Labels: []string{c.name, hclBlockName},
 		Value:  ctyVal,
 	}, nil
 }
@@ -125,6 +126,7 @@ func flattenComputeAutoscalerAutoscalingPolicy(v interface{}, d *schema.Resource
 		flattenComputeAutoscalerAutoscalingPolicyScalingSchedules(original["scalingSchedules"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyMinReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
@@ -195,6 +197,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleDownControl(v interface{}, d 
 		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(original["timeWindowSec"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -210,6 +213,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownRepli
 		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(original["percent"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
@@ -276,6 +280,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleInControl(v interface{}, d *s
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlTimeWindowSec(original["timeWindowSec"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -291,6 +296,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicasPercent(original["percent"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicasFixed(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
@@ -357,6 +363,7 @@ func flattenComputeAutoscalerAutoscalingPolicyCpuUtilization(v interface{}, d *s
 		flattenComputeAutoscalerAutoscalingPolicyCpuUtilizationPredictiveMethod(original["predictiveMethod"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyCpuUtilizationTarget(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -391,6 +398,7 @@ func flattenComputeAutoscalerAutoscalingPolicyMetric(v interface{}, d *schema.Re
 	}
 	return transformed
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyMetricName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -424,6 +432,7 @@ func flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilization(v interfa
 		flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilizationTarget(original["utilizationTarget"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilizationTarget(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -448,6 +457,7 @@ func flattenComputeAutoscalerAutoscalingPolicyScalingSchedules(v interface{}, d 
 	}
 	return transformed
 }
+
 func flattenComputeAutoscalerAutoscalingPolicyScalingSchedulesMinRequiredReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
@@ -504,7 +514,6 @@ func flattenComputeAutoscalerTarget(v interface{}, d *schema.ResourceData, confi
 	}
 	return tpgresource.ConvertSelfLinkToV1(v.(string))
 }
-
 func flattenComputeAutoscalerZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v

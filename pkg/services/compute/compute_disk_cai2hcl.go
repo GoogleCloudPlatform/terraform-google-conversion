@@ -25,43 +25,28 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/utils"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 )
 
-func computeDiskGuestOsFeaturesSchema() *schema.Resource {
-	return &schema.Resource{
-		Schema: map[string]*schema.Schema{
-			"type": {
-				Type:        schema.TypeString,
-				Required:    true,
-				ForceNew:    true,
-				Description: `The type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options.`,
-			},
-		},
-	}
-}
-
-const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
-
-const ComputeDiskSchemaName string = "google_compute_disk"
-
-type ComputeDiskConverter struct {
+type ComputeDiskCai2hclConverter struct {
 	name   string
 	schema map[string]*schema.Schema
 }
 
-func NewComputeDiskConverter(provider *schema.Provider) models.Converter {
+func NewComputeDiskCai2hclConverter(provider *schema.Provider) models.Cai2hclConverter {
 	schema := provider.ResourcesMap[ComputeDiskSchemaName].Schema
 
-	return &ComputeDiskConverter{
+	return &ComputeDiskCai2hclConverter{
 		name:   ComputeDiskSchemaName,
 		schema: schema,
 	}
 }
 
 // Convert converts asset to HCL resource blocks.
-func (c *ComputeDiskConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
+func (c *ComputeDiskCai2hclConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
 	var blocks []*models.TerraformResourceBlock
 	block, err := c.convertResourceData(asset)
 	if err != nil {
@@ -71,15 +56,18 @@ func (c *ComputeDiskConverter) Convert(asset caiasset.Asset) ([]*models.Terrafor
 	return blocks, nil
 }
 
-func (c *ComputeDiskConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
+func (c *ComputeDiskCai2hclConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
 	if asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
 
 	var err error
 	res := asset.Resource.Data
-	config := utils.NewConfig()
+	config := transport.NewConfig()
 	d := &schema.ResourceData{}
+
+	assetNameParts := strings.Split(asset.Name, "/")
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
 
 	hclData := make(map[string]interface{})
 
@@ -127,7 +115,7 @@ func (c *ComputeDiskConverter) convertResourceData(asset caiasset.Asset) (*model
 		return nil, err
 	}
 	return &models.TerraformResourceBlock{
-		Labels: []string{c.name, res["name"].(string)},
+		Labels: []string{c.name, hclBlockName},
 		Value:  ctyVal,
 	}, nil
 }
@@ -151,6 +139,7 @@ func flattenComputeDiskSourceImageEncryptionKey(v interface{}, d *schema.Resourc
 		flattenComputeDiskSourceImageEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeDiskSourceImageEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -192,6 +181,7 @@ func flattenComputeDiskDiskEncryptionKey(v interface{}, d *schema.ResourceData, 
 		flattenComputeDiskDiskEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeDiskDiskEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -231,6 +221,7 @@ func flattenComputeDiskSourceSnapshotEncryptionKey(v interface{}, d *schema.Reso
 		flattenComputeDiskSourceSnapshotEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeDiskSourceSnapshotEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -256,9 +247,8 @@ func flattenComputeDiskDescription(v interface{}, d *schema.ResourceData, config
 }
 
 func flattenComputeDiskLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return utils.RemoveTerraformAttributionLabel(v)
+	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
-
 func flattenComputeDiskName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -378,6 +368,7 @@ func flattenComputeDiskAsyncPrimaryDisk(v interface{}, d *schema.ResourceData, c
 		flattenComputeDiskAsyncPrimaryDiskDisk(original["disk"], d, config)
 	return []interface{}{transformed}
 }
+
 func flattenComputeDiskAsyncPrimaryDiskDisk(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -389,6 +380,7 @@ func flattenComputeDiskArchitecture(v interface{}, d *schema.ResourceData, confi
 func flattenComputeDiskParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return d.Get("params")
 }
+
 func flattenComputeDiskParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return d.Get("params.0.resource_manager_tags")
 }
@@ -411,6 +403,7 @@ func flattenComputeDiskGuestOsFeatures(v interface{}, d *schema.ResourceData, co
 	}
 	return transformed
 }
+
 func flattenComputeDiskGuestOsFeaturesType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

@@ -14,18 +14,23 @@
 package converters
 
 import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/cai"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/services/compute"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/services/resourcemanager"
 )
 
-var ConverterMap = map[string]cai.ResourceConverter{
+var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	// ####### START handwritten resources ###########
-	"google_project":          resourcemanager.ResourceConverterProject(),
-	"google_compute_instance": compute.ResourceConverterComputeInstance(),
+	"google_project":          resourcemanager.ProjectTfplan2caiConverter(),
+	"google_compute_instance": compute.ComputeInstanceTfplan2caiConverter(),
 	// ####### END handwritten resources ###########
-	"google_compute_address":           compute.ResourceConverterComputeAddress(),
-	"google_compute_autoscaler":        compute.ResourceConverterComputeAutoscaler(),
-	"google_compute_disk":              compute.ResourceConverterComputeDisk(),
-	"google_compute_region_autoscaler": compute.ResourceConverterComputeRegionAutoscaler(),
+	"google_bigquery_dataset":             bigquery.BigQueryDatasetTfplan2caiConverter(),
+	"google_compute_address":              compute.ComputeAddressTfplan2caiConverter(),
+	"google_compute_autoscaler":           compute.ComputeAutoscalerTfplan2caiConverter(),
+	"google_compute_backend_bucket":       compute.ComputeBackendBucketTfplan2caiConverter(),
+	"google_compute_backend_service":      compute.ComputeBackendServiceTfplan2caiConverter(),
+	"google_compute_disk":                 compute.ComputeDiskTfplan2caiConverter(),
+	"google_compute_external_vpn_gateway": compute.ComputeExternalVpnGatewayTfplan2caiConverter(),
+	"google_compute_region_autoscaler":    compute.ComputeRegionAutoscalerTfplan2caiConverter(),
 }
