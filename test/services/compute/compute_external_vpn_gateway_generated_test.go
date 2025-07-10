@@ -20,54 +20,30 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
 )
 
-func TestAccComputeDisk_diskBasicExample(t *testing.T) {
+func TestAccComputeExternalVpnGateway_externalVpnGatewayExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
 			"count",
-			"create_snapshot_before_destroy",
-			"create_snapshot_before_destroy_prefix",
 			"depends_on",
 			"for_each",
-			"interface",
 			"lifecycle",
 			"provider",
 		},
 		[]string{},
 	)
 }
-func TestAccComputeDisk_diskAsyncExample(t *testing.T) {
+func TestAccComputeExternalVpnGateway_onlyExternalVpnGatewayFullExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
 			"count",
-			"create_snapshot_before_destroy",
-			"create_snapshot_before_destroy_prefix",
 			"depends_on",
 			"for_each",
-			"interface",
-			"lifecycle",
-			"provider",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeDisk_diskFeaturesExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"create_snapshot_before_destroy",
-			"create_snapshot_before_destroy_prefix",
-			"depends_on",
-			"for_each",
-			"interface",
 			"lifecycle",
 			"provider",
 		},
