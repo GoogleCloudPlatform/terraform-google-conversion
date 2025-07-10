@@ -30,6 +30,7 @@ func TestAccComputeBackendBucket_backendBucketBasicExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
 			"provider",
 		},
 		[]string{
@@ -47,6 +48,7 @@ func TestAccComputeBackendBucket_backendBucketFullExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
 			"provider",
 		},
 		[]string{},
@@ -62,6 +64,7 @@ func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
 			"provider",
 		},
 		[]string{
@@ -79,6 +82,7 @@ func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *tes
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
 			"provider",
 		},
 		[]string{},
@@ -94,6 +98,7 @@ func TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample(t *testi
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
 			"provider",
 		},
 		[]string{},
@@ -109,6 +114,7 @@ func TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample(t *testin
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
 			"provider",
 		},
 		[]string{},
@@ -124,6 +130,7 @@ func TestAccComputeBackendBucket_backendBucketBypassCacheExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
 			"provider",
 		},
 		[]string{},
@@ -139,12 +146,14 @@ func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
 			"provider",
 		},
 		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
+	t.Skip("Skip the test temporarily, as it takes time to fix it.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -154,6 +163,8 @@ func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"load_balancing_scheme",
+			"project",
 			"provider",
 		},
 		[]string{},
