@@ -19,6 +19,8 @@ package dialogflowcx
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -129,11 +131,39 @@ func expandDialogflowCXWebhookGenericWebService(v interface{}, d tpgresource.Ter
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedUri, err := expandDialogflowCXWebhookGenericWebServiceUri(original["uri"], d, config)
+	transformedAllowedCaCerts, err := expandDialogflowCXWebhookGenericWebServiceAllowedCaCerts(original["allowed_ca_certs"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["uri"] = transformedUri
+	} else if val := reflect.ValueOf(transformedAllowedCaCerts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedCaCerts"] = transformedAllowedCaCerts
+	}
+
+	transformedHttpMethod, err := expandDialogflowCXWebhookGenericWebServiceHttpMethod(original["http_method"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHttpMethod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["httpMethod"] = transformedHttpMethod
+	}
+
+	transformedOauthConfig, err := expandDialogflowCXWebhookGenericWebServiceOauthConfig(original["oauth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauthConfig"] = transformedOauthConfig
+	}
+
+	transformedParameterMapping, err := expandDialogflowCXWebhookGenericWebServiceParameterMapping(original["parameter_mapping"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParameterMapping); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parameterMapping"] = transformedParameterMapping
+	}
+
+	transformedRequestBody, err := expandDialogflowCXWebhookGenericWebServiceRequestBody(original["request_body"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestBody); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestBody"] = transformedRequestBody
 	}
 
 	transformedRequestHeaders, err := expandDialogflowCXWebhookGenericWebServiceRequestHeaders(original["request_headers"], d, config)
@@ -143,17 +173,131 @@ func expandDialogflowCXWebhookGenericWebService(v interface{}, d tpgresource.Ter
 		transformed["requestHeaders"] = transformedRequestHeaders
 	}
 
-	transformedAllowedCaCerts, err := expandDialogflowCXWebhookGenericWebServiceAllowedCaCerts(original["allowed_ca_certs"], d, config)
+	transformedSecretVersionForUsernamePassword, err := expandDialogflowCXWebhookGenericWebServiceSecretVersionForUsernamePassword(original["secret_version_for_username_password"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllowedCaCerts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["allowedCaCerts"] = transformedAllowedCaCerts
+	} else if val := reflect.ValueOf(transformedSecretVersionForUsernamePassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretVersionForUsernamePassword"] = transformedSecretVersionForUsernamePassword
+	}
+
+	transformedSecretVersionsForRequestHeaders, err := expandDialogflowCXWebhookGenericWebServiceSecretVersionsForRequestHeaders(original["secret_versions_for_request_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretVersionsForRequestHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretVersionsForRequestHeaders"] = transformedSecretVersionsForRequestHeaders
+	}
+
+	transformedServiceAgentAuth, err := expandDialogflowCXWebhookGenericWebServiceServiceAgentAuth(original["service_agent_auth"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAgentAuth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAgentAuth"] = transformedServiceAgentAuth
+	}
+
+	transformedUri, err := expandDialogflowCXWebhookGenericWebServiceUri(original["uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uri"] = transformedUri
+	}
+
+	transformedWebhookType, err := expandDialogflowCXWebhookGenericWebServiceWebhookType(original["webhook_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhookType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhookType"] = transformedWebhookType
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowCXWebhookGenericWebServiceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXWebhookGenericWebServiceAllowedCaCerts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceHttpMethod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceOauthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedClientId, err := expandDialogflowCXWebhookGenericWebServiceOauthConfigClientId(original["client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientId"] = transformedClientId
+	}
+
+	transformedClientSecret, err := expandDialogflowCXWebhookGenericWebServiceOauthConfigClientSecret(original["client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecret"] = transformedClientSecret
+	}
+
+	transformedScopes, err := expandDialogflowCXWebhookGenericWebServiceOauthConfigScopes(original["scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scopes"] = transformedScopes
+	}
+
+	transformedSecretVersionForClientSecret, err := expandDialogflowCXWebhookGenericWebServiceOauthConfigSecretVersionForClientSecret(original["secret_version_for_client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretVersionForClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretVersionForClientSecret"] = transformedSecretVersionForClientSecret
+	}
+
+	transformedTokenEndpoint, err := expandDialogflowCXWebhookGenericWebServiceOauthConfigTokenEndpoint(original["token_endpoint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTokenEndpoint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tokenEndpoint"] = transformedTokenEndpoint
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceOauthConfigClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceOauthConfigClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceOauthConfigScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceOauthConfigSecretVersionForClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceOauthConfigTokenEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceParameterMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceRequestBody(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -168,7 +312,48 @@ func expandDialogflowCXWebhookGenericWebServiceRequestHeaders(v interface{}, d t
 	return m, nil
 }
 
-func expandDialogflowCXWebhookGenericWebServiceAllowedCaCerts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXWebhookGenericWebServiceSecretVersionForUsernamePassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceSecretVersionsForRequestHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+	if v == nil {
+		return map[string]interface{}{}, nil
+	}
+	m := make(map[string]interface{})
+	for _, raw := range v.(*schema.Set).List() {
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedSecretVersion, err := expandDialogflowCXWebhookGenericWebServiceSecretVersionsForRequestHeadersSecretVersion(original["secret_version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["secretVersion"] = transformedSecretVersion
+		}
+
+		transformedKey, err := tpgresource.ExpandString(original["key"], d, config)
+		if err != nil {
+			return nil, err
+		}
+		m[transformedKey] = transformed
+	}
+	return m, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceSecretVersionsForRequestHeadersSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceServiceAgentAuth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceWebhookType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -211,11 +396,39 @@ func expandDialogflowCXWebhookServiceDirectoryGenericWebService(v interface{}, d
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedUri, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceUri(original["uri"], d, config)
+	transformedAllowedCaCerts, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceAllowedCaCerts(original["allowed_ca_certs"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["uri"] = transformedUri
+	} else if val := reflect.ValueOf(transformedAllowedCaCerts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedCaCerts"] = transformedAllowedCaCerts
+	}
+
+	transformedHttpMethod, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceHttpMethod(original["http_method"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHttpMethod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["httpMethod"] = transformedHttpMethod
+	}
+
+	transformedOauthConfig, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfig(original["oauth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauthConfig"] = transformedOauthConfig
+	}
+
+	transformedParameterMapping, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceParameterMapping(original["parameter_mapping"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParameterMapping); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parameterMapping"] = transformedParameterMapping
+	}
+
+	transformedRequestBody, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceRequestBody(original["request_body"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestBody); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestBody"] = transformedRequestBody
 	}
 
 	transformedRequestHeaders, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceRequestHeaders(original["request_headers"], d, config)
@@ -225,17 +438,131 @@ func expandDialogflowCXWebhookServiceDirectoryGenericWebService(v interface{}, d
 		transformed["requestHeaders"] = transformedRequestHeaders
 	}
 
-	transformedAllowedCaCerts, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceAllowedCaCerts(original["allowed_ca_certs"], d, config)
+	transformedSecretVersionForUsernamePassword, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceSecretVersionForUsernamePassword(original["secret_version_for_username_password"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllowedCaCerts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["allowedCaCerts"] = transformedAllowedCaCerts
+	} else if val := reflect.ValueOf(transformedSecretVersionForUsernamePassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretVersionForUsernamePassword"] = transformedSecretVersionForUsernamePassword
+	}
+
+	transformedSecretVersionsForRequestHeaders, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceSecretVersionsForRequestHeaders(original["secret_versions_for_request_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretVersionsForRequestHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretVersionsForRequestHeaders"] = transformedSecretVersionsForRequestHeaders
+	}
+
+	transformedServiceAgentAuth, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceServiceAgentAuth(original["service_agent_auth"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAgentAuth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAgentAuth"] = transformedServiceAgentAuth
+	}
+
+	transformedUri, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceUri(original["uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uri"] = transformedUri
+	}
+
+	transformedWebhookType, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceWebhookType(original["webhook_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWebhookType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["webhookType"] = transformedWebhookType
 	}
 
 	return transformed, nil
 }
 
-func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceAllowedCaCerts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceHttpMethod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedClientId, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigClientId(original["client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientId"] = transformedClientId
+	}
+
+	transformedClientSecret, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigClientSecret(original["client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecret"] = transformedClientSecret
+	}
+
+	transformedScopes, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigScopes(original["scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scopes"] = transformedScopes
+	}
+
+	transformedSecretVersionForClientSecret, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigSecretVersionForClientSecret(original["secret_version_for_client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretVersionForClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretVersionForClientSecret"] = transformedSecretVersionForClientSecret
+	}
+
+	transformedTokenEndpoint, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigTokenEndpoint(original["token_endpoint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTokenEndpoint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tokenEndpoint"] = transformedTokenEndpoint
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigSecretVersionForClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceOauthConfigTokenEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceParameterMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceRequestBody(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -250,7 +577,48 @@ func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceRequestHeaders(v 
 	return m, nil
 }
 
-func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceAllowedCaCerts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceSecretVersionForUsernamePassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceSecretVersionsForRequestHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+	if v == nil {
+		return map[string]interface{}{}, nil
+	}
+	m := make(map[string]interface{})
+	for _, raw := range v.(*schema.Set).List() {
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedSecretVersion, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceSecretVersionsForRequestHeadersSecretVersion(original["secret_version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["secretVersion"] = transformedSecretVersion
+		}
+
+		transformedKey, err := tpgresource.ExpandString(original["key"], d, config)
+		if err != nil {
+			return nil, err
+		}
+		m[transformedKey] = transformed
+	}
+	return m, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceSecretVersionsForRequestHeadersSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceServiceAgentAuth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceWebhookType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
