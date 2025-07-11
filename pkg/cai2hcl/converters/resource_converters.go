@@ -57,6 +57,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeExternalVpnGatewayAssetType: {
 		"Default": compute.NewComputeExternalVpnGatewayCai2hclConverter(provider),
 	},
+	compute.ComputeFirewallAssetType: {
+		"Default": compute.NewComputeFirewallCai2hclConverter(provider),
+	},
 	compute.ComputeSubnetworkAssetType: {
 		"Default": compute.NewComputeSubnetworkCai2hclConverter(provider),
 	},
