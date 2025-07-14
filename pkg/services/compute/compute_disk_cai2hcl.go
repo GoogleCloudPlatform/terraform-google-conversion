@@ -80,6 +80,7 @@ func (c *ComputeDiskCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 		// Decoding the object has resulted in it being gone. It may be marked deleted.
 		return nil, nil
 	}
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
 
 	hclData["source_image_encryption_key"] = flattenComputeDiskSourceImageEncryptionKey(res["sourceImageEncryptionKey"], d, config)
 	hclData["source_instant_snapshot"] = flattenComputeDiskSourceInstantSnapshot(res["sourceInstantSnapshot"], d, config)

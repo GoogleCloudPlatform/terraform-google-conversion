@@ -75,6 +75,8 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 		return nil, err
 	}
 
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+
 	hclData["description"] = flattenComputeSubnetworkDescription(res["description"], d, config)
 	hclData["ip_cidr_range"] = flattenComputeSubnetworkIpCidrRange(res["ipCidrRange"], d, config)
 	hclData["reserved_internal_range"] = flattenComputeSubnetworkReservedInternalRange(res["reservedInternalRange"], d, config)

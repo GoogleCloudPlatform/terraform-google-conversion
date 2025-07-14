@@ -72,6 +72,8 @@ func (c *ComputeAddressCai2hclConverter) convertResourceData(asset caiasset.Asse
 
 	hclData := make(map[string]interface{})
 
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+
 	hclData["address"] = flattenComputeAddressAddress(res["address"], d, config)
 	hclData["address_type"] = flattenComputeAddressAddressType(res["addressType"], d, config)
 	hclData["description"] = flattenComputeAddressDescription(res["description"], d, config)

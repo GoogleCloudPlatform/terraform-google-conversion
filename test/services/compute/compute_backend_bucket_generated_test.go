@@ -153,7 +153,6 @@ func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
 	)
 }
 func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
-	t.Skip("Skip the test temporarily, as it takes time to fix it.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -164,7 +163,6 @@ func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
-			"project",
 			"provider",
 		},
 		[]string{},

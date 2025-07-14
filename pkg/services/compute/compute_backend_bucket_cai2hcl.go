@@ -70,6 +70,8 @@ func (c *ComputeBackendBucketCai2hclConverter) convertResourceData(asset caiasse
 
 	hclData := make(map[string]interface{})
 
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+
 	hclData["bucket_name"] = flattenComputeBackendBucketBucketName(res["bucketName"], d, config)
 	hclData["cdn_policy"] = flattenComputeBackendBucketCdnPolicy(res["cdnPolicy"], d, config)
 	hclData["compression_mode"] = flattenComputeBackendBucketCompressionMode(res["compressionMode"], d, config)

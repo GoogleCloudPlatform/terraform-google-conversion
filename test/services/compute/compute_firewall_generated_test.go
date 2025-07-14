@@ -45,7 +45,6 @@ func TestAccComputeFirewall_firewallWithTargetTagsExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
-			"project",
 			"provider",
 		},
 		[]string{},

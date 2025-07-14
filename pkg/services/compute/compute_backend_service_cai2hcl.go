@@ -84,6 +84,7 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 		// Decoding the object has resulted in it being gone. It may be marked deleted.
 		return nil, nil
 	}
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
 
 	hclData["affinity_cookie_ttl_sec"] = flattenComputeBackendServiceAffinityCookieTtlSec(res["affinityCookieTtlSec"], d, config)
 	hclData["backend"] = flattenComputeBackendServiceBackend(res["backends"], d, config)

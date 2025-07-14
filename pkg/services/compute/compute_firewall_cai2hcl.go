@@ -70,6 +70,8 @@ func (c *ComputeFirewallCai2hclConverter) convertResourceData(asset caiasset.Ass
 
 	hclData := make(map[string]interface{})
 
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+
 	hclData["allow"] = flattenComputeFirewallAllow(res["allowed"], d, config)
 	hclData["deny"] = flattenComputeFirewallDeny(res["denied"], d, config)
 	hclData["description"] = flattenComputeFirewallDescription(res["description"], d, config)
