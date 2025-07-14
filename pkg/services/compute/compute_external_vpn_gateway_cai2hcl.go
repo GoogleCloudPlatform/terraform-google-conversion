@@ -71,6 +71,8 @@ func (c *ComputeExternalVpnGatewayCai2hclConverter) convertResourceData(asset ca
 
 	hclData := make(map[string]interface{})
 
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+
 	hclData["description"] = flattenComputeExternalVpnGatewayDescription(res["description"], d, config)
 	hclData["labels"] = flattenComputeExternalVpnGatewayLabels(res["labels"], d, config)
 	hclData["name"] = flattenComputeExternalVpnGatewayName(res["name"], d, config)

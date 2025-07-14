@@ -71,6 +71,8 @@ func (c *BigQueryDatasetCai2hclConverter) convertResourceData(asset caiasset.Ass
 
 	hclData := make(map[string]interface{})
 
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+
 	hclData["max_time_travel_hours"] = flattenBigQueryDatasetMaxTimeTravelHours(res["maxTimeTravelHours"], d, config)
 	hclData["access"] = flattenBigQueryDatasetAccess(res["access"], d, config)
 	// Terraform must set the top level schema field, but since this object contains collapsed properties
