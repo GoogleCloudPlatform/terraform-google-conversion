@@ -95,6 +95,7 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["ip_collection"] = flattenComputeSubnetworkIpCollection(res["ipCollection"], d, config)
 	hclData["allow_subnet_cidr_routes_overlap"] = flattenComputeSubnetworkAllowSubnetCidrRoutesOverlap(res["allowSubnetCidrRoutesOverlap"], d, config)
 	hclData["enable_flow_logs"] = flattenComputeSubnetworkEnableFlowLogs(res["enableFlowLogs"], d, config)
+	hclData["params"] = flattenComputeSubnetworkParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -246,6 +247,14 @@ func flattenComputeSubnetworkAllowSubnetCidrRoutesOverlap(v interface{}, d *sche
 
 func flattenComputeSubnetworkEnableFlowLogs(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenComputeSubnetworkParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return d.Get("params")
+}
+
+func flattenComputeSubnetworkParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return d.Get("params.0.resource_manager_tags")
 }
 
 func resourceComputeSubnetworkTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
