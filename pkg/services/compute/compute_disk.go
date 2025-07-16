@@ -454,12 +454,6 @@ customer-supplied encryption key to either encrypt or decrypt
 this resource. You can provide either the rawKey or the rsaEncryptedKey.`,
 							Sensitive: true,
 						},
-						"sha256": {
-							Type:     schema.TypeString,
-							Computed: true,
-							Description: `The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
-encryption key that protects this resource.`,
-						},
 					},
 				},
 			},
@@ -678,12 +672,6 @@ If absent, the Compute Engine Service Agent service account is used.`,
 							Description: `Specifies a 256-bit customer-supplied encryption key, encoded in
 RFC 4648 base64 to either encrypt or decrypt this resource.`,
 						},
-						"sha256": {
-							Type:     schema.TypeString,
-							Computed: true,
-							Description: `The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
-encryption key that protects this resource.`,
-						},
 					},
 				},
 			},
@@ -733,12 +721,6 @@ If absent, the Compute Engine Service Agent service account is used.`,
 							ForceNew: true,
 							Description: `Specifies a 256-bit customer-supplied encryption key, encoded in
 RFC 4648 base64 to either encrypt or decrypt this resource.`,
-						},
-						"sha256": {
-							Type:     schema.TypeString,
-							Computed: true,
-							Description: `The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
-encryption key that protects this resource.`,
 						},
 					},
 				},

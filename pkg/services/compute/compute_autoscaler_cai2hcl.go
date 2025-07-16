@@ -71,6 +71,7 @@ func (c *ComputeAutoscalerCai2hclConverter) convertResourceData(asset caiasset.A
 
 	hclData := make(map[string]interface{})
 
+	hclData["zone"] = utils.ParseFieldValue(asset.Name, "zones")
 	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
 
 	hclData["name"] = flattenComputeAutoscalerName(res["name"], d, config)
