@@ -75,19 +75,9 @@ func (c *BigQueryDatasetCai2hclConverter) convertResourceData(asset caiasset.Ass
 
 	hclData["max_time_travel_hours"] = flattenBigQueryDatasetMaxTimeTravelHours(res["maxTimeTravelHours"], d, config)
 	hclData["access"] = flattenBigQueryDatasetAccess(res["access"], d, config)
-	// Terraform must set the top level schema field, but since this object contains collapsed properties
-	// it's difficult to know what the top level should be. Instead we just loop over the map returned from flatten.
 	if flattenedProp := flattenBigQueryDatasetDatasetReference(res["datasetReference"], d, config); flattenedProp != nil {
-		flattenedPropSlice, ok := flattenedProp.([]interface{})
-		if !ok || len(flattenedPropSlice) == 0 {
-			return nil, fmt.Errorf("unexpected type returned from flattener: %T", flattenedProp)
-		}
-		flattedPropMap, ok := flattenedPropSlice[0].(map[string]interface{})
-		if !ok || len(flattedPropMap) == 0 {
-			return nil, fmt.Errorf("unexpected type returned from flattener: %T", flattenedPropSlice)
-		}
-		for k, v := range flattedPropMap {
-			hclData[k] = v
+		if err := tgcresource.MergeFlattenedProperties(hclData, flattenedProp); err != nil {
+			return nil, fmt.Errorf("error merging flattened properties from datasetReference: %s", err)
 		}
 	}
 	hclData["default_table_expiration_ms"] = flattenBigQueryDatasetDefaultTableExpirationMs(res["defaultTableExpirationMs"], d, config)

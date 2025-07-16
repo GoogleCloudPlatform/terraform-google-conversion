@@ -25,6 +25,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/utils"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
@@ -84,6 +85,7 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 		// Decoding the object has resulted in it being gone. It may be marked deleted.
 		return nil, nil
 	}
+
 	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
 
 	hclData["affinity_cookie_ttl_sec"] = flattenComputeBackendServiceAffinityCookieTtlSec(res["affinityCookieTtlSec"], d, config)
@@ -92,19 +94,9 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 	hclData["compression_mode"] = flattenComputeBackendServiceCompressionMode(res["compressionMode"], d, config)
 	hclData["consistent_hash"] = flattenComputeBackendServiceConsistentHash(res["consistentHash"], d, config)
 	hclData["cdn_policy"] = flattenComputeBackendServiceCdnPolicy(res["cdnPolicy"], d, config)
-	// Terraform must set the top level schema field, but since this object contains collapsed properties
-	// it's difficult to know what the top level should be. Instead we just loop over the map returned from flatten.
 	if flattenedProp := flattenComputeBackendServiceConnectionDraining(res["connectionDraining"], d, config); flattenedProp != nil {
-		flattenedPropSlice, ok := flattenedProp.([]interface{})
-		if !ok || len(flattenedPropSlice) == 0 {
-			return nil, fmt.Errorf("unexpected type returned from flattener: %T", flattenedProp)
-		}
-		flattedPropMap, ok := flattenedPropSlice[0].(map[string]interface{})
-		if !ok || len(flattedPropMap) == 0 {
-			return nil, fmt.Errorf("unexpected type returned from flattener: %T", flattenedPropSlice)
-		}
-		for k, v := range flattedPropMap {
-			hclData[k] = v
+		if err := tgcresource.MergeFlattenedProperties(hclData, flattenedProp); err != nil {
+			return nil, fmt.Errorf("error merging flattened properties from connectionDraining: %s", err)
 		}
 	}
 	hclData["custom_request_headers"] = flattenComputeBackendServiceCustomRequestHeaders(res["customRequestHeaders"], d, config)
@@ -959,8 +951,6 @@ func flattenComputeBackendServiceIap(v interface{}, d *schema.ResourceData, conf
 		flattenComputeBackendServiceIapOauth2ClientId(original["oauth2ClientId"], d, config)
 	transformed["oauth2_client_secret"] =
 		flattenComputeBackendServiceIapOauth2ClientSecret(original["oauth2ClientSecret"], d, config)
-	transformed["oauth2_client_secret_sha256"] =
-		flattenComputeBackendServiceIapOauth2ClientSecretSha256(original["oauth2ClientSecretSha256"], d, config)
 	return []interface{}{transformed}
 }
 
@@ -977,10 +967,6 @@ func flattenComputeBackendServiceIapOauth2ClientId(v interface{}, d *schema.Reso
 
 func flattenComputeBackendServiceIapOauth2ClientSecret(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return d.Get("iap.0.oauth2_client_secret")
-}
-
-func flattenComputeBackendServiceIapOauth2ClientSecretSha256(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
 }
 
 func flattenComputeBackendServiceIpAddressSelectionPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

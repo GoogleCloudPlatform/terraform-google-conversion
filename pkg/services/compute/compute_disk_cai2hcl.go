@@ -80,6 +80,10 @@ func (c *ComputeDiskCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 		// Decoding the object has resulted in it being gone. It may be marked deleted.
 		return nil, nil
 	}
+
+	hclData["zone"] = utils.ParseFieldValue(asset.Name, "zones")
+
+	hclData["snapshot"] = utils.ParseFieldValue(asset.Name, "snapshots")
 	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
 
 	hclData["source_image_encryption_key"] = flattenComputeDiskSourceImageEncryptionKey(res["sourceImageEncryptionKey"], d, config)
@@ -92,7 +96,6 @@ func (c *ComputeDiskCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 	hclData["name"] = flattenComputeDiskName(res["name"], d, config)
 	hclData["size"] = flattenComputeDiskSize(res["sizeGb"], d, config)
 	hclData["physical_block_size_bytes"] = flattenComputeDiskPhysicalBlockSizeBytes(res["physicalBlockSizeBytes"], d, config)
-	hclData["interface"] = flattenComputeDiskInterface(res["interface"], d, config)
 	hclData["source_disk"] = flattenComputeDiskSourceDisk(res["sourceDisk"], d, config)
 	hclData["type"] = flattenComputeDiskType(res["type"], d, config)
 	hclData["image"] = flattenComputeDiskImage(res["sourceImage"], d, config)
@@ -132,8 +135,6 @@ func flattenComputeDiskSourceImageEncryptionKey(v interface{}, d *schema.Resourc
 	transformed := make(map[string]interface{})
 	transformed["raw_key"] =
 		flattenComputeDiskSourceImageEncryptionKeyRawKey(original["rawKey"], d, config)
-	transformed["sha256"] =
-		flattenComputeDiskSourceImageEncryptionKeySha256(original["sha256"], d, config)
 	transformed["kms_key_self_link"] =
 		flattenComputeDiskSourceImageEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
 	transformed["kms_key_service_account"] =
@@ -142,10 +143,6 @@ func flattenComputeDiskSourceImageEncryptionKey(v interface{}, d *schema.Resourc
 }
 
 func flattenComputeDiskSourceImageEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenComputeDiskSourceImageEncryptionKeySha256(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -174,8 +171,6 @@ func flattenComputeDiskDiskEncryptionKey(v interface{}, d *schema.ResourceData, 
 		flattenComputeDiskDiskEncryptionKeyRawKey(original["rawKey"], d, config)
 	transformed["rsa_encrypted_key"] =
 		flattenComputeDiskDiskEncryptionKeyRsaEncryptedKey(original["rsaEncryptedKey"], d, config)
-	transformed["sha256"] =
-		flattenComputeDiskDiskEncryptionKeySha256(original["sha256"], d, config)
 	transformed["kms_key_self_link"] =
 		flattenComputeDiskDiskEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
 	transformed["kms_key_service_account"] =
@@ -188,10 +183,6 @@ func flattenComputeDiskDiskEncryptionKeyRawKey(v interface{}, d *schema.Resource
 }
 
 func flattenComputeDiskDiskEncryptionKeyRsaEncryptedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenComputeDiskDiskEncryptionKeySha256(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -216,8 +207,6 @@ func flattenComputeDiskSourceSnapshotEncryptionKey(v interface{}, d *schema.Reso
 		flattenComputeDiskSourceSnapshotEncryptionKeyRawKey(original["rawKey"], d, config)
 	transformed["kms_key_self_link"] =
 		flattenComputeDiskSourceSnapshotEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
-	transformed["sha256"] =
-		flattenComputeDiskSourceSnapshotEncryptionKeySha256(original["sha256"], d, config)
 	transformed["kms_key_service_account"] =
 		flattenComputeDiskSourceSnapshotEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
 	return []interface{}{transformed}
@@ -228,10 +217,6 @@ func flattenComputeDiskSourceSnapshotEncryptionKeyRawKey(v interface{}, d *schem
 }
 
 func flattenComputeDiskSourceSnapshotEncryptionKeyKmsKeySelfLink(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenComputeDiskSourceSnapshotEncryptionKeySha256(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -286,10 +271,6 @@ func flattenComputeDiskPhysicalBlockSizeBytes(v interface{}, d *schema.ResourceD
 	}
 
 	return v // let terraform core handle it otherwise
-}
-
-func flattenComputeDiskInterface(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
 }
 
 func flattenComputeDiskSourceDisk(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

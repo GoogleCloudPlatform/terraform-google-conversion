@@ -4,6 +4,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 )
@@ -15,9 +16,10 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 12
+// Generated resources: 13
 var generatedResources = map[string]*schema.Resource{
 	"google_bigquery_dataset":             bigquery.ResourceBigQueryDataset(),
+	"google_cloudfunctions2_function":     cloudfunctions2.ResourceCloudfunctions2function(),
 	"google_compute_address":              compute.ResourceComputeAddress(),
 	"google_compute_autoscaler":           compute.ResourceComputeAutoscaler(),
 	"google_compute_backend_bucket":       compute.ResourceComputeBackendBucket(),

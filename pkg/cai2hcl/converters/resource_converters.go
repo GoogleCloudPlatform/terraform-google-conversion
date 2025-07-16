@@ -16,6 +16,7 @@ package converters
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 
@@ -37,6 +38,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	// ####### END handwritten resources ###########
 	bigquery.BigQueryDatasetAssetType: {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
+	},
+	cloudfunctions2.Cloudfunctions2FunctionAssetType: {
+		"Default": cloudfunctions2.NewCloudfunctions2functionCai2hclConverter(provider),
 	},
 	compute.ComputeAddressAssetType: {
 		"Default": compute.NewComputeAddressCai2hclConverter(provider),
