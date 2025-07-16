@@ -66,4 +66,7 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeSubnetworkAssetType: {
 		"Default": compute.NewComputeSubnetworkCai2hclConverter(provider),
 	},
+	compute.ComputeUrlMapAssetType: {
+		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
+	},
 }
