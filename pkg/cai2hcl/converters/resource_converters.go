@@ -60,6 +60,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeFirewallAssetType: {
 		"Default": compute.NewComputeFirewallCai2hclConverter(provider),
 	},
+	compute.ComputeFirewallPolicyAssetType: {
+		"Default": compute.NewComputeFirewallPolicyCai2hclConverter(provider),
+	},
 	compute.ComputeSubnetworkAssetType: {
 		"Default": compute.NewComputeSubnetworkCai2hclConverter(provider),
 	},
