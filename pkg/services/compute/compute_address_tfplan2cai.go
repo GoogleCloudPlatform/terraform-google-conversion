@@ -149,15 +149,6 @@ func GetComputeAddressCaiObject(d tpgresource.TerraformResourceData, config *tra
 		obj["region"] = regionProp
 	}
 
-	return resourceComputeAddressTgcEncoder(d, config, obj)
-}
-
-func resourceComputeAddressTgcEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	config := meta.(*transport_tpg.Config)
-
-	obj["subnetwork"] = tgcresource.GetComputeSelfLink(config, obj["subnetwork"])
-	obj["network"] = tgcresource.GetComputeSelfLink(config, obj["network"])
-
 	return obj, nil
 }
 
@@ -186,13 +177,12 @@ func expandComputeAddressNetworkTier(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandComputeAddressSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("subnetworks", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseRegionalFieldValue("subnetworks", v.(string), "project", "region", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for subnetwork: %s", err)
 	}
-
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
 }
 
 func expandComputeAddressLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -200,13 +190,12 @@ func expandComputeAddressLabelFingerprint(v interface{}, d tpgresource.Terraform
 }
 
 func expandComputeAddressNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("networks", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseGlobalFieldValue("networks", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for network: %s", err)
 	}
-
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
 }
 
 func expandComputeAddressPrefixLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -233,11 +222,10 @@ func expandComputeAddressEffectiveLabels(v interface{}, d tpgresource.TerraformR
 }
 
 func expandComputeAddressRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("regions", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
 	}
-
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
 }

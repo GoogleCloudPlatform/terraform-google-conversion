@@ -550,11 +550,10 @@ func expandComputeRegionAutoscalerTarget(v interface{}, d tpgresource.TerraformR
 }
 
 func expandComputeRegionAutoscalerRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("regions", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseGlobalFieldValue("regions", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for region: %s", err)
 	}
-
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
 }

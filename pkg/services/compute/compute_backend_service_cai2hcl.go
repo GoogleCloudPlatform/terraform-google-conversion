@@ -324,6 +324,9 @@ func flattenComputeBackendServiceBackendCustomMetricsName(v interface{}, d *sche
 }
 
 func flattenComputeBackendServiceBackendCustomMetricsDryRun(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return false
+	}
 	return v
 }
 
@@ -962,6 +965,9 @@ func flattenComputeBackendServiceIap(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenComputeBackendServiceIapEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return false
+	}
 	return v
 }
 
@@ -1084,6 +1090,9 @@ func flattenComputeBackendServiceCustomMetricsName(v interface{}, d *schema.Reso
 }
 
 func flattenComputeBackendServiceCustomMetricsDryRun(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return false
+	}
 	return v
 }
 
@@ -1416,7 +1425,11 @@ func flattenComputeBackendServiceSecuritySettingsClientTlsPolicy(v interface{}, 
 	if v == nil {
 		return v
 	}
-	return tpgresource.ConvertSelfLinkToV1(v.(string))
+	relative, err := tpgresource.GetRelativePath(v.(string))
+	if err != nil {
+		return v
+	}
+	return relative
 }
 
 func flattenComputeBackendServiceSecuritySettingsSubjectAltNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

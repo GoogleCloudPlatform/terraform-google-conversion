@@ -119,7 +119,11 @@ func flattenComputeSubnetworkReservedInternalRange(v interface{}, d *schema.Reso
 	if v == nil {
 		return v
 	}
-	return tpgresource.ConvertSelfLinkToV1(v.(string))
+	relative, err := tpgresource.GetRelativePath(v.(string))
+	if err != nil {
+		return v
+	}
+	return relative
 }
 
 func flattenComputeSubnetworkName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -130,7 +134,11 @@ func flattenComputeSubnetworkNetwork(v interface{}, d *schema.ResourceData, conf
 	if v == nil {
 		return v
 	}
-	return tpgresource.ConvertSelfLinkToV1(v.(string))
+	relative, err := tpgresource.GetRelativePath(v.(string))
+	if err != nil {
+		return v
+	}
+	return relative
 }
 
 func flattenComputeSubnetworkPurpose(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -174,7 +182,11 @@ func flattenComputeSubnetworkSecondaryIpRangeReservedInternalRange(v interface{}
 	if v == nil {
 		return v
 	}
-	return tpgresource.ConvertSelfLinkToV1(v.(string))
+	relative, err := tpgresource.GetRelativePath(v.(string))
+	if err != nil {
+		return v
+	}
+	return relative
 }
 
 func flattenComputeSubnetworkPrivateIpGoogleAccess(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
