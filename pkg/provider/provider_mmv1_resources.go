@@ -16,7 +16,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 13
+// Generated resources: 14
 var generatedResources = map[string]*schema.Resource{
 	"google_bigquery_dataset":             bigquery.ResourceBigQueryDataset(),
 	"google_cloudfunctions2_function":     cloudfunctions2.ResourceCloudfunctions2function(),
@@ -28,6 +28,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_external_vpn_gateway": compute.ResourceComputeExternalVpnGateway(),
 	"google_compute_firewall":             compute.ResourceComputeFirewall(),
 	"google_compute_firewall_policy":      compute.ResourceComputeFirewallPolicy(),
+	"google_compute_health_check":         compute.ResourceComputeHealthCheck(),
 	"google_compute_region_autoscaler":    compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_subnetwork":           compute.ResourceComputeSubnetwork(),
 	"google_compute_url_map":              compute.ResourceComputeUrlMap(),
