@@ -37,6 +37,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_firewall":             compute.ComputeFirewallTfplan2caiConverter(),
 	"google_compute_firewall_policy":      compute.ComputeFirewallPolicyTfplan2caiConverter(),
 	"google_compute_health_check":         compute.ComputeHealthCheckTfplan2caiConverter(),
+	"google_compute_network":              compute.ComputeNetworkTfplan2caiConverter(),
 	"google_compute_region_autoscaler":    compute.ComputeRegionAutoscalerTfplan2caiConverter(),
 	"google_compute_subnetwork":           compute.ComputeSubnetworkTfplan2caiConverter(),
 	"google_compute_url_map":              compute.ComputeUrlMapTfplan2caiConverter(),
