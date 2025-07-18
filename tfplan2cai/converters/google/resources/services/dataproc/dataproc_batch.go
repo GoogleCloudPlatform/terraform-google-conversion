@@ -316,6 +316,13 @@ func expandDataprocBatchEnvironmentConfigExecutionConfig(v interface{}, d tpgres
 		transformed["subnetworkUri"] = transformedSubnetworkUri
 	}
 
+	transformedAuthenticationConfig, err := expandDataprocBatchEnvironmentConfigExecutionConfigAuthenticationConfig(original["authentication_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthenticationConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authenticationConfig"] = transformedAuthenticationConfig
+	}
+
 	return transformed, nil
 }
 
@@ -344,6 +351,29 @@ func expandDataprocBatchEnvironmentConfigExecutionConfigNetworkUri(v interface{}
 }
 
 func expandDataprocBatchEnvironmentConfigExecutionConfigSubnetworkUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocBatchEnvironmentConfigExecutionConfigAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserWorkloadAuthenticationType, err := expandDataprocBatchEnvironmentConfigExecutionConfigAuthenticationConfigUserWorkloadAuthenticationType(original["user_workload_authentication_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserWorkloadAuthenticationType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userWorkloadAuthenticationType"] = transformedUserWorkloadAuthenticationType
+	}
+
+	return transformed, nil
+}
+
+func expandDataprocBatchEnvironmentConfigExecutionConfigAuthenticationConfigUserWorkloadAuthenticationType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
