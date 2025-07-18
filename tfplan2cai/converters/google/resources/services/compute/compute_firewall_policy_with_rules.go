@@ -193,6 +193,13 @@ func expandComputeFirewallPolicyWithRulesRule(v interface{}, d tpgresource.Terra
 			transformed["match"] = transformedMatch
 		}
 
+		transformedTargetSecureTag, err := expandComputeFirewallPolicyWithRulesRuleTargetSecureTag(original["target_secure_tag"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetSecureTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetSecureTags"] = transformedTargetSecureTag
+		}
+
 		transformedAction, err := expandComputeFirewallPolicyWithRulesRuleAction(original["action"], d, config)
 		if err != nil {
 			return nil, err
@@ -366,6 +373,13 @@ func expandComputeFirewallPolicyWithRulesRuleMatch(v interface{}, d tpgresource.
 		transformed["destThreatIntelligences"] = transformedDestThreatIntelligences
 	}
 
+	transformedSrcSecureTag, err := expandComputeFirewallPolicyWithRulesRuleMatchSrcSecureTag(original["src_secure_tag"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcSecureTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcSecureTags"] = transformedSrcSecureTag
+	}
+
 	transformedLayer4Config, err := expandComputeFirewallPolicyWithRulesRuleMatchLayer4Config(original["layer4_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -428,6 +442,43 @@ func expandComputeFirewallPolicyWithRulesRuleMatchDestThreatIntelligences(v inte
 	return v, nil
 }
 
+func expandComputeFirewallPolicyWithRulesRuleMatchSrcSecureTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandComputeFirewallPolicyWithRulesRuleMatchSrcSecureTagName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedState, err := expandComputeFirewallPolicyWithRulesRuleMatchSrcSecureTagState(original["state"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["state"] = transformedState
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeFirewallPolicyWithRulesRuleMatchSrcSecureTagName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeFirewallPolicyWithRulesRuleMatchSrcSecureTagState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeFirewallPolicyWithRulesRuleMatchLayer4Config(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
@@ -462,6 +513,43 @@ func expandComputeFirewallPolicyWithRulesRuleMatchLayer4ConfigIpProtocol(v inter
 }
 
 func expandComputeFirewallPolicyWithRulesRuleMatchLayer4ConfigPorts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeFirewallPolicyWithRulesRuleTargetSecureTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandComputeFirewallPolicyWithRulesRuleTargetSecureTagName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedState, err := expandComputeFirewallPolicyWithRulesRuleTargetSecureTagState(original["state"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["state"] = transformedState
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeFirewallPolicyWithRulesRuleTargetSecureTagName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeFirewallPolicyWithRulesRuleTargetSecureTagState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

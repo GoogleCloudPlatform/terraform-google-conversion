@@ -101,7 +101,7 @@ func GetComputeBackendBucketCaiObject(d tpgresource.TerraformResourceData, confi
 	enableCdnProp, err := expandComputeBackendBucketEnableCdn(d.Get("enable_cdn"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_cdn"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableCdnProp)) && (ok || !reflect.DeepEqual(v, enableCdnProp)) {
+	} else if v, ok := d.GetOkExists("enable_cdn"); ok || !reflect.DeepEqual(v, enableCdnProp) {
 		obj["enableCdn"] = enableCdnProp
 	}
 	nameProp, err := expandComputeBackendBucketName(d.Get("name"), d, config)

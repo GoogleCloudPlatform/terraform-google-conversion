@@ -546,21 +546,27 @@ func expandComputeAutoscalerAutoscalingPolicyScalingSchedulesDescription(v inter
 }
 
 func expandComputeAutoscalerTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("instanceGroupManagers", v.(string), "project", d, config, true)
+	if v == nil || v.(string) == "" {
+		return "", nil
+	}
+	f, err := tpgresource.ParseZonalFieldValue("instanceGroupManagers", v.(string), "project", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for target: %s", err)
 	}
 
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}"+f.RelativeLink())
+	if err != nil {
+		return nil, err
+	}
+
+	return url, nil
 }
 
 func expandComputeAutoscalerZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("zones", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseGlobalFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)
 	}
-
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
 }
