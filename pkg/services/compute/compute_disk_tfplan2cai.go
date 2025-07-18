@@ -240,7 +240,7 @@ func GetComputeDiskCaiObject(d tpgresource.TerraformResourceData, config *transp
 	if err != nil {
 		return nil, err
 	}
-	return obj, nil
+	return resourceComputeDiskTgcEncoder(d, config, obj)
 }
 
 func resourceComputeDiskEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
@@ -284,6 +284,14 @@ func resourceComputeDiskEncoder(d tpgresource.TerraformResourceData, meta interf
 	return obj, nil
 }
 
+func resourceComputeDiskTgcEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	config := meta.(*transport_tpg.Config)
+
+	obj["type"] = tgcresource.GetFullUrl(config, obj["type"], "https://www.googleapis.com/compute/v1/")
+
+	return obj, nil
+}
+
 func expandComputeDiskSourceImageEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -298,13 +306,6 @@ func expandComputeDiskSourceImageEncryptionKey(v interface{}, d tpgresource.Terr
 		return nil, err
 	} else if val := reflect.ValueOf(transformedRawKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["rawKey"] = transformedRawKey
-	}
-
-	transformedSha256, err := expandComputeDiskSourceImageEncryptionKeySha256(original["sha256"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSha256); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["sha256"] = transformedSha256
 	}
 
 	transformedKmsKeySelfLink, err := expandComputeDiskSourceImageEncryptionKeyKmsKeySelfLink(original["kms_key_self_link"], d, config)
@@ -325,10 +326,6 @@ func expandComputeDiskSourceImageEncryptionKey(v interface{}, d tpgresource.Terr
 }
 
 func expandComputeDiskSourceImageEncryptionKeyRawKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeDiskSourceImageEncryptionKeySha256(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -367,13 +364,6 @@ func expandComputeDiskDiskEncryptionKey(v interface{}, d tpgresource.TerraformRe
 		transformed["rsaEncryptedKey"] = transformedRsaEncryptedKey
 	}
 
-	transformedSha256, err := expandComputeDiskDiskEncryptionKeySha256(original["sha256"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSha256); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["sha256"] = transformedSha256
-	}
-
 	transformedKmsKeySelfLink, err := expandComputeDiskDiskEncryptionKeyKmsKeySelfLink(original["kms_key_self_link"], d, config)
 	if err != nil {
 		return nil, err
@@ -396,10 +386,6 @@ func expandComputeDiskDiskEncryptionKeyRawKey(v interface{}, d tpgresource.Terra
 }
 
 func expandComputeDiskDiskEncryptionKeyRsaEncryptedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeDiskDiskEncryptionKeySha256(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -434,13 +420,6 @@ func expandComputeDiskSourceSnapshotEncryptionKey(v interface{}, d tpgresource.T
 		transformed["kmsKeyName"] = transformedKmsKeySelfLink
 	}
 
-	transformedSha256, err := expandComputeDiskSourceSnapshotEncryptionKeySha256(original["sha256"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSha256); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["sha256"] = transformedSha256
-	}
-
 	transformedKmsKeyServiceAccount, err := expandComputeDiskSourceSnapshotEncryptionKeyKmsKeyServiceAccount(original["kms_key_service_account"], d, config)
 	if err != nil {
 		return nil, err
@@ -456,10 +435,6 @@ func expandComputeDiskSourceSnapshotEncryptionKeyRawKey(v interface{}, d tpgreso
 }
 
 func expandComputeDiskSourceSnapshotEncryptionKeyKmsKeySelfLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeDiskSourceSnapshotEncryptionKeySha256(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -496,13 +471,12 @@ func expandComputeDiskSourceDisk(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandComputeDiskType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("diskTypes", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseZonalFieldValue("diskTypes", v.(string), "project", "zone", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for type: %s", err)
 	}
-
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
 }
 
 func expandComputeDiskImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -510,12 +484,9 @@ func expandComputeDiskImage(v interface{}, d tpgresource.TerraformResourceData, 
 }
 
 func expandComputeDiskResourcePolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	vSlice, ok := v.([]interface{})
-	if !ok || vSlice == nil {
-		return nil, fmt.Errorf("invalid type for v: %T, expected []interface{}", v)
-	}
-	req := make([]interface{}, 0, len(vSlice))
-	for _, raw := range vSlice {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
 		if raw == nil {
 			return nil, fmt.Errorf("Invalid value for resource_policies: nil")
 		}
@@ -523,9 +494,8 @@ func expandComputeDiskResourcePolicies(v interface{}, d tpgresource.TerraformRes
 		if err != nil {
 			return nil, fmt.Errorf("Invalid value for resource_policies: %s", err)
 		}
-
-		fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-		req = append(req, fullUrl)
+		url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+		req = append(req, url)
 	}
 	return req, nil
 }
@@ -631,12 +601,9 @@ func expandComputeDiskGuestOsFeaturesType(v interface{}, d tpgresource.Terraform
 }
 
 func expandComputeDiskLicenses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	vSlice, ok := v.([]interface{})
-	if !ok || vSlice == nil {
-		return nil, fmt.Errorf("invalid type for v: %T, expected []interface{}", v)
-	}
-	req := make([]interface{}, 0, len(vSlice))
-	for _, raw := range vSlice {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
 		if raw == nil {
 			return nil, fmt.Errorf("Invalid value for licenses: nil")
 		}
@@ -644,9 +611,8 @@ func expandComputeDiskLicenses(v interface{}, d tpgresource.TerraformResourceDat
 		if err != nil {
 			return nil, fmt.Errorf("Invalid value for licenses: %s", err)
 		}
-
-		fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-		req = append(req, fullUrl)
+		url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+		req = append(req, url)
 	}
 	return req, nil
 }
@@ -671,21 +637,19 @@ func expandComputeDiskEffectiveLabels(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandComputeDiskZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("zones", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseGlobalFieldValue("zones", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for zone: %s", err)
 	}
-
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
 }
 
 func expandComputeDiskSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseProjectFieldValue("snapshots", v.(string), "project", d, config, true)
+	f, err := tpgresource.ParseGlobalFieldValue("snapshots", v.(string), "project", d, config, true)
 	if err != nil {
 		return nil, fmt.Errorf("Invalid value for snapshot: %s", err)
 	}
-
-	fullUrl := tgcresource.GetComputeSelfLink(config, f.RelativeLink())
-	return fullUrl, nil
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
 }

@@ -72,6 +72,9 @@ func (c *ComputeAddressCai2hclConverter) convertResourceData(asset caiasset.Asse
 
 	hclData := make(map[string]interface{})
 
+	hclData["region"] = utils.ParseFieldValue(asset.Name, "regions")
+	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+
 	hclData["address"] = flattenComputeAddressAddress(res["address"], d, config)
 	hclData["address_type"] = flattenComputeAddressAddressType(res["addressType"], d, config)
 	hclData["description"] = flattenComputeAddressDescription(res["description"], d, config)
@@ -128,7 +131,11 @@ func flattenComputeAddressSubnetwork(v interface{}, d *schema.ResourceData, conf
 	if v == nil {
 		return v
 	}
-	return tpgresource.ConvertSelfLinkToV1(v.(string))
+	relative, err := tpgresource.GetRelativePath(v.(string))
+	if err != nil {
+		return v
+	}
+	return relative
 }
 
 func flattenComputeAddressLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -138,7 +145,11 @@ func flattenComputeAddressNetwork(v interface{}, d *schema.ResourceData, config 
 	if v == nil {
 		return v
 	}
-	return tpgresource.ConvertSelfLinkToV1(v.(string))
+	relative, err := tpgresource.GetRelativePath(v.(string))
+	if err != nil {
+		return v
+	}
+	return relative
 }
 
 func flattenComputeAddressPrefixLength(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

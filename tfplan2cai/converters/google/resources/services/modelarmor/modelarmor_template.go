@@ -43,8 +43,8 @@ func GetModelArmorTemplateCaiObject(d tpgresource.TerraformResourceData, config 
 			Name: name,
 			Type: ModelArmorTemplateAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/modelarmor/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/modelarmor/v1beta/rest",
 				DiscoveryName:        "Template",
 				Data:                 obj,
 			},

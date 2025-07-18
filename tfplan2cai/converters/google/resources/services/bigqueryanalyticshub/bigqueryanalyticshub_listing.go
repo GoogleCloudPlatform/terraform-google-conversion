@@ -283,12 +283,23 @@ func expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResources(v interfa
 			transformed["table"] = transformedTable
 		}
 
+		transformedRoutine, err := expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResourcesRoutine(original["routine"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRoutine); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["routine"] = transformedRoutine
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
 }
 
 func expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResourcesTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingBigqueryDatasetSelectedResourcesRoutine(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
