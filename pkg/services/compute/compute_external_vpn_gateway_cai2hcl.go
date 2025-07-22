@@ -71,7 +71,8 @@ func (c *ComputeExternalVpnGatewayCai2hclConverter) convertResourceData(asset ca
 
 	hclData := make(map[string]interface{})
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/externalVpnGateways/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenComputeExternalVpnGatewayDescription(res["description"], d, config)
 	hclData["labels"] = flattenComputeExternalVpnGatewayLabels(res["labels"], d, config)

@@ -70,7 +70,8 @@ func (c *ComputeUrlMapCai2hclConverter) convertResourceData(asset caiasset.Asset
 
 	hclData := make(map[string]interface{})
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "fingerprint": struct{}{}, "map_id": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/urlMaps/{{name}}", outputFields, hclData)
 
 	hclData["default_service"] = flattenComputeUrlMapDefaultService(res["defaultService"], d, config)
 	hclData["description"] = flattenComputeUrlMapDescription(res["description"], d, config)
