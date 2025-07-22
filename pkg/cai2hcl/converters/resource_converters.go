@@ -73,6 +73,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeHealthCheckAssetType: {
 		"Default": compute.NewComputeHealthCheckCai2hclConverter(provider),
 	},
+	compute.ComputeImageAssetType: {
+		"Default": compute.NewComputeImageCai2hclConverter(provider),
+	},
 	compute.ComputeNetworkAssetType: {
 		"Default": compute.NewComputeNetworkCai2hclConverter(provider),
 	},
