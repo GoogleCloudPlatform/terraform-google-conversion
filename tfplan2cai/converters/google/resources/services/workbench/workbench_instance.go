@@ -58,6 +58,21 @@ var WorkbenchInstanceSettableUnmodifiableDefaultMetadata = []string{
 	"serial-port-logging-enable",
 }
 
+var WorkbenchInstanceEUCProvidedAdditionalMetadata = []string{
+	"enable-oslogin",
+	"disable-ssh",
+	"ssh-keys",
+	"block-project-ssh-keys",
+	"post-startup-script",
+	"post-startup-script-behavior",
+	"startup-script",
+	"startup-script-url",
+	"gce-container-declaration",
+	"gce-software-declaration",
+	"serial-port-enable",
+	"euc-enabled",
+}
+
 var WorkbenchInstanceProvidedMetadata = []string{
 	"agent-health-check-interval-seconds",
 	"agent-health-check-path",
@@ -76,6 +91,7 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"dataproc-region",
 	"dataproc-service-account",
 	"disable-check-xsrf",
+	"enable-euc",
 	"framework",
 	"generate-diagnostics-bucket",
 	"generate-diagnostics-file",
@@ -125,6 +141,14 @@ func WorkbenchInstanceMetadataDiffSuppress(k, old, new string, d *schema.Resourc
 	for _, metadata := range WorkbenchInstanceProvidedMetadata {
 		if key == metadata {
 			return true
+		}
+	}
+
+	if d.Get("enable_managed_euc").(bool) {
+		for _, metadata := range WorkbenchInstanceEUCProvidedAdditionalMetadata {
+			if key == metadata {
+				return true
+			}
 		}
 	}
 
@@ -291,6 +315,12 @@ func GetWorkbenchInstanceApiObject(d tpgresource.TerraformResourceData, config *
 		return nil, err
 	} else if v, ok := d.GetOkExists("enable_third_party_identity"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableThirdPartyIdentityProp)) && (ok || !reflect.DeepEqual(v, enableThirdPartyIdentityProp)) {
 		obj["enableThirdPartyIdentity"] = enableThirdPartyIdentityProp
+	}
+	enableManagedEucProp, err := expandWorkbenchInstanceEnableManagedEuc(d.Get("enable_managed_euc"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_managed_euc"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableManagedEucProp)) && (ok || !reflect.DeepEqual(v, enableManagedEucProp)) {
+		obj["enableManagedEuc"] = enableManagedEucProp
 	}
 	labelsProp, err := expandWorkbenchInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -922,6 +952,10 @@ func expandWorkbenchInstanceDisableProxyAccess(v interface{}, d tpgresource.Terr
 }
 
 func expandWorkbenchInstanceEnableThirdPartyIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceEnableManagedEuc(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
