@@ -71,7 +71,8 @@ func (c *ComputeImageCai2hclConverter) convertResourceData(asset caiasset.Asset)
 
 	hclData := make(map[string]interface{})
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"archive_size_bytes": struct{}{}, "creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/images/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenComputeImageDescription(res["description"], d, config)
 	hclData["storage_locations"] = flattenComputeImageStorageLocations(res["storageLocations"], d, config)

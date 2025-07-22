@@ -67,6 +67,9 @@ func (c *ComputeFirewallPolicyCai2hclConverter) convertResourceData(asset caiass
 
 	hclData := make(map[string]interface{})
 
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "fingerprint": struct{}{}, "firewall_policy_id": struct{}{}, "name": struct{}{}, "rule_tuple_count": struct{}{}, "self_link": struct{}{}, "self_link_with_id": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/locations/global/firewallPolicies/{{name}}", outputFields, hclData)
+
 	hclData["short_name"] = flattenComputeFirewallPolicyShortName(res["shortName"], d, config)
 	hclData["description"] = flattenComputeFirewallPolicyDescription(res["description"], d, config)
 	hclData["parent"] = flattenComputeFirewallPolicyParent(res["parent"], d, config)

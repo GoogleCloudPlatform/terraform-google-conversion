@@ -70,7 +70,8 @@ func (c *ComputeHealthCheckCai2hclConverter) convertResourceData(asset caiasset.
 
 	hclData := make(map[string]interface{})
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "type": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/healthChecks/{{name}}", outputFields, hclData)
 
 	hclData["check_interval_sec"] = flattenComputeHealthCheckCheckIntervalSec(res["checkIntervalSec"], d, config)
 	hclData["description"] = flattenComputeHealthCheckDescription(res["description"], d, config)

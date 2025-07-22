@@ -81,7 +81,8 @@ func (c *ComputeNetworkCai2hclConverter) convertResourceData(asset caiasset.Asse
 		return nil, nil
 	}
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"gateway_ipv4": struct{}{}, "network_id": struct{}{}, "numeric_id": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/networks/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenComputeNetworkDescription(res["description"], d, config)
 	hclData["name"] = flattenComputeNetworkName(res["name"], d, config)

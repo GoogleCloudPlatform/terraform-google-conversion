@@ -86,7 +86,8 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 		return nil, nil
 	}
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "fingerprint": struct{}{}, "generated_id": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/backendServices/{{name}}", outputFields, hclData)
 
 	hclData["affinity_cookie_ttl_sec"] = flattenComputeBackendServiceAffinityCookieTtlSec(res["affinityCookieTtlSec"], d, config)
 	hclData["backend"] = flattenComputeBackendServiceBackend(res["backends"], d, config)
