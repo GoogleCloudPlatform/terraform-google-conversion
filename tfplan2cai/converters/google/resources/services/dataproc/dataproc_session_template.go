@@ -226,6 +226,13 @@ func expandDataprocSessionTemplateEnvironmentConfigExecutionConfig(v interface{}
 		transformed["kmsKey"] = transformedKmsKey
 	}
 
+	transformedIdleTtl, err := expandDataprocSessionTemplateEnvironmentConfigExecutionConfigIdleTtl(original["idle_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleTtl"] = transformedIdleTtl
+	}
+
 	transformedTtl, err := expandDataprocSessionTemplateEnvironmentConfigExecutionConfigTtl(original["ttl"], d, config)
 	if err != nil {
 		return nil, err
@@ -266,6 +273,10 @@ func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigNetworkTags(v 
 }
 
 func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigIdleTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
