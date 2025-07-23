@@ -114,6 +114,12 @@ func GetComputeRouterApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("md5_authentication_keys"); !tpgresource.IsEmptyValue(reflect.ValueOf(md5AuthenticationKeysProp)) && (ok || !reflect.DeepEqual(v, md5AuthenticationKeysProp)) {
 		obj["md5AuthenticationKeys"] = md5AuthenticationKeysProp
 	}
+	paramsProp, err := expandComputeRouterParams(d.Get("params"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("params"); !tpgresource.IsEmptyValue(reflect.ValueOf(paramsProp)) && (ok || !reflect.DeepEqual(v, paramsProp)) {
+		obj["params"] = paramsProp
+	}
 	regionProp, err := expandComputeRouterRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -287,6 +293,36 @@ func expandComputeRouterMd5AuthenticationKeysName(v interface{}, d tpgresource.T
 
 func expandComputeRouterMd5AuthenticationKeysKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeRouterParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResourceManagerTags, err := expandComputeRouterParamsResourceManagerTags(original["resource_manager_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResourceManagerTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resourceManagerTags"] = transformedResourceManagerTags
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRouterParamsResourceManagerTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandComputeRouterRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
