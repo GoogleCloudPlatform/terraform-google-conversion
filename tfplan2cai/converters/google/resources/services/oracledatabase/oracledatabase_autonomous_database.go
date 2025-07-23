@@ -92,6 +92,18 @@ func GetOracleDatabaseAutonomousDatabaseApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("cidr"); !tpgresource.IsEmptyValue(reflect.ValueOf(cidrProp)) && (ok || !reflect.DeepEqual(v, cidrProp)) {
 		obj["cidr"] = cidrProp
 	}
+	odbNetworkProp, err := expandOracleDatabaseAutonomousDatabaseOdbNetwork(d.Get("odb_network"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("odb_network"); !tpgresource.IsEmptyValue(reflect.ValueOf(odbNetworkProp)) && (ok || !reflect.DeepEqual(v, odbNetworkProp)) {
+		obj["odbNetwork"] = odbNetworkProp
+	}
+	odbSubnetProp, err := expandOracleDatabaseAutonomousDatabaseOdbSubnet(d.Get("odb_subnet"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("odb_subnet"); !tpgresource.IsEmptyValue(reflect.ValueOf(odbSubnetProp)) && (ok || !reflect.DeepEqual(v, odbSubnetProp)) {
+		obj["odbSubnet"] = odbSubnetProp
+	}
 	labelsProp, err := expandOracleDatabaseAutonomousDatabaseEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -1309,6 +1321,14 @@ func expandOracleDatabaseAutonomousDatabaseNetwork(v interface{}, d tpgresource.
 }
 
 func expandOracleDatabaseAutonomousDatabaseCidr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseAutonomousDatabaseOdbNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseAutonomousDatabaseOdbSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
