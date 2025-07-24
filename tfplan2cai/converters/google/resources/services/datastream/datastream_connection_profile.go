@@ -19,10 +19,23 @@ package datastream
 import (
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func resourceDataStreamStreamCreateWithoutValidationDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	// If the old value was "false" and the new value is now unset (empty string),
+	// return true to suppress the diff.
+	if (old == "" && new == "false") || (old == "false" && new == "") {
+		return true
+	}
+
+	// Otherwise, do not suppress the diff.
+	return false
+}
 
 const DatastreamConnectionProfileAssetType string = "datastream.googleapis.com/ConnectionProfile"
 
