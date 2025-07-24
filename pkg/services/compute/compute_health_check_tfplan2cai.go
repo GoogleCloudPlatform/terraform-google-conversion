@@ -19,7 +19,6 @@ package compute
 import (
 	"fmt"
 	"reflect"
-	"strings"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/cai"
@@ -40,7 +39,7 @@ func GetComputeHealthCheckCaiAssets(d tpgresource.TerraformResourceData, config 
 	}
 	if obj, err := GetComputeHealthCheckCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
-		if location == "" && strings.Contains(name, "/global/") {
+		if location == "" {
 			location = "global"
 		}
 		return []caiasset.Asset{

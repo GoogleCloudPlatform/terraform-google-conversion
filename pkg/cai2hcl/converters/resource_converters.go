@@ -19,6 +19,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/provider"
@@ -88,5 +89,8 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	compute.ComputeUrlMapAssetType: {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
+	},
+	pubsub.PubsubTopicAssetType: {
+		"Default": pubsub.NewPubsubTopicCai2hclConverter(provider),
 	},
 }
