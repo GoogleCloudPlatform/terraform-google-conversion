@@ -18,6 +18,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/cai"
 )
@@ -45,4 +46,5 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_region_autoscaler":               compute.ComputeRegionAutoscalerTfplan2caiConverter(),
 	"google_compute_subnetwork":                      compute.ComputeSubnetworkTfplan2caiConverter(),
 	"google_compute_url_map":                         compute.ComputeUrlMapTfplan2caiConverter(),
+	"google_pubsub_topic":                            pubsub.PubsubTopicTfplan2caiConverter(),
 }

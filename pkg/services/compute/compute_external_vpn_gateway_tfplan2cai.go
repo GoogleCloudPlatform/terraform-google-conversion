@@ -18,7 +18,6 @@ package compute
 
 import (
 	"reflect"
-	"strings"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/cai"
@@ -39,7 +38,7 @@ func GetComputeExternalVpnGatewayCaiAssets(d tpgresource.TerraformResourceData, 
 	}
 	if obj, err := GetComputeExternalVpnGatewayCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
-		if location == "" && strings.Contains(name, "/global/") {
+		if location == "" {
 			location = "global"
 		}
 		return []caiasset.Asset{
