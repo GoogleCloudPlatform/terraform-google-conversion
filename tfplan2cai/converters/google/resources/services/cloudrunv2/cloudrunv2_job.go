@@ -330,13 +330,6 @@ func expandCloudRunV2JobTemplateTemplate(v interface{}, d tpgresource.TerraformR
 		transformed["nodeSelector"] = transformedNodeSelector
 	}
 
-	transformedGpuZonalRedundancyDisabled, err := expandCloudRunV2JobTemplateTemplateGpuZonalRedundancyDisabled(original["gpu_zonal_redundancy_disabled"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["gpuZonalRedundancyDisabled"] = transformedGpuZonalRedundancyDisabled
-	}
-
 	return transformed, nil
 }
 
@@ -1311,10 +1304,6 @@ func expandCloudRunV2JobTemplateTemplateNodeSelector(v interface{}, d tpgresourc
 }
 
 func expandCloudRunV2JobTemplateTemplateNodeSelectorAccelerator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandCloudRunV2JobTemplateTemplateGpuZonalRedundancyDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
