@@ -110,6 +110,12 @@ func GetApigeeEnvironmentApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("properties"); !tpgresource.IsEmptyValue(reflect.ValueOf(propertiesProp)) && (ok || !reflect.DeepEqual(v, propertiesProp)) {
 		obj["properties"] = propertiesProp
 	}
+	clientIpResolutionConfigProp, err := expandApigeeEnvironmentClientIpResolutionConfig(d.Get("client_ip_resolution_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("client_ip_resolution_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(clientIpResolutionConfigProp)) && (ok || !reflect.DeepEqual(v, clientIpResolutionConfigProp)) {
+		obj["clientIpResolutionConfig"] = clientIpResolutionConfigProp
+	}
 
 	return obj, nil
 }
@@ -240,5 +246,58 @@ func expandApigeeEnvironmentPropertiesPropertyName(v interface{}, d tpgresource.
 }
 
 func expandApigeeEnvironmentPropertiesPropertyValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeEnvironmentClientIpResolutionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHeaderIndexAlgorithm, err := expandApigeeEnvironmentClientIpResolutionConfigHeaderIndexAlgorithm(original["header_index_algorithm"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHeaderIndexAlgorithm); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["headerIndexAlgorithm"] = transformedHeaderIndexAlgorithm
+	}
+
+	return transformed, nil
+}
+
+func expandApigeeEnvironmentClientIpResolutionConfigHeaderIndexAlgorithm(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIpHeaderName, err := expandApigeeEnvironmentClientIpResolutionConfigHeaderIndexAlgorithmIpHeaderName(original["ip_header_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIpHeaderName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ipHeaderName"] = transformedIpHeaderName
+	}
+
+	transformedIpHeaderIndex, err := expandApigeeEnvironmentClientIpResolutionConfigHeaderIndexAlgorithmIpHeaderIndex(original["ip_header_index"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIpHeaderIndex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ipHeaderIndex"] = transformedIpHeaderIndex
+	}
+
+	return transformed, nil
+}
+
+func expandApigeeEnvironmentClientIpResolutionConfigHeaderIndexAlgorithmIpHeaderName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeEnvironmentClientIpResolutionConfigHeaderIndexAlgorithmIpHeaderIndex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -146,6 +146,18 @@ func GetComputeInterconnectApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("requested_features"); !tpgresource.IsEmptyValue(reflect.ValueOf(requestedFeaturesProp)) && (ok || !reflect.DeepEqual(v, requestedFeaturesProp)) {
 		obj["requestedFeatures"] = requestedFeaturesProp
 	}
+	aaiEnabledProp, err := expandComputeInterconnectAaiEnabled(d.Get("aai_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("aai_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(aaiEnabledProp)) && (ok || !reflect.DeepEqual(v, aaiEnabledProp)) {
+		obj["aaiEnabled"] = aaiEnabledProp
+	}
+	applicationAwareInterconnectProp, err := expandComputeInterconnectApplicationAwareInterconnect(d.Get("application_aware_interconnect"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("application_aware_interconnect"); !tpgresource.IsEmptyValue(reflect.ValueOf(applicationAwareInterconnectProp)) && (ok || !reflect.DeepEqual(v, applicationAwareInterconnectProp)) {
+		obj["applicationAwareInterconnect"] = applicationAwareInterconnectProp
+	}
 	labelsProp, err := expandComputeInterconnectEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -283,6 +295,162 @@ func expandComputeInterconnectRemoteLocation(v interface{}, d tpgresource.Terraf
 }
 
 func expandComputeInterconnectRequestedFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectAaiEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedProfileDescription, err := expandComputeInterconnectApplicationAwareInterconnectProfileDescription(original["profile_description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProfileDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["profileDescription"] = transformedProfileDescription
+	}
+
+	transformedStrictPriorityPolicy, err := expandComputeInterconnectApplicationAwareInterconnectStrictPriorityPolicy(original["strict_priority_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStrictPriorityPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["strictPriorityPolicy"] = transformedStrictPriorityPolicy
+	}
+
+	transformedBandwidthPercentagePolicy, err := expandComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicy(original["bandwidth_percentage_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBandwidthPercentagePolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bandwidthPercentagePolicy"] = transformedBandwidthPercentagePolicy
+	}
+
+	transformedShapeAveragePercentage, err := expandComputeInterconnectApplicationAwareInterconnectShapeAveragePercentage(original["shape_average_percentage"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedShapeAveragePercentage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["shapeAveragePercentages"] = transformedShapeAveragePercentage
+	}
+
+	return transformed, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectProfileDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectStrictPriorityPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBandwidthPercentage, err := expandComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentage(original["bandwidth_percentage"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBandwidthPercentage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bandwidthPercentages"] = transformedBandwidthPercentage
+	}
+
+	return transformed, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTrafficClass, err := expandComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentageTrafficClass(original["traffic_class"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTrafficClass); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["trafficClass"] = transformedTrafficClass
+		}
+
+		transformedPercentage, err := expandComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentagePercentage(original["percentage"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPercentage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["percentage"] = transformedPercentage
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentageTrafficClass(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentagePercentage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectShapeAveragePercentage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedTrafficClass, err := expandComputeInterconnectApplicationAwareInterconnectShapeAveragePercentageTrafficClass(original["traffic_class"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTrafficClass); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["trafficClass"] = transformedTrafficClass
+		}
+
+		transformedPercentage, err := expandComputeInterconnectApplicationAwareInterconnectShapeAveragePercentagePercentage(original["percentage"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPercentage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["percentage"] = transformedPercentage
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectShapeAveragePercentageTrafficClass(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeInterconnectApplicationAwareInterconnectShapeAveragePercentagePercentage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

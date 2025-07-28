@@ -4252,11 +4252,32 @@ func expandComputeUrlMapTest(v interface{}, d tpgresource.TerraformResourceData,
 			transformed["path"] = transformedPath
 		}
 
+		transformedHeaders, err := expandComputeUrlMapTestHeaders(original["headers"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headers"] = transformedHeaders
+		}
+
 		transformedService, err := expandComputeUrlMapTestService(original["service"], d, config)
 		if err != nil {
 			return nil, err
 		} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["service"] = transformedService
+		}
+
+		transformedExpectedOutputUrl, err := expandComputeUrlMapTestExpectedOutputUrl(original["expected_output_url"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExpectedOutputUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["expectedOutputUrl"] = transformedExpectedOutputUrl
+		}
+
+		transformedExpectedRedirectResponseCode, err := expandComputeUrlMapTestExpectedRedirectResponseCode(original["expected_redirect_response_code"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExpectedRedirectResponseCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["expectedRedirectResponseCode"] = transformedExpectedRedirectResponseCode
 		}
 
 		req = append(req, transformed)
@@ -4273,6 +4294,43 @@ func expandComputeUrlMapTestHost(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandComputeUrlMapTestPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapTestHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandComputeUrlMapTestHeadersName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedValue, err := expandComputeUrlMapTestHeadersValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeUrlMapTestHeadersName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapTestHeadersValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -4306,6 +4364,14 @@ func expandComputeUrlMapTestService(v interface{}, d tpgresource.TerraformResour
 	}
 
 	return f.RelativeLink(), nil
+}
+
+func expandComputeUrlMapTestExpectedOutputUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapTestExpectedRedirectResponseCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeUrlMapDefaultUrlRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

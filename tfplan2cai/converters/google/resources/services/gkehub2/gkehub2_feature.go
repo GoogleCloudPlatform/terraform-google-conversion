@@ -110,6 +110,13 @@ func expandGKEHub2FeatureSpec(v interface{}, d tpgresource.TerraformResourceData
 		transformed["clusterupgrade"] = transformedClusterupgrade
 	}
 
+	transformedRbacrolebindingactuation, err := expandGKEHub2FeatureSpecRbacrolebindingactuation(original["rbacrolebindingactuation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRbacrolebindingactuation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rbacrolebindingactuation"] = transformedRbacrolebindingactuation
+	}
+
 	return transformed, nil
 }
 
@@ -370,6 +377,29 @@ func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesPostConditions(v i
 }
 
 func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesPostConditionsSoaking(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecRbacrolebindingactuation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedCustomRoles, err := expandGKEHub2FeatureSpecRbacrolebindingactuationAllowedCustomRoles(original["allowed_custom_roles"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedCustomRoles); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedCustomRoles"] = transformedAllowedCustomRoles
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecRbacrolebindingactuationAllowedCustomRoles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
