@@ -37,6 +37,7 @@ type AssetResource struct {
 	DiscoveryName        string                 `json:"discovery_name"`
 	Parent               string                 `json:"parent"`
 	Data                 map[string]interface{} `json:"data"`
+	Location             string                 `json:"location,omitempty"`
 }
 
 // OrgPolicy is for managing organization policies.
