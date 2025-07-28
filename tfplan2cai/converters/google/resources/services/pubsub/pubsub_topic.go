@@ -94,6 +94,12 @@ func GetPubsubTopicApiObject(d tpgresource.TerraformResourceData, config *transp
 	} else if v, ok := d.GetOkExists("ingestion_data_source_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(ingestionDataSourceSettingsProp)) && (ok || !reflect.DeepEqual(v, ingestionDataSourceSettingsProp)) {
 		obj["ingestionDataSourceSettings"] = ingestionDataSourceSettingsProp
 	}
+	messageTransformsProp, err := expandPubsubTopicMessageTransforms(d.Get("message_transforms"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("message_transforms"); !tpgresource.IsEmptyValue(reflect.ValueOf(messageTransformsProp)) && (ok || !reflect.DeepEqual(v, messageTransformsProp)) {
+		obj["messageTransforms"] = messageTransformsProp
+	}
 	labelsProp, err := expandPubsubTopicEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -651,6 +657,73 @@ func expandPubsubTopicIngestionDataSourceSettingsConfluentCloudIdentityPoolId(v 
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsConfluentCloudGcpServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicMessageTransforms(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedJavascriptUdf, err := expandPubsubTopicMessageTransformsJavascriptUdf(original["javascript_udf"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedJavascriptUdf); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["javascriptUdf"] = transformedJavascriptUdf
+		}
+
+		transformedDisabled, err := expandPubsubTopicMessageTransformsDisabled(original["disabled"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDisabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["disabled"] = transformedDisabled
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandPubsubTopicMessageTransformsJavascriptUdf(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFunctionName, err := expandPubsubTopicMessageTransformsJavascriptUdfFunctionName(original["function_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFunctionName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["functionName"] = transformedFunctionName
+	}
+
+	transformedCode, err := expandPubsubTopicMessageTransformsJavascriptUdfCode(original["code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["code"] = transformedCode
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicMessageTransformsJavascriptUdfFunctionName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicMessageTransformsJavascriptUdfCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicMessageTransformsDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

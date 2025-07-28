@@ -132,6 +132,12 @@ func GetApigeeInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("consumer_accept_list"); !tpgresource.IsEmptyValue(reflect.ValueOf(consumerAcceptListProp)) && (ok || !reflect.DeepEqual(v, consumerAcceptListProp)) {
 		obj["consumerAcceptList"] = consumerAcceptListProp
 	}
+	accessLoggingConfigProp, err := expandApigeeInstanceAccessLoggingConfig(d.Get("access_logging_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("access_logging_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessLoggingConfigProp)) && (ok || !reflect.DeepEqual(v, accessLoggingConfigProp)) {
+		obj["accessLoggingConfig"] = accessLoggingConfigProp
+	}
 
 	return obj, nil
 }
@@ -165,5 +171,39 @@ func expandApigeeInstanceDiskEncryptionKeyName(v interface{}, d tpgresource.Terr
 }
 
 func expandApigeeInstanceConsumerAcceptList(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeInstanceAccessLoggingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandApigeeInstanceAccessLoggingConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedFilter, err := expandApigeeInstanceAccessLoggingConfigFilter(original["filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filter"] = transformedFilter
+	}
+
+	return transformed, nil
+}
+
+func expandApigeeInstanceAccessLoggingConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandApigeeInstanceAccessLoggingConfigFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
