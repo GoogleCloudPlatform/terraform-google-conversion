@@ -1,5 +1,6 @@
 build_dir=bin
 TF_CONFIG_FILE=tf-dev-override.tfrc
+TEST?=$$(go list -e ./... | grep -v github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test)
 
 build:
 	GO111MODULE=on go build -o ./${build_dir}/tfplan2cai ./cmd/tfplan2cai
@@ -9,13 +10,13 @@ test:
 	go version
 	terraform --version
 	./config-tf-dev-override.sh
-	TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -short ./...
+	TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test $(TEST) $(TESTARGS) -timeout 30m -short
 
 test-integration:
 	go version
 	terraform --version
 	./config-tf-dev-override.sh
-	TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" go test -run=CLI ./...
+	TF_CLI_CONFIG_FILE="$${PWD}/${TF_CONFIG_FILE}" GO111MODULE=on go test -run=TestAcc $(TESTPATH) $(TESTARGS) -timeout 30m -v ./...
 
 test-go-licenses:
 	cd .. && go version && go install github.com/google/go-licenses@latest
