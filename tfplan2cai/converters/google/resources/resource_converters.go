@@ -55,6 +55,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/gkehub2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/healthcare"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/iambeta"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/iamworkforcepool"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/iap"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/logging"
@@ -381,6 +382,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_iam_workload_identity_pool_iam_policy":                  {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamPolicy()},
 		"google_iam_workload_identity_pool_iam_binding":                 {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamBinding()},
 		"google_iam_workload_identity_pool_iam_member":                  {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamMember()},
+		"google_iam_workforce_pool_iam_policy":                          {iamworkforcepool.ResourceConverterIAMWorkforcePoolWorkforcePoolIamPolicy()},
+		"google_iam_workforce_pool_iam_binding":                         {iamworkforcepool.ResourceConverterIAMWorkforcePoolWorkforcePoolIamBinding()},
+		"google_iam_workforce_pool_iam_member":                          {iamworkforcepool.ResourceConverterIAMWorkforcePoolWorkforcePoolIamMember()},
 		"google_iap_tunnel_iam_policy":                                  {iap.ResourceConverterIapTunnelIamPolicy()},
 		"google_iap_tunnel_iam_binding":                                 {iap.ResourceConverterIapTunnelIamBinding()},
 		"google_iap_tunnel_iam_member":                                  {iap.ResourceConverterIapTunnelIamMember()},
