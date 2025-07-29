@@ -435,12 +435,6 @@ given time.`,
 								},
 							},
 						},
-						"service": {
-							Type:        schema.TypeString,
-							Computed:    true,
-							Optional:    true,
-							Description: `Name of the service associated with a Function.`,
-						},
 						"service_account_email": {
 							Type:        schema.TypeString,
 							Computed:    true,
