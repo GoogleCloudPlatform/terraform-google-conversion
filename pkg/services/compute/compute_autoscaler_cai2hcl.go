@@ -71,8 +71,8 @@ func (c *ComputeAutoscalerCai2hclConverter) convertResourceData(asset caiasset.A
 
 	hclData := make(map[string]interface{})
 
-	hclData["zone"] = utils.ParseFieldValue(asset.Name, "zones")
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/autoscalers/{{name}}", outputFields, hclData)
 
 	hclData["name"] = flattenComputeAutoscalerName(res["name"], d, config)
 	hclData["description"] = flattenComputeAutoscalerDescription(res["description"], d, config)

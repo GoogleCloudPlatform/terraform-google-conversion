@@ -92,6 +92,24 @@ func GetOracleDatabaseCloudVmClusterApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
+	odbNetworkProp, err := expandOracleDatabaseCloudVmClusterOdbNetwork(d.Get("odb_network"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("odb_network"); !tpgresource.IsEmptyValue(reflect.ValueOf(odbNetworkProp)) && (ok || !reflect.DeepEqual(v, odbNetworkProp)) {
+		obj["odbNetwork"] = odbNetworkProp
+	}
+	odbSubnetProp, err := expandOracleDatabaseCloudVmClusterOdbSubnet(d.Get("odb_subnet"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("odb_subnet"); !tpgresource.IsEmptyValue(reflect.ValueOf(odbSubnetProp)) && (ok || !reflect.DeepEqual(v, odbSubnetProp)) {
+		obj["odbSubnet"] = odbSubnetProp
+	}
+	backupOdbSubnetProp, err := expandOracleDatabaseCloudVmClusterBackupOdbSubnet(d.Get("backup_odb_subnet"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("backup_odb_subnet"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupOdbSubnetProp)) && (ok || !reflect.DeepEqual(v, backupOdbSubnetProp)) {
+		obj["backupOdbSubnet"] = backupOdbSubnetProp
+	}
 	labelsProp, err := expandOracleDatabaseCloudVmClusterEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -543,6 +561,18 @@ func expandOracleDatabaseCloudVmClusterBackupSubnetCidr(v interface{}, d tpgreso
 }
 
 func expandOracleDatabaseCloudVmClusterNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseCloudVmClusterOdbNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseCloudVmClusterOdbSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseCloudVmClusterBackupOdbSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

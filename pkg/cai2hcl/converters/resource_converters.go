@@ -16,8 +16,10 @@ package converters
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/provider"
@@ -38,6 +40,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	// ####### END handwritten resources ###########
 	bigquery.BigQueryDatasetAssetType: {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
+	},
+	blockchainnodeengine.BlockchainNodeEngineBlockchainNodeAssetType: {
+		"Default": blockchainnodeengine.NewBlockchainNodeEngineBlockchainNodesCai2hclConverter(provider),
 	},
 	cloudfunctions2.Cloudfunctions2FunctionAssetType: {
 		"Default": cloudfunctions2.NewCloudfunctions2functionCai2hclConverter(provider),
@@ -67,13 +72,25 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeFirewallPolicyAssetType: {
 		"Default": compute.NewComputeFirewallPolicyCai2hclConverter(provider),
 	},
+	compute.ComputeGlobalAddressAssetType: {
+		"Default": compute.NewComputeGlobalAddressCai2hclConverter(provider),
+	},
 	compute.ComputeHealthCheckAssetType: {
 		"Default": compute.NewComputeHealthCheckCai2hclConverter(provider),
+	},
+	compute.ComputeImageAssetType: {
+		"Default": compute.NewComputeImageCai2hclConverter(provider),
+	},
+	compute.ComputeNetworkAssetType: {
+		"Default": compute.NewComputeNetworkCai2hclConverter(provider),
 	},
 	compute.ComputeSubnetworkAssetType: {
 		"Default": compute.NewComputeSubnetworkCai2hclConverter(provider),
 	},
 	compute.ComputeUrlMapAssetType: {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
+	},
+	pubsub.PubsubTopicAssetType: {
+		"Default": pubsub.NewPubsubTopicCai2hclConverter(provider),
 	},
 }

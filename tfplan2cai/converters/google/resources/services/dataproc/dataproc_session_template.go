@@ -226,6 +226,13 @@ func expandDataprocSessionTemplateEnvironmentConfigExecutionConfig(v interface{}
 		transformed["kmsKey"] = transformedKmsKey
 	}
 
+	transformedIdleTtl, err := expandDataprocSessionTemplateEnvironmentConfigExecutionConfigIdleTtl(original["idle_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleTtl"] = transformedIdleTtl
+	}
+
 	transformedTtl, err := expandDataprocSessionTemplateEnvironmentConfigExecutionConfigTtl(original["ttl"], d, config)
 	if err != nil {
 		return nil, err
@@ -247,6 +254,13 @@ func expandDataprocSessionTemplateEnvironmentConfigExecutionConfig(v interface{}
 		transformed["subnetworkUri"] = transformedSubnetworkUri
 	}
 
+	transformedAuthenticationConfig, err := expandDataprocSessionTemplateEnvironmentConfigExecutionConfigAuthenticationConfig(original["authentication_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthenticationConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authenticationConfig"] = transformedAuthenticationConfig
+	}
+
 	return transformed, nil
 }
 
@@ -262,6 +276,10 @@ func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigKmsKey(v inter
 	return v, nil
 }
 
+func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigIdleTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -271,6 +289,29 @@ func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigStagingBucket(
 }
 
 func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigSubnetworkUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserWorkloadAuthenticationType, err := expandDataprocSessionTemplateEnvironmentConfigExecutionConfigAuthenticationConfigUserWorkloadAuthenticationType(original["user_workload_authentication_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserWorkloadAuthenticationType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userWorkloadAuthenticationType"] = transformedUserWorkloadAuthenticationType
+	}
+
+	return transformed, nil
+}
+
+func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigAuthenticationConfigUserWorkloadAuthenticationType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

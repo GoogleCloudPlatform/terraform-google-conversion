@@ -81,10 +81,8 @@ func (c *ComputeDiskCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 		return nil, nil
 	}
 
-	hclData["zone"] = utils.ParseFieldValue(asset.Name, "zones")
-
-	hclData["snapshot"] = utils.ParseFieldValue(asset.Name, "snapshots")
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "disk_id": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "last_attach_timestamp": struct{}{}, "last_detach_timestamp": struct{}{}, "source_disk_id": struct{}{}, "source_image_id": struct{}{}, "source_instant_snapshot_id": struct{}{}, "source_snapshot_id": struct{}{}, "terraform_labels": struct{}{}, "users": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{name}}", outputFields, hclData)
 
 	hclData["source_image_encryption_key"] = flattenComputeDiskSourceImageEncryptionKey(res["sourceImageEncryptionKey"], d, config)
 	hclData["source_instant_snapshot"] = flattenComputeDiskSourceInstantSnapshot(res["sourceInstantSnapshot"], d, config)

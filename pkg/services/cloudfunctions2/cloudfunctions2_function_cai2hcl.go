@@ -71,8 +71,8 @@ func (c *Cloudfunctions2functionCai2hclConverter) convertResourceData(asset caia
 
 	hclData := make(map[string]interface{})
 
-	hclData["location"] = utils.ParseFieldValue(asset.Name, "locations")
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "environment": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}, "url": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudfunctions.googleapis.com/projects/{{project}}/locations/{{location}}/functions/{{name}}", outputFields, hclData)
 
 	hclData["name"] = flattenCloudfunctions2functionName(res["name"], d, config)
 	hclData["description"] = flattenCloudfunctions2functionDescription(res["description"], d, config)
