@@ -75,7 +75,8 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 		return nil, err
 	}
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "gateway_address": struct{}{}, "internal_ipv6_prefix": struct{}{}, "ipv6_cidr_range": struct{}{}, "ipv6_gce_endpoint": struct{}{}, "state": struct{}{}, "subnetwork_id": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenComputeSubnetworkDescription(res["description"], d, config)
 	hclData["ip_cidr_range"] = flattenComputeSubnetworkIpCidrRange(res["ipCidrRange"], d, config)

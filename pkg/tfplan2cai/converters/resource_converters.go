@@ -15,8 +15,10 @@ package converters
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/cai"
 )
@@ -26,18 +28,23 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_project":          resourcemanager.ProjectTfplan2caiConverter(),
 	"google_compute_instance": compute.ComputeInstanceTfplan2caiConverter(),
 	// ####### END handwritten resources ###########
-	"google_bigquery_dataset":             bigquery.BigQueryDatasetTfplan2caiConverter(),
-	"google_cloudfunctions2_function":     cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
-	"google_compute_address":              compute.ComputeAddressTfplan2caiConverter(),
-	"google_compute_autoscaler":           compute.ComputeAutoscalerTfplan2caiConverter(),
-	"google_compute_backend_bucket":       compute.ComputeBackendBucketTfplan2caiConverter(),
-	"google_compute_backend_service":      compute.ComputeBackendServiceTfplan2caiConverter(),
-	"google_compute_disk":                 compute.ComputeDiskTfplan2caiConverter(),
-	"google_compute_external_vpn_gateway": compute.ComputeExternalVpnGatewayTfplan2caiConverter(),
-	"google_compute_firewall":             compute.ComputeFirewallTfplan2caiConverter(),
-	"google_compute_firewall_policy":      compute.ComputeFirewallPolicyTfplan2caiConverter(),
-	"google_compute_health_check":         compute.ComputeHealthCheckTfplan2caiConverter(),
-	"google_compute_region_autoscaler":    compute.ComputeRegionAutoscalerTfplan2caiConverter(),
-	"google_compute_subnetwork":           compute.ComputeSubnetworkTfplan2caiConverter(),
-	"google_compute_url_map":              compute.ComputeUrlMapTfplan2caiConverter(),
+	"google_bigquery_dataset":                        bigquery.BigQueryDatasetTfplan2caiConverter(),
+	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.BlockchainNodeEngineBlockchainNodesTfplan2caiConverter(),
+	"google_cloudfunctions2_function":                cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
+	"google_compute_address":                         compute.ComputeAddressTfplan2caiConverter(),
+	"google_compute_autoscaler":                      compute.ComputeAutoscalerTfplan2caiConverter(),
+	"google_compute_backend_bucket":                  compute.ComputeBackendBucketTfplan2caiConverter(),
+	"google_compute_backend_service":                 compute.ComputeBackendServiceTfplan2caiConverter(),
+	"google_compute_disk":                            compute.ComputeDiskTfplan2caiConverter(),
+	"google_compute_external_vpn_gateway":            compute.ComputeExternalVpnGatewayTfplan2caiConverter(),
+	"google_compute_firewall":                        compute.ComputeFirewallTfplan2caiConverter(),
+	"google_compute_firewall_policy":                 compute.ComputeFirewallPolicyTfplan2caiConverter(),
+	"google_compute_global_address":                  compute.ComputeGlobalAddressTfplan2caiConverter(),
+	"google_compute_health_check":                    compute.ComputeHealthCheckTfplan2caiConverter(),
+	"google_compute_image":                           compute.ComputeImageTfplan2caiConverter(),
+	"google_compute_network":                         compute.ComputeNetworkTfplan2caiConverter(),
+	"google_compute_region_autoscaler":               compute.ComputeRegionAutoscalerTfplan2caiConverter(),
+	"google_compute_subnetwork":                      compute.ComputeSubnetworkTfplan2caiConverter(),
+	"google_compute_url_map":                         compute.ComputeUrlMapTfplan2caiConverter(),
+	"google_pubsub_topic":                            pubsub.PubsubTopicTfplan2caiConverter(),
 }

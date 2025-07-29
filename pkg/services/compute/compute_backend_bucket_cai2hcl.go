@@ -70,7 +70,8 @@ func (c *ComputeBackendBucketCai2hclConverter) convertResourceData(asset caiasse
 
 	hclData := make(map[string]interface{})
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/backendBuckets/{{name}}", outputFields, hclData)
 
 	hclData["bucket_name"] = flattenComputeBackendBucketBucketName(res["bucketName"], d, config)
 	hclData["cdn_policy"] = flattenComputeBackendBucketCdnPolicy(res["cdnPolicy"], d, config)

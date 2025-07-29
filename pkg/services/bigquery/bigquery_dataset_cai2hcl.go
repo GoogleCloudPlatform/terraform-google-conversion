@@ -71,7 +71,8 @@ func (c *BigQueryDatasetCai2hclConverter) convertResourceData(asset caiasset.Ass
 
 	hclData := make(map[string]interface{})
 
-	hclData["project"] = utils.ParseFieldValue(asset.Name, "projects")
+	outputFields := map[string]struct{}{"creation_time": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "last_modified_time": struct{}{}, "terraform_labels": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}", outputFields, hclData)
 
 	hclData["max_time_travel_hours"] = flattenBigQueryDatasetMaxTimeTravelHours(res["maxTimeTravelHours"], d, config)
 	hclData["access"] = flattenBigQueryDatasetAccess(res["access"], d, config)

@@ -41,7 +41,7 @@ func GetComputeUrlMapCaiAssets(d tpgresource.TerraformResourceData, config *tran
 	}
 	if obj, err := GetComputeUrlMapCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
-		if location == "" && strings.Contains(name, "/global/") {
+		if location == "" {
 			location = "global"
 		}
 		return []caiasset.Asset{

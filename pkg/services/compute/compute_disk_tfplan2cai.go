@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"log"
 	"reflect"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -44,7 +43,7 @@ func GetComputeDiskCaiAssets(d tpgresource.TerraformResourceData, config *transp
 	}
 	if obj, err := GetComputeDiskCaiObject(d, config); err == nil {
 		location, _ := tpgresource.GetLocation(d, config)
-		if location == "" && strings.Contains(name, "/global/") {
+		if location == "" {
 			location = "global"
 		}
 		return []caiasset.Asset{
