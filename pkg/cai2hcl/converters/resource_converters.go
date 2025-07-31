@@ -90,6 +90,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeUrlMapAssetType: {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
 	},
+	pubsub.PubsubSubscriptionAssetType: {
+		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),
+	},
 	pubsub.PubsubTopicAssetType: {
 		"Default": pubsub.NewPubsubTopicCai2hclConverter(provider),
 	},
