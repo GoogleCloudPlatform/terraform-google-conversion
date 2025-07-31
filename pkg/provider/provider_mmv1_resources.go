@@ -17,7 +17,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 19
+// Generated resources: 20
 var generatedResources = map[string]*schema.Resource{
 	"google_bigquery_dataset":                        bigquery.ResourceBigQueryDataset(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.ResourceBlockchainNodeEngineBlockchainNodes(),
@@ -37,5 +37,6 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_region_autoscaler":               compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_subnetwork":                      compute.ResourceComputeSubnetwork(),
 	"google_compute_url_map":                         compute.ResourceComputeUrlMap(),
+	"google_pubsub_subscription":                     pubsub.ResourcePubsubSubscription(),
 	"google_pubsub_topic":                            pubsub.ResourcePubsubTopic(),
 }
