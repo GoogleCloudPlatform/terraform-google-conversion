@@ -17,6 +17,7 @@
 package workbench
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"sort"
@@ -53,6 +54,25 @@ func WorkbenchInstanceLabelsDiffSuppress(k, old, new string, d *schema.ResourceD
 	return false
 }
 
+var WorkbenchInstanceSettableUnmodifiableDefaultMetadata = []string{
+	"serial-port-logging-enable",
+}
+
+var WorkbenchInstanceEUCProvidedAdditionalMetadata = []string{
+	"enable-oslogin",
+	"disable-ssh",
+	"ssh-keys",
+	"block-project-ssh-keys",
+	"post-startup-script",
+	"post-startup-script-behavior",
+	"startup-script",
+	"startup-script-url",
+	"gce-container-declaration",
+	"gce-software-declaration",
+	"serial-port-enable",
+	"euc-enabled",
+}
+
 var WorkbenchInstanceProvidedMetadata = []string{
 	"agent-health-check-interval-seconds",
 	"agent-health-check-path",
@@ -71,6 +91,7 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"dataproc-region",
 	"dataproc-service-account",
 	"disable-check-xsrf",
+	"enable-euc",
 	"framework",
 	"generate-diagnostics-bucket",
 	"generate-diagnostics-file",
@@ -99,7 +120,6 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"report-system-status",
 	"resource-url",
 	"restriction",
-	"serial-port-logging-enable",
 	"service-account-mode",
 	"shutdown-script",
 	"title",
@@ -120,6 +140,20 @@ func WorkbenchInstanceMetadataDiffSuppress(k, old, new string, d *schema.Resourc
 
 	for _, metadata := range WorkbenchInstanceProvidedMetadata {
 		if key == metadata {
+			return true
+		}
+	}
+
+	if d.Get("enable_managed_euc").(bool) {
+		for _, metadata := range WorkbenchInstanceEUCProvidedAdditionalMetadata {
+			if key == metadata {
+				return true
+			}
+		}
+	}
+
+	for _, metadata := range WorkbenchInstanceSettableUnmodifiableDefaultMetadata {
+		if strings.Contains(k, metadata) && new == "" {
 			return true
 		}
 	}
@@ -198,6 +232,34 @@ func WorkbenchInstanceKmsDiffSuppress(_, old, new string, _ *schema.ResourceData
 	return false
 }
 
+func workbenchMetadataCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	if diff.HasChange("gce_setup.0.metadata") {
+		o, n := diff.GetChange("gce_setup.0.metadata")
+		oldMetadata := o.(map[string]interface{})
+		newMetadata := n.(map[string]interface{})
+
+		for _, key := range WorkbenchInstanceSettableUnmodifiableDefaultMetadata {
+			oldValue, oldOk := oldMetadata[key]
+			newValue, newOk := newMetadata[key]
+
+			// Condition to force new:
+			// 1. The key exists in both old and new metadata AND their values differ.
+			// 2. The key exists in new but not in old (meaning it was added).
+			//
+			// The key exists in old but not in new (meaning it was removed) is ignored.
+			if (oldOk && newOk && oldValue != newValue) ||
+				(!oldOk && newOk) {
+				// If a change is detected for this specific key, force a new resource and stop checking.
+				if err := diff.ForceNew("gce_setup.0.metadata"); err != nil {
+					return err
+				}
+				return nil // Return nil immediately after forcing new
+			}
+		}
+	}
+	return nil
+}
+
 const WorkbenchInstanceAssetType string = "notebooks.googleapis.com/Instance"
 
 func ResourceConverterWorkbenchInstance() cai.ResourceConverter {
@@ -253,6 +315,12 @@ func GetWorkbenchInstanceApiObject(d tpgresource.TerraformResourceData, config *
 		return nil, err
 	} else if v, ok := d.GetOkExists("enable_third_party_identity"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableThirdPartyIdentityProp)) && (ok || !reflect.DeepEqual(v, enableThirdPartyIdentityProp)) {
 		obj["enableThirdPartyIdentity"] = enableThirdPartyIdentityProp
+	}
+	enableManagedEucProp, err := expandWorkbenchInstanceEnableManagedEuc(d.Get("enable_managed_euc"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_managed_euc"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableManagedEucProp)) && (ok || !reflect.DeepEqual(v, enableManagedEucProp)) {
+		obj["enableManagedEuc"] = enableManagedEucProp
 	}
 	labelsProp, err := expandWorkbenchInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -369,6 +437,13 @@ func expandWorkbenchInstanceGceSetup(v interface{}, d tpgresource.TerraformResou
 		return nil, err
 	} else if val := reflect.ValueOf(transformedConfidentialInstanceConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["confidentialInstanceConfig"] = transformedConfidentialInstanceConfig
+	}
+
+	transformedReservationAffinity, err := expandWorkbenchInstanceGceSetupReservationAffinity(original["reservation_affinity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReservationAffinity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["reservationAffinity"] = transformedReservationAffinity
 	}
 
 	return transformed, nil
@@ -823,6 +898,51 @@ func expandWorkbenchInstanceGceSetupConfidentialInstanceConfigConfidentialInstan
 	return v, nil
 }
 
+func expandWorkbenchInstanceGceSetupReservationAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConsumeReservationType, err := expandWorkbenchInstanceGceSetupReservationAffinityConsumeReservationType(original["consume_reservation_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConsumeReservationType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["consumeReservationType"] = transformedConsumeReservationType
+	}
+
+	transformedKey, err := expandWorkbenchInstanceGceSetupReservationAffinityKey(original["key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["key"] = transformedKey
+	}
+
+	transformedValues, err := expandWorkbenchInstanceGceSetupReservationAffinityValues(original["values"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValues); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["values"] = transformedValues
+	}
+
+	return transformed, nil
+}
+
+func expandWorkbenchInstanceGceSetupReservationAffinityConsumeReservationType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupReservationAffinityKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupReservationAffinityValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandWorkbenchInstanceInstanceOwners(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -832,6 +952,10 @@ func expandWorkbenchInstanceDisableProxyAccess(v interface{}, d tpgresource.Terr
 }
 
 func expandWorkbenchInstanceEnableThirdPartyIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceEnableManagedEuc(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

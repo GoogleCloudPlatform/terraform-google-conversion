@@ -92,6 +92,12 @@ func GetDataplexDatascanApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("data_profile_spec"); ok || !reflect.DeepEqual(v, dataProfileSpecProp) {
 		obj["dataProfileSpec"] = dataProfileSpecProp
 	}
+	dataDiscoverySpecProp, err := expandDataplexDatascanDataDiscoverySpec(d.Get("data_discovery_spec"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("data_discovery_spec"); ok || !reflect.DeepEqual(v, dataDiscoverySpecProp) {
+		obj["dataDiscoverySpec"] = dataDiscoverySpecProp
+	}
 	labelsProp, err := expandDataplexDatascanEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -273,6 +279,13 @@ func expandDataplexDatascanDataQualitySpec(v interface{}, d tpgresource.Terrafor
 		return nil, err
 	} else if val := reflect.ValueOf(transformedRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["rules"] = transformedRules
+	}
+
+	transformedCatalogPublishingEnabled, err := expandDataplexDatascanDataQualitySpecCatalogPublishingEnabled(original["catalog_publishing_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCatalogPublishingEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["catalogPublishingEnabled"] = transformedCatalogPublishingEnabled
 	}
 
 	return transformed, nil
@@ -496,6 +509,13 @@ func expandDataplexDatascanDataQualitySpecRules(v interface{}, d tpgresource.Ter
 			transformed["name"] = transformedName
 		}
 
+		transformedSuspended, err := expandDataplexDatascanDataQualitySpecRulesSuspended(original["suspended"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSuspended); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["suspended"] = transformedSuspended
+		}
+
 		transformedDescription, err := expandDataplexDatascanDataQualitySpecRulesDescription(original["description"], d, config)
 		if err != nil {
 			return nil, err
@@ -588,6 +608,10 @@ func expandDataplexDatascanDataQualitySpecRulesThreshold(v interface{}, d tpgres
 }
 
 func expandDataplexDatascanDataQualitySpecRulesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesSuspended(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -863,6 +887,10 @@ func expandDataplexDatascanDataQualitySpecRulesSqlAssertionSqlStatement(v interf
 	return v, nil
 }
 
+func expandDataplexDatascanDataQualitySpecCatalogPublishingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDataplexDatascanDataProfileSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 {
@@ -1008,6 +1036,242 @@ func expandDataplexDatascanDataProfileSpecExcludeFields(v interface{}, d tpgreso
 }
 
 func expandDataplexDatascanDataProfileSpecExcludeFieldsFieldNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBigqueryPublishingConfig, err := expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfig(original["bigquery_publishing_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBigqueryPublishingConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bigqueryPublishingConfig"] = transformedBigqueryPublishingConfig
+	}
+
+	transformedStorageConfig, err := expandDataplexDatascanDataDiscoverySpecStorageConfig(original["storage_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStorageConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["storageConfig"] = transformedStorageConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTableType, err := expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigTableType(original["table_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTableType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tableType"] = transformedTableType
+	}
+
+	transformedConnection, err := expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigConnection(original["connection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connection"] = transformedConnection
+	}
+
+	transformedLocation, err := expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigLocation(original["location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["location"] = transformedLocation
+	}
+
+	transformedProject, err := expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigProject(original["project"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["project"] = transformedProject
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigTableType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIncludePatterns, err := expandDataplexDatascanDataDiscoverySpecStorageConfigIncludePatterns(original["include_patterns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludePatterns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includePatterns"] = transformedIncludePatterns
+	}
+
+	transformedExcludePatterns, err := expandDataplexDatascanDataDiscoverySpecStorageConfigExcludePatterns(original["exclude_patterns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExcludePatterns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["excludePatterns"] = transformedExcludePatterns
+	}
+
+	transformedCsvOptions, err := expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptions(original["csv_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCsvOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["csvOptions"] = transformedCsvOptions
+	}
+
+	transformedJsonOptions, err := expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptions(original["json_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJsonOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jsonOptions"] = transformedJsonOptions
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigIncludePatterns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigExcludePatterns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHeaderRows, err := expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsHeaderRows(original["header_rows"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHeaderRows); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["headerRows"] = transformedHeaderRows
+	}
+
+	transformedDelimiter, err := expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsDelimiter(original["delimiter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDelimiter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["delimiter"] = transformedDelimiter
+	}
+
+	transformedEncoding, err := expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsEncoding(original["encoding"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncoding); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["encoding"] = transformedEncoding
+	}
+
+	transformedTypeInferenceDisabled, err := expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsTypeInferenceDisabled(original["type_inference_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTypeInferenceDisabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["typeInferenceDisabled"] = transformedTypeInferenceDisabled
+	}
+
+	transformedQuote, err := expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsQuote(original["quote"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedQuote); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["quote"] = transformedQuote
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsHeaderRows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsDelimiter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsEncoding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsTypeInferenceDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsQuote(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEncoding, err := expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptionsEncoding(original["encoding"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncoding); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["encoding"] = transformedEncoding
+	}
+
+	transformedTypeInferenceDisabled, err := expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptionsTypeInferenceDisabled(original["type_inference_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTypeInferenceDisabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["typeInferenceDisabled"] = transformedTypeInferenceDisabled
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptionsEncoding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptionsTypeInferenceDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -122,6 +122,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_logging_metric"},
 		{name: "example_monitoring_alert_policy"},
 		{name: "example_monitoring_notification_channel"},
+		{name: "example_org_policy_custom_constraint"},
 		{name: "example_org_policy_policy"},
 		{name: "example_organization_iam_binding"},
 		{name: "example_organization_iam_custom_role"},

@@ -318,6 +318,12 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("subsetting"); !tpgresource.IsEmptyValue(reflect.ValueOf(subsettingProp)) && (ok || !reflect.DeepEqual(v, subsettingProp)) {
 		obj["subsetting"] = subsettingProp
 	}
+	dynamicForwardingProp, err := expandComputeRegionBackendServiceDynamicForwarding(d.Get("dynamic_forwarding"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dynamic_forwarding"); !tpgresource.IsEmptyValue(reflect.ValueOf(dynamicForwardingProp)) && (ok || !reflect.DeepEqual(v, dynamicForwardingProp)) {
+		obj["dynamicForwarding"] = dynamicForwardingProp
+	}
 	regionProp, err := expandComputeRegionBackendServiceRegion(d.Get("region"), d, config)
 	if err != nil {
 		return nil, err
@@ -1641,10 +1647,63 @@ func expandComputeRegionBackendServiceSubsetting(v interface{}, d tpgresource.Te
 		transformed["policy"] = transformedPolicy
 	}
 
+	transformedSubsetSize, err := expandComputeRegionBackendServiceSubsettingSubsetSize(original["subset_size"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubsetSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subsetSize"] = transformedSubsetSize
+	}
+
 	return transformed, nil
 }
 
 func expandComputeRegionBackendServiceSubsettingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceSubsettingSubsetSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceDynamicForwarding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIpPortSelection, err := expandComputeRegionBackendServiceDynamicForwardingIpPortSelection(original["ip_port_selection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIpPortSelection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ipPortSelection"] = transformedIpPortSelection
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceDynamicForwardingIpPortSelection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandComputeRegionBackendServiceDynamicForwardingIpPortSelectionEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceDynamicForwardingIpPortSelectionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

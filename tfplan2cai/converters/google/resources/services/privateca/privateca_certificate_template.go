@@ -97,429 +97,56 @@ func GetPrivatecaCertificateTemplateApiObject(d tpgresource.TerraformResourceDat
 }
 
 func expandPrivatecaCertificateTemplatePredefinedValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return v, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedKeyUsage, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsage(original["key_usage"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedKeyUsage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["keyUsage"] = transformedKeyUsage
-	}
-
-	transformedCaOptions, err := expandPrivatecaCertificateTemplatePredefinedValuesCaOptions(original["ca_options"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedCaOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["caOptions"] = transformedCaOptions
-	}
-
-	transformedPolicyIds, err := expandPrivatecaCertificateTemplatePredefinedValuesPolicyIds(original["policy_ids"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedPolicyIds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["policyIds"] = transformedPolicyIds
-	}
-
-	transformedAiaOcspServers, err := expandPrivatecaCertificateTemplatePredefinedValuesAiaOcspServers(original["aia_ocsp_servers"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedAiaOcspServers); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["aiaOcspServers"] = transformedAiaOcspServers
-	}
-
-	transformedAdditionalExtensions, err := expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensions(original["additional_extensions"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedAdditionalExtensions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["additionalExtensions"] = transformedAdditionalExtensions
-	}
-
-	return transformed, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
+	if len(original) == 0 {
 		return nil, nil
 	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedBaseKeyUsage, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsage(original["base_key_usage"], d, config)
+	caOptions, err := expandPrivatecaCertificateTemplateConfigX509ConfigCaOptions(original["ca_options"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedBaseKeyUsage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["baseKeyUsage"] = transformedBaseKeyUsage
 	}
+	transformed["caOptions"] = caOptions
 
-	transformedExtendedKeyUsage, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsage(original["extended_key_usage"], d, config)
+	keyUsage, err := expandPrivatecaCertificateConfigX509ConfigKeyUsage(original["key_usage"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedExtendedKeyUsage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["extendedKeyUsage"] = transformedExtendedKeyUsage
 	}
+	transformed["keyUsage"] = keyUsage
 
-	transformedUnknownExtendedKeyUsages, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageUnknownExtendedKeyUsages(original["unknown_extended_key_usages"], d, config)
+	policyIds, err := expandPrivatecaCertificateConfigX509ConfigPolicyIds(original["policy_ids"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUnknownExtendedKeyUsages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["unknownExtendedKeyUsages"] = transformedUnknownExtendedKeyUsages
 	}
+	transformed["policyIds"] = policyIds
 
+	aiaOcspServers, err := expandPrivatecaCertificateConfigX509ConfigAiaOcspServers(original["aia_ocsp_servers"], d, config)
+	if err != nil {
+		return nil, err
+	}
+	transformed["aiaOcspServers"] = aiaOcspServers
+
+	addExts, err := expandPrivatecaCertificateConfigX509ConfigAdditionalExtensions(original["additional_extensions"], d, config)
+	if err != nil {
+		return nil, err
+	}
+	transformed["additionalExtensions"] = addExts
+
+	nameConstraints, err := expandPrivatecaCertificateConfigX509ConfigNameConstraints(original["name_constraints"], d, config)
+	if err != nil {
+		return nil, err
+	}
+	transformed["nameConstraints"] = nameConstraints
 	return transformed, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedDigitalSignature, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageDigitalSignature(original["digital_signature"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["digitalSignature"] = transformedDigitalSignature
-	}
-
-	transformedContentCommitment, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageContentCommitment(original["content_commitment"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["contentCommitment"] = transformedContentCommitment
-	}
-
-	transformedKeyEncipherment, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageKeyEncipherment(original["key_encipherment"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["keyEncipherment"] = transformedKeyEncipherment
-	}
-
-	transformedDataEncipherment, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageDataEncipherment(original["data_encipherment"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["dataEncipherment"] = transformedDataEncipherment
-	}
-
-	transformedKeyAgreement, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageKeyAgreement(original["key_agreement"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["keyAgreement"] = transformedKeyAgreement
-	}
-
-	transformedCertSign, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageCertSign(original["cert_sign"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["certSign"] = transformedCertSign
-	}
-
-	transformedCrlSign, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageCrlSign(original["crl_sign"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["crlSign"] = transformedCrlSign
-	}
-
-	transformedEncipherOnly, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageEncipherOnly(original["encipher_only"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["encipherOnly"] = transformedEncipherOnly
-	}
-
-	transformedDecipherOnly, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageDecipherOnly(original["decipher_only"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["decipherOnly"] = transformedDecipherOnly
-	}
-
-	return transformed, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageDigitalSignature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageContentCommitment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageKeyEncipherment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageDataEncipherment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageKeyAgreement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageCertSign(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageCrlSign(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageEncipherOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageBaseKeyUsageDecipherOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedServerAuth, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageServerAuth(original["server_auth"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["serverAuth"] = transformedServerAuth
-	}
-
-	transformedClientAuth, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageClientAuth(original["client_auth"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["clientAuth"] = transformedClientAuth
-	}
-
-	transformedCodeSigning, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageCodeSigning(original["code_signing"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["codeSigning"] = transformedCodeSigning
-	}
-
-	transformedEmailProtection, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageEmailProtection(original["email_protection"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["emailProtection"] = transformedEmailProtection
-	}
-
-	transformedTimeStamping, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageTimeStamping(original["time_stamping"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["timeStamping"] = transformedTimeStamping
-	}
-
-	transformedOcspSigning, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageOcspSigning(original["ocsp_signing"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["ocspSigning"] = transformedOcspSigning
-	}
-
-	return transformed, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageServerAuth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageClientAuth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageCodeSigning(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageEmailProtection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageTimeStamping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageExtendedKeyUsageOcspSigning(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageUnknownExtendedKeyUsages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedObjectIdPath, err := expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageUnknownExtendedKeyUsagesObjectIdPath(original["object_id_path"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedObjectIdPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["objectIdPath"] = transformedObjectIdPath
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesKeyUsageUnknownExtendedKeyUsagesObjectIdPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesCaOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedIsCa, err := expandPrivatecaCertificateTemplatePredefinedValuesCaOptionsIsCa(original["is_ca"], d, config)
-	if err != nil {
-		return nil, err
-	} else {
-		transformed["isCa"] = transformedIsCa
-	}
-
-	transformedMaxIssuerPathLength, err := expandPrivatecaCertificateTemplatePredefinedValuesCaOptionsMaxIssuerPathLength(original["max_issuer_path_length"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMaxIssuerPathLength); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["maxIssuerPathLength"] = transformedMaxIssuerPathLength
-	}
-
-	return transformed, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesCaOptionsIsCa(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesCaOptionsMaxIssuerPathLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesPolicyIds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedObjectIdPath, err := expandPrivatecaCertificateTemplatePredefinedValuesPolicyIdsObjectIdPath(original["object_id_path"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedObjectIdPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["objectIdPath"] = transformedObjectIdPath
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesPolicyIdsObjectIdPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesAiaOcspServers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedObjectId, err := expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensionsObjectId(original["object_id"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedObjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["objectId"] = transformedObjectId
-		}
-
-		transformedCritical, err := expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensionsCritical(original["critical"], d, config)
-		if err != nil {
-			return nil, err
-		} else {
-			transformed["critical"] = transformedCritical
-		}
-
-		transformedValue, err := expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensionsValue(original["value"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["value"] = transformedValue
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensionsObjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedObjectIdPath, err := expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensionsObjectIdObjectIdPath(original["object_id_path"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedObjectIdPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["objectIdPath"] = transformedObjectIdPath
-	}
-
-	return transformed, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensionsObjectIdObjectIdPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensionsCritical(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandPrivatecaCertificateTemplatePredefinedValuesAdditionalExtensionsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandPrivatecaCertificateTemplateIdentityConstraints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

@@ -104,6 +104,12 @@ func GetComputeBackendBucketApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
+	loadBalancingSchemeProp, err := expandComputeBackendBucketLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("load_balancing_scheme"); ok || !reflect.DeepEqual(v, loadBalancingSchemeProp) {
+		obj["loadBalancingScheme"] = loadBalancingSchemeProp
+	}
 
 	return resourceComputeBackendBucketEncoder(d, config, obj)
 }
@@ -398,5 +404,9 @@ func expandComputeBackendBucketEnableCdn(v interface{}, d tpgresource.TerraformR
 }
 
 func expandComputeBackendBucketName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendBucketLoadBalancingScheme(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
