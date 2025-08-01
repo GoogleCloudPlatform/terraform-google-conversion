@@ -80,6 +80,12 @@ func GetBackupDRBackupPlanApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("backup_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupRulesProp)) && (ok || !reflect.DeepEqual(v, backupRulesProp)) {
 		obj["backupRules"] = backupRulesProp
 	}
+	logRetentionDaysProp, err := expandBackupDRBackupPlanLogRetentionDays(d.Get("log_retention_days"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("log_retention_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(logRetentionDaysProp)) && (ok || !reflect.DeepEqual(v, logRetentionDaysProp)) {
+		obj["logRetentionDays"] = logRetentionDaysProp
+	}
 
 	return obj, nil
 }
@@ -297,5 +303,9 @@ func expandBackupDRBackupPlanBackupRulesStandardScheduleBackupWindowStartHourOfD
 }
 
 func expandBackupDRBackupPlanBackupRulesStandardScheduleBackupWindowEndHourOfDay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRBackupPlanLogRetentionDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
