@@ -55,11 +55,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/gkehub2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/healthcare"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/iambeta"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/iamworkforcepool"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/iap"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/notebooks"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/orgpolicy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/pubsublite"
@@ -144,6 +146,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_datastream_private_connection":                          {datastream.ResourceConverterDatastreamPrivateConnection()},
 		"google_datastream_stream":                                      {datastream.ResourceConverterDatastreamStream()},
 		"google_firebase_project":                                       {firebase.ResourceConverterFirebaseProject()},
+		"google_org_policy_custom_constraint":                           {orgpolicy.ResourceConverterOrgPolicyCustomConstraint()},
 		"google_org_policy_policy":                                      {resourcemanager.ResourceConverterOrgPolicyPolicy()},
 		"google_redis_instance":                                         {redis.ResourceConverterRedisInstance()},
 		"google_spanner_database":                                       {spanner.ResourceConverterSpannerDatabase()},
@@ -202,6 +205,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_beyondcorp_security_gateway_iam_policy":                 {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamPolicy()},
 		"google_beyondcorp_security_gateway_iam_binding":                {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamBinding()},
 		"google_beyondcorp_security_gateway_iam_member":                 {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamMember()},
+		"google_beyondcorp_security_gateway_application_iam_policy":     {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayApplicationIamPolicy()},
+		"google_beyondcorp_security_gateway_application_iam_binding":    {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayApplicationIamBinding()},
+		"google_beyondcorp_security_gateway_application_iam_member":     {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayApplicationIamMember()},
 		"google_bigquery_table_iam_policy":                              {bigquery.ResourceConverterBigQueryTableIamPolicy()},
 		"google_bigquery_table_iam_binding":                             {bigquery.ResourceConverterBigQueryTableIamBinding()},
 		"google_bigquery_table_iam_member":                              {bigquery.ResourceConverterBigQueryTableIamMember()},
@@ -244,6 +250,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_cloud_run_v2_service_iam_policy":                        {cloudrunv2.ResourceConverterCloudRunV2ServiceIamPolicy()},
 		"google_cloud_run_v2_service_iam_binding":                       {cloudrunv2.ResourceConverterCloudRunV2ServiceIamBinding()},
 		"google_cloud_run_v2_service_iam_member":                        {cloudrunv2.ResourceConverterCloudRunV2ServiceIamMember()},
+		"google_cloud_run_v2_worker_pool_iam_policy":                    {cloudrunv2.ResourceConverterCloudRunV2WorkerPoolIamPolicy()},
+		"google_cloud_run_v2_worker_pool_iam_binding":                   {cloudrunv2.ResourceConverterCloudRunV2WorkerPoolIamBinding()},
+		"google_cloud_run_v2_worker_pool_iam_member":                    {cloudrunv2.ResourceConverterCloudRunV2WorkerPoolIamMember()},
 		"google_cloud_tasks_queue_iam_policy":                           {cloudtasks.ResourceConverterCloudTasksQueueIamPolicy()},
 		"google_cloud_tasks_queue_iam_binding":                          {cloudtasks.ResourceConverterCloudTasksQueueIamBinding()},
 		"google_cloud_tasks_queue_iam_member":                           {cloudtasks.ResourceConverterCloudTasksQueueIamMember()},
@@ -373,6 +382,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_iam_workload_identity_pool_iam_policy":                  {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamPolicy()},
 		"google_iam_workload_identity_pool_iam_binding":                 {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamBinding()},
 		"google_iam_workload_identity_pool_iam_member":                  {iambeta.ResourceConverterIAMBetaWorkloadIdentityPoolIamMember()},
+		"google_iam_workforce_pool_iam_policy":                          {iamworkforcepool.ResourceConverterIAMWorkforcePoolWorkforcePoolIamPolicy()},
+		"google_iam_workforce_pool_iam_binding":                         {iamworkforcepool.ResourceConverterIAMWorkforcePoolWorkforcePoolIamBinding()},
+		"google_iam_workforce_pool_iam_member":                          {iamworkforcepool.ResourceConverterIAMWorkforcePoolWorkforcePoolIamMember()},
 		"google_iap_tunnel_iam_policy":                                  {iap.ResourceConverterIapTunnelIamPolicy()},
 		"google_iap_tunnel_iam_binding":                                 {iap.ResourceConverterIapTunnelIamBinding()},
 		"google_iap_tunnel_iam_member":                                  {iap.ResourceConverterIapTunnelIamMember()},

@@ -89,6 +89,30 @@ func GetComputeReservationApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("specific_reservation"); !tpgresource.IsEmptyValue(reflect.ValueOf(specificReservationProp)) && (ok || !reflect.DeepEqual(v, specificReservationProp)) {
 		obj["specificReservation"] = specificReservationProp
 	}
+	deleteAtTimeProp, err := expandComputeReservationDeleteAtTime(d.Get("delete_at_time"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("delete_at_time"); !tpgresource.IsEmptyValue(reflect.ValueOf(deleteAtTimeProp)) && (ok || !reflect.DeepEqual(v, deleteAtTimeProp)) {
+		obj["deleteAtTime"] = deleteAtTimeProp
+	}
+	deleteAfterDurationProp, err := expandComputeReservationDeleteAfterDuration(d.Get("delete_after_duration"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("delete_after_duration"); !tpgresource.IsEmptyValue(reflect.ValueOf(deleteAfterDurationProp)) && (ok || !reflect.DeepEqual(v, deleteAfterDurationProp)) {
+		obj["deleteAfterDuration"] = deleteAfterDurationProp
+	}
+	reservationSharingPolicyProp, err := expandComputeReservationReservationSharingPolicy(d.Get("reservation_sharing_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("reservation_sharing_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservationSharingPolicyProp)) && (ok || !reflect.DeepEqual(v, reservationSharingPolicyProp)) {
+		obj["reservationSharingPolicy"] = reservationSharingPolicyProp
+	}
+	enableEmergentMaintenanceProp, err := expandComputeReservationEnableEmergentMaintenance(d.Get("enable_emergent_maintenance"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_emergent_maintenance"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableEmergentMaintenanceProp)) && (ok || !reflect.DeepEqual(v, enableEmergentMaintenanceProp)) {
+		obj["enableEmergentMaintenance"] = enableEmergentMaintenanceProp
+	}
 	zoneProp, err := expandComputeReservationZone(d.Get("zone"), d, config)
 	if err != nil {
 		return nil, err
@@ -134,6 +158,13 @@ func expandComputeReservationShareSettings(v interface{}, d tpgresource.Terrafor
 		transformed["projectMap"] = transformedProjectMap
 	}
 
+	transformedProjects, err := expandComputeReservationShareSettingsProjects(original["projects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projects"] = transformedProjects
+	}
+
 	return transformed, nil
 }
 
@@ -170,6 +201,10 @@ func expandComputeReservationShareSettingsProjectMapProjectId(v interface{}, d t
 	return v, nil
 }
 
+func expandComputeReservationShareSettingsProjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeReservationSpecificReservation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -198,6 +233,13 @@ func expandComputeReservationSpecificReservation(v interface{}, d tpgresource.Te
 		return nil, err
 	} else if val := reflect.ValueOf(transformedInstanceProperties); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["instanceProperties"] = transformedInstanceProperties
+	}
+
+	transformedSourceInstanceTemplate, err := expandComputeReservationSpecificReservationSourceInstanceTemplate(original["source_instance_template"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceInstanceTemplate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceInstanceTemplate"] = transformedSourceInstanceTemplate
 	}
 
 	return transformed, nil
@@ -246,6 +288,13 @@ func expandComputeReservationSpecificReservationInstanceProperties(v interface{}
 		return nil, err
 	} else if val := reflect.ValueOf(transformedLocalSsds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["localSsds"] = transformedLocalSsds
+	}
+
+	transformedMaintenanceInterval, err := expandComputeReservationSpecificReservationInstancePropertiesMaintenanceInterval(original["maintenance_interval"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaintenanceInterval); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maintenanceInterval"] = transformedMaintenanceInterval
 	}
 
 	return transformed, nil
@@ -330,6 +379,79 @@ func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsInter
 }
 
 func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsDiskSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationSpecificReservationInstancePropertiesMaintenanceInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationSpecificReservationSourceInstanceTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationDeleteAtTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationDeleteAfterDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSeconds, err := expandComputeReservationDeleteAfterDurationSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	transformedNanos, err := expandComputeReservationDeleteAfterDurationNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	return transformed, nil
+}
+
+func expandComputeReservationDeleteAfterDurationSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationDeleteAfterDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationReservationSharingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceShareType, err := expandComputeReservationReservationSharingPolicyServiceShareType(original["service_share_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceShareType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceShareType"] = transformedServiceShareType
+	}
+
+	return transformed, nil
+}
+
+func expandComputeReservationReservationSharingPolicyServiceShareType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationEnableEmergentMaintenance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

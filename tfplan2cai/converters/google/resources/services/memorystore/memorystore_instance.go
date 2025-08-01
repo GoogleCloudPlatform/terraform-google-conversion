@@ -68,7 +68,7 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	replicaCountProp, err := expandMemorystoreInstanceReplicaCount(d.Get("replica_count"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("replica_count"); !tpgresource.IsEmptyValue(reflect.ValueOf(replicaCountProp)) && (ok || !reflect.DeepEqual(v, replicaCountProp)) {
+	} else if v, ok := d.GetOkExists("replica_count"); ok || !reflect.DeepEqual(v, replicaCountProp) {
 		obj["replicaCount"] = replicaCountProp
 	}
 	authorizationModeProp, err := expandMemorystoreInstanceAuthorizationMode(d.Get("authorization_mode"), d, config)
@@ -154,6 +154,12 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 		return nil, err
 	} else if v, ok := d.GetOkExists("managed_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(managedBackupSourceProp)) && (ok || !reflect.DeepEqual(v, managedBackupSourceProp)) {
 		obj["managedBackupSource"] = managedBackupSourceProp
+	}
+	kmsKeyProp, err := expandMemorystoreInstanceKmsKey(d.Get("kms_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
+		obj["kmsKey"] = kmsKeyProp
 	}
 	labelsProp, err := expandMemorystoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -905,6 +911,10 @@ func expandMemorystoreInstanceManagedBackupSource(v interface{}, d tpgresource.T
 }
 
 func expandMemorystoreInstanceManagedBackupSourceBackup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

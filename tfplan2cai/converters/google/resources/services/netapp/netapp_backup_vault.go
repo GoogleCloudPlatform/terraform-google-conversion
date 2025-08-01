@@ -74,6 +74,12 @@ func GetNetappBackupVaultApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("backup_region"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupRegionProp)) && (ok || !reflect.DeepEqual(v, backupRegionProp)) {
 		obj["backupRegion"] = backupRegionProp
 	}
+	backupRetentionPolicyProp, err := expandNetappBackupVaultBackupRetentionPolicy(d.Get("backup_retention_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("backup_retention_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupRetentionPolicyProp)) && (ok || !reflect.DeepEqual(v, backupRetentionPolicyProp)) {
+		obj["backupRetentionPolicy"] = backupRetentionPolicyProp
+	}
 	labelsProp, err := expandNetappBackupVaultEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -93,6 +99,73 @@ func expandNetappBackupVaultBackupVaultType(v interface{}, d tpgresource.Terrafo
 }
 
 func expandNetappBackupVaultBackupRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupVaultBackupRetentionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBackupMinimumEnforcedRetentionDays, err := expandNetappBackupVaultBackupRetentionPolicyBackupMinimumEnforcedRetentionDays(original["backup_minimum_enforced_retention_days"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackupMinimumEnforcedRetentionDays); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backupMinimumEnforcedRetentionDays"] = transformedBackupMinimumEnforcedRetentionDays
+	}
+
+	transformedDailyBackupImmutable, err := expandNetappBackupVaultBackupRetentionPolicyDailyBackupImmutable(original["daily_backup_immutable"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDailyBackupImmutable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dailyBackupImmutable"] = transformedDailyBackupImmutable
+	}
+
+	transformedWeeklyBackupImmutable, err := expandNetappBackupVaultBackupRetentionPolicyWeeklyBackupImmutable(original["weekly_backup_immutable"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWeeklyBackupImmutable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["weeklyBackupImmutable"] = transformedWeeklyBackupImmutable
+	}
+
+	transformedMonthlyBackupImmutable, err := expandNetappBackupVaultBackupRetentionPolicyMonthlyBackupImmutable(original["monthly_backup_immutable"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMonthlyBackupImmutable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["monthlyBackupImmutable"] = transformedMonthlyBackupImmutable
+	}
+
+	transformedManualBackupImmutable, err := expandNetappBackupVaultBackupRetentionPolicyManualBackupImmutable(original["manual_backup_immutable"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedManualBackupImmutable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["manualBackupImmutable"] = transformedManualBackupImmutable
+	}
+
+	return transformed, nil
+}
+
+func expandNetappBackupVaultBackupRetentionPolicyBackupMinimumEnforcedRetentionDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupVaultBackupRetentionPolicyDailyBackupImmutable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupVaultBackupRetentionPolicyWeeklyBackupImmutable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupVaultBackupRetentionPolicyMonthlyBackupImmutable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupVaultBackupRetentionPolicyManualBackupImmutable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

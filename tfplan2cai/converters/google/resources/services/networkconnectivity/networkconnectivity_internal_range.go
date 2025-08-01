@@ -104,6 +104,12 @@ func GetNetworkConnectivityInternalRangeApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("exclude_cidr_ranges"); !tpgresource.IsEmptyValue(reflect.ValueOf(excludeCidrRangesProp)) && (ok || !reflect.DeepEqual(v, excludeCidrRangesProp)) {
 		obj["excludeCidrRanges"] = excludeCidrRangesProp
 	}
+	allocationOptionsProp, err := expandNetworkConnectivityInternalRangeAllocationOptions(d.Get("allocation_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allocation_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(allocationOptionsProp)) && (ok || !reflect.DeepEqual(v, allocationOptionsProp)) {
+		obj["allocationOptions"] = allocationOptionsProp
+	}
 	overlapsProp, err := expandNetworkConnectivityInternalRangeOverlaps(d.Get("overlaps"), d, config)
 	if err != nil {
 		return nil, err
@@ -161,6 +167,40 @@ func expandNetworkConnectivityInternalRangeTargetCidrRange(v interface{}, d tpgr
 }
 
 func expandNetworkConnectivityInternalRangeExcludeCidrRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityInternalRangeAllocationOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllocationStrategy, err := expandNetworkConnectivityInternalRangeAllocationOptionsAllocationStrategy(original["allocation_strategy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllocationStrategy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allocationStrategy"] = transformedAllocationStrategy
+	}
+
+	transformedFirstAvailableRangesLookupSize, err := expandNetworkConnectivityInternalRangeAllocationOptionsFirstAvailableRangesLookupSize(original["first_available_ranges_lookup_size"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFirstAvailableRangesLookupSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["firstAvailableRangesLookupSize"] = transformedFirstAvailableRangesLookupSize
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkConnectivityInternalRangeAllocationOptionsAllocationStrategy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityInternalRangeAllocationOptionsFirstAvailableRangesLookupSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

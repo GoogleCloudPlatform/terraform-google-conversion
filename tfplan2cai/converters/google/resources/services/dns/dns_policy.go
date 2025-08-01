@@ -71,6 +71,12 @@ func GetDNSPolicyApiObject(d tpgresource.TerraformResourceData, config *transpor
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	dns64ConfigProp, err := expandDNSPolicyDns64Config(d.Get("dns64_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dns64_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(dns64ConfigProp)) && (ok || !reflect.DeepEqual(v, dns64ConfigProp)) {
+		obj["dns64Config"] = dns64ConfigProp
+	}
 	enableInboundForwardingProp, err := expandDNSPolicyEnableInboundForwarding(d.Get("enable_inbound_forwarding"), d, config)
 	if err != nil {
 		return nil, err
@@ -157,6 +163,48 @@ func expandDNSPolicyAlternativeNameServerConfigTargetNameServersForwardingPath(v
 }
 
 func expandDNSPolicyDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDNSPolicyDns64Config(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedScope, err := expandDNSPolicyDns64ConfigScope(original["scope"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScope); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scope"] = transformedScope
+	}
+
+	return transformed, nil
+}
+
+func expandDNSPolicyDns64ConfigScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllQueries, err := expandDNSPolicyDns64ConfigScopeAllQueries(original["all_queries"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["allQueries"] = transformedAllQueries
+	}
+
+	return transformed, nil
+}
+
+func expandDNSPolicyDns64ConfigScopeAllQueries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

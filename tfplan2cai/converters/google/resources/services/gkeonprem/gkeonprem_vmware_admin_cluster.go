@@ -134,6 +134,12 @@ func GetGkeonpremVmwareAdminClusterApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("platform_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(platformConfigProp)) && (ok || !reflect.DeepEqual(v, platformConfigProp)) {
 		obj["platformConfig"] = platformConfigProp
 	}
+	privateRegistryConfigProp, err := expandGkeonpremVmwareAdminClusterPrivateRegistryConfig(d.Get("private_registry_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("private_registry_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(privateRegistryConfigProp)) && (ok || !reflect.DeepEqual(v, privateRegistryConfigProp)) {
+		obj["privateRegistryConfig"] = privateRegistryConfigProp
+	}
 	annotationsProp, err := expandGkeonpremVmwareAdminClusterEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
@@ -1274,6 +1280,40 @@ func expandGkeonpremVmwareAdminClusterPlatformConfigStatusConditionsLastTransiti
 }
 
 func expandGkeonpremVmwareAdminClusterPlatformConfigStatusConditionsState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareAdminClusterPrivateRegistryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAddress, err := expandGkeonpremVmwareAdminClusterPrivateRegistryConfigAddress(original["address"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAddress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["address"] = transformedAddress
+	}
+
+	transformedCaCert, err := expandGkeonpremVmwareAdminClusterPrivateRegistryConfigCaCert(original["ca_cert"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCaCert); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["caCert"] = transformedCaCert
+	}
+
+	return transformed, nil
+}
+
+func expandGkeonpremVmwareAdminClusterPrivateRegistryConfigAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareAdminClusterPrivateRegistryConfigCaCert(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
