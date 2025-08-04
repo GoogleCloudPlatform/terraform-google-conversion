@@ -23,3 +23,12 @@ func TestConvertResourcemanager(t *testing.T) {
 			"project_create",
 		})
 }
+
+func TestConvertNetworksecurity(t *testing.T) {
+	cai2hclTesting.AssertTestFiles(
+		t,
+		"./services/networksecurity/testdata",
+		[]string{
+			"server_tls_policy",
+		})
+}
