@@ -1,14 +1,15 @@
 package provider
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 var handwrittenTfplan2caiResources = map[string]*schema.Resource{
@@ -18,8 +19,9 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 19
+// Generated resources: 22
 var generatedResources = map[string]*schema.Resource{
+	"google_alloydb_backup":                          alloydb.ResourceAlloydbBackup(),
 	"google_bigquery_dataset":                        bigquery.ResourceBigQueryDataset(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.ResourceBlockchainNodeEngineBlockchainNodes(),
 	"google_cloudfunctions2_function":                cloudfunctions2.ResourceCloudfunctions2function(),
@@ -38,5 +40,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_region_autoscaler":               compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_subnetwork":                      compute.ResourceComputeSubnetwork(),
 	"google_compute_url_map":                         compute.ResourceComputeUrlMap(),
+	"google_network_security_server_tls_policy":      networksecurity.ResourceNetworkSecurityServerTlsPolicy(),
+	"google_pubsub_subscription":                     pubsub.ResourcePubsubSubscription(),
 	"google_pubsub_topic":                            pubsub.ResourcePubsubTopic(),
 }

@@ -74,6 +74,12 @@ func GetManagedKafkaClusterApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("rebalance_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(rebalanceConfigProp)) && (ok || !reflect.DeepEqual(v, rebalanceConfigProp)) {
 		obj["rebalanceConfig"] = rebalanceConfigProp
 	}
+	tlsConfigProp, err := expandManagedKafkaClusterTlsConfig(d.Get("tls_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tls_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(tlsConfigProp)) && (ok || !reflect.DeepEqual(v, tlsConfigProp)) {
+		obj["tlsConfig"] = tlsConfigProp
+	}
 	labelsProp, err := expandManagedKafkaClusterEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -213,6 +219,86 @@ func expandManagedKafkaClusterRebalanceConfig(v interface{}, d tpgresource.Terra
 }
 
 func expandManagedKafkaClusterRebalanceConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandManagedKafkaClusterTlsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTrustConfig, err := expandManagedKafkaClusterTlsConfigTrustConfig(original["trust_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTrustConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["trustConfig"] = transformedTrustConfig
+	}
+
+	transformedSslPrincipalMappingRules, err := expandManagedKafkaClusterTlsConfigSslPrincipalMappingRules(original["ssl_principal_mapping_rules"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSslPrincipalMappingRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sslPrincipalMappingRules"] = transformedSslPrincipalMappingRules
+	}
+
+	return transformed, nil
+}
+
+func expandManagedKafkaClusterTlsConfigTrustConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCasConfigs, err := expandManagedKafkaClusterTlsConfigTrustConfigCasConfigs(original["cas_configs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCasConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["casConfigs"] = transformedCasConfigs
+	}
+
+	return transformed, nil
+}
+
+func expandManagedKafkaClusterTlsConfigTrustConfigCasConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCaPool, err := expandManagedKafkaClusterTlsConfigTrustConfigCasConfigsCaPool(original["ca_pool"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCaPool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["caPool"] = transformedCaPool
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandManagedKafkaClusterTlsConfigTrustConfigCasConfigsCaPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandManagedKafkaClusterTlsConfigSslPrincipalMappingRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
