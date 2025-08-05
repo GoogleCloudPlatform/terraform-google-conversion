@@ -136,6 +136,18 @@ func GetBigqueryAnalyticsHubListingApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("log_linked_dataset_query_user_email"); !tpgresource.IsEmptyValue(reflect.ValueOf(logLinkedDatasetQueryUserEmailProp)) && (ok || !reflect.DeepEqual(v, logLinkedDatasetQueryUserEmailProp)) {
 		obj["logLinkedDatasetQueryUserEmail"] = logLinkedDatasetQueryUserEmailProp
 	}
+	discoveryTypeProp, err := expandBigqueryAnalyticsHubListingDiscoveryType(d.Get("discovery_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("discovery_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(discoveryTypeProp)) && (ok || !reflect.DeepEqual(v, discoveryTypeProp)) {
+		obj["discoveryType"] = discoveryTypeProp
+	}
+	allowOnlyMetadataSharingProp, err := expandBigqueryAnalyticsHubListingAllowOnlyMetadataSharing(d.Get("allow_only_metadata_sharing"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_only_metadata_sharing"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowOnlyMetadataSharingProp)) && (ok || !reflect.DeepEqual(v, allowOnlyMetadataSharingProp)) {
+		obj["allowOnlyMetadataSharing"] = allowOnlyMetadataSharingProp
+	}
 
 	return obj, nil
 }
@@ -384,5 +396,13 @@ func expandBigqueryAnalyticsHubListingRestrictedExportConfigRestrictQueryResult(
 }
 
 func expandBigqueryAnalyticsHubListingLogLinkedDatasetQueryUserEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingDiscoveryType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingAllowOnlyMetadataSharing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
