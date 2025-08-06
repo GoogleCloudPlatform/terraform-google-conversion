@@ -114,7 +114,7 @@ func flattenBigQueryDatasetAccess(v interface{}, d *schema.ResourceData, config 
 		return v
 	}
 	l := v.([]interface{})
-	transformed := schema.NewSet(schema.HashResource(bigqueryDatasetAccessSchema()), []interface{}{})
+	transformed := schema.NewSet(resourceBigqueryDatasetAccessHash, []interface{}{})
 	for _, raw := range l {
 		original := raw.(map[string]interface{})
 		if len(original) < 1 {
