@@ -20,9 +20,10 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 23
+// Generated resources: 24
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                          alloydb.ResourceAlloydbBackup(),
+	"google_alloydb_cluster":                         alloydb.ResourceAlloydbCluster(),
 	"google_bigquery_dataset":                        bigquery.ResourceBigQueryDataset(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.ResourceBlockchainNodeEngineBlockchainNodes(),
 	"google_certificate_manager_certificate":         certificatemanager.ResourceCertificateManagerCertificate(),

@@ -32,6 +32,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_instance": compute.ComputeInstanceTfplan2caiConverter(),
 	// ####### END handwritten resources ###########
 	"google_alloydb_backup":                          alloydb.AlloydbBackupTfplan2caiConverter(),
+	"google_alloydb_cluster":                         alloydb.AlloydbClusterTfplan2caiConverter(),
 	"google_bigquery_dataset":                        bigquery.BigQueryDatasetTfplan2caiConverter(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.BlockchainNodeEngineBlockchainNodesTfplan2caiConverter(),
 	"google_certificate_manager_certificate":         certificatemanager.CertificateManagerCertificateTfplan2caiConverter(),

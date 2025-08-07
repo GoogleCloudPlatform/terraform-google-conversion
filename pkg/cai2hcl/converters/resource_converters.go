@@ -44,6 +44,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	alloydb.AlloydbBackupAssetType: {
 		"Default": alloydb.NewAlloydbBackupCai2hclConverter(provider),
 	},
+	alloydb.AlloydbClusterAssetType: {
+		"Default": alloydb.NewAlloydbClusterCai2hclConverter(provider),
+	},
 	bigquery.BigQueryDatasetAssetType: {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
 	},
