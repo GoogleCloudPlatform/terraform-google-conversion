@@ -241,7 +241,7 @@ func expandComputeUrlMapHeaderActionRequestHeadersToAdd(v interface{}, d tpgreso
 		transformedReplace, err := expandComputeUrlMapHeaderActionRequestHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -293,7 +293,7 @@ func expandComputeUrlMapHeaderActionResponseHeadersToAdd(v interface{}, d tpgres
 		transformedReplace, err := expandComputeUrlMapHeaderActionResponseHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -631,7 +631,7 @@ func expandComputeUrlMapPathMatcherHeaderActionRequestHeadersToAdd(v interface{}
 		transformedReplace, err := expandComputeUrlMapPathMatcherHeaderActionRequestHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -683,7 +683,7 @@ func expandComputeUrlMapPathMatcherHeaderActionResponseHeadersToAdd(v interface{
 		transformedReplace, err := expandComputeUrlMapPathMatcherHeaderActionResponseHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -992,7 +992,7 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicy(v interface{}, 
 	transformedDisabled, err := expandComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicyDisabled(original["disabled"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDisabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["disabled"] = transformedDisabled
 	}
 
@@ -1543,7 +1543,7 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHea
 		transformedReplace, err := expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -1595,7 +1595,7 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHea
 		transformedReplace, err := expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -1671,7 +1671,7 @@ func expandComputeUrlMapPathMatcherPathRuleUrlRedirect(v interface{}, d tpgresou
 	transformedStripQuery, err := expandComputeUrlMapPathMatcherPathRuleUrlRedirectStripQuery(original["strip_query"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedStripQuery); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["stripQuery"] = transformedStripQuery
 	}
 
@@ -1883,7 +1883,7 @@ func expandComputeUrlMapPathMatcherRouteRulesHeaderActionRequestHeadersToAdd(v i
 		transformedReplace, err := expandComputeUrlMapPathMatcherRouteRulesHeaderActionRequestHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -1935,7 +1935,7 @@ func expandComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToAdd(v 
 		transformedReplace, err := expandComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -2990,7 +2990,7 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesH
 		transformedReplace, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -3042,7 +3042,7 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesH
 		transformedReplace, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddReplace(original["replace"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["replace"] = transformedReplace
 		}
 
@@ -3370,7 +3370,7 @@ func expandComputeUrlMapPathMatcherDefaultUrlRedirect(v interface{}, d tpgresour
 	transformedStripQuery, err := expandComputeUrlMapPathMatcherDefaultUrlRedirectStripQuery(original["strip_query"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedStripQuery); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["stripQuery"] = transformedStripQuery
 	}
 
@@ -4426,7 +4426,7 @@ func expandComputeUrlMapDefaultUrlRedirect(v interface{}, d tpgresource.Terrafor
 	transformedStripQuery, err := expandComputeUrlMapDefaultUrlRedirectStripQuery(original["strip_query"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedStripQuery); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["stripQuery"] = transformedStripQuery
 	}
 
