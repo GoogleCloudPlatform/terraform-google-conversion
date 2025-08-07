@@ -134,6 +134,12 @@ func GetGkeonpremVmwareAdminClusterApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("platform_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(platformConfigProp)) && (ok || !reflect.DeepEqual(v, platformConfigProp)) {
 		obj["platformConfig"] = platformConfigProp
 	}
+	enableAdvancedClusterProp, err := expandGkeonpremVmwareAdminClusterEnableAdvancedCluster(d.Get("enable_advanced_cluster"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_advanced_cluster"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableAdvancedClusterProp)) && (ok || !reflect.DeepEqual(v, enableAdvancedClusterProp)) {
+		obj["enableAdvancedCluster"] = enableAdvancedClusterProp
+	}
 	privateRegistryConfigProp, err := expandGkeonpremVmwareAdminClusterPrivateRegistryConfig(d.Get("private_registry_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -1280,6 +1286,10 @@ func expandGkeonpremVmwareAdminClusterPlatformConfigStatusConditionsLastTransiti
 }
 
 func expandGkeonpremVmwareAdminClusterPlatformConfigStatusConditionsState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareAdminClusterEnableAdvancedCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
