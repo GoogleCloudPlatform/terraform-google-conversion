@@ -20,6 +20,8 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
@@ -87,6 +89,12 @@ func GetComputeRegionSecurityPolicyApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("ddos_protection_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(ddosProtectionConfigProp)) && (ok || !reflect.DeepEqual(v, ddosProtectionConfigProp)) {
 		obj["ddosProtectionConfig"] = ddosProtectionConfigProp
 	}
+	advancedOptionsConfigProp, err := expandComputeRegionSecurityPolicyAdvancedOptionsConfig(d.Get("advanced_options_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("advanced_options_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(advancedOptionsConfigProp)) && (ok || !reflect.DeepEqual(v, advancedOptionsConfigProp)) {
+		obj["advancedOptionsConfig"] = advancedOptionsConfigProp
+	}
 	userDefinedFieldsProp, err := expandComputeRegionSecurityPolicyUserDefinedFields(d.Get("user_defined_fields"), d, config)
 	if err != nil {
 		return nil, err
@@ -145,6 +153,94 @@ func expandComputeRegionSecurityPolicyDdosProtectionConfig(v interface{}, d tpgr
 }
 
 func expandComputeRegionSecurityPolicyDdosProtectionConfigDdosProtection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyAdvancedOptionsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedJsonParsing, err := expandComputeRegionSecurityPolicyAdvancedOptionsConfigJsonParsing(original["json_parsing"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJsonParsing); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jsonParsing"] = transformedJsonParsing
+	}
+
+	transformedJsonCustomConfig, err := expandComputeRegionSecurityPolicyAdvancedOptionsConfigJsonCustomConfig(original["json_custom_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJsonCustomConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jsonCustomConfig"] = transformedJsonCustomConfig
+	}
+
+	transformedLogLevel, err := expandComputeRegionSecurityPolicyAdvancedOptionsConfigLogLevel(original["log_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLogLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["logLevel"] = transformedLogLevel
+	}
+
+	transformedUserIpRequestHeaders, err := expandComputeRegionSecurityPolicyAdvancedOptionsConfigUserIpRequestHeaders(original["user_ip_request_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserIpRequestHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userIpRequestHeaders"] = transformedUserIpRequestHeaders
+	}
+
+	transformedRequestBodyInspectionSize, err := expandComputeRegionSecurityPolicyAdvancedOptionsConfigRequestBodyInspectionSize(original["request_body_inspection_size"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestBodyInspectionSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestBodyInspectionSize"] = transformedRequestBodyInspectionSize
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyAdvancedOptionsConfigJsonParsing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyAdvancedOptionsConfigJsonCustomConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedContentTypes, err := expandComputeRegionSecurityPolicyAdvancedOptionsConfigJsonCustomConfigContentTypes(original["content_types"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContentTypes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["contentTypes"] = transformedContentTypes
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionSecurityPolicyAdvancedOptionsConfigJsonCustomConfigContentTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyAdvancedOptionsConfigLogLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyAdvancedOptionsConfigUserIpRequestHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyAdvancedOptionsConfigRequestBodyInspectionSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
