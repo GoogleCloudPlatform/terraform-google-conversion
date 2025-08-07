@@ -187,11 +187,11 @@ func flattenComputeImageImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d 
 }
 
 func flattenComputeImageImageEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("image_encryption_key.0.raw_key")
+	return v
 }
 
 func flattenComputeImageImageEncryptionKeyRsaEncryptedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("image_encryption_key.0.rsa_encrypted_key")
+	return v
 }
 
 func flattenComputeImageLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -209,7 +209,21 @@ func flattenComputeImageName(v interface{}, d *schema.ResourceData, config *tran
 }
 
 func flattenComputeImageRawDisk(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("raw_disk")
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["container_type"] =
+		flattenComputeImageRawDiskContainerType(original["containerType"], d, config)
+	transformed["sha1"] =
+		flattenComputeImageRawDiskSha1(original["sha1Checksum"], d, config)
+	transformed["source"] =
+		flattenComputeImageRawDiskSource(original["source"], d, config)
+	return []interface{}{transformed}
 }
 
 func flattenComputeImageRawDiskContainerType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -236,7 +250,23 @@ func flattenComputeImageSourceDisk(v interface{}, d *schema.ResourceData, config
 }
 
 func flattenComputeImageSourceDiskEncryptionKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("source_disk_encryption_key")
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["raw_key"] =
+		flattenComputeImageSourceDiskEncryptionKeyRawKey(original["rawKey"], d, config)
+	transformed["rsa_encrypted_key"] =
+		flattenComputeImageSourceDiskEncryptionKeyRsaEncryptedKey(original["rsaEncryptedKey"], d, config)
+	transformed["kms_key_self_link"] =
+		flattenComputeImageSourceDiskEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
+	transformed["kms_key_service_account"] =
+		flattenComputeImageSourceDiskEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
+	return []interface{}{transformed}
 }
 
 func flattenComputeImageSourceDiskEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -271,7 +301,23 @@ func flattenComputeImageSourceImage(v interface{}, d *schema.ResourceData, confi
 }
 
 func flattenComputeImageSourceImageEncryptionKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("source_image_encryption_key")
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["raw_key"] =
+		flattenComputeImageSourceImageEncryptionKeyRawKey(original["rawKey"], d, config)
+	transformed["rsa_encrypted_key"] =
+		flattenComputeImageSourceImageEncryptionKeyRsaEncryptedKey(original["rsaEncryptedKey"], d, config)
+	transformed["kms_key_self_link"] =
+		flattenComputeImageSourceImageEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
+	transformed["kms_key_service_account"] =
+		flattenComputeImageSourceImageEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
+	return []interface{}{transformed}
 }
 
 func flattenComputeImageSourceImageEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -434,7 +480,23 @@ func flattenComputeImageShieldedInstanceInitialStateDbxsFileType(v interface{}, 
 }
 
 func flattenComputeImageSourceSnapshotEncryptionKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("source_snapshot_encryption_key")
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["raw_key"] =
+		flattenComputeImageSourceSnapshotEncryptionKeyRawKey(original["rawKey"], d, config)
+	transformed["rsa_encrypted_key"] =
+		flattenComputeImageSourceSnapshotEncryptionKeyRsaEncryptedKey(original["rsaEncryptedKey"], d, config)
+	transformed["kms_key_self_link"] =
+		flattenComputeImageSourceSnapshotEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
+	transformed["kms_key_service_account"] =
+		flattenComputeImageSourceSnapshotEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
+	return []interface{}{transformed}
 }
 
 func flattenComputeImageSourceSnapshotEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

@@ -967,7 +967,7 @@ func flattenComputeBackendServiceIapOauth2ClientId(v interface{}, d *schema.Reso
 }
 
 func flattenComputeBackendServiceIapOauth2ClientSecret(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("iap.0.oauth2_client_secret")
+	return v
 }
 
 func flattenComputeBackendServiceIpAddressSelectionPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -1448,7 +1448,7 @@ func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyId(
 }
 
 func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("security_settings.0.aws_v4_authentication.0.access_key")
+	return v
 }
 
 func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

@@ -191,11 +191,21 @@ func flattenComputeNetworkNetworkProfile(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenComputeNetworkParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("params")
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeNetworkParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	return []interface{}{transformed}
 }
 
 func flattenComputeNetworkParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("params.0.resource_manager_tags")
+	return v
 }
 
 func resourceComputeNetworkDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
