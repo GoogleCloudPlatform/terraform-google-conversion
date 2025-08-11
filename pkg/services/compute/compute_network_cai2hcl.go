@@ -138,6 +138,9 @@ func flattenComputeNetworkRoutingConfig(v interface{}, d *schema.ResourceData, c
 		flattenComputeNetworkRoutingConfigBgpAlwaysCompareMed(original["bgpAlwaysCompareMed"], d, config)
 	transformed["bgp_inter_region_cost"] =
 		flattenComputeNetworkRoutingConfigBgpInterRegionCost(original["bgpInterRegionCost"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -201,6 +204,9 @@ func flattenComputeNetworkParams(v interface{}, d *schema.ResourceData, config *
 	transformed := make(map[string]interface{})
 	transformed["resource_manager_tags"] =
 		flattenComputeNetworkParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

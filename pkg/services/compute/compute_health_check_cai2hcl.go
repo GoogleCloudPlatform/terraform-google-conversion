@@ -25,6 +25,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/utils"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
@@ -202,6 +203,9 @@ func flattenComputeHealthCheckHttpHealthCheck(v interface{}, d *schema.ResourceD
 		flattenComputeHealthCheckHttpHealthCheckProxyHeader(original["proxyHeader"], d, config)
 	transformed["port_specification"] =
 		flattenComputeHealthCheckHttpHealthCheckPortSpecification(original["portSpecification"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -269,6 +273,9 @@ func flattenComputeHealthCheckHttpsHealthCheck(v interface{}, d *schema.Resource
 		flattenComputeHealthCheckHttpsHealthCheckProxyHeader(original["proxyHeader"], d, config)
 	transformed["port_specification"] =
 		flattenComputeHealthCheckHttpsHealthCheckPortSpecification(original["portSpecification"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -334,6 +341,9 @@ func flattenComputeHealthCheckTcpHealthCheck(v interface{}, d *schema.ResourceDa
 		flattenComputeHealthCheckTcpHealthCheckProxyHeader(original["proxyHeader"], d, config)
 	transformed["port_specification"] =
 		flattenComputeHealthCheckTcpHealthCheckPortSpecification(original["portSpecification"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -395,6 +405,9 @@ func flattenComputeHealthCheckSslHealthCheck(v interface{}, d *schema.ResourceDa
 		flattenComputeHealthCheckSslHealthCheckProxyHeader(original["proxyHeader"], d, config)
 	transformed["port_specification"] =
 		flattenComputeHealthCheckSslHealthCheckPortSpecification(original["portSpecification"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -458,6 +471,9 @@ func flattenComputeHealthCheckHttp2HealthCheck(v interface{}, d *schema.Resource
 		flattenComputeHealthCheckHttp2HealthCheckProxyHeader(original["proxyHeader"], d, config)
 	transformed["port_specification"] =
 		flattenComputeHealthCheckHttp2HealthCheckPortSpecification(original["portSpecification"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -519,6 +535,9 @@ func flattenComputeHealthCheckGrpcHealthCheck(v interface{}, d *schema.ResourceD
 		flattenComputeHealthCheckGrpcHealthCheckPortSpecification(original["portSpecification"], d, config)
 	transformed["grpc_service_name"] =
 		flattenComputeHealthCheckGrpcHealthCheckGrpcServiceName(original["grpcServiceName"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -566,6 +585,9 @@ func flattenComputeHealthCheckGrpcTlsHealthCheck(v interface{}, d *schema.Resour
 		flattenComputeHealthCheckGrpcTlsHealthCheckPortSpecification(original["portSpecification"], d, config)
 	transformed["grpc_service_name"] =
 		flattenComputeHealthCheckGrpcTlsHealthCheckGrpcServiceName(original["grpcServiceName"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

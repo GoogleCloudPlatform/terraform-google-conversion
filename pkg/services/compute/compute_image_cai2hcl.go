@@ -171,6 +171,9 @@ func flattenComputeImageImageEncryptionKey(v interface{}, d *schema.ResourceData
 		flattenComputeImageImageEncryptionKeyRawKey(original["rawKey"], d, config)
 	transformed["rsa_encrypted_key"] =
 		flattenComputeImageImageEncryptionKeyRsaEncryptedKey(original["rsaEncryptedKey"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -223,6 +226,9 @@ func flattenComputeImageRawDisk(v interface{}, d *schema.ResourceData, config *t
 		flattenComputeImageRawDiskSha1(original["sha1Checksum"], d, config)
 	transformed["source"] =
 		flattenComputeImageRawDiskSource(original["source"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -266,6 +272,9 @@ func flattenComputeImageSourceDiskEncryptionKey(v interface{}, d *schema.Resourc
 		flattenComputeImageSourceDiskEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
 	transformed["kms_key_service_account"] =
 		flattenComputeImageSourceDiskEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -317,6 +326,9 @@ func flattenComputeImageSourceImageEncryptionKey(v interface{}, d *schema.Resour
 		flattenComputeImageSourceImageEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
 	transformed["kms_key_service_account"] =
 		flattenComputeImageSourceImageEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -368,6 +380,9 @@ func flattenComputeImageShieldedInstanceInitialState(v interface{}, d *schema.Re
 		flattenComputeImageShieldedInstanceInitialStateDbs(original["dbs"], d, config)
 	transformed["dbxs"] =
 		flattenComputeImageShieldedInstanceInitialStateDbxs(original["dbxs"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -384,6 +399,9 @@ func flattenComputeImageShieldedInstanceInitialStatePk(v interface{}, d *schema.
 		flattenComputeImageShieldedInstanceInitialStatePkContent(original["content"], d, config)
 	transformed["file_type"] =
 		flattenComputeImageShieldedInstanceInitialStatePkFileType(original["fileType"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -496,6 +514,9 @@ func flattenComputeImageSourceSnapshotEncryptionKey(v interface{}, d *schema.Res
 		flattenComputeImageSourceSnapshotEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
 	transformed["kms_key_service_account"] =
 		flattenComputeImageSourceSnapshotEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
