@@ -3,8 +3,8 @@ package networksecurity
 import (
 	"errors"
 	"fmt"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cai2hcl/common"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/cai2hcl/common"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/caiasset"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	netsecapi "google.golang.org/api/networksecurity/v1"
 	"strings"
@@ -88,8 +88,7 @@ func flattenServerTLSPolicy(resource *caiasset.AssetResource) (map[string]any, e
 	result["server_certificate"] = flattenServerCertificate(serverTLSPolicy.ServerCertificate)
 	result["mtls_policy"] = flattenMTLSPolicy(serverTLSPolicy.MtlsPolicy)
 	result["project"] = flattenProjectName(serverTLSPolicy.Name)
-
-	result["location"] = resource.Location
+	result["location"] = flattenLocation(serverTLSPolicy.Name)
 
 	return result, nil
 }
@@ -170,4 +169,12 @@ func flattenProjectName(name string) string {
 		return ""
 	}
 	return tokens[1]
+}
+
+func flattenLocation(name string) string {
+	tokens := strings.Split(name, "/")
+	if len(tokens) < 6 || tokens[2] != "locations" {
+		return ""
+	}
+	return tokens[3]
 }
