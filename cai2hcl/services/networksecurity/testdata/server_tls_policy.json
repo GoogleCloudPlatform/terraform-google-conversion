@@ -13,7 +13,7 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/global/serverTlsPolicies/lb_mtls_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:11.184079186Z",
+        "createTime": "2025-08-05T16:25:14.331266021Z",
         "description": "my description",
         "labels": {
           "foo": "bar"
@@ -23,7 +23,7 @@
           "clientValidationTrustConfig": "projects/307841421122/locations/global/trustConfigs/id-4adf7779-1e9f-4124-9438-652c80886074"
         },
         "name": "projects/ccm-breakit/locations/global/serverTlsPolicies/lb_mtls_policy",
-        "updateTime": "2025-07-29T16:00:15.415731403Z"
+        "updateTime": "2025-08-05T16:25:21.105490028Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -31,7 +31,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -47,7 +47,7 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/global/serverTlsPolicies/td_mtls_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:12.082558809Z",
+        "createTime": "2025-08-05T16:25:14.331708131Z",
         "description": "my description",
         "labels": {
           "foo": "bar"
@@ -67,7 +67,7 @@
             "pluginInstance": "google_cloud_private_spiffe"
           }
         },
-        "updateTime": "2025-07-29T16:00:15.692522561Z"
+        "updateTime": "2025-08-05T16:25:21.045078465Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -75,7 +75,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -91,7 +91,7 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/global/serverTlsPolicies/td_with_server_cert_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:12.040588118Z",
+        "createTime": "2025-08-05T16:25:14.329850656Z",
         "description": "my description",
         "name": "projects/ccm-breakit/locations/global/serverTlsPolicies/td_with_server_cert_policy",
         "serverCertificate": {
@@ -99,7 +99,7 @@
             "targetUri": "unix:mypath"
           }
         },
-        "updateTime": "2025-07-29T16:00:15.680321984Z"
+        "updateTime": "2025-08-05T16:25:21.191035565Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -107,7 +107,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -123,7 +123,7 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/global/serverTlsPolicies/empty_description_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:11.660089355Z",
+        "createTime": "2025-08-05T16:25:14.331267507Z",
         "labels": {
           "foo": "bar"
         },
@@ -132,7 +132,7 @@
           "clientValidationTrustConfig": "projects/307841421122/locations/global/trustConfigs/id-4adf7779-1e9f-4124-9438-652c80886074"
         },
         "name": "projects/ccm-breakit/locations/global/serverTlsPolicies/empty_description_policy",
-        "updateTime": "2025-07-29T16:00:16.847799545Z"
+        "updateTime": "2025-08-05T16:25:20.756907211Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -140,7 +140,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -156,14 +156,14 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/global/serverTlsPolicies/empty_labels_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:12.040240475Z",
+        "createTime": "2025-08-05T16:25:14.329866696Z",
         "description": "my description",
         "mtlsPolicy": {
           "clientValidationMode": "REJECT_INVALID",
           "clientValidationTrustConfig": "projects/307841421122/locations/global/trustConfigs/id-4adf7779-1e9f-4124-9438-652c80886074"
         },
         "name": "projects/ccm-breakit/locations/global/serverTlsPolicies/empty_labels_policy",
-        "updateTime": "2025-07-29T16:00:16.309813819Z"
+        "updateTime": "2025-08-05T16:25:21.154695297Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -171,7 +171,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -187,7 +187,7 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/us-central1/serverTlsPolicies/regional_location_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:12.162242768Z",
+        "createTime": "2025-08-05T16:25:14.329828351Z",
         "description": "my description",
         "labels": {
           "foo": "bar"
@@ -197,7 +197,7 @@
           "clientValidationTrustConfig": "projects/307841421122/locations/us-central1/trustConfigs/tsmx-20250609-tc1"
         },
         "name": "projects/ccm-breakit/locations/us-central1/serverTlsPolicies/regional_location_policy",
-        "updateTime": "2025-07-29T16:00:15.08724113Z"
+        "updateTime": "2025-08-05T16:25:16.997166259Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -205,7 +205,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -221,7 +221,7 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/global/serverTlsPolicies/lb_mtls_allow_invalid_cert_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:12.078450339Z",
+        "createTime": "2025-08-05T16:25:14.263043415Z",
         "description": "my description",
         "labels": {
           "foo": "bar"
@@ -230,7 +230,7 @@
           "clientValidationMode": "ALLOW_INVALID_OR_MISSING_CLIENT_CERT"
         },
         "name": "projects/ccm-breakit/locations/global/serverTlsPolicies/lb_mtls_allow_invalid_cert_policy",
-        "updateTime": "2025-07-29T16:00:16.300643457Z"
+        "updateTime": "2025-08-05T16:25:16.933670463Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -238,7 +238,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -255,7 +255,7 @@
     "resource": {
       "data": {
         "allowOpen": true,
-        "createTime": "2025-07-29T16:00:11.930403186Z",
+        "createTime": "2025-08-05T16:25:14.331474263Z",
         "description": "my description",
         "mtlsPolicy": {
           "clientValidationCa": [
@@ -272,7 +272,7 @@
             "targetUri": "unix:mypath"
           }
         },
-        "updateTime": "2025-07-29T16:00:15.644106332Z"
+        "updateTime": "2025-08-05T16:25:21.254620046Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -280,7 +280,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -296,7 +296,7 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/global/serverTlsPolicies/td_with_cert_provider_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:12.122393281Z",
+        "createTime": "2025-08-05T16:25:14.331269202Z",
         "description": "my description",
         "name": "projects/ccm-breakit/locations/global/serverTlsPolicies/td_with_cert_provider_policy",
         "serverCertificate": {
@@ -304,7 +304,7 @@
             "pluginInstance": "google_cloud_private_spiffe"
           }
         },
-        "updateTime": "2025-07-29T16:00:15.720820072Z"
+        "updateTime": "2025-08-05T16:25:18.095425719Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -312,7 +312,7 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   },
   {
     "ancestors": [
@@ -328,7 +328,7 @@
     "name": "//networksecurity.googleapis.com/projects/ccm-breakit/locations/global/serverTlsPolicies/td_mtls_client_validation_grpc_policy",
     "resource": {
       "data": {
-        "createTime": "2025-07-29T16:00:12.000713965Z",
+        "createTime": "2025-08-05T16:25:14.331720924Z",
         "description": "my description",
         "labels": {
           "foo": "bar"
@@ -348,7 +348,7 @@
             "pluginInstance": "google_cloud_private_spiffe"
           }
         },
-        "updateTime": "2025-07-29T16:00:15.701713898Z"
+        "updateTime": "2025-08-05T16:25:21.209045286Z"
       },
       "discovery_document_uri": "https://networksecurity.googleapis.com/$discovery/rest",
       "discovery_name": "ServerTlsPolicy",
@@ -356,6 +356,6 @@
       "parent": "//cloudresourcemanager.googleapis.com/projects/307841421122",
       "version": "v1"
     },
-    "updateTime": "2025-07-29T18:00:00Z"
+    "updateTime": "2025-08-05T18:00:00Z"
   }
 ]
