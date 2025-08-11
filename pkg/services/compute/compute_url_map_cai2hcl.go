@@ -25,6 +25,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/utils"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
@@ -126,6 +127,9 @@ func flattenComputeUrlMapHeaderAction(v interface{}, d *schema.ResourceData, con
 		flattenComputeUrlMapHeaderActionResponseHeadersToAdd(original["responseHeadersToAdd"], d, config)
 	transformed["response_headers_to_remove"] =
 		flattenComputeUrlMapHeaderActionResponseHeadersToRemove(original["responseHeadersToRemove"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -304,6 +308,9 @@ func flattenComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicy(v interface
 		flattenComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicyErrorResponseRule(original["errorResponseRules"], d, config)
 	transformed["error_service"] =
 		flattenComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicyErrorService(original["errorService"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -381,6 +388,9 @@ func flattenComputeUrlMapPathMatcherHeaderAction(v interface{}, d *schema.Resour
 		flattenComputeUrlMapPathMatcherHeaderActionResponseHeadersToAdd(original["responseHeadersToAdd"], d, config)
 	transformed["response_headers_to_remove"] =
 		flattenComputeUrlMapPathMatcherHeaderActionResponseHeadersToRemove(original["responseHeadersToRemove"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -522,6 +532,9 @@ func flattenComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicy(v interfac
 		flattenComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicyErrorResponseRule(original["errorResponseRules"], d, config)
 	transformed["error_service"] =
 		flattenComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicyErrorService(original["errorService"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -607,6 +620,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteAction(v interface{}, d *schema
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewrite(original["urlRewrite"], d, config)
 	transformed["weighted_backend_services"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServices(original["weightedBackendServices"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -635,6 +651,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicy(v interface{},
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicyExposeHeaders(original["exposeHeaders"], d, config)
 	transformed["max_age"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicyMaxAge(original["maxAge"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -699,6 +718,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicy(v in
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbort(original["abort"], d, config)
 	transformed["delay"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelay(original["delay"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -715,6 +737,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbort
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbortHttpStatus(original["httpStatus"], d, config)
 	transformed["percentage"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbortPercentage(original["percentage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -752,6 +777,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelay
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayFixedDelay(original["fixedDelay"], d, config)
 	transformed["percentage"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayPercentage(original["percentage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -768,6 +796,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelay
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayFixedDelayNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -809,6 +840,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy(v int
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
 	transformed["mirror_percent"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -842,6 +876,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicy(v interface{}
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeout(original["perTryTimeout"], d, config)
 	transformed["retry_conditions"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyRetryConditions(original["retryConditions"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -875,6 +912,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeout(
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeoutNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeoutSeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -916,6 +956,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionTimeout(v interface{}, d 
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionTimeoutNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionTimeoutSeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -953,6 +996,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDuration(v inter
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationSeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -990,6 +1036,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewrite(v interface{},
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewriteHostRewrite(original["hostRewrite"], d, config)
 	transformed["path_prefix_rewrite"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewritePathPrefixRewrite(original["pathPrefixRewrite"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1050,6 +1099,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHe
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAdd(original["responseHeadersToAdd"], d, config)
 	transformed["response_headers_to_remove"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionResponseHeadersToRemove(original["responseHeadersToRemove"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1171,6 +1223,9 @@ func flattenComputeUrlMapPathMatcherPathRuleUrlRedirect(v interface{}, d *schema
 		flattenComputeUrlMapPathMatcherPathRuleUrlRedirectRedirectResponseCode(original["redirectResponseCode"], d, config)
 	transformed["strip_query"] =
 		flattenComputeUrlMapPathMatcherPathRuleUrlRedirectStripQuery(original["stripQuery"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1273,6 +1328,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesHeaderAction(v interface{}, d *sch
 		flattenComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToAdd(original["responseHeadersToAdd"], d, config)
 	transformed["response_headers_to_remove"] =
 		flattenComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToRemove(original["responseHeadersToRemove"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1445,6 +1503,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatch(
 		flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatchRangeEnd(original["rangeEnd"], d, config)
 	transformed["range_start"] =
 		flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatchRangeStart(original["rangeStart"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1621,6 +1682,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteAction(v interface{}, d *sche
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(original["urlRewrite"], d, config)
 	transformed["weighted_backend_services"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices(original["weightedBackendServices"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1649,6 +1713,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCorsPolicy(v interface{
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCorsPolicyExposeHeaders(original["exposeHeaders"], d, config)
 	transformed["max_age"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCorsPolicyMaxAge(original["maxAge"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1710,6 +1777,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicy(v 
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbort(original["abort"], d, config)
 	transformed["delay"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelay(original["delay"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1726,6 +1796,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbo
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbortHttpStatus(original["httpStatus"], d, config)
 	transformed["percentage"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbortPercentage(original["percentage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1763,6 +1836,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDel
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelayFixedDelay(original["fixedDelay"], d, config)
 	transformed["percentage"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelayPercentage(original["percentage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1779,6 +1855,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDel
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelayFixedDelayNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1820,6 +1899,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicy(v i
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
 	transformed["mirror_percent"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1853,6 +1935,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicy(v interface
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeout(original["perTryTimeout"], d, config)
 	transformed["retry_conditions"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyRetryConditions(original["retryConditions"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1886,6 +1971,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeou
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeoutNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeoutSeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1927,6 +2015,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionTimeout(v interface{}, 
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionTimeoutNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionTimeoutSeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1964,6 +2055,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDuration(v int
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationSeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2003,6 +2097,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(v interface{
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathPrefixRewrite(original["pathPrefixRewrite"], d, config)
 	transformed["path_template_rewrite"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathTemplateRewrite(original["pathTemplateRewrite"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2067,6 +2164,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAdd(original["responseHeadersToAdd"], d, config)
 	transformed["response_headers_to_remove"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionResponseHeadersToRemove(original["responseHeadersToRemove"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2188,6 +2288,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirect(v interface{}, d *sche
 		flattenComputeUrlMapPathMatcherRouteRulesUrlRedirectRedirectResponseCode(original["redirectResponseCode"], d, config)
 	transformed["strip_query"] =
 		flattenComputeUrlMapPathMatcherRouteRulesUrlRedirectStripQuery(original["stripQuery"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2228,6 +2331,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicy(v interf
 		flattenComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicyErrorResponseRule(original["errorResponseRules"], d, config)
 	transformed["error_service"] =
 		flattenComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicyErrorService(original["errorService"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2375,6 +2481,9 @@ func flattenComputeUrlMapPathMatcherDefaultUrlRedirect(v interface{}, d *schema.
 		flattenComputeUrlMapPathMatcherDefaultUrlRedirectRedirectResponseCode(original["redirectResponseCode"], d, config)
 	transformed["strip_query"] =
 		flattenComputeUrlMapPathMatcherDefaultUrlRedirectStripQuery(original["stripQuery"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2430,6 +2539,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteAction(v interface{}, d *schema.
 		flattenComputeUrlMapPathMatcherDefaultRouteActionCorsPolicy(original["corsPolicy"], d, config)
 	transformed["fault_injection_policy"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicy(original["faultInjectionPolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2499,6 +2611,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHea
 		flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToRemove(original["responseHeadersToRemove"], d, config)
 	transformed["response_headers_to_add"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAdd(original["responseHeadersToAdd"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2589,6 +2704,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionUrlRewrite(v interface{}, 
 		flattenComputeUrlMapPathMatcherDefaultRouteActionUrlRewritePathPrefixRewrite(original["pathPrefixRewrite"], d, config)
 	transformed["host_rewrite"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionUrlRewriteHostRewrite(original["hostRewrite"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2613,6 +2731,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionTimeout(v interface{}, d *
 		flattenComputeUrlMapPathMatcherDefaultRouteActionTimeoutSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionTimeoutNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2650,6 +2771,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDuration(v interf
 		flattenComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationSeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2689,6 +2813,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicy(v interface{},
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyNumRetries(original["numRetries"], d, config)
 	transformed["per_try_timeout"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeout(original["perTryTimeout"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2726,6 +2853,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeout(v
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeoutSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeoutNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2763,6 +2893,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicy(v inte
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
 	transformed["mirror_percent"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2806,6 +2939,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionCorsPolicy(v interface{}, 
 		flattenComputeUrlMapPathMatcherDefaultRouteActionCorsPolicyAllowCredentials(original["allowCredentials"], d, config)
 	transformed["disabled"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionCorsPolicyDisabled(original["disabled"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2867,6 +3003,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicy(v int
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelay(original["delay"], d, config)
 	transformed["abort"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbort(original["abort"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2883,6 +3022,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelay(
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(original["fixedDelay"], d, config)
 	transformed["percentage"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayPercentage(original["percentage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2899,6 +3041,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayF
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayFixedDelayNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2940,6 +3085,9 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbort(
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbortHttpStatus(original["httpStatus"], d, config)
 	transformed["percentage"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbortPercentage(original["percentage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -2977,6 +3125,9 @@ func flattenComputeUrlMapDefaultCustomErrorResponsePolicy(v interface{}, d *sche
 		flattenComputeUrlMapDefaultCustomErrorResponsePolicyErrorResponseRule(original["errorResponseRules"], d, config)
 	transformed["error_service"] =
 		flattenComputeUrlMapDefaultCustomErrorResponsePolicyErrorService(original["errorService"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3155,6 +3306,9 @@ func flattenComputeUrlMapDefaultUrlRedirect(v interface{}, d *schema.ResourceDat
 		flattenComputeUrlMapDefaultUrlRedirectRedirectResponseCode(original["redirectResponseCode"], d, config)
 	transformed["strip_query"] =
 		flattenComputeUrlMapDefaultUrlRedirectStripQuery(original["stripQuery"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3210,6 +3364,9 @@ func flattenComputeUrlMapDefaultRouteAction(v interface{}, d *schema.ResourceDat
 		flattenComputeUrlMapDefaultRouteActionCorsPolicy(original["corsPolicy"], d, config)
 	transformed["fault_injection_policy"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicy(original["faultInjectionPolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3279,6 +3436,9 @@ func flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderAction(v
 		flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToRemove(original["responseHeadersToRemove"], d, config)
 	transformed["response_headers_to_add"] =
 		flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAdd(original["responseHeadersToAdd"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3369,6 +3529,9 @@ func flattenComputeUrlMapDefaultRouteActionUrlRewrite(v interface{}, d *schema.R
 		flattenComputeUrlMapDefaultRouteActionUrlRewritePathPrefixRewrite(original["pathPrefixRewrite"], d, config)
 	transformed["host_rewrite"] =
 		flattenComputeUrlMapDefaultRouteActionUrlRewriteHostRewrite(original["hostRewrite"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3393,6 +3556,9 @@ func flattenComputeUrlMapDefaultRouteActionTimeout(v interface{}, d *schema.Reso
 		flattenComputeUrlMapDefaultRouteActionTimeoutSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeUrlMapDefaultRouteActionTimeoutNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3430,6 +3596,9 @@ func flattenComputeUrlMapDefaultRouteActionMaxStreamDuration(v interface{}, d *s
 		flattenComputeUrlMapDefaultRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
 	transformed["seconds"] =
 		flattenComputeUrlMapDefaultRouteActionMaxStreamDurationSeconds(original["seconds"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3469,6 +3638,9 @@ func flattenComputeUrlMapDefaultRouteActionRetryPolicy(v interface{}, d *schema.
 		flattenComputeUrlMapDefaultRouteActionRetryPolicyNumRetries(original["numRetries"], d, config)
 	transformed["per_try_timeout"] =
 		flattenComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeout(original["perTryTimeout"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3506,6 +3678,9 @@ func flattenComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeout(v interface{
 		flattenComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeoutSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeoutNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3543,6 +3718,9 @@ func flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicy(v interface{}, d 
 		flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
 	transformed["mirror_percent"] =
 		flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3586,6 +3764,9 @@ func flattenComputeUrlMapDefaultRouteActionCorsPolicy(v interface{}, d *schema.R
 		flattenComputeUrlMapDefaultRouteActionCorsPolicyAllowCredentials(original["allowCredentials"], d, config)
 	transformed["disabled"] =
 		flattenComputeUrlMapDefaultRouteActionCorsPolicyDisabled(original["disabled"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3647,6 +3828,9 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicy(v interface{}, d
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelay(original["delay"], d, config)
 	transformed["abort"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbort(original["abort"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3663,6 +3847,9 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelay(v interface
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(original["fixedDelay"], d, config)
 	transformed["percentage"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayPercentage(original["percentage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3679,6 +3866,9 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(v
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelayNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -3720,6 +3910,9 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbort(v interface
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbortHttpStatus(original["httpStatus"], d, config)
 	transformed["percentage"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbortPercentage(original["percentage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

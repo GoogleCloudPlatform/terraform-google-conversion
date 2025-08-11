@@ -122,6 +122,9 @@ func flattenCertificateManagerCertificateSelfManaged(v interface{}, d *schema.Re
 		flattenCertificateManagerCertificateSelfManagedPemCertificate(original["pemCertificate"], d, config)
 	transformed["pem_private_key"] =
 		flattenCertificateManagerCertificateSelfManagedPemPrivateKey(original["pemPrivateKey"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -156,6 +159,9 @@ func flattenCertificateManagerCertificateManaged(v interface{}, d *schema.Resour
 		flattenCertificateManagerCertificateManagedDnsAuthorizations(original["dnsAuthorizations"], d, config)
 	transformed["issuance_config"] =
 		flattenCertificateManagerCertificateManagedIssuanceConfig(original["issuanceConfig"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
