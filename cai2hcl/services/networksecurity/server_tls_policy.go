@@ -32,7 +32,7 @@ func NewServerTLSPolicyConverter(provider *schema.Provider) common.Converter {
 	}
 }
 
-// Convert converts CAI assets to HCL resource blocks (Provider version: 6.45.0)
+// Convert converts CAI assets to HCL resource blocks (Provider version: 5.45.2)
 func (c *ServerTLSPolicyConverter) Convert(assets []*caiasset.Asset) ([]*common.HCLResourceBlock, error) {
 	var blocks []*common.HCLResourceBlock
 	var err error
