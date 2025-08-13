@@ -30,6 +30,12 @@ import (
 
 const datasetIdRegexp = `^[0-9A-Za-z_]+$`
 
+var bigqueryDatasetAccessPrimitiveToRoleMap = map[string]string{
+	"OWNER":  "roles/bigquery.dataOwner",
+	"WRITER": "roles/bigquery.dataEditor",
+	"READER": "roles/bigquery.dataViewer",
+}
+
 func validateDatasetId(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 	if !regexp.MustCompile(datasetIdRegexp).MatchString(value) {

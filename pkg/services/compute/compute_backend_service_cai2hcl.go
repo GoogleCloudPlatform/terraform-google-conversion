@@ -348,6 +348,9 @@ func flattenComputeBackendServiceCircuitBreakers(v interface{}, d *schema.Resour
 		flattenComputeBackendServiceCircuitBreakersMaxRequests(original["maxRequests"], d, config)
 	transformed["max_retries"] =
 		flattenComputeBackendServiceCircuitBreakersMaxRetries(original["maxRetries"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -364,6 +367,9 @@ func flattenComputeBackendServiceCircuitBreakersConnectTimeout(v interface{}, d 
 		flattenComputeBackendServiceCircuitBreakersConnectTimeoutSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeBackendServiceCircuitBreakersConnectTimeoutNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -505,6 +511,9 @@ func flattenComputeBackendServiceConsistentHash(v interface{}, d *schema.Resourc
 		flattenComputeBackendServiceConsistentHashHttpHeaderName(original["httpHeaderName"], d, config)
 	transformed["minimum_ring_size"] =
 		flattenComputeBackendServiceConsistentHashMinimumRingSize(original["minimumRingSize"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -523,6 +532,9 @@ func flattenComputeBackendServiceConsistentHashHttpCookie(v interface{}, d *sche
 		flattenComputeBackendServiceConsistentHashHttpCookieName(original["name"], d, config)
 	transformed["path"] =
 		flattenComputeBackendServiceConsistentHashHttpCookiePath(original["path"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -539,6 +551,9 @@ func flattenComputeBackendServiceConsistentHashHttpCookieTtl(v interface{}, d *s
 		flattenComputeBackendServiceConsistentHashHttpCookieTtlSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeBackendServiceConsistentHashHttpCookieTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -636,6 +651,9 @@ func flattenComputeBackendServiceCdnPolicy(v interface{}, d *schema.ResourceData
 		flattenComputeBackendServiceCdnPolicyServeWhileStale(original["serveWhileStale"], d, config)
 	transformed["bypass_cache_on_request_headers"] =
 		flattenComputeBackendServiceCdnPolicyBypassCacheOnRequestHeaders(original["bypassCacheOnRequestHeaders"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -666,6 +684,9 @@ func flattenComputeBackendServiceCdnPolicyCacheKeyPolicy(v interface{}, d *schem
 		flattenComputeBackendServiceCdnPolicyCacheKeyPolicyIncludeHttpHeaders(original["includeHttpHeaders"], d, config)
 	transformed["include_named_cookies"] =
 		flattenComputeBackendServiceCdnPolicyCacheKeyPolicyIncludeNamedCookies(original["includeNamedCookies"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -888,6 +909,9 @@ func flattenComputeBackendServiceConnectionDraining(v interface{}, d *schema.Res
 	transformed := make(map[string]interface{})
 	transformed["connection_draining_timeout_sec"] =
 		flattenComputeBackendServiceConnectionDrainingConnectionDrainingTimeoutSec(original["drainingTimeoutSec"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -952,6 +976,9 @@ func flattenComputeBackendServiceIap(v interface{}, d *schema.ResourceData, conf
 		flattenComputeBackendServiceIapOauth2ClientId(original["oauth2ClientId"], d, config)
 	transformed["oauth2_client_secret"] =
 		flattenComputeBackendServiceIapOauth2ClientSecret(original["oauth2ClientSecret"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -967,7 +994,7 @@ func flattenComputeBackendServiceIapOauth2ClientId(v interface{}, d *schema.Reso
 }
 
 func flattenComputeBackendServiceIapOauth2ClientSecret(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("iap.0.oauth2_client_secret")
+	return v
 }
 
 func flattenComputeBackendServiceIpAddressSelectionPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -1021,6 +1048,9 @@ func flattenComputeBackendServiceLocalityLbPoliciesPolicy(v interface{}, d *sche
 	transformed := make(map[string]interface{})
 	transformed["name"] =
 		flattenComputeBackendServiceLocalityLbPoliciesPolicyName(original["name"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1041,6 +1071,9 @@ func flattenComputeBackendServiceLocalityLbPoliciesCustomPolicy(v interface{}, d
 		flattenComputeBackendServiceLocalityLbPoliciesCustomPolicyName(original["name"], d, config)
 	transformed["data"] =
 		flattenComputeBackendServiceLocalityLbPoliciesCustomPolicyData(original["data"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1118,6 +1151,9 @@ func flattenComputeBackendServiceOutlierDetection(v interface{}, d *schema.Resou
 		flattenComputeBackendServiceOutlierDetectionSuccessRateRequestVolume(original["successRateRequestVolume"], d, config)
 	transformed["success_rate_stdev_factor"] =
 		flattenComputeBackendServiceOutlierDetectionSuccessRateStdevFactor(original["successRateStdevFactor"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1134,6 +1170,9 @@ func flattenComputeBackendServiceOutlierDetectionBaseEjectionTime(v interface{},
 		flattenComputeBackendServiceOutlierDetectionBaseEjectionTimeSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeBackendServiceOutlierDetectionBaseEjectionTimeNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1269,6 +1308,9 @@ func flattenComputeBackendServiceOutlierDetectionInterval(v interface{}, d *sche
 		flattenComputeBackendServiceOutlierDetectionIntervalSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeBackendServiceOutlierDetectionIntervalNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1405,6 +1447,9 @@ func flattenComputeBackendServiceSecuritySettings(v interface{}, d *schema.Resou
 		flattenComputeBackendServiceSecuritySettingsSubjectAltNames(original["subjectAltNames"], d, config)
 	transformed["aws_v4_authentication"] =
 		flattenComputeBackendServiceSecuritySettingsAwsV4Authentication(original["awsV4Authentication"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1440,6 +1485,9 @@ func flattenComputeBackendServiceSecuritySettingsAwsV4Authentication(v interface
 		flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyVersion(original["accessKeyVersion"], d, config)
 	transformed["origin_region"] =
 		flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationOriginRegion(original["originRegion"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1448,7 +1496,7 @@ func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyId(
 }
 
 func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("security_settings.0.aws_v4_authentication.0.access_key")
+	return v
 }
 
 func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -1478,6 +1526,9 @@ func flattenComputeBackendServiceStrongSessionAffinityCookie(v interface{}, d *s
 		flattenComputeBackendServiceStrongSessionAffinityCookieName(original["name"], d, config)
 	transformed["path"] =
 		flattenComputeBackendServiceStrongSessionAffinityCookiePath(original["path"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1494,6 +1545,9 @@ func flattenComputeBackendServiceStrongSessionAffinityCookieTtl(v interface{}, d
 		flattenComputeBackendServiceStrongSessionAffinityCookieTtlSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeBackendServiceStrongSessionAffinityCookieTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1573,6 +1627,9 @@ func flattenComputeBackendServiceLogConfig(v interface{}, d *schema.ResourceData
 		flattenComputeBackendServiceLogConfigOptionalMode(original["optionalMode"], d, config)
 	transformed["optional_fields"] =
 		flattenComputeBackendServiceLogConfigOptionalFields(original["optionalFields"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1611,6 +1668,9 @@ func flattenComputeBackendServiceTlsSettings(v interface{}, d *schema.ResourceDa
 		flattenComputeBackendServiceTlsSettingsSubjectAltNames(original["subjectAltNames"], d, config)
 	transformed["authentication_config"] =
 		flattenComputeBackendServiceTlsSettingsAuthenticationConfig(original["authenticationConfig"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1663,6 +1723,9 @@ func flattenComputeBackendServiceMaxStreamDuration(v interface{}, d *schema.Reso
 		flattenComputeBackendServiceMaxStreamDurationSeconds(original["seconds"], d, config)
 	transformed["nanos"] =
 		flattenComputeBackendServiceMaxStreamDurationNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1698,6 +1761,9 @@ func flattenComputeBackendServiceNetworkPassThroughLbTrafficPolicy(v interface{}
 	transformed := make(map[string]interface{})
 	transformed["zonal_affinity"] =
 		flattenComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity(original["zonalAffinity"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1714,6 +1780,9 @@ func flattenComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity(
 		flattenComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpillover(original["spillover"], d, config)
 	transformed["spillover_ratio"] =
 		flattenComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpilloverRatio(original["spilloverRatio"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1736,6 +1805,9 @@ func flattenComputeBackendServiceDynamicForwarding(v interface{}, d *schema.Reso
 	transformed := make(map[string]interface{})
 	transformed["ip_port_selection"] =
 		flattenComputeBackendServiceDynamicForwardingIpPortSelection(original["ipPortSelection"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -1750,6 +1822,9 @@ func flattenComputeBackendServiceDynamicForwardingIpPortSelection(v interface{},
 	transformed := make(map[string]interface{})
 	transformed["enabled"] =
 		flattenComputeBackendServiceDynamicForwardingIpPortSelectionEnabled(original["enabled"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

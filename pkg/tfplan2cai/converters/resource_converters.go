@@ -17,6 +17,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
@@ -31,8 +32,10 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_instance": compute.ComputeInstanceTfplan2caiConverter(),
 	// ####### END handwritten resources ###########
 	"google_alloydb_backup":                          alloydb.AlloydbBackupTfplan2caiConverter(),
+	"google_alloydb_cluster":                         alloydb.AlloydbClusterTfplan2caiConverter(),
 	"google_bigquery_dataset":                        bigquery.BigQueryDatasetTfplan2caiConverter(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.BlockchainNodeEngineBlockchainNodesTfplan2caiConverter(),
+	"google_certificate_manager_certificate":         certificatemanager.CertificateManagerCertificateTfplan2caiConverter(),
 	"google_cloudfunctions2_function":                cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
 	"google_compute_address":                         compute.ComputeAddressTfplan2caiConverter(),
 	"google_compute_autoscaler":                      compute.ComputeAutoscalerTfplan2caiConverter(),

@@ -92,6 +92,18 @@ func GetBigqueryReservationReservationApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("secondary_location"); !tpgresource.IsEmptyValue(reflect.ValueOf(secondaryLocationProp)) && (ok || !reflect.DeepEqual(v, secondaryLocationProp)) {
 		obj["secondaryLocation"] = secondaryLocationProp
 	}
+	scalingModeProp, err := expandBigqueryReservationReservationScalingMode(d.Get("scaling_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scaling_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(scalingModeProp)) && (ok || !reflect.DeepEqual(v, scalingModeProp)) {
+		obj["scalingMode"] = scalingModeProp
+	}
+	maxSlotsProp, err := expandBigqueryReservationReservationMaxSlots(d.Get("max_slots"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("max_slots"); !tpgresource.IsEmptyValue(reflect.ValueOf(maxSlotsProp)) && (ok || !reflect.DeepEqual(v, maxSlotsProp)) {
+		obj["maxSlots"] = maxSlotsProp
+	}
 
 	return obj, nil
 }
@@ -147,5 +159,13 @@ func expandBigqueryReservationReservationAutoscaleMaxSlots(v interface{}, d tpgr
 }
 
 func expandBigqueryReservationReservationSecondaryLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationScalingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationMaxSlots(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
