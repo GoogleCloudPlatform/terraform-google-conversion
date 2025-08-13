@@ -121,6 +121,9 @@ func flattenAlloydbBackupEncryptionConfig(v interface{}, d *schema.ResourceData,
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenAlloydbBackupEncryptionConfigKmsKeyName(original["kmsKeyName"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

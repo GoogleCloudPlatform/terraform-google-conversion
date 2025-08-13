@@ -120,6 +120,9 @@ func flattenPubsubTopicMessageStoragePolicy(v interface{}, d *schema.ResourceDat
 		flattenPubsubTopicMessageStoragePolicyAllowedPersistenceRegions(original["allowedPersistenceRegions"], d, config)
 	transformed["enforce_in_transit"] =
 		flattenPubsubTopicMessageStoragePolicyEnforceInTransit(original["enforceInTransit"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -147,6 +150,9 @@ func flattenPubsubTopicSchemaSettings(v interface{}, d *schema.ResourceData, con
 		flattenPubsubTopicSchemaSettingsSchema(original["schema"], d, config)
 	transformed["encoding"] =
 		flattenPubsubTopicSchemaSettingsEncoding(original["encoding"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -183,6 +189,9 @@ func flattenPubsubTopicIngestionDataSourceSettings(v interface{}, d *schema.Reso
 		flattenPubsubTopicIngestionDataSourceSettingsAwsMsk(original["awsMsk"], d, config)
 	transformed["confluent_cloud"] =
 		flattenPubsubTopicIngestionDataSourceSettingsConfluentCloud(original["confluentCloud"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -203,6 +212,9 @@ func flattenPubsubTopicIngestionDataSourceSettingsAwsKinesis(v interface{}, d *s
 		flattenPubsubTopicIngestionDataSourceSettingsAwsKinesisAwsRoleArn(original["awsRoleArn"], d, config)
 	transformed["gcp_service_account"] =
 		flattenPubsubTopicIngestionDataSourceSettingsAwsKinesisGcpServiceAccount(original["gcpServiceAccount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -243,6 +255,9 @@ func flattenPubsubTopicIngestionDataSourceSettingsCloudStorage(v interface{}, d 
 		flattenPubsubTopicIngestionDataSourceSettingsCloudStorageMinimumObjectCreateTime(original["minimumObjectCreateTime"], d, config)
 	transformed["match_glob"] =
 		flattenPubsubTopicIngestionDataSourceSettingsCloudStorageMatchGlob(original["matchGlob"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -261,6 +276,9 @@ func flattenPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormat(v inter
 	transformed := make(map[string]interface{})
 	transformed["delimiter"] =
 		flattenPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormatDelimiter(original["delimiter"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -303,6 +321,9 @@ func flattenPubsubTopicIngestionDataSourceSettingsPlatformLogsSettings(v interfa
 	transformed := make(map[string]interface{})
 	transformed["severity"] =
 		flattenPubsubTopicIngestionDataSourceSettingsPlatformLogsSettingsSeverity(original["severity"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -333,6 +354,9 @@ func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubs(v interface{}, 
 		flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsSubscriptionId(original["subscriptionId"], d, config)
 	transformed["gcp_service_account"] =
 		flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsGcpServiceAccount(original["gcpServiceAccount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -381,6 +405,9 @@ func flattenPubsubTopicIngestionDataSourceSettingsAwsMsk(v interface{}, d *schem
 		flattenPubsubTopicIngestionDataSourceSettingsAwsMskAwsRoleArn(original["awsRoleArn"], d, config)
 	transformed["gcp_service_account"] =
 		flattenPubsubTopicIngestionDataSourceSettingsAwsMskGcpServiceAccount(original["gcpServiceAccount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -419,6 +446,9 @@ func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloud(v interface{}, 
 		flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudIdentityPoolId(original["identityPoolId"], d, config)
 	transformed["gcp_service_account"] =
 		flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudGcpServiceAccount(original["gcpServiceAccount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -475,6 +505,9 @@ func flattenPubsubTopicMessageTransformsJavascriptUdf(v interface{}, d *schema.R
 		flattenPubsubTopicMessageTransformsJavascriptUdfFunctionName(original["functionName"], d, config)
 	transformed["code"] =
 		flattenPubsubTopicMessageTransformsJavascriptUdfCode(original["code"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

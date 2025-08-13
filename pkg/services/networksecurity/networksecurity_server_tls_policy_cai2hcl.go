@@ -113,6 +113,9 @@ func flattenNetworkSecurityServerTlsPolicyServerCertificate(v interface{}, d *sc
 		flattenNetworkSecurityServerTlsPolicyServerCertificateGrpcEndpoint(original["grpcEndpoint"], d, config)
 	transformed["certificate_provider_instance"] =
 		flattenNetworkSecurityServerTlsPolicyServerCertificateCertificateProviderInstance(original["certificateProviderInstance"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -127,6 +130,9 @@ func flattenNetworkSecurityServerTlsPolicyServerCertificateGrpcEndpoint(v interf
 	transformed := make(map[string]interface{})
 	transformed["target_uri"] =
 		flattenNetworkSecurityServerTlsPolicyServerCertificateGrpcEndpointTargetUri(original["targetUri"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -145,6 +151,9 @@ func flattenNetworkSecurityServerTlsPolicyServerCertificateCertificateProviderIn
 	transformed := make(map[string]interface{})
 	transformed["plugin_instance"] =
 		flattenNetworkSecurityServerTlsPolicyServerCertificateCertificateProviderInstancePluginInstance(original["pluginInstance"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -167,6 +176,9 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicy(v interface{}, d *schema.Re
 		flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationTrustConfig(original["clientValidationTrustConfig"], d, config)
 	transformed["client_validation_ca"] =
 		flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCa(original["clientValidationCa"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -209,6 +221,9 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaGrpcEndpoi
 	transformed := make(map[string]interface{})
 	transformed["target_uri"] =
 		flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaGrpcEndpointTargetUri(original["targetUri"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -227,6 +242,9 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaCertificat
 	transformed := make(map[string]interface{})
 	transformed["plugin_instance"] =
 		flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaCertificateProviderInstancePluginInstance(original["pluginInstance"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

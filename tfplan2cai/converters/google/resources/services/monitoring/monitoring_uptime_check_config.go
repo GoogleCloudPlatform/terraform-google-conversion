@@ -423,11 +423,18 @@ func expandMonitoringUptimeCheckConfigHttpCheckAuthInfo(v interface{}, d tpgreso
 		transformed["password"] = transformedPassword
 	}
 
+	transformedUsername, err := expandMonitoringUptimeCheckConfigHttpCheckAuthInfoUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
 	transformedPasswordWo, err := expandMonitoringUptimeCheckConfigHttpCheckAuthInfoPasswordWo(original["password_wo"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedPasswordWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["passwordWo"] = transformedPasswordWo
+		transformed["password"] = transformedPasswordWo
 	}
 
 	transformedPasswordWoVersion, err := expandMonitoringUptimeCheckConfigHttpCheckAuthInfoPasswordWoVersion(original["password_wo_version"], d, config)
@@ -437,17 +444,14 @@ func expandMonitoringUptimeCheckConfigHttpCheckAuthInfo(v interface{}, d tpgreso
 		transformed["passwordWoVersion"] = transformedPasswordWoVersion
 	}
 
-	transformedUsername, err := expandMonitoringUptimeCheckConfigHttpCheckAuthInfoUsername(original["username"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["username"] = transformedUsername
-	}
-
 	return transformed, nil
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckAuthInfoPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringUptimeCheckConfigHttpCheckAuthInfoUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -456,10 +460,6 @@ func expandMonitoringUptimeCheckConfigHttpCheckAuthInfoPasswordWo(v interface{},
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckAuthInfoPasswordWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandMonitoringUptimeCheckConfigHttpCheckAuthInfoUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

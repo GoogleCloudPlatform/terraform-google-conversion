@@ -18,6 +18,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
@@ -43,11 +44,17 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	alloydb.AlloydbBackupAssetType: {
 		"Default": alloydb.NewAlloydbBackupCai2hclConverter(provider),
 	},
+	alloydb.AlloydbClusterAssetType: {
+		"Default": alloydb.NewAlloydbClusterCai2hclConverter(provider),
+	},
 	bigquery.BigQueryDatasetAssetType: {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
 	},
 	blockchainnodeengine.BlockchainNodeEngineBlockchainNodeAssetType: {
 		"Default": blockchainnodeengine.NewBlockchainNodeEngineBlockchainNodesCai2hclConverter(provider),
+	},
+	certificatemanager.CertificateManagerCertificateAssetType: {
+		"Default": certificatemanager.NewCertificateManagerCertificateCai2hclConverter(provider),
 	},
 	cloudfunctions2.Cloudfunctions2FunctionAssetType: {
 		"Default": cloudfunctions2.NewCloudfunctions2functionCai2hclConverter(provider),

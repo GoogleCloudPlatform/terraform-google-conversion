@@ -143,6 +143,9 @@ func flattenPubsubSubscriptionBigqueryConfig(v interface{}, d *schema.ResourceDa
 		flattenPubsubSubscriptionBigqueryConfigDropUnknownFields(original["dropUnknownFields"], d, config)
 	transformed["service_account_email"] =
 		flattenPubsubSubscriptionBigqueryConfigServiceAccountEmail(original["serviceAccountEmail"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -197,6 +200,9 @@ func flattenPubsubSubscriptionCloudStorageConfig(v interface{}, d *schema.Resour
 		flattenPubsubSubscriptionCloudStorageConfigAvroConfig(original["avroConfig"], d, config)
 	transformed["service_account_email"] =
 		flattenPubsubSubscriptionCloudStorageConfigServiceAccountEmail(original["serviceAccountEmail"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -296,6 +302,9 @@ func flattenPubsubSubscriptionPushConfig(v interface{}, d *schema.ResourceData, 
 		flattenPubsubSubscriptionPushConfigAttributes(original["attributes"], d, config)
 	transformed["no_wrapper"] =
 		flattenPubsubSubscriptionPushConfigNoWrapper(original["noWrapper"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -312,6 +321,9 @@ func flattenPubsubSubscriptionPushConfigOidcToken(v interface{}, d *schema.Resou
 		flattenPubsubSubscriptionPushConfigOidcTokenServiceAccountEmail(original["serviceAccountEmail"], d, config)
 	transformed["audience"] =
 		flattenPubsubSubscriptionPushConfigOidcTokenAudience(original["audience"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -405,6 +417,9 @@ func flattenPubsubSubscriptionDeadLetterPolicy(v interface{}, d *schema.Resource
 		flattenPubsubSubscriptionDeadLetterPolicyDeadLetterTopic(original["deadLetterTopic"], d, config)
 	transformed["max_delivery_attempts"] =
 		flattenPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(original["maxDeliveryAttempts"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -491,6 +506,9 @@ func flattenPubsubSubscriptionMessageTransformsJavascriptUdf(v interface{}, d *s
 		flattenPubsubSubscriptionMessageTransformsJavascriptUdfFunctionName(original["functionName"], d, config)
 	transformed["code"] =
 		flattenPubsubSubscriptionMessageTransformsJavascriptUdfCode(original["code"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

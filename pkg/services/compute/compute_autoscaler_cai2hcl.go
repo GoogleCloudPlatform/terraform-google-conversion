@@ -26,6 +26,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/converters/utils"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
@@ -127,6 +128,9 @@ func flattenComputeAutoscalerAutoscalingPolicy(v interface{}, d *schema.Resource
 		flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilization(original["loadBalancingUtilization"], d, config)
 	transformed["scaling_schedules"] =
 		flattenComputeAutoscalerAutoscalingPolicyScalingSchedules(original["scalingSchedules"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -198,6 +202,9 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleDownControl(v interface{}, d 
 		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(original["maxScaledDownReplicas"], d, config)
 	transformed["time_window_sec"] =
 		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(original["timeWindowSec"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -214,6 +221,9 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownRepli
 		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(original["fixed"], d, config)
 	transformed["percent"] =
 		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(original["percent"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -281,6 +291,9 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleInControl(v interface{}, d *s
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(original["maxScaledInReplicas"], d, config)
 	transformed["time_window_sec"] =
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlTimeWindowSec(original["timeWindowSec"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -297,6 +310,9 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicasFixed(original["fixed"], d, config)
 	transformed["percent"] =
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicasPercent(original["percent"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -364,6 +380,9 @@ func flattenComputeAutoscalerAutoscalingPolicyCpuUtilization(v interface{}, d *s
 		flattenComputeAutoscalerAutoscalingPolicyCpuUtilizationTarget(original["utilizationTarget"], d, config)
 	transformed["predictive_method"] =
 		flattenComputeAutoscalerAutoscalingPolicyCpuUtilizationPredictiveMethod(original["predictiveMethod"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -433,6 +452,9 @@ func flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilization(v interfa
 	transformed := make(map[string]interface{})
 	transformed["target"] =
 		flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilizationTarget(original["utilizationTarget"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

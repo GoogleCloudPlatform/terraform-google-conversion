@@ -114,7 +114,7 @@ func flattenBigQueryDatasetAccess(v interface{}, d *schema.ResourceData, config 
 		return v
 	}
 	l := v.([]interface{})
-	transformed := schema.NewSet(schema.HashResource(bigqueryDatasetAccessSchema()), []interface{}{})
+	transformed := schema.NewSet(resourceBigqueryDatasetAccessHash, []interface{}{})
 	for _, raw := range l {
 		original := raw.(map[string]interface{})
 		if len(original) < 1 {
@@ -176,6 +176,9 @@ func flattenBigQueryDatasetAccessView(v interface{}, d *schema.ResourceData, con
 		flattenBigQueryDatasetAccessViewProjectId(original["projectId"], d, config)
 	transformed["table_id"] =
 		flattenBigQueryDatasetAccessViewTableId(original["tableId"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -204,6 +207,9 @@ func flattenBigQueryDatasetAccessDataset(v interface{}, d *schema.ResourceData, 
 		flattenBigQueryDatasetAccessDatasetDataset(original["dataset"], d, config)
 	transformed["target_types"] =
 		flattenBigQueryDatasetAccessDatasetTargetTypes(original["targetTypes"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -220,6 +226,9 @@ func flattenBigQueryDatasetAccessDatasetDataset(v interface{}, d *schema.Resourc
 		flattenBigQueryDatasetAccessDatasetDatasetDatasetId(original["datasetId"], d, config)
 	transformed["project_id"] =
 		flattenBigQueryDatasetAccessDatasetDatasetProjectId(original["projectId"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -250,6 +259,9 @@ func flattenBigQueryDatasetAccessRoutine(v interface{}, d *schema.ResourceData, 
 		flattenBigQueryDatasetAccessRoutineProjectId(original["projectId"], d, config)
 	transformed["routine_id"] =
 		flattenBigQueryDatasetAccessRoutineRoutineId(original["routineId"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -282,6 +294,9 @@ func flattenBigQueryDatasetAccessCondition(v interface{}, d *schema.ResourceData
 		flattenBigQueryDatasetAccessConditionDescription(original["description"], d, config)
 	transformed["location"] =
 		flattenBigQueryDatasetAccessConditionLocation(original["location"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -312,6 +327,9 @@ func flattenBigQueryDatasetDatasetReference(v interface{}, d *schema.ResourceDat
 	transformed := make(map[string]interface{})
 	transformed["dataset_id"] =
 		flattenBigQueryDatasetDatasetReferenceDatasetId(original["datasetId"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -370,6 +388,9 @@ func flattenBigQueryDatasetExternalDatasetReference(v interface{}, d *schema.Res
 		flattenBigQueryDatasetExternalDatasetReferenceExternalSource(original["externalSource"], d, config)
 	transformed["connection"] =
 		flattenBigQueryDatasetExternalDatasetReferenceConnection(original["connection"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -410,6 +431,9 @@ func flattenBigQueryDatasetDefaultEncryptionConfiguration(v interface{}, d *sche
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenBigQueryDatasetDefaultEncryptionConfigurationKmsKeyName(original["kmsKeyName"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -446,6 +470,9 @@ func flattenBigQueryDatasetExternalCatalogDatasetOptions(v interface{}, d *schem
 		flattenBigQueryDatasetExternalCatalogDatasetOptionsParameters(original["parameters"], d, config)
 	transformed["default_storage_location_uri"] =
 		flattenBigQueryDatasetExternalCatalogDatasetOptionsDefaultStorageLocationUri(original["defaultStorageLocationUri"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
