@@ -15,6 +15,7 @@ package converters
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
@@ -33,6 +34,9 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	// ####### END handwritten resources ###########
 	"google_alloydb_backup":                          alloydb.AlloydbBackupTfplan2caiConverter(),
 	"google_alloydb_cluster":                         alloydb.AlloydbClusterTfplan2caiConverter(),
+	"google_apphub_application":                      apphub.ApphubApplicationTfplan2caiConverter(),
+	"google_apphub_service":                          apphub.ApphubServiceTfplan2caiConverter(),
+	"google_apphub_workload":                         apphub.ApphubWorkloadTfplan2caiConverter(),
 	"google_bigquery_dataset":                        bigquery.BigQueryDatasetTfplan2caiConverter(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.BlockchainNodeEngineBlockchainNodesTfplan2caiConverter(),
 	"google_certificate_manager_certificate":         certificatemanager.CertificateManagerCertificateTfplan2caiConverter(),
