@@ -48,6 +48,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	alloydb.AlloydbClusterAssetType: {
 		"Default": alloydb.NewAlloydbClusterCai2hclConverter(provider),
 	},
+	alloydb.AlloydbInstanceAssetType: {
+		"Default": alloydb.NewAlloydbInstanceCai2hclConverter(provider),
+	},
 	apphub.ApphubApplicationAssetType: {
 		"Default": apphub.NewApphubApplicationCai2hclConverter(provider),
 	},
