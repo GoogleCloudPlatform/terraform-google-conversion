@@ -178,8 +178,8 @@ github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0 h1:NFPMacTrY/IdcIcnUB+7hsor
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0/go.mod h1:QYmYnLfsosrxjCnGY1p9c7Zj6n9thnEE+7RObeYs3fA=
 github.com/hashicorp/terraform-plugin-testing v1.5.1 h1:T4aQh9JAhmWo4+t1A7x+rnxAJHCDIYW9kXyo4sVO92c=
 github.com/hashicorp/terraform-plugin-testing v1.5.1/go.mod h1:dg8clO6K59rZ8w9EshBmDp1CxTIPu3yA4iaDpX1h5u0=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250814164854-9a2f64dcef02 h1:CGocxK+46L4zh8MOYG6MC2kFDWEcFiEiE7yN9Z9jYeo=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250814164854-9a2f64dcef02/go.mod h1:NFFukd4GEBS+3a+mL0Ko9Z5MOb4aJ2ySPk/w2HLYx08=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250814180055-87e56fcfd420 h1:X4WKzWtfNy/2Z+Ap4uOzngvngOBpwqR6V8csFH9VhvA=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20250814180055-87e56fcfd420/go.mod h1:NFFukd4GEBS+3a+mL0Ko9Z5MOb4aJ2ySPk/w2HLYx08=
 github.com/hashicorp/terraform-registry-address v0.2.5 h1:2GTftHqmUhVOeuu9CW3kwDkRe4pcBDq0uuK5VJngU1M=
 github.com/hashicorp/terraform-registry-address v0.2.5/go.mod h1:PpzXWINwB5kuVS5CA7m1+eO2f1jKb5ZDIxrOPfpnGkg=
 github.com/hashicorp/terraform-svchost v0.1.1 h1:EZZimZ1GxdqFRinZ1tpJwVxxt49xc/S52uzrw4x0jKQ=
