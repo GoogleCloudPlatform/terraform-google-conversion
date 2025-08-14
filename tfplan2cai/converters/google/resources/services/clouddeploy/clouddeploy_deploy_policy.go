@@ -353,7 +353,7 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindo
 		transformedStartTime, err := expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsStartTime(original["start_time"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["startTime"] = transformedStartTime
 		}
 
@@ -461,8 +461,13 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindo
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
+	if len(l) == 0 {
 		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})
@@ -591,7 +596,7 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindow
 		transformedStartTime, err := expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindowsStartTime(original["start_time"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["startTime"] = transformedStartTime
 		}
 
@@ -613,8 +618,13 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindow
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindowsStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
+	if len(l) == 0 {
 		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})
