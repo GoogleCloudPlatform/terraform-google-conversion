@@ -983,6 +983,11 @@ func Provider() *schema.Provider {
 			// dcl
 			transport_tpg.ContainerAwsCustomEndpointEntryKey:   transport_tpg.ContainerAwsCustomEndpointEntry,
 			transport_tpg.ContainerAzureCustomEndpointEntryKey: transport_tpg.ContainerAzureCustomEndpointEntry,
+			transport_tpg.ApikeysEndpointEntryKey:              transport_tpg.ApikeysEndpointEntry,
+			transport_tpg.AssuredWorkloadsEndpointEntryKey:     transport_tpg.AssuredWorkloadsEndpointEntry,
+			transport_tpg.CloudResourceManagerEndpointEntryKey: transport_tpg.CloudResourceManagerEndpointEntry,
+			transport_tpg.FirebaserulesEndpointEntryKey:        transport_tpg.FirebaserulesEndpointEntry,
+			transport_tpg.RecaptchaEnterpriseEndpointEntryKey:  transport_tpg.RecaptchaEnterpriseEndpointEntry,
 		},
 
 		ProviderMetaSchema: map[string]*schema.Schema{
@@ -998,7 +1003,6 @@ func Provider() *schema.Provider {
 	provider.ConfigureContextFunc = func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 		return ProviderConfigure(ctx, d, provider)
 	}
-
 	return provider
 }
 
@@ -1321,6 +1325,11 @@ func ProviderConfigure(ctx context.Context, d *schema.ResourceData, p *schema.Pr
 	// dcl
 	config.ContainerAwsBasePath = d.Get(transport_tpg.ContainerAwsCustomEndpointEntryKey).(string)
 	config.ContainerAzureBasePath = d.Get(transport_tpg.ContainerAzureCustomEndpointEntryKey).(string)
+	config.ApikeysBasePath = d.Get(transport_tpg.ApikeysEndpointEntryKey).(string)
+	config.AssuredWorkloadsBasePath = d.Get(transport_tpg.AssuredWorkloadsEndpointEntryKey).(string)
+	config.CloudResourceManagerBasePath = d.Get(transport_tpg.CloudResourceManagerEndpointEntryKey).(string)
+	config.FirebaserulesBasePath = d.Get(transport_tpg.FirebaserulesEndpointEntryKey).(string)
+	config.RecaptchaEnterpriseBasePath = d.Get(transport_tpg.RecaptchaEnterpriseEndpointEntryKey).(string)
 
 	stopCtx, ok := schema.StopContext(ctx)
 	if !ok {
