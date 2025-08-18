@@ -285,6 +285,13 @@ func expandBigQueryJobConfigurationQuery(v interface{}, d tpgresource.TerraformR
 		transformed["continuous"] = transformedContinuous
 	}
 
+	transformedConnectionProperties, err := expandBigQueryJobConfigurationQueryConnectionProperties(original["connection_properties"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectionProperties); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectionProperties"] = transformedConnectionProperties
+	}
+
 	return transformed, nil
 }
 
@@ -527,6 +534,43 @@ func expandBigQueryJobConfigurationQueryScriptOptionsKeyResultStatement(v interf
 }
 
 func expandBigQueryJobConfigurationQueryContinuous(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryJobConfigurationQueryConnectionProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedKey, err := expandBigQueryJobConfigurationQueryConnectionPropertiesKey(original["key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["key"] = transformedKey
+		}
+
+		transformedValue, err := expandBigQueryJobConfigurationQueryConnectionPropertiesValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandBigQueryJobConfigurationQueryConnectionPropertiesKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryJobConfigurationQueryConnectionPropertiesValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
