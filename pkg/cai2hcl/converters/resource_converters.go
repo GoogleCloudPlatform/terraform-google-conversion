@@ -16,6 +16,7 @@ package converters
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
@@ -46,6 +47,18 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	alloydb.AlloydbClusterAssetType: {
 		"Default": alloydb.NewAlloydbClusterCai2hclConverter(provider),
+	},
+	alloydb.AlloydbInstanceAssetType: {
+		"Default": alloydb.NewAlloydbInstanceCai2hclConverter(provider),
+	},
+	apphub.ApphubApplicationAssetType: {
+		"Default": apphub.NewApphubApplicationCai2hclConverter(provider),
+	},
+	apphub.ApphubServiceAssetType: {
+		"Default": apphub.NewApphubServiceCai2hclConverter(provider),
+	},
+	apphub.ApphubWorkloadAssetType: {
+		"Default": apphub.NewApphubWorkloadCai2hclConverter(provider),
 	},
 	bigquery.BigQueryDatasetAssetType: {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
