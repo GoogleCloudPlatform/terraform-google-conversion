@@ -130,6 +130,9 @@ func flattenCloudfunctions2functionBuildConfig(v interface{}, d *schema.Resource
 		flattenCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(original["automaticUpdatePolicy"], d, config)
 	transformed["on_deploy_update_policy"] =
 		flattenCloudfunctions2functionBuildConfigOnDeployUpdatePolicy(original["onDeployUpdatePolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -154,6 +157,9 @@ func flattenCloudfunctions2functionBuildConfigSource(v interface{}, d *schema.Re
 		flattenCloudfunctions2functionBuildConfigSourceStorageSource(original["storageSource"], d, config)
 	transformed["repo_source"] =
 		flattenCloudfunctions2functionBuildConfigSourceRepoSource(original["repoSource"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -172,6 +178,9 @@ func flattenCloudfunctions2functionBuildConfigSourceStorageSource(v interface{},
 		flattenCloudfunctions2functionBuildConfigSourceStorageSourceObject(original["object"], d, config)
 	transformed["generation"] =
 		flattenCloudfunctions2functionBuildConfigSourceStorageSourceGeneration(original["generation"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -259,6 +268,9 @@ func flattenCloudfunctions2functionBuildConfigSourceRepoSource(v interface{}, d 
 		flattenCloudfunctions2functionBuildConfigSourceRepoSourceDir(original["dir"], d, config)
 	transformed["invert_regex"] =
 		flattenCloudfunctions2functionBuildConfigSourceRepoSourceInvertRegex(original["invertRegex"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -363,6 +375,9 @@ func flattenCloudfunctions2functionServiceConfig(v interface{}, d *schema.Resour
 		flattenCloudfunctions2functionServiceConfigSecretVolumes(original["secretVolumes"], d, config)
 	transformed["binary_authorization_policy"] =
 		flattenCloudfunctions2functionServiceConfigBinaryAuthorizationPolicy(original["binaryAuthorizationPolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -595,6 +610,9 @@ func flattenCloudfunctions2functionEventTrigger(v interface{}, d *schema.Resourc
 		flattenCloudfunctions2functionEventTriggerServiceAccountEmail(original["serviceAccountEmail"], d, config)
 	transformed["retry_policy"] =
 		flattenCloudfunctions2functionEventTriggerRetryPolicy(original["retryPolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 

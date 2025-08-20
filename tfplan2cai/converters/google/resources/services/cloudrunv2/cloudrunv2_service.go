@@ -243,6 +243,13 @@ func expandCloudRunV2ServiceScaling(v interface{}, d tpgresource.TerraformResour
 		transformed["minInstanceCount"] = transformedMinInstanceCount
 	}
 
+	transformedMaxInstanceCount, err := expandCloudRunV2ServiceScalingMaxInstanceCount(original["max_instance_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxInstanceCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxInstanceCount"] = transformedMaxInstanceCount
+	}
+
 	transformedScalingMode, err := expandCloudRunV2ServiceScalingScalingMode(original["scaling_mode"], d, config)
 	if err != nil {
 		return nil, err
@@ -261,6 +268,10 @@ func expandCloudRunV2ServiceScaling(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandCloudRunV2ServiceScalingMinInstanceCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceScalingMaxInstanceCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

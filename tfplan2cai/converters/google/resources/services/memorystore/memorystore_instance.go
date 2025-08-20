@@ -125,6 +125,12 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("zone_distribution_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(zoneDistributionConfigProp)) && (ok || !reflect.DeepEqual(v, zoneDistributionConfigProp)) {
 		obj["zoneDistributionConfig"] = zoneDistributionConfigProp
 	}
+	allowFewerZonesDeploymentProp, err := expandMemorystoreInstanceAllowFewerZonesDeployment(d.Get("allow_fewer_zones_deployment"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_fewer_zones_deployment"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowFewerZonesDeploymentProp)) && (ok || !reflect.DeepEqual(v, allowFewerZonesDeploymentProp)) {
+		obj["allowFewerZonesDeployment"] = allowFewerZonesDeploymentProp
+	}
 	deletionProtectionEnabledProp, err := expandMemorystoreInstanceDeletionProtectionEnabled(d.Get("deletion_protection_enabled"), d, config)
 	if err != nil {
 		return nil, err
@@ -633,6 +639,10 @@ func expandMemorystoreInstanceZoneDistributionConfigZone(v interface{}, d tpgres
 }
 
 func expandMemorystoreInstanceZoneDistributionConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceAllowFewerZonesDeployment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

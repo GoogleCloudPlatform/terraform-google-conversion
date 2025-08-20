@@ -100,6 +100,12 @@ func GetRedisClusterApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("zone_distribution_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(zoneDistributionConfigProp)) && (ok || !reflect.DeepEqual(v, zoneDistributionConfigProp)) {
 		obj["zoneDistributionConfig"] = zoneDistributionConfigProp
 	}
+	allowFewerZonesDeploymentProp, err := expandRedisClusterAllowFewerZonesDeployment(d.Get("allow_fewer_zones_deployment"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_fewer_zones_deployment"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowFewerZonesDeploymentProp)) && (ok || !reflect.DeepEqual(v, allowFewerZonesDeploymentProp)) {
+		obj["allowFewerZonesDeployment"] = allowFewerZonesDeploymentProp
+	}
 	pscConfigsProp, err := expandRedisClusterPscConfigs(d.Get("psc_configs"), d, config)
 	if err != nil {
 		return nil, err
@@ -339,6 +345,10 @@ func expandRedisClusterZoneDistributionConfigMode(v interface{}, d tpgresource.T
 }
 
 func expandRedisClusterZoneDistributionConfigZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterAllowFewerZonesDeployment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
