@@ -80,11 +80,11 @@ func GetNetworkServicesTcpRouteApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("rules"); ok || !reflect.DeepEqual(v, rulesProp) {
 		obj["rules"] = rulesProp
 	}
-	labelsProp, err := expandNetworkServicesTcpRouteEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetworkServicesTcpRouteEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

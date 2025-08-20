@@ -128,11 +128,11 @@ func GetNetworkServicesEdgeCacheOriginApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("flex_shielding"); !tpgresource.IsEmptyValue(reflect.ValueOf(flexShieldingProp)) && (ok || !reflect.DeepEqual(v, flexShieldingProp)) {
 		obj["flexShielding"] = flexShieldingProp
 	}
-	labelsProp, err := expandNetworkServicesEdgeCacheOriginEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetworkServicesEdgeCacheOriginEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

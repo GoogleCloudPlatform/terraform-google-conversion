@@ -146,17 +146,17 @@ func GetWorkstationsWorkstationConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("allowed_ports"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowedPortsProp)) && (ok || !reflect.DeepEqual(v, allowedPortsProp)) {
 		obj["allowedPorts"] = allowedPortsProp
 	}
-	labelsProp, err := expandWorkstationsWorkstationConfigEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandWorkstationsWorkstationConfigEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
-	annotationsProp, err := expandWorkstationsWorkstationConfigEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	effectiveAnnotationsProp, err := expandWorkstationsWorkstationConfigEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveAnnotationsProp)) && (ok || !reflect.DeepEqual(v, effectiveAnnotationsProp)) {
+		obj["annotations"] = effectiveAnnotationsProp
 	}
 
 	return obj, nil

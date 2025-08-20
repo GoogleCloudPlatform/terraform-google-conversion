@@ -85,17 +85,17 @@ func GetComputeExternalVpnGatewayCaiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("redundancy_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(redundancyTypeProp)) && (ok || !reflect.DeepEqual(v, redundancyTypeProp)) {
 		obj["redundancyType"] = redundancyTypeProp
 	}
-	interfacesProp, err := expandComputeExternalVpnGatewayInterface(d.Get("interface"), d, config)
+	interfaceProp, err := expandComputeExternalVpnGatewayInterface(d.Get("interface"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("interface"); !tpgresource.IsEmptyValue(reflect.ValueOf(interfacesProp)) && (ok || !reflect.DeepEqual(v, interfacesProp)) {
-		obj["interfaces"] = interfacesProp
+	} else if v, ok := d.GetOkExists("interface"); !tpgresource.IsEmptyValue(reflect.ValueOf(interfaceProp)) && (ok || !reflect.DeepEqual(v, interfaceProp)) {
+		obj["interfaces"] = interfaceProp
 	}
-	labelsProp, err := expandComputeExternalVpnGatewayEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandComputeExternalVpnGatewayEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

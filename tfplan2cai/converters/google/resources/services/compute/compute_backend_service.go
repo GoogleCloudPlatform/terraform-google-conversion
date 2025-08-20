@@ -215,11 +215,11 @@ func GetComputeBackendServiceApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("affinity_cookie_ttl_sec"); !tpgresource.IsEmptyValue(reflect.ValueOf(affinityCookieTtlSecProp)) && (ok || !reflect.DeepEqual(v, affinityCookieTtlSecProp)) {
 		obj["affinityCookieTtlSec"] = affinityCookieTtlSecProp
 	}
-	backendsProp, err := expandComputeBackendServiceBackend(d.Get("backend"), d, config)
+	backendProp, err := expandComputeBackendServiceBackend(d.Get("backend"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("backend"); !tpgresource.IsEmptyValue(reflect.ValueOf(backendsProp)) && (ok || !reflect.DeepEqual(v, backendsProp)) {
-		obj["backends"] = backendsProp
+	} else if v, ok := d.GetOkExists("backend"); !tpgresource.IsEmptyValue(reflect.ValueOf(backendProp)) && (ok || !reflect.DeepEqual(v, backendProp)) {
+		obj["backends"] = backendProp
 	}
 	circuitBreakersProp, err := expandComputeBackendServiceCircuitBreakers(d.Get("circuit_breakers"), d, config)
 	if err != nil {

@@ -142,11 +142,11 @@ func GetDataprocMetastoreServiceApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("telemetry_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(telemetryConfigProp)) && (ok || !reflect.DeepEqual(v, telemetryConfigProp)) {
 		obj["telemetryConfig"] = telemetryConfigProp
 	}
-	labelsProp, err := expandDataprocMetastoreServiceEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandDataprocMetastoreServiceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

@@ -92,11 +92,11 @@ func GetDataplexTaskApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("notebook"); !tpgresource.IsEmptyValue(reflect.ValueOf(notebookProp)) && (ok || !reflect.DeepEqual(v, notebookProp)) {
 		obj["notebook"] = notebookProp
 	}
-	labelsProp, err := expandDataplexTaskEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandDataplexTaskEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil
