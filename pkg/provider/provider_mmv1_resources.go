@@ -1,10 +1,14 @@
 package provider
 
 import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,10 +21,17 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 19
+// Generated resources: 28
 var generatedResources = map[string]*schema.Resource{
+	"google_alloydb_backup":                          alloydb.ResourceAlloydbBackup(),
+	"google_alloydb_cluster":                         alloydb.ResourceAlloydbCluster(),
+	"google_alloydb_instance":                        alloydb.ResourceAlloydbInstance(),
+	"google_apphub_application":                      apphub.ResourceApphubApplication(),
+	"google_apphub_service":                          apphub.ResourceApphubService(),
+	"google_apphub_workload":                         apphub.ResourceApphubWorkload(),
 	"google_bigquery_dataset":                        bigquery.ResourceBigQueryDataset(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.ResourceBlockchainNodeEngineBlockchainNodes(),
+	"google_certificate_manager_certificate":         certificatemanager.ResourceCertificateManagerCertificate(),
 	"google_cloudfunctions2_function":                cloudfunctions2.ResourceCloudfunctions2function(),
 	"google_compute_address":                         compute.ResourceComputeAddress(),
 	"google_compute_autoscaler":                      compute.ResourceComputeAutoscaler(),
@@ -37,5 +48,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_region_autoscaler":               compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_subnetwork":                      compute.ResourceComputeSubnetwork(),
 	"google_compute_url_map":                         compute.ResourceComputeUrlMap(),
+	"google_network_security_server_tls_policy":      networksecurity.ResourceNetworkSecurityServerTlsPolicy(),
+	"google_pubsub_subscription":                     pubsub.ResourcePubsubSubscription(),
 	"google_pubsub_topic":                            pubsub.ResourcePubsubTopic(),
 }

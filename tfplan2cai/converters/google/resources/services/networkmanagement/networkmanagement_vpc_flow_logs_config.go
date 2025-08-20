@@ -110,6 +110,18 @@ func GetNetworkManagementVpcFlowLogsConfigApiObject(d tpgresource.TerraformResou
 	} else if v, ok := d.GetOkExists("vpn_tunnel"); !tpgresource.IsEmptyValue(reflect.ValueOf(vpnTunnelProp)) && (ok || !reflect.DeepEqual(v, vpnTunnelProp)) {
 		obj["vpnTunnel"] = vpnTunnelProp
 	}
+	subnetProp, err := expandNetworkManagementVpcFlowLogsConfigSubnet(d.Get("subnet"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("subnet"); !tpgresource.IsEmptyValue(reflect.ValueOf(subnetProp)) && (ok || !reflect.DeepEqual(v, subnetProp)) {
+		obj["subnet"] = subnetProp
+	}
+	networkProp, err := expandNetworkManagementVpcFlowLogsConfigNetwork(d.Get("network"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
+		obj["network"] = networkProp
+	}
 	labelsProp, err := expandNetworkManagementVpcFlowLogsConfigEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -153,6 +165,14 @@ func expandNetworkManagementVpcFlowLogsConfigInterconnectAttachment(v interface{
 }
 
 func expandNetworkManagementVpcFlowLogsConfigVpnTunnel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementVpcFlowLogsConfigSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementVpcFlowLogsConfigNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

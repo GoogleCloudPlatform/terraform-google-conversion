@@ -14,10 +14,14 @@
 package converters
 
 import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tfplan2cai/converters/cai"
@@ -28,8 +32,15 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_project":          resourcemanager.ProjectTfplan2caiConverter(),
 	"google_compute_instance": compute.ComputeInstanceTfplan2caiConverter(),
 	// ####### END handwritten resources ###########
+	"google_alloydb_backup":                          alloydb.AlloydbBackupTfplan2caiConverter(),
+	"google_alloydb_cluster":                         alloydb.AlloydbClusterTfplan2caiConverter(),
+	"google_alloydb_instance":                        alloydb.AlloydbInstanceTfplan2caiConverter(),
+	"google_apphub_application":                      apphub.ApphubApplicationTfplan2caiConverter(),
+	"google_apphub_service":                          apphub.ApphubServiceTfplan2caiConverter(),
+	"google_apphub_workload":                         apphub.ApphubWorkloadTfplan2caiConverter(),
 	"google_bigquery_dataset":                        bigquery.BigQueryDatasetTfplan2caiConverter(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.BlockchainNodeEngineBlockchainNodesTfplan2caiConverter(),
+	"google_certificate_manager_certificate":         certificatemanager.CertificateManagerCertificateTfplan2caiConverter(),
 	"google_cloudfunctions2_function":                cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
 	"google_compute_address":                         compute.ComputeAddressTfplan2caiConverter(),
 	"google_compute_autoscaler":                      compute.ComputeAutoscalerTfplan2caiConverter(),
@@ -46,5 +57,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_region_autoscaler":               compute.ComputeRegionAutoscalerTfplan2caiConverter(),
 	"google_compute_subnetwork":                      compute.ComputeSubnetworkTfplan2caiConverter(),
 	"google_compute_url_map":                         compute.ComputeUrlMapTfplan2caiConverter(),
+	"google_network_security_server_tls_policy":      networksecurity.NetworkSecurityServerTlsPolicyTfplan2caiConverter(),
+	"google_pubsub_subscription":                     pubsub.PubsubSubscriptionTfplan2caiConverter(),
 	"google_pubsub_topic":                            pubsub.PubsubTopicTfplan2caiConverter(),
 }

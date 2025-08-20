@@ -115,6 +115,9 @@ func flattenBlockchainNodeEngineBlockchainNodesEthereumDetails(v interface{}, d 
 		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsApiEnableAdmin(original["apiEnableAdmin"], d, config)
 	transformed["api_enable_debug"] =
 		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsApiEnableDebug(original["apiEnableDebug"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -129,6 +132,9 @@ func flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfig(v 
 	transformed := make(map[string]interface{})
 	transformed["mev_relay_urls"] =
 		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigMevRelayUrls(original["mevRelayUrls"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
@@ -147,6 +153,9 @@ func flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsGethDetails(v inte
 	transformed := make(map[string]interface{})
 	transformed["garbage_collection_mode"] =
 		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsGethDetailsGarbageCollectionMode(original["garbageCollectionMode"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
 	return []interface{}{transformed}
 }
 
