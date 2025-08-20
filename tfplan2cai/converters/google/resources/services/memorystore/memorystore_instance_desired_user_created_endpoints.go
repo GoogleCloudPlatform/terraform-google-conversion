@@ -56,11 +56,11 @@ func GetMemorystoreInstanceDesiredUserCreatedEndpointsCaiObject(d tpgresource.Te
 
 func GetMemorystoreInstanceDesiredUserCreatedEndpointsApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	endpointsProp, err := expandMemorystoreInstanceDesiredUserCreatedEndpointsDesiredUserCreatedEndpoints(d.Get("desired_user_created_endpoints"), d, config)
+	desiredUserCreatedEndpointsProp, err := expandMemorystoreInstanceDesiredUserCreatedEndpointsDesiredUserCreatedEndpoints(d.Get("desired_user_created_endpoints"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("desired_user_created_endpoints"); !tpgresource.IsEmptyValue(reflect.ValueOf(endpointsProp)) && (ok || !reflect.DeepEqual(v, endpointsProp)) {
-		obj["endpoints"] = endpointsProp
+	} else if v, ok := d.GetOkExists("desired_user_created_endpoints"); !tpgresource.IsEmptyValue(reflect.ValueOf(desiredUserCreatedEndpointsProp)) && (ok || !reflect.DeepEqual(v, desiredUserCreatedEndpointsProp)) {
+		obj["endpoints"] = desiredUserCreatedEndpointsProp
 	}
 
 	return obj, nil

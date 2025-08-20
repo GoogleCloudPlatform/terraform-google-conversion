@@ -128,11 +128,11 @@ func GetNetworkConnectivityInternalRangeApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("immutable"); !tpgresource.IsEmptyValue(reflect.ValueOf(immutableProp)) && (ok || !reflect.DeepEqual(v, immutableProp)) {
 		obj["immutable"] = immutableProp
 	}
-	labelsProp, err := expandNetworkConnectivityInternalRangeEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetworkConnectivityInternalRangeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

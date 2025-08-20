@@ -70,11 +70,11 @@ func GetDataprocMetastoreFederationApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("backend_metastores"); !tpgresource.IsEmptyValue(reflect.ValueOf(backendMetastoresProp)) && (ok || !reflect.DeepEqual(v, backendMetastoresProp)) {
 		obj["backendMetastores"] = backendMetastoresProp
 	}
-	labelsProp, err := expandDataprocMetastoreFederationEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandDataprocMetastoreFederationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

@@ -80,11 +80,11 @@ func GetNetworkSecurityClientTlsPolicyApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("server_validation_ca"); !tpgresource.IsEmptyValue(reflect.ValueOf(serverValidationCaProp)) && (ok || !reflect.DeepEqual(v, serverValidationCaProp)) {
 		obj["serverValidationCa"] = serverValidationCaProp
 	}
-	labelsProp, err := expandNetworkSecurityClientTlsPolicyEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetworkSecurityClientTlsPolicyEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

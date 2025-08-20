@@ -68,11 +68,11 @@ func GetIntegrationConnectorsConnectionApiObject(d tpgresource.TerraformResource
 	} else if v, ok := d.GetOkExists("connector_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(connectorVersionProp)) && (ok || !reflect.DeepEqual(v, connectorVersionProp)) {
 		obj["connectorVersion"] = connectorVersionProp
 	}
-	configVariablesProp, err := expandIntegrationConnectorsConnectionConfigVariable(d.Get("config_variable"), d, config)
+	configVariableProp, err := expandIntegrationConnectorsConnectionConfigVariable(d.Get("config_variable"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("config_variable"); !tpgresource.IsEmptyValue(reflect.ValueOf(configVariablesProp)) && (ok || !reflect.DeepEqual(v, configVariablesProp)) {
-		obj["configVariables"] = configVariablesProp
+	} else if v, ok := d.GetOkExists("config_variable"); !tpgresource.IsEmptyValue(reflect.ValueOf(configVariableProp)) && (ok || !reflect.DeepEqual(v, configVariableProp)) {
+		obj["configVariables"] = configVariableProp
 	}
 	authConfigProp, err := expandIntegrationConnectorsConnectionAuthConfig(d.Get("auth_config"), d, config)
 	if err != nil {
@@ -86,11 +86,11 @@ func GetIntegrationConnectorsConnectionApiObject(d tpgresource.TerraformResource
 	} else if v, ok := d.GetOkExists("lock_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(lockConfigProp)) && (ok || !reflect.DeepEqual(v, lockConfigProp)) {
 		obj["lockConfig"] = lockConfigProp
 	}
-	destinationConfigsProp, err := expandIntegrationConnectorsConnectionDestinationConfig(d.Get("destination_config"), d, config)
+	destinationConfigProp, err := expandIntegrationConnectorsConnectionDestinationConfig(d.Get("destination_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("destination_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(destinationConfigsProp)) && (ok || !reflect.DeepEqual(v, destinationConfigsProp)) {
-		obj["destinationConfigs"] = destinationConfigsProp
+	} else if v, ok := d.GetOkExists("destination_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(destinationConfigProp)) && (ok || !reflect.DeepEqual(v, destinationConfigProp)) {
+		obj["destinationConfigs"] = destinationConfigProp
 	}
 	serviceAccountProp, err := expandIntegrationConnectorsConnectionServiceAccount(d.Get("service_account"), d, config)
 	if err != nil {
@@ -134,11 +134,11 @@ func GetIntegrationConnectorsConnectionApiObject(d tpgresource.TerraformResource
 	} else if v, ok := d.GetOkExists("eventing_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(eventingConfigProp)) && (ok || !reflect.DeepEqual(v, eventingConfigProp)) {
 		obj["eventingConfig"] = eventingConfigProp
 	}
-	labelsProp, err := expandIntegrationConnectorsConnectionEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandIntegrationConnectorsConnectionEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

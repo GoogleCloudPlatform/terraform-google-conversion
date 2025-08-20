@@ -271,11 +271,11 @@ func GetArtifactRegistryRepositoryApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("vulnerability_scanning_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(vulnerabilityScanningConfigProp)) && (ok || !reflect.DeepEqual(v, vulnerabilityScanningConfigProp)) {
 		obj["vulnerabilityScanningConfig"] = vulnerabilityScanningConfigProp
 	}
-	labelsProp, err := expandArtifactRegistryRepositoryEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandArtifactRegistryRepositoryEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return resourceArtifactRegistryRepositoryEncoder(d, config, obj)

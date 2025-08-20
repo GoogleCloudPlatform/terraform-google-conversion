@@ -68,11 +68,11 @@ func GetGeminiDataSharingWithGoogleSettingApiObject(d tpgresource.TerraformResou
 	} else if v, ok := d.GetOkExists("enable_data_sharing"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableDataSharingProp)) && (ok || !reflect.DeepEqual(v, enableDataSharingProp)) {
 		obj["enableDataSharing"] = enableDataSharingProp
 	}
-	labelsProp, err := expandGeminiDataSharingWithGoogleSettingEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandGeminiDataSharingWithGoogleSettingEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil
