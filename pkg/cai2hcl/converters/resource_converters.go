@@ -17,6 +17,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/backupdr"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
@@ -59,6 +60,12 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	apphub.ApphubWorkloadAssetType: {
 		"Default": apphub.NewApphubWorkloadCai2hclConverter(provider),
+	},
+	backupdr.BackupDRBackupPlanAssetType: {
+		"Default": backupdr.NewBackupDRBackupPlanCai2hclConverter(provider),
+	},
+	backupdr.BackupDRBackupVaultAssetType: {
+		"Default": backupdr.NewBackupDRBackupVaultCai2hclConverter(provider),
 	},
 	bigquery.BigQueryDatasetAssetType: {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
