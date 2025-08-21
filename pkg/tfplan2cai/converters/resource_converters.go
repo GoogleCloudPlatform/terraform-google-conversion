@@ -15,6 +15,7 @@ package converters
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/backupdr"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/beyondcorp"
@@ -38,6 +39,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_alloydb_backup":                          alloydb.AlloydbBackupTfplan2caiConverter(),
 	"google_alloydb_cluster":                         alloydb.AlloydbClusterTfplan2caiConverter(),
 	"google_alloydb_instance":                        alloydb.AlloydbInstanceTfplan2caiConverter(),
+	"google_apigee_instance":                         apigee.ApigeeInstanceTfplan2caiConverter(),
 	"google_apphub_application":                      apphub.ApphubApplicationTfplan2caiConverter(),
 	"google_apphub_service":                          apphub.ApphubServiceTfplan2caiConverter(),
 	"google_apphub_workload":                         apphub.ApphubWorkloadTfplan2caiConverter(),
