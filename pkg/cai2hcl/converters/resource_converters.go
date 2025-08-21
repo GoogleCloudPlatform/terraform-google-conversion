@@ -18,7 +18,9 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/backupdr"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
@@ -67,8 +69,20 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	backupdr.BackupDRBackupVaultAssetType: {
 		"Default": backupdr.NewBackupDRBackupVaultCai2hclConverter(provider),
 	},
+	beyondcorp.BeyondcorpAppConnectionAssetType: {
+		"Default": beyondcorp.NewBeyondcorpAppConnectionCai2hclConverter(provider),
+	},
+	beyondcorp.BeyondcorpAppConnectorAssetType: {
+		"Default": beyondcorp.NewBeyondcorpAppConnectorCai2hclConverter(provider),
+	},
+	beyondcorp.BeyondcorpAppGatewayAssetType: {
+		"Default": beyondcorp.NewBeyondcorpAppGatewayCai2hclConverter(provider),
+	},
 	bigquery.BigQueryDatasetAssetType: {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
+	},
+	binaryauthorization.BinaryAuthorizationAttestorAssetType: {
+		"Default": binaryauthorization.NewBinaryAuthorizationAttestorCai2hclConverter(provider),
 	},
 	blockchainnodeengine.BlockchainNodeEngineBlockchainNodeAssetType: {
 		"Default": blockchainnodeengine.NewBlockchainNodeEngineBlockchainNodesCai2hclConverter(provider),
