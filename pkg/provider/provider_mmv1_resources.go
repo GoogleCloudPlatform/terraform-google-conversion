@@ -4,7 +4,9 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/backupdr"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
@@ -22,7 +24,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 30
+// Generated resources: 34
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                          alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                         alloydb.ResourceAlloydbCluster(),
@@ -32,7 +34,11 @@ var generatedResources = map[string]*schema.Resource{
 	"google_apphub_workload":                         apphub.ResourceApphubWorkload(),
 	"google_backup_dr_backup_plan":                   backupdr.ResourceBackupDRBackupPlan(),
 	"google_backup_dr_backup_vault":                  backupdr.ResourceBackupDRBackupVault(),
+	"google_beyondcorp_app_connection":               beyondcorp.ResourceBeyondcorpAppConnection(),
+	"google_beyondcorp_app_connector":                beyondcorp.ResourceBeyondcorpAppConnector(),
+	"google_beyondcorp_app_gateway":                  beyondcorp.ResourceBeyondcorpAppGateway(),
 	"google_bigquery_dataset":                        bigquery.ResourceBigQueryDataset(),
+	"google_binary_authorization_attestor":           binaryauthorization.ResourceBinaryAuthorizationAttestor(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.ResourceBlockchainNodeEngineBlockchainNodes(),
 	"google_certificate_manager_certificate":         certificatemanager.ResourceCertificateManagerCertificate(),
 	"google_cloudfunctions2_function":                cloudfunctions2.ResourceCloudfunctions2function(),
