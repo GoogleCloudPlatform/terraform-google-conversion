@@ -16,6 +16,7 @@ package converters
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/backupdr"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/beyondcorp"
@@ -53,6 +54,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	alloydb.AlloydbInstanceAssetType: {
 		"Default": alloydb.NewAlloydbInstanceCai2hclConverter(provider),
+	},
+	apigee.ApigeeInstanceAssetType: {
+		"Default": apigee.NewApigeeInstanceCai2hclConverter(provider),
 	},
 	apphub.ApphubApplicationAssetType: {
 		"Default": apphub.NewApphubApplicationCai2hclConverter(provider),
