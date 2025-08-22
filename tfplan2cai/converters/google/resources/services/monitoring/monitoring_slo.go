@@ -87,11 +87,11 @@ func GetMonitoringSloApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("goal"); !tpgresource.IsEmptyValue(reflect.ValueOf(goalProp)) && (ok || !reflect.DeepEqual(v, goalProp)) {
 		obj["goal"] = goalProp
 	}
-	rollingPeriodProp, err := expandMonitoringSloRollingPeriodDays(d.Get("rolling_period_days"), d, config)
+	rollingPeriodDaysProp, err := expandMonitoringSloRollingPeriodDays(d.Get("rolling_period_days"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("rolling_period_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(rollingPeriodProp)) && (ok || !reflect.DeepEqual(v, rollingPeriodProp)) {
-		obj["rollingPeriod"] = rollingPeriodProp
+	} else if v, ok := d.GetOkExists("rolling_period_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(rollingPeriodDaysProp)) && (ok || !reflect.DeepEqual(v, rollingPeriodDaysProp)) {
+		obj["rollingPeriod"] = rollingPeriodDaysProp
 	}
 	calendarPeriodProp, err := expandMonitoringSloCalendarPeriod(d.Get("calendar_period"), d, config)
 	if err != nil {
@@ -111,11 +111,11 @@ func GetMonitoringSloApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("service_level_indicator"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceLevelIndicatorProp)) && (ok || !reflect.DeepEqual(v, serviceLevelIndicatorProp)) {
 		obj["serviceLevelIndicator"] = serviceLevelIndicatorProp
 	}
-	nameProp, err := expandMonitoringSloSloId(d.Get("slo_id"), d, config)
+	sloIdProp, err := expandMonitoringSloSloId(d.Get("slo_id"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("slo_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
-		obj["name"] = nameProp
+	} else if v, ok := d.GetOkExists("slo_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(sloIdProp)) && (ok || !reflect.DeepEqual(v, sloIdProp)) {
+		obj["name"] = sloIdProp
 	}
 
 	return resourceMonitoringSloEncoder(d, config, obj)

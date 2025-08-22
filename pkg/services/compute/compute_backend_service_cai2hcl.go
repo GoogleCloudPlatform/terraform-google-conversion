@@ -129,6 +129,7 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 	hclData["max_stream_duration"] = flattenComputeBackendServiceMaxStreamDuration(res["maxStreamDuration"], d, config)
 	hclData["network_pass_through_lb_traffic_policy"] = flattenComputeBackendServiceNetworkPassThroughLbTrafficPolicy(res["networkPassThroughLbTrafficPolicy"], d, config)
 	hclData["dynamic_forwarding"] = flattenComputeBackendServiceDynamicForwarding(res["dynamicForwarding"], d, config)
+	hclData["params"] = flattenComputeBackendServiceParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -1829,6 +1830,27 @@ func flattenComputeBackendServiceDynamicForwardingIpPortSelection(v interface{},
 }
 
 func flattenComputeBackendServiceDynamicForwardingIpPortSelectionEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeBackendServiceParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeBackendServiceParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeBackendServiceParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

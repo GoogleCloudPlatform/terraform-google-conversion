@@ -68,11 +68,11 @@ func GetIAM3PrincipalAccessBoundaryPolicyApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("details"); !tpgresource.IsEmptyValue(reflect.ValueOf(detailsProp)) && (ok || !reflect.DeepEqual(v, detailsProp)) {
 		obj["details"] = detailsProp
 	}
-	annotationsProp, err := expandIAM3PrincipalAccessBoundaryPolicyEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	effectiveAnnotationsProp, err := expandIAM3PrincipalAccessBoundaryPolicyEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveAnnotationsProp)) && (ok || !reflect.DeepEqual(v, effectiveAnnotationsProp)) {
+		obj["annotations"] = effectiveAnnotationsProp
 	}
 
 	return obj, nil

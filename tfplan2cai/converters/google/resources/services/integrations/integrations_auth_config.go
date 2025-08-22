@@ -92,11 +92,11 @@ func GetIntegrationsAuthConfigApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("decrypted_credential"); !tpgresource.IsEmptyValue(reflect.ValueOf(decryptedCredentialProp)) && (ok || !reflect.DeepEqual(v, decryptedCredentialProp)) {
 		obj["decryptedCredential"] = decryptedCredentialProp
 	}
-	client_certificateProp, err := expandIntegrationsAuthConfigClientCertificate(d.Get("client_certificate"), d, config)
+	clientCertificateProp, err := expandIntegrationsAuthConfigClientCertificate(d.Get("client_certificate"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("client_certificate"); !tpgresource.IsEmptyValue(reflect.ValueOf(client_certificateProp)) && (ok || !reflect.DeepEqual(v, client_certificateProp)) {
-		obj["client_certificate"] = client_certificateProp
+	} else if v, ok := d.GetOkExists("client_certificate"); !tpgresource.IsEmptyValue(reflect.ValueOf(clientCertificateProp)) && (ok || !reflect.DeepEqual(v, clientCertificateProp)) {
+		obj["client_certificate"] = clientCertificateProp
 	}
 
 	return obj, nil

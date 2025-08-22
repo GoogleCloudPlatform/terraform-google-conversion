@@ -69,11 +69,11 @@ func GetComputeBackendServiceCaiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("affinity_cookie_ttl_sec"); ok || !reflect.DeepEqual(v, affinityCookieTtlSecProp) {
 		obj["affinityCookieTtlSec"] = affinityCookieTtlSecProp
 	}
-	backendsProp, err := expandComputeBackendServiceBackend(d.Get("backend"), d, config)
+	backendProp, err := expandComputeBackendServiceBackend(d.Get("backend"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("backend"); !tpgresource.IsEmptyValue(reflect.ValueOf(backendsProp)) && (ok || !reflect.DeepEqual(v, backendsProp)) {
-		obj["backends"] = backendsProp
+	} else if v, ok := d.GetOkExists("backend"); !tpgresource.IsEmptyValue(reflect.ValueOf(backendProp)) && (ok || !reflect.DeepEqual(v, backendProp)) {
+		obj["backends"] = backendProp
 	}
 	circuitBreakersProp, err := expandComputeBackendServiceCircuitBreakers(d.Get("circuit_breakers"), d, config)
 	if err != nil {
@@ -284,6 +284,12 @@ func GetComputeBackendServiceCaiObject(d tpgresource.TerraformResourceData, conf
 		return nil, err
 	} else if v, ok := d.GetOkExists("dynamic_forwarding"); !tpgresource.IsEmptyValue(reflect.ValueOf(dynamicForwardingProp)) && (ok || !reflect.DeepEqual(v, dynamicForwardingProp)) {
 		obj["dynamicForwarding"] = dynamicForwardingProp
+	}
+	paramsProp, err := expandComputeBackendServiceParams(d.Get("params"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("params"); !tpgresource.IsEmptyValue(reflect.ValueOf(paramsProp)) && (ok || !reflect.DeepEqual(v, paramsProp)) {
+		obj["params"] = paramsProp
 	}
 
 	obj, err = resourceComputeBackendServiceEncoder(d, config, obj)
@@ -1956,4 +1962,34 @@ func expandComputeBackendServiceDynamicForwardingIpPortSelection(v interface{}, 
 
 func expandComputeBackendServiceDynamicForwardingIpPortSelectionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeBackendServiceParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResourceManagerTags, err := expandComputeBackendServiceParamsResourceManagerTags(original["resource_manager_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResourceManagerTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resourceManagerTags"] = transformedResourceManagerTags
+	}
+
+	return transformed, nil
+}
+
+func expandComputeBackendServiceParamsResourceManagerTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

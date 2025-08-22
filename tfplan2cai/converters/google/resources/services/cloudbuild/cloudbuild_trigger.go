@@ -224,6 +224,12 @@ func GetCloudBuildTriggerApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("build"); !tpgresource.IsEmptyValue(reflect.ValueOf(buildProp)) && (ok || !reflect.DeepEqual(v, buildProp)) {
 		obj["build"] = buildProp
 	}
+	developerConnectEventConfigProp, err := expandCloudBuildTriggerDeveloperConnectEventConfig(d.Get("developer_connect_event_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("developer_connect_event_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(developerConnectEventConfigProp)) && (ok || !reflect.DeepEqual(v, developerConnectEventConfigProp)) {
+		obj["developerConnectEventConfig"] = developerConnectEventConfigProp
+	}
 
 	return obj, nil
 }
@@ -2124,5 +2130,143 @@ func expandCloudBuildTriggerBuildOptionsVolumesName(v interface{}, d tpgresource
 }
 
 func expandCloudBuildTriggerBuildOptionsVolumesPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGitRepositoryLink, err := expandCloudBuildTriggerDeveloperConnectEventConfigGitRepositoryLink(original["git_repository_link"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGitRepositoryLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gitRepositoryLink"] = transformedGitRepositoryLink
+	}
+
+	transformedGitRepositoryLinkType, err := expandCloudBuildTriggerDeveloperConnectEventConfigGitRepositoryLinkType(original["git_repository_link_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGitRepositoryLinkType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gitRepositoryLinkType"] = transformedGitRepositoryLinkType
+	}
+
+	transformedPullRequest, err := expandCloudBuildTriggerDeveloperConnectEventConfigPullRequest(original["pull_request"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPullRequest); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pullRequest"] = transformedPullRequest
+	}
+
+	transformedPush, err := expandCloudBuildTriggerDeveloperConnectEventConfigPush(original["push"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPush); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["push"] = transformedPush
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigGitRepositoryLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigGitRepositoryLinkType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigPullRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBranch, err := expandCloudBuildTriggerDeveloperConnectEventConfigPullRequestBranch(original["branch"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBranch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["branch"] = transformedBranch
+	}
+
+	transformedCommentControl, err := expandCloudBuildTriggerDeveloperConnectEventConfigPullRequestCommentControl(original["comment_control"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCommentControl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["commentControl"] = transformedCommentControl
+	}
+
+	transformedInvertRegex, err := expandCloudBuildTriggerDeveloperConnectEventConfigPullRequestInvertRegex(original["invert_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInvertRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["invertRegex"] = transformedInvertRegex
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigPullRequestBranch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigPullRequestCommentControl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigPullRequestInvertRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigPush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBranch, err := expandCloudBuildTriggerDeveloperConnectEventConfigPushBranch(original["branch"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBranch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["branch"] = transformedBranch
+	}
+
+	transformedTag, err := expandCloudBuildTriggerDeveloperConnectEventConfigPushTag(original["tag"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTag); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tag"] = transformedTag
+	}
+
+	transformedInvertRegex, err := expandCloudBuildTriggerDeveloperConnectEventConfigPushInvertRegex(original["invert_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInvertRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["invertRegex"] = transformedInvertRegex
+	}
+
+	return transformed, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigPushBranch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigPushTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerDeveloperConnectEventConfigPushInvertRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

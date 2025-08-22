@@ -62,11 +62,11 @@ func GetGeminiCodeToolsSettingApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("enabled_tool"); !tpgresource.IsEmptyValue(reflect.ValueOf(enabledToolProp)) && (ok || !reflect.DeepEqual(v, enabledToolProp)) {
 		obj["enabledTool"] = enabledToolProp
 	}
-	labelsProp, err := expandGeminiCodeToolsSettingEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandGeminiCodeToolsSettingEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

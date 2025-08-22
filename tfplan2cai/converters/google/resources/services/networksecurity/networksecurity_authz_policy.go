@@ -87,11 +87,11 @@ func GetNetworkSecurityAuthzPolicyApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("custom_provider"); !tpgresource.IsEmptyValue(reflect.ValueOf(customProviderProp)) && (ok || !reflect.DeepEqual(v, customProviderProp)) {
 		obj["customProvider"] = customProviderProp
 	}
-	labelsProp, err := expandNetworkSecurityAuthzPolicyEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetworkSecurityAuthzPolicyEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 	nameProp, err := expandNetworkSecurityAuthzPolicyName(d.Get("name"), d, config)
 	if err != nil {
