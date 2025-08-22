@@ -444,13 +444,6 @@ func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.Ter
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedService, err := expandCloudfunctions2functionServiceConfigService(original["service"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["service"] = transformedService
-	}
-
 	transformedTimeoutSeconds, err := expandCloudfunctions2functionServiceConfigTimeoutSeconds(original["timeout_seconds"], d, config)
 	if err != nil {
 		return nil, err
@@ -557,10 +550,6 @@ func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.Ter
 	}
 
 	return transformed, nil
-}
-
-func expandCloudfunctions2functionServiceConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandCloudfunctions2functionServiceConfigTimeoutSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

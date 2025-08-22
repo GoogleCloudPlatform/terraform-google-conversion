@@ -519,13 +519,6 @@ func expandCloudRunV2WorkerPoolTemplateContainers(v interface{}, d tpgresource.T
 			transformed["workingDir"] = transformedWorkingDir
 		}
 
-		transformedDependsOn, err := expandCloudRunV2WorkerPoolTemplateContainersDependsOn(original["depends_on"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedDependsOn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["dependsOn"] = transformedDependsOn
-		}
-
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -713,10 +706,6 @@ func expandCloudRunV2WorkerPoolTemplateContainersVolumeMountsMountPath(v interfa
 }
 
 func expandCloudRunV2WorkerPoolTemplateContainersWorkingDir(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandCloudRunV2WorkerPoolTemplateContainersDependsOn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

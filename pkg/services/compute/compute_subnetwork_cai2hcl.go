@@ -96,7 +96,6 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["external_ipv6_prefix"] = flattenComputeSubnetworkExternalIpv6Prefix(res["externalIpv6Prefix"], d, config)
 	hclData["ip_collection"] = flattenComputeSubnetworkIpCollection(res["ipCollection"], d, config)
 	hclData["allow_subnet_cidr_routes_overlap"] = flattenComputeSubnetworkAllowSubnetCidrRoutesOverlap(res["allowSubnetCidrRoutesOverlap"], d, config)
-	hclData["enable_flow_logs"] = flattenComputeSubnetworkEnableFlowLogs(res["enableFlowLogs"], d, config)
 	hclData["params"] = flattenComputeSubnetworkParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -256,10 +255,6 @@ func flattenComputeSubnetworkIpCollection(v interface{}, d *schema.ResourceData,
 }
 
 func flattenComputeSubnetworkAllowSubnetCidrRoutesOverlap(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenComputeSubnetworkEnableFlowLogs(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

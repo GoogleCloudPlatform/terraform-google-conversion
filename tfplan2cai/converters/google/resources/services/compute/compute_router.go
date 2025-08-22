@@ -34,7 +34,7 @@ func resourceComputeRouterCustomDiff(_ context.Context, diff *schema.ResourceDif
 	block := diff.Get("bgp.0").(map[string]interface{})
 	advertiseMode := block["advertise_mode"]
 	advertisedGroups := block["advertised_groups"].([]interface{})
-	advertisedIPRanges := block["advertised_ip_ranges"].([]interface{})
+	advertisedIPRanges := block["advertised_ip_ranges"].(*schema.Set).List()
 
 	if advertiseMode == "DEFAULT" && len(advertisedGroups) != 0 {
 		return fmt.Errorf("Error in bgp: advertised_groups cannot be specified when using advertise_mode DEFAULT")
@@ -213,6 +213,7 @@ func expandComputeRouterBgpAdvertisedGroups(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputeRouterBgpAdvertisedIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
