@@ -167,12 +167,6 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("allow_subnet_cidr_routes_overlap"); ok || !reflect.DeepEqual(v, allowSubnetCidrRoutesOverlapProp) {
 		obj["allowSubnetCidrRoutesOverlap"] = allowSubnetCidrRoutesOverlapProp
 	}
-	enableFlowLogsProp, err := expandComputeSubnetworkEnableFlowLogs(d.Get("enable_flow_logs"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("enable_flow_logs"); ok || !reflect.DeepEqual(v, enableFlowLogsProp) {
-		obj["enableFlowLogs"] = enableFlowLogsProp
-	}
 	paramsProp, err := expandComputeSubnetworkParams(d.Get("params"), d, config)
 	if err != nil {
 		return nil, err
@@ -330,10 +324,6 @@ func expandComputeSubnetworkIpCollection(v interface{}, d tpgresource.TerraformR
 }
 
 func expandComputeSubnetworkAllowSubnetCidrRoutesOverlap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeSubnetworkEnableFlowLogs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

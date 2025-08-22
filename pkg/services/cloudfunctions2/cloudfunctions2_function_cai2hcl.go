@@ -343,8 +343,6 @@ func flattenCloudfunctions2functionServiceConfig(v interface{}, d *schema.Resour
 		return nil
 	}
 	transformed := make(map[string]interface{})
-	transformed["service"] =
-		flattenCloudfunctions2functionServiceConfigService(original["service"], d, config)
 	transformed["timeout_seconds"] =
 		flattenCloudfunctions2functionServiceConfigTimeoutSeconds(original["timeoutSeconds"], d, config)
 	transformed["available_memory"] =
@@ -379,10 +377,6 @@ func flattenCloudfunctions2functionServiceConfig(v interface{}, d *schema.Resour
 		return nil
 	}
 	return []interface{}{transformed}
-}
-
-func flattenCloudfunctions2functionServiceConfigService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
 }
 
 func flattenCloudfunctions2functionServiceConfigTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

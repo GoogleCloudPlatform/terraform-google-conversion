@@ -595,6 +595,15 @@ Deleting a Secondary cluster with a secondary instance REQUIRES setting deletion
 Possible values: DEFAULT, FORCE`,
 				Default: "DEFAULT",
 			},
+			"deletion_protection": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Description: `Whether Terraform will be prevented from destroying the cluster.
+When the field is set to true or unset in Terraform state, a 'terraform apply'
+or 'terraform destroy' that would delete the cluster will fail.
+When the field is set to false, deleting the cluster is allowed.`,
+				Default: true,
+			},
 			"skip_await_major_version_upgrade": {
 				Type:     schema.TypeBool,
 				Optional: true,
