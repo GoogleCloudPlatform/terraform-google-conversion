@@ -158,11 +158,11 @@ func GetNetappActiveDirectoryApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("encrypt_dc_connections"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptDcConnectionsProp)) && (ok || !reflect.DeepEqual(v, encryptDcConnectionsProp)) {
 		obj["encryptDcConnections"] = encryptDcConnectionsProp
 	}
-	labelsProp, err := expandNetappActiveDirectoryEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetappActiveDirectoryEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

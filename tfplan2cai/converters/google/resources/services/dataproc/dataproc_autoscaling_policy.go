@@ -56,11 +56,11 @@ func GetDataprocAutoscalingPolicyCaiObject(d tpgresource.TerraformResourceData, 
 
 func GetDataprocAutoscalingPolicyApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	idProp, err := expandDataprocAutoscalingPolicyPolicyId(d.Get("policy_id"), d, config)
+	policyIdProp, err := expandDataprocAutoscalingPolicyPolicyId(d.Get("policy_id"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("policy_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
-		obj["id"] = idProp
+	} else if v, ok := d.GetOkExists("policy_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(policyIdProp)) && (ok || !reflect.DeepEqual(v, policyIdProp)) {
+		obj["id"] = policyIdProp
 	}
 	workerConfigProp, err := expandDataprocAutoscalingPolicyWorkerConfig(d.Get("worker_config"), d, config)
 	if err != nil {

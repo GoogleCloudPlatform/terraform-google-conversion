@@ -93,11 +93,11 @@ func GetBillingBudgetApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("threshold_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(thresholdRulesProp)) && (ok || !reflect.DeepEqual(v, thresholdRulesProp)) {
 		obj["thresholdRules"] = thresholdRulesProp
 	}
-	notificationsRuleProp, err := expandBillingBudgetAllUpdatesRule(d.Get("all_updates_rule"), d, config)
+	allUpdatesRuleProp, err := expandBillingBudgetAllUpdatesRule(d.Get("all_updates_rule"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("all_updates_rule"); !tpgresource.IsEmptyValue(reflect.ValueOf(notificationsRuleProp)) && (ok || !reflect.DeepEqual(v, notificationsRuleProp)) {
-		obj["notificationsRule"] = notificationsRuleProp
+	} else if v, ok := d.GetOkExists("all_updates_rule"); !tpgresource.IsEmptyValue(reflect.ValueOf(allUpdatesRuleProp)) && (ok || !reflect.DeepEqual(v, allUpdatesRuleProp)) {
+		obj["notificationsRule"] = allUpdatesRuleProp
 	}
 	ownershipScopeProp, err := expandBillingBudgetOwnershipScope(d.Get("ownership_scope"), d, config)
 	if err != nil {

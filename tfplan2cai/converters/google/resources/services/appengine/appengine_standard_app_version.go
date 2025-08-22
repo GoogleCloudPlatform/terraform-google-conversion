@@ -58,11 +58,11 @@ func GetAppEngineStandardAppVersionCaiObject(d tpgresource.TerraformResourceData
 
 func GetAppEngineStandardAppVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	idProp, err := expandAppEngineStandardAppVersionVersionId(d.Get("version_id"), d, config)
+	versionIdProp, err := expandAppEngineStandardAppVersionVersionId(d.Get("version_id"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("version_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(idProp)) && (ok || !reflect.DeepEqual(v, idProp)) {
-		obj["id"] = idProp
+	} else if v, ok := d.GetOkExists("version_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionIdProp)) && (ok || !reflect.DeepEqual(v, versionIdProp)) {
+		obj["id"] = versionIdProp
 	}
 	runtimeProp, err := expandAppEngineStandardAppVersionRuntime(d.Get("runtime"), d, config)
 	if err != nil {

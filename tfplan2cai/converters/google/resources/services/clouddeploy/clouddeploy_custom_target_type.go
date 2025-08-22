@@ -68,17 +68,17 @@ func GetClouddeployCustomTargetTypeApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("custom_actions"); !tpgresource.IsEmptyValue(reflect.ValueOf(customActionsProp)) && (ok || !reflect.DeepEqual(v, customActionsProp)) {
 		obj["customActions"] = customActionsProp
 	}
-	annotationsProp, err := expandClouddeployCustomTargetTypeEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	effectiveAnnotationsProp, err := expandClouddeployCustomTargetTypeEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveAnnotationsProp)) && (ok || !reflect.DeepEqual(v, effectiveAnnotationsProp)) {
+		obj["annotations"] = effectiveAnnotationsProp
 	}
-	labelsProp, err := expandClouddeployCustomTargetTypeEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandClouddeployCustomTargetTypeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil
