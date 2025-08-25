@@ -80,11 +80,11 @@ func GetNetworkServicesServiceLbPoliciesApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("failover_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(failoverConfigProp)) && (ok || !reflect.DeepEqual(v, failoverConfigProp)) {
 		obj["failoverConfig"] = failoverConfigProp
 	}
-	labelsProp, err := expandNetworkServicesServiceLbPoliciesEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetworkServicesServiceLbPoliciesEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

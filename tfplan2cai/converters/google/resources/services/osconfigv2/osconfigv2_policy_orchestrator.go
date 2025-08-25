@@ -86,11 +86,11 @@ func GetOSConfigV2PolicyOrchestratorApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("orchestration_scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(orchestrationScopeProp)) && (ok || !reflect.DeepEqual(v, orchestrationScopeProp)) {
 		obj["orchestrationScope"] = orchestrationScopeProp
 	}
-	labelsProp, err := expandOSConfigV2PolicyOrchestratorEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandOSConfigV2PolicyOrchestratorEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

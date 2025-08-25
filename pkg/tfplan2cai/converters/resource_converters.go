@@ -15,8 +15,12 @@ package converters
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/backupdr"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
@@ -34,10 +38,18 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	// ####### END handwritten resources ###########
 	"google_alloydb_backup":                          alloydb.AlloydbBackupTfplan2caiConverter(),
 	"google_alloydb_cluster":                         alloydb.AlloydbClusterTfplan2caiConverter(),
+	"google_alloydb_instance":                        alloydb.AlloydbInstanceTfplan2caiConverter(),
+	"google_apigee_instance":                         apigee.ApigeeInstanceTfplan2caiConverter(),
 	"google_apphub_application":                      apphub.ApphubApplicationTfplan2caiConverter(),
 	"google_apphub_service":                          apphub.ApphubServiceTfplan2caiConverter(),
 	"google_apphub_workload":                         apphub.ApphubWorkloadTfplan2caiConverter(),
+	"google_backup_dr_backup_plan":                   backupdr.BackupDRBackupPlanTfplan2caiConverter(),
+	"google_backup_dr_backup_vault":                  backupdr.BackupDRBackupVaultTfplan2caiConverter(),
+	"google_beyondcorp_app_connection":               beyondcorp.BeyondcorpAppConnectionTfplan2caiConverter(),
+	"google_beyondcorp_app_connector":                beyondcorp.BeyondcorpAppConnectorTfplan2caiConverter(),
+	"google_beyondcorp_app_gateway":                  beyondcorp.BeyondcorpAppGatewayTfplan2caiConverter(),
 	"google_bigquery_dataset":                        bigquery.BigQueryDatasetTfplan2caiConverter(),
+	"google_binary_authorization_attestor":           binaryauthorization.BinaryAuthorizationAttestorTfplan2caiConverter(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.BlockchainNodeEngineBlockchainNodesTfplan2caiConverter(),
 	"google_certificate_manager_certificate":         certificatemanager.CertificateManagerCertificateTfplan2caiConverter(),
 	"google_cloudfunctions2_function":                cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),

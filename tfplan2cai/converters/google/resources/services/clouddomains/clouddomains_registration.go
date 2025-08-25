@@ -92,11 +92,11 @@ func GetClouddomainsRegistrationApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("contact_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(contactSettingsProp)) && (ok || !reflect.DeepEqual(v, contactSettingsProp)) {
 		obj["contactSettings"] = contactSettingsProp
 	}
-	labelsProp, err := expandClouddomainsRegistrationEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandClouddomainsRegistrationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 	domainNameProp, err := expandClouddomainsRegistrationDomainName(d.Get("domain_name"), d, config)
 	if err != nil {

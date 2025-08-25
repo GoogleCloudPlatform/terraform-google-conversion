@@ -100,11 +100,11 @@ func GetBinaryAuthorizationAttestorApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	userOwnedGrafeasNoteProp, err := expandBinaryAuthorizationAttestorAttestationAuthorityNote(d.Get("attestation_authority_note"), d, config)
+	attestationAuthorityNoteProp, err := expandBinaryAuthorizationAttestorAttestationAuthorityNote(d.Get("attestation_authority_note"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("attestation_authority_note"); !tpgresource.IsEmptyValue(reflect.ValueOf(userOwnedGrafeasNoteProp)) && (ok || !reflect.DeepEqual(v, userOwnedGrafeasNoteProp)) {
-		obj["userOwnedGrafeasNote"] = userOwnedGrafeasNoteProp
+	} else if v, ok := d.GetOkExists("attestation_authority_note"); !tpgresource.IsEmptyValue(reflect.ValueOf(attestationAuthorityNoteProp)) && (ok || !reflect.DeepEqual(v, attestationAuthorityNoteProp)) {
+		obj["userOwnedGrafeasNote"] = attestationAuthorityNoteProp
 	}
 
 	return obj, nil
