@@ -94,11 +94,11 @@ func GetMemcacheInstanceApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("node_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(nodeConfigProp)) && (ok || !reflect.DeepEqual(v, nodeConfigProp)) {
 		obj["nodeConfig"] = nodeConfigProp
 	}
-	parametersProp, err := expandMemcacheInstanceMemcacheParameters(d.Get("memcache_parameters"), d, config)
+	memcacheParametersProp, err := expandMemcacheInstanceMemcacheParameters(d.Get("memcache_parameters"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("memcache_parameters"); !tpgresource.IsEmptyValue(reflect.ValueOf(parametersProp)) && (ok || !reflect.DeepEqual(v, parametersProp)) {
-		obj["parameters"] = parametersProp
+	} else if v, ok := d.GetOkExists("memcache_parameters"); !tpgresource.IsEmptyValue(reflect.ValueOf(memcacheParametersProp)) && (ok || !reflect.DeepEqual(v, memcacheParametersProp)) {
+		obj["parameters"] = memcacheParametersProp
 	}
 	maintenancePolicyProp, err := expandMemcacheInstanceMaintenancePolicy(d.Get("maintenance_policy"), d, config)
 	if err != nil {
@@ -112,11 +112,11 @@ func GetMemcacheInstanceApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("reserved_ip_range_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservedIpRangeIdProp)) && (ok || !reflect.DeepEqual(v, reservedIpRangeIdProp)) {
 		obj["reservedIpRangeId"] = reservedIpRangeIdProp
 	}
-	labelsProp, err := expandMemcacheInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandMemcacheInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

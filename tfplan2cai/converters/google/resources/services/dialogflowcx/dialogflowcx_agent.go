@@ -141,6 +141,42 @@ func GetDialogflowCXAgentApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("gen_app_builder_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(genAppBuilderSettingsProp)) && (ok || !reflect.DeepEqual(v, genAppBuilderSettingsProp)) {
 		obj["genAppBuilderSettings"] = genAppBuilderSettingsProp
 	}
+	startPlaybookProp, err := expandDialogflowCXAgentStartPlaybook(d.Get("start_playbook"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("start_playbook"); !tpgresource.IsEmptyValue(reflect.ValueOf(startPlaybookProp)) && (ok || !reflect.DeepEqual(v, startPlaybookProp)) {
+		obj["startPlaybook"] = startPlaybookProp
+	}
+	enableMultiLanguageTrainingProp, err := expandDialogflowCXAgentEnableMultiLanguageTraining(d.Get("enable_multi_language_training"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_multi_language_training"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableMultiLanguageTrainingProp)) && (ok || !reflect.DeepEqual(v, enableMultiLanguageTrainingProp)) {
+		obj["enableMultiLanguageTraining"] = enableMultiLanguageTrainingProp
+	}
+	lockedProp, err := expandDialogflowCXAgentLocked(d.Get("locked"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("locked"); !tpgresource.IsEmptyValue(reflect.ValueOf(lockedProp)) && (ok || !reflect.DeepEqual(v, lockedProp)) {
+		obj["locked"] = lockedProp
+	}
+	answerFeedbackSettingsProp, err := expandDialogflowCXAgentAnswerFeedbackSettings(d.Get("answer_feedback_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("answer_feedback_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(answerFeedbackSettingsProp)) && (ok || !reflect.DeepEqual(v, answerFeedbackSettingsProp)) {
+		obj["answerFeedbackSettings"] = answerFeedbackSettingsProp
+	}
+	personalizationSettingsProp, err := expandDialogflowCXAgentPersonalizationSettings(d.Get("personalization_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("personalization_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(personalizationSettingsProp)) && (ok || !reflect.DeepEqual(v, personalizationSettingsProp)) {
+		obj["personalizationSettings"] = personalizationSettingsProp
+	}
+	clientCertificateSettingsProp, err := expandDialogflowCXAgentClientCertificateSettings(d.Get("client_certificate_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("client_certificate_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(clientCertificateSettingsProp)) && (ok || !reflect.DeepEqual(v, clientCertificateSettingsProp)) {
+		obj["clientCertificateSettings"] = clientCertificateSettingsProp
+	}
 
 	return obj, nil
 }
@@ -567,5 +603,116 @@ func expandDialogflowCXAgentGenAppBuilderSettings(v interface{}, d tpgresource.T
 }
 
 func expandDialogflowCXAgentGenAppBuilderSettingsEngine(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXAgentStartPlaybook(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXAgentEnableMultiLanguageTraining(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXAgentLocked(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXAgentAnswerFeedbackSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableAnswerFeedback, err := expandDialogflowCXAgentAnswerFeedbackSettingsEnableAnswerFeedback(original["enable_answer_feedback"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableAnswerFeedback); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableAnswerFeedback"] = transformedEnableAnswerFeedback
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXAgentAnswerFeedbackSettingsEnableAnswerFeedback(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXAgentPersonalizationSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDefaultEndUserMetadata, err := expandDialogflowCXAgentPersonalizationSettingsDefaultEndUserMetadata(original["default_end_user_metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultEndUserMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultEndUserMetadata"] = transformedDefaultEndUserMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXAgentPersonalizationSettingsDefaultEndUserMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandDialogflowCXAgentClientCertificateSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSslCertificate, err := expandDialogflowCXAgentClientCertificateSettingsSslCertificate(original["ssl_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSslCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sslCertificate"] = transformedSslCertificate
+	}
+
+	transformedPrivateKey, err := expandDialogflowCXAgentClientCertificateSettingsPrivateKey(original["private_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateKey"] = transformedPrivateKey
+	}
+
+	transformedPassphrase, err := expandDialogflowCXAgentClientCertificateSettingsPassphrase(original["passphrase"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPassphrase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["passphrase"] = transformedPassphrase
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXAgentClientCertificateSettingsSslCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXAgentClientCertificateSettingsPrivateKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXAgentClientCertificateSettingsPassphrase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

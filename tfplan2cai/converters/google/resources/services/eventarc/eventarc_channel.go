@@ -62,11 +62,11 @@ func GetEventarcChannelApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
-	providerProp, err := expandEventarcChannelThirdPartyProvider(d.Get("third_party_provider"), d, config)
+	thirdPartyProviderProp, err := expandEventarcChannelThirdPartyProvider(d.Get("third_party_provider"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("third_party_provider"); !tpgresource.IsEmptyValue(reflect.ValueOf(providerProp)) && (ok || !reflect.DeepEqual(v, providerProp)) {
-		obj["provider"] = providerProp
+	} else if v, ok := d.GetOkExists("third_party_provider"); !tpgresource.IsEmptyValue(reflect.ValueOf(thirdPartyProviderProp)) && (ok || !reflect.DeepEqual(v, thirdPartyProviderProp)) {
+		obj["provider"] = thirdPartyProviderProp
 	}
 	cryptoKeyNameProp, err := expandEventarcChannelCryptoKeyName(d.Get("crypto_key_name"), d, config)
 	if err != nil {

@@ -56,11 +56,11 @@ func GetDocumentAIProcessorDefaultVersionCaiObject(d tpgresource.TerraformResour
 
 func GetDocumentAIProcessorDefaultVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	defaultProcessorVersionProp, err := expandDocumentAIProcessorDefaultVersionVersion(d.Get("version"), d, config)
+	versionProp, err := expandDocumentAIProcessorDefaultVersionVersion(d.Get("version"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("version"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultProcessorVersionProp)) && (ok || !reflect.DeepEqual(v, defaultProcessorVersionProp)) {
-		obj["defaultProcessorVersion"] = defaultProcessorVersionProp
+	} else if v, ok := d.GetOkExists("version"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionProp)) && (ok || !reflect.DeepEqual(v, versionProp)) {
+		obj["defaultProcessorVersion"] = versionProp
 	}
 	processorProp, err := expandDocumentAIProcessorDefaultVersionProcessor(d.Get("processor"), d, config)
 	if err != nil {
