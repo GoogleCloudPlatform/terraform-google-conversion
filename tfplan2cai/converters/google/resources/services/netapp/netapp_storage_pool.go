@@ -146,6 +146,12 @@ func GetNetappStoragePoolApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("enable_hot_tier_auto_resize"); ok || !reflect.DeepEqual(v, enableHotTierAutoResizeProp) {
 		obj["enableHotTierAutoResize"] = enableHotTierAutoResizeProp
 	}
+	qosTypeProp, err := expandNetappStoragePoolQosType(d.Get("qos_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("qos_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(qosTypeProp)) && (ok || !reflect.DeepEqual(v, qosTypeProp)) {
+		obj["qosType"] = qosTypeProp
+	}
 	effectiveLabelsProp, err := expandNetappStoragePoolEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -213,6 +219,10 @@ func expandNetappStoragePoolHotTierSizeGib(v interface{}, d tpgresource.Terrafor
 }
 
 func expandNetappStoragePoolEnableHotTierAutoResize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolQosType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
