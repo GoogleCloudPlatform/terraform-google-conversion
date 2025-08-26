@@ -136,6 +136,12 @@ func GetCloudRunV2ServiceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("build_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(buildConfigProp)) && (ok || !reflect.DeepEqual(v, buildConfigProp)) {
 		obj["buildConfig"] = buildConfigProp
 	}
+	multiRegionSettingsProp, err := expandCloudRunV2ServiceMultiRegionSettings(d.Get("multi_region_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("multi_region_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(multiRegionSettingsProp)) && (ok || !reflect.DeepEqual(v, multiRegionSettingsProp)) {
+		obj["multiRegionSettings"] = multiRegionSettingsProp
+	}
 	iapEnabledProp, err := expandCloudRunV2ServiceIapEnabled(d.Get("iap_enabled"), d, config)
 	if err != nil {
 		return nil, err
@@ -1958,6 +1964,40 @@ func expandCloudRunV2ServiceBuildConfigEnvironmentVariables(v interface{}, d tpg
 }
 
 func expandCloudRunV2ServiceBuildConfigServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceMultiRegionSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRegions, err := expandCloudRunV2ServiceMultiRegionSettingsRegions(original["regions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRegions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["regions"] = transformedRegions
+	}
+
+	transformedMultiRegionId, err := expandCloudRunV2ServiceMultiRegionSettingsMultiRegionId(original["multi_region_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMultiRegionId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["multiRegionId"] = transformedMultiRegionId
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2ServiceMultiRegionSettingsRegions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceMultiRegionSettingsMultiRegionId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
