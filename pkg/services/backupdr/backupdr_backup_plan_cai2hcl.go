@@ -71,7 +71,7 @@ func (c *BackupDRBackupPlanCai2hclConverter) convertResourceData(asset caiasset.
 
 	hclData := make(map[string]interface{})
 
-	res, err = resourceBackupDRBackupPlanTgcDecoder(d, config, res)
+	res, hclData, err = resourceBackupDRBackupPlanTgcDecoder(d, config, res, hclData)
 	if err != nil {
 		return nil, err
 	}
@@ -314,7 +314,7 @@ func flattenBackupDRBackupPlanLogRetentionDays(v interface{}, d *schema.Resource
 	return v // let terraform core handle it otherwise
 }
 
-func resourceBackupDRBackupPlanTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+func resourceBackupDRBackupPlanTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	// startHourOfDay is missing in CAI, but has default value 0 in API object
 	if rules, ok := res["backupRules"].([]interface{}); ok {
 		for _, raw := range rules {
@@ -334,5 +334,5 @@ func resourceBackupDRBackupPlanTgcDecoder(d *schema.ResourceData, meta interface
 		}
 	}
 
-	return res, nil
+	return res, hclData, nil
 }

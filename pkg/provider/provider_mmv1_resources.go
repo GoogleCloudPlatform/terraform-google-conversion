@@ -10,6 +10,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
@@ -25,7 +26,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 35
+// Generated resources: 38
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                          alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                         alloydb.ResourceAlloydbCluster(),
@@ -43,6 +44,9 @@ var generatedResources = map[string]*schema.Resource{
 	"google_binary_authorization_attestor":           binaryauthorization.ResourceBinaryAuthorizationAttestor(),
 	"google_blockchain_node_engine_blockchain_nodes": blockchainnodeengine.ResourceBlockchainNodeEngineBlockchainNodes(),
 	"google_certificate_manager_certificate":         certificatemanager.ResourceCertificateManagerCertificate(),
+	"google_cloud_asset_folder_feed":                 cloudasset.ResourceCloudAssetFolderFeed(),
+	"google_cloud_asset_organization_feed":           cloudasset.ResourceCloudAssetOrganizationFeed(),
+	"google_cloud_asset_project_feed":                cloudasset.ResourceCloudAssetProjectFeed(),
 	"google_cloudfunctions2_function":                cloudfunctions2.ResourceCloudfunctions2function(),
 	"google_compute_address":                         compute.ResourceComputeAddress(),
 	"google_compute_autoscaler":                      compute.ResourceComputeAutoscaler(),

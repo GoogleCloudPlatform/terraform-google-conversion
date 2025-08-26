@@ -71,7 +71,7 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 
 	hclData := make(map[string]interface{})
 
-	res, err = resourceComputeBackendServiceTgcDecoder(d, config, res)
+	res, hclData, err = resourceComputeBackendServiceTgcDecoder(d, config, res, hclData)
 	if err != nil {
 		return nil, err
 	}
@@ -1854,7 +1854,7 @@ func flattenComputeBackendServiceParamsResourceManagerTags(v interface{}, d *sch
 	return v
 }
 
-func resourceComputeBackendServiceTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+func resourceComputeBackendServiceTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	if v, ok := res["backends"]; ok {
 		backends := v.([]interface{})
 		for _, vBackend := range backends {
@@ -1872,7 +1872,7 @@ func resourceComputeBackendServiceTgcDecoder(d *schema.ResourceData, meta interf
 		}
 	}
 
-	return res, nil
+	return res, hclData, nil
 }
 func resourceComputeBackendServiceDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
 	// Requests with consistentHash will error for specific values of
