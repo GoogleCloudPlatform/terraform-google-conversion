@@ -71,7 +71,7 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 
 	hclData := make(map[string]interface{})
 
-	res, err = resourceComputeSubnetworkTgcDecoder(d, config, res)
+	res, hclData, err = resourceComputeSubnetworkTgcDecoder(d, config, res, hclData)
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +279,7 @@ func flattenComputeSubnetworkParamsResourceManagerTags(v interface{}, d *schema.
 	return v
 }
 
-func resourceComputeSubnetworkTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+func resourceComputeSubnetworkTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	// In the GET API response, the field stackType is not present.
 	// In CAI asset,  "stackType" has value "UNSPECIFIED_STACK_TYPE"
 	// So set the value to empty string in this case.
@@ -290,5 +290,5 @@ func resourceComputeSubnetworkTgcDecoder(d *schema.ResourceData, meta interface{
 		}
 	}
 
-	return res, nil
+	return res, hclData, nil
 }
