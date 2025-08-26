@@ -133,6 +133,12 @@ func GetFirestoreIndexApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("multikey"); !tpgresource.IsEmptyValue(reflect.ValueOf(multikeyProp)) && (ok || !reflect.DeepEqual(v, multikeyProp)) {
 		obj["multikey"] = multikeyProp
 	}
+	uniqueProp, err := expandFirestoreIndexUnique(d.Get("unique"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("unique"); !tpgresource.IsEmptyValue(reflect.ValueOf(uniqueProp)) && (ok || !reflect.DeepEqual(v, uniqueProp)) {
+		obj["unique"] = uniqueProp
+	}
 	fieldsProp, err := expandFirestoreIndexFields(d.Get("fields"), d, config)
 	if err != nil {
 		return nil, err
@@ -174,6 +180,10 @@ func expandFirestoreIndexDensity(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandFirestoreIndexMultikey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexUnique(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
