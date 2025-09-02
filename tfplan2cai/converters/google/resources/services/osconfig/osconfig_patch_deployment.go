@@ -380,7 +380,7 @@ func expandOSConfigPatchDeploymentPatchConfigYum(v interface{}, d tpgresource.Te
 	transformedMinimal, err := expandOSConfigPatchDeploymentPatchConfigYumMinimal(original["minimal"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMinimal); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["minimal"] = transformedMinimal
 	}
 
