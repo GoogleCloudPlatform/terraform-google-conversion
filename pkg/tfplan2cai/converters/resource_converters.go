@@ -24,6 +24,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuild"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
@@ -56,6 +58,9 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_cloud_asset_folder_feed":                 cloudasset.CloudAssetFolderFeedTfplan2caiConverter(),
 	"google_cloud_asset_organization_feed":           cloudasset.CloudAssetOrganizationFeedTfplan2caiConverter(),
 	"google_cloud_asset_project_feed":                cloudasset.CloudAssetProjectFeedTfplan2caiConverter(),
+	"google_cloudbuild_bitbucket_server_config":      cloudbuild.CloudBuildBitbucketServerConfigTfplan2caiConverter(),
+	"google_cloudbuildv2_connection":                 cloudbuildv2.Cloudbuildv2ConnectionTfplan2caiConverter(),
+	"google_cloudbuildv2_repository":                 cloudbuildv2.Cloudbuildv2RepositoryTfplan2caiConverter(),
 	"google_cloudfunctions2_function":                cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
 	"google_compute_address":                         compute.ComputeAddressTfplan2caiConverter(),
 	"google_compute_autoscaler":                      compute.ComputeAutoscalerTfplan2caiConverter(),

@@ -11,6 +11,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuild"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
@@ -26,7 +28,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 38
+// Generated resources: 41
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                          alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                         alloydb.ResourceAlloydbCluster(),
@@ -47,6 +49,9 @@ var generatedResources = map[string]*schema.Resource{
 	"google_cloud_asset_folder_feed":                 cloudasset.ResourceCloudAssetFolderFeed(),
 	"google_cloud_asset_organization_feed":           cloudasset.ResourceCloudAssetOrganizationFeed(),
 	"google_cloud_asset_project_feed":                cloudasset.ResourceCloudAssetProjectFeed(),
+	"google_cloudbuild_bitbucket_server_config":      cloudbuild.ResourceCloudBuildBitbucketServerConfig(),
+	"google_cloudbuildv2_connection":                 cloudbuildv2.ResourceCloudbuildv2Connection(),
+	"google_cloudbuildv2_repository":                 cloudbuildv2.ResourceCloudbuildv2Repository(),
 	"google_cloudfunctions2_function":                cloudfunctions2.ResourceCloudfunctions2function(),
 	"google_compute_address":                         compute.ResourceComputeAddress(),
 	"google_compute_autoscaler":                      compute.ResourceComputeAutoscaler(),
