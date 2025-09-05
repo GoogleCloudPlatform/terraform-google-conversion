@@ -27,6 +27,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuild"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuildv2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
@@ -110,6 +111,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	cloudbuildv2.Cloudbuildv2RepositoryAssetType: {
 		"Default": cloudbuildv2.NewCloudbuildv2RepositoryCai2hclConverter(provider),
+	},
+	clouddeploy.ClouddeployCustomTargetTypeAssetType: {
+		"Default": clouddeploy.NewClouddeployCustomTargetTypeCai2hclConverter(provider),
 	},
 	cloudfunctions2.Cloudfunctions2FunctionAssetType: {
 		"Default": cloudfunctions2.NewCloudfunctions2functionCai2hclConverter(provider),
