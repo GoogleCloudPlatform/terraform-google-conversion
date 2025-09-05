@@ -90,16 +90,5 @@ func flattenCloudbuildv2RepositoryRemoteUri(v interface{}, d *schema.ResourceDat
 }
 
 func flattenCloudbuildv2RepositoryAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return v
-	}
-
-	transformed := make(map[string]interface{})
-	if l, ok := d.GetOkExists("annotations"); ok {
-		for k := range l.(map[string]interface{}) {
-			transformed[k] = v.(map[string]interface{})[k]
-		}
-	}
-
-	return transformed
+	return v
 }

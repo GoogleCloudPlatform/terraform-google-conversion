@@ -13,6 +13,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuild"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuildv2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
@@ -28,7 +29,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 41
+// Generated resources: 42
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                          alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                         alloydb.ResourceAlloydbCluster(),
@@ -52,6 +53,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_cloudbuild_bitbucket_server_config":      cloudbuild.ResourceCloudBuildBitbucketServerConfig(),
 	"google_cloudbuildv2_connection":                 cloudbuildv2.ResourceCloudbuildv2Connection(),
 	"google_cloudbuildv2_repository":                 cloudbuildv2.ResourceCloudbuildv2Repository(),
+	"google_clouddeploy_custom_target_type":          clouddeploy.ResourceClouddeployCustomTargetType(),
 	"google_cloudfunctions2_function":                cloudfunctions2.ResourceCloudfunctions2function(),
 	"google_compute_address":                         compute.ResourceComputeAddress(),
 	"google_compute_autoscaler":                      compute.ResourceComputeAutoscaler(),
