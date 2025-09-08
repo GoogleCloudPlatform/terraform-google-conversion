@@ -3,8 +3,8 @@ package networksecurity
 import (
 	"errors"
 	"fmt"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cai2hcl/common"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/cai2hcl/common"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v5/caiasset"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	netsecapi "google.golang.org/api/networksecurity/v1"
 )
