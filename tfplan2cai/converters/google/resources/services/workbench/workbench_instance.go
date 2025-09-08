@@ -57,6 +57,7 @@ func WorkbenchInstanceLabelsDiffSuppress(k, old, new string, d *schema.ResourceD
 var WorkbenchInstanceSettableUnmodifiableDefaultMetadata = []string{
 	"install-monitoring-agent",
 	"serial-port-logging-enable",
+	"report-notebook-metrics",
 }
 
 var WorkbenchInstanceEUCProvidedAdditionalMetadata = []string{
@@ -115,7 +116,6 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"proxy-user-mail",
 	"report-container-health",
 	"report-event-url",
-	"report-notebook-metrics",
 	"report-system-health",
 	"report-system-status",
 	"resource-url",
