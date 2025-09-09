@@ -22,7 +22,9 @@ type BackendAuthenticationConfigConverter struct {
 
 // NewBackendAuthenticationConfigConverter returns an HCL converter.
 func NewBackendAuthenticationConfigConverter(provider *schema.Provider) common.Converter {
-	schema := provider.ResourcesMap[BackendAuthenticationConfigSchemaName].Schema
+	// NOTE(laurenzk): Hardcoded BAC-schema used to avoid incrementing `terraform-provider-google-beta`
+	// version. This is to minimize impact on existing resources. Is removed from v6.
+	schema := getBACSchema()
 
 	return &BackendAuthenticationConfigConverter{
 		name:   BackendAuthenticationConfigSchemaName,
@@ -86,4 +88,66 @@ func flattenBackendAuthenticationConfig(resource *caiasset.AssetResource) (map[s
 	result["location"] = flattenLocation(resourceData["name"].(string))
 
 	return result, nil
+}
+
+func getBACSchema() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"name": {
+			Type:     schema.TypeString,
+			Required: true,
+			ForceNew: true,
+		},
+		"client_certificate": {
+			Type:     schema.TypeString,
+			Optional: true,
+			ForceNew: true,
+		},
+		"description": {
+			Type:     schema.TypeString,
+			Optional: true,
+		},
+		"labels": {
+			Type:     schema.TypeMap,
+			Optional: true,
+			Elem:     &schema.Schema{Type: schema.TypeString},
+		},
+		"location": {
+			Type:     schema.TypeString,
+			Optional: true,
+			Default:  "global",
+		},
+		"trust_config": {
+			Type:     schema.TypeString,
+			Optional: true,
+			ForceNew: true,
+		},
+		"well_known_roots": {
+			Type:     schema.TypeString,
+			Optional: true,
+		},
+		"create_time": {
+			Type:     schema.TypeString,
+			Computed: true,
+		},
+		"effective_labels": {
+			Type:     schema.TypeMap,
+			Computed: true,
+			Elem:     &schema.Schema{Type: schema.TypeString},
+		},
+		"terraform_labels": {
+			Type:     schema.TypeMap,
+			Computed: true,
+			Elem:     &schema.Schema{Type: schema.TypeString},
+		},
+		"update_time": {
+			Type:     schema.TypeString,
+			Computed: true,
+		},
+		"project": {
+			Type:     schema.TypeString,
+			Optional: true,
+			Computed: true,
+			ForceNew: true,
+		},
+	}
 }
