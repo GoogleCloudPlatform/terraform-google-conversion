@@ -161,6 +161,24 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeUrlMapAssetType: {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
 	},
+	networksecurity.NetworkSecurityAddressGroupAssetType: {
+		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityAuthorizationPolicyAssetType: {
+		"Default": networksecurity.NewNetworkSecurityAuthorizationPolicyCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityClientTlsPolicyAssetType: {
+		"Default": networksecurity.NewNetworkSecurityClientTlsPolicyCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityGatewaySecurityPolicyAssetType: {
+		"Default": networksecurity.NewNetworkSecurityGatewaySecurityPolicyCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecuritySecurityProfileAssetType: {
+		"Default": networksecurity.NewNetworkSecuritySecurityProfileCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecuritySecurityProfileGroupAssetType: {
+		"Default": networksecurity.NewNetworkSecuritySecurityProfileGroupCai2hclConverter(provider),
+	},
 	networksecurity.NetworkSecurityServerTlsPolicyAssetType: {
 		"Default": networksecurity.NewNetworkSecurityServerTlsPolicyCai2hclConverter(provider),
 	},
