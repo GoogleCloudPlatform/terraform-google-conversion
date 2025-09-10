@@ -74,6 +74,12 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("consent_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(consentConfigProp)) && (ok || !reflect.DeepEqual(v, consentConfigProp)) {
 		obj["consentConfig"] = consentConfigProp
 	}
+	validationConfigProp, err := expandHealthcareFhirStoreValidationConfig(d.Get("validation_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("validation_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(validationConfigProp)) && (ok || !reflect.DeepEqual(v, validationConfigProp)) {
+		obj["validationConfig"] = validationConfigProp
+	}
 	complexDataTypeReferenceParsingProp, err := expandHealthcareFhirStoreComplexDataTypeReferenceParsing(d.Get("complex_data_type_reference_parsing"), d, config)
 	if err != nil {
 		return nil, err
@@ -254,6 +260,73 @@ func expandHealthcareFhirStoreConsentConfigAccessDeterminationLogConfigLogLevel(
 }
 
 func expandHealthcareFhirStoreConsentConfigEnforcedAdminConsents(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisableProfileValidation, err := expandHealthcareFhirStoreValidationConfigDisableProfileValidation(original["disable_profile_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableProfileValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableProfileValidation"] = transformedDisableProfileValidation
+	}
+
+	transformedEnabledImplementationGuides, err := expandHealthcareFhirStoreValidationConfigEnabledImplementationGuides(original["enabled_implementation_guides"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabledImplementationGuides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabledImplementationGuides"] = transformedEnabledImplementationGuides
+	}
+
+	transformedDisableRequiredFieldValidation, err := expandHealthcareFhirStoreValidationConfigDisableRequiredFieldValidation(original["disable_required_field_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableRequiredFieldValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableRequiredFieldValidation"] = transformedDisableRequiredFieldValidation
+	}
+
+	transformedDisableReferenceTypeValidation, err := expandHealthcareFhirStoreValidationConfigDisableReferenceTypeValidation(original["disable_reference_type_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableReferenceTypeValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableReferenceTypeValidation"] = transformedDisableReferenceTypeValidation
+	}
+
+	transformedDisableFhirpathValidation, err := expandHealthcareFhirStoreValidationConfigDisableFhirpathValidation(original["disable_fhirpath_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableFhirpathValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableFhirpathValidation"] = transformedDisableFhirpathValidation
+	}
+
+	return transformed, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigDisableProfileValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigEnabledImplementationGuides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigDisableRequiredFieldValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigDisableReferenceTypeValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigDisableFhirpathValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
