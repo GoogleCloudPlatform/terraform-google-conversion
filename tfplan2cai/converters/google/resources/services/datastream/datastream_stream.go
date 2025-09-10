@@ -2515,6 +2515,13 @@ func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHiera
 		transformed["datasetTemplate"] = transformedDatasetTemplate
 	}
 
+	transformedProjectId, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsProjectId(original["project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectId"] = transformedProjectId
+	}
+
 	return transformed, nil
 }
 
@@ -2560,6 +2567,10 @@ func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHiera
 }
 
 func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplateKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
