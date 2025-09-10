@@ -30,5 +30,6 @@ func TestConvertNetworksecurity(t *testing.T) {
 		"./services/networksecurity/testdata",
 		[]string{
 			"server_tls_policy",
+			"backend_authentication_config",
 		})
 }
