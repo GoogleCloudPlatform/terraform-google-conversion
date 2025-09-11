@@ -304,6 +304,20 @@ func expandNetappVolumeExportPolicyRules(v interface{}, d tpgresource.TerraformR
 			transformed["kerberos5pReadWrite"] = transformedKerberos5pReadWrite
 		}
 
+		transformedSquashMode, err := expandNetappVolumeExportPolicyRulesSquashMode(original["squash_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSquashMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["squashMode"] = transformedSquashMode
+		}
+
+		transformedAnonUid, err := expandNetappVolumeExportPolicyRulesAnonUid(original["anon_uid"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAnonUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["anonUid"] = transformedAnonUid
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -350,6 +364,14 @@ func expandNetappVolumeExportPolicyRulesKerberos5pReadOnly(v interface{}, d tpgr
 }
 
 func expandNetappVolumeExportPolicyRulesKerberos5pReadWrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeExportPolicyRulesSquashMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeExportPolicyRulesAnonUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
