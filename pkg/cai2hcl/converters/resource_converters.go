@@ -173,6 +173,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	networksecurity.NetworkSecurityGatewaySecurityPolicyAssetType: {
 		"Default": networksecurity.NewNetworkSecurityGatewaySecurityPolicyCai2hclConverter(provider),
 	},
+	networksecurity.NetworkSecurityGatewaySecurityPolicyRuleAssetType: {
+		"Default": networksecurity.NewNetworkSecurityGatewaySecurityPolicyRuleCai2hclConverter(provider),
+	},
 	networksecurity.NetworkSecuritySecurityProfileAssetType: {
 		"Default": networksecurity.NewNetworkSecuritySecurityProfileCai2hclConverter(provider),
 	},
@@ -181,6 +184,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	networksecurity.NetworkSecurityServerTlsPolicyAssetType: {
 		"Default": networksecurity.NewNetworkSecurityServerTlsPolicyCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityUrlListAssetType: {
+		"Default": networksecurity.NewNetworkSecurityUrlListsCai2hclConverter(provider),
 	},
 	pubsub.PubsubSubscriptionAssetType: {
 		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),

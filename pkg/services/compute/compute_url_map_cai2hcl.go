@@ -756,6 +756,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbort
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -1198,6 +1201,9 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesWe
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -1295,6 +1301,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesPriority(v interface{}, d *schema.
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
@@ -1522,6 +1531,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatchR
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -1538,6 +1550,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatchR
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
@@ -1954,6 +1969,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyNumRetries(v
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -2262,6 +2280,9 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
