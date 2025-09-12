@@ -145,6 +145,9 @@ func flattenBackupDRBackupPlanBackupRulesBackupRetentionDays(v interface{}, d *s
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -275,6 +278,9 @@ func flattenBackupDRBackupPlanBackupRulesStandardScheduleBackupWindowStartHourOf
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise

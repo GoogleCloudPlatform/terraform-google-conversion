@@ -387,6 +387,9 @@ func flattenComputeBackendServiceCircuitBreakersConnectTimeoutSeconds(v interfac
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -570,6 +573,9 @@ func flattenComputeBackendServiceConsistentHashHttpCookieTtlSeconds(v interface{
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
@@ -1190,6 +1196,9 @@ func flattenComputeBackendServiceOutlierDetectionBaseEjectionTimeSeconds(v inter
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -1327,6 +1336,9 @@ func flattenComputeBackendServiceOutlierDetectionIntervalSeconds(v interface{}, 
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
@@ -1564,6 +1576,9 @@ func flattenComputeBackendServiceStrongSessionAffinityCookieTtlSeconds(v interfa
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
