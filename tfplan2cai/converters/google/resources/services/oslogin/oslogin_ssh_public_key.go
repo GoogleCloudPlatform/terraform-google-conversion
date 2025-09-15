@@ -34,7 +34,7 @@ func ResourceConverterOSLoginSSHPublicKey() cai.ResourceConverter {
 }
 
 func GetOSLoginSSHPublicKeyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//oslogin.googleapis.com/users/{{user}}/sshPublicKeys/{{fingerprint}}/{{name}}")
+	name, err := cai.AssetName(d, config, "//oslogin.googleapis.com/users/{{user}}/sshPublicKeys/{{fingerprint}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

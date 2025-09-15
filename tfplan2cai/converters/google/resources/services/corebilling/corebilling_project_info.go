@@ -34,7 +34,7 @@ func ResourceConverterCoreBillingProjectInfo() cai.ResourceConverter {
 }
 
 func GetCoreBillingProjectInfoCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//cloudbilling.googleapis.com/projects/{{project}}/billingInfo/{{name}}")
+	name, err := cai.AssetName(d, config, "//cloudbilling.googleapis.com/projects/{{project}}/billingInfo")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
