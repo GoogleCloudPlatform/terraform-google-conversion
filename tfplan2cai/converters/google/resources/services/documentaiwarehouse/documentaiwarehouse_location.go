@@ -34,7 +34,7 @@ func ResourceConverterDocumentAIWarehouseLocation() cai.ResourceConverter {
 }
 
 func GetDocumentAIWarehouseLocationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//contentwarehouse.googleapis.com/projects/{{project_number}}/locations/{{location}}:initialize/{{name}}")
+	name, err := cai.AssetName(d, config, "//contentwarehouse.googleapis.com/projects/{{project_number}}/locations/{{location}}:initialize")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
