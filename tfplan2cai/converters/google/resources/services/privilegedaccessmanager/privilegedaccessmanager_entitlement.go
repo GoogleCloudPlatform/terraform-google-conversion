@@ -362,6 +362,13 @@ func expandPrivilegedAccessManagerEntitlementPrivilegedAccessGcpIamAccessRoleBin
 			transformed["conditionExpression"] = transformedConditionExpression
 		}
 
+		transformedId, err := expandPrivilegedAccessManagerEntitlementPrivilegedAccessGcpIamAccessRoleBindingsId(original["id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["id"] = transformedId
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -372,6 +379,10 @@ func expandPrivilegedAccessManagerEntitlementPrivilegedAccessGcpIamAccessRoleBin
 }
 
 func expandPrivilegedAccessManagerEntitlementPrivilegedAccessGcpIamAccessRoleBindingsConditionExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivilegedAccessManagerEntitlementPrivilegedAccessGcpIamAccessRoleBindingsId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
