@@ -16,6 +16,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
@@ -29,7 +30,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 50
+// Generated resources: 52
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -70,6 +71,8 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_region_autoscaler":                     compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_subnetwork":                            compute.ResourceComputeSubnetwork(),
 	"google_compute_url_map":                               compute.ResourceComputeUrlMap(),
+	"google_kms_autokey_config":                            kms.ResourceKMSAutokeyConfig(),
+	"google_kms_key_handle":                                kms.ResourceKMSKeyHandle(),
 	"google_network_security_address_group":                networksecurity.ResourceNetworkSecurityAddressGroup(),
 	"google_network_security_authorization_policy":         networksecurity.ResourceNetworkSecurityAuthorizationPolicy(),
 	"google_network_security_client_tls_policy":            networksecurity.ResourceNetworkSecurityClientTlsPolicy(),

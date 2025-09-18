@@ -30,6 +30,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
@@ -160,6 +161,12 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	compute.ComputeUrlMapAssetType: {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
+	},
+	kms.KMSAutokeyConfigAssetType: {
+		"Default": kms.NewKMSAutokeyConfigCai2hclConverter(provider),
+	},
+	kms.KMSKeyHandleAssetType: {
+		"Default": kms.NewKMSKeyHandleCai2hclConverter(provider),
 	},
 	networksecurity.NetworkSecurityAddressGroupAssetType: {
 		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),
