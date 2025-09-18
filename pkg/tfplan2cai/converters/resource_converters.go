@@ -29,6 +29,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/resourcemanager"
@@ -79,6 +80,8 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_region_autoscaler":                     compute.ComputeRegionAutoscalerTfplan2caiConverter(),
 	"google_compute_subnetwork":                            compute.ComputeSubnetworkTfplan2caiConverter(),
 	"google_compute_url_map":                               compute.ComputeUrlMapTfplan2caiConverter(),
+	"google_kms_autokey_config":                            kms.KMSAutokeyConfigTfplan2caiConverter(),
+	"google_kms_key_handle":                                kms.KMSKeyHandleTfplan2caiConverter(),
 	"google_network_security_address_group":                networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),
 	"google_network_security_authorization_policy":         networksecurity.NetworkSecurityAuthorizationPolicyTfplan2caiConverter(),
 	"google_network_security_client_tls_policy":            networksecurity.NetworkSecurityClientTlsPolicyTfplan2caiConverter(),
