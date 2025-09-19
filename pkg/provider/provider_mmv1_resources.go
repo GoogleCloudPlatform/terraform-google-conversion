@@ -16,6 +16,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
@@ -30,7 +31,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 52
+// Generated resources: 55
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -71,6 +72,9 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_region_autoscaler":                     compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_subnetwork":                            compute.ResourceComputeSubnetwork(),
 	"google_compute_url_map":                               compute.ResourceComputeUrlMap(),
+	"google_filestore_backup":                              filestore.ResourceFilestoreBackup(),
+	"google_filestore_instance":                            filestore.ResourceFilestoreInstance(),
+	"google_filestore_snapshot":                            filestore.ResourceFilestoreSnapshot(),
 	"google_kms_autokey_config":                            kms.ResourceKMSAutokeyConfig(),
 	"google_kms_key_handle":                                kms.ResourceKMSKeyHandle(),
 	"google_network_security_address_group":                networksecurity.ResourceNetworkSecurityAddressGroup(),

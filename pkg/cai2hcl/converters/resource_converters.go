@@ -30,6 +30,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/pubsub"
@@ -161,6 +162,15 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	compute.ComputeUrlMapAssetType: {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
+	},
+	filestore.FilestoreBackupAssetType: {
+		"Default": filestore.NewFilestoreBackupCai2hclConverter(provider),
+	},
+	filestore.FilestoreInstanceAssetType: {
+		"Default": filestore.NewFilestoreInstanceCai2hclConverter(provider),
+	},
+	filestore.FilestoreSnapshotAssetType: {
+		"Default": filestore.NewFilestoreSnapshotCai2hclConverter(provider),
 	},
 	kms.KMSAutokeyConfigAssetType: {
 		"Default": kms.NewKMSAutokeyConfigCai2hclConverter(provider),
