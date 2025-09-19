@@ -237,6 +237,13 @@ func expandPrivilegedAccessManagerEntitlementApprovalWorkflowManualApprovalsStep
 			transformed["approverEmailRecipients"] = transformedApproverEmailRecipients
 		}
 
+		transformedId, err := expandPrivilegedAccessManagerEntitlementApprovalWorkflowManualApprovalsStepsId(original["id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["id"] = transformedId
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -275,6 +282,10 @@ func expandPrivilegedAccessManagerEntitlementApprovalWorkflowManualApprovalsStep
 
 func expandPrivilegedAccessManagerEntitlementApprovalWorkflowManualApprovalsStepsApproverEmailRecipients(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandPrivilegedAccessManagerEntitlementApprovalWorkflowManualApprovalsStepsId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
