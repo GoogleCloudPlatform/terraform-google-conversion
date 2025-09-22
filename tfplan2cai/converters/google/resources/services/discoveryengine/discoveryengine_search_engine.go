@@ -92,6 +92,12 @@ func GetDiscoveryEngineSearchEngineApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("app_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(appTypeProp)) && (ok || !reflect.DeepEqual(v, appTypeProp)) {
 		obj["appType"] = appTypeProp
 	}
+	featuresProp, err := expandDiscoveryEngineSearchEngineFeatures(d.Get("features"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("features"); !tpgresource.IsEmptyValue(reflect.ValueOf(featuresProp)) && (ok || !reflect.DeepEqual(v, featuresProp)) {
+		obj["features"] = featuresProp
+	}
 
 	return resourceDiscoveryEngineSearchEngineEncoder(d, config, obj)
 }
@@ -173,4 +179,15 @@ func expandDiscoveryEngineSearchEngineCommonConfigCompanyName(v interface{}, d t
 
 func expandDiscoveryEngineSearchEngineAppType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
