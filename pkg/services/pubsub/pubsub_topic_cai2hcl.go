@@ -82,6 +82,7 @@ func (c *PubsubTopicCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 	hclData["message_retention_duration"] = flattenPubsubTopicMessageRetentionDuration(res["messageRetentionDuration"], d, config)
 	hclData["ingestion_data_source_settings"] = flattenPubsubTopicIngestionDataSourceSettings(res["ingestionDataSourceSettings"], d, config)
 	hclData["message_transforms"] = flattenPubsubTopicMessageTransforms(res["messageTransforms"], d, config)
+	hclData["tags"] = flattenPubsubTopicTags(res["tags"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -520,5 +521,9 @@ func flattenPubsubTopicMessageTransformsJavascriptUdfCode(v interface{}, d *sche
 }
 
 func flattenPubsubTopicMessageTransformsDisabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenPubsubTopicTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
