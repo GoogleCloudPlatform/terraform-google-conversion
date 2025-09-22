@@ -250,3 +250,22 @@ func TestAccPubsubSubscription_pubsubSubscriptionMultipleSmtsExample(t *testing.
 		[]string{},
 	)
 }
+func TestAccPubsubSubscription_pubsubSubscriptionTagsExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"bigquery_config.service_account_email",
+			"bigquery_config.table",
+			"bigquery_config.use_table_schema",
+			"cloud_storage_config",
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"provider",
+		},
+		[]string{},
+	)
+}

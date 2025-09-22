@@ -201,3 +201,21 @@ func TestAccPubsubTopic_pubsubTopicMultipleSmtsExample(t *testing.T) {
 		[]string{},
 	)
 }
+func TestAccPubsubTopic_pubsubTopicTagsExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"message_retention_duration",
+			"message_storage_policy.enforce_in_transit",
+			"provider",
+			"schema_settings",
+		},
+		[]string{},
+	)
+}
