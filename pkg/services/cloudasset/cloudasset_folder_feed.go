@@ -19,7 +19,7 @@ package cloudasset
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/verify"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
 
 const CloudAssetFeedAssetType string = "cloudasset.googleapis.com/Feed"

@@ -7,7 +7,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/caiasset"
 
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"

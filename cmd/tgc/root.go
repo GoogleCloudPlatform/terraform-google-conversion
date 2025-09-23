@@ -23,9 +23,9 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/tgc/cai2hcl"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/tgc/common"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/cmd/tgc/tfplan2cai"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/cmd/tgc/cai2hcl"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/cmd/tgc/common"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/cmd/tgc/tfplan2cai"
 )
 
 const rootCmdDesc = `
