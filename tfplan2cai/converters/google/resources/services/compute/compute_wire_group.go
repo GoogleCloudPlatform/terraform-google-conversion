@@ -221,6 +221,13 @@ func expandComputeWireGroupWireProperties(v interface{}, d tpgresource.Terraform
 		transformed["faultResponse"] = transformedFaultResponse
 	}
 
+	transformedBandwidthAllocation, err := expandComputeWireGroupWirePropertiesBandwidthAllocation(original["bandwidth_allocation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBandwidthAllocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bandwidthAllocation"] = transformedBandwidthAllocation
+	}
+
 	return transformed, nil
 }
 
@@ -229,5 +236,9 @@ func expandComputeWireGroupWirePropertiesBandwidthUnmetered(v interface{}, d tpg
 }
 
 func expandComputeWireGroupWirePropertiesFaultResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeWireGroupWirePropertiesBandwidthAllocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
