@@ -74,6 +74,12 @@ func GetStorageInsightsDatasetConfigApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("retention_period_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(retentionPeriodDaysProp)) && (ok || !reflect.DeepEqual(v, retentionPeriodDaysProp)) {
 		obj["retentionPeriodDays"] = retentionPeriodDaysProp
 	}
+	activityDataRetentionPeriodDaysProp, err := expandStorageInsightsDatasetConfigActivityDataRetentionPeriodDays(d.Get("activity_data_retention_period_days"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("activity_data_retention_period_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(activityDataRetentionPeriodDaysProp)) && (ok || !reflect.DeepEqual(v, activityDataRetentionPeriodDaysProp)) {
+		obj["activityDataRetentionPeriodDays"] = activityDataRetentionPeriodDaysProp
+	}
 	identityProp, err := expandStorageInsightsDatasetConfigIdentity(d.Get("identity"), d, config)
 	if err != nil {
 		return nil, err
@@ -141,6 +147,10 @@ func expandStorageInsightsDatasetConfigIncludeNewlyCreatedBuckets(v interface{},
 }
 
 func expandStorageInsightsDatasetConfigRetentionPeriodDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandStorageInsightsDatasetConfigActivityDataRetentionPeriodDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
