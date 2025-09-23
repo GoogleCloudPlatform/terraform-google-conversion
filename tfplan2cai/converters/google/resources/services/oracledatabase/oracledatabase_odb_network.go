@@ -62,6 +62,12 @@ func GetOracleDatabaseOdbNetworkApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
+	gcpOracleZoneProp, err := expandOracleDatabaseOdbNetworkGcpOracleZone(d.Get("gcp_oracle_zone"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gcp_oracle_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(gcpOracleZoneProp)) && (ok || !reflect.DeepEqual(v, gcpOracleZoneProp)) {
+		obj["gcpOracleZone"] = gcpOracleZoneProp
+	}
 	effectiveLabelsProp, err := expandOracleDatabaseOdbNetworkEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -73,6 +79,10 @@ func GetOracleDatabaseOdbNetworkApiObject(d tpgresource.TerraformResourceData, c
 }
 
 func expandOracleDatabaseOdbNetworkNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseOdbNetworkGcpOracleZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
