@@ -86,6 +86,12 @@ func GetLookerInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("fips_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(fipsEnabledProp)) && (ok || !reflect.DeepEqual(v, fipsEnabledProp)) {
 		obj["fipsEnabled"] = fipsEnabledProp
 	}
+	geminiEnabledProp, err := expandLookerInstanceGeminiEnabled(d.Get("gemini_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gemini_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(geminiEnabledProp)) && (ok || !reflect.DeepEqual(v, geminiEnabledProp)) {
+		obj["geminiEnabled"] = geminiEnabledProp
+	}
 	maintenanceWindowProp, err := expandLookerInstanceMaintenanceWindow(d.Get("maintenance_window"), d, config)
 	if err != nil {
 		return nil, err
@@ -402,6 +408,10 @@ func expandLookerInstanceEncryptionConfigKmsKeyNameVersion(v interface{}, d tpgr
 }
 
 func expandLookerInstanceFipsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstanceGeminiEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
