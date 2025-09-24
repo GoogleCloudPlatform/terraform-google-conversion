@@ -67,6 +67,9 @@ func GetFirebaseHostingVersionApiObject(d tpgresource.TerraformResourceData, con
 }
 
 func expandFirebaseHostingVersionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -100,6 +103,9 @@ func expandFirebaseHostingVersionConfig(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandFirebaseHostingVersionConfigRewrites(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -166,6 +172,9 @@ func expandFirebaseHostingVersionConfigRewritesFunction(v interface{}, d tpgreso
 }
 
 func expandFirebaseHostingVersionConfigRewritesRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -200,6 +209,9 @@ func expandFirebaseHostingVersionConfigRewritesRunRegion(v interface{}, d tpgres
 }
 
 func expandFirebaseHostingVersionConfigRedirects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -259,6 +271,9 @@ func expandFirebaseHostingVersionConfigRedirectsLocation(v interface{}, d tpgres
 }
 
 func expandFirebaseHostingVersionConfigHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

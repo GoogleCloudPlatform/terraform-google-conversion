@@ -105,6 +105,9 @@ func expandClouddeployDeployPolicySuspended(v interface{}, d tpgresource.Terrafo
 }
 
 func expandClouddeployDeployPolicySelectors(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -134,6 +137,9 @@ func expandClouddeployDeployPolicySelectors(v interface{}, d tpgresource.Terrafo
 }
 
 func expandClouddeployDeployPolicySelectorsTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -175,6 +181,9 @@ func expandClouddeployDeployPolicySelectorsTargetLabels(v interface{}, d tpgreso
 }
 
 func expandClouddeployDeployPolicySelectorsDeliveryPipeline(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -216,6 +225,9 @@ func expandClouddeployDeployPolicySelectorsDeliveryPipelineLabels(v interface{},
 }
 
 func expandClouddeployDeployPolicyRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -238,6 +250,9 @@ func expandClouddeployDeployPolicyRules(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestriction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -290,6 +305,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionActions(v interface{}, 
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -327,6 +345,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsTimeZone(v i
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -370,6 +391,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindo
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsStartDate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -415,6 +439,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindo
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsEndDate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -460,6 +487,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindo
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -521,6 +551,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindo
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsEndTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -577,6 +610,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindo
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -617,6 +653,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindow
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindowsStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -678,6 +717,9 @@ func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindow
 }
 
 func expandClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindowsEndTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

@@ -77,6 +77,9 @@ func expandTpuV2QueuedResourceName(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandTpuV2QueuedResourceTpu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -96,6 +99,9 @@ func expandTpuV2QueuedResourceTpu(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandTpuV2QueuedResourceTpuNodeSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -140,6 +146,9 @@ func expandTpuV2QueuedResourceTpuNodeSpecNodeId(v interface{}, d tpgresource.Ter
 }
 
 func expandTpuV2QueuedResourceTpuNodeSpecNode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -192,6 +201,9 @@ func expandTpuV2QueuedResourceTpuNodeSpecNodeDescription(v interface{}, d tpgres
 }
 
 func expandTpuV2QueuedResourceTpuNodeSpecNodeNetworkConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

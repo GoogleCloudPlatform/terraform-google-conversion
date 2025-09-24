@@ -185,6 +185,9 @@ func expandColabScheduleAllowQueueing(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandColabScheduleCreateNotebookExecutionJobRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -204,6 +207,9 @@ func expandColabScheduleCreateNotebookExecutionJobRequest(v interface{}, d tpgre
 }
 
 func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -276,6 +282,9 @@ func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobDis
 }
 
 func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobDataformRepositorySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -310,6 +319,9 @@ func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobDat
 }
 
 func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobGcsNotebookSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

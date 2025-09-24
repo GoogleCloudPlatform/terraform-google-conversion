@@ -168,6 +168,9 @@ func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *tra
 }
 
 func expandAlloydbClusterEncryptionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -191,6 +194,9 @@ func expandAlloydbClusterEncryptionConfigKmsKeyName(v interface{}, d tpgresource
 }
 
 func expandAlloydbClusterNetworkConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -237,6 +243,9 @@ func expandAlloydbClusterDatabaseVersion(v interface{}, d tpgresource.TerraformR
 }
 
 func expandAlloydbClusterPscConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -260,6 +269,9 @@ func expandAlloydbClusterPscConfigPscEnabled(v interface{}, d tpgresource.Terraf
 }
 
 func expandAlloydbClusterInitialUser(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -294,6 +306,9 @@ func expandAlloydbClusterInitialUserPassword(v interface{}, d tpgresource.Terraf
 }
 
 func expandAlloydbClusterRestoreBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -317,6 +332,9 @@ func expandAlloydbClusterRestoreBackupSourceBackupName(v interface{}, d tpgresou
 }
 
 func expandAlloydbClusterRestoreContinuousBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -351,6 +369,9 @@ func expandAlloydbClusterRestoreContinuousBackupSourcePointInTime(v interface{},
 }
 
 func expandAlloydbClusterContinuousBackupConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -392,6 +413,9 @@ func expandAlloydbClusterContinuousBackupConfigRecoveryWindowDays(v interface{},
 }
 
 func expandAlloydbClusterContinuousBackupConfigEncryptionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -415,6 +439,9 @@ func expandAlloydbClusterContinuousBackupConfigEncryptionConfigKmsKeyName(v inte
 }
 
 func expandAlloydbClusterAutomatedBackupPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -502,6 +529,9 @@ func expandAlloydbClusterAutomatedBackupPolicyLabels(v interface{}, d tpgresourc
 }
 
 func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -525,6 +555,9 @@ func expandAlloydbClusterAutomatedBackupPolicyEncryptionConfigKmsKeyName(v inter
 }
 
 func expandAlloydbClusterAutomatedBackupPolicyWeeklySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -555,6 +588,9 @@ func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleDaysOfWeek(v interfa
 }
 
 func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -614,6 +650,9 @@ func expandAlloydbClusterAutomatedBackupPolicyWeeklyScheduleStartTimesNanos(v in
 }
 
 func expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetention(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -637,6 +676,9 @@ func expandAlloydbClusterAutomatedBackupPolicyTimeBasedRetentionRetentionPeriod(
 }
 
 func expandAlloydbClusterAutomatedBackupPolicyQuantityBasedRetention(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -668,6 +710,9 @@ func expandAlloydbClusterClusterType(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandAlloydbClusterSecondaryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -691,6 +736,9 @@ func expandAlloydbClusterSecondaryConfigPrimaryClusterName(v interface{}, d tpgr
 }
 
 func expandAlloydbClusterMaintenanceUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -710,6 +758,9 @@ func expandAlloydbClusterMaintenanceUpdatePolicy(v interface{}, d tpgresource.Te
 }
 
 func expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -743,6 +794,9 @@ func expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsDay(v interfac
 }
 
 func expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

@@ -67,6 +67,9 @@ func GetRedisClusterUserCreatedConnectionsApiObject(d tpgresource.TerraformResou
 }
 
 func expandRedisClusterUserCreatedConnectionsClusterEndpoints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -89,6 +92,9 @@ func expandRedisClusterUserCreatedConnectionsClusterEndpoints(v interface{}, d t
 }
 
 func expandRedisClusterUserCreatedConnectionsClusterEndpointsConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -111,6 +117,9 @@ func expandRedisClusterUserCreatedConnectionsClusterEndpointsConnections(v inter
 }
 
 func expandRedisClusterUserCreatedConnectionsClusterEndpointsConnectionsPscConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

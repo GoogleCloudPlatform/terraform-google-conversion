@@ -99,6 +99,9 @@ func expandContactCenterInsightsAnalysisRuleConversationFilter(v interface{}, d 
 }
 
 func expandContactCenterInsightsAnalysisRuleAnnotatorSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -246,6 +249,9 @@ func expandContactCenterInsightsAnalysisRuleAnnotatorSelectorRunSummarizationAnn
 }
 
 func expandContactCenterInsightsAnalysisRuleAnnotatorSelectorSummarizationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -280,6 +286,9 @@ func expandContactCenterInsightsAnalysisRuleAnnotatorSelectorSummarizationConfig
 }
 
 func expandContactCenterInsightsAnalysisRuleAnnotatorSelectorQaConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -299,6 +308,9 @@ func expandContactCenterInsightsAnalysisRuleAnnotatorSelectorQaConfig(v interfac
 }
 
 func expandContactCenterInsightsAnalysisRuleAnnotatorSelectorQaConfigScorecardList(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

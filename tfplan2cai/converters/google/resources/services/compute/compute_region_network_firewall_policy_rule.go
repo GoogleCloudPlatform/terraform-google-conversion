@@ -145,6 +145,9 @@ func expandComputeRegionNetworkFirewallPolicyRulePriority(v interface{}, d tpgre
 }
 
 func expandComputeRegionNetworkFirewallPolicyRuleMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -282,6 +285,9 @@ func expandComputeRegionNetworkFirewallPolicyRuleMatchDestNetworkScope(v interfa
 }
 
 func expandComputeRegionNetworkFirewallPolicyRuleMatchLayer4Configs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -319,6 +325,9 @@ func expandComputeRegionNetworkFirewallPolicyRuleMatchLayer4ConfigsPorts(v inter
 }
 
 func expandComputeRegionNetworkFirewallPolicyRuleMatchSrcSecureTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -412,6 +421,9 @@ func expandComputeRegionNetworkFirewallPolicyRuleTargetServiceAccounts(v interfa
 }
 
 func expandComputeRegionNetworkFirewallPolicyRuleTargetSecureTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

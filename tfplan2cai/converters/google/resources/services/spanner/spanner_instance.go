@@ -241,6 +241,9 @@ func expandSpannerInstanceProcessingUnits(v interface{}, d tpgresource.Terraform
 }
 
 func expandSpannerInstanceAutoscalingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -274,6 +277,9 @@ func expandSpannerInstanceAutoscalingConfig(v interface{}, d tpgresource.Terrafo
 }
 
 func expandSpannerInstanceAutoscalingConfigAutoscalingLimits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -330,6 +336,9 @@ func expandSpannerInstanceAutoscalingConfigAutoscalingLimitsMaxNodes(v interface
 }
 
 func expandSpannerInstanceAutoscalingConfigAutoscalingTargets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -364,6 +373,9 @@ func expandSpannerInstanceAutoscalingConfigAutoscalingTargetsStorageUtilizationP
 }
 
 func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -393,6 +405,9 @@ func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptions(v interf
 }
 
 func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaSelection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -416,6 +431,9 @@ func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaSe
 }
 
 func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -435,6 +453,9 @@ func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverrides
 }
 
 func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

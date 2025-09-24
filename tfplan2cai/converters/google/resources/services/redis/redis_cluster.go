@@ -171,6 +171,9 @@ func resourceRedisClusterEncoder(d tpgresource.TerraformResourceData, meta inter
 }
 
 func expandRedisClusterGcsSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -195,6 +198,9 @@ func expandRedisClusterGcsSourceUris(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandRedisClusterManagedBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -309,6 +315,9 @@ func expandRedisClusterNodeType(v interface{}, d tpgresource.TerraformResourceDa
 }
 
 func expandRedisClusterZoneDistributionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -343,6 +352,9 @@ func expandRedisClusterZoneDistributionConfigZone(v interface{}, d tpgresource.T
 }
 
 func expandRedisClusterPscConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -392,6 +404,9 @@ func expandRedisClusterRedisConfigs(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandRedisClusterPersistenceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -429,6 +444,9 @@ func expandRedisClusterPersistenceConfigMode(v interface{}, d tpgresource.Terraf
 }
 
 func expandRedisClusterPersistenceConfigRdbConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -463,6 +481,9 @@ func expandRedisClusterPersistenceConfigRdbConfigRdbSnapshotStartTime(v interfac
 }
 
 func expandRedisClusterPersistenceConfigAofConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -486,6 +507,9 @@ func expandRedisClusterPersistenceConfigAofConfigAppendFsync(v interface{}, d tp
 }
 
 func expandRedisClusterMaintenancePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -527,6 +551,9 @@ func expandRedisClusterMaintenancePolicyUpdateTime(v interface{}, d tpgresource.
 }
 
 func expandRedisClusterMaintenancePolicyWeeklyMaintenanceWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -571,6 +598,9 @@ func expandRedisClusterMaintenancePolicyWeeklyMaintenanceWindowDuration(v interf
 }
 
 func expandRedisClusterMaintenancePolicyWeeklyMaintenanceWindowStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -632,6 +662,9 @@ func expandRedisClusterMaintenancePolicyWeeklyMaintenanceWindowStartTimeNanos(v 
 }
 
 func expandRedisClusterCrossClusterReplicationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -683,6 +716,9 @@ func expandRedisClusterCrossClusterReplicationConfigClusterRole(v interface{}, d
 }
 
 func expandRedisClusterCrossClusterReplicationConfigPrimaryCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -717,6 +753,9 @@ func expandRedisClusterCrossClusterReplicationConfigPrimaryClusterUid(v interfac
 }
 
 func expandRedisClusterCrossClusterReplicationConfigSecondaryClusters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -754,6 +793,9 @@ func expandRedisClusterCrossClusterReplicationConfigSecondaryClustersUid(v inter
 }
 
 func expandRedisClusterCrossClusterReplicationConfigMembership(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -780,6 +822,9 @@ func expandRedisClusterCrossClusterReplicationConfigMembership(v interface{}, d 
 }
 
 func expandRedisClusterCrossClusterReplicationConfigMembershipPrimaryCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -814,6 +859,9 @@ func expandRedisClusterCrossClusterReplicationConfigMembershipPrimaryClusterUid(
 }
 
 func expandRedisClusterCrossClusterReplicationConfigMembershipSecondaryClusters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

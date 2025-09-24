@@ -93,6 +93,9 @@ func expandDialogflowFulfillmentEnabled(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandDialogflowFulfillmentFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -119,6 +122,9 @@ func expandDialogflowFulfillmentFeaturesType(v interface{}, d tpgresource.Terraf
 }
 
 func expandDialogflowFulfillmentGenericWebService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

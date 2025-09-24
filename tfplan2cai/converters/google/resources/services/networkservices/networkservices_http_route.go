@@ -113,6 +113,9 @@ func expandNetworkServicesHttpRouteGateways(v interface{}, d tpgresource.Terrafo
 }
 
 func expandNetworkServicesHttpRouteRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -142,6 +145,9 @@ func expandNetworkServicesHttpRouteRules(v interface{}, d tpgresource.TerraformR
 }
 
 func expandNetworkServicesHttpRouteRulesMatches(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -215,6 +221,9 @@ func expandNetworkServicesHttpRouteRulesMatchesRegexMatch(v interface{}, d tpgre
 }
 
 func expandNetworkServicesHttpRouteRulesMatchesQueryParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -274,6 +283,9 @@ func expandNetworkServicesHttpRouteRulesMatchesQueryParametersPresentMatch(v int
 }
 
 func expandNetworkServicesHttpRouteRulesMatchesHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -373,6 +385,9 @@ func expandNetworkServicesHttpRouteRulesMatchesHeadersSuffixMatch(v interface{},
 }
 
 func expandNetworkServicesHttpRouteRulesMatchesHeadersRangeMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -407,6 +422,9 @@ func expandNetworkServicesHttpRouteRulesMatchesHeadersRangeMatchEnd(v interface{
 }
 
 func expandNetworkServicesHttpRouteRulesAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -489,6 +507,9 @@ func expandNetworkServicesHttpRouteRulesAction(v interface{}, d tpgresource.Terr
 }
 
 func expandNetworkServicesHttpRouteRulesActionDestinations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -526,6 +547,9 @@ func expandNetworkServicesHttpRouteRulesActionDestinationsWeight(v interface{}, 
 }
 
 func expandNetworkServicesHttpRouteRulesActionRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -615,6 +639,9 @@ func expandNetworkServicesHttpRouteRulesActionRedirectPortRedirect(v interface{}
 }
 
 func expandNetworkServicesHttpRouteRulesActionFaultInjectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -641,6 +668,9 @@ func expandNetworkServicesHttpRouteRulesActionFaultInjectionPolicy(v interface{}
 }
 
 func expandNetworkServicesHttpRouteRulesActionFaultInjectionPolicyDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -675,6 +705,9 @@ func expandNetworkServicesHttpRouteRulesActionFaultInjectionPolicyDelayPercentag
 }
 
 func expandNetworkServicesHttpRouteRulesActionFaultInjectionPolicyAbort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -709,6 +742,9 @@ func expandNetworkServicesHttpRouteRulesActionFaultInjectionPolicyAbortPercentag
 }
 
 func expandNetworkServicesHttpRouteRulesActionRequestHeaderModifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -768,6 +804,9 @@ func expandNetworkServicesHttpRouteRulesActionRequestHeaderModifierRemove(v inte
 }
 
 func expandNetworkServicesHttpRouteRulesActionResponseHeaderModifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -827,6 +866,9 @@ func expandNetworkServicesHttpRouteRulesActionResponseHeaderModifierRemove(v int
 }
 
 func expandNetworkServicesHttpRouteRulesActionUrlRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -865,6 +907,9 @@ func expandNetworkServicesHttpRouteRulesActionTimeout(v interface{}, d tpgresour
 }
 
 func expandNetworkServicesHttpRouteRulesActionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -910,6 +955,9 @@ func expandNetworkServicesHttpRouteRulesActionRetryPolicyPerTryTimeout(v interfa
 }
 
 func expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -929,6 +977,9 @@ func expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicy(v interface{},
 }
 
 func expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicyDestination(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -963,6 +1014,9 @@ func expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicyDestinationWeig
 }
 
 func expandNetworkServicesHttpRouteRulesActionCorsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

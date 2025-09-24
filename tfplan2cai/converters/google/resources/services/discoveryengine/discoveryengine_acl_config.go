@@ -67,6 +67,9 @@ func GetDiscoveryEngineAclConfigApiObject(d tpgresource.TerraformResourceData, c
 }
 
 func expandDiscoveryEngineAclConfigIdpConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -97,6 +100,9 @@ func expandDiscoveryEngineAclConfigIdpConfigIdpType(v interface{}, d tpgresource
 }
 
 func expandDiscoveryEngineAclConfigIdpConfigExternalIdpConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

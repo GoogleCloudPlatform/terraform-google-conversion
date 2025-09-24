@@ -144,6 +144,9 @@ func expandMemcacheInstanceMemcacheVersion(v interface{}, d tpgresource.Terrafor
 }
 
 func expandMemcacheInstanceNodeConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -178,6 +181,9 @@ func expandMemcacheInstanceNodeConfigMemorySizeMb(v interface{}, d tpgresource.T
 }
 
 func expandMemcacheInstanceMemcacheParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -219,6 +225,9 @@ func expandMemcacheInstanceMemcacheParametersParams(v interface{}, d tpgresource
 }
 
 func expandMemcacheInstanceMaintenancePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -271,6 +280,9 @@ func expandMemcacheInstanceMaintenancePolicyDescription(v interface{}, d tpgreso
 }
 
 func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -315,6 +327,9 @@ func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowDuration(v in
 }
 
 func expandMemcacheInstanceMaintenancePolicyWeeklyMaintenanceWindowStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil

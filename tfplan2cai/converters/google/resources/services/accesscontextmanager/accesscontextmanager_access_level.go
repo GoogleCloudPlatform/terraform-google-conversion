@@ -110,6 +110,9 @@ func expandAccessContextManagerAccessLevelDescription(v interface{}, d tpgresour
 }
 
 func expandAccessContextManagerAccessLevelBasic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -140,6 +143,9 @@ func expandAccessContextManagerAccessLevelBasicCombiningFunction(v interface{}, 
 }
 
 func expandAccessContextManagerAccessLevelBasicConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -220,6 +226,9 @@ func expandAccessContextManagerAccessLevelBasicConditionsNegate(v interface{}, d
 }
 
 func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -286,6 +295,9 @@ func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyAllowedDevi
 }
 
 func expandAccessContextManagerAccessLevelBasicConditionsDevicePolicyOsConstraints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -346,6 +358,9 @@ func expandAccessContextManagerAccessLevelBasicConditionsRegions(v interface{}, 
 }
 
 func expandAccessContextManagerAccessLevelBasicConditionsVpcNetworkSources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -368,6 +383,9 @@ func expandAccessContextManagerAccessLevelBasicConditionsVpcNetworkSources(v int
 }
 
 func expandAccessContextManagerAccessLevelBasicConditionsVpcNetworkSourcesVpcSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -402,6 +420,9 @@ func expandAccessContextManagerAccessLevelBasicConditionsVpcNetworkSourcesVpcSub
 }
 
 func expandAccessContextManagerAccessLevelCustom(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -421,6 +442,9 @@ func expandAccessContextManagerAccessLevelCustom(v interface{}, d tpgresource.Te
 }
 
 func expandAccessContextManagerAccessLevelCustomExpr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

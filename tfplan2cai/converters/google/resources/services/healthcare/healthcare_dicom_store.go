@@ -89,6 +89,9 @@ func expandHealthcareDicomStoreName(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandHealthcareDicomStoreNotificationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -123,6 +126,9 @@ func expandHealthcareDicomStoreNotificationConfigSendForBulkImport(v interface{}
 }
 
 func expandHealthcareDicomStoreStreamConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -145,6 +151,9 @@ func expandHealthcareDicomStoreStreamConfigs(v interface{}, d tpgresource.Terraf
 }
 
 func expandHealthcareDicomStoreStreamConfigsBigqueryDestination(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

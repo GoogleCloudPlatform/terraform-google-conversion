@@ -136,6 +136,9 @@ func expandComputeReservationSpecificReservationRequired(v interface{}, d tpgres
 }
 
 func expandComputeReservationShareSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -206,6 +209,9 @@ func expandComputeReservationShareSettingsProjects(v interface{}, d tpgresource.
 }
 
 func expandComputeReservationSpecificReservation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -254,6 +260,9 @@ func expandComputeReservationSpecificReservationInUseCount(v interface{}, d tpgr
 }
 
 func expandComputeReservationSpecificReservationInstanceProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -309,6 +318,9 @@ func expandComputeReservationSpecificReservationInstancePropertiesMinCpuPlatform
 }
 
 func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerators(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -346,6 +358,9 @@ func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerat
 }
 
 func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -395,6 +410,9 @@ func expandComputeReservationDeleteAtTime(v interface{}, d tpgresource.Terraform
 }
 
 func expandComputeReservationDeleteAfterDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -429,6 +447,9 @@ func expandComputeReservationDeleteAfterDurationNanos(v interface{}, d tpgresour
 }
 
 func expandComputeReservationReservationSharingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

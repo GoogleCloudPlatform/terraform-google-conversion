@@ -165,6 +165,9 @@ func expandBigQueryRoutineLanguage(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandBigQueryRoutineArguments(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -280,6 +283,9 @@ func expandBigQueryRoutineSecurityMode(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandBigQueryRoutineSparkOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -409,6 +415,9 @@ func expandBigQueryRoutineSparkOptionsMainClass(v interface{}, d tpgresource.Ter
 }
 
 func expandBigQueryRoutineRemoteFunctionOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

@@ -77,6 +77,9 @@ func expandStorageControlOrganizationIntelligenceConfigEditionConfig(v interface
 }
 
 func expandStorageControlOrganizationIntelligenceConfigFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -117,6 +120,9 @@ func expandStorageControlOrganizationIntelligenceConfigFilter(v interface{}, d t
 }
 
 func expandStorageControlOrganizationIntelligenceConfigFilterExcludedCloudStorageBuckets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -140,6 +146,9 @@ func expandStorageControlOrganizationIntelligenceConfigFilterExcludedCloudStorag
 }
 
 func expandStorageControlOrganizationIntelligenceConfigFilterIncludedCloudStorageBuckets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -163,6 +172,9 @@ func expandStorageControlOrganizationIntelligenceConfigFilterIncludedCloudStorag
 }
 
 func expandStorageControlOrganizationIntelligenceConfigFilterExcludedCloudStorageLocations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -186,6 +198,9 @@ func expandStorageControlOrganizationIntelligenceConfigFilterExcludedCloudStorag
 }
 
 func expandStorageControlOrganizationIntelligenceConfigFilterIncludedCloudStorageLocations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

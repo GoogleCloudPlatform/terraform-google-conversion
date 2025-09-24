@@ -220,6 +220,9 @@ func resourceComputeRegionDiskEncoder(d tpgresource.TerraformResourceData, meta 
 }
 
 func expandComputeRegionDiskDiskEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -276,6 +279,9 @@ func expandComputeRegionDiskDiskEncryptionKeyKmsKeyName(v interface{}, d tpgreso
 }
 
 func expandComputeRegionDiskSourceSnapshotEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -369,6 +375,9 @@ func expandComputeRegionDiskSourceDisk(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandComputeRegionDiskAsyncPrimaryDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -393,6 +402,9 @@ func expandComputeRegionDiskAsyncPrimaryDiskDisk(v interface{}, d tpgresource.Te
 
 func expandComputeRegionDiskGuestOsFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

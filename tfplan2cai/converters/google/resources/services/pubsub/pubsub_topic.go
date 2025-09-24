@@ -130,6 +130,9 @@ func expandPubsubTopicKmsKeyName(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandPubsubTopicMessageStoragePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -165,6 +168,9 @@ func expandPubsubTopicMessageStoragePolicyEnforceInTransit(v interface{}, d tpgr
 }
 
 func expandPubsubTopicSchemaSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -203,6 +209,9 @@ func expandPubsubTopicMessageRetentionDuration(v interface{}, d tpgresource.Terr
 }
 
 func expandPubsubTopicIngestionDataSourceSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -257,6 +266,9 @@ func expandPubsubTopicIngestionDataSourceSettings(v interface{}, d tpgresource.T
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsAwsKinesis(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -313,6 +325,9 @@ func expandPubsubTopicIngestionDataSourceSettingsAwsKinesisGcpServiceAccount(v i
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsCloudStorage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -371,6 +386,9 @@ func expandPubsubTopicIngestionDataSourceSettingsCloudStorageBucket(v interface{
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -394,6 +412,9 @@ func expandPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormatDelimiter
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsCloudStorageAvroFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -409,6 +430,9 @@ func expandPubsubTopicIngestionDataSourceSettingsCloudStorageAvroFormat(v interf
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsCloudStoragePubsubAvroFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -432,6 +456,9 @@ func expandPubsubTopicIngestionDataSourceSettingsCloudStorageMatchGlob(v interfa
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsPlatformLogsSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -455,6 +482,9 @@ func expandPubsubTopicIngestionDataSourceSettingsPlatformLogsSettingsSeverity(v 
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsAzureEventHubs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -544,6 +574,9 @@ func expandPubsubTopicIngestionDataSourceSettingsAzureEventHubsGcpServiceAccount
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsAwsMsk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -600,6 +633,9 @@ func expandPubsubTopicIngestionDataSourceSettingsAwsMskGcpServiceAccount(v inter
 }
 
 func expandPubsubTopicIngestionDataSourceSettingsConfluentCloud(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -667,6 +703,9 @@ func expandPubsubTopicIngestionDataSourceSettingsConfluentCloudGcpServiceAccount
 }
 
 func expandPubsubTopicMessageTransforms(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -696,6 +735,9 @@ func expandPubsubTopicMessageTransforms(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandPubsubTopicMessageTransformsJavascriptUdf(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

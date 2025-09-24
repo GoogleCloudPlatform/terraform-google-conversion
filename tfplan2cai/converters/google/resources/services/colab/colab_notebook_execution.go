@@ -119,6 +119,9 @@ func expandColabNotebookExecutionDisplayName(v interface{}, d tpgresource.Terraf
 }
 
 func expandColabNotebookExecutionDataformRepositorySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -153,6 +156,9 @@ func expandColabNotebookExecutionDataformRepositorySourceCommitSha(v interface{}
 }
 
 func expandColabNotebookExecutionGcsNotebookSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -187,6 +193,9 @@ func expandColabNotebookExecutionGcsNotebookSourceGeneration(v interface{}, d tp
 }
 
 func expandColabNotebookExecutionDirectNotebookSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

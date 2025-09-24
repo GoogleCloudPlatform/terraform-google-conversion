@@ -83,6 +83,9 @@ func expandApihubCurationDisplayName(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandApihubCurationEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -102,6 +105,9 @@ func expandApihubCurationEndpoint(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandApihubCurationEndpointApplicationIntegrationEndpointDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

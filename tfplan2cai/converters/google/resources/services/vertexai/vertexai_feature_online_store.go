@@ -91,6 +91,9 @@ func GetVertexAIFeatureOnlineStoreApiObject(d tpgresource.TerraformResourceData,
 }
 
 func expandVertexAIFeatureOnlineStoreBigtable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -110,6 +113,9 @@ func expandVertexAIFeatureOnlineStoreBigtable(v interface{}, d tpgresource.Terra
 }
 
 func expandVertexAIFeatureOnlineStoreBigtableAutoScaling(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -155,6 +161,9 @@ func expandVertexAIFeatureOnlineStoreBigtableAutoScalingCpuUtilizationTarget(v i
 }
 
 func expandVertexAIFeatureOnlineStoreOptimized(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -170,6 +179,9 @@ func expandVertexAIFeatureOnlineStoreOptimized(v interface{}, d tpgresource.Terr
 }
 
 func expandVertexAIFeatureOnlineStoreDedicatedServingEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -211,6 +223,9 @@ func expandVertexAIFeatureOnlineStoreDedicatedServingEndpointServiceAttachment(v
 }
 
 func expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPrivateServiceConnectConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -245,6 +260,9 @@ func expandVertexAIFeatureOnlineStoreDedicatedServingEndpointPrivateServiceConne
 }
 
 func expandVertexAIFeatureOnlineStoreEmbeddingManagement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

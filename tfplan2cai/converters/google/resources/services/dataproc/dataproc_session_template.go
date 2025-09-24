@@ -101,6 +101,9 @@ func expandDataprocSessionTemplateName(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandDataprocSessionTemplateRuntimeConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -171,6 +174,9 @@ func expandDataprocSessionTemplateRuntimeConfigEffectiveProperties(v interface{}
 }
 
 func expandDataprocSessionTemplateEnvironmentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -197,6 +203,9 @@ func expandDataprocSessionTemplateEnvironmentConfig(v interface{}, d tpgresource
 }
 
 func expandDataprocSessionTemplateEnvironmentConfigExecutionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -293,6 +302,9 @@ func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigSubnetworkUri(
 }
 
 func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -316,6 +328,9 @@ func expandDataprocSessionTemplateEnvironmentConfigExecutionConfigAuthentication
 }
 
 func expandDataprocSessionTemplateEnvironmentConfigPeripheralsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -351,6 +366,9 @@ func expandDataprocSessionTemplateEnvironmentConfigPeripheralsConfigMetastoreSer
 }
 
 func expandDataprocSessionTemplateEnvironmentConfigPeripheralsConfigSparkHistoryServerConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -374,6 +392,9 @@ func expandDataprocSessionTemplateEnvironmentConfigPeripheralsConfigSparkHistory
 }
 
 func expandDataprocSessionTemplateJupyterSession(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -408,6 +429,9 @@ func expandDataprocSessionTemplateJupyterSessionDisplayName(v interface{}, d tpg
 }
 
 func expandDataprocSessionTemplateSparkConnectSession(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil

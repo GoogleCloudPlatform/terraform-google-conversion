@@ -108,6 +108,9 @@ func expandCloudAssetFolderFeedContentType(v interface{}, d tpgresource.Terrafor
 }
 
 func expandCloudAssetFolderFeedFeedOutputConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -127,6 +130,9 @@ func expandCloudAssetFolderFeedFeedOutputConfig(v interface{}, d tpgresource.Ter
 }
 
 func expandCloudAssetFolderFeedFeedOutputConfigPubsubDestination(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -150,6 +156,9 @@ func expandCloudAssetFolderFeedFeedOutputConfigPubsubDestinationTopic(v interfac
 }
 
 func expandCloudAssetFolderFeedCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

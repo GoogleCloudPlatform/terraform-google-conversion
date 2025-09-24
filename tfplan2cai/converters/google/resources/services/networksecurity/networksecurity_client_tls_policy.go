@@ -99,6 +99,9 @@ func expandNetworkSecurityClientTlsPolicySni(v interface{}, d tpgresource.Terraf
 }
 
 func expandNetworkSecurityClientTlsPolicyClientCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -125,6 +128,9 @@ func expandNetworkSecurityClientTlsPolicyClientCertificate(v interface{}, d tpgr
 }
 
 func expandNetworkSecurityClientTlsPolicyClientCertificateGrpcEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -148,6 +154,9 @@ func expandNetworkSecurityClientTlsPolicyClientCertificateGrpcEndpointTargetUri(
 }
 
 func expandNetworkSecurityClientTlsPolicyClientCertificateCertificateProviderInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -171,6 +180,9 @@ func expandNetworkSecurityClientTlsPolicyClientCertificateCertificateProviderIns
 }
 
 func expandNetworkSecurityClientTlsPolicyServerValidationCa(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -200,6 +212,9 @@ func expandNetworkSecurityClientTlsPolicyServerValidationCa(v interface{}, d tpg
 }
 
 func expandNetworkSecurityClientTlsPolicyServerValidationCaGrpcEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -223,6 +238,9 @@ func expandNetworkSecurityClientTlsPolicyServerValidationCaGrpcEndpointTargetUri
 }
 
 func expandNetworkSecurityClientTlsPolicyServerValidationCaCertificateProviderInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
