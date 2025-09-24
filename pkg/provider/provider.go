@@ -7,11 +7,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/version"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // Provider returns a *schema.Provider.

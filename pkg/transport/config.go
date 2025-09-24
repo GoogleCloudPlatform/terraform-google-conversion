@@ -47,7 +47,7 @@ import (
 	"google.golang.org/api/cloudkms/v1"
 	"google.golang.org/api/cloudresourcemanager/v1"
 	resourceManagerV3 "google.golang.org/api/cloudresourcemanager/v3"
-	composer "google.golang.org/api/composer/v1beta1"
+	"google.golang.org/api/composer/v1beta1"
 	compute "google.golang.org/api/compute/v0.beta"
 	container "google.golang.org/api/container/v1beta1"
 	dataflow "google.golang.org/api/dataflow/v1b3"
