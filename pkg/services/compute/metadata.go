@@ -3,11 +3,10 @@ package compute
 import (
 	"encoding/json"
 	"errors"
-	"reflect"
-	"sort"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"google.golang.org/api/googleapi"
+	"reflect"
+	"sort"
 
 	compute "google.golang.org/api/compute/v0.beta"
 

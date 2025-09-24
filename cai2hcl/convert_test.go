@@ -1,9 +1,8 @@
 package cai2hcl_test
 
 import (
-	"testing"
-
 	cai2hclTesting "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/cai2hcl/testing"
+	"testing"
 )
 
 func TestConvertCompute(t *testing.T) {

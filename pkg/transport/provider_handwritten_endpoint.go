@@ -1,8 +1,8 @@
 package transport
 
 import (
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
 
 // For generated resources, endpoint entries live in product-specific provider
