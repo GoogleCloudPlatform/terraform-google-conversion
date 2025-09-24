@@ -241,6 +241,9 @@ func expandDataFusionInstanceDataprocServiceAccount(v interface{}, d tpgresource
 }
 
 func expandDataFusionInstanceNetworkConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -293,6 +296,9 @@ func expandDataFusionInstanceNetworkConfigConnectionType(v interface{}, d tpgres
 }
 
 func expandDataFusionInstanceNetworkConfigPrivateServiceConnectConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -346,6 +352,9 @@ func expandDataFusionInstanceDisplayName(v interface{}, d tpgresource.TerraformR
 }
 
 func expandDataFusionInstanceCryptoKeyConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -369,6 +378,9 @@ func expandDataFusionInstanceCryptoKeyConfigKeyReference(v interface{}, d tpgres
 }
 
 func expandDataFusionInstanceEventPublishConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -403,6 +415,9 @@ func expandDataFusionInstanceEventPublishConfigTopic(v interface{}, d tpgresourc
 }
 
 func expandDataFusionInstanceAccelerators(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

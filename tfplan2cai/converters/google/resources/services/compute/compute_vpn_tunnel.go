@@ -386,6 +386,9 @@ func expandComputeVpnTunnelLabelFingerprint(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputeVpnTunnelCipherSuite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -412,6 +415,9 @@ func expandComputeVpnTunnelCipherSuite(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandComputeVpnTunnelCipherSuitePhase1(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -472,6 +478,9 @@ func expandComputeVpnTunnelCipherSuitePhase1Dh(v interface{}, d tpgresource.Terr
 }
 
 func expandComputeVpnTunnelCipherSuitePhase2(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

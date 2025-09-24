@@ -317,6 +317,9 @@ func expandNotebooksInstanceServiceAccountScopes(v interface{}, d tpgresource.Te
 }
 
 func expandNotebooksInstanceAcceleratorConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -351,6 +354,9 @@ func expandNotebooksInstanceAcceleratorConfigCoreCount(v interface{}, d tpgresou
 }
 
 func expandNotebooksInstanceShieldedInstanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -400,6 +406,9 @@ func expandNotebooksInstanceNicType(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandNotebooksInstanceReservationAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -512,6 +521,9 @@ func expandNotebooksInstanceMetadata(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandNotebooksInstanceVmImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -557,6 +569,9 @@ func expandNotebooksInstanceVmImageImageName(v interface{}, d tpgresource.Terraf
 }
 
 func expandNotebooksInstanceContainerImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

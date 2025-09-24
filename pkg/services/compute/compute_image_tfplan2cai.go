@@ -195,6 +195,9 @@ func expandComputeImageFamily(v interface{}, d tpgresource.TerraformResourceData
 
 func expandComputeImageGuestOsFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -221,6 +224,9 @@ func expandComputeImageGuestOsFeaturesType(v interface{}, d tpgresource.Terrafor
 }
 
 func expandComputeImageImageEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -302,6 +308,9 @@ func expandComputeImageName(v interface{}, d tpgresource.TerraformResourceData, 
 }
 
 func expandComputeImageRawDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -356,6 +365,9 @@ func expandComputeImageSourceDisk(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandComputeImageSourceDiskEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -421,6 +433,9 @@ func expandComputeImageSourceImage(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandComputeImageSourceImageEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -486,6 +501,9 @@ func expandComputeImageSourceSnapshot(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandComputeImageShieldedInstanceInitialState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -526,6 +544,9 @@ func expandComputeImageShieldedInstanceInitialState(v interface{}, d tpgresource
 }
 
 func expandComputeImageShieldedInstanceInitialStatePk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -560,6 +581,9 @@ func expandComputeImageShieldedInstanceInitialStatePkFileType(v interface{}, d t
 }
 
 func expandComputeImageShieldedInstanceInitialStateKeks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -597,6 +621,9 @@ func expandComputeImageShieldedInstanceInitialStateKeksFileType(v interface{}, d
 }
 
 func expandComputeImageShieldedInstanceInitialStateDbs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -634,6 +661,9 @@ func expandComputeImageShieldedInstanceInitialStateDbsFileType(v interface{}, d 
 }
 
 func expandComputeImageShieldedInstanceInitialStateDbxs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -671,6 +701,9 @@ func expandComputeImageShieldedInstanceInitialStateDbxsFileType(v interface{}, d
 }
 
 func expandComputeImageSourceSnapshotEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

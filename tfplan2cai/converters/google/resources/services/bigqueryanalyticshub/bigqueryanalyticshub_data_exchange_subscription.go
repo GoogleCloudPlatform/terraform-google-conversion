@@ -127,6 +127,9 @@ func expandBigqueryAnalyticsHubDataExchangeSubscriptionSubscriberContact(v inter
 }
 
 func expandBigqueryAnalyticsHubDataExchangeSubscriptionDestinationDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -178,6 +181,9 @@ func expandBigqueryAnalyticsHubDataExchangeSubscriptionDestinationDatasetLocatio
 }
 
 func expandBigqueryAnalyticsHubDataExchangeSubscriptionDestinationDatasetDatasetReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

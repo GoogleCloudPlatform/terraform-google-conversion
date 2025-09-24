@@ -138,6 +138,9 @@ func expandDataLossPreventionStoredInfoTypeDisplayName(v interface{}, d tpgresou
 }
 
 func expandDataLossPreventionStoredInfoTypeRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -172,6 +175,9 @@ func expandDataLossPreventionStoredInfoTypeRegexGroupIndexes(v interface{}, d tp
 }
 
 func expandDataLossPreventionStoredInfoTypeDictionary(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -198,6 +204,9 @@ func expandDataLossPreventionStoredInfoTypeDictionary(v interface{}, d tpgresour
 }
 
 func expandDataLossPreventionStoredInfoTypeDictionaryWordList(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -221,6 +230,9 @@ func expandDataLossPreventionStoredInfoTypeDictionaryWordListWords(v interface{}
 }
 
 func expandDataLossPreventionStoredInfoTypeDictionaryCloudStoragePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -244,6 +256,9 @@ func expandDataLossPreventionStoredInfoTypeDictionaryCloudStoragePathPath(v inte
 }
 
 func expandDataLossPreventionStoredInfoTypeLargeCustomDictionary(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -277,6 +292,9 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionary(v interface{}, 
 }
 
 func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryOutputPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -300,6 +318,9 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryOutputPathPath(v
 }
 
 func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryCloudStorageFileSet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -323,6 +344,9 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryCloudStorageFile
 }
 
 func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryField(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -349,6 +373,9 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryField(v 
 }
 
 func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -394,6 +421,9 @@ func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldTab
 }
 
 func expandDataLossPreventionStoredInfoTypeLargeCustomDictionaryBigQueryFieldField(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

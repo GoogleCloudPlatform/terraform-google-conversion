@@ -95,6 +95,9 @@ func expandDialogflowCXGeneratorDisplayName(v interface{}, d tpgresource.Terrafo
 }
 
 func expandDialogflowCXGeneratorLlmModelSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -129,6 +132,9 @@ func expandDialogflowCXGeneratorLlmModelSettingsPromptText(v interface{}, d tpgr
 }
 
 func expandDialogflowCXGeneratorModelParameter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -185,6 +191,9 @@ func expandDialogflowCXGeneratorModelParameterTopK(v interface{}, d tpgresource.
 }
 
 func expandDialogflowCXGeneratorPlaceholders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -222,6 +231,9 @@ func expandDialogflowCXGeneratorPlaceholdersName(v interface{}, d tpgresource.Te
 }
 
 func expandDialogflowCXGeneratorPromptText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

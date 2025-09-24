@@ -95,6 +95,9 @@ func expandPrivatecaCaPoolTier(v interface{}, d tpgresource.TerraformResourceDat
 }
 
 func expandPrivatecaCaPoolIssuancePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -149,6 +152,9 @@ func expandPrivatecaCaPoolIssuancePolicy(v interface{}, d tpgresource.TerraformR
 }
 
 func expandPrivatecaCaPoolIssuancePolicyAllowedKeyTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -178,6 +184,9 @@ func expandPrivatecaCaPoolIssuancePolicyAllowedKeyTypes(v interface{}, d tpgreso
 }
 
 func expandPrivatecaCaPoolIssuancePolicyAllowedKeyTypesRsa(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -212,6 +221,9 @@ func expandPrivatecaCaPoolIssuancePolicyAllowedKeyTypesRsaMaxModulusSize(v inter
 }
 
 func expandPrivatecaCaPoolIssuancePolicyAllowedKeyTypesEllipticCurve(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -243,6 +255,9 @@ func expandPrivatecaCaPoolIssuancePolicyMaximumLifetime(v interface{}, d tpgreso
 }
 
 func expandPrivatecaCaPoolIssuancePolicyAllowedIssuanceModes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -277,6 +292,9 @@ func expandPrivatecaCaPoolIssuancePolicyAllowedIssuanceModesAllowConfigBasedIssu
 }
 
 func expandPrivatecaCaPoolIssuancePolicyIdentityConstraints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -318,6 +336,9 @@ func expandPrivatecaCaPoolIssuancePolicyIdentityConstraintsAllowSubjectAltNamesP
 }
 
 func expandPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -427,6 +448,9 @@ func expandPrivatecaCaPoolIssuancePolicyBaselineValues(v interface{}, d tpgresou
 }
 
 func expandPrivatecaCaPoolPublishingOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -472,6 +496,9 @@ func expandPrivatecaCaPoolPublishingOptionsEncodingFormat(v interface{}, d tpgre
 }
 
 func expandPrivatecaCaPoolEncryptionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

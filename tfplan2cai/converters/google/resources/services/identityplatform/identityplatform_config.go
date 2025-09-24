@@ -127,6 +127,9 @@ func expandIdentityPlatformConfigAutodeleteAnonymousUsers(v interface{}, d tpgre
 }
 
 func expandIdentityPlatformConfigSignIn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -174,6 +177,9 @@ func expandIdentityPlatformConfigSignIn(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandIdentityPlatformConfigSignInEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -208,6 +214,9 @@ func expandIdentityPlatformConfigSignInEmailPasswordRequired(v interface{}, d tp
 }
 
 func expandIdentityPlatformConfigSignInPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -249,6 +258,9 @@ func expandIdentityPlatformConfigSignInPhoneNumberTestPhoneNumbers(v interface{}
 }
 
 func expandIdentityPlatformConfigSignInAnonymous(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -276,6 +288,9 @@ func expandIdentityPlatformConfigSignInAllowDuplicateEmails(v interface{}, d tpg
 }
 
 func expandIdentityPlatformConfigSignInHashConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -343,6 +358,9 @@ func expandIdentityPlatformConfigSignInHashConfigMemoryCost(v interface{}, d tpg
 }
 
 func expandIdentityPlatformConfigBlockingFunctions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -409,6 +427,9 @@ func expandIdentityPlatformConfigBlockingFunctionsTriggersUpdateTime(v interface
 }
 
 func expandIdentityPlatformConfigBlockingFunctionsForwardInboundCredentials(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -454,6 +475,9 @@ func expandIdentityPlatformConfigBlockingFunctionsForwardInboundCredentialsRefre
 }
 
 func expandIdentityPlatformConfigQuota(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -473,6 +497,9 @@ func expandIdentityPlatformConfigQuota(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandIdentityPlatformConfigQuotaSignUpQuotaConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -522,6 +549,9 @@ func expandIdentityPlatformConfigAuthorizedDomains(v interface{}, d tpgresource.
 }
 
 func expandIdentityPlatformConfigSmsRegionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -548,6 +578,9 @@ func expandIdentityPlatformConfigSmsRegionConfig(v interface{}, d tpgresource.Te
 }
 
 func expandIdentityPlatformConfigSmsRegionConfigAllowByDefault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -571,6 +604,9 @@ func expandIdentityPlatformConfigSmsRegionConfigAllowByDefaultDisallowedRegions(
 }
 
 func expandIdentityPlatformConfigSmsRegionConfigAllowlistOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -594,6 +630,9 @@ func expandIdentityPlatformConfigSmsRegionConfigAllowlistOnlyAllowedRegions(v in
 }
 
 func expandIdentityPlatformConfigClient(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -627,6 +666,9 @@ func expandIdentityPlatformConfigClient(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandIdentityPlatformConfigClientPermissions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -669,6 +711,9 @@ func expandIdentityPlatformConfigClientFirebaseSubdomain(v interface{}, d tpgres
 }
 
 func expandIdentityPlatformConfigMfa(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -710,6 +755,9 @@ func expandIdentityPlatformConfigMfaEnabledProviders(v interface{}, d tpgresourc
 }
 
 func expandIdentityPlatformConfigMfaProviderConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -743,6 +791,9 @@ func expandIdentityPlatformConfigMfaProviderConfigsState(v interface{}, d tpgres
 }
 
 func expandIdentityPlatformConfigMfaProviderConfigsTotpProviderConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -766,6 +817,9 @@ func expandIdentityPlatformConfigMfaProviderConfigsTotpProviderConfigAdjacentInt
 }
 
 func expandIdentityPlatformConfigMultiTenant(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -800,6 +854,9 @@ func expandIdentityPlatformConfigMultiTenantDefaultTenantLocation(v interface{},
 }
 
 func expandIdentityPlatformConfigMonitoring(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -819,6 +876,9 @@ func expandIdentityPlatformConfigMonitoring(v interface{}, d tpgresource.Terrafo
 }
 
 func expandIdentityPlatformConfigMonitoringRequestLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

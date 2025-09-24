@@ -123,6 +123,9 @@ func expandNetworkConnectivityPolicyBasedRouteNetwork(v interface{}, d tpgresour
 }
 
 func expandNetworkConnectivityPolicyBasedRouteFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -191,6 +194,9 @@ func expandNetworkConnectivityPolicyBasedRoutePriority(v interface{}, d tpgresou
 }
 
 func expandNetworkConnectivityPolicyBasedRouteVirtualMachine(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -214,6 +220,9 @@ func expandNetworkConnectivityPolicyBasedRouteVirtualMachineTags(v interface{}, 
 }
 
 func expandNetworkConnectivityPolicyBasedRouteInterconnectAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

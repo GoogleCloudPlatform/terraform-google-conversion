@@ -102,6 +102,9 @@ func expandComputeAutoscalerDescription(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandComputeAutoscalerAutoscalingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -200,6 +203,9 @@ func expandComputeAutoscalerAutoscalingPolicyMode(v interface{}, d tpgresource.T
 }
 
 func expandComputeAutoscalerAutoscalingPolicyScaleDownControl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -226,6 +232,9 @@ func expandComputeAutoscalerAutoscalingPolicyScaleDownControl(v interface{}, d t
 }
 
 func expandComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -264,6 +273,9 @@ func expandComputeAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(v int
 }
 
 func expandComputeAutoscalerAutoscalingPolicyScaleInControl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -290,6 +302,9 @@ func expandComputeAutoscalerAutoscalingPolicyScaleInControl(v interface{}, d tpg
 }
 
 func expandComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -328,6 +343,9 @@ func expandComputeAutoscalerAutoscalingPolicyScaleInControlTimeWindowSec(v inter
 }
 
 func expandComputeAutoscalerAutoscalingPolicyCpuUtilization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -362,6 +380,9 @@ func expandComputeAutoscalerAutoscalingPolicyCpuUtilizationPredictiveMethod(v in
 }
 
 func expandComputeAutoscalerAutoscalingPolicyMetric(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -432,6 +453,9 @@ func expandComputeAutoscalerAutoscalingPolicyMetricFilter(v interface{}, d tpgre
 }
 
 func expandComputeAutoscalerAutoscalingPolicyLoadBalancingUtilization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

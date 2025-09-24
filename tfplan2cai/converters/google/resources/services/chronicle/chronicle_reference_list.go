@@ -89,6 +89,9 @@ func expandChronicleReferenceListDescription(v interface{}, d tpgresource.Terraf
 }
 
 func expandChronicleReferenceListEntries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -115,6 +118,9 @@ func expandChronicleReferenceListEntriesValue(v interface{}, d tpgresource.Terra
 }
 
 func expandChronicleReferenceListScopeInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -134,6 +140,9 @@ func expandChronicleReferenceListScopeInfo(v interface{}, d tpgresource.Terrafor
 }
 
 func expandChronicleReferenceListScopeInfoReferenceListScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

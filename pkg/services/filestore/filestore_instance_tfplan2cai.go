@@ -156,6 +156,9 @@ func expandFilestoreInstanceProtocol(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandFilestoreInstanceFileShares(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -211,6 +214,9 @@ func expandFilestoreInstanceFileSharesSourceBackup(v interface{}, d tpgresource.
 }
 
 func expandFilestoreInstanceFileSharesNfsExportOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -292,6 +298,9 @@ func expandFilestoreInstanceFileSharesNfsExportOptionsNetwork(v interface{}, d t
 }
 
 func expandFilestoreInstanceNetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -358,6 +367,9 @@ func expandFilestoreInstanceNetworksConnectMode(v interface{}, d tpgresource.Ter
 }
 
 func expandFilestoreInstanceNetworksPscConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -393,6 +405,9 @@ func expandFilestoreInstanceDeletionProtectionReason(v interface{}, d tpgresourc
 }
 
 func expandFilestoreInstancePerformanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -419,6 +434,9 @@ func expandFilestoreInstancePerformanceConfig(v interface{}, d tpgresource.Terra
 }
 
 func expandFilestoreInstancePerformanceConfigIopsPerTb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -442,6 +460,9 @@ func expandFilestoreInstancePerformanceConfigIopsPerTbMaxIopsPerTb(v interface{}
 }
 
 func expandFilestoreInstancePerformanceConfigFixedIops(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -476,6 +497,9 @@ func expandFilestoreInstanceTags(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandFilestoreInstanceInitialReplication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -506,6 +530,9 @@ func expandFilestoreInstanceInitialReplicationRole(v interface{}, d tpgresource.
 }
 
 func expandFilestoreInstanceInitialReplicationReplicas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -532,6 +559,9 @@ func expandFilestoreInstanceInitialReplicationReplicasPeerInstance(v interface{}
 }
 
 func expandFilestoreInstanceDirectoryServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -551,6 +581,9 @@ func expandFilestoreInstanceDirectoryServices(v interface{}, d tpgresource.Terra
 }
 
 func expandFilestoreInstanceDirectoryServicesLdap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

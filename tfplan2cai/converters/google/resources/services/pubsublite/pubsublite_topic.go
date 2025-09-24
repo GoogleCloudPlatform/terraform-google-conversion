@@ -103,6 +103,9 @@ func resourcePubsubLiteTopicEncoder(d tpgresource.TerraformResourceData, meta in
 }
 
 func expandPubsubLiteTopicPartitionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -133,6 +136,9 @@ func expandPubsubLiteTopicPartitionConfigCount(v interface{}, d tpgresource.Terr
 }
 
 func expandPubsubLiteTopicPartitionConfigCapacity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -167,6 +173,9 @@ func expandPubsubLiteTopicPartitionConfigCapacitySubscribeMibPerSec(v interface{
 }
 
 func expandPubsubLiteTopicRetentionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -201,6 +210,9 @@ func expandPubsubLiteTopicRetentionConfigPeriod(v interface{}, d tpgresource.Ter
 }
 
 func expandPubsubLiteTopicReservationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

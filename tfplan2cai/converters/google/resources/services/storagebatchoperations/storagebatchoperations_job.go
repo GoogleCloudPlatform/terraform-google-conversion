@@ -91,6 +91,9 @@ func GetStorageBatchOperationsJobApiObject(d tpgresource.TerraformResourceData, 
 }
 
 func expandStorageBatchOperationsJobBucketList(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -110,6 +113,9 @@ func expandStorageBatchOperationsJobBucketList(v interface{}, d tpgresource.Terr
 }
 
 func expandStorageBatchOperationsJobBucketListBuckets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -150,6 +156,9 @@ func expandStorageBatchOperationsJobBucketListBucketsBucket(v interface{}, d tpg
 }
 
 func expandStorageBatchOperationsJobBucketListBucketsPrefixList(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -173,6 +182,9 @@ func expandStorageBatchOperationsJobBucketListBucketsPrefixListIncludedObjectPre
 }
 
 func expandStorageBatchOperationsJobBucketListBucketsManifest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -196,6 +208,9 @@ func expandStorageBatchOperationsJobBucketListBucketsManifestManifestLocation(v 
 }
 
 func expandStorageBatchOperationsJobDeleteObject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -219,6 +234,9 @@ func expandStorageBatchOperationsJobDeleteObjectPermanentObjectDeletionEnabled(v
 }
 
 func expandStorageBatchOperationsJobPutMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -315,6 +333,9 @@ func expandStorageBatchOperationsJobPutMetadataCustomMetadata(v interface{}, d t
 }
 
 func expandStorageBatchOperationsJobRewriteObject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -338,6 +359,9 @@ func expandStorageBatchOperationsJobRewriteObjectKmsKey(v interface{}, d tpgreso
 }
 
 func expandStorageBatchOperationsJobPutObjectHold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

@@ -235,6 +235,9 @@ func expandPubsubSubscriptionTopic(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandPubsubSubscriptionBigqueryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -313,6 +316,9 @@ func expandPubsubSubscriptionBigqueryConfigServiceAccountEmail(v interface{}, d 
 }
 
 func expandPubsubSubscriptionCloudStorageConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -427,6 +433,9 @@ func expandPubsubSubscriptionCloudStorageConfigState(v interface{}, d tpgresourc
 }
 
 func expandPubsubSubscriptionCloudStorageConfigAvroConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -470,6 +479,9 @@ func expandPubsubSubscriptionCloudStorageConfigServiceAccountEmail(v interface{}
 }
 
 func expandPubsubSubscriptionPushConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -510,6 +522,9 @@ func expandPubsubSubscriptionPushConfig(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandPubsubSubscriptionPushConfigOidcToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -559,6 +574,9 @@ func expandPubsubSubscriptionPushConfigAttributes(v interface{}, d tpgresource.T
 }
 
 func expandPubsubSubscriptionPushConfigNoWrapper(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -594,6 +612,9 @@ func expandPubsubSubscriptionRetainAckedMessages(v interface{}, d tpgresource.Te
 }
 
 func expandPubsubSubscriptionExpirationPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -626,6 +647,9 @@ func expandPubsubSubscriptionFilter(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandPubsubSubscriptionDeadLetterPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -660,6 +684,9 @@ func expandPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(v interface{}, 
 }
 
 func expandPubsubSubscriptionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -707,6 +734,9 @@ func expandPubsubSubscriptionEnableExactlyOnceDelivery(v interface{}, d tpgresou
 }
 
 func expandPubsubSubscriptionMessageTransforms(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -736,6 +766,9 @@ func expandPubsubSubscriptionMessageTransforms(v interface{}, d tpgresource.Terr
 }
 
 func expandPubsubSubscriptionMessageTransformsJavascriptUdf(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

@@ -137,6 +137,9 @@ func expandDialogflowConversationProfileDisplayName(v interface{}, d tpgresource
 }
 
 func expandDialogflowConversationProfileAutomatedAgentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -171,6 +174,9 @@ func expandDialogflowConversationProfileAutomatedAgentConfigSessionTtl(v interfa
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -211,6 +217,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfig(v interface{},
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigNotificationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -245,6 +254,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigNotificationCon
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -285,6 +297,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -370,6 +385,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsSuggestionFeature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -413,6 +431,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsSuggestionTriggerSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -447,6 +468,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsQueryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -502,6 +526,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsQueryConfigContextFilterSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -547,6 +574,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsQueryConfigSections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -570,6 +600,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsQueryConfigDialogflowQuerySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -600,6 +633,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsQueryConfigDialogflowQuerySourceHumanAgentSideConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -623,6 +659,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsConversationModelConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -657,6 +696,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSuggestionConfigFeatureConfigsConversationProcessConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -692,6 +734,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigHumanAgentSugge
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -732,6 +777,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -817,6 +865,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsSuggestionFeature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -860,6 +911,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsSuggestionTriggerSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -894,6 +948,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsQueryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -963,6 +1020,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsQueryConfigContextFilterSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1008,6 +1068,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsQueryConfigSections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1031,6 +1094,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsQueryConfigKnowledgeBaseQuerySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1054,6 +1120,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsQueryConfigDocumentQuerySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1077,6 +1146,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsQueryConfigDialogflowQuerySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1107,6 +1179,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsQueryConfigDialogflowQuerySourceHumanAgentSideConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1130,6 +1205,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsConversationModelConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1164,6 +1242,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggestionConfigFeatureConfigsConversationProcessConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1199,6 +1280,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigEndUserSuggesti
 }
 
 func expandDialogflowConversationProfileHumanAgentAssistantConfigMessageAnalysisConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1233,6 +1317,9 @@ func expandDialogflowConversationProfileHumanAgentAssistantConfigMessageAnalysis
 }
 
 func expandDialogflowConversationProfileHumanAgentHandoffConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1252,6 +1339,9 @@ func expandDialogflowConversationProfileHumanAgentHandoffConfig(v interface{}, d
 }
 
 func expandDialogflowConversationProfileHumanAgentHandoffConfigLivePersonConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1275,6 +1365,9 @@ func expandDialogflowConversationProfileHumanAgentHandoffConfigLivePersonConfigA
 }
 
 func expandDialogflowConversationProfileNotificationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1309,6 +1402,9 @@ func expandDialogflowConversationProfileNotificationConfigMessageFormat(v interf
 }
 
 func expandDialogflowConversationProfileLoggingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1332,6 +1428,9 @@ func expandDialogflowConversationProfileLoggingConfigEnableStackdriverLogging(v 
 }
 
 func expandDialogflowConversationProfileNewMessageEventNotificationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1366,6 +1465,9 @@ func expandDialogflowConversationProfileNewMessageEventNotificationConfigMessage
 }
 
 func expandDialogflowConversationProfileSttConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1467,6 +1569,9 @@ func expandDialogflowConversationProfileSecuritySettings(v interface{}, d tpgres
 }
 
 func expandDialogflowConversationProfileTtsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1530,6 +1635,9 @@ func expandDialogflowConversationProfileTtsConfigEffectsProfileId(v interface{},
 }
 
 func expandDialogflowConversationProfileTtsConfigVoice(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

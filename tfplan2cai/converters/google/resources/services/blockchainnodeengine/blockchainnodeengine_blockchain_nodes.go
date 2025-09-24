@@ -79,6 +79,9 @@ func GetBlockchainNodeEngineBlockchainNodesApiObject(d tpgresource.TerraformReso
 }
 
 func expandBlockchainNodeEngineBlockchainNodesEthereumDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -154,6 +157,9 @@ func expandBlockchainNodeEngineBlockchainNodesEthereumDetails(v interface{}, d t
 }
 
 func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -177,6 +183,9 @@ func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigMevR
 }
 
 func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsGethDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -200,6 +209,9 @@ func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsGethDetailsGarbageC
 }
 
 func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsAdditionalEndpoints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

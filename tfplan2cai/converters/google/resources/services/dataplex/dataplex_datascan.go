@@ -117,6 +117,9 @@ func expandDataplexDatascanDisplayName(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandDataplexDatascanData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -151,6 +154,9 @@ func expandDataplexDatascanDataResource(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandDataplexDatascanExecutionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -177,6 +183,9 @@ func expandDataplexDatascanExecutionSpec(v interface{}, d tpgresource.TerraformR
 }
 
 func expandDataplexDatascanExecutionSpecTrigger(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -203,6 +212,9 @@ func expandDataplexDatascanExecutionSpecTrigger(v interface{}, d tpgresource.Ter
 }
 
 func expandDataplexDatascanExecutionSpecTriggerOnDemand(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -218,6 +230,9 @@ func expandDataplexDatascanExecutionSpecTriggerOnDemand(v interface{}, d tpgreso
 }
 
 func expandDataplexDatascanExecutionSpecTriggerSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -245,6 +260,9 @@ func expandDataplexDatascanExecutionSpecField(v interface{}, d tpgresource.Terra
 }
 
 func expandDataplexDatascanDataQualitySpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -300,6 +318,9 @@ func expandDataplexDatascanDataQualitySpecRowFilter(v interface{}, d tpgresource
 }
 
 func expandDataplexDatascanDataQualitySpecPostScanActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -326,6 +347,9 @@ func expandDataplexDatascanDataQualitySpecPostScanActions(v interface{}, d tpgre
 }
 
 func expandDataplexDatascanDataQualitySpecPostScanActionsBigqueryExport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -349,6 +373,9 @@ func expandDataplexDatascanDataQualitySpecPostScanActionsBigqueryExportResultsTa
 }
 
 func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -389,6 +416,9 @@ func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReport(v in
 }
 
 func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReportRecipients(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -412,6 +442,9 @@ func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReportRecip
 }
 
 func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReportScoreThresholdTrigger(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -435,6 +468,9 @@ func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReportScore
 }
 
 func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReportJobFailureTrigger(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -450,6 +486,9 @@ func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReportJobFa
 }
 
 func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReportJobEndTrigger(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -465,6 +504,9 @@ func expandDataplexDatascanDataQualitySpecPostScanActionsNotificationReportJobEn
 }
 
 func expandDataplexDatascanDataQualitySpecRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -620,6 +662,9 @@ func expandDataplexDatascanDataQualitySpecRulesDescription(v interface{}, d tpgr
 }
 
 func expandDataplexDatascanDataQualitySpecRulesRangeExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -676,6 +721,9 @@ func expandDataplexDatascanDataQualitySpecRulesRangeExpectationStrictMaxEnabled(
 }
 
 func expandDataplexDatascanDataQualitySpecRulesNonNullExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -691,6 +739,9 @@ func expandDataplexDatascanDataQualitySpecRulesNonNullExpectation(v interface{},
 }
 
 func expandDataplexDatascanDataQualitySpecRulesSetExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -714,6 +765,9 @@ func expandDataplexDatascanDataQualitySpecRulesSetExpectationValues(v interface{
 }
 
 func expandDataplexDatascanDataQualitySpecRulesRegexExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -737,6 +791,9 @@ func expandDataplexDatascanDataQualitySpecRulesRegexExpectationRegex(v interface
 }
 
 func expandDataplexDatascanDataQualitySpecRulesUniquenessExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -752,6 +809,9 @@ func expandDataplexDatascanDataQualitySpecRulesUniquenessExpectation(v interface
 }
 
 func expandDataplexDatascanDataQualitySpecRulesStatisticRangeExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -819,6 +879,9 @@ func expandDataplexDatascanDataQualitySpecRulesStatisticRangeExpectationStrictMa
 }
 
 func expandDataplexDatascanDataQualitySpecRulesRowConditionExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -842,6 +905,9 @@ func expandDataplexDatascanDataQualitySpecRulesRowConditionExpectationSqlExpress
 }
 
 func expandDataplexDatascanDataQualitySpecRulesTableConditionExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -865,6 +931,9 @@ func expandDataplexDatascanDataQualitySpecRulesTableConditionExpectationSqlExpre
 }
 
 func expandDataplexDatascanDataQualitySpecRulesSqlAssertion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -892,6 +961,9 @@ func expandDataplexDatascanDataQualitySpecCatalogPublishingEnabled(v interface{}
 }
 
 func expandDataplexDatascanDataProfileSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -952,6 +1024,9 @@ func expandDataplexDatascanDataProfileSpecRowFilter(v interface{}, d tpgresource
 }
 
 func expandDataplexDatascanDataProfileSpecPostScanActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -971,6 +1046,9 @@ func expandDataplexDatascanDataProfileSpecPostScanActions(v interface{}, d tpgre
 }
 
 func expandDataplexDatascanDataProfileSpecPostScanActionsBigqueryExport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -994,6 +1072,9 @@ func expandDataplexDatascanDataProfileSpecPostScanActionsBigqueryExportResultsTa
 }
 
 func expandDataplexDatascanDataProfileSpecIncludeFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1017,6 +1098,9 @@ func expandDataplexDatascanDataProfileSpecIncludeFieldsFieldNames(v interface{},
 }
 
 func expandDataplexDatascanDataProfileSpecExcludeFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1040,6 +1124,9 @@ func expandDataplexDatascanDataProfileSpecExcludeFieldsFieldNames(v interface{},
 }
 
 func expandDataplexDatascanDataDiscoverySpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -1071,6 +1158,9 @@ func expandDataplexDatascanDataDiscoverySpec(v interface{}, d tpgresource.Terraf
 }
 
 func expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1127,6 +1217,9 @@ func expandDataplexDatascanDataDiscoverySpecBigqueryPublishingConfigProject(v in
 }
 
 func expandDataplexDatascanDataDiscoverySpecStorageConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1175,6 +1268,9 @@ func expandDataplexDatascanDataDiscoverySpecStorageConfigExcludePatterns(v inter
 }
 
 func expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1242,6 +1338,9 @@ func expandDataplexDatascanDataDiscoverySpecStorageConfigCsvOptionsQuote(v inter
 }
 
 func expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

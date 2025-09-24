@@ -140,6 +140,9 @@ func expandCloudfunctions2functionDescription(v interface{}, d tpgresource.Terra
 }
 
 func expandCloudfunctions2functionBuildConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -223,6 +226,9 @@ func expandCloudfunctions2functionBuildConfigEntryPoint(v interface{}, d tpgreso
 }
 
 func expandCloudfunctions2functionBuildConfigSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -249,6 +255,9 @@ func expandCloudfunctions2functionBuildConfigSource(v interface{}, d tpgresource
 }
 
 func expandCloudfunctions2functionBuildConfigSourceStorageSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -294,6 +303,9 @@ func expandCloudfunctions2functionBuildConfigSourceStorageSourceGeneration(v int
 }
 
 func expandCloudfunctions2functionBuildConfigSourceRepoSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -406,6 +418,9 @@ func expandCloudfunctions2functionBuildConfigServiceAccount(v interface{}, d tpg
 }
 
 func expandCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -421,6 +436,9 @@ func expandCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(v interface{}
 }
 
 func expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -436,6 +454,9 @@ func expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicy(v interface{},
 }
 
 func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -608,6 +629,9 @@ func expandCloudfunctions2functionServiceConfigAllTrafficOnLatestRevision(v inte
 }
 
 func expandCloudfunctions2functionServiceConfigSecretEnvironmentVariables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -667,6 +691,9 @@ func expandCloudfunctions2functionServiceConfigSecretEnvironmentVariablesVersion
 }
 
 func expandCloudfunctions2functionServiceConfigSecretVolumes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -722,6 +749,9 @@ func expandCloudfunctions2functionServiceConfigSecretVolumesSecret(v interface{}
 }
 
 func expandCloudfunctions2functionServiceConfigSecretVolumesVersions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -763,6 +793,9 @@ func expandCloudfunctions2functionServiceConfigBinaryAuthorizationPolicy(v inter
 }
 
 func expandCloudfunctions2functionEventTrigger(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -826,6 +859,9 @@ func expandCloudfunctions2functionEventTriggerEventType(v interface{}, d tpgreso
 
 func expandCloudfunctions2functionEventTriggerEventFilters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

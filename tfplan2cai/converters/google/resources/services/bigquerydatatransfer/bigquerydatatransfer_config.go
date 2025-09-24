@@ -247,6 +247,9 @@ func expandBigqueryDataTransferConfigSchedule(v interface{}, d tpgresource.Terra
 }
 
 func expandBigqueryDataTransferConfigScheduleOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -292,6 +295,9 @@ func expandBigqueryDataTransferConfigScheduleOptionsEndTime(v interface{}, d tpg
 }
 
 func expandBigqueryDataTransferConfigEmailPreferences(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -323,6 +329,9 @@ func expandBigqueryDataTransferConfigDataRefreshWindowDays(v interface{}, d tpgr
 }
 
 func expandBigqueryDataTransferConfigEncryptionConfiguration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

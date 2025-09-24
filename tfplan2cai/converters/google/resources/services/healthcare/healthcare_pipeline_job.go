@@ -105,6 +105,9 @@ func expandHealthcarePipelineJobDisableLineage(v interface{}, d tpgresource.Terr
 }
 
 func expandHealthcarePipelineJobMappingPipelineJob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -145,6 +148,9 @@ func expandHealthcarePipelineJobMappingPipelineJob(v interface{}, d tpgresource.
 }
 
 func expandHealthcarePipelineJobMappingPipelineJobMappingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -175,6 +181,9 @@ func expandHealthcarePipelineJobMappingPipelineJobMappingConfigDescription(v int
 }
 
 func expandHealthcarePipelineJobMappingPipelineJobMappingConfigWhistleConfigSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -209,6 +218,9 @@ func expandHealthcarePipelineJobMappingPipelineJobMappingConfigWhistleConfigSour
 }
 
 func expandHealthcarePipelineJobMappingPipelineJobFhirStreamingSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -251,6 +263,9 @@ func expandHealthcarePipelineJobMappingPipelineJobReconciliationDestination(v in
 }
 
 func expandHealthcarePipelineJobReconciliationPipelineJob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -284,6 +299,9 @@ func expandHealthcarePipelineJobReconciliationPipelineJob(v interface{}, d tpgre
 }
 
 func expandHealthcarePipelineJobReconciliationPipelineJobMergeConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -314,6 +332,9 @@ func expandHealthcarePipelineJobReconciliationPipelineJobMergeConfigDescription(
 }
 
 func expandHealthcarePipelineJobReconciliationPipelineJobMergeConfigWhistleConfigSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -356,6 +377,9 @@ func expandHealthcarePipelineJobReconciliationPipelineJobFhirStoreDestination(v 
 }
 
 func expandHealthcarePipelineJobBackfillPipelineJob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

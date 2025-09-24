@@ -81,6 +81,9 @@ func GetCloudIdentityGroupMembershipApiObject(d tpgresource.TerraformResourceDat
 }
 
 func expandCloudIdentityGroupMembershipMemberKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -115,6 +118,9 @@ func expandCloudIdentityGroupMembershipMemberKeyNamespace(v interface{}, d tpgre
 }
 
 func expandCloudIdentityGroupMembershipPreferredMemberKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -150,6 +156,9 @@ func expandCloudIdentityGroupMembershipPreferredMemberKeyNamespace(v interface{}
 
 func expandCloudIdentityGroupMembershipRoles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -183,6 +192,9 @@ func expandCloudIdentityGroupMembershipRolesName(v interface{}, d tpgresource.Te
 }
 
 func expandCloudIdentityGroupMembershipRolesExpiryDetail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

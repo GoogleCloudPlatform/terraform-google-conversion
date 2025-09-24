@@ -182,6 +182,9 @@ func expandAlloydbInstanceInstanceType(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandAlloydbInstanceQueryInsightsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -238,6 +241,9 @@ func expandAlloydbInstanceQueryInsightsConfigQueryPlansPerMinute(v interface{}, 
 }
 
 func expandAlloydbInstanceObservabilityConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -349,6 +355,9 @@ func expandAlloydbInstanceObservabilityConfigAssistiveExperiencesEnabled(v inter
 }
 
 func expandAlloydbInstanceReadPoolConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -372,6 +381,9 @@ func expandAlloydbInstanceReadPoolConfigNodeCount(v interface{}, d tpgresource.T
 }
 
 func expandAlloydbInstanceMachineConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -406,6 +418,9 @@ func expandAlloydbInstanceMachineConfigMachineType(v interface{}, d tpgresource.
 }
 
 func expandAlloydbInstanceClientConnectionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -436,6 +451,9 @@ func expandAlloydbInstanceClientConnectionConfigRequireConnectors(v interface{},
 }
 
 func expandAlloydbInstanceClientConnectionConfigSslConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -459,6 +477,9 @@ func expandAlloydbInstanceClientConnectionConfigSslConfigSslMode(v interface{}, 
 }
 
 func expandAlloydbInstancePscInstanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -518,6 +539,9 @@ func expandAlloydbInstancePscInstanceConfigPscDnsName(v interface{}, d tpgresour
 }
 
 func expandAlloydbInstancePscInstanceConfigPscInterfaceConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -544,6 +568,9 @@ func expandAlloydbInstancePscInstanceConfigPscInterfaceConfigsNetworkAttachmentR
 }
 
 func expandAlloydbInstancePscInstanceConfigPscAutoConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -614,6 +641,9 @@ func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetworkStat
 }
 
 func expandAlloydbInstanceNetworkConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -654,6 +684,9 @@ func expandAlloydbInstanceNetworkConfig(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandAlloydbInstanceNetworkConfigAuthorizedExternalNetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

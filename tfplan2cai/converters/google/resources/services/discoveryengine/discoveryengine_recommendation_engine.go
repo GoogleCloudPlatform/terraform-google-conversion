@@ -109,6 +109,9 @@ func expandDiscoveryEngineRecommendationEngineIndustryVertical(v interface{}, d 
 }
 
 func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -164,6 +167,9 @@ func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigOpt
 }
 
 func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigOptimizationObjectiveConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -202,6 +208,9 @@ func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigTra
 }
 
 func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigEngineFeaturesConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -228,6 +237,9 @@ func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigEng
 }
 
 func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigEngineFeaturesConfigRecommendedForYouConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -251,6 +263,9 @@ func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigEng
 }
 
 func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigEngineFeaturesConfigMostPopularConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -274,6 +289,9 @@ func expandDiscoveryEngineRecommendationEngineMediaRecommendationEngineConfigEng
 }
 
 func expandDiscoveryEngineRecommendationEngineCommonConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

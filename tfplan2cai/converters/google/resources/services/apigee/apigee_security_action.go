@@ -127,6 +127,9 @@ func expandApigeeSecurityActionApiProxies(v interface{}, d tpgresource.Terraform
 }
 
 func expandApigeeSecurityActionConditionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -260,6 +263,9 @@ func expandApigeeSecurityActionConditionConfigAsns(v interface{}, d tpgresource.
 }
 
 func expandApigeeSecurityActionAllow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -275,6 +281,9 @@ func expandApigeeSecurityActionAllow(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandApigeeSecurityActionDeny(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -298,6 +307,9 @@ func expandApigeeSecurityActionDenyResponseCode(v interface{}, d tpgresource.Ter
 }
 
 func expandApigeeSecurityActionFlag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -317,6 +329,9 @@ func expandApigeeSecurityActionFlag(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandApigeeSecurityActionFlagHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

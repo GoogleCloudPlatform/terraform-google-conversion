@@ -91,6 +91,9 @@ func GetVertexAIFeatureOnlineStoreFeatureviewApiObject(d tpgresource.TerraformRe
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewSyncConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -114,6 +117,9 @@ func expandVertexAIFeatureOnlineStoreFeatureviewSyncConfigCron(v interface{}, d 
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewBigQuerySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -148,6 +154,9 @@ func expandVertexAIFeatureOnlineStoreFeatureviewBigQuerySourceEntityIdColumns(v 
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -174,6 +183,9 @@ func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySource(v interfac
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceFeatureGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -215,6 +227,9 @@ func expandVertexAIFeatureOnlineStoreFeatureviewFeatureRegistrySourceProjectNumb
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -292,6 +307,9 @@ func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigDistanceMeasur
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigTreeAhConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -315,6 +333,9 @@ func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigTreeAhConfigLe
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewVectorSearchConfigBruteForceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil

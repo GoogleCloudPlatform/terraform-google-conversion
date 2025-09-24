@@ -169,6 +169,9 @@ func expandBigQueryDatasetMaxTimeTravelHours(v interface{}, d tpgresource.Terraf
 
 func expandBigQueryDatasetAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -278,6 +281,9 @@ func expandBigQueryDatasetAccessUserByEmail(v interface{}, d tpgresource.Terrafo
 }
 
 func expandBigQueryDatasetAccessView(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -323,6 +329,9 @@ func expandBigQueryDatasetAccessViewTableId(v interface{}, d tpgresource.Terrafo
 }
 
 func expandBigQueryDatasetAccessDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -349,6 +358,9 @@ func expandBigQueryDatasetAccessDataset(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandBigQueryDatasetAccessDatasetDataset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -387,6 +399,9 @@ func expandBigQueryDatasetAccessDatasetTargetTypes(v interface{}, d tpgresource.
 }
 
 func expandBigQueryDatasetAccessRoutine(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -432,6 +447,9 @@ func expandBigQueryDatasetAccessRoutineRoutineId(v interface{}, d tpgresource.Te
 }
 
 func expandBigQueryDatasetAccessCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -516,6 +534,9 @@ func expandBigQueryDatasetDescription(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandBigQueryDatasetExternalDatasetReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -558,6 +579,9 @@ func expandBigQueryDatasetLocation(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandBigQueryDatasetDefaultEncryptionConfiguration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -604,6 +628,9 @@ func expandBigQueryDatasetResourceTags(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandBigQueryDatasetExternalCatalogDatasetOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

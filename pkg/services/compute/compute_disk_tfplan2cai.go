@@ -292,6 +292,9 @@ func resourceComputeDiskTgcEncoder(d tpgresource.TerraformResourceData, meta int
 }
 
 func expandComputeDiskSourceImageEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -341,6 +344,9 @@ func expandComputeDiskSourceInstantSnapshot(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputeDiskDiskEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -397,6 +403,9 @@ func expandComputeDiskDiskEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpg
 }
 
 func expandComputeDiskSourceSnapshotEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -516,6 +525,9 @@ func expandComputeDiskProvisionedThroughput(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputeDiskAsyncPrimaryDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -543,6 +555,9 @@ func expandComputeDiskArchitecture(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandComputeDiskParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -574,6 +589,9 @@ func expandComputeDiskParamsResourceManagerTags(v interface{}, d tpgresource.Ter
 
 func expandComputeDiskGuestOsFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

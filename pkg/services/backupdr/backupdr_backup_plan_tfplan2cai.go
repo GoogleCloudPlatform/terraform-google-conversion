@@ -108,6 +108,9 @@ func expandBackupDRBackupPlanResourceType(v interface{}, d tpgresource.Terraform
 }
 
 func expandBackupDRBackupPlanBackupRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -152,6 +155,9 @@ func expandBackupDRBackupPlanBackupRulesBackupRetentionDays(v interface{}, d tpg
 }
 
 func expandBackupDRBackupPlanBackupRulesStandardSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -236,6 +242,9 @@ func expandBackupDRBackupPlanBackupRulesStandardScheduleDaysOfMonth(v interface{
 }
 
 func expandBackupDRBackupPlanBackupRulesStandardScheduleWeekDayOfMonth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -278,6 +287,9 @@ func expandBackupDRBackupPlanBackupRulesStandardScheduleTimeZone(v interface{}, 
 }
 
 func expandBackupDRBackupPlanBackupRulesStandardScheduleBackupWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

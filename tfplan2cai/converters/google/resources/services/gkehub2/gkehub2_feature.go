@@ -81,6 +81,9 @@ func GetGKEHub2FeatureApiObject(d tpgresource.TerraformResourceData, config *tra
 }
 
 func expandGKEHub2FeatureSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -121,6 +124,9 @@ func expandGKEHub2FeatureSpec(v interface{}, d tpgresource.TerraformResourceData
 }
 
 func expandGKEHub2FeatureSpecMulticlusteringress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -144,6 +150,9 @@ func expandGKEHub2FeatureSpecMulticlusteringressConfigMembership(v interface{}, 
 }
 
 func expandGKEHub2FeatureSpecFleetobservability(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -163,6 +172,9 @@ func expandGKEHub2FeatureSpecFleetobservability(v interface{}, d tpgresource.Ter
 }
 
 func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -189,6 +201,9 @@ func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfig(v interface{}, d tp
 }
 
 func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigDefaultConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -212,6 +227,9 @@ func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigDefaultConfigMode(v 
 }
 
 func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigFleetScopeLogsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -235,6 +253,9 @@ func expandGKEHub2FeatureSpecFleetobservabilityLoggingConfigFleetScopeLogsConfig
 }
 
 func expandGKEHub2FeatureSpecClusterupgrade(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -272,6 +293,9 @@ func expandGKEHub2FeatureSpecClusterupgradeUpstreamFleets(v interface{}, d tpgre
 }
 
 func expandGKEHub2FeatureSpecClusterupgradePostConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -295,6 +319,9 @@ func expandGKEHub2FeatureSpecClusterupgradePostConditionsSoaking(v interface{}, 
 }
 
 func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -324,6 +351,9 @@ func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverrides(v interface{}, d 
 }
 
 func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesUpgrade(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -358,6 +388,9 @@ func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesUpgradeVersion(v i
 }
 
 func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesPostConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -381,6 +414,9 @@ func expandGKEHub2FeatureSpecClusterupgradeGkeUpgradeOverridesPostConditionsSoak
 }
 
 func expandGKEHub2FeatureSpecRbacrolebindingactuation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -404,6 +440,9 @@ func expandGKEHub2FeatureSpecRbacrolebindingactuationAllowedCustomRoles(v interf
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -437,6 +476,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfig(v interface{}, d tpgresource.T
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigMesh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -460,6 +502,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigMeshManagement(v interface{}, d
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -501,6 +546,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementManagement(v in
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSync(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -571,6 +619,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncMetri
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncGit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -671,6 +722,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncGitSy
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncOci(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -749,6 +803,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigConfigmanagementConfigSyncOciVe
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontroller(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -779,6 +836,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerVersion(v inter
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControllerHubConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -885,6 +945,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControlle
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControllerHubConfigMonitoring(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -962,6 +1025,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControlle
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControllerHubConfigDeploymentConfigsContainerResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -988,6 +1054,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControlle
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControllerHubConfigDeploymentConfigsContainerResourcesLimits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1022,6 +1091,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControlle
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControllerHubConfigDeploymentConfigsContainerResourcesRequests(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1060,6 +1132,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControlle
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControllerHubConfigDeploymentConfigsPodToleration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1119,6 +1194,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControlle
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControllerHubConfigPolicyContent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1145,6 +1223,9 @@ func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControlle
 }
 
 func expandGKEHub2FeatureFleetDefaultMemberConfigPolicycontrollerPolicyControllerHubConfigPolicyContentTemplateLibrary(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
