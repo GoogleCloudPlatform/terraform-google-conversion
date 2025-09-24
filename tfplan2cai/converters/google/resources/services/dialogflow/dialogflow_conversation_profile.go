@@ -128,6 +128,12 @@ func GetDialogflowConversationProfileApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("tts_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(ttsConfigProp)) && (ok || !reflect.DeepEqual(v, ttsConfigProp)) {
 		obj["ttsConfig"] = ttsConfigProp
 	}
+	newRecognitionResultNotificationConfigProp, err := expandDialogflowConversationProfileNewRecognitionResultNotificationConfig(d.Get("new_recognition_result_notification_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("new_recognition_result_notification_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(newRecognitionResultNotificationConfigProp)) && (ok || !reflect.DeepEqual(v, newRecognitionResultNotificationConfigProp)) {
+		obj["newRecognitionResultNotificationConfig"] = newRecognitionResultNotificationConfigProp
+	}
 
 	return obj, nil
 }
@@ -1668,5 +1674,42 @@ func expandDialogflowConversationProfileTtsConfigVoiceName(v interface{}, d tpgr
 }
 
 func expandDialogflowConversationProfileTtsConfigVoiceSsmlGender(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileNewRecognitionResultNotificationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTopic, err := expandDialogflowConversationProfileNewRecognitionResultNotificationConfigTopic(original["topic"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTopic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["topic"] = transformedTopic
+	}
+
+	transformedMessageFormat, err := expandDialogflowConversationProfileNewRecognitionResultNotificationConfigMessageFormat(original["message_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMessageFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["messageFormat"] = transformedMessageFormat
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowConversationProfileNewRecognitionResultNotificationConfigTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileNewRecognitionResultNotificationConfigMessageFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
