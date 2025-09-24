@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/caiasset"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/ancestrymanager"
-	convert "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google"
-	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/tfplan"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/caiasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/ancestrymanager"
+	convert "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google"
+	resources "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/tfplan"
 	"go.uber.org/zap"
 )
 

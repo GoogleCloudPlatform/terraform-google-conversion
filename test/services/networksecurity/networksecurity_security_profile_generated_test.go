@@ -17,7 +17,7 @@ package networksecurity_test
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileBasicExample(t *testing.T) {

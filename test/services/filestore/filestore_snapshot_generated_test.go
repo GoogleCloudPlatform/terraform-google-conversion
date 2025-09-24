@@ -17,7 +17,7 @@ package filestore_test
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccFilestoreSnapshot_filestoreSnapshotBasicExample(t *testing.T) {

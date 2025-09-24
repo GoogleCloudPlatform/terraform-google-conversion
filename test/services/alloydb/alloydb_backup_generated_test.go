@@ -17,7 +17,7 @@ package alloydb_test
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccAlloydbBackup_alloydbBackupBasicTestExample(t *testing.T) {
