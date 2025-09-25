@@ -18,6 +18,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
@@ -73,6 +74,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	apphub.ApphubWorkloadAssetType: {
 		"Default": apphub.NewApphubWorkloadCai2hclConverter(provider),
 	},
+	artifactregistry.ArtifactRegistryRepositoryAssetType: {
+		"Default": artifactregistry.NewArtifactRegistryRepositoryCai2hclConverter(provider),
+	},
 	backupdr.BackupDRBackupPlanAssetType: {
 		"Default": backupdr.NewBackupDRBackupPlanCai2hclConverter(provider),
 	},
@@ -114,8 +118,14 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	cloudbuildv2.Cloudbuildv2RepositoryAssetType: {
 		"Default": cloudbuildv2.NewCloudbuildv2RepositoryCai2hclConverter(provider),
 	},
+	clouddeploy.ClouddeployAutomationAssetType: {
+		"Default": clouddeploy.NewClouddeployAutomationCai2hclConverter(provider),
+	},
 	clouddeploy.ClouddeployCustomTargetTypeAssetType: {
 		"Default": clouddeploy.NewClouddeployCustomTargetTypeCai2hclConverter(provider),
+	},
+	clouddeploy.ClouddeployDeployPolicyAssetType: {
+		"Default": clouddeploy.NewClouddeployDeployPolicyCai2hclConverter(provider),
 	},
 	cloudfunctions2.Cloudfunctions2FunctionAssetType: {
 		"Default": cloudfunctions2.NewCloudfunctions2functionCai2hclConverter(provider),
