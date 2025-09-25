@@ -33,6 +33,7 @@ func TestAccFilestoreBackup_filestoreBackupBasicExample(t *testing.T) {
 			"location",
 			"name",
 			"provider",
+			"tags",
 		},
 		[]string{},
 	)
