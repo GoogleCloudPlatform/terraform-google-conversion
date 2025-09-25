@@ -62,6 +62,18 @@ func GetNetworkSecurityMirroringEndpointGroupApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("mirroring_deployment_group"); !tpgresource.IsEmptyValue(reflect.ValueOf(mirroringDeploymentGroupProp)) && (ok || !reflect.DeepEqual(v, mirroringDeploymentGroupProp)) {
 		obj["mirroringDeploymentGroup"] = mirroringDeploymentGroupProp
 	}
+	mirroringDeploymentGroupsProp, err := expandNetworkSecurityMirroringEndpointGroupMirroringDeploymentGroups(d.Get("mirroring_deployment_groups"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mirroring_deployment_groups"); !tpgresource.IsEmptyValue(reflect.ValueOf(mirroringDeploymentGroupsProp)) && (ok || !reflect.DeepEqual(v, mirroringDeploymentGroupsProp)) {
+		obj["mirroringDeploymentGroups"] = mirroringDeploymentGroupsProp
+	}
+	typeProp, err := expandNetworkSecurityMirroringEndpointGroupType(d.Get("type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
+		obj["type"] = typeProp
+	}
 	descriptionProp, err := expandNetworkSecurityMirroringEndpointGroupDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -79,6 +91,14 @@ func GetNetworkSecurityMirroringEndpointGroupApiObject(d tpgresource.TerraformRe
 }
 
 func expandNetworkSecurityMirroringEndpointGroupMirroringDeploymentGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityMirroringEndpointGroupMirroringDeploymentGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityMirroringEndpointGroupType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
