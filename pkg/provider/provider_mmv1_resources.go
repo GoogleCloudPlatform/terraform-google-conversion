@@ -4,6 +4,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
@@ -31,7 +32,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 55
+// Generated resources: 58
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -40,6 +41,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_apphub_application":                            apphub.ResourceApphubApplication(),
 	"google_apphub_service":                                apphub.ResourceApphubService(),
 	"google_apphub_workload":                               apphub.ResourceApphubWorkload(),
+	"google_artifact_registry_repository":                  artifactregistry.ResourceArtifactRegistryRepository(),
 	"google_backup_dr_backup_plan":                         backupdr.ResourceBackupDRBackupPlan(),
 	"google_backup_dr_backup_vault":                        backupdr.ResourceBackupDRBackupVault(),
 	"google_beyondcorp_app_connection":                     beyondcorp.ResourceBeyondcorpAppConnection(),
@@ -55,7 +57,9 @@ var generatedResources = map[string]*schema.Resource{
 	"google_cloudbuild_bitbucket_server_config":            cloudbuild.ResourceCloudBuildBitbucketServerConfig(),
 	"google_cloudbuildv2_connection":                       cloudbuildv2.ResourceCloudbuildv2Connection(),
 	"google_cloudbuildv2_repository":                       cloudbuildv2.ResourceCloudbuildv2Repository(),
+	"google_clouddeploy_automation":                        clouddeploy.ResourceClouddeployAutomation(),
 	"google_clouddeploy_custom_target_type":                clouddeploy.ResourceClouddeployCustomTargetType(),
+	"google_clouddeploy_deploy_policy":                     clouddeploy.ResourceClouddeployDeployPolicy(),
 	"google_cloudfunctions2_function":                      cloudfunctions2.ResourceCloudfunctions2function(),
 	"google_compute_address":                               compute.ResourceComputeAddress(),
 	"google_compute_autoscaler":                            compute.ResourceComputeAutoscaler(),
