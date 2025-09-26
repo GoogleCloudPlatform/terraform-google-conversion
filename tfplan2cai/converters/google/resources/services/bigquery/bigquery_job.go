@@ -132,6 +132,13 @@ func expandBigQueryJobConfiguration(v interface{}, d tpgresource.TerraformResour
 		transformed["extract"] = transformedExtract
 	}
 
+	transformedReservation, err := expandBigQueryJobConfigurationReservation(d.Get("reservation"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReservation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["reservation"] = transformedReservation
+	}
+
 	transformedEffectiveLabels, err := expandBigQueryJobConfigurationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -1354,6 +1361,10 @@ func expandBigQueryJobConfigurationExtractSourceModelDatasetId(v interface{}, d 
 }
 
 func expandBigQueryJobConfigurationExtractSourceModelModelId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryJobConfigurationReservation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
