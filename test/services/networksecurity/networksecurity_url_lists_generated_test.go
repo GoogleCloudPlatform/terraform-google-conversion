@@ -21,7 +21,6 @@ import (
 )
 
 func TestAccNetworkSecurityUrlLists_networkSecurityUrlListsBasicExample(t *testing.T) {
-	t.Skip("It takes time to fix it.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -39,7 +38,6 @@ func TestAccNetworkSecurityUrlLists_networkSecurityUrlListsBasicExample(t *testi
 	)
 }
 func TestAccNetworkSecurityUrlLists_networkSecurityUrlListsAdvancedExample(t *testing.T) {
-	t.Skip("It takes time to fix it.")
 	t.Parallel()
 
 	test.BidirectionalConversion(

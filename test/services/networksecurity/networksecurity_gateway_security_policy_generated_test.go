@@ -21,7 +21,6 @@ import (
 )
 
 func TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityPolicyBasicExample(t *testing.T) {
-	t.Skip("It takes time to fix it.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -39,7 +38,6 @@ func TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityP
 	)
 }
 func TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityPolicyTlsInspectionBasicExample(t *testing.T) {
-	t.Skip("It takes time to fix it.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
