@@ -1572,6 +1572,28 @@ UTILIZATION balancing modes.
 For CONNECTION mode, either maxConnections or
 maxConnectionsPerInstance must be set.`,
 			},
+			"max_in_flight_requests": {
+				Type:     schema.TypeInt,
+				Computed: true,
+				Optional: true,
+				Description: `Defines a maximum number of in-flight requests for the whole NEG
+or instance group. Not available if backend's balancingMode is RATE
+or CONNECTION.`,
+			},
+			"max_in_flight_requests_per_endpoint": {
+				Type:     schema.TypeInt,
+				Computed: true,
+				Optional: true,
+				Description: `Defines a maximum number of in-flight requests for a single endpoint.
+Not available if backend's balancingMode is RATE or CONNECTION.`,
+			},
+			"max_in_flight_requests_per_instance": {
+				Type:     schema.TypeInt,
+				Computed: true,
+				Optional: true,
+				Description: `Defines a maximum number of in-flight requests for a single VM.
+Not available if backend's balancingMode is RATE or CONNECTION.`,
+			},
 			"max_rate": {
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -1618,6 +1640,15 @@ with default preference. This field cannot be set when loadBalancingScheme is se
     based on RTT.
   - DEFAULT: If preferred backends don't have enough capacity, backends in this layer would be used and
     traffic would be assigned based on the load balancing algorithm you use. This is the default Possible values: ["PREFERRED", "DEFAULT"]`,
+			},
+			"traffic_duration": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"LONG", "SHORT", ""}),
+				Description: `This field specifies how long a connection should be kept alive for:
+- LONG: Most of the requests are expected to take more than multiple
+  seconds to finish.
+- SHORT: Most requests are expected to finish with a sub-second latency. Possible values: ["LONG", "SHORT"]`,
 			},
 		},
 	}
