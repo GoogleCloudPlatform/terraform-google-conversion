@@ -171,19 +171,23 @@ func flattenComputeBackendServiceBackend(v interface{}, d *schema.ResourceData, 
 			continue
 		}
 		transformed.Add(map[string]interface{}{
-			"balancing_mode":               flattenComputeBackendServiceBackendBalancingMode(original["balancingMode"], d, config),
-			"capacity_scaler":              flattenComputeBackendServiceBackendCapacityScaler(original["capacityScaler"], d, config),
-			"preference":                   flattenComputeBackendServiceBackendPreference(original["preference"], d, config),
-			"description":                  flattenComputeBackendServiceBackendDescription(original["description"], d, config),
-			"group":                        flattenComputeBackendServiceBackendGroup(original["group"], d, config),
-			"max_connections":              flattenComputeBackendServiceBackendMaxConnections(original["maxConnections"], d, config),
-			"max_connections_per_instance": flattenComputeBackendServiceBackendMaxConnectionsPerInstance(original["maxConnectionsPerInstance"], d, config),
-			"max_connections_per_endpoint": flattenComputeBackendServiceBackendMaxConnectionsPerEndpoint(original["maxConnectionsPerEndpoint"], d, config),
-			"max_rate":                     flattenComputeBackendServiceBackendMaxRate(original["maxRate"], d, config),
-			"max_rate_per_instance":        flattenComputeBackendServiceBackendMaxRatePerInstance(original["maxRatePerInstance"], d, config),
-			"max_rate_per_endpoint":        flattenComputeBackendServiceBackendMaxRatePerEndpoint(original["maxRatePerEndpoint"], d, config),
-			"max_utilization":              flattenComputeBackendServiceBackendMaxUtilization(original["maxUtilization"], d, config),
-			"custom_metrics":               flattenComputeBackendServiceBackendCustomMetrics(original["customMetrics"], d, config),
+			"balancing_mode":                      flattenComputeBackendServiceBackendBalancingMode(original["balancingMode"], d, config),
+			"capacity_scaler":                     flattenComputeBackendServiceBackendCapacityScaler(original["capacityScaler"], d, config),
+			"preference":                          flattenComputeBackendServiceBackendPreference(original["preference"], d, config),
+			"description":                         flattenComputeBackendServiceBackendDescription(original["description"], d, config),
+			"group":                               flattenComputeBackendServiceBackendGroup(original["group"], d, config),
+			"max_connections":                     flattenComputeBackendServiceBackendMaxConnections(original["maxConnections"], d, config),
+			"max_connections_per_instance":        flattenComputeBackendServiceBackendMaxConnectionsPerInstance(original["maxConnectionsPerInstance"], d, config),
+			"max_connections_per_endpoint":        flattenComputeBackendServiceBackendMaxConnectionsPerEndpoint(original["maxConnectionsPerEndpoint"], d, config),
+			"max_rate":                            flattenComputeBackendServiceBackendMaxRate(original["maxRate"], d, config),
+			"max_rate_per_instance":               flattenComputeBackendServiceBackendMaxRatePerInstance(original["maxRatePerInstance"], d, config),
+			"max_rate_per_endpoint":               flattenComputeBackendServiceBackendMaxRatePerEndpoint(original["maxRatePerEndpoint"], d, config),
+			"max_utilization":                     flattenComputeBackendServiceBackendMaxUtilization(original["maxUtilization"], d, config),
+			"max_in_flight_requests":              flattenComputeBackendServiceBackendMaxInFlightRequests(original["maxInFlightRequests"], d, config),
+			"max_in_flight_requests_per_instance": flattenComputeBackendServiceBackendMaxInFlightRequestsPerInstance(original["maxInFlightRequestsPerInstance"], d, config),
+			"max_in_flight_requests_per_endpoint": flattenComputeBackendServiceBackendMaxInFlightRequestsPerEndpoint(original["maxInFlightRequestsPerEndpoint"], d, config),
+			"traffic_duration":                    flattenComputeBackendServiceBackendTrafficDuration(original["trafficDuration"], d, config),
+			"custom_metrics":                      flattenComputeBackendServiceBackendCustomMetrics(original["customMetrics"], d, config),
 		})
 	}
 	return transformed
@@ -289,6 +293,61 @@ func flattenComputeBackendServiceBackendMaxRatePerEndpoint(v interface{}, d *sch
 }
 
 func flattenComputeBackendServiceBackendMaxUtilization(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeBackendServiceBackendMaxInFlightRequests(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeBackendServiceBackendMaxInFlightRequestsPerInstance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeBackendServiceBackendMaxInFlightRequestsPerEndpoint(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeBackendServiceBackendTrafficDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
