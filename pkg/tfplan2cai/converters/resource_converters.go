@@ -83,6 +83,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_image":                                 compute.ComputeImageTfplan2caiConverter(),
 	"google_compute_network":                               compute.ComputeNetworkTfplan2caiConverter(),
 	"google_compute_region_autoscaler":                     compute.ComputeRegionAutoscalerTfplan2caiConverter(),
+	"google_compute_region_health_check":                   compute.ComputeRegionHealthCheckTfplan2caiConverter(),
 	"google_compute_subnetwork":                            compute.ComputeSubnetworkTfplan2caiConverter(),
 	"google_compute_url_map":                               compute.ComputeUrlMapTfplan2caiConverter(),
 	"google_filestore_backup":                              filestore.FilestoreBackupTfplan2caiConverter(),
