@@ -21,7 +21,7 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 		// Edge cases
 		// Handle the edge case that multiple Terraform resources share the same CAI asset type
 		switch asset.Type {
-		case cloudasset.googleapis.com / FeedAssetType:
+		case "cloudasset.googleapis.com/Feed":
 			if strings.Contains(asset.Name, "folders") {
 				converter = ConverterMap[asset.Type]["CloudAssetFolderFeed"]
 			} else if strings.Contains(asset.Name, "organizations") {
@@ -29,13 +29,13 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 			} else if strings.Contains(asset.Name, "projects") {
 				converter = ConverterMap[asset.Type]["CloudAssetProjectFeed"]
 			}
-		case compute.googleapis.com / AutoscalerAssetType:
+		case "compute.googleapis.com/Autoscaler":
 			if strings.Contains(asset.Name, "zones") {
 				converter = ConverterMap[asset.Type]["ComputeAutoscaler"]
 			} else if strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionAutoscaler"]
 			}
-		case compute.googleapis.com / HealthCheckAssetType:
+		case "compute.googleapis.com/HealthCheck":
 			if strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeHealthCheck"]
 			} else if strings.Contains(asset.Name, "regions") {
