@@ -32,7 +32,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 59
+// Generated resources: 60
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -40,6 +40,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_apigee_instance":                               apigee.ResourceApigeeInstance(),
 	"google_apphub_application":                            apphub.ResourceApphubApplication(),
 	"google_apphub_service":                                apphub.ResourceApphubService(),
+	"google_apphub_service_project_attachment":             apphub.ResourceApphubServiceProjectAttachment(),
 	"google_apphub_workload":                               apphub.ResourceApphubWorkload(),
 	"google_artifact_registry_repository":                  artifactregistry.ResourceArtifactRegistryRepository(),
 	"google_backup_dr_backup_plan":                         backupdr.ResourceBackupDRBackupPlan(),

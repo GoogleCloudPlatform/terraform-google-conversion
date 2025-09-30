@@ -71,6 +71,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"apphub.googleapis.com/Service": {
 		"Default": apphub.NewApphubServiceCai2hclConverter(provider),
 	},
+	"apphub.googleapis.com/ServiceProjectAttachment": {
+		"Default": apphub.NewApphubServiceProjectAttachmentCai2hclConverter(provider),
+	},
 	"apphub.googleapis.com/Workload": {
 		"Default": apphub.NewApphubWorkloadCai2hclConverter(provider),
 	},
