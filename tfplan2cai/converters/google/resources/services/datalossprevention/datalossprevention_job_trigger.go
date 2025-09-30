@@ -2357,6 +2357,13 @@ func expandDataLossPreventionJobTriggerInspectJobActionsSaveFindingsOutputConfig
 		transformed["table"] = transformedTable
 	}
 
+	transformedStoragePath, err := expandDataLossPreventionJobTriggerInspectJobActionsSaveFindingsOutputConfigStoragePath(original["storage_path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStoragePath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["storagePath"] = transformedStoragePath
+	}
+
 	transformedOutputSchema, err := expandDataLossPreventionJobTriggerInspectJobActionsSaveFindingsOutputConfigOutputSchema(original["output_schema"], d, config)
 	if err != nil {
 		return nil, err
@@ -2412,6 +2419,32 @@ func expandDataLossPreventionJobTriggerInspectJobActionsSaveFindingsOutputConfig
 }
 
 func expandDataLossPreventionJobTriggerInspectJobActionsSaveFindingsOutputConfigTableTableId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsSaveFindingsOutputConfigStoragePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPath, err := expandDataLossPreventionJobTriggerInspectJobActionsSaveFindingsOutputConfigStoragePathPath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionJobTriggerInspectJobActionsSaveFindingsOutputConfigStoragePathPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
