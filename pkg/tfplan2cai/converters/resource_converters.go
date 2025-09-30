@@ -49,6 +49,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_apigee_instance":                               apigee.ApigeeInstanceTfplan2caiConverter(),
 	"google_apphub_application":                            apphub.ApphubApplicationTfplan2caiConverter(),
 	"google_apphub_service":                                apphub.ApphubServiceTfplan2caiConverter(),
+	"google_apphub_service_project_attachment":             apphub.ApphubServiceProjectAttachmentTfplan2caiConverter(),
 	"google_apphub_workload":                               apphub.ApphubWorkloadTfplan2caiConverter(),
 	"google_artifact_registry_repository":                  artifactregistry.ArtifactRegistryRepositoryTfplan2caiConverter(),
 	"google_backup_dr_backup_plan":                         backupdr.BackupDRBackupPlanTfplan2caiConverter(),
