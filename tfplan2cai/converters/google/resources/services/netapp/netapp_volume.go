@@ -879,6 +879,27 @@ func expandNetappVolumeHybridReplicationParameters(v interface{}, d tpgresource.
 		transformed["labels"] = transformedLabels
 	}
 
+	transformedReplicationSchedule, err := expandNetappVolumeHybridReplicationParametersReplicationSchedule(original["replication_schedule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReplicationSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["replicationSchedule"] = transformedReplicationSchedule
+	}
+
+	transformedHybridReplicationType, err := expandNetappVolumeHybridReplicationParametersHybridReplicationType(original["hybrid_replication_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHybridReplicationType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hybridReplicationType"] = transformedHybridReplicationType
+	}
+
+	transformedLargeVolumeConstituentCount, err := expandNetappVolumeHybridReplicationParametersLargeVolumeConstituentCount(original["large_volume_constituent_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLargeVolumeConstituentCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["largeVolumeConstituentCount"] = transformedLargeVolumeConstituentCount
+	}
+
 	return transformed, nil
 }
 
@@ -919,6 +940,18 @@ func expandNetappVolumeHybridReplicationParametersLabels(v interface{}, d tpgres
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersReplicationSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersHybridReplicationType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersLargeVolumeConstituentCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandNetappVolumeThroughputMibps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
