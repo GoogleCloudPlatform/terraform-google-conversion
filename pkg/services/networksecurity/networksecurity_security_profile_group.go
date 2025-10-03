@@ -78,6 +78,11 @@ Format: organizations/{organization_id}.`,
 				Optional:    true,
 				Description: `Reference to a SecurityProfile with the threat prevention configuration for the SecurityProfileGroup.`,
 			},
+			"url_filtering_profile": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: `Reference to a SecurityProfile with the URL filtering configuration for the SecurityProfileGroup.`,
+			},
 			"create_time": {
 				Type:        schema.TypeString,
 				Computed:    true,

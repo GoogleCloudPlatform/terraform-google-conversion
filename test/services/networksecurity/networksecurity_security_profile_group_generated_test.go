@@ -74,3 +74,21 @@ func TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGr
 		[]string{},
 	)
 }
+func TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGroupUrlFilteringExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"location",
+			"name",
+			"parent",
+			"provider",
+		},
+		[]string{},
+	)
+}

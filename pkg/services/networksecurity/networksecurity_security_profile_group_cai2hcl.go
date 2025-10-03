@@ -76,6 +76,7 @@ func (c *NetworkSecuritySecurityProfileGroupCai2hclConverter) convertResourceDat
 	hclData["description"] = flattenNetworkSecuritySecurityProfileGroupDescription(res["description"], d, config)
 	hclData["labels"] = flattenNetworkSecuritySecurityProfileGroupLabels(res["labels"], d, config)
 	hclData["threat_prevention_profile"] = flattenNetworkSecuritySecurityProfileGroupThreatPreventionProfile(res["threatPreventionProfile"], d, config)
+	hclData["url_filtering_profile"] = flattenNetworkSecuritySecurityProfileGroupUrlFilteringProfile(res["urlFilteringProfile"], d, config)
 	hclData["custom_mirroring_profile"] = flattenNetworkSecuritySecurityProfileGroupCustomMirroringProfile(res["customMirroringProfile"], d, config)
 	hclData["custom_intercept_profile"] = flattenNetworkSecuritySecurityProfileGroupCustomInterceptProfile(res["customInterceptProfile"], d, config)
 
@@ -97,6 +98,10 @@ func flattenNetworkSecuritySecurityProfileGroupLabels(v interface{}, d *schema.R
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenNetworkSecuritySecurityProfileGroupThreatPreventionProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileGroupUrlFilteringProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

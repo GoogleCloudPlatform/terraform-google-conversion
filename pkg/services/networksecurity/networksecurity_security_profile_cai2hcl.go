@@ -26,6 +26,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 )
@@ -76,6 +77,7 @@ func (c *NetworkSecuritySecurityProfileCai2hclConverter) convertResourceData(ass
 	hclData["description"] = flattenNetworkSecuritySecurityProfileDescription(res["description"], d, config)
 	hclData["labels"] = flattenNetworkSecuritySecurityProfileLabels(res["labels"], d, config)
 	hclData["threat_prevention_profile"] = flattenNetworkSecuritySecurityProfileThreatPreventionProfile(res["threatPreventionProfile"], d, config)
+	hclData["url_filtering_profile"] = flattenNetworkSecuritySecurityProfileUrlFilteringProfile(res["urlFilteringProfile"], d, config)
 	hclData["custom_mirroring_profile"] = flattenNetworkSecuritySecurityProfileCustomMirroringProfile(res["customMirroringProfile"], d, config)
 	hclData["custom_intercept_profile"] = flattenNetworkSecuritySecurityProfileCustomInterceptProfile(res["customInterceptProfile"], d, config)
 	hclData["type"] = flattenNetworkSecuritySecurityProfileType(res["type"], d, config)
@@ -200,6 +202,89 @@ func flattenNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverri
 
 func flattenNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverridesAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenNetworkSecuritySecurityProfileUrlFilteringProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["url_filters"] =
+		flattenNetworkSecuritySecurityProfileUrlFilteringProfileUrlFilters(original["urlFilters"], d, config)
+
+	// We check again the length after removing the default url_filter
+	if transformed["url_filters"].(*schema.Set).Len() == 0 {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+func flattenNetworkSecuritySecurityProfileUrlFilteringProfileUrlFilters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+
+	// We check if the user included the default filter in his config
+	resourceDataContainsDefaultFilter := false
+	resourceData, ok := d.GetOk("url_filtering_profile.0.url_filters")
+	if ok {
+		for _, raw := range resourceData.(*schema.Set).List() {
+			if raw.(map[string]interface{})["priority"] == 2147483647 {
+				resourceDataContainsDefaultFilter = true
+				break
+			}
+		}
+	}
+
+	l := v.([]interface{})
+	transformed := schema.NewSet(schema.HashResource(networksecuritySecurityProfileUrlFilteringProfileUrlFiltersSchema()), []interface{}{})
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+
+		priorityFlatten := flattenNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersPriority(original["priority"], d, config)
+		// Do not include the auto created default url_filter coming back from the api unless the user included it in his config
+		if priorityFlatten == 2147483647 && !resourceDataContainsDefaultFilter {
+			continue
+		}
+
+		transformed.Add(map[string]interface{}{
+			"filtering_action": flattenNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersFilteringAction(original["filteringAction"], d, config),
+			"urls":             flattenNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersUrls(original["urls"], d, config),
+			"priority":         priorityFlatten,
+		})
+	}
+	return transformed
+}
+func flattenNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersFilteringAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersUrls(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersPriority(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
 }
 
 func flattenNetworkSecuritySecurityProfileCustomMirroringProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

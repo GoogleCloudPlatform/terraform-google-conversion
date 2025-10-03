@@ -73,6 +73,12 @@ func GetNetworkSecuritySecurityProfileGroupCaiObject(d tpgresource.TerraformReso
 	} else if v, ok := d.GetOkExists("threat_prevention_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(threatPreventionProfileProp)) && (ok || !reflect.DeepEqual(v, threatPreventionProfileProp)) {
 		obj["threatPreventionProfile"] = threatPreventionProfileProp
 	}
+	urlFilteringProfileProp, err := expandNetworkSecuritySecurityProfileGroupUrlFilteringProfile(d.Get("url_filtering_profile"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("url_filtering_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(urlFilteringProfileProp)) && (ok || !reflect.DeepEqual(v, urlFilteringProfileProp)) {
+		obj["urlFilteringProfile"] = urlFilteringProfileProp
+	}
 	customMirroringProfileProp, err := expandNetworkSecuritySecurityProfileGroupCustomMirroringProfile(d.Get("custom_mirroring_profile"), d, config)
 	if err != nil {
 		return nil, err
@@ -100,6 +106,10 @@ func expandNetworkSecuritySecurityProfileGroupDescription(v interface{}, d tpgre
 }
 
 func expandNetworkSecuritySecurityProfileGroupThreatPreventionProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileGroupUrlFilteringProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
