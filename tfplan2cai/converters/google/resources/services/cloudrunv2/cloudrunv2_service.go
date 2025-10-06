@@ -423,6 +423,13 @@ func expandCloudRunV2ServiceTemplate(v interface{}, d tpgresource.TerraformResou
 		transformed["gpuZonalRedundancyDisabled"] = transformedGpuZonalRedundancyDisabled
 	}
 
+	transformedHealthCheckDisabled, err := expandCloudRunV2ServiceTemplateHealthCheckDisabled(original["health_check_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHealthCheckDisabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["healthCheckDisabled"] = transformedHealthCheckDisabled
+	}
+
 	return transformed, nil
 }
 
@@ -1893,6 +1900,10 @@ func expandCloudRunV2ServiceTemplateNodeSelectorAccelerator(v interface{}, d tpg
 }
 
 func expandCloudRunV2ServiceTemplateGpuZonalRedundancyDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateHealthCheckDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
