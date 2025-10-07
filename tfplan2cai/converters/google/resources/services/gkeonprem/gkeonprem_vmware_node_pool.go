@@ -74,6 +74,12 @@ func GetGkeonpremVmwareNodePoolApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("config"); !tpgresource.IsEmptyValue(reflect.ValueOf(configProp)) && (ok || !reflect.DeepEqual(v, configProp)) {
 		obj["config"] = configProp
 	}
+	onPremVersionProp, err := expandGkeonpremVmwareNodePoolOnPremVersion(d.Get("on_prem_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("on_prem_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(onPremVersionProp)) && (ok || !reflect.DeepEqual(v, onPremVersionProp)) {
+		obj["onPremVersion"] = onPremVersionProp
+	}
 	effectiveAnnotationsProp, err := expandGkeonpremVmwareNodePoolEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
@@ -381,6 +387,10 @@ func expandGkeonpremVmwareNodePoolConfigVsphereConfigHostGroups(v interface{}, d
 }
 
 func expandGkeonpremVmwareNodePoolConfigEnableLoadBalancer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareNodePoolOnPremVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
