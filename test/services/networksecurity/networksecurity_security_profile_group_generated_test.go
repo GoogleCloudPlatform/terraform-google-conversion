@@ -34,6 +34,7 @@ func TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGr
 			"name",
 			"parent",
 			"provider",
+			"url_filtering_profile",
 		},
 		[]string{},
 	)
@@ -52,6 +53,7 @@ func TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGr
 			"name",
 			"parent",
 			"provider",
+			"url_filtering_profile",
 		},
 		[]string{},
 	)
@@ -70,6 +72,7 @@ func TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGr
 			"name",
 			"parent",
 			"provider",
+			"url_filtering_profile",
 		},
 		[]string{},
 	)
@@ -88,6 +91,7 @@ func TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGr
 			"name",
 			"parent",
 			"provider",
+			"url_filtering_profile",
 		},
 		[]string{},
 	)
