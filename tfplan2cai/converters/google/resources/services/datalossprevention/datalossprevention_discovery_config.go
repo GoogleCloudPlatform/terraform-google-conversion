@@ -279,6 +279,13 @@ func expandDataLossPreventionDiscoveryConfigActions(v interface{}, d tpgresource
 			transformed["tagResources"] = transformedTagResources
 		}
 
+		transformedPublishToDataplexCatalog, err := expandDataLossPreventionDiscoveryConfigActionsPublishToDataplexCatalog(original["publish_to_dataplex_catalog"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["publishToDataplexCatalog"] = transformedPublishToDataplexCatalog
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -630,6 +637,24 @@ func expandDataLossPreventionDiscoveryConfigActionsTagResourcesProfileGeneration
 
 func expandDataLossPreventionDiscoveryConfigActionsTagResourcesLowerDataRiskToLow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsPublishToDataplexCatalog(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandDataLossPreventionDiscoveryConfigTargets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
