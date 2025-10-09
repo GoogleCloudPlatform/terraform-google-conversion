@@ -18,6 +18,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
@@ -32,7 +33,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 60
+// Generated resources: 61
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -81,6 +82,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_filestore_backup":                              filestore.ResourceFilestoreBackup(),
 	"google_filestore_instance":                            filestore.ResourceFilestoreInstance(),
 	"google_filestore_snapshot":                            filestore.ResourceFilestoreSnapshot(),
+	"google_firebase_data_connect_service":                 firebasedataconnect.ResourceFirebaseDataConnectService(),
 	"google_kms_autokey_config":                            kms.ResourceKMSAutokeyConfig(),
 	"google_kms_key_handle":                                kms.ResourceKMSKeyHandle(),
 	"google_network_security_address_group":                networksecurity.ResourceNetworkSecurityAddressGroup(),
