@@ -70,6 +70,12 @@ func GetDataprocMetastoreFederationApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("backend_metastores"); !tpgresource.IsEmptyValue(reflect.ValueOf(backendMetastoresProp)) && (ok || !reflect.DeepEqual(v, backendMetastoresProp)) {
 		obj["backendMetastores"] = backendMetastoresProp
 	}
+	tagsProp, err := expandDataprocMetastoreFederationTags(d.Get("tags"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tags"); !tpgresource.IsEmptyValue(reflect.ValueOf(tagsProp)) && (ok || !reflect.DeepEqual(v, tagsProp)) {
+		obj["tags"] = tagsProp
+	}
 	effectiveLabelsProp, err := expandDataprocMetastoreFederationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -122,6 +128,17 @@ func expandDataprocMetastoreFederationBackendMetastoresName(v interface{}, d tpg
 
 func expandDataprocMetastoreFederationBackendMetastoresMetastoreType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataprocMetastoreFederationTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandDataprocMetastoreFederationEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
