@@ -98,6 +98,12 @@ func GetDiscoveryEngineSearchEngineApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("features"); !tpgresource.IsEmptyValue(reflect.ValueOf(featuresProp)) && (ok || !reflect.DeepEqual(v, featuresProp)) {
 		obj["features"] = featuresProp
 	}
+	kmsKeyNameProp, err := expandDiscoveryEngineSearchEngineKmsKeyName(d.Get("kms_key_name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyNameProp)) && (ok || !reflect.DeepEqual(v, kmsKeyNameProp)) {
+		obj["kmsKeyName"] = kmsKeyNameProp
+	}
 
 	return resourceDiscoveryEngineSearchEngineEncoder(d, config, obj)
 }
@@ -196,4 +202,8 @@ func expandDiscoveryEngineSearchEngineFeatures(v interface{}, d tpgresource.Terr
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandDiscoveryEngineSearchEngineKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
