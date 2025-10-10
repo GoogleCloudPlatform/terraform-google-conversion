@@ -17,12 +17,19 @@
 package discoveryengine
 
 import (
+	"encoding/json"
 	"reflect"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+func DataConnectorEntitiesParamsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	return (old == "" && new == "{}") || (old == "{}" && new == "")
+}
 
 const DiscoveryEngineDataConnectorAssetType string = "{{location}}-discoveryengine.googleapis.com/DataConnector"
 
@@ -97,6 +104,36 @@ func GetDiscoveryEngineDataConnectorApiObject(d tpgresource.TerraformResourceDat
 		return nil, err
 	} else if v, ok := d.GetOkExists("static_ip_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(staticIpEnabledProp)) && (ok || !reflect.DeepEqual(v, staticIpEnabledProp)) {
 		obj["staticIpEnabled"] = staticIpEnabledProp
+	}
+	connectorModesProp, err := expandDiscoveryEngineDataConnectorConnectorModes(d.Get("connector_modes"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("connector_modes"); !tpgresource.IsEmptyValue(reflect.ValueOf(connectorModesProp)) && (ok || !reflect.DeepEqual(v, connectorModesProp)) {
+		obj["connectorModes"] = connectorModesProp
+	}
+	syncModeProp, err := expandDiscoveryEngineDataConnectorSyncMode(d.Get("sync_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("sync_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(syncModeProp)) && (ok || !reflect.DeepEqual(v, syncModeProp)) {
+		obj["syncMode"] = syncModeProp
+	}
+	incrementalRefreshIntervalProp, err := expandDiscoveryEngineDataConnectorIncrementalRefreshInterval(d.Get("incremental_refresh_interval"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("incremental_refresh_interval"); !tpgresource.IsEmptyValue(reflect.ValueOf(incrementalRefreshIntervalProp)) && (ok || !reflect.DeepEqual(v, incrementalRefreshIntervalProp)) {
+		obj["incrementalRefreshInterval"] = incrementalRefreshIntervalProp
+	}
+	autoRunDisabledProp, err := expandDiscoveryEngineDataConnectorAutoRunDisabled(d.Get("auto_run_disabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("auto_run_disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(autoRunDisabledProp)) && (ok || !reflect.DeepEqual(v, autoRunDisabledProp)) {
+		obj["autoRunDisabled"] = autoRunDisabledProp
+	}
+	incrementalSyncDisabledProp, err := expandDiscoveryEngineDataConnectorIncrementalSyncDisabled(d.Get("incremental_sync_disabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("incremental_sync_disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(incrementalSyncDisabledProp)) && (ok || !reflect.DeepEqual(v, incrementalSyncDisabledProp)) {
+		obj["incrementalSyncDisabled"] = incrementalSyncDisabledProp
 	}
 
 	return obj, nil
@@ -190,13 +227,14 @@ func expandDiscoveryEngineDataConnectorEntitiesDataStore(v interface{}, d tpgres
 	return v, nil
 }
 
-func expandDiscoveryEngineDataConnectorEntitiesParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
-	if v == nil {
-		return map[string]string{}, nil
+func expandDiscoveryEngineDataConnectorEntitiesParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
 	}
-	m := make(map[string]string)
-	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
 	}
 	return m, nil
 }
@@ -206,5 +244,25 @@ func expandDiscoveryEngineDataConnectorKmsKeyName(v interface{}, d tpgresource.T
 }
 
 func expandDiscoveryEngineDataConnectorStaticIpEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorConnectorModes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorSyncMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorIncrementalRefreshInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorAutoRunDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorIncrementalSyncDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
