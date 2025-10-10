@@ -80,6 +80,12 @@ func GetNetworkServicesServiceLbPoliciesApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("failover_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(failoverConfigProp)) && (ok || !reflect.DeepEqual(v, failoverConfigProp)) {
 		obj["failoverConfig"] = failoverConfigProp
 	}
+	isolationConfigProp, err := expandNetworkServicesServiceLbPoliciesIsolationConfig(d.Get("isolation_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("isolation_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(isolationConfigProp)) && (ok || !reflect.DeepEqual(v, isolationConfigProp)) {
+		obj["isolationConfig"] = isolationConfigProp
+	}
 	effectiveLabelsProp, err := expandNetworkServicesServiceLbPoliciesEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -147,6 +153,43 @@ func expandNetworkServicesServiceLbPoliciesFailoverConfig(v interface{}, d tpgre
 }
 
 func expandNetworkServicesServiceLbPoliciesFailoverConfigFailoverHealthThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesServiceLbPoliciesIsolationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIsolationGranularity, err := expandNetworkServicesServiceLbPoliciesIsolationConfigIsolationGranularity(original["isolation_granularity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIsolationGranularity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["isolationGranularity"] = transformedIsolationGranularity
+	}
+
+	transformedIsolationMode, err := expandNetworkServicesServiceLbPoliciesIsolationConfigIsolationMode(original["isolation_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIsolationMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["isolationMode"] = transformedIsolationMode
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkServicesServiceLbPoliciesIsolationConfigIsolationGranularity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesServiceLbPoliciesIsolationConfigIsolationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
