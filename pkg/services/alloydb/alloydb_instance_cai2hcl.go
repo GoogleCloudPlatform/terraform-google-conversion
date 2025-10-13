@@ -83,7 +83,6 @@ func (c *AlloydbInstanceCai2hclConverter) convertResourceData(asset caiasset.Ass
 	hclData["activation_policy"] = flattenAlloydbInstanceActivationPolicy(res["activationPolicy"], d, config)
 	hclData["instance_type"] = flattenAlloydbInstanceInstanceType(res["instanceType"], d, config)
 	hclData["query_insights_config"] = flattenAlloydbInstanceQueryInsightsConfig(res["queryInsightsConfig"], d, config)
-	hclData["observability_config"] = flattenAlloydbInstanceObservabilityConfig(res["observabilityConfig"], d, config)
 	hclData["read_pool_config"] = flattenAlloydbInstanceReadPoolConfig(res["readPoolConfig"], d, config)
 	hclData["machine_config"] = flattenAlloydbInstanceMachineConfig(res["machineConfig"], d, config)
 	hclData["client_connection_config"] = flattenAlloydbInstanceClientConnectionConfig(res["clientConnectionConfig"], d, config)
@@ -193,101 +192,6 @@ func flattenAlloydbInstanceQueryInsightsConfigQueryPlansPerMinute(v interface{},
 	}
 
 	return v // let terraform core handle it otherwise
-}
-
-func flattenAlloydbInstanceObservabilityConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
-	transformed := make(map[string]interface{})
-	transformed["enabled"] =
-		flattenAlloydbInstanceObservabilityConfigEnabled(original["enabled"], d, config)
-	transformed["preserve_comments"] =
-		flattenAlloydbInstanceObservabilityConfigPreserveComments(original["preserveComments"], d, config)
-	transformed["track_wait_events"] =
-		flattenAlloydbInstanceObservabilityConfigTrackWaitEvents(original["trackWaitEvents"], d, config)
-	transformed["track_wait_event_types"] =
-		flattenAlloydbInstanceObservabilityConfigTrackWaitEventTypes(original["trackWaitEventTypes"], d, config)
-	transformed["max_query_string_length"] =
-		flattenAlloydbInstanceObservabilityConfigMaxQueryStringLength(original["maxQueryStringLength"], d, config)
-	transformed["record_application_tags"] =
-		flattenAlloydbInstanceObservabilityConfigRecordApplicationTags(original["recordApplicationTags"], d, config)
-	transformed["query_plans_per_minute"] =
-		flattenAlloydbInstanceObservabilityConfigQueryPlansPerMinute(original["queryPlansPerMinute"], d, config)
-	transformed["track_active_queries"] =
-		flattenAlloydbInstanceObservabilityConfigTrackActiveQueries(original["trackActiveQueries"], d, config)
-	transformed["assistive_experiences_enabled"] =
-		flattenAlloydbInstanceObservabilityConfigAssistiveExperiencesEnabled(original["assistiveExperiencesEnabled"], d, config)
-	if tgcresource.AllValuesAreNil(transformed) {
-		return nil
-	}
-	return []interface{}{transformed}
-}
-
-func flattenAlloydbInstanceObservabilityConfigEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenAlloydbInstanceObservabilityConfigPreserveComments(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenAlloydbInstanceObservabilityConfigTrackWaitEvents(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenAlloydbInstanceObservabilityConfigTrackWaitEventTypes(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenAlloydbInstanceObservabilityConfigMaxQueryStringLength(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
-}
-
-func flattenAlloydbInstanceObservabilityConfigRecordApplicationTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenAlloydbInstanceObservabilityConfigQueryPlansPerMinute(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
-}
-
-func flattenAlloydbInstanceObservabilityConfigTrackActiveQueries(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenAlloydbInstanceObservabilityConfigAssistiveExperiencesEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
 }
 
 func flattenAlloydbInstanceReadPoolConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

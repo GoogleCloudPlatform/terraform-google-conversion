@@ -48,11 +48,6 @@ func hyperDiskIopsUpdateDiffSuppress(_ context.Context, d *schema.ResourceDiff, 
 	return nil
 }
 
-// Suppress all diffs, used for Disk.Interface which is a nonfunctional field
-func AlwaysDiffSuppress(_, _, _ string, _ *schema.ResourceData) bool {
-	return true
-}
-
 // diffsuppress for beta and to check change in source_disk attribute
 func sourceDiskDiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
 	s1 := strings.TrimPrefix(old, "https://www.googleapis.com/compute/beta")
@@ -490,15 +485,6 @@ images names must include the family name. If they don't, use the
 For instance, the image 'centos-6-v20180104' includes its family name 'centos-6'.
 These images can be referred by family name here.`,
 			},
-			"interface": {
-				Type:             schema.TypeString,
-				Optional:         true,
-				Deprecated:       "`interface` is deprecated and will be removed in a future major release. This field is no longer used and can be safely removed from your configurations; disk interfaces are automatically determined on attachment.",
-				ForceNew:         true,
-				DiffSuppressFunc: AlwaysDiffSuppress,
-				Description:      `Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME. The default is SCSI.`,
-				Default:          "SCSI",
-			},
 			"labels": {
 				Type:     schema.TypeMap,
 				Optional: true,
@@ -519,12 +505,6 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 					Type:             schema.TypeString,
 					DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
 				},
-			},
-			"multi_writer": {
-				Type:        schema.TypeBool,
-				Optional:    true,
-				ForceNew:    true,
-				Description: `Indicates whether or not the disk can be read/write attached to more than one instance.`,
 			},
 			"params": {
 				Type:        schema.TypeList,
@@ -572,23 +552,6 @@ allows for an update of IOPS every 4 hours. To update your hyperdisk more freque
 				Description: `Indicates how much Throughput must be provisioned for the disk.
 Note: Updating currently is only supported by hyperdisk skus without the need to delete and recreate the disk, hyperdisk
 allows for an update of Throughput every 4 hours. To update your hyperdisk more frequently, you'll need to manually delete and recreate it`,
-			},
-			"resource_policies": {
-				Type:     schema.TypeList,
-				Computed: true,
-				Optional: true,
-				ForceNew: true,
-				Description: `Resource policies applied to this disk for automatic snapshot creations.
-
-~>**NOTE** This value does not support updating the
-resource policy, as resource policies can not be updated more than
-one at a time. Use
-['google_compute_disk_resource_policy_attachment'](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk_resource_policy_attachment)
-to allow for updating the resource policy attached to the disk.`,
-				Elem: &schema.Schema{
-					Type:             schema.TypeString,
-					DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
-				},
 			},
 			"size": {
 				Type:     schema.TypeInt,

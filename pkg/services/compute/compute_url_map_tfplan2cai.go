@@ -49,8 +49,8 @@ func GetComputeUrlMapCaiAssets(d tpgresource.TerraformResourceData, config *tran
 				Name: name,
 				Type: ComputeUrlMapAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
 					DiscoveryName:        "UrlMap",
 					Data:                 obj,
 					Location:             location,
@@ -1245,13 +1245,6 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy(v inte
 		transformed["backendService"] = transformedBackendService
 	}
 
-	transformedMirrorPercent, err := expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["mirrorPercent"] = transformedMirrorPercent
-	}
-
 	return transformed, nil
 }
 
@@ -1285,10 +1278,6 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyBackend
 	}
 
 	return f.RelativeLink(), nil
-}
-
-func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1852,20 +1841,6 @@ func expandComputeUrlMapPathMatcherRouteRules(v interface{}, d tpgresource.Terra
 			return nil, err
 		} else if val := reflect.ValueOf(transformedCustomErrorResponsePolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["customErrorResponsePolicy"] = transformedCustomErrorResponsePolicy
-		}
-
-		transformedHttpFilterConfigs, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigs(original["http_filter_configs"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedHttpFilterConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["httpFilterConfigs"] = transformedHttpFilterConfigs
-		}
-
-		transformedHttpFilterMetadata, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadata(original["http_filter_metadata"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedHttpFilterMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["httpFilterMetadata"] = transformedHttpFilterMetadata
 		}
 
 		req = append(req, transformed)
@@ -2762,13 +2737,6 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicy(v in
 		transformed["backendService"] = transformedBackendService
 	}
 
-	transformedMirrorPercent, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["mirrorPercent"] = transformedMirrorPercent
-	}
-
 	return transformed, nil
 }
 
@@ -2802,10 +2770,6 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyBacke
 	}
 
 	return f.RelativeLink(), nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -3404,108 +3368,6 @@ func expandComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicyErrorServi
 	return v, nil
 }
 
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedFilterName, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsFilterName(original["filter_name"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedFilterName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["filterName"] = transformedFilterName
-		}
-
-		transformedConfigTypeUrl, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsConfigTypeUrl(original["config_type_url"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedConfigTypeUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["configTypeUrl"] = transformedConfigTypeUrl
-		}
-
-		transformedConfig, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsConfig(original["config"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["config"] = transformedConfig
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsFilterName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsConfigTypeUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedFilterName, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataFilterName(original["filter_name"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedFilterName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["filterName"] = transformedFilterName
-		}
-
-		transformedConfigTypeUrl, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataConfigTypeUrl(original["config_type_url"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedConfigTypeUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["configTypeUrl"] = transformedConfigTypeUrl
-		}
-
-		transformedConfig, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataConfig(original["config"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["config"] = transformedConfig
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataFilterName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataConfigTypeUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandComputeUrlMapPathMatcherDefaultUrlRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -4097,13 +3959,6 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicy(v inter
 		transformed["backendService"] = transformedBackendService
 	}
 
-	transformedMirrorPercent, err := expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["mirrorPercent"] = transformedMirrorPercent
-	}
-
 	return transformed, nil
 }
 
@@ -4137,10 +3992,6 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyBackendS
 	}
 
 	return f.RelativeLink(), nil
-}
-
-func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionCorsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -5216,13 +5067,6 @@ func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicy(v interface{}, d t
 		transformed["backendService"] = transformedBackendService
 	}
 
-	transformedMirrorPercent, err := expandComputeUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["mirrorPercent"] = transformedMirrorPercent
-	}
-
 	return transformed, nil
 }
 
@@ -5256,10 +5100,6 @@ func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicyBackendService(v in
 	}
 
 	return f.RelativeLink(), nil
-}
-
-func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandComputeUrlMapDefaultRouteActionCorsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

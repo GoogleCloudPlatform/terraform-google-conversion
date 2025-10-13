@@ -28,7 +28,6 @@ func TestAccComputeBackendService_backendServiceBasicExample(t *testing.T) {
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -46,7 +45,6 @@ func TestAccComputeBackendService_backendServiceExternalIapExample(t *testing.T)
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -64,7 +62,6 @@ func TestAccComputeBackendService_backendServiceCacheSimpleExample(t *testing.T)
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -82,7 +79,6 @@ func TestAccComputeBackendService_backendServiceCacheIncludeHttpHeadersExample(t
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -100,7 +96,6 @@ func TestAccComputeBackendService_backendServiceCacheIncludeNamedCookiesExample(
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -118,7 +113,6 @@ func TestAccComputeBackendService_backendServiceCacheExample(t *testing.T) {
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -136,84 +130,6 @@ func TestAccComputeBackendService_backendServiceCacheBypassCacheOnRequestHeaders
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeBackendService_backendServiceTrafficDirectorRoundRobinExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"dynamic_forwarding",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
-		},
-		[]string{
-			"RESOURCE.enableCDN",
-		},
-	)
-}
-func TestAccComputeBackendService_backendServiceTrafficDirectorRingHashExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"dynamic_forwarding",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"outlier_detection.enforcing_consecutive_gateway_failure",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
-		},
-		[]string{
-			"RESOURCE.enableCDN",
-		},
-	)
-}
-func TestAccComputeBackendService_backendServiceStatefulSessionAffinityExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"dynamic_forwarding",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeBackendService_backendServiceNetworkEndpointExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -231,7 +147,6 @@ func TestAccComputeBackendService_backendServiceExternalManagedExample(t *testin
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -249,7 +164,6 @@ func TestAccComputeBackendService_backendServiceIpAddressSelectionPolicyExample(
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -267,7 +181,6 @@ func TestAccComputeBackendService_backendServiceCustomMetricsExample(t *testing.
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -285,7 +198,6 @@ func TestAccComputeBackendService_backendServiceTlsSettingsExample(t *testing.T)
 		[]string{
 			"count",
 			"depends_on",
-			"dynamic_forwarding",
 			"for_each",
 			"iap.oauth2_client_secret",
 			"lifecycle",
@@ -293,25 +205,5 @@ func TestAccComputeBackendService_backendServiceTlsSettingsExample(t *testing.T)
 			"security_settings.aws_v4_authentication.access_key",
 		},
 		[]string{},
-	)
-}
-func TestAccComputeBackendService_backendServiceDynamicForwardingExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"dynamic_forwarding",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
-		},
-		[]string{
-			"RESOURCE.enableCDN",
-		},
 	)
 }

@@ -46,8 +46,8 @@ func GetFilestoreInstanceCaiAssets(d tpgresource.TerraformResourceData, config *
 				Name: name,
 				Type: FilestoreInstanceAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v1beta1",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/file/v1beta1/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/file/v1/rest",
 					DiscoveryName:        "Instance",
 					Data:                 obj,
 					Location:             location,
@@ -126,12 +126,6 @@ func GetFilestoreInstanceCaiObject(d tpgresource.TerraformResourceData, config *
 		return nil, err
 	} else if v, ok := d.GetOkExists("initial_replication"); !tpgresource.IsEmptyValue(reflect.ValueOf(initialReplicationProp)) && (ok || !reflect.DeepEqual(v, initialReplicationProp)) {
 		obj["replication"] = initialReplicationProp
-	}
-	directoryServicesProp, err := expandFilestoreInstanceDirectoryServices(d.Get("directory_services"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("directory_services"); !tpgresource.IsEmptyValue(reflect.ValueOf(directoryServicesProp)) && (ok || !reflect.DeepEqual(v, directoryServicesProp)) {
-		obj["directoryServices"] = directoryServicesProp
 	}
 	effectiveLabelsProp, err := expandFilestoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -555,87 +549,6 @@ func expandFilestoreInstanceInitialReplicationReplicas(v interface{}, d tpgresou
 }
 
 func expandFilestoreInstanceInitialReplicationReplicasPeerInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandFilestoreInstanceDirectoryServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedLdap, err := expandFilestoreInstanceDirectoryServicesLdap(original["ldap"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedLdap); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["ldap"] = transformedLdap
-	}
-
-	return transformed, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedDomain, err := expandFilestoreInstanceDirectoryServicesLdapDomain(original["domain"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["domain"] = transformedDomain
-	}
-
-	transformedServers, err := expandFilestoreInstanceDirectoryServicesLdapServers(original["servers"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedServers); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["servers"] = transformedServers
-	}
-
-	transformedUsersOu, err := expandFilestoreInstanceDirectoryServicesLdapUsersOu(original["users_ou"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedUsersOu); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["usersOu"] = transformedUsersOu
-	}
-
-	transformedGroupsOu, err := expandFilestoreInstanceDirectoryServicesLdapGroupsOu(original["groups_ou"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedGroupsOu); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["groupsOu"] = transformedGroupsOu
-	}
-
-	return transformed, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdapDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdapServers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdapUsersOu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandFilestoreInstanceDirectoryServicesLdapGroupsOu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

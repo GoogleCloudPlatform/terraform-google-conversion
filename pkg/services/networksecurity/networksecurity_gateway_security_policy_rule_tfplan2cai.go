@@ -46,8 +46,8 @@ func GetNetworkSecurityGatewaySecurityPolicyRuleCaiAssets(d tpgresource.Terrafor
 				Name: name,
 				Type: NetworkSecurityGatewaySecurityPolicyRuleAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v1beta1",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1beta1/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1/rest",
 					DiscoveryName:        "GatewaySecurityPolicyRule",
 					Data:                 obj,
 					Location:             location,

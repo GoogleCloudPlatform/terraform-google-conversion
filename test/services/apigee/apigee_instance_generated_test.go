@@ -68,22 +68,6 @@ func TestAccApigeeInstance_apigeeInstanceIpRangeTestExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccApigeeInstance_apigeeInstanceFullTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"org_id",
-			"provider",
-		},
-		[]string{},
-	)
-}
 func TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample(t *testing.T) {
 	t.Parallel()
 

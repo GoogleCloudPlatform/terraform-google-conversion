@@ -34,7 +34,6 @@ func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileBasicEx
 			"name",
 			"parent",
 			"provider",
-			"url_filtering_profile",
 		},
 		[]string{},
 	)
@@ -53,65 +52,6 @@ func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileOverrid
 			"name",
 			"parent",
 			"provider",
-			"url_filtering_profile",
-		},
-		[]string{},
-	)
-}
-func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileMirroringExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"parent",
-			"provider",
-			"url_filtering_profile",
-		},
-		[]string{},
-	)
-}
-func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileInterceptExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"parent",
-			"provider",
-			"url_filtering_profile",
-		},
-		[]string{},
-	)
-}
-func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileUrlFilteringExample(t *testing.T) {
-	t.Skip("The ENUM value URL_FILTERING in type field is transformed to UNKNOWN_ENUM_VALUE_ProfileType_5 in CAI asset. The reason could be that URL_FILTERING is not supported in CAI yet. Will check if the value in CAI assets will be correct later.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"parent",
-			"provider",
-			"url_filtering_profile",
 		},
 		[]string{},
 	)

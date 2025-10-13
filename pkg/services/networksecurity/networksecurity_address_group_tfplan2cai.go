@@ -46,8 +46,8 @@ func GetNetworkSecurityAddressGroupCaiAssets(d tpgresource.TerraformResourceData
 				Name: name,
 				Type: NetworkSecurityAddressGroupAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v1beta1",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1beta1/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1/rest",
 					DiscoveryName:        "AddressGroup",
 					Data:                 obj,
 					Location:             location,
@@ -85,12 +85,6 @@ func GetNetworkSecurityAddressGroupCaiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("capacity"); !tpgresource.IsEmptyValue(reflect.ValueOf(capacityProp)) && (ok || !reflect.DeepEqual(v, capacityProp)) {
 		obj["capacity"] = capacityProp
 	}
-	purposeProp, err := expandNetworkSecurityAddressGroupPurpose(d.Get("purpose"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("purpose"); !tpgresource.IsEmptyValue(reflect.ValueOf(purposeProp)) && (ok || !reflect.DeepEqual(v, purposeProp)) {
-		obj["purpose"] = purposeProp
-	}
 	effectiveLabelsProp, err := expandNetworkSecurityAddressGroupEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -114,10 +108,6 @@ func expandNetworkSecurityAddressGroupItems(v interface{}, d tpgresource.Terrafo
 }
 
 func expandNetworkSecurityAddressGroupCapacity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetworkSecurityAddressGroupPurpose(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

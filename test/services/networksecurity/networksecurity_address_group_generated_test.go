@@ -74,21 +74,3 @@ func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsAdvancedExam
 		[]string{},
 	)
 }
-func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsCloudArmorExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"parent",
-			"provider",
-		},
-		[]string{},
-	)
-}

@@ -46,8 +46,8 @@ func GetAlloydbBackupCaiAssets(d tpgresource.TerraformResourceData, config *tran
 				Name: name,
 				Type: AlloydbBackupAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v1beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/alloydb/v1beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/alloydb/v1/rest",
 					DiscoveryName:        "Backup",
 					Data:                 obj,
 					Location:             location,

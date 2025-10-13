@@ -58,13 +58,6 @@ var ResourceManagerV3CustomEndpointEntry = &schema.Schema{
 	ValidateFunc: ValidateCustomEndpoint,
 }
 
-var RuntimeConfigCustomEndpointEntryKey = "runtimeconfig_custom_endpoint"
-var RuntimeConfigCustomEndpointEntry = &schema.Schema{
-	Type:         schema.TypeString,
-	Optional:     true,
-	ValidateFunc: ValidateCustomEndpoint,
-}
-
 var ServiceNetworkingCustomEndpointEntryKey = "service_networking_custom_endpoint"
 var ServiceNetworkingCustomEndpointEntry = &schema.Schema{
 	Type:         schema.TypeString,

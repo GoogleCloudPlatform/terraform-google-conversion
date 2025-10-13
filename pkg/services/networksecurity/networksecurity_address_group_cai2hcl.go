@@ -79,7 +79,6 @@ func (c *NetworkSecurityAddressGroupCai2hclConverter) convertResourceData(asset 
 	hclData["type"] = flattenNetworkSecurityAddressGroupType(res["type"], d, config)
 	hclData["items"] = flattenNetworkSecurityAddressGroupItems(res["items"], d, config)
 	hclData["capacity"] = flattenNetworkSecurityAddressGroupCapacity(res["capacity"], d, config)
-	hclData["purpose"] = flattenNetworkSecurityAddressGroupPurpose(res["purpose"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -124,8 +123,4 @@ func flattenNetworkSecurityAddressGroupCapacity(v interface{}, d *schema.Resourc
 	}
 
 	return v // let terraform core handle it otherwise
-}
-
-func flattenNetworkSecurityAddressGroupPurpose(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
 }
