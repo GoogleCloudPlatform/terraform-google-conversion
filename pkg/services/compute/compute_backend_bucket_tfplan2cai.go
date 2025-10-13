@@ -46,8 +46,8 @@ func GetComputeBackendBucketCaiAssets(d tpgresource.TerraformResourceData, confi
 				Name: name,
 				Type: ComputeBackendBucketAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
 					DiscoveryName:        "BackendBucket",
 					Data:                 obj,
 					Location:             location,

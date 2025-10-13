@@ -51,8 +51,8 @@ func GetComputeDiskCaiAssets(d tpgresource.TerraformResourceData, config *transp
 				Name: name,
 				Type: ComputeDiskAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
 					DiscoveryName:        "Disk",
 					Data:                 obj,
 					Location:             location,
@@ -144,23 +144,11 @@ func GetComputeDiskCaiObject(d tpgresource.TerraformResourceData, config *transp
 	} else if v, ok := d.GetOkExists("image"); !tpgresource.IsEmptyValue(reflect.ValueOf(imageProp)) && (ok || !reflect.DeepEqual(v, imageProp)) {
 		obj["sourceImage"] = imageProp
 	}
-	resourcePoliciesProp, err := expandComputeDiskResourcePolicies(d.Get("resource_policies"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("resource_policies"); !tpgresource.IsEmptyValue(reflect.ValueOf(resourcePoliciesProp)) && (ok || !reflect.DeepEqual(v, resourcePoliciesProp)) {
-		obj["resourcePolicies"] = resourcePoliciesProp
-	}
 	enableConfidentialComputeProp, err := expandComputeDiskEnableConfidentialCompute(d.Get("enable_confidential_compute"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("enable_confidential_compute"); ok || !reflect.DeepEqual(v, enableConfidentialComputeProp) {
 		obj["enableConfidentialCompute"] = enableConfidentialComputeProp
-	}
-	multiWriterProp, err := expandComputeDiskMultiWriter(d.Get("multi_writer"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("multi_writer"); !tpgresource.IsEmptyValue(reflect.ValueOf(multiWriterProp)) && (ok || !reflect.DeepEqual(v, multiWriterProp)) {
-		obj["multiWriter"] = multiWriterProp
 	}
 	provisionedIopsProp, err := expandComputeDiskProvisionedIops(d.Get("provisioned_iops"), d, config)
 	if err != nil {
@@ -491,28 +479,7 @@ func expandComputeDiskImage(v interface{}, d tpgresource.TerraformResourceData, 
 	return v, nil
 }
 
-func expandComputeDiskResourcePolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			return nil, fmt.Errorf("Invalid value for resource_policies: nil")
-		}
-		f, err := tpgresource.ParseRegionalFieldValue("resourcePolicies", raw.(string), "project", "region", "zone", d, config, true)
-		if err != nil {
-			return nil, fmt.Errorf("Invalid value for resource_policies: %s", err)
-		}
-		url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
-		req = append(req, url)
-	}
-	return req, nil
-}
-
 func expandComputeDiskEnableConfidentialCompute(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeDiskMultiWriter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

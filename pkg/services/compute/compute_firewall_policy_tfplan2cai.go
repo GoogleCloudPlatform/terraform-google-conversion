@@ -46,8 +46,8 @@ func GetComputeFirewallPolicyCaiAssets(d tpgresource.TerraformResourceData, conf
 				Name: name,
 				Type: ComputeFirewallPolicyAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
 					DiscoveryName:        "FirewallPolicy",
 					Data:                 obj,
 					Location:             location,

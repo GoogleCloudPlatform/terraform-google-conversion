@@ -116,8 +116,6 @@ func flattenComputeAutoscalerAutoscalingPolicy(v interface{}, d *schema.Resource
 		flattenComputeAutoscalerAutoscalingPolicyCooldownPeriod(original["coolDownPeriodSec"], d, config)
 	transformed["mode"] =
 		flattenComputeAutoscalerAutoscalingPolicyMode(original["mode"], d, config)
-	transformed["scale_down_control"] =
-		flattenComputeAutoscalerAutoscalingPolicyScaleDownControl(original["scaleDownControl"], d, config)
 	transformed["scale_in_control"] =
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControl(original["scaleInControl"], d, config)
 	transformed["cpu_utilization"] =
@@ -193,95 +191,6 @@ func flattenComputeAutoscalerAutoscalingPolicyCooldownPeriod(v interface{}, d *s
 
 func flattenComputeAutoscalerAutoscalingPolicyMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func flattenComputeAutoscalerAutoscalingPolicyScaleDownControl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
-	transformed := make(map[string]interface{})
-	transformed["max_scaled_down_replicas"] =
-		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(original["maxScaledDownReplicas"], d, config)
-	transformed["time_window_sec"] =
-		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(original["timeWindowSec"], d, config)
-	if tgcresource.AllValuesAreNil(transformed) {
-		return nil
-	}
-	return []interface{}{transformed}
-}
-
-func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
-	transformed := make(map[string]interface{})
-	transformed["fixed"] =
-		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(original["fixed"], d, config)
-	transformed["percent"] =
-		flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(original["percent"], d, config)
-	if tgcresource.AllValuesAreNil(transformed) {
-		return nil
-	}
-	return []interface{}{transformed}
-}
-
-func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
-}
-
-func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
-}
-
-func flattenComputeAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
 }
 
 func flattenComputeAutoscalerAutoscalingPolicyScaleInControl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

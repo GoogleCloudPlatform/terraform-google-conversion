@@ -199,9 +199,6 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"networksecurity.googleapis.com/AddressGroup": {
 		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),
 	},
-	"networksecurity.googleapis.com/AuthorizationPolicy": {
-		"Default": networksecurity.NewNetworkSecurityAuthorizationPolicyCai2hclConverter(provider),
-	},
 	"networksecurity.googleapis.com/ClientTlsPolicy": {
 		"Default": networksecurity.NewNetworkSecurityClientTlsPolicyCai2hclConverter(provider),
 	},

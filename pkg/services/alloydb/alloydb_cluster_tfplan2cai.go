@@ -46,8 +46,8 @@ func GetAlloydbClusterCaiAssets(d tpgresource.TerraformResourceData, config *tra
 				Name: name,
 				Type: AlloydbClusterAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v1beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/alloydb/v1beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/alloydb/v1/rest",
 					DiscoveryName:        "Cluster",
 					Data:                 obj,
 					Location:             location,

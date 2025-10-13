@@ -82,16 +82,6 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 				ForceNew:    true,
 				Description: `The name of the parent this address group belongs to. Format: organizations/{organization_id} or projects/{project_id}.`,
 			},
-			"purpose": {
-				Type:        schema.TypeList,
-				Computed:    true,
-				Optional:    true,
-				Description: `List of supported purposes of the Address Group. Possible values: ["DEFAULT", "CLOUD_ARMOR"]`,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-					ValidateFunc: verify.ValidateEnum([]string{"DEFAULT", "CLOUD_ARMOR"}),
-				},
-			},
 			"create_time": {
 				Type:     schema.TypeString,
 				Computed: true,

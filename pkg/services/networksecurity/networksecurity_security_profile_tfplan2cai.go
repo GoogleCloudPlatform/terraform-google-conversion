@@ -48,8 +48,8 @@ func GetNetworkSecuritySecurityProfileCaiAssets(d tpgresource.TerraformResourceD
 				Name: name,
 				Type: NetworkSecuritySecurityProfileAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v1beta1",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1beta1/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1/rest",
 					DiscoveryName:        "SecurityProfile",
 					Data:                 obj,
 					Location:             location,
@@ -74,12 +74,6 @@ func GetNetworkSecuritySecurityProfileCaiObject(d tpgresource.TerraformResourceD
 		return nil, err
 	} else if v, ok := d.GetOkExists("threat_prevention_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(threatPreventionProfileProp)) && (ok || !reflect.DeepEqual(v, threatPreventionProfileProp)) {
 		obj["threatPreventionProfile"] = threatPreventionProfileProp
-	}
-	urlFilteringProfileProp, err := expandNetworkSecuritySecurityProfileUrlFilteringProfile(d.Get("url_filtering_profile"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("url_filtering_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(urlFilteringProfileProp)) && (ok || !reflect.DeepEqual(v, urlFilteringProfileProp)) {
-		obj["urlFilteringProfile"] = urlFilteringProfileProp
 	}
 	customMirroringProfileProp, err := expandNetworkSecuritySecurityProfileCustomMirroringProfile(d.Get("custom_mirroring_profile"), d, config)
 	if err != nil {
@@ -269,80 +263,6 @@ func expandNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverrid
 }
 
 func expandNetworkSecuritySecurityProfileThreatPreventionProfileAntivirusOverridesAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetworkSecuritySecurityProfileUrlFilteringProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedUrlFilters, err := expandNetworkSecuritySecurityProfileUrlFilteringProfileUrlFilters(original["url_filters"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedUrlFilters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["urlFilters"] = transformedUrlFilters
-	}
-
-	return transformed, nil
-}
-
-func expandNetworkSecuritySecurityProfileUrlFilteringProfileUrlFilters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedFilteringAction, err := expandNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersFilteringAction(original["filtering_action"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedFilteringAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["filteringAction"] = transformedFilteringAction
-		}
-
-		transformedUrls, err := expandNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersUrls(original["urls"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedUrls); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["urls"] = transformedUrls
-		}
-
-		transformedPriority, err := expandNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersPriority(original["priority"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedPriority); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["priority"] = transformedPriority
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersFilteringAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetworkSecuritySecurityProfileUrlFilteringProfileUrlFiltersPriority(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

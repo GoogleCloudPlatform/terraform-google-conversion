@@ -46,8 +46,8 @@ func GetNetworkSecurityClientTlsPolicyCaiAssets(d tpgresource.TerraformResourceD
 				Name: name,
 				Type: NetworkSecurityClientTlsPolicyAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v1beta1",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1beta1/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networksecurity/v1/rest",
 					DiscoveryName:        "ClientTlsPolicy",
 					Data:                 obj,
 					Location:             location,

@@ -116,8 +116,6 @@ func flattenComputeRegionAutoscalerAutoscalingPolicy(v interface{}, d *schema.Re
 		flattenComputeRegionAutoscalerAutoscalingPolicyCooldownPeriod(original["coolDownPeriodSec"], d, config)
 	transformed["mode"] =
 		flattenComputeRegionAutoscalerAutoscalingPolicyMode(original["mode"], d, config)
-	transformed["scale_down_control"] =
-		flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControl(original["scaleDownControl"], d, config)
 	transformed["scale_in_control"] =
 		flattenComputeRegionAutoscalerAutoscalingPolicyScaleInControl(original["scaleInControl"], d, config)
 	transformed["cpu_utilization"] =
@@ -193,95 +191,6 @@ func flattenComputeRegionAutoscalerAutoscalingPolicyCooldownPeriod(v interface{}
 
 func flattenComputeRegionAutoscalerAutoscalingPolicyMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
-	transformed := make(map[string]interface{})
-	transformed["max_scaled_down_replicas"] =
-		flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(original["maxScaledDownReplicas"], d, config)
-	transformed["time_window_sec"] =
-		flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(original["timeWindowSec"], d, config)
-	if tgcresource.AllValuesAreNil(transformed) {
-		return nil
-	}
-	return []interface{}{transformed}
-}
-
-func flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
-	transformed := make(map[string]interface{})
-	transformed["fixed"] =
-		flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(original["fixed"], d, config)
-	transformed["percent"] =
-		flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(original["percent"], d, config)
-	if tgcresource.AllValuesAreNil(transformed) {
-		return nil
-	}
-	return []interface{}{transformed}
-}
-
-func flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
-}
-
-func flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
-}
-
-func flattenComputeRegionAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
 }
 
 func flattenComputeRegionAutoscalerAutoscalingPolicyScaleInControl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

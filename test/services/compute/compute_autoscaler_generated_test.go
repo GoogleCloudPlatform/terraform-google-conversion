@@ -20,21 +20,6 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeAutoscaler_autoscalerSingleInstanceExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-		},
-		[]string{},
-	)
-}
 func TestAccComputeAutoscaler_autoscalerBasicExample(t *testing.T) {
 	t.Parallel()
 

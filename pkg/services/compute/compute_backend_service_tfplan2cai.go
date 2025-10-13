@@ -48,8 +48,8 @@ func GetComputeBackendServiceCaiAssets(d tpgresource.TerraformResourceData, conf
 				Name: name,
 				Type: ComputeBackendServiceAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
 					DiscoveryName:        "BackendService",
 					Data:                 obj,
 					Location:             location,
@@ -273,18 +273,6 @@ func GetComputeBackendServiceCaiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("max_stream_duration"); !tpgresource.IsEmptyValue(reflect.ValueOf(maxStreamDurationProp)) && (ok || !reflect.DeepEqual(v, maxStreamDurationProp)) {
 		obj["maxStreamDuration"] = maxStreamDurationProp
 	}
-	networkPassThroughLbTrafficPolicyProp, err := expandComputeBackendServiceNetworkPassThroughLbTrafficPolicy(d.Get("network_pass_through_lb_traffic_policy"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("network_pass_through_lb_traffic_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkPassThroughLbTrafficPolicyProp)) && (ok || !reflect.DeepEqual(v, networkPassThroughLbTrafficPolicyProp)) {
-		obj["networkPassThroughLbTrafficPolicy"] = networkPassThroughLbTrafficPolicyProp
-	}
-	dynamicForwardingProp, err := expandComputeBackendServiceDynamicForwarding(d.Get("dynamic_forwarding"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("dynamic_forwarding"); !tpgresource.IsEmptyValue(reflect.ValueOf(dynamicForwardingProp)) && (ok || !reflect.DeepEqual(v, dynamicForwardingProp)) {
-		obj["dynamicForwarding"] = dynamicForwardingProp
-	}
 	paramsProp, err := expandComputeBackendServiceParams(d.Get("params"), d, config)
 	if err != nil {
 		return nil, err
@@ -459,34 +447,6 @@ func expandComputeBackendServiceBackend(v interface{}, d tpgresource.TerraformRe
 			transformed["maxUtilization"] = transformedMaxUtilization
 		}
 
-		transformedMaxInFlightRequests, err := expandComputeBackendServiceBackendMaxInFlightRequests(original["max_in_flight_requests"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedMaxInFlightRequests); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["maxInFlightRequests"] = transformedMaxInFlightRequests
-		}
-
-		transformedMaxInFlightRequestsPerInstance, err := expandComputeBackendServiceBackendMaxInFlightRequestsPerInstance(original["max_in_flight_requests_per_instance"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedMaxInFlightRequestsPerInstance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["maxInFlightRequestsPerInstance"] = transformedMaxInFlightRequestsPerInstance
-		}
-
-		transformedMaxInFlightRequestsPerEndpoint, err := expandComputeBackendServiceBackendMaxInFlightRequestsPerEndpoint(original["max_in_flight_requests_per_endpoint"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedMaxInFlightRequestsPerEndpoint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["maxInFlightRequestsPerEndpoint"] = transformedMaxInFlightRequestsPerEndpoint
-		}
-
-		transformedTrafficDuration, err := expandComputeBackendServiceBackendTrafficDuration(original["traffic_duration"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedTrafficDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["trafficDuration"] = transformedTrafficDuration
-		}
-
 		transformedCustomMetrics, err := expandComputeBackendServiceBackendCustomMetrics(original["custom_metrics"], d, config)
 		if err != nil {
 			return nil, err
@@ -544,22 +504,6 @@ func expandComputeBackendServiceBackendMaxRatePerEndpoint(v interface{}, d tpgre
 }
 
 func expandComputeBackendServiceBackendMaxUtilization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceBackendMaxInFlightRequests(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceBackendMaxInFlightRequestsPerInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceBackendMaxInFlightRequestsPerEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceBackendTrafficDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -626,13 +570,6 @@ func expandComputeBackendServiceCircuitBreakers(v interface{}, d tpgresource.Ter
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedConnectTimeout, err := expandComputeBackendServiceCircuitBreakersConnectTimeout(original["connect_timeout"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedConnectTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["connectTimeout"] = transformedConnectTimeout
-	}
-
 	transformedMaxRequestsPerConnection, err := expandComputeBackendServiceCircuitBreakersMaxRequestsPerConnection(original["max_requests_per_connection"], d, config)
 	if err != nil {
 		return nil, err
@@ -669,43 +606,6 @@ func expandComputeBackendServiceCircuitBreakers(v interface{}, d tpgresource.Ter
 	}
 
 	return transformed, nil
-}
-
-func expandComputeBackendServiceCircuitBreakersConnectTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedSeconds, err := expandComputeBackendServiceCircuitBreakersConnectTimeoutSeconds(original["seconds"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["seconds"] = transformedSeconds
-	}
-
-	transformedNanos, err := expandComputeBackendServiceCircuitBreakersConnectTimeoutNanos(original["nanos"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["nanos"] = transformedNanos
-	}
-
-	return transformed, nil
-}
-
-func expandComputeBackendServiceCircuitBreakersConnectTimeoutSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceCircuitBreakersConnectTimeoutNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandComputeBackendServiceCircuitBreakersMaxRequestsPerConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1991,113 +1891,6 @@ func expandComputeBackendServiceMaxStreamDurationSeconds(v interface{}, d tpgres
 }
 
 func expandComputeBackendServiceMaxStreamDurationNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceNetworkPassThroughLbTrafficPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedZonalAffinity, err := expandComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity(original["zonal_affinity"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedZonalAffinity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["zonalAffinity"] = transformedZonalAffinity
-	}
-
-	return transformed, nil
-}
-
-func expandComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedSpillover, err := expandComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpillover(original["spillover"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSpillover); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["spillover"] = transformedSpillover
-	}
-
-	transformedSpilloverRatio, err := expandComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpilloverRatio(original["spillover_ratio"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSpilloverRatio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["spilloverRatio"] = transformedSpilloverRatio
-	}
-
-	return transformed, nil
-}
-
-func expandComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpillover(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpilloverRatio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeBackendServiceDynamicForwarding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedIpPortSelection, err := expandComputeBackendServiceDynamicForwardingIpPortSelection(original["ip_port_selection"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedIpPortSelection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["ipPortSelection"] = transformedIpPortSelection
-	}
-
-	return transformed, nil
-}
-
-func expandComputeBackendServiceDynamicForwardingIpPortSelection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedEnabled, err := expandComputeBackendServiceDynamicForwardingIpPortSelectionEnabled(original["enabled"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["enabled"] = transformedEnabled
-	}
-
-	return transformed, nil
-}
-
-func expandComputeBackendServiceDynamicForwardingIpPortSelectionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

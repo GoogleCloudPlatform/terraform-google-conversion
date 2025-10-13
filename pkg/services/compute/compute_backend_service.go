@@ -414,38 +414,13 @@ is applicable only when the load_balancing_scheme is set to INTERNAL_SELF_MANAGE
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"connect_timeout": {
-							Type:        schema.TypeList,
-							Optional:    true,
-							Description: `The timeout for new network connections to hosts.`,
-							MaxItems:    1,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"seconds": {
-										Type:     schema.TypeInt,
-										Required: true,
-										Description: `Span of time at a resolution of a second.
-Must be from 0 to 315,576,000,000 inclusive.`,
-									},
-									"nanos": {
-										Type:     schema.TypeInt,
-										Optional: true,
-										Description: `Span of time that's a fraction of a second at nanosecond
-resolution. Durations less than one second are represented
-with a 0 seconds field and a positive nanos field. Must
-be from 0 to 999,999,999 inclusive.`,
-									},
-								},
-							},
-							AtLeastOneOf: []string{"circuit_breakers.0.connect_timeout", "circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
-						},
 						"max_connections": {
 							Type:     schema.TypeInt,
 							Optional: true,
 							Description: `The maximum number of connections to the backend cluster.
 Defaults to 1024.`,
 							Default:      1024,
-							AtLeastOneOf: []string{"circuit_breakers.0.connect_timeout", "circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
+							AtLeastOneOf: []string{"circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
 						},
 						"max_pending_requests": {
 							Type:     schema.TypeInt,
@@ -453,7 +428,7 @@ Defaults to 1024.`,
 							Description: `The maximum number of pending requests to the backend cluster.
 Defaults to 1024.`,
 							Default:      1024,
-							AtLeastOneOf: []string{"circuit_breakers.0.connect_timeout", "circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
+							AtLeastOneOf: []string{"circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
 						},
 						"max_requests": {
 							Type:     schema.TypeInt,
@@ -461,7 +436,7 @@ Defaults to 1024.`,
 							Description: `The maximum number of parallel requests to the backend cluster.
 Defaults to 1024.`,
 							Default:      1024,
-							AtLeastOneOf: []string{"circuit_breakers.0.connect_timeout", "circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
+							AtLeastOneOf: []string{"circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
 						},
 						"max_requests_per_connection": {
 							Type:     schema.TypeInt,
@@ -470,7 +445,7 @@ Defaults to 1024.`,
 is respected by both the HTTP/1.1 and HTTP/2 implementations. If
 not specified, there is no limit. Setting this parameter to 1
 will effectively disable keep alive.`,
-							AtLeastOneOf: []string{"circuit_breakers.0.connect_timeout", "circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
+							AtLeastOneOf: []string{"circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
 						},
 						"max_retries": {
 							Type:     schema.TypeInt,
@@ -478,7 +453,7 @@ will effectively disable keep alive.`,
 							Description: `The maximum number of parallel retries to the backend cluster.
 Defaults to 3.`,
 							Default:      3,
-							AtLeastOneOf: []string{"circuit_breakers.0.connect_timeout", "circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
+							AtLeastOneOf: []string{"circuit_breakers.0.max_requests_per_connection", "circuit_breakers.0.max_connections", "circuit_breakers.0.max_pending_requests", "circuit_breakers.0.max_requests", "circuit_breakers.0.max_retries"},
 						},
 					},
 				},
@@ -635,33 +610,6 @@ responses.`,
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: `An optional description of this resource.`,
-			},
-			"dynamic_forwarding": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Description: `Dynamic forwarding configuration. This field is used to configure the backend service with dynamic forwarding
-feature which together with Service Extension allows customized and complex routing logic.`,
-				MaxItems: 1,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"ip_port_selection": {
-							Type:        schema.TypeList,
-							Optional:    true,
-							Description: `IP:PORT based dynamic forwarding configuration.`,
-							MaxItems:    1,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"enabled": {
-										Type:        schema.TypeBool,
-										Optional:    true,
-										ForceNew:    true,
-										Description: `A boolean flag enabling IP:PORT based dynamic forwarding.`,
-									},
-								},
-							},
-						},
-					},
-				},
 			},
 			"edge_security_policy": {
 				Type:             schema.TypeString,
@@ -1004,42 +952,6 @@ This field is only allowed when the loadBalancingScheme of the backend service i
 							Description: `Span of time that's a fraction of a second at nanosecond resolution.
 Durations less than one second are represented with a 0 seconds field and a positive nanos field.
 Must be from 0 to 999,999,999 inclusive.`,
-						},
-					},
-				},
-			},
-			"network_pass_through_lb_traffic_policy": {
-				Type:        schema.TypeList,
-				Optional:    true,
-				Description: `Configures traffic steering properties of internal passthrough Network Load Balancers.`,
-				MaxItems:    1,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"zonal_affinity": {
-							Type:        schema.TypeList,
-							Optional:    true,
-							Description: `When configured, new connections are load balanced across healthy backend endpoints in the local zone.`,
-							MaxItems:    1,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"spillover": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										ValidateFunc: verify.ValidateEnum([]string{"ZONAL_AFFINITY_DISABLED", "ZONAL_AFFINITY_SPILL_CROSS_ZONE", "ZONAL_AFFINITY_STAY_WITHIN_ZONE", ""}),
-										Description:  `This field indicates whether zonal affinity is enabled or not. Default value: "ZONAL_AFFINITY_DISABLED" Possible values: ["ZONAL_AFFINITY_DISABLED", "ZONAL_AFFINITY_SPILL_CROSS_ZONE", "ZONAL_AFFINITY_STAY_WITHIN_ZONE"]`,
-										Default:      "ZONAL_AFFINITY_DISABLED",
-									},
-									"spillover_ratio": {
-										Type:     schema.TypeFloat,
-										Optional: true,
-										Description: `The value of the field must be in [0, 1]. When the ratio of the count of healthy backend endpoints in a zone
-to the count of backend endpoints in that same zone is equal to or above this threshold, the load balancer
-distributes new connections to all healthy endpoints in the local zone only. When the ratio of the count
-of healthy backend endpoints in a zone to the count of backend endpoints in that same zone is below this
-threshold, the load balancer distributes all new connections to all healthy endpoints across all zones.`,
-									},
-								},
-							},
 						},
 					},
 				},
@@ -1572,28 +1484,6 @@ UTILIZATION balancing modes.
 For CONNECTION mode, either maxConnections or
 maxConnectionsPerInstance must be set.`,
 			},
-			"max_in_flight_requests": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
-				Description: `Defines a maximum number of in-flight requests for the whole NEG
-or instance group. Not available if backend's balancingMode is RATE
-or CONNECTION.`,
-			},
-			"max_in_flight_requests_per_endpoint": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
-				Description: `Defines a maximum number of in-flight requests for a single endpoint.
-Not available if backend's balancingMode is RATE or CONNECTION.`,
-			},
-			"max_in_flight_requests_per_instance": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
-				Description: `Defines a maximum number of in-flight requests for a single VM.
-Not available if backend's balancingMode is RATE or CONNECTION.`,
-			},
 			"max_rate": {
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -1640,15 +1530,6 @@ with default preference. This field cannot be set when loadBalancingScheme is se
     based on RTT.
   - DEFAULT: If preferred backends don't have enough capacity, backends in this layer would be used and
     traffic would be assigned based on the load balancing algorithm you use. This is the default Possible values: ["PREFERRED", "DEFAULT"]`,
-			},
-			"traffic_duration": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: verify.ValidateEnum([]string{"LONG", "SHORT", ""}),
-				Description: `This field specifies how long a connection should be kept alive for:
-- LONG: Most of the requests are expected to take more than multiple
-  seconds to finish.
-- SHORT: Most requests are expected to finish with a sub-second latency. Possible values: ["LONG", "SHORT"]`,
 			},
 		},
 	}

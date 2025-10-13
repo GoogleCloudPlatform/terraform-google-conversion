@@ -95,7 +95,6 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_kms_autokey_config":                            kms.KMSAutokeyConfigTfplan2caiConverter(),
 	"google_kms_key_handle":                                kms.KMSKeyHandleTfplan2caiConverter(),
 	"google_network_security_address_group":                networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),
-	"google_network_security_authorization_policy":         networksecurity.NetworkSecurityAuthorizationPolicyTfplan2caiConverter(),
 	"google_network_security_client_tls_policy":            networksecurity.NetworkSecurityClientTlsPolicyTfplan2caiConverter(),
 	"google_network_security_gateway_security_policy":      networksecurity.NetworkSecurityGatewaySecurityPolicyTfplan2caiConverter(),
 	"google_network_security_gateway_security_policy_rule": networksecurity.NetworkSecurityGatewaySecurityPolicyRuleTfplan2caiConverter(),

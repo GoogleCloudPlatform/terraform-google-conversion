@@ -107,15 +107,6 @@ except the last character, which cannot be a dash.`,
 				Description: `The network this subnet belongs to.
 Only networks that are in the distributed mode can have subnetworks.`,
 			},
-			"allow_subnet_cidr_routes_overlap": {
-				Type:     schema.TypeBool,
-				Computed: true,
-				Optional: true,
-				Description: `Typically packets destined to IPs within the subnetwork range that do not match
-existing resources are dropped and prevented from leaving the VPC.
-Setting this field to true will allow these packets to match dynamic routes injected
-via BGP even if their destinations match existing subnet ranges.`,
-			},
 			"description": {
 				Type:     schema.TypeString,
 				Optional: true,

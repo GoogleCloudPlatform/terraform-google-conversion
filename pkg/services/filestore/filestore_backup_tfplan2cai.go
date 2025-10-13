@@ -46,8 +46,8 @@ func GetFilestoreBackupCaiAssets(d tpgresource.TerraformResourceData, config *tr
 				Name: name,
 				Type: FilestoreBackupAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v1beta1",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/file/v1beta1/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/file/v1/rest",
 					DiscoveryName:        "Backup",
 					Data:                 obj,
 					Location:             location,

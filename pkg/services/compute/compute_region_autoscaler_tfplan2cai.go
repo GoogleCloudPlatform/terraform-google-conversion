@@ -50,8 +50,8 @@ func GetComputeRegionAutoscalerCaiAssets(d tpgresource.TerraformResourceData, co
 				Name: name,
 				Type: ComputeAutoscalerAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
 					DiscoveryName:        "Autoscaler",
 					Data:                 obj,
 					Location:             location,
@@ -147,13 +147,6 @@ func expandComputeRegionAutoscalerAutoscalingPolicy(v interface{}, d tpgresource
 		transformed["mode"] = transformedMode
 	}
 
-	transformedScaleDownControl, err := expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControl(original["scale_down_control"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedScaleDownControl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["scaleDownControl"] = transformedScaleDownControl
-	}
-
 	transformedScaleInControl, err := expandComputeRegionAutoscalerAutoscalingPolicyScaleInControl(original["scale_in_control"], d, config)
 	if err != nil {
 		return nil, err
@@ -205,76 +198,6 @@ func expandComputeRegionAutoscalerAutoscalingPolicyCooldownPeriod(v interface{},
 }
 
 func expandComputeRegionAutoscalerAutoscalingPolicyMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedMaxScaledDownReplicas, err := expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(original["max_scaled_down_replicas"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMaxScaledDownReplicas); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["maxScaledDownReplicas"] = transformedMaxScaledDownReplicas
-	}
-
-	transformedTimeWindowSec, err := expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(original["time_window_sec"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedTimeWindowSec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["timeWindowSec"] = transformedTimeWindowSec
-	}
-
-	return transformed, nil
-}
-
-func expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedFixed, err := expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(original["fixed"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedFixed); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["fixed"] = transformedFixed
-	}
-
-	transformedPercent, err := expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(original["percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["percent"] = transformedPercent
-	}
-
-	return transformed, nil
-}
-
-func expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasFixed(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControlMaxScaledDownReplicasPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeRegionAutoscalerAutoscalingPolicyScaleDownControlTimeWindowSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

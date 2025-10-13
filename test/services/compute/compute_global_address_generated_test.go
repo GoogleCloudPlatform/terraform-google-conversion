@@ -35,18 +35,3 @@ func TestAccComputeGlobalAddress_globalAddressBasicExample(t *testing.T) {
 		[]string{},
 	)
 }
-func TestAccComputeGlobalAddress_globalAddressPrivateServicesConnectExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-		},
-		[]string{},
-	)
-}

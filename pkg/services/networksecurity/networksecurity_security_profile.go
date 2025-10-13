@@ -58,7 +58,7 @@ Format: projects/{project_id}/locations/global/interceptEndpointGroups/{endpoint
 						},
 					},
 				},
-				ConflictsWith: []string{"threat_prevention_profile", "url_filtering_profile", "custom_mirroring_profile"},
+				ConflictsWith: []string{"threat_prevention_profile", "custom_mirroring_profile"},
 			},
 			"custom_mirroring_profile": {
 				Type:     schema.TypeList,
@@ -76,7 +76,7 @@ Format: projects/{project_id}/locations/global/mirroringEndpointGroups/{endpoint
 						},
 					},
 				},
-				ConflictsWith: []string{"threat_prevention_profile", "url_filtering_profile", "custom_intercept_profile"},
+				ConflictsWith: []string{"threat_prevention_profile", "custom_intercept_profile"},
 			},
 			"description": {
 				Type:        schema.TypeString,
@@ -140,27 +140,7 @@ and threat overrides, the threat overrides action is applied.`,
 						},
 					},
 				},
-				ConflictsWith: []string{"url_filtering_profile", "custom_mirroring_profile", "custom_intercept_profile"},
-			},
-			"url_filtering_profile": {
-				Type:        schema.TypeList,
-				Optional:    true,
-				Description: `The url filtering configuration for the security profile.`,
-				MaxItems:    1,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"url_filters": {
-							Type:     schema.TypeSet,
-							Optional: true,
-							Description: `The configuration for action to take based on domain name match.
-A domain name would be checked for matching filters through the list in order of highest to lowest priority,
-and the first filter that a domain name matches with is the one whose actions gets applied.`,
-							Elem: networksecuritySecurityProfileUrlFilteringProfileUrlFiltersSchema(),
-							// Default schema.HashSchema is used.
-						},
-					},
-				},
-				ConflictsWith: []string{"threat_prevention_profile", "custom_mirroring_profile", "custom_intercept_profile"},
+				ConflictsWith: []string{"custom_mirroring_profile", "custom_intercept_profile"},
 			},
 			"create_time": {
 				Type:        schema.TypeString,
@@ -253,35 +233,6 @@ func networksecuritySecurityProfileThreatPreventionProfileAntivirusOverridesSche
 				Required:     true,
 				ValidateFunc: verify.ValidateEnum([]string{"SMTP", "SMB", "POP3", "IMAP", "HTTP2", "HTTP", "FTP"}),
 				Description:  `Required protocol to match. Possible values: ["SMTP", "SMB", "POP3", "IMAP", "HTTP2", "HTTP", "FTP"]`,
-			},
-		},
-	}
-}
-
-func networksecuritySecurityProfileUrlFilteringProfileUrlFiltersSchema() *schema.Resource {
-	return &schema.Resource{
-		Schema: map[string]*schema.Schema{
-			"filtering_action": {
-				Type:         schema.TypeString,
-				Required:     true,
-				ValidateFunc: verify.ValidateEnum([]string{"ALLOW", "DENY"}),
-				Description:  `The action to take when the filter is applied. Possible values: ["ALLOW", "DENY"]`,
-			},
-			"priority": {
-				Type:     schema.TypeInt,
-				Required: true,
-				Description: `The priority of the filter within the URL filtering profile.
-Must be an integer from 0 and 2147483647, inclusive. Lower integers indicate higher priorities.
-The priority of a filter must be unique within a URL filtering profile.`,
-			},
-			"urls": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Description: `A list of domain matcher strings that a domain name gets compared with to determine if the filter is applicable.
-A domain name must match with at least one of the strings in the list for a filter to be applicable.`,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
 			},
 		},
 	}
