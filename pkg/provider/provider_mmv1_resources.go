@@ -17,6 +17,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
@@ -33,7 +34,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 60
+// Generated resources: 61
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -79,6 +80,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_region_health_check":                   compute.ResourceComputeRegionHealthCheck(),
 	"google_compute_subnetwork":                            compute.ResourceComputeSubnetwork(),
 	"google_compute_url_map":                               compute.ResourceComputeUrlMap(),
+	"google_dataproc_batch":                                dataproc.ResourceDataprocBatch(),
 	"google_filestore_backup":                              filestore.ResourceFilestoreBackup(),
 	"google_filestore_instance":                            filestore.ResourceFilestoreInstance(),
 	"google_filestore_snapshot":                            filestore.ResourceFilestoreSnapshot(),
