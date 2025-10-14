@@ -12,17 +12,17 @@ require (
 	github.com/hashicorp/hcl/v2 v2.23.0
 	github.com/hashicorp/terraform-json v0.25.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20251013185935-1fd44e6f40fb
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20251014002025-9d935c9cfb3d
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
 	github.com/zclconf/go-cty v1.16.2
 	go.uber.org/zap v1.27.0
-	google.golang.org/api v0.250.0
+	google.golang.org/api v0.252.0
 )
 
 require (
-	cloud.google.com/go/auth v0.16.5
+	cloud.google.com/go/auth v0.17.0
 	cloud.google.com/go/auth/oauth2adapt v0.2.8
 	cloud.google.com/go/bigtable v1.37.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
@@ -34,7 +34,7 @@ require (
 	github.com/spf13/cobra v1.8.1
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
 	golang.org/x/oauth2 v0.31.0
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250908214217-97024824d090
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251002232023-7c0ddcbb5797
 	google.golang.org/grpc v1.75.1
 )
 
@@ -42,7 +42,7 @@ require (
 	bitbucket.org/creachadair/stringset v0.0.11 // indirect
 	cel.dev/expr v0.24.0 // indirect
 	cloud.google.com/go v0.121.0 // indirect
-	cloud.google.com/go/compute/metadata v0.8.4 // indirect
+	cloud.google.com/go/compute/metadata v0.9.0 // indirect
 	cloud.google.com/go/iam v1.5.2 // indirect
 	cloud.google.com/go/longrunning v0.6.7 // indirect
 	cloud.google.com/go/monitoring v1.24.2 // indirect
@@ -122,6 +122,6 @@ require (
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20250603155806-513f23925822 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
-	google.golang.org/protobuf v1.36.9 // indirect
+	google.golang.org/protobuf v1.36.10 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
