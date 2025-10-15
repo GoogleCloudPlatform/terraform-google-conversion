@@ -56,6 +56,12 @@ func GetSaasRuntimeUnitKindCaiObject(d tpgresource.TerraformResourceData, config
 
 func GetSaasRuntimeUnitKindApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	defaultReleaseProp, err := expandSaasRuntimeUnitKindDefaultRelease(d.Get("default_release"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("default_release"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultReleaseProp)) && (ok || !reflect.DeepEqual(v, defaultReleaseProp)) {
+		obj["defaultRelease"] = defaultReleaseProp
+	}
 	dependenciesProp, err := expandSaasRuntimeUnitKindDependencies(d.Get("dependencies"), d, config)
 	if err != nil {
 		return nil, err
@@ -94,6 +100,10 @@ func GetSaasRuntimeUnitKindApiObject(d tpgresource.TerraformResourceData, config
 	}
 
 	return obj, nil
+}
+
+func expandSaasRuntimeUnitKindDefaultRelease(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSaasRuntimeUnitKindDependencies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
