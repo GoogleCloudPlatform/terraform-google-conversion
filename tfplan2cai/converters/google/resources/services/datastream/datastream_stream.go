@@ -203,6 +203,13 @@ func expandDatastreamStreamSourceConfig(v interface{}, d tpgresource.TerraformRe
 		transformed["salesforceSourceConfig"] = transformedSalesforceSourceConfig
 	}
 
+	transformedMongodbSourceConfig, err := expandDatastreamStreamSourceConfigMongodbSourceConfig(original["mongodb_source_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["mongodbSourceConfig"] = transformedMongodbSourceConfig
+	}
+
 	return transformed, nil
 }
 
@@ -2414,6 +2421,297 @@ func expandDatastreamStreamSourceConfigSalesforceSourceConfigPollingInterval(v i
 	return v, nil
 }
 
+func expandDatastreamStreamSourceConfigMongodbSourceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIncludeObjects, err := expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjects(original["include_objects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeObjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeObjects"] = transformedIncludeObjects
+	}
+
+	transformedExcludeObjects, err := expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjects(original["exclude_objects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExcludeObjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["excludeObjects"] = transformedExcludeObjects
+	}
+
+	transformedMaxConcurrentBackfillTasks, err := expandDatastreamStreamSourceConfigMongodbSourceConfigMaxConcurrentBackfillTasks(original["max_concurrent_backfill_tasks"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxConcurrentBackfillTasks); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxConcurrentBackfillTasks"] = transformedMaxConcurrentBackfillTasks
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDatabases, err := expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabases(original["databases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["databases"] = transformedDatabases
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDatabase, err := expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesDatabase(original["database"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["database"] = transformedDatabase
+		}
+
+		transformedCollections, err := expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollections(original["collections"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCollections); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["collections"] = transformedCollections
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCollection, err := expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollectionsCollection(original["collection"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCollection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["collection"] = transformedCollection
+		}
+
+		transformedFields, err := expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollectionsFields(original["fields"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["fields"] = transformedFields
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollectionsCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollectionsFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedField, err := expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollectionsFieldsField(original["field"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedField); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["field"] = transformedField
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollectionsFieldsField(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDatabases, err := expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabases(original["databases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["databases"] = transformedDatabases
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDatabase, err := expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesDatabase(original["database"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["database"] = transformedDatabase
+		}
+
+		transformedCollections, err := expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollections(original["collections"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCollections); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["collections"] = transformedCollections
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCollection, err := expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollectionsCollection(original["collection"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCollection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["collection"] = transformedCollection
+		}
+
+		transformedFields, err := expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollectionsFields(original["fields"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["fields"] = transformedFields
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollectionsCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollectionsFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedField, err := expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollectionsFieldsField(original["field"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedField); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["field"] = transformedField
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollectionsFieldsField(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamSourceConfigMongodbSourceConfigMaxConcurrentBackfillTasks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDatastreamStreamDestinationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -2904,6 +3202,13 @@ func expandDatastreamStreamBackfillAll(v interface{}, d tpgresource.TerraformRes
 		return nil, err
 	} else if val := reflect.ValueOf(transformedSalesforceExcludedObjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["salesforceExcludedObjects"] = transformedSalesforceExcludedObjects
+	}
+
+	transformedMongodbExcludedObjects, err := expandDatastreamStreamBackfillAllMongodbExcludedObjects(original["mongodb_excluded_objects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMongodbExcludedObjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mongodbExcludedObjects"] = transformedMongodbExcludedObjects
 	}
 
 	return transformed, nil
@@ -3793,6 +4098,129 @@ func expandDatastreamStreamBackfillAllSalesforceExcludedObjectsObjectsFields(v i
 }
 
 func expandDatastreamStreamBackfillAllSalesforceExcludedObjectsObjectsFieldsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllMongodbExcludedObjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDatabases, err := expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabases(original["databases"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabases); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["databases"] = transformedDatabases
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDatabase, err := expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesDatabase(original["database"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["database"] = transformedDatabase
+		}
+
+		transformedCollections, err := expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollections(original["collections"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCollections); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["collections"] = transformedCollections
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCollection, err := expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollectionsCollection(original["collection"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCollection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["collection"] = transformedCollection
+		}
+
+		transformedFields, err := expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollectionsFields(original["fields"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["fields"] = transformedFields
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollectionsCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollectionsFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedField, err := expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollectionsFieldsField(original["field"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedField); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["field"] = transformedField
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollectionsFieldsField(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
