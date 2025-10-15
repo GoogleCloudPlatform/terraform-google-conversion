@@ -33,9 +33,7 @@ func TestAccComputeBackendBucket_backendBucketBasicExample(t *testing.T) {
 			"load_balancing_scheme",
 			"provider",
 		},
-		[]string{
-			"RESOURCE.cdnPolicy.signedUrlCacheMaxAgeSec",
-		},
+		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketFullExample(t *testing.T) {
@@ -67,9 +65,7 @@ func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T
 			"load_balancing_scheme",
 			"provider",
 		},
-		[]string{
-			"RESOURCE.cdnPolicy.signedUrlCacheMaxAgeSec",
-		},
+		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *testing.T) {
