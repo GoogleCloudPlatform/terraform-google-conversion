@@ -43,8 +43,8 @@ func GetNetworkConnectivityPolicyBasedRouteCaiObject(d tpgresource.TerraformReso
 			Name: name,
 			Type: NetworkConnectivityPolicyBasedRouteAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkconnectivity/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkconnectivity/v1beta/rest",
 				DiscoveryName:        "PolicyBasedRoute",
 				Data:                 obj,
 			},
