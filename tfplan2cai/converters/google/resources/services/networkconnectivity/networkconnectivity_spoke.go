@@ -43,8 +43,8 @@ func GetNetworkConnectivitySpokeCaiObject(d tpgresource.TerraformResourceData, c
 			Name: name,
 			Type: NetworkConnectivitySpokeAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkconnectivity/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkconnectivity/v1beta/rest",
 				DiscoveryName:        "Spoke",
 				Data:                 obj,
 			},
@@ -109,6 +109,12 @@ func GetNetworkConnectivitySpokeApiObject(d tpgresource.TerraformResourceData, c
 		return nil, err
 	} else if v, ok := d.GetOkExists("linked_producer_vpc_network"); !tpgresource.IsEmptyValue(reflect.ValueOf(linkedProducerVpcNetworkProp)) && (ok || !reflect.DeepEqual(v, linkedProducerVpcNetworkProp)) {
 		obj["linkedProducerVpcNetwork"] = linkedProducerVpcNetworkProp
+	}
+	gatewayProp, err := expandNetworkConnectivitySpokeGateway(d.Get("gateway"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gateway"); !tpgresource.IsEmptyValue(reflect.ValueOf(gatewayProp)) && (ok || !reflect.DeepEqual(v, gatewayProp)) {
+		obj["gateway"] = gatewayProp
 	}
 	effectiveLabelsProp, err := expandNetworkConnectivitySpokeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -431,6 +437,79 @@ func expandNetworkConnectivitySpokeLinkedProducerVpcNetworkIncludeExportRanges(v
 }
 
 func expandNetworkConnectivitySpokeLinkedProducerVpcNetworkExcludeExportRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeGateway(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIpRangeReservations, err := expandNetworkConnectivitySpokeGatewayIpRangeReservations(original["ip_range_reservations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIpRangeReservations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ipRangeReservations"] = transformedIpRangeReservations
+	}
+
+	transformedCapacity, err := expandNetworkConnectivitySpokeGatewayCapacity(original["capacity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCapacity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["capacity"] = transformedCapacity
+	}
+
+	transformedRouters, err := expandNetworkConnectivitySpokeGatewayRouters(original["routers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRouters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["routers"] = transformedRouters
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkConnectivitySpokeGatewayIpRangeReservations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIpRange, err := expandNetworkConnectivitySpokeGatewayIpRangeReservationsIpRange(original["ip_range"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpRange); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipRange"] = transformedIpRange
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkConnectivitySpokeGatewayIpRangeReservationsIpRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeGatewayCapacity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivitySpokeGatewayRouters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

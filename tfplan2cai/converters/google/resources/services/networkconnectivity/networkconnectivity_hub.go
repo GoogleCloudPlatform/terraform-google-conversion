@@ -43,8 +43,8 @@ func GetNetworkConnectivityHubCaiObject(d tpgresource.TerraformResourceData, con
 			Name: name,
 			Type: NetworkConnectivityHubAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkconnectivity/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/networkconnectivity/v1beta/rest",
 				DiscoveryName:        "Hub",
 				Data:                 obj,
 			},
