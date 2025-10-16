@@ -31,6 +31,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
@@ -90,6 +91,9 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_subnetwork":                            compute.ComputeSubnetworkTfplan2caiConverter(),
 	"google_compute_url_map":                               compute.ComputeUrlMapTfplan2caiConverter(),
 	"google_dataproc_batch":                                dataproc.DataprocBatchTfplan2caiConverter(),
+	"google_datastream_connection_profile":                 datastream.DatastreamConnectionProfileTfplan2caiConverter(),
+	"google_datastream_private_connection":                 datastream.DatastreamPrivateConnectionTfplan2caiConverter(),
+	"google_datastream_stream":                             datastream.DatastreamStreamTfplan2caiConverter(),
 	"google_filestore_backup":                              filestore.FilestoreBackupTfplan2caiConverter(),
 	"google_filestore_instance":                            filestore.FilestoreInstanceTfplan2caiConverter(),
 	"google_filestore_snapshot":                            filestore.FilestoreSnapshotTfplan2caiConverter(),
