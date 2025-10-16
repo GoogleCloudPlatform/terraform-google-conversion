@@ -32,6 +32,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
@@ -187,6 +188,15 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"dataproc.googleapis.com/Batch": {
 		"Default": dataproc.NewDataprocBatchCai2hclConverter(provider),
+	},
+	"datastream.googleapis.com/ConnectionProfile": {
+		"Default": datastream.NewDatastreamConnectionProfileCai2hclConverter(provider),
+	},
+	"datastream.googleapis.com/PrivateConnection": {
+		"Default": datastream.NewDatastreamPrivateConnectionCai2hclConverter(provider),
+	},
+	"datastream.googleapis.com/Stream": {
+		"Default": datastream.NewDatastreamStreamCai2hclConverter(provider),
 	},
 	"file.googleapis.com/Backup": {
 		"Default": filestore.NewFilestoreBackupCai2hclConverter(provider),
