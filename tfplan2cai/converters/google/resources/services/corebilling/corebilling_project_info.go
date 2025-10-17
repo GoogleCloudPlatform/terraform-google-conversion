@@ -34,7 +34,7 @@ func ResourceConverterCoreBillingProjectInfo() cai.ResourceConverter {
 }
 
 func GetCoreBillingProjectInfoCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//cloudbilling.googleapis.com/projects/{{project}}/billingInfo/{{name}}")
+	name, err := cai.AssetName(d, config, "//cloudbilling.googleapis.com/projects/{{project}}/billingInfo")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -56,11 +56,11 @@ func GetCoreBillingProjectInfoCaiObject(d tpgresource.TerraformResourceData, con
 
 func GetCoreBillingProjectInfoApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	billing_accountProp, err := expandCoreBillingProjectInfoBillingAccount(d.Get("billing_account"), d, config)
+	billingAccountProp, err := expandCoreBillingProjectInfoBillingAccount(d.Get("billing_account"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("billing_account"); !tpgresource.IsEmptyValue(reflect.ValueOf(billing_accountProp)) && (ok || !reflect.DeepEqual(v, billing_accountProp)) {
-		obj["billing_account"] = billing_accountProp
+	} else if v, ok := d.GetOkExists("billing_account"); !tpgresource.IsEmptyValue(reflect.ValueOf(billingAccountProp)) && (ok || !reflect.DeepEqual(v, billingAccountProp)) {
+		obj["billing_account"] = billingAccountProp
 	}
 
 	return resourceCoreBillingProjectInfoEncoder(d, config, obj)

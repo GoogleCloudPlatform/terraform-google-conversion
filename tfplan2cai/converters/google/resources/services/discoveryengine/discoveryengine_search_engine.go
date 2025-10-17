@@ -86,6 +86,12 @@ func GetDiscoveryEngineSearchEngineApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("common_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(commonConfigProp)) && (ok || !reflect.DeepEqual(v, commonConfigProp)) {
 		obj["commonConfig"] = commonConfigProp
 	}
+	appTypeProp, err := expandDiscoveryEngineSearchEngineAppType(d.Get("app_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("app_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(appTypeProp)) && (ok || !reflect.DeepEqual(v, appTypeProp)) {
+		obj["appType"] = appTypeProp
+	}
 
 	return resourceDiscoveryEngineSearchEngineEncoder(d, config, obj)
 }
@@ -162,5 +168,9 @@ func expandDiscoveryEngineSearchEngineCommonConfig(v interface{}, d tpgresource.
 }
 
 func expandDiscoveryEngineSearchEngineCommonConfigCompanyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineAppType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

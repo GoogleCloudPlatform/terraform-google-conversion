@@ -68,6 +68,18 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("version"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionProp)) && (ok || !reflect.DeepEqual(v, versionProp)) {
 		obj["version"] = versionProp
 	}
+	consentConfigProp, err := expandHealthcareFhirStoreConsentConfig(d.Get("consent_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("consent_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(consentConfigProp)) && (ok || !reflect.DeepEqual(v, consentConfigProp)) {
+		obj["consentConfig"] = consentConfigProp
+	}
+	validationConfigProp, err := expandHealthcareFhirStoreValidationConfig(d.Get("validation_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("validation_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(validationConfigProp)) && (ok || !reflect.DeepEqual(v, validationConfigProp)) {
+		obj["validationConfig"] = validationConfigProp
+	}
 	complexDataTypeReferenceParsingProp, err := expandHealthcareFhirStoreComplexDataTypeReferenceParsing(d.Get("complex_data_type_reference_parsing"), d, config)
 	if err != nil {
 		return nil, err
@@ -128,11 +140,11 @@ func GetHealthcareFhirStoreApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("notification_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(notificationConfigsProp)) && (ok || !reflect.DeepEqual(v, notificationConfigsProp)) {
 		obj["notificationConfigs"] = notificationConfigsProp
 	}
-	labelsProp, err := expandHealthcareFhirStoreEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandHealthcareFhirStoreEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil
@@ -143,6 +155,178 @@ func expandHealthcareFhirStoreName(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandHealthcareFhirStoreVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreConsentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedVersion, err := expandHealthcareFhirStoreConsentConfigVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	transformedAccessEnforced, err := expandHealthcareFhirStoreConsentConfigAccessEnforced(original["access_enforced"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccessEnforced); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accessEnforced"] = transformedAccessEnforced
+	}
+
+	transformedConsentHeaderHandling, err := expandHealthcareFhirStoreConsentConfigConsentHeaderHandling(original["consent_header_handling"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConsentHeaderHandling); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["consentHeaderHandling"] = transformedConsentHeaderHandling
+	}
+
+	transformedAccessDeterminationLogConfig, err := expandHealthcareFhirStoreConsentConfigAccessDeterminationLogConfig(original["access_determination_log_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccessDeterminationLogConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accessDeterminationLogConfig"] = transformedAccessDeterminationLogConfig
+	}
+
+	transformedEnforcedAdminConsents, err := expandHealthcareFhirStoreConsentConfigEnforcedAdminConsents(original["enforced_admin_consents"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnforcedAdminConsents); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enforcedAdminConsents"] = transformedEnforcedAdminConsents
+	}
+
+	return transformed, nil
+}
+
+func expandHealthcareFhirStoreConsentConfigVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreConsentConfigAccessEnforced(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreConsentConfigConsentHeaderHandling(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedProfile, err := expandHealthcareFhirStoreConsentConfigConsentHeaderHandlingProfile(original["profile"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProfile); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["profile"] = transformedProfile
+	}
+
+	return transformed, nil
+}
+
+func expandHealthcareFhirStoreConsentConfigConsentHeaderHandlingProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreConsentConfigAccessDeterminationLogConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLogLevel, err := expandHealthcareFhirStoreConsentConfigAccessDeterminationLogConfigLogLevel(original["log_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLogLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["logLevel"] = transformedLogLevel
+	}
+
+	return transformed, nil
+}
+
+func expandHealthcareFhirStoreConsentConfigAccessDeterminationLogConfigLogLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreConsentConfigEnforcedAdminConsents(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisableProfileValidation, err := expandHealthcareFhirStoreValidationConfigDisableProfileValidation(original["disable_profile_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableProfileValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableProfileValidation"] = transformedDisableProfileValidation
+	}
+
+	transformedEnabledImplementationGuides, err := expandHealthcareFhirStoreValidationConfigEnabledImplementationGuides(original["enabled_implementation_guides"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabledImplementationGuides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabledImplementationGuides"] = transformedEnabledImplementationGuides
+	}
+
+	transformedDisableRequiredFieldValidation, err := expandHealthcareFhirStoreValidationConfigDisableRequiredFieldValidation(original["disable_required_field_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableRequiredFieldValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableRequiredFieldValidation"] = transformedDisableRequiredFieldValidation
+	}
+
+	transformedDisableReferenceTypeValidation, err := expandHealthcareFhirStoreValidationConfigDisableReferenceTypeValidation(original["disable_reference_type_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableReferenceTypeValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableReferenceTypeValidation"] = transformedDisableReferenceTypeValidation
+	}
+
+	transformedDisableFhirpathValidation, err := expandHealthcareFhirStoreValidationConfigDisableFhirpathValidation(original["disable_fhirpath_validation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableFhirpathValidation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableFhirpathValidation"] = transformedDisableFhirpathValidation
+	}
+
+	return transformed, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigDisableProfileValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigEnabledImplementationGuides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigDisableRequiredFieldValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigDisableReferenceTypeValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareFhirStoreValidationConfigDisableFhirpathValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

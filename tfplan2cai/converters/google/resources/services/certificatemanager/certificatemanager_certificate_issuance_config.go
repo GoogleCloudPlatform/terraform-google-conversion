@@ -86,11 +86,11 @@ func GetCertificateManagerCertificateIssuanceConfigApiObject(d tpgresource.Terra
 	} else if v, ok := d.GetOkExists("certificate_authority_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(certificateAuthorityConfigProp)) && (ok || !reflect.DeepEqual(v, certificateAuthorityConfigProp)) {
 		obj["certificateAuthorityConfig"] = certificateAuthorityConfigProp
 	}
-	labelsProp, err := expandCertificateManagerCertificateIssuanceConfigEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandCertificateManagerCertificateIssuanceConfigEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

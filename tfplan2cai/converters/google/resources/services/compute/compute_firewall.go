@@ -164,17 +164,17 @@ func GetComputeFirewallCaiObject(d tpgresource.TerraformResourceData, config *tr
 
 func GetComputeFirewallApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	allowedProp, err := expandComputeFirewallAllow(d.Get("allow"), d, config)
+	allowProp, err := expandComputeFirewallAllow(d.Get("allow"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("allow"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowedProp)) && (ok || !reflect.DeepEqual(v, allowedProp)) {
-		obj["allowed"] = allowedProp
+	} else if v, ok := d.GetOkExists("allow"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowProp)) && (ok || !reflect.DeepEqual(v, allowProp)) {
+		obj["allowed"] = allowProp
 	}
-	deniedProp, err := expandComputeFirewallDeny(d.Get("deny"), d, config)
+	denyProp, err := expandComputeFirewallDeny(d.Get("deny"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("deny"); !tpgresource.IsEmptyValue(reflect.ValueOf(deniedProp)) && (ok || !reflect.DeepEqual(v, deniedProp)) {
-		obj["denied"] = deniedProp
+	} else if v, ok := d.GetOkExists("deny"); !tpgresource.IsEmptyValue(reflect.ValueOf(denyProp)) && (ok || !reflect.DeepEqual(v, denyProp)) {
+		obj["denied"] = denyProp
 	}
 	descriptionProp, err := expandComputeFirewallDescription(d.Get("description"), d, config)
 	if err != nil {

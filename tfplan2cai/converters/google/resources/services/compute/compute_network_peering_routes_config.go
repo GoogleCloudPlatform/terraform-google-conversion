@@ -56,11 +56,11 @@ func GetComputeNetworkPeeringRoutesConfigCaiObject(d tpgresource.TerraformResour
 
 func GetComputeNetworkPeeringRoutesConfigApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	nameProp, err := expandComputeNetworkPeeringRoutesConfigPeering(d.Get("peering"), d, config)
+	peeringProp, err := expandComputeNetworkPeeringRoutesConfigPeering(d.Get("peering"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("peering"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
-		obj["name"] = nameProp
+	} else if v, ok := d.GetOkExists("peering"); !tpgresource.IsEmptyValue(reflect.ValueOf(peeringProp)) && (ok || !reflect.DeepEqual(v, peeringProp)) {
+		obj["name"] = peeringProp
 	}
 	exportCustomRoutesProp, err := expandComputeNetworkPeeringRoutesConfigExportCustomRoutes(d.Get("export_custom_routes"), d, config)
 	if err != nil {

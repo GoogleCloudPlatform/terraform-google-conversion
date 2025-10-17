@@ -62,11 +62,11 @@ func GetNetworkSecurityFirewallEndpointApiObject(d tpgresource.TerraformResource
 	} else if v, ok := d.GetOkExists("billing_project_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(billingProjectIdProp)) && (ok || !reflect.DeepEqual(v, billingProjectIdProp)) {
 		obj["billingProjectId"] = billingProjectIdProp
 	}
-	labelsProp, err := expandNetworkSecurityFirewallEndpointEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetworkSecurityFirewallEndpointEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

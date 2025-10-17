@@ -36,7 +36,7 @@ func ResourceConverterCloudAssetOrganizationFeed() cai.ResourceConverter {
 }
 
 func GetCloudAssetOrganizationFeedCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//cloudasset.googleapis.com/{{name}}")
+	name, err := cai.AssetName(d, config, "//cloudasset.googleapis.com/organizations/{{org_id}}/feeds/{{feed_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

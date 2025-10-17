@@ -34,7 +34,7 @@ func ResourceConverterComputeProjectCloudArmorTier() cai.ResourceConverter {
 }
 
 func GetComputeProjectCloudArmorTierCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/{{name}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

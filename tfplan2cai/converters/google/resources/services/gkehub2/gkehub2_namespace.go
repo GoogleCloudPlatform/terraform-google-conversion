@@ -68,11 +68,11 @@ func GetGKEHub2NamespaceApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("namespace_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(namespaceLabelsProp)) && (ok || !reflect.DeepEqual(v, namespaceLabelsProp)) {
 		obj["namespaceLabels"] = namespaceLabelsProp
 	}
-	labelsProp, err := expandGKEHub2NamespaceEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandGKEHub2NamespaceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

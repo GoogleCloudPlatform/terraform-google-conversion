@@ -34,7 +34,7 @@ func ResourceConverterDocumentAIProcessor() cai.ResourceConverter {
 }
 
 func GetDocumentAIProcessorCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-documentai.googleapis.com/projects/{{project}}/locations/{{location}}/processors/{{name}}")
+	name, err := cai.AssetName(d, config, "//{{location}}-documentai.googleapis.com/projects/{{project}}/locations/{{location}}/processors")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

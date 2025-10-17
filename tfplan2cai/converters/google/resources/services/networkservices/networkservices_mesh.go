@@ -68,11 +68,11 @@ func GetNetworkServicesMeshApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("interception_port"); !tpgresource.IsEmptyValue(reflect.ValueOf(interceptionPortProp)) && (ok || !reflect.DeepEqual(v, interceptionPortProp)) {
 		obj["interceptionPort"] = interceptionPortProp
 	}
-	labelsProp, err := expandNetworkServicesMeshEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandNetworkServicesMeshEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

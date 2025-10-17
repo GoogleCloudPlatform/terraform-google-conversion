@@ -68,11 +68,11 @@ func GetGeminiLoggingSettingApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("log_metadata"); !tpgresource.IsEmptyValue(reflect.ValueOf(logMetadataProp)) && (ok || !reflect.DeepEqual(v, logMetadataProp)) {
 		obj["logMetadata"] = logMetadataProp
 	}
-	labelsProp, err := expandGeminiLoggingSettingEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandGeminiLoggingSettingEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

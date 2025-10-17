@@ -92,11 +92,11 @@ func GetDatabaseMigrationServiceConnectionProfileApiObject(d tpgresource.Terrafo
 	} else if v, ok := d.GetOkExists("alloydb"); !tpgresource.IsEmptyValue(reflect.ValueOf(alloydbProp)) && (ok || !reflect.DeepEqual(v, alloydbProp)) {
 		obj["alloydb"] = alloydbProp
 	}
-	labelsProp, err := expandDatabaseMigrationServiceConnectionProfileEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandDatabaseMigrationServiceConnectionProfileEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

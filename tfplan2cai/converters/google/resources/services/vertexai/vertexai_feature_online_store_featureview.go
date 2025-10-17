@@ -80,11 +80,11 @@ func GetVertexAIFeatureOnlineStoreFeatureviewApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("vector_search_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(vectorSearchConfigProp)) && (ok || !reflect.DeepEqual(v, vectorSearchConfigProp)) {
 		obj["vectorSearchConfig"] = vectorSearchConfigProp
 	}
-	labelsProp, err := expandVertexAIFeatureOnlineStoreFeatureviewEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandVertexAIFeatureOnlineStoreFeatureviewEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

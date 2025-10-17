@@ -34,7 +34,7 @@ func ResourceConverterDialogflowEncryptionSpec() cai.ResourceConverter {
 }
 
 func GetDialogflowEncryptionSpecCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//dialogflow.googleapis.com/projects/{{project}}/locations/{{location}}/encryptionSpec/{{name}}")
+	name, err := cai.AssetName(d, config, "//dialogflow.googleapis.com/projects/{{project}}/locations/{{location}}/encryptionSpec")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

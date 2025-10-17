@@ -26,6 +26,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/bigqueryanalyticshub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/bigqueryconnection"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/bigquerydatapolicy"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/bigquerydatapolicyv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/bigtable"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/clouddeploy"
@@ -184,6 +185,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_access_context_manager_service_perimeter":               {accesscontextmanager.ResourceConverterAccessContextManagerServicePerimeter()},
 		"google_access_context_manager_access_policy":                   {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicy()},
 		"google_cloud_run_service":                                      {cloudrun.ResourceConverterCloudRunService()},
+		"google_cloud_run_v2_service":                                   {cloudrunv2.ResourceConverterCloudRunV2Service()},
 		"google_cloud_run_domain_mapping":                               {cloudrun.ResourceConverterCloudRunDomainMapping()},
 		"google_cloud_run_v2_job":                                       {cloudrunv2.ResourceConverterCloudRunV2Job()},
 		"google_cloudfunctions_function":                                {cloudfunctions.ResourceConverterCloudFunctionsCloudFunction()},
@@ -199,9 +201,6 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_artifact_registry_repository_iam_policy":                {artifactregistry.ResourceConverterArtifactRegistryRepositoryIamPolicy()},
 		"google_artifact_registry_repository_iam_binding":               {artifactregistry.ResourceConverterArtifactRegistryRepositoryIamBinding()},
 		"google_artifact_registry_repository_iam_member":                {artifactregistry.ResourceConverterArtifactRegistryRepositoryIamMember()},
-		"google_beyondcorp_application_iam_policy":                      {beyondcorp.ResourceConverterBeyondcorpApplicationIamPolicy()},
-		"google_beyondcorp_application_iam_binding":                     {beyondcorp.ResourceConverterBeyondcorpApplicationIamBinding()},
-		"google_beyondcorp_application_iam_member":                      {beyondcorp.ResourceConverterBeyondcorpApplicationIamMember()},
 		"google_beyondcorp_security_gateway_iam_policy":                 {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamPolicy()},
 		"google_beyondcorp_security_gateway_iam_binding":                {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamBinding()},
 		"google_beyondcorp_security_gateway_iam_member":                 {beyondcorp.ResourceConverterBeyondcorpSecurityGatewayIamMember()},
@@ -223,6 +222,9 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_bigquery_datapolicy_data_policy_iam_policy":             {bigquerydatapolicy.ResourceConverterBigqueryDatapolicyDataPolicyIamPolicy()},
 		"google_bigquery_datapolicy_data_policy_iam_binding":            {bigquerydatapolicy.ResourceConverterBigqueryDatapolicyDataPolicyIamBinding()},
 		"google_bigquery_datapolicy_data_policy_iam_member":             {bigquerydatapolicy.ResourceConverterBigqueryDatapolicyDataPolicyIamMember()},
+		"google_bigquery_datapolicyv2_data_policy_iam_policy":           {bigquerydatapolicyv2.ResourceConverterBigqueryDatapolicyv2DataPolicyIamPolicy()},
+		"google_bigquery_datapolicyv2_data_policy_iam_binding":          {bigquerydatapolicyv2.ResourceConverterBigqueryDatapolicyv2DataPolicyIamBinding()},
+		"google_bigquery_datapolicyv2_data_policy_iam_member":           {bigquerydatapolicyv2.ResourceConverterBigqueryDatapolicyv2DataPolicyIamMember()},
 		"google_binary_authorization_attestor_iam_policy":               {binaryauthorization.ResourceConverterBinaryAuthorizationAttestorIamPolicy()},
 		"google_binary_authorization_attestor_iam_binding":              {binaryauthorization.ResourceConverterBinaryAuthorizationAttestorIamBinding()},
 		"google_binary_authorization_attestor_iam_member":               {binaryauthorization.ResourceConverterBinaryAuthorizationAttestorIamMember()},

@@ -36,7 +36,7 @@ func ResourceConverterComputeSnapshotSettings() cai.ResourceConverter {
 }
 
 func GetComputeSnapshotSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/snapshotSettings/{{name}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/snapshotSettings")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

@@ -45,6 +45,14 @@ func forwardingRuleCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v
 			}
 		}
 	}
+
+	// Force recreation if allow_global_access changes for INTERNAL_MANAGED load balancing scheme
+	if diff.Id() != "" && diff.HasChange("allow_global_access") {
+		if loadBalancingScheme, ok := diff.Get("load_balancing_scheme").(string); ok && loadBalancingScheme == "INTERNAL_MANAGED" {
+			diff.ForceNew("allow_global_access")
+		}
+	}
+
 	return nil
 }
 
@@ -170,17 +178,17 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	IPAddressProp, err := expandComputeForwardingRuleIPAddress(d.Get("ip_address"), d, config)
+	iPAddressProp, err := expandComputeForwardingRuleIPAddress(d.Get("ip_address"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ip_address"); !tpgresource.IsEmptyValue(reflect.ValueOf(IPAddressProp)) && (ok || !reflect.DeepEqual(v, IPAddressProp)) {
-		obj["IPAddress"] = IPAddressProp
+	} else if v, ok := d.GetOkExists("ip_address"); !tpgresource.IsEmptyValue(reflect.ValueOf(iPAddressProp)) && (ok || !reflect.DeepEqual(v, iPAddressProp)) {
+		obj["IPAddress"] = iPAddressProp
 	}
-	IPProtocolProp, err := expandComputeForwardingRuleIPProtocol(d.Get("ip_protocol"), d, config)
+	iPProtocolProp, err := expandComputeForwardingRuleIPProtocol(d.Get("ip_protocol"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ip_protocol"); !tpgresource.IsEmptyValue(reflect.ValueOf(IPProtocolProp)) && (ok || !reflect.DeepEqual(v, IPProtocolProp)) {
-		obj["IPProtocol"] = IPProtocolProp
+	} else if v, ok := d.GetOkExists("ip_protocol"); !tpgresource.IsEmptyValue(reflect.ValueOf(iPProtocolProp)) && (ok || !reflect.DeepEqual(v, iPProtocolProp)) {
+		obj["IPProtocol"] = iPProtocolProp
 	}
 	backendServiceProp, err := expandComputeForwardingRuleBackendService(d.Get("backend_service"), d, config)
 	if err != nil {
@@ -296,11 +304,11 @@ func GetComputeForwardingRuleApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("ip_collection"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipCollectionProp)) && (ok || !reflect.DeepEqual(v, ipCollectionProp)) {
 		obj["ipCollection"] = ipCollectionProp
 	}
-	labelsProp, err := expandComputeForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandComputeForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 	regionProp, err := expandComputeForwardingRuleRegion(d.Get("region"), d, config)
 	if err != nil {

@@ -128,11 +128,11 @@ func GetDatastreamStreamApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("customer_managed_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(customerManagedEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, customerManagedEncryptionKeyProp)) {
 		obj["customerManagedEncryptionKey"] = customerManagedEncryptionKeyProp
 	}
-	labelsProp, err := expandDatastreamStreamEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandDatastreamStreamEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return resourceDatastreamStreamEncoder(d, config, obj)
@@ -2515,6 +2515,13 @@ func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHiera
 		transformed["datasetTemplate"] = transformedDatasetTemplate
 	}
 
+	transformedProjectId, err := expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsProjectId(original["project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectId"] = transformedProjectId
+	}
+
 	return transformed, nil
 }
 
@@ -2560,6 +2567,10 @@ func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHiera
 }
 
 func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplateKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

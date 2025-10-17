@@ -74,11 +74,11 @@ func GetDatastreamPrivateConnectionApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("psc_interface_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(pscInterfaceConfigProp)) && (ok || !reflect.DeepEqual(v, pscInterfaceConfigProp)) {
 		obj["pscInterfaceConfig"] = pscInterfaceConfigProp
 	}
-	labelsProp, err := expandDatastreamPrivateConnectionEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandDatastreamPrivateConnectionEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

@@ -125,12 +125,6 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("zone_distribution_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(zoneDistributionConfigProp)) && (ok || !reflect.DeepEqual(v, zoneDistributionConfigProp)) {
 		obj["zoneDistributionConfig"] = zoneDistributionConfigProp
 	}
-	allowFewerZonesDeploymentProp, err := expandMemorystoreInstanceAllowFewerZonesDeployment(d.Get("allow_fewer_zones_deployment"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("allow_fewer_zones_deployment"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowFewerZonesDeploymentProp)) && (ok || !reflect.DeepEqual(v, allowFewerZonesDeploymentProp)) {
-		obj["allowFewerZonesDeployment"] = allowFewerZonesDeploymentProp
-	}
 	deletionProtectionEnabledProp, err := expandMemorystoreInstanceDeletionProtectionEnabled(d.Get("deletion_protection_enabled"), d, config)
 	if err != nil {
 		return nil, err
@@ -167,11 +161,11 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
 		obj["kmsKey"] = kmsKeyProp
 	}
-	labelsProp, err := expandMemorystoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandMemorystoreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return resourceMemorystoreInstanceEncoder(d, config, obj)
@@ -639,10 +633,6 @@ func expandMemorystoreInstanceZoneDistributionConfigZone(v interface{}, d tpgres
 }
 
 func expandMemorystoreInstanceZoneDistributionConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandMemorystoreInstanceAllowFewerZonesDeployment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

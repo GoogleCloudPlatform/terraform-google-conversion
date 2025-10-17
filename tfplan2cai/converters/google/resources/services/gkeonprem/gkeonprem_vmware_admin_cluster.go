@@ -146,11 +146,17 @@ func GetGkeonpremVmwareAdminClusterApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("private_registry_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(privateRegistryConfigProp)) && (ok || !reflect.DeepEqual(v, privateRegistryConfigProp)) {
 		obj["privateRegistryConfig"] = privateRegistryConfigProp
 	}
-	annotationsProp, err := expandGkeonpremVmwareAdminClusterEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	proxyProp, err := expandGkeonpremVmwareAdminClusterProxy(d.Get("proxy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
+	} else if v, ok := d.GetOkExists("proxy"); !tpgresource.IsEmptyValue(reflect.ValueOf(proxyProp)) && (ok || !reflect.DeepEqual(v, proxyProp)) {
+		obj["proxy"] = proxyProp
+	}
+	effectiveAnnotationsProp, err := expandGkeonpremVmwareAdminClusterEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveAnnotationsProp)) && (ok || !reflect.DeepEqual(v, effectiveAnnotationsProp)) {
+		obj["annotations"] = effectiveAnnotationsProp
 	}
 
 	return obj, nil
@@ -1324,6 +1330,40 @@ func expandGkeonpremVmwareAdminClusterPrivateRegistryConfigAddress(v interface{}
 }
 
 func expandGkeonpremVmwareAdminClusterPrivateRegistryConfigCaCert(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareAdminClusterProxy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUrl, err := expandGkeonpremVmwareAdminClusterProxyUrl(original["url"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["url"] = transformedUrl
+	}
+
+	transformedNoProxy, err := expandGkeonpremVmwareAdminClusterProxyNoProxy(original["no_proxy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNoProxy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["noProxy"] = transformedNoProxy
+	}
+
+	return transformed, nil
+}
+
+func expandGkeonpremVmwareAdminClusterProxyUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGkeonpremVmwareAdminClusterProxyNoProxy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

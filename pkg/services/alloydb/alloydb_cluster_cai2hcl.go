@@ -162,20 +162,8 @@ func flattenAlloydbClusterEtag(v interface{}, d *schema.ResourceData, config *tr
 }
 
 func flattenAlloydbClusterAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return v
-	}
-
-	transformed := make(map[string]interface{})
-	if l, ok := d.GetOkExists("annotations"); ok {
-		for k := range l.(map[string]interface{}) {
-			transformed[k] = v.(map[string]interface{})[k]
-		}
-	}
-
-	return transformed
+	return v
 }
-
 func flattenAlloydbClusterDatabaseVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -202,16 +190,30 @@ func flattenAlloydbClusterPscConfigPscEnabled(v interface{}, d *schema.ResourceD
 }
 
 func flattenAlloydbClusterInitialUser(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil || len(v.([]interface{})) == 0 {
+	if v == nil {
 		return nil
 	}
-
-	return []interface{}{
-		map[string]interface{}{
-			"user":     d.Get("initial_user.0.user"),
-			"password": d.Get("initial_user.0.password"),
-		},
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
 	}
+	transformed := make(map[string]interface{})
+	transformed["user"] =
+		flattenAlloydbClusterInitialUserUser(original["user"], d, config)
+	transformed["password"] =
+		flattenAlloydbClusterInitialUserPassword(original["password"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenAlloydbClusterInitialUserUser(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenAlloydbClusterInitialUserPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenAlloydbClusterRestoreBackupSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -662,6 +664,9 @@ func flattenAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeHour
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise

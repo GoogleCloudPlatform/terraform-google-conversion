@@ -137,11 +137,11 @@ func GetSpannerInstanceApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
-	nodeCountProp, err := expandSpannerInstanceNumNodes(d.Get("num_nodes"), d, config)
+	numNodesProp, err := expandSpannerInstanceNumNodes(d.Get("num_nodes"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("num_nodes"); !tpgresource.IsEmptyValue(reflect.ValueOf(nodeCountProp)) && (ok || !reflect.DeepEqual(v, nodeCountProp)) {
-		obj["nodeCount"] = nodeCountProp
+	} else if v, ok := d.GetOkExists("num_nodes"); !tpgresource.IsEmptyValue(reflect.ValueOf(numNodesProp)) && (ok || !reflect.DeepEqual(v, numNodesProp)) {
+		obj["nodeCount"] = numNodesProp
 	}
 	processingUnitsProp, err := expandSpannerInstanceProcessingUnits(d.Get("processing_units"), d, config)
 	if err != nil {
@@ -173,11 +173,11 @@ func GetSpannerInstanceApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("default_backup_schedule_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultBackupScheduleTypeProp)) && (ok || !reflect.DeepEqual(v, defaultBackupScheduleTypeProp)) {
 		obj["defaultBackupScheduleType"] = defaultBackupScheduleTypeProp
 	}
-	labelsProp, err := expandSpannerInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandSpannerInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return resourceSpannerInstanceEncoder(d, config, obj)

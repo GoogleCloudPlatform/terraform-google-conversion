@@ -72,11 +72,11 @@ func GetComputeRegionUrlMapApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	hostRulesProp, err := expandComputeRegionUrlMapHostRule(d.Get("host_rule"), d, config)
+	hostRuleProp, err := expandComputeRegionUrlMapHostRule(d.Get("host_rule"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("host_rule"); !tpgresource.IsEmptyValue(reflect.ValueOf(hostRulesProp)) && (ok || !reflect.DeepEqual(v, hostRulesProp)) {
-		obj["hostRules"] = hostRulesProp
+	} else if v, ok := d.GetOkExists("host_rule"); !tpgresource.IsEmptyValue(reflect.ValueOf(hostRuleProp)) && (ok || !reflect.DeepEqual(v, hostRuleProp)) {
+		obj["hostRules"] = hostRuleProp
 	}
 	fingerprintProp, err := expandComputeRegionUrlMapFingerprint(d.Get("fingerprint"), d, config)
 	if err != nil {
@@ -90,17 +90,17 @@ func GetComputeRegionUrlMapApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
-	pathMatchersProp, err := expandComputeRegionUrlMapPathMatcher(d.Get("path_matcher"), d, config)
+	pathMatcherProp, err := expandComputeRegionUrlMapPathMatcher(d.Get("path_matcher"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("path_matcher"); !tpgresource.IsEmptyValue(reflect.ValueOf(pathMatchersProp)) && (ok || !reflect.DeepEqual(v, pathMatchersProp)) {
-		obj["pathMatchers"] = pathMatchersProp
+	} else if v, ok := d.GetOkExists("path_matcher"); !tpgresource.IsEmptyValue(reflect.ValueOf(pathMatcherProp)) && (ok || !reflect.DeepEqual(v, pathMatcherProp)) {
+		obj["pathMatchers"] = pathMatcherProp
 	}
-	testsProp, err := expandComputeRegionUrlMapTest(d.Get("test"), d, config)
+	testProp, err := expandComputeRegionUrlMapTest(d.Get("test"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("test"); !tpgresource.IsEmptyValue(reflect.ValueOf(testsProp)) && (ok || !reflect.DeepEqual(v, testsProp)) {
-		obj["tests"] = testsProp
+	} else if v, ok := d.GetOkExists("test"); !tpgresource.IsEmptyValue(reflect.ValueOf(testProp)) && (ok || !reflect.DeepEqual(v, testProp)) {
+		obj["tests"] = testProp
 	}
 	defaultUrlRedirectProp, err := expandComputeRegionUrlMapDefaultUrlRedirect(d.Get("default_url_redirect"), d, config)
 	if err != nil {
@@ -113,6 +113,12 @@ func GetComputeRegionUrlMapApiObject(d tpgresource.TerraformResourceData, config
 		return nil, err
 	} else if v, ok := d.GetOkExists("default_route_action"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultRouteActionProp)) && (ok || !reflect.DeepEqual(v, defaultRouteActionProp)) {
 		obj["defaultRouteAction"] = defaultRouteActionProp
+	}
+	headerActionProp, err := expandComputeRegionUrlMapHeaderAction(d.Get("header_action"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("header_action"); !tpgresource.IsEmptyValue(reflect.ValueOf(headerActionProp)) && (ok || !reflect.DeepEqual(v, headerActionProp)) {
+		obj["headerAction"] = headerActionProp
 	}
 	regionProp, err := expandComputeRegionUrlMapRegion(d.Get("region"), d, config)
 	if err != nil {
@@ -204,6 +210,13 @@ func expandComputeRegionUrlMapPathMatcher(v interface{}, d tpgresource.Terraform
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
+		transformedHeaderAction, err := expandComputeRegionUrlMapPathMatcherHeaderAction(original["header_action"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerAction"] = transformedHeaderAction
+		}
+
 		transformedDefaultService, err := expandComputeRegionUrlMapPathMatcherDefaultService(original["default_service"], d, config)
 		if err != nil {
 			return nil, err
@@ -256,6 +269,150 @@ func expandComputeRegionUrlMapPathMatcher(v interface{}, d tpgresource.Terraform
 		req = append(req, transformed)
 	}
 	return req, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRequestHeadersToRemove, err := expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToRemove(original["request_headers_to_remove"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestHeadersToRemove); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestHeadersToRemove"] = transformedRequestHeadersToRemove
+	}
+
+	transformedRequestHeadersToAdd, err := expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToAdd(original["request_headers_to_add"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestHeadersToAdd); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestHeadersToAdd"] = transformedRequestHeadersToAdd
+	}
+
+	transformedResponseHeadersToRemove, err := expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToRemove(original["response_headers_to_remove"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponseHeadersToRemove); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["responseHeadersToRemove"] = transformedResponseHeadersToRemove
+	}
+
+	transformedResponseHeadersToAdd, err := expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToAdd(original["response_headers_to_add"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponseHeadersToAdd); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["responseHeadersToAdd"] = transformedResponseHeadersToAdd
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToRemove(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHeaderName, err := expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToAddHeaderName(original["header_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerName"] = transformedHeaderName
+		}
+
+		transformedHeaderValue, err := expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToAddHeaderValue(original["header_value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerValue"] = transformedHeaderValue
+		}
+
+		transformedReplace, err := expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToAddReplace(original["replace"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["replace"] = transformedReplace
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToAddHeaderName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionRequestHeadersToAddReplace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToRemove(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHeaderName, err := expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToAddHeaderName(original["header_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerName"] = transformedHeaderName
+		}
+
+		transformedHeaderValue, err := expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToAddHeaderValue(original["header_value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerValue"] = transformedHeaderValue
+		}
+
+		transformedReplace, err := expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToAddReplace(original["replace"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["replace"] = transformedReplace
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToAddHeaderName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapPathMatcherHeaderActionResponseHeadersToAddReplace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeRegionUrlMapPathMatcherDefaultService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -4011,6 +4168,150 @@ func expandComputeRegionUrlMapDefaultRouteActionFaultInjectionPolicyAbortHttpSta
 }
 
 func expandComputeRegionUrlMapDefaultRouteActionFaultInjectionPolicyAbortPercentage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRequestHeadersToRemove, err := expandComputeRegionUrlMapHeaderActionRequestHeadersToRemove(original["request_headers_to_remove"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestHeadersToRemove); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestHeadersToRemove"] = transformedRequestHeadersToRemove
+	}
+
+	transformedRequestHeadersToAdd, err := expandComputeRegionUrlMapHeaderActionRequestHeadersToAdd(original["request_headers_to_add"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestHeadersToAdd); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestHeadersToAdd"] = transformedRequestHeadersToAdd
+	}
+
+	transformedResponseHeadersToRemove, err := expandComputeRegionUrlMapHeaderActionResponseHeadersToRemove(original["response_headers_to_remove"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponseHeadersToRemove); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["responseHeadersToRemove"] = transformedResponseHeadersToRemove
+	}
+
+	transformedResponseHeadersToAdd, err := expandComputeRegionUrlMapHeaderActionResponseHeadersToAdd(original["response_headers_to_add"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponseHeadersToAdd); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["responseHeadersToAdd"] = transformedResponseHeadersToAdd
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionRequestHeadersToRemove(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHeaderName, err := expandComputeRegionUrlMapHeaderActionRequestHeadersToAddHeaderName(original["header_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerName"] = transformedHeaderName
+		}
+
+		transformedHeaderValue, err := expandComputeRegionUrlMapHeaderActionRequestHeadersToAddHeaderValue(original["header_value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerValue"] = transformedHeaderValue
+		}
+
+		transformedReplace, err := expandComputeRegionUrlMapHeaderActionRequestHeadersToAddReplace(original["replace"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["replace"] = transformedReplace
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionRequestHeadersToAddHeaderName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionRequestHeadersToAddReplace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionResponseHeadersToRemove(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHeaderName, err := expandComputeRegionUrlMapHeaderActionResponseHeadersToAddHeaderName(original["header_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerName"] = transformedHeaderName
+		}
+
+		transformedHeaderValue, err := expandComputeRegionUrlMapHeaderActionResponseHeadersToAddHeaderValue(original["header_value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerValue"] = transformedHeaderValue
+		}
+
+		transformedReplace, err := expandComputeRegionUrlMapHeaderActionResponseHeadersToAddReplace(original["replace"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedReplace); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["replace"] = transformedReplace
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionResponseHeadersToAddHeaderName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionUrlMapHeaderActionResponseHeadersToAddReplace(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
