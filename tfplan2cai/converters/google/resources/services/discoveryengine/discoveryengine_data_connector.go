@@ -27,7 +27,7 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-func DataConnectorEntitiesParamsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+func DataConnectorEntitiesFieldsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	return (old == "" && new == "{}") || (old == "{}" && new == "")
 }
 
