@@ -71,7 +71,7 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 
 	hclData := make(map[string]interface{})
 
-	res, err = resourceComputeBackendServiceTgcDecoder(d, config, res)
+	res, hclData, err = resourceComputeBackendServiceTgcDecoder(d, config, res, hclData)
 	if err != nil {
 		return nil, err
 	}
@@ -129,6 +129,7 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 	hclData["max_stream_duration"] = flattenComputeBackendServiceMaxStreamDuration(res["maxStreamDuration"], d, config)
 	hclData["network_pass_through_lb_traffic_policy"] = flattenComputeBackendServiceNetworkPassThroughLbTrafficPolicy(res["networkPassThroughLbTrafficPolicy"], d, config)
 	hclData["dynamic_forwarding"] = flattenComputeBackendServiceDynamicForwarding(res["dynamicForwarding"], d, config)
+	hclData["params"] = flattenComputeBackendServiceParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -386,6 +387,9 @@ func flattenComputeBackendServiceCircuitBreakersConnectTimeoutSeconds(v interfac
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -569,6 +573,9 @@ func flattenComputeBackendServiceConsistentHashHttpCookieTtlSeconds(v interface{
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
@@ -1189,6 +1196,9 @@ func flattenComputeBackendServiceOutlierDetectionBaseEjectionTimeSeconds(v inter
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -1326,6 +1336,9 @@ func flattenComputeBackendServiceOutlierDetectionIntervalSeconds(v interface{}, 
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
@@ -1563,6 +1576,9 @@ func flattenComputeBackendServiceStrongSessionAffinityCookieTtlSeconds(v interfa
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
@@ -1832,7 +1848,28 @@ func flattenComputeBackendServiceDynamicForwardingIpPortSelectionEnabled(v inter
 	return v
 }
 
-func resourceComputeBackendServiceTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+func flattenComputeBackendServiceParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeBackendServiceParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeBackendServiceParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func resourceComputeBackendServiceTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	if v, ok := res["backends"]; ok {
 		backends := v.([]interface{})
 		for _, vBackend := range backends {
@@ -1850,7 +1887,7 @@ func resourceComputeBackendServiceTgcDecoder(d *schema.ResourceData, meta interf
 		}
 	}
 
-	return res, nil
+	return res, hclData, nil
 }
 func resourceComputeBackendServiceDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
 	// Requests with consistentHash will error for specific values of

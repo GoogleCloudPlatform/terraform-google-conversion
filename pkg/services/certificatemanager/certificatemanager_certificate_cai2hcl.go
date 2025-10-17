@@ -70,7 +70,7 @@ func (c *CertificateManagerCertificateCai2hclConverter) convertResourceData(asse
 
 	hclData := make(map[string]interface{})
 
-	res, err = resourceCertificateManagerCertificateTgcDecoder(d, config, res)
+	res, hclData, err = resourceCertificateManagerCertificateTgcDecoder(d, config, res, hclData)
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +177,7 @@ func flattenCertificateManagerCertificateManagedIssuanceConfig(v interface{}, d 
 	return v
 }
 
-func resourceCertificateManagerCertificateTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+func resourceCertificateManagerCertificateTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	if sm, ok := res["selfManaged"].(map[string]interface{}); ok {
 		sm["pemCertificate"] = res["pemCertificate"]
 		sm["pemPrivateKey"] = "hidden"
@@ -186,5 +186,5 @@ func resourceCertificateManagerCertificateTgcDecoder(d *schema.ResourceData, met
 		// Omit the default value.
 		delete(res, "scope")
 	}
-	return res, nil
+	return res, hclData, nil
 }

@@ -146,6 +146,12 @@ func GetComputeServiceAttachmentApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("domain_names"); !tpgresource.IsEmptyValue(reflect.ValueOf(domainNamesProp)) && (ok || !reflect.DeepEqual(v, domainNamesProp)) {
 		obj["domainNames"] = domainNamesProp
 	}
+	tunnelingConfigProp, err := expandComputeServiceAttachmentTunnelingConfig(d.Get("tunneling_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tunneling_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(tunnelingConfigProp)) && (ok || !reflect.DeepEqual(v, tunnelingConfigProp)) {
+		obj["tunnelingConfig"] = tunnelingConfigProp
+	}
 	consumerRejectListsProp, err := expandComputeServiceAttachmentConsumerRejectLists(d.Get("consumer_reject_lists"), d, config)
 	if err != nil {
 		return nil, err
@@ -237,6 +243,40 @@ func expandComputeServiceAttachmentEnableProxyProtocol(v interface{}, d tpgresou
 }
 
 func expandComputeServiceAttachmentDomainNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeServiceAttachmentTunnelingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRoutingMode, err := expandComputeServiceAttachmentTunnelingConfigRoutingMode(original["routing_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRoutingMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["routingMode"] = transformedRoutingMode
+	}
+
+	transformedEncapsulationProfile, err := expandComputeServiceAttachmentTunnelingConfigEncapsulationProfile(original["encapsulation_profile"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncapsulationProfile); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["encapsulationProfile"] = transformedEncapsulationProfile
+	}
+
+	return transformed, nil
+}
+
+func expandComputeServiceAttachmentTunnelingConfigRoutingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeServiceAttachmentTunnelingConfigEncapsulationProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -99,11 +99,11 @@ func GetCloudfunctions2functionCaiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("kms_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyNameProp)) && (ok || !reflect.DeepEqual(v, kmsKeyNameProp)) {
 		obj["kmsKeyName"] = kmsKeyNameProp
 	}
-	labelsProp, err := expandCloudfunctions2functionEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandCloudfunctions2functionEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	obj, err = resourceCloudfunctions2functionEncoder(d, config, obj)
@@ -444,13 +444,6 @@ func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.Ter
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedService, err := expandCloudfunctions2functionServiceConfigService(original["service"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["service"] = transformedService
-	}
-
 	transformedTimeoutSeconds, err := expandCloudfunctions2functionServiceConfigTimeoutSeconds(original["timeout_seconds"], d, config)
 	if err != nil {
 		return nil, err
@@ -557,10 +550,6 @@ func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.Ter
 	}
 
 	return transformed, nil
-}
-
-func expandCloudfunctions2functionServiceConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandCloudfunctions2functionServiceConfigTimeoutSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

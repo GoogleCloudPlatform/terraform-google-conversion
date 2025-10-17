@@ -30,32 +30,10 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-var WorkbenchInstanceProvidedLabels = []string{
-	"consumer-project-id",
-	"consumer-project-number",
-	"notebooks-product",
-	"resource-name",
-}
-
-func WorkbenchInstanceLabelsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
-	// Suppress diffs for the labels
-	for _, label := range WorkbenchInstanceProvidedLabels {
-		if strings.Contains(k, label) && new == "" {
-			return true
-		}
-	}
-
-	// Let diff be determined by labels (above)
-	if strings.Contains(k, "labels.%") {
-		return true
-	}
-
-	// For other keys, don't suppress diff.
-	return false
-}
-
 var WorkbenchInstanceSettableUnmodifiableDefaultMetadata = []string{
+	"install-monitoring-agent",
 	"serial-port-logging-enable",
+	"report-notebook-metrics",
 }
 
 var WorkbenchInstanceEUCProvidedAdditionalMetadata = []string{
@@ -98,7 +76,6 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"generate-diagnostics-options",
 	"google-logging-enabled",
 	"image-url",
-	"install-monitoring-agent",
 	"install-nvidia-driver",
 	"installed-extensions",
 	"instance-region",
@@ -115,7 +92,6 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"proxy-user-mail",
 	"report-container-health",
 	"report-event-url",
-	"report-notebook-metrics",
 	"report-system-health",
 	"report-system-status",
 	"resource-url",
@@ -322,11 +298,11 @@ func GetWorkbenchInstanceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("enable_managed_euc"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableManagedEucProp)) && (ok || !reflect.DeepEqual(v, enableManagedEucProp)) {
 		obj["enableManagedEuc"] = enableManagedEucProp
 	}
-	labelsProp, err := expandWorkbenchInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandWorkbenchInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

@@ -105,33 +105,11 @@ func GetPubsubTopicCaiObject(d tpgresource.TerraformResourceData, config *transp
 	} else if v, ok := d.GetOkExists("message_transforms"); !tpgresource.IsEmptyValue(reflect.ValueOf(messageTransformsProp)) && (ok || !reflect.DeepEqual(v, messageTransformsProp)) {
 		obj["messageTransforms"] = messageTransformsProp
 	}
-	labelsProp, err := expandPubsubTopicEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandPubsubTopicEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
-	}
-
-	obj, err = resourcePubsubTopicEncoder(d, config, obj)
-	if err != nil {
-		return nil, err
-	}
-	return resourcePubsubTopicTgcEncoder(d, config, obj)
-}
-
-func resourcePubsubTopicEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	delete(obj, "name")
-	return obj, nil
-}
-
-func resourcePubsubTopicTgcEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	config := meta.(*transport_tpg.Config)
-
-	nameProp, err := expandPubsubTopicName(d.Get("name"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
-		obj["name"] = nameProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

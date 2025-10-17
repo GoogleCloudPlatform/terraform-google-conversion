@@ -35,7 +35,7 @@ func ResourceConverterDialogflowCXPage() cai.ResourceConverter {
 }
 
 func GetDialogflowCXPageCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/pages/{{name}}")
+	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/pages")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

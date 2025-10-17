@@ -141,11 +141,11 @@ func GetContainerAttachedClusterApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("security_posture_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(securityPostureConfigProp)) && (ok || !reflect.DeepEqual(v, securityPostureConfigProp)) {
 		obj["securityPostureConfig"] = securityPostureConfigProp
 	}
-	annotationsProp, err := expandContainerAttachedClusterEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	effectiveAnnotationsProp, err := expandContainerAttachedClusterEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveAnnotationsProp)) && (ok || !reflect.DeepEqual(v, effectiveAnnotationsProp)) {
+		obj["annotations"] = effectiveAnnotationsProp
 	}
 
 	return obj, nil

@@ -147,6 +147,9 @@ func flattenComputeRegionAutoscalerAutoscalingPolicyMinReplicas(v interface{}, d
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -163,6 +166,9 @@ func flattenComputeRegionAutoscalerAutoscalingPolicyMaxReplicas(v interface{}, d
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise
@@ -496,6 +502,9 @@ func flattenComputeRegionAutoscalerAutoscalingPolicyScalingSchedulesMinRequiredR
 		intVal := int(floatVal)
 		return intVal
 	}
+	if v == nil {
+		return 0
+	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -520,6 +529,9 @@ func flattenComputeRegionAutoscalerAutoscalingPolicyScalingSchedulesDurationSec(
 	if floatVal, ok := v.(float64); ok {
 		intVal := int(floatVal)
 		return intVal
+	}
+	if v == nil {
+		return 0
 	}
 
 	return v // let terraform core handle it otherwise

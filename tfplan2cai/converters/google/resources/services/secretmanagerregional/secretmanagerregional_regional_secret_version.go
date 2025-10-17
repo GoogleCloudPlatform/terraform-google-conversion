@@ -57,11 +57,11 @@ func GetSecretManagerRegionalRegionalSecretVersionCaiObject(d tpgresource.Terraf
 
 func GetSecretManagerRegionalRegionalSecretVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	stateProp, err := expandSecretManagerRegionalRegionalSecretVersionEnabled(d.Get("enabled"), d, config)
+	enabledProp, err := expandSecretManagerRegionalRegionalSecretVersionEnabled(d.Get("enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(stateProp)) && (ok || !reflect.DeepEqual(v, stateProp)) {
-		obj["state"] = stateProp
+	} else if v, ok := d.GetOkExists("enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(enabledProp)) && (ok || !reflect.DeepEqual(v, enabledProp)) {
+		obj["state"] = enabledProp
 	}
 	payloadProp, err := expandSecretManagerRegionalRegionalSecretVersionPayload(nil, d, config)
 	if err != nil {

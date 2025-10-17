@@ -63,17 +63,17 @@ func GetComputeGlobalForwardingRuleApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
-	IPAddressProp, err := expandComputeGlobalForwardingRuleIPAddress(d.Get("ip_address"), d, config)
+	iPAddressProp, err := expandComputeGlobalForwardingRuleIPAddress(d.Get("ip_address"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ip_address"); !tpgresource.IsEmptyValue(reflect.ValueOf(IPAddressProp)) && (ok || !reflect.DeepEqual(v, IPAddressProp)) {
-		obj["IPAddress"] = IPAddressProp
+	} else if v, ok := d.GetOkExists("ip_address"); !tpgresource.IsEmptyValue(reflect.ValueOf(iPAddressProp)) && (ok || !reflect.DeepEqual(v, iPAddressProp)) {
+		obj["IPAddress"] = iPAddressProp
 	}
-	IPProtocolProp, err := expandComputeGlobalForwardingRuleIPProtocol(d.Get("ip_protocol"), d, config)
+	iPProtocolProp, err := expandComputeGlobalForwardingRuleIPProtocol(d.Get("ip_protocol"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ip_protocol"); !tpgresource.IsEmptyValue(reflect.ValueOf(IPProtocolProp)) && (ok || !reflect.DeepEqual(v, IPProtocolProp)) {
-		obj["IPProtocol"] = IPProtocolProp
+	} else if v, ok := d.GetOkExists("ip_protocol"); !tpgresource.IsEmptyValue(reflect.ValueOf(iPProtocolProp)) && (ok || !reflect.DeepEqual(v, iPProtocolProp)) {
+		obj["IPProtocol"] = iPProtocolProp
 	}
 	ipVersionProp, err := expandComputeGlobalForwardingRuleIpVersion(d.Get("ip_version"), d, config)
 	if err != nil {
@@ -171,11 +171,11 @@ func GetComputeGlobalForwardingRuleApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("no_automate_dns_zone"); ok || !reflect.DeepEqual(v, noAutomateDnsZoneProp) {
 		obj["noAutomateDnsZone"] = noAutomateDnsZoneProp
 	}
-	labelsProp, err := expandComputeGlobalForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandComputeGlobalForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

@@ -34,7 +34,7 @@ func ResourceConverterBackupDRServiceConfig() cai.ResourceConverter {
 }
 
 func GetBackupDRServiceConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//backupdr.googleapis.com/projects/{{project}}/locations/{{location}}/serviceConfig/{{name}}")
+	name, err := cai.AssetName(d, config, "//backupdr.googleapis.com/projects/{{project}}/locations/{{location}}/serviceConfig")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

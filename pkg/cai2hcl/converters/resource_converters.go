@@ -16,10 +16,18 @@ package converters
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/cai2hcl/models"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/alloydb"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/apphub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/backupdr"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/bigquery"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/blockchainnodeengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/certificatemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudasset"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuild"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudbuildv2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/services/networksecurity"
@@ -51,6 +59,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	alloydb.AlloydbInstanceAssetType: {
 		"Default": alloydb.NewAlloydbInstanceCai2hclConverter(provider),
 	},
+	apigee.ApigeeInstanceAssetType: {
+		"Default": apigee.NewApigeeInstanceCai2hclConverter(provider),
+	},
 	apphub.ApphubApplicationAssetType: {
 		"Default": apphub.NewApphubApplicationCai2hclConverter(provider),
 	},
@@ -60,14 +71,49 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	apphub.ApphubWorkloadAssetType: {
 		"Default": apphub.NewApphubWorkloadCai2hclConverter(provider),
 	},
+	backupdr.BackupDRBackupPlanAssetType: {
+		"Default": backupdr.NewBackupDRBackupPlanCai2hclConverter(provider),
+	},
+	backupdr.BackupDRBackupVaultAssetType: {
+		"Default": backupdr.NewBackupDRBackupVaultCai2hclConverter(provider),
+	},
+	beyondcorp.BeyondcorpAppConnectionAssetType: {
+		"Default": beyondcorp.NewBeyondcorpAppConnectionCai2hclConverter(provider),
+	},
+	beyondcorp.BeyondcorpAppConnectorAssetType: {
+		"Default": beyondcorp.NewBeyondcorpAppConnectorCai2hclConverter(provider),
+	},
+	beyondcorp.BeyondcorpAppGatewayAssetType: {
+		"Default": beyondcorp.NewBeyondcorpAppGatewayCai2hclConverter(provider),
+	},
 	bigquery.BigQueryDatasetAssetType: {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
+	},
+	binaryauthorization.BinaryAuthorizationAttestorAssetType: {
+		"Default": binaryauthorization.NewBinaryAuthorizationAttestorCai2hclConverter(provider),
 	},
 	blockchainnodeengine.BlockchainNodeEngineBlockchainNodeAssetType: {
 		"Default": blockchainnodeengine.NewBlockchainNodeEngineBlockchainNodesCai2hclConverter(provider),
 	},
 	certificatemanager.CertificateManagerCertificateAssetType: {
 		"Default": certificatemanager.NewCertificateManagerCertificateCai2hclConverter(provider),
+	},
+	cloudasset.CloudAssetFeedAssetType: {
+		"CloudAssetFolderFeed":       cloudasset.NewCloudAssetFolderFeedCai2hclConverter(provider),
+		"CloudAssetOrganizationFeed": cloudasset.NewCloudAssetOrganizationFeedCai2hclConverter(provider),
+		"CloudAssetProjectFeed":      cloudasset.NewCloudAssetProjectFeedCai2hclConverter(provider),
+	},
+	cloudbuild.CloudBuildBitbucketServerConfigAssetType: {
+		"Default": cloudbuild.NewCloudBuildBitbucketServerConfigCai2hclConverter(provider),
+	},
+	cloudbuildv2.Cloudbuildv2ConnectionAssetType: {
+		"Default": cloudbuildv2.NewCloudbuildv2ConnectionCai2hclConverter(provider),
+	},
+	cloudbuildv2.Cloudbuildv2RepositoryAssetType: {
+		"Default": cloudbuildv2.NewCloudbuildv2RepositoryCai2hclConverter(provider),
+	},
+	clouddeploy.ClouddeployCustomTargetTypeAssetType: {
+		"Default": clouddeploy.NewClouddeployCustomTargetTypeCai2hclConverter(provider),
 	},
 	cloudfunctions2.Cloudfunctions2FunctionAssetType: {
 		"Default": cloudfunctions2.NewCloudfunctions2functionCai2hclConverter(provider),
@@ -115,8 +161,32 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	compute.ComputeUrlMapAssetType: {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
 	},
+	networksecurity.NetworkSecurityAddressGroupAssetType: {
+		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityAuthorizationPolicyAssetType: {
+		"Default": networksecurity.NewNetworkSecurityAuthorizationPolicyCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityClientTlsPolicyAssetType: {
+		"Default": networksecurity.NewNetworkSecurityClientTlsPolicyCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityGatewaySecurityPolicyAssetType: {
+		"Default": networksecurity.NewNetworkSecurityGatewaySecurityPolicyCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityGatewaySecurityPolicyRuleAssetType: {
+		"Default": networksecurity.NewNetworkSecurityGatewaySecurityPolicyRuleCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecuritySecurityProfileAssetType: {
+		"Default": networksecurity.NewNetworkSecuritySecurityProfileCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecuritySecurityProfileGroupAssetType: {
+		"Default": networksecurity.NewNetworkSecuritySecurityProfileGroupCai2hclConverter(provider),
+	},
 	networksecurity.NetworkSecurityServerTlsPolicyAssetType: {
 		"Default": networksecurity.NewNetworkSecurityServerTlsPolicyCai2hclConverter(provider),
+	},
+	networksecurity.NetworkSecurityUrlListAssetType: {
+		"Default": networksecurity.NewNetworkSecurityUrlListsCai2hclConverter(provider),
 	},
 	pubsub.PubsubSubscriptionAssetType: {
 		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),

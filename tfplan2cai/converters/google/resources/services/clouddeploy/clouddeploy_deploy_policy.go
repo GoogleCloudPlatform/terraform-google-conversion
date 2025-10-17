@@ -65,7 +65,7 @@ func GetClouddeployDeployPolicyApiObject(d tpgresource.TerraformResourceData, co
 	suspendedProp, err := expandClouddeployDeployPolicySuspended(d.Get("suspended"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("suspended"); ok || !reflect.DeepEqual(v, suspendedProp) {
+	} else if v, ok := d.GetOkExists("suspended"); !tpgresource.IsEmptyValue(reflect.ValueOf(suspendedProp)) && (ok || !reflect.DeepEqual(v, suspendedProp)) {
 		obj["suspended"] = suspendedProp
 	}
 	selectorsProp, err := expandClouddeployDeployPolicySelectors(d.Get("selectors"), d, config)
@@ -80,17 +80,17 @@ func GetClouddeployDeployPolicyApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(rulesProp)) && (ok || !reflect.DeepEqual(v, rulesProp)) {
 		obj["rules"] = rulesProp
 	}
-	annotationsProp, err := expandClouddeployDeployPolicyEffectiveAnnotations(d.Get("effective_annotations"), d, config)
+	effectiveAnnotationsProp, err := expandClouddeployDeployPolicyEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(annotationsProp)) && (ok || !reflect.DeepEqual(v, annotationsProp)) {
-		obj["annotations"] = annotationsProp
+	} else if v, ok := d.GetOkExists("effective_annotations"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveAnnotationsProp)) && (ok || !reflect.DeepEqual(v, effectiveAnnotationsProp)) {
+		obj["annotations"] = effectiveAnnotationsProp
 	}
-	labelsProp, err := expandClouddeployDeployPolicyEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandClouddeployDeployPolicyEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

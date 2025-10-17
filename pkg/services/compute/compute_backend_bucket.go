@@ -213,16 +213,38 @@ client when the resource is created.`,
 				Description:      `The security policy associated with this backend bucket.`,
 			},
 			"enable_cdn": {
-				Type:        schema.TypeBool,
-				Optional:    true,
-				Description: `If true, enable Cloud CDN for this BackendBucket.`,
+				Type:     schema.TypeBool,
+				Optional: true,
+				Description: `If true, enable Cloud CDN for this BackendBucket.
+Note: This cannot be set to true when loadBalancingScheme is set to INTERNAL_MANAGED.`,
 			},
 			"load_balancing_scheme": {
 				Type:         schema.TypeString,
 				Optional:     true,
 				ValidateFunc: verify.ValidateEnum([]string{"INTERNAL_MANAGED", ""}),
 				Description: `The value can only be INTERNAL_MANAGED for cross-region internal layer 7 load balancer.
-If loadBalancingScheme is not specified, the backend bucket can be used by classic global external load balancers, or global application external load balancers, or both. Possible values: ["INTERNAL_MANAGED"]`,
+If loadBalancingScheme is not specified, the backend bucket can be used by classic global external load balancers, or global application external load balancers, or both.
+Important: CDN cannot be enabled (enableCdn cannot be set to true) when loadBalancingScheme is set to INTERNAL_MANAGED. Possible values: ["INTERNAL_MANAGED"]`,
+			},
+			"params": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `Additional params passed with the request, but not persisted as part of resource payload`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"resource_manager_tags": {
+							Type:     schema.TypeMap,
+							Optional: true,
+							ForceNew: true,
+							Description: `Resource manager tags to be bound to the backend bucket. Tag keys and values have the
+same definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},
+and values are in the format tagValues/456.`,
+							Elem: &schema.Schema{Type: schema.TypeString},
+						},
+					},
+				},
 			},
 			"creation_timestamp": {
 				Type:        schema.TypeString,

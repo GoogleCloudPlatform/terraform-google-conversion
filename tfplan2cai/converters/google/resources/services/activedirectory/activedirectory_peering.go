@@ -74,11 +74,11 @@ func GetActiveDirectoryPeeringApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("status_message"); !tpgresource.IsEmptyValue(reflect.ValueOf(statusMessageProp)) && (ok || !reflect.DeepEqual(v, statusMessageProp)) {
 		obj["statusMessage"] = statusMessageProp
 	}
-	labelsProp, err := expandActiveDirectoryPeeringEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandActiveDirectoryPeeringEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

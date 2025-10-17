@@ -122,11 +122,11 @@ func GetDatabaseMigrationServiceMigrationJobApiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("vpc_peering_connectivity"); !tpgresource.IsEmptyValue(reflect.ValueOf(vpcPeeringConnectivityProp)) && (ok || !reflect.DeepEqual(v, vpcPeeringConnectivityProp)) {
 		obj["vpcPeeringConnectivity"] = vpcPeeringConnectivityProp
 	}
-	labelsProp, err := expandDatabaseMigrationServiceMigrationJobEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandDatabaseMigrationServiceMigrationJobEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

@@ -74,11 +74,11 @@ func GetGeminiGeminiGcpEnablementSettingApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("web_grounding_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(webGroundingTypeProp)) && (ok || !reflect.DeepEqual(v, webGroundingTypeProp)) {
 		obj["webGroundingType"] = webGroundingTypeProp
 	}
-	labelsProp, err := expandGeminiGeminiGcpEnablementSettingEffectiveLabels(d.Get("effective_labels"), d, config)
+	effectiveLabelsProp, err := expandGeminiGeminiGcpEnablementSettingEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
-		obj["labels"] = labelsProp
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
 	}
 
 	return obj, nil

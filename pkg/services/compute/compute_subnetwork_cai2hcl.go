@@ -71,7 +71,7 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 
 	hclData := make(map[string]interface{})
 
-	res, err = resourceComputeSubnetworkTgcDecoder(d, config, res)
+	res, hclData, err = resourceComputeSubnetworkTgcDecoder(d, config, res, hclData)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,6 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["external_ipv6_prefix"] = flattenComputeSubnetworkExternalIpv6Prefix(res["externalIpv6Prefix"], d, config)
 	hclData["ip_collection"] = flattenComputeSubnetworkIpCollection(res["ipCollection"], d, config)
 	hclData["allow_subnet_cidr_routes_overlap"] = flattenComputeSubnetworkAllowSubnetCidrRoutesOverlap(res["allowSubnetCidrRoutesOverlap"], d, config)
-	hclData["enable_flow_logs"] = flattenComputeSubnetworkEnableFlowLogs(res["enableFlowLogs"], d, config)
 	hclData["params"] = flattenComputeSubnetworkParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -259,10 +258,6 @@ func flattenComputeSubnetworkAllowSubnetCidrRoutesOverlap(v interface{}, d *sche
 	return v
 }
 
-func flattenComputeSubnetworkEnableFlowLogs(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
 func flattenComputeSubnetworkParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -284,7 +279,7 @@ func flattenComputeSubnetworkParamsResourceManagerTags(v interface{}, d *schema.
 	return v
 }
 
-func resourceComputeSubnetworkTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+func resourceComputeSubnetworkTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	// In the GET API response, the field stackType is not present.
 	// In CAI asset,  "stackType" has value "UNSPECIFIED_STACK_TYPE"
 	// So set the value to empty string in this case.
@@ -295,5 +290,5 @@ func resourceComputeSubnetworkTgcDecoder(d *schema.ResourceData, meta interface{
 		}
 	}
 
-	return res, nil
+	return res, hclData, nil
 }
