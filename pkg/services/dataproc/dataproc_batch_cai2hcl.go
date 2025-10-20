@@ -63,22 +63,18 @@ func (c *DataprocBatchCai2hclConverter) convertResourceData(asset caiasset.Asset
 	var err error
 	res := asset.Resource.Data
 	config := transport.NewConfig()
-	d := &schema.ResourceData{}
+
+	// This is a fake resource used to get fake d
+	// d.Get will return empty map, instead of nil
+	fakeResource := &schema.Resource{
+		Schema: c.schema,
+	}
+	d := fakeResource.TestResourceData()
 
 	assetNameParts := strings.Split(asset.Name, "/")
 	hclBlockName := assetNameParts[len(assetNameParts)-1]
 
 	hclData := make(map[string]interface{})
-
-	res, err = resourceDataprocBatchDecoder(d, config, res)
-	if err != nil {
-		return nil, err
-	}
-
-	if res == nil {
-		// Decoding the object has resulted in it being gone. It may be marked deleted.
-		return nil, nil
-	}
 
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "creator": struct{}{}, "effective_labels": struct{}{}, "name": struct{}{}, "operation": struct{}{}, "runtime_info": struct{}{}, "state": struct{}{}, "state_history": struct{}{}, "state_message": struct{}{}, "state_time": struct{}{}, "terraform_labels": struct{}{}, "uuid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//dataproc.googleapis.com/projects/{{project}}/locations/{{location}}/batches/{{batch_id}}", outputFields, hclData)
@@ -138,6 +134,16 @@ func flattenDataprocBatchRuntimeConfigContainerImage(v interface{}, d *schema.Re
 }
 
 func flattenDataprocBatchRuntimeConfigProperties(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if properties, ok := v.(map[string]interface{}); ok {
+		propertiesCopy := make(map[string]interface{})
+		for k, v := range properties {
+			// Remove the prefix "spark:" from the properties. Otherwise, terraform apply will fail with the error from API.
+			modifiedK := strings.TrimPrefix(k, "spark:")
+			propertiesCopy[modifiedK] = v
+		}
+		return propertiesCopy
+	}
+
 	return v
 }
 
@@ -475,35 +481,4 @@ func flattenDataprocBatchSparkSqlBatchJarFileUris(v interface{}, d *schema.Resou
 
 func flattenDataprocBatchSparkSqlBatchQueryVariables(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func resourceDataprocBatchDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
-	if obj1, ok := res["runtimeConfig"]; ok {
-		if rconfig, ok := obj1.(map[string]interface{}); ok {
-			if obj2, ok := rconfig["properties"]; ok {
-				if properties, ok := obj2.(map[string]interface{}); ok {
-					// Update effective_properties to include both server set and client set properties
-					propertiesCopy := make(map[string]interface{})
-					for k, v := range properties {
-						propertiesCopy[k] = v
-					}
-					rconfig["effectiveProperties"] = propertiesCopy
-
-					// Update properties back to original client set properties
-					originalPropertiesCopy := make(map[string]interface{})
-					properties := d.Get("runtime_config.0.properties")
-					if properties != nil {
-						originalProperties := properties.(interface{}).(map[string]interface{})
-						for k, v := range originalProperties {
-							originalPropertiesCopy[k] = v
-						}
-						rconfig["properties"] = originalPropertiesCopy
-					}
-					return res, nil
-				}
-			}
-		}
-	}
-
-	return res, nil
 }
