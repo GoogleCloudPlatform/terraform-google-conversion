@@ -17,6 +17,7 @@
 package dataproc
 
 import (
+	"fmt"
 	"reflect"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/caiasset"
@@ -165,13 +166,15 @@ func expandDataprocBatchRuntimeConfigContainerImage(v interface{}, d tpgresource
 	return v, nil
 }
 
-func expandDataprocBatchRuntimeConfigProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+func expandDataprocBatchRuntimeConfigProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return map[string]string{}, nil
 	}
 	m := make(map[string]string)
 	for k, val := range v.(map[string]interface{}) {
-		m[k] = val.(string)
+		// In CAI asset, the properties have prefix "spark:" (e.g. spark:spark.dynamicAllocation.enabled)
+		modifiedK := fmt.Sprintf("spark:%s", k)
+		m[modifiedK] = val.(string)
 	}
 	return m, nil
 }

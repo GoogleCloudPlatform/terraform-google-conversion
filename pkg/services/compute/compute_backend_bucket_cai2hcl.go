@@ -64,7 +64,13 @@ func (c *ComputeBackendBucketCai2hclConverter) convertResourceData(asset caiasse
 	var err error
 	res := asset.Resource.Data
 	config := transport.NewConfig()
-	d := &schema.ResourceData{}
+
+	// This is a fake resource used to get fake d
+	// d.Get will return empty map, instead of nil
+	fakeResource := &schema.Resource{
+		Schema: c.schema,
+	}
+	d := fakeResource.TestResourceData()
 
 	assetNameParts := strings.Split(asset.Name, "/")
 	hclBlockName := assetNameParts[len(assetNameParts)-1]
