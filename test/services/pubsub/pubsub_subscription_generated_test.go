@@ -53,7 +53,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPullExample(t *testing.T) {
 			"cloud_storage_config",
 			"count",
 			"depends_on",
-			"enable_message_ordering",
 			"for_each",
 			"lifecycle",
 			"message_transforms.javascript_udf",

@@ -52,7 +52,6 @@ func TestAccNetworkSecurityGatewaySecurityPolicyRule_networkSecurityGatewaySecur
 			"location",
 			"name",
 			"provider",
-			"tls_inspection_enabled",
 		},
 		[]string{},
 	)

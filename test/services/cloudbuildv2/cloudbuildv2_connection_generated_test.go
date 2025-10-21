@@ -29,7 +29,6 @@ func TestAccCloudbuildv2Connection_cloudbuildv2ConnectionExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
-			"github_config.app_installation_id",
 			"lifecycle",
 			"location",
 			"name",

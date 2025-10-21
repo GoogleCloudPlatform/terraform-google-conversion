@@ -51,7 +51,6 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorRouteExample(t *testing.T) {
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.route_rules.url_redirect.https_redirect",
 			"provider",
 		},
 		[]string{},
