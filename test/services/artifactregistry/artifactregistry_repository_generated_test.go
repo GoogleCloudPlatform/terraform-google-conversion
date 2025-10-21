@@ -178,7 +178,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryCleanupExample(
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"cleanup_policy_dry_run",
 			"count",
 			"depends_on",
 			"for_each",

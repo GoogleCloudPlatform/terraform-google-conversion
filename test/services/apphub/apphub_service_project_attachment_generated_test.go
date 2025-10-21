@@ -47,7 +47,6 @@ func TestAccApphubServiceProjectAttachment_serviceProjectAttachmentFullExample(t
 			"for_each",
 			"lifecycle",
 			"provider",
-			"service_project",
 			"service_project_attachment_id",
 		},
 		[]string{},
