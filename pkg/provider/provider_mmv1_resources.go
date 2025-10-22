@@ -24,6 +24,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -35,7 +36,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 64
+// Generated resources: 66
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -101,4 +102,6 @@ var generatedResources = map[string]*schema.Resource{
 	"google_network_security_url_lists":                    networksecurity.ResourceNetworkSecurityUrlLists(),
 	"google_pubsub_subscription":                           pubsub.ResourcePubsubSubscription(),
 	"google_pubsub_topic":                                  pubsub.ResourcePubsubTopic(),
+	"google_redis_cluster":                                 redis.ResourceRedisCluster(),
+	"google_redis_instance":                                redis.ResourceRedisInstance(),
 }

@@ -37,6 +37,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tfplan2cai/converters/cai"
 )
@@ -110,4 +111,6 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_network_security_url_lists":                    networksecurity.NetworkSecurityUrlListsTfplan2caiConverter(),
 	"google_pubsub_subscription":                           pubsub.PubsubSubscriptionTfplan2caiConverter(),
 	"google_pubsub_topic":                                  pubsub.PubsubTopicTfplan2caiConverter(),
+	"google_redis_cluster":                                 redis.RedisClusterTfplan2caiConverter(),
+	"google_redis_instance":                                redis.RedisInstanceTfplan2caiConverter(),
 }
