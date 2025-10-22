@@ -280,6 +280,7 @@ type Config struct {
 	CloudRunBasePath                 string
 	CloudRunV2BasePath               string
 	CloudSchedulerBasePath           string
+	CloudSecurityComplianceBasePath  string
 	CloudTasksBasePath               string
 	ColabBasePath                    string
 	ComposerBasePath                 string
@@ -453,6 +454,7 @@ const CloudQuotasBasePathKey = "CloudQuotas"
 const CloudRunBasePathKey = "CloudRun"
 const CloudRunV2BasePathKey = "CloudRunV2"
 const CloudSchedulerBasePathKey = "CloudScheduler"
+const CloudSecurityComplianceBasePathKey = "CloudSecurityCompliance"
 const CloudTasksBasePathKey = "CloudTasks"
 const ColabBasePathKey = "Colab"
 const ComposerBasePathKey = "Composer"
@@ -615,6 +617,7 @@ var DefaultBasePaths = map[string]string{
 	CloudRunBasePathKey:                 "https://{{location}}-run.googleapis.com/",
 	CloudRunV2BasePathKey:               "https://run.googleapis.com/v2/",
 	CloudSchedulerBasePathKey:           "https://cloudscheduler.googleapis.com/v1/",
+	CloudSecurityComplianceBasePathKey:  "https://cloudsecuritycompliance.googleapis.com/v1/",
 	CloudTasksBasePathKey:               "https://cloudtasks.googleapis.com/v2/",
 	ColabBasePathKey:                    "https://{{location}}-aiplatform.googleapis.com/v1/",
 	ComposerBasePathKey:                 "https://composer.googleapis.com/v1/",
@@ -1005,6 +1008,11 @@ func SetEndpointDefaults(d *schema.ResourceData) error {
 		d.Set("cloud_scheduler_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_CLOUD_SCHEDULER_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[CloudSchedulerBasePathKey]))
+	}
+	if d.Get("cloud_security_compliance_custom_endpoint") == "" {
+		d.Set("cloud_security_compliance_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_CLOUD_SECURITY_COMPLIANCE_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[CloudSecurityComplianceBasePathKey]))
 	}
 	if d.Get("cloud_tasks_custom_endpoint") == "" {
 		d.Set("cloud_tasks_custom_endpoint", MultiEnvDefault([]string{
@@ -2634,6 +2642,7 @@ func ConfigureBasePaths(c *Config) {
 	c.CloudRunBasePath = DefaultBasePaths[CloudRunBasePathKey]
 	c.CloudRunV2BasePath = DefaultBasePaths[CloudRunV2BasePathKey]
 	c.CloudSchedulerBasePath = DefaultBasePaths[CloudSchedulerBasePathKey]
+	c.CloudSecurityComplianceBasePath = DefaultBasePaths[CloudSecurityComplianceBasePathKey]
 	c.CloudTasksBasePath = DefaultBasePaths[CloudTasksBasePathKey]
 	c.ColabBasePath = DefaultBasePaths[ColabBasePathKey]
 	c.ComposerBasePath = DefaultBasePaths[ComposerBasePathKey]
