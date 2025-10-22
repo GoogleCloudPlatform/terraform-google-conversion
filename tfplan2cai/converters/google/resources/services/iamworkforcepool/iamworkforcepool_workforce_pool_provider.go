@@ -132,6 +132,12 @@ func GetIAMWorkforcePoolWorkforcePoolProviderApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("extended_attributes_oauth2_client"); !tpgresource.IsEmptyValue(reflect.ValueOf(extendedAttributesOauth2ClientProp)) && (ok || !reflect.DeepEqual(v, extendedAttributesOauth2ClientProp)) {
 		obj["extendedAttributesOauth2Client"] = extendedAttributesOauth2ClientProp
 	}
+	scimUsageProp, err := expandIAMWorkforcePoolWorkforcePoolProviderScimUsage(d.Get("scim_usage"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scim_usage"); !tpgresource.IsEmptyValue(reflect.ValueOf(scimUsageProp)) && (ok || !reflect.DeepEqual(v, scimUsageProp)) {
+		obj["scimUsage"] = scimUsageProp
+	}
 
 	return obj, nil
 }
@@ -649,5 +655,9 @@ func expandIAMWorkforcePoolWorkforcePoolProviderExtendedAttributesOauth2ClientQu
 }
 
 func expandIAMWorkforcePoolWorkforcePoolProviderExtendedAttributesOauth2ClientQueryParametersFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderScimUsage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
