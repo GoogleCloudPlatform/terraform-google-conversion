@@ -38,6 +38,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/provider"
@@ -239,5 +240,11 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"pubsub.googleapis.com/Topic": {
 		"Default": pubsub.NewPubsubTopicCai2hclConverter(provider),
+	},
+	"redis.googleapis.com/Cluster": {
+		"Default": redis.NewRedisClusterCai2hclConverter(provider),
+	},
+	"redis.googleapis.com/Instance": {
+		"Default": redis.NewRedisInstanceCai2hclConverter(provider),
 	},
 }
