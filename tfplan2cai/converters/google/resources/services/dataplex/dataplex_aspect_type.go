@@ -75,6 +75,12 @@ func GetDataplexAspectTypeApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("metadata_template"); !tpgresource.IsEmptyValue(reflect.ValueOf(metadataTemplateProp)) && (ok || !reflect.DeepEqual(v, metadataTemplateProp)) {
 		obj["metadataTemplate"] = metadataTemplateProp
 	}
+	dataClassificationProp, err := expandDataplexAspectTypeDataClassification(d.Get("data_classification"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("data_classification"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataClassificationProp)) && (ok || !reflect.DeepEqual(v, dataClassificationProp)) {
+		obj["dataClassification"] = dataClassificationProp
+	}
 	effectiveLabelsProp, err := expandDataplexAspectTypeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -103,6 +109,10 @@ func expandDataplexAspectTypeMetadataTemplate(v interface{}, d tpgresource.Terra
 		return nil, err
 	}
 	return m, nil
+}
+
+func expandDataplexAspectTypeDataClassification(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDataplexAspectTypeEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
