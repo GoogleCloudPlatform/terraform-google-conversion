@@ -39,6 +39,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tfplan2cai/converters/cai"
 )
 
@@ -113,4 +115,6 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_pubsub_topic":                                  pubsub.PubsubTopicTfplan2caiConverter(),
 	"google_redis_cluster":                                 redis.RedisClusterTfplan2caiConverter(),
 	"google_redis_instance":                                redis.RedisInstanceTfplan2caiConverter(),
+	"google_secret_manager_secret":                         secretmanager.SecretManagerSecretTfplan2caiConverter(),
+	"google_secret_manager_regional_secret":                secretmanagerregional.SecretManagerRegionalRegionalSecretTfplan2caiConverter(),
 }

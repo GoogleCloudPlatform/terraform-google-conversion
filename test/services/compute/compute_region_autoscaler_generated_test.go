@@ -31,6 +31,7 @@ func TestAccComputeRegionAutoscaler_regionAutoscalerBasicExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"provider",
+			"region",
 		},
 		[]string{},
 	)
