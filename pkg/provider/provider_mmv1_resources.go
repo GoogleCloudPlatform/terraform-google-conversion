@@ -26,6 +26,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -36,7 +38,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 66
+// Generated resources: 68
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -104,4 +106,6 @@ var generatedResources = map[string]*schema.Resource{
 	"google_pubsub_topic":                                  pubsub.ResourcePubsubTopic(),
 	"google_redis_cluster":                                 redis.ResourceRedisCluster(),
 	"google_redis_instance":                                redis.ResourceRedisInstance(),
+	"google_secret_manager_secret":                         secretmanager.ResourceSecretManagerSecret(),
+	"google_secret_manager_regional_secret":                secretmanagerregional.ResourceSecretManagerRegionalRegionalSecret(),
 }

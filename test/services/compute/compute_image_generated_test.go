@@ -33,6 +33,10 @@ func TestAccComputeImage_imageBasicExample(t *testing.T) {
 			"image_encryption_key.rsa_encrypted_key",
 			"lifecycle",
 			"provider",
+			"raw_disk",
+			"source_disk_encryption_key",
+			"source_image_encryption_key",
+			"source_snapshot_encryption_key",
 		},
 		[]string{},
 	)
@@ -50,6 +54,10 @@ func TestAccComputeImage_imageGuestOsExample(t *testing.T) {
 			"image_encryption_key.rsa_encrypted_key",
 			"lifecycle",
 			"provider",
+			"raw_disk",
+			"source_disk_encryption_key",
+			"source_image_encryption_key",
+			"source_snapshot_encryption_key",
 		},
 		[]string{},
 	)
@@ -67,6 +75,10 @@ func TestAccComputeImage_imageBasicStorageLocationExample(t *testing.T) {
 			"image_encryption_key.rsa_encrypted_key",
 			"lifecycle",
 			"provider",
+			"raw_disk",
+			"source_disk_encryption_key",
+			"source_image_encryption_key",
+			"source_snapshot_encryption_key",
 		},
 		[]string{},
 	)

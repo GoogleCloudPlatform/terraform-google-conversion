@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------------
 
-package redis_test
+package secretmanagerregional_test
 
 import (
 	"testing"
@@ -20,7 +20,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccRedisInstance_redisInstanceBasicExample(t *testing.T) {
+func TestAccSecretManagerRegionalRegionalSecret_regionalSecretConfigBasicExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -31,14 +31,16 @@ func TestAccRedisInstance_redisInstanceBasicExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"location",
 			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)
 }
-func TestAccRedisInstance_redisInstanceFullExample(t *testing.T) {
+func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithCmekExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -49,14 +51,16 @@ func TestAccRedisInstance_redisInstanceFullExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"location",
 			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)
 }
-func TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample(t *testing.T) {
+func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithRotationExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -67,14 +71,16 @@ func TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample(t *testi
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"location",
 			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)
 }
-func TestAccRedisInstance_redisInstancePrivateServiceTestExample(t *testing.T) {
+func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithTtlExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -85,14 +91,16 @@ func TestAccRedisInstance_redisInstancePrivateServiceTestExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"location",
 			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)
 }
-func TestAccRedisInstance_redisInstanceMrrExample(t *testing.T) {
+func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithExpireTimeExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -103,9 +111,31 @@ func TestAccRedisInstance_redisInstanceMrrExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"location",
 			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
+		},
+		[]string{},
+	)
+}
+func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithVersionDestroyTtlExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"deletion_protection",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"location",
+			"provider",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)

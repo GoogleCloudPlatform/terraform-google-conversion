@@ -41,6 +41,12 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 			} else if strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionHealthCheck"]
 			}
+		case "secretmanager.googleapis.com/Secret":
+			if strings.Contains(asset.Name, "locations") {
+				converter = ConverterMap[asset.Type]["SecretManagerRegionalRegionalSecret"]
+			} else {
+				converter = ConverterMap[asset.Type]["SecretManagerSecret"]
+			}
 		}
 	}
 

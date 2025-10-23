@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------------
 
-package redis_test
+package secretmanager_test
 
 import (
 	"testing"
@@ -20,7 +20,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccRedisInstance_redisInstanceBasicExample(t *testing.T) {
+func TestAccSecretManagerSecret_secretConfigBasicExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -32,13 +32,14 @@ func TestAccRedisInstance_redisInstanceBasicExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)
 }
-func TestAccRedisInstance_redisInstanceFullExample(t *testing.T) {
+func TestAccSecretManagerSecret_secretWithAnnotationsExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -50,13 +51,14 @@ func TestAccRedisInstance_redisInstanceFullExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)
 }
-func TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample(t *testing.T) {
+func TestAccSecretManagerSecret_secretWithVersionDestroyTtlExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -68,13 +70,14 @@ func TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample(t *testi
 			"for_each",
 			"lifecycle",
 			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)
 }
-func TestAccRedisInstance_redisInstancePrivateServiceTestExample(t *testing.T) {
+func TestAccSecretManagerSecret_secretWithAutomaticCmekExample(t *testing.T) {
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -86,26 +89,9 @@ func TestAccRedisInstance_redisInstancePrivateServiceTestExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"provider",
-			"region",
-			"reserved_ip_range",
-		},
-		[]string{},
-	)
-}
-func TestAccRedisInstance_redisInstanceMrrExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"region",
-			"reserved_ip_range",
+			"secret_id",
+			"tags",
+			"ttl",
 		},
 		[]string{},
 	)

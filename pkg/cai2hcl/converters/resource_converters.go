@@ -40,6 +40,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -246,5 +248,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"redis.googleapis.com/Instance": {
 		"Default": redis.NewRedisInstanceCai2hclConverter(provider),
+	},
+	"secretmanager.googleapis.com/Secret": {
+		"SecretManagerRegionalRegionalSecret": secretmanagerregional.NewSecretManagerRegionalRegionalSecretCai2hclConverter(provider),
+		"SecretManagerSecret":                 secretmanager.NewSecretManagerSecretCai2hclConverter(provider),
 	},
 }

@@ -33,6 +33,7 @@ func TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityP
 			"location",
 			"name",
 			"provider",
+			"tls_inspection_policy",
 		},
 		[]string{},
 	)
@@ -50,6 +51,7 @@ func TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityP
 			"location",
 			"name",
 			"provider",
+			"tls_inspection_policy",
 		},
 		[]string{},
 	)
