@@ -32,7 +32,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckTcpExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckTcpFullExample(t *testing.T) {
@@ -47,7 +46,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckTcpFullExample(t *testing.
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckSslExample(t *testing.T) {
@@ -62,7 +60,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckSslExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckSslFullExample(t *testing.T) {
@@ -77,7 +74,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckSslFullExample(t *testing.
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckHttpExample(t *testing.T) {
@@ -92,7 +88,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttpExample(t *testing.T) 
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckHttpFullExample(t *testing.T) {
@@ -107,7 +102,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttpFullExample(t *testing
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckHttpsExample(t *testing.T) {
@@ -122,7 +116,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttpsExample(t *testing.T)
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckHttpsFullExample(t *testing.T) {
@@ -137,7 +130,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttpsFullExample(t *testin
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckHttp2Example(t *testing.T) {
@@ -152,7 +144,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttp2Example(t *testing.T)
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckHttp2FullExample(t *testing.T) {
@@ -167,7 +158,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttp2FullExample(t *testin
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcExample(t *testing.T) {
@@ -182,7 +172,6 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcExample(t *testing.T) 
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcFullExample(t *testing.T) {
@@ -197,6 +186,5 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcFullExample(t *testing
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -33,7 +33,6 @@ func TestAccApphubServiceProjectAttachment_serviceProjectAttachmentBasicExample(
 			"provider",
 			"service_project_attachment_id",
 		},
-		[]string{},
 	)
 }
 func TestAccApphubServiceProjectAttachment_serviceProjectAttachmentFullExample(t *testing.T) {
@@ -49,6 +48,5 @@ func TestAccApphubServiceProjectAttachment_serviceProjectAttachmentFullExample(t
 			"provider",
 			"service_project_attachment_id",
 		},
-		[]string{},
 	)
 }

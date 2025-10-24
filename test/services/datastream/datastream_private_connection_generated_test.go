@@ -35,7 +35,6 @@ func TestAccDatastreamPrivateConnection_datastreamPrivateConnectionFullExample(t
 			"private_connection_id",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamPrivateConnection_datastreamPrivateConnectionPscInterfaceExample(t *testing.T) {
@@ -53,6 +52,5 @@ func TestAccDatastreamPrivateConnection_datastreamPrivateConnectionPscInterfaceE
 			"private_connection_id",
 			"provider",
 		},
-		[]string{},
 	)
 }

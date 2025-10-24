@@ -35,7 +35,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyBasicEx
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyAdvancedExample(t *testing.T) {
@@ -53,7 +52,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyAdvance
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyServerCertExample(t *testing.T) {
@@ -71,7 +69,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyServerC
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyMtlsExample(t *testing.T) {
@@ -89,6 +86,5 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyMtlsExa
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }

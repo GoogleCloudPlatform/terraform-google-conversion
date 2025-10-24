@@ -38,7 +38,6 @@ func TestAccComputeNetwork_networkBasicExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeNetwork_networkCustomMtuExample(t *testing.T) {
@@ -59,7 +58,6 @@ func TestAccComputeNetwork_networkCustomMtuExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeNetwork_networkCustomFirewallEnforcementOrderExample(t *testing.T) {
@@ -80,7 +78,6 @@ func TestAccComputeNetwork_networkCustomFirewallEnforcementOrderExample(t *testi
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeNetwork_networkBgpBestPathSelectionModeExample(t *testing.T) {
@@ -101,7 +98,6 @@ func TestAccComputeNetwork_networkBgpBestPathSelectionModeExample(t *testing.T) 
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardExample(t *testing.T) {
@@ -122,7 +118,6 @@ func TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardExample(t *tes
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardCustomFieldsExample(t *testing.T) {
@@ -143,6 +138,5 @@ func TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardCustomFieldsEx
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }

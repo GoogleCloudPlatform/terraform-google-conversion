@@ -38,7 +38,6 @@ func TestAccComputeDisk_diskBasicExample(t *testing.T) {
 			"provider",
 			"source_storage_object",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeDisk_diskAsyncExample(t *testing.T) {
@@ -59,7 +58,6 @@ func TestAccComputeDisk_diskAsyncExample(t *testing.T) {
 			"provider",
 			"source_storage_object",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeDisk_diskFeaturesExample(t *testing.T) {
@@ -80,6 +78,5 @@ func TestAccComputeDisk_diskFeaturesExample(t *testing.T) {
 			"provider",
 			"source_storage_object",
 		},
-		[]string{},
 	)
 }

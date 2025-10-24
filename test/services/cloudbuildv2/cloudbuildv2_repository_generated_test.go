@@ -35,7 +35,6 @@ func TestAccCloudbuildv2Repository_cloudbuildv2RepositoryGheExample(t *testing.T
 			"parent_connection",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudbuildv2Repository_cloudbuildv2RepositoryGithubExample(t *testing.T) {
@@ -53,7 +52,6 @@ func TestAccCloudbuildv2Repository_cloudbuildv2RepositoryGithubExample(t *testin
 			"parent_connection",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudbuildv2Repository_cloudbuildv2RepositoryGleExample(t *testing.T) {
@@ -71,6 +69,5 @@ func TestAccCloudbuildv2Repository_cloudbuildv2RepositoryGleExample(t *testing.T
 			"parent_connection",
 			"provider",
 		},
-		[]string{},
 	)
 }

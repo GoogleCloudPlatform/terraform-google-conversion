@@ -33,6 +33,5 @@ func TestAccComputeAutoscaler_autoscalerBasicExample(t *testing.T) {
 			"provider",
 			"zone",
 		},
-		[]string{},
 	)
 }

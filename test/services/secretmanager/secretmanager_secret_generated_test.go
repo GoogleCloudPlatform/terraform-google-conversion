@@ -36,7 +36,6 @@ func TestAccSecretManagerSecret_secretConfigBasicExample(t *testing.T) {
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }
 func TestAccSecretManagerSecret_secretWithAnnotationsExample(t *testing.T) {
@@ -55,7 +54,6 @@ func TestAccSecretManagerSecret_secretWithAnnotationsExample(t *testing.T) {
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }
 func TestAccSecretManagerSecret_secretWithVersionDestroyTtlExample(t *testing.T) {
@@ -74,7 +72,6 @@ func TestAccSecretManagerSecret_secretWithVersionDestroyTtlExample(t *testing.T)
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }
 func TestAccSecretManagerSecret_secretWithAutomaticCmekExample(t *testing.T) {
@@ -93,6 +90,5 @@ func TestAccSecretManagerSecret_secretWithAutomaticCmekExample(t *testing.T) {
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }

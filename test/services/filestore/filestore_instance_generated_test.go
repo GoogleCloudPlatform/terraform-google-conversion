@@ -37,7 +37,6 @@ func TestAccFilestoreInstance_filestoreInstanceBasicExample(t *testing.T) {
 			"tags",
 			"zone",
 		},
-		[]string{},
 	)
 }
 func TestAccFilestoreInstance_filestoreInstanceFullExample(t *testing.T) {
@@ -57,7 +56,6 @@ func TestAccFilestoreInstance_filestoreInstanceFullExample(t *testing.T) {
 			"tags",
 			"zone",
 		},
-		[]string{},
 	)
 }
 func TestAccFilestoreInstance_filestoreInstanceProtocolExample(t *testing.T) {
@@ -77,6 +75,5 @@ func TestAccFilestoreInstance_filestoreInstanceProtocolExample(t *testing.T) {
 			"tags",
 			"zone",
 		},
-		[]string{},
 	)
 }

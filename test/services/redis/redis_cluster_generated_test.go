@@ -37,7 +37,6 @@ func TestAccRedisCluster_redisClusterHaExample(t *testing.T) {
 			"psc_configs",
 			"region",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisCluster_redisClusterHaSingleZoneExample(t *testing.T) {
@@ -57,7 +56,6 @@ func TestAccRedisCluster_redisClusterHaSingleZoneExample(t *testing.T) {
 			"psc_configs",
 			"region",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisCluster_redisClusterSecondaryExample(t *testing.T) {
@@ -77,7 +75,6 @@ func TestAccRedisCluster_redisClusterSecondaryExample(t *testing.T) {
 			"psc_configs",
 			"region",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisCluster_redisClusterRdbExample(t *testing.T) {
@@ -97,7 +94,6 @@ func TestAccRedisCluster_redisClusterRdbExample(t *testing.T) {
 			"psc_configs",
 			"region",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisCluster_redisClusterAofExample(t *testing.T) {
@@ -117,7 +113,6 @@ func TestAccRedisCluster_redisClusterAofExample(t *testing.T) {
 			"psc_configs",
 			"region",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisCluster_redisClusterCmekExample(t *testing.T) {
@@ -137,6 +132,5 @@ func TestAccRedisCluster_redisClusterCmekExample(t *testing.T) {
 			"psc_configs",
 			"region",
 		},
-		[]string{},
 	)
 }

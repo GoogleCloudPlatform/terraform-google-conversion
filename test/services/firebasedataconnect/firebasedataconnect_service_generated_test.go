@@ -37,7 +37,6 @@ func TestAccFirebaseDataConnectService_firebasedataconnectServiceBasicExample(t 
 			"provider",
 			"service_id",
 		},
-		[]string{},
 	)
 }
 func TestAccFirebaseDataConnectService_firebasedataconnectServiceWithForceDeletionExample(t *testing.T) {
@@ -57,6 +56,5 @@ func TestAccFirebaseDataConnectService_firebasedataconnectServiceWithForceDeleti
 			"provider",
 			"service_id",
 		},
-		[]string{},
 	)
 }

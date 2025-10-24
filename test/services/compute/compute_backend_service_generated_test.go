@@ -36,7 +36,6 @@ func TestAccComputeBackendService_backendServiceBasicExample(t *testing.T) {
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceExternalIapExample(t *testing.T) {
@@ -55,7 +54,6 @@ func TestAccComputeBackendService_backendServiceExternalIapExample(t *testing.T)
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceCacheSimpleExample(t *testing.T) {
@@ -74,7 +72,6 @@ func TestAccComputeBackendService_backendServiceCacheSimpleExample(t *testing.T)
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceCacheIncludeHttpHeadersExample(t *testing.T) {
@@ -93,7 +90,6 @@ func TestAccComputeBackendService_backendServiceCacheIncludeHttpHeadersExample(t
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceCacheIncludeNamedCookiesExample(t *testing.T) {
@@ -112,7 +108,6 @@ func TestAccComputeBackendService_backendServiceCacheIncludeNamedCookiesExample(
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceCacheExample(t *testing.T) {
@@ -131,7 +126,6 @@ func TestAccComputeBackendService_backendServiceCacheExample(t *testing.T) {
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceCacheBypassCacheOnRequestHeadersExample(t *testing.T) {
@@ -150,7 +144,6 @@ func TestAccComputeBackendService_backendServiceCacheBypassCacheOnRequestHeaders
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceExternalManagedExample(t *testing.T) {
@@ -169,7 +162,6 @@ func TestAccComputeBackendService_backendServiceExternalManagedExample(t *testin
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceIpAddressSelectionPolicyExample(t *testing.T) {
@@ -188,7 +180,6 @@ func TestAccComputeBackendService_backendServiceIpAddressSelectionPolicyExample(
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceCustomMetricsExample(t *testing.T) {
@@ -207,7 +198,6 @@ func TestAccComputeBackendService_backendServiceCustomMetricsExample(t *testing.
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendService_backendServiceTlsSettingsExample(t *testing.T) {
@@ -226,6 +216,5 @@ func TestAccComputeBackendService_backendServiceTlsSettingsExample(t *testing.T)
 			"provider",
 			"security_settings.aws_v4_authentication.access_key",
 		},
-		[]string{},
 	)
 }

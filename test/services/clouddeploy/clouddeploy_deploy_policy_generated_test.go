@@ -35,7 +35,6 @@ func TestAccClouddeployDeployPolicy_clouddeployDeployPolicyBasicExample(t *testi
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccClouddeployDeployPolicy_clouddeployDeployPolicyFullExample(t *testing.T) {
@@ -53,6 +52,5 @@ func TestAccClouddeployDeployPolicy_clouddeployDeployPolicyFullExample(t *testin
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }

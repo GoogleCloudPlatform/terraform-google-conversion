@@ -35,7 +35,6 @@ func TestAccFilestoreSnapshot_filestoreSnapshotBasicExample(t *testing.T) {
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccFilestoreSnapshot_filestoreSnapshotFullExample(t *testing.T) {
@@ -53,6 +52,5 @@ func TestAccFilestoreSnapshot_filestoreSnapshotFullExample(t *testing.T) {
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }

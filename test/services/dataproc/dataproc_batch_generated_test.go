@@ -39,7 +39,6 @@ func TestAccDataprocBatch_dataprocBatchSparkExample(t *testing.T) {
 			"spark_r_batch.args",
 			"spark_sql_batch.query_variables",
 		},
-		[]string{},
 	)
 }
 func TestAccDataprocBatch_dataprocBatchSparkFullExample(t *testing.T) {
@@ -61,7 +60,6 @@ func TestAccDataprocBatch_dataprocBatchSparkFullExample(t *testing.T) {
 			"spark_r_batch.args",
 			"spark_sql_batch.query_variables",
 		},
-		[]string{},
 	)
 }
 func TestAccDataprocBatch_dataprocBatchSparksqlExample(t *testing.T) {
@@ -83,7 +81,6 @@ func TestAccDataprocBatch_dataprocBatchSparksqlExample(t *testing.T) {
 			"spark_r_batch.args",
 			"spark_sql_batch.query_variables",
 		},
-		[]string{},
 	)
 }
 func TestAccDataprocBatch_dataprocBatchPysparkExample(t *testing.T) {
@@ -105,7 +102,6 @@ func TestAccDataprocBatch_dataprocBatchPysparkExample(t *testing.T) {
 			"spark_r_batch.args",
 			"spark_sql_batch.query_variables",
 		},
-		[]string{},
 	)
 }
 func TestAccDataprocBatch_dataprocBatchSparkrExample(t *testing.T) {
@@ -127,7 +123,6 @@ func TestAccDataprocBatch_dataprocBatchSparkrExample(t *testing.T) {
 			"spark_r_batch.args",
 			"spark_sql_batch.query_variables",
 		},
-		[]string{},
 	)
 }
 func TestAccDataprocBatch_dataprocBatchAutotuningExample(t *testing.T) {
@@ -149,6 +144,5 @@ func TestAccDataprocBatch_dataprocBatchAutotuningExample(t *testing.T) {
 			"spark_r_batch.args",
 			"spark_sql_batch.query_variables",
 		},
-		[]string{},
 	)
 }

@@ -35,7 +35,6 @@ func TestAccComputeBackendBucket_backendBucketBasicExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketFullExample(t *testing.T) {
@@ -53,7 +52,6 @@ func TestAccComputeBackendBucket_backendBucketFullExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T) {
@@ -71,7 +69,6 @@ func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *testing.T) {
@@ -89,7 +86,6 @@ func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *tes
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample(t *testing.T) {
@@ -107,7 +103,6 @@ func TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample(t *testi
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample(t *testing.T) {
@@ -125,7 +120,6 @@ func TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample(t *testin
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketBypassCacheExample(t *testing.T) {
@@ -143,7 +137,6 @@ func TestAccComputeBackendBucket_backendBucketBypassCacheExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
@@ -161,7 +154,6 @@ func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
@@ -179,6 +171,5 @@ func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }

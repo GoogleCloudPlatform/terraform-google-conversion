@@ -34,6 +34,5 @@ func TestAccCloudAssetProjectFeed_cloudAssetProjectFeedExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }

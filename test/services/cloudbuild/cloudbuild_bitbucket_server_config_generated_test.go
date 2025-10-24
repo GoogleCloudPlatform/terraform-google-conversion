@@ -34,7 +34,6 @@ func TestAccCloudBuildBitbucketServerConfig_cloudbuildBitbucketServerConfigExamp
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudBuildBitbucketServerConfig_cloudbuildBitbucketServerConfigPeeredNetworkExample(t *testing.T) {
@@ -51,6 +50,5 @@ func TestAccCloudBuildBitbucketServerConfig_cloudbuildBitbucketServerConfigPeere
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }

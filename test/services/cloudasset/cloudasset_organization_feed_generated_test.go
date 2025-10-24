@@ -35,6 +35,5 @@ func TestAccCloudAssetOrganizationFeed_cloudAssetOrganizationFeedExample(t *test
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -34,7 +34,6 @@ func TestAccBackupDRBackupPlan_backupDrBackupPlanSimpleExample(t *testing.T) {
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBackupDRBackupPlan_backupDrBackupPlanForCsqlResourceExample(t *testing.T) {
@@ -51,6 +50,5 @@ func TestAccBackupDRBackupPlan_backupDrBackupPlanForCsqlResourceExample(t *testi
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -34,6 +34,5 @@ func TestAccCloudbuildv2Connection_cloudbuildv2ConnectionExample(t *testing.T) {
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -32,6 +32,5 @@ func TestAccComputeFirewallPolicy_firewallPolicyExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
