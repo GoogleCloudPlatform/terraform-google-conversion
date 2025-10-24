@@ -109,6 +109,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_google_logging_folder_bucket_config"},
 		{name: "example_google_logging_organization_bucket_config"},
 		{name: "example_google_logging_project_bucket_config"},
+		{name: "example_google_logging_project_sink"},
 		{name: "example_google_sql_database"},
 		{name: "example_kms_crypto_key"},
 		{name: "example_kms_crypto_key_iam_binding"},
