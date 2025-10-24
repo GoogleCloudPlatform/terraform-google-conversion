@@ -34,7 +34,6 @@ func TestAccBeyondcorpAppGateway_beyondcorpAppGatewayBasicExample(t *testing.T) 
 			"provider",
 			"region",
 		},
-		[]string{},
 	)
 }
 func TestAccBeyondcorpAppGateway_beyondcorpAppGatewayFullExample(t *testing.T) {
@@ -51,6 +50,5 @@ func TestAccBeyondcorpAppGateway_beyondcorpAppGatewayFullExample(t *testing.T) {
 			"provider",
 			"region",
 		},
-		[]string{},
 	)
 }

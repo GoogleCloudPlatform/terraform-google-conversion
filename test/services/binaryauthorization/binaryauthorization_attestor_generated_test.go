@@ -32,6 +32,5 @@ func TestAccBinaryAuthorizationAttestor_binaryAuthorizationAttestorBasicExample(
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }

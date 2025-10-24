@@ -45,7 +45,6 @@ func TestAccAlloydbCluster_alloydbClusterBasicExample(t *testing.T) {
 			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample(t *testing.T) {
@@ -73,7 +72,6 @@ func TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample(t *testing.T) {
 			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample(t *testing.T) {
@@ -101,7 +99,6 @@ func TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample(t *testing.T) {
 			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbCluster_alloydbClusterFullExample(t *testing.T) {
@@ -129,7 +126,6 @@ func TestAccAlloydbCluster_alloydbClusterFullExample(t *testing.T) {
 			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample(t *testing.T) {
@@ -157,6 +153,5 @@ func TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample(t *testing.T)
 			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }

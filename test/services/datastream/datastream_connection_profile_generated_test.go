@@ -41,7 +41,6 @@ func TestAccDatastreamConnectionProfile_datastreamConnectionProfileBasicExample(
 			"postgresql_profile.password",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresqlPrivateConnectionExample(t *testing.T) {
@@ -65,7 +64,6 @@ func TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresqlPri
 			"postgresql_profile.password",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamConnectionProfile_datastreamConnectionProfileFullExample(t *testing.T) {
@@ -89,7 +87,6 @@ func TestAccDatastreamConnectionProfile_datastreamConnectionProfileFullExample(t
 			"postgresql_profile.password",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecretManagerExample(t *testing.T) {
@@ -113,6 +110,5 @@ func TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecre
 			"postgresql_profile.password",
 			"provider",
 		},
-		[]string{},
 	)
 }

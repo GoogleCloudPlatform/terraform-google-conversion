@@ -38,7 +38,6 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertifi
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigExample(t *testing.T) {
@@ -59,7 +58,6 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertifi
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateExample(t *testing.T) {
@@ -80,7 +78,6 @@ func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertifica
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateRegionalExample(t *testing.T) {
@@ -101,7 +98,6 @@ func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertifica
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigAllRegionsExample(t *testing.T) {
@@ -122,7 +118,6 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertifi
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsAllRegionsExample(t *testing.T) {
@@ -143,7 +138,6 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertifi
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedRegionalCertificateDnsAuthExample(t *testing.T) {
@@ -164,7 +158,6 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedRegiona
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerClientAuthCertificateExample(t *testing.T) {
@@ -185,6 +178,5 @@ func TestAccCertificateManagerCertificate_certificateManagerClientAuthCertificat
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }

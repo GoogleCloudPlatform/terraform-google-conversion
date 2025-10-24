@@ -32,6 +32,5 @@ func TestAccComputeGlobalAddress_globalAddressBasicExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }

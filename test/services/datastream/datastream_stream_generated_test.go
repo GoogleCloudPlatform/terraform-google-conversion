@@ -46,7 +46,6 @@ func TestAccDatastreamStream_datastreamStreamBasicExample(t *testing.T) {
 			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
 			"stream_id",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamStream_datastreamStreamFullExample(t *testing.T) {
@@ -75,7 +74,6 @@ func TestAccDatastreamStream_datastreamStreamFullExample(t *testing.T) {
 			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
 			"stream_id",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamStream_datastreamStreamPostgresqlBigqueryDatasetIdExample(t *testing.T) {
@@ -104,7 +102,6 @@ func TestAccDatastreamStream_datastreamStreamPostgresqlBigqueryDatasetIdExample(
 			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
 			"stream_id",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamStream_datastreamStreamBigqueryExample(t *testing.T) {
@@ -133,7 +130,6 @@ func TestAccDatastreamStream_datastreamStreamBigqueryExample(t *testing.T) {
 			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
 			"stream_id",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamStream_datastreamStreamBigqueryCrossProjectSourceHierachyExample(t *testing.T) {
@@ -162,7 +158,6 @@ func TestAccDatastreamStream_datastreamStreamBigqueryCrossProjectSourceHierachyE
 			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
 			"stream_id",
 		},
-		[]string{},
 	)
 }
 func TestAccDatastreamStream_datastreamStreamBigqueryAppendOnlyExample(t *testing.T) {
@@ -191,6 +186,5 @@ func TestAccDatastreamStream_datastreamStreamBigqueryAppendOnlyExample(t *testin
 			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
 			"stream_id",
 		},
-		[]string{},
 	)
 }

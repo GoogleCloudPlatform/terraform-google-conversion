@@ -38,7 +38,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushExample(t *testing.T) {
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPullExample(t *testing.T) {
@@ -59,7 +58,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPullExample(t *testing.T) {
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPullFilterExample(t *testing.T) {
@@ -80,7 +78,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPullFilterExample(t *testing.T)
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionDeadLetterExample(t *testing.T) {
@@ -101,7 +98,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionDeadLetterExample(t *testing.T)
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushBqExample(t *testing.T) {
@@ -122,7 +118,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushBqExample(t *testing.T) {
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushBqTableSchemaExample(t *testing.T) {
@@ -143,7 +138,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushBqTableSchemaExample(t *tes
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushBqServiceAccountExample(t *testing.T) {
@@ -164,7 +158,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushBqServiceAccountExample(t *
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageExample(t *testing.T) {
@@ -185,7 +178,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageExample(t *test
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageAvroExample(t *testing.T) {
@@ -206,7 +198,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageAvroExample(t *
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageServiceAccountExample(t *testing.T) {
@@ -227,7 +218,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageServiceAccountE
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionSingleSmtExample(t *testing.T) {
@@ -248,7 +238,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionSingleSmtExample(t *testing.T) 
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionMultipleSmtsExample(t *testing.T) {
@@ -270,7 +259,6 @@ func TestAccPubsubSubscription_pubsubSubscriptionMultipleSmtsExample(t *testing.
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionTagsExample(t *testing.T) {
@@ -291,6 +279,5 @@ func TestAccPubsubSubscription_pubsubSubscriptionTagsExample(t *testing.T) {
 			"provider",
 			"tags",
 		},
-		[]string{},
 	)
 }

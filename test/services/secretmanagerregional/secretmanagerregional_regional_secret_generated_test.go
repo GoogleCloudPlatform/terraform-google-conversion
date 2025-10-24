@@ -37,7 +37,6 @@ func TestAccSecretManagerRegionalRegionalSecret_regionalSecretConfigBasicExample
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }
 func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithCmekExample(t *testing.T) {
@@ -57,7 +56,6 @@ func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithCmekExample(t 
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }
 func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithRotationExample(t *testing.T) {
@@ -77,7 +75,6 @@ func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithRotationExampl
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }
 func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithTtlExample(t *testing.T) {
@@ -97,7 +94,6 @@ func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithTtlExample(t *
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }
 func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithExpireTimeExample(t *testing.T) {
@@ -117,7 +113,6 @@ func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithExpireTimeExam
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }
 func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithVersionDestroyTtlExample(t *testing.T) {
@@ -137,6 +132,5 @@ func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithVersionDestroy
 			"tags",
 			"ttl",
 		},
-		[]string{},
 	)
 }

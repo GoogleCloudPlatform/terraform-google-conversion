@@ -36,7 +36,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryBasicExample(t 
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryMultiRegionExample(t *testing.T) {
@@ -55,7 +54,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryMultiRegionExam
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryDockerExample(t *testing.T) {
@@ -74,7 +72,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryDockerExample(t
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryCmekExample(t *testing.T) {
@@ -93,7 +90,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryCmekExample(t *
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryVirtualExample(t *testing.T) {
@@ -112,7 +108,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryVirtualExample(
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteExample(t *testing.T) {
@@ -131,7 +126,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteExample(t
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteAptExample(t *testing.T) {
@@ -150,7 +144,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteAptExampl
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteYumExample(t *testing.T) {
@@ -169,7 +162,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteYumExampl
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryCleanupExample(t *testing.T) {
@@ -188,7 +180,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryCleanupExample(
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerhubAuthExample(t *testing.T) {
@@ -207,7 +198,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerhub
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerCustomWithAuthExample(t *testing.T) {
@@ -226,7 +216,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerCus
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteMavenCustomWithAuthExample(t *testing.T) {
@@ -245,7 +234,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteMavenCust
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteNpmCustomWithAuthExample(t *testing.T) {
@@ -264,7 +252,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteNpmCustom
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemotePythonCustomWithAuthExample(t *testing.T) {
@@ -283,7 +270,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemotePythonCus
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithDockerExample(t *testing.T) {
@@ -302,7 +288,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRep
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithArtifactRegistryUriExample(t *testing.T) {
@@ -321,7 +306,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRep
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithCustomUpstreamExample(t *testing.T) {
@@ -340,7 +324,6 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRep
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }
 func TestAccArtifactRegistryRepository_artifactRegistryRepositoryVulnerabilityScanningExample(t *testing.T) {
@@ -359,6 +342,5 @@ func TestAccArtifactRegistryRepository_artifactRegistryRepositoryVulnerabilitySc
 			"remote_repository_config.upstream_credentials",
 			"repository_id",
 		},
-		[]string{},
 	)
 }

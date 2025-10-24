@@ -36,7 +36,6 @@ func TestAccClouddeployAutomation_clouddeployAutomationBasicExample(t *testing.T
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccClouddeployAutomation_clouddeployAutomationFullExample(t *testing.T) {
@@ -55,6 +54,5 @@ func TestAccClouddeployAutomation_clouddeployAutomationFullExample(t *testing.T)
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -33,7 +33,6 @@ func TestAccCloudfunctions2function_cloudfunctions2BasicExample(t *testing.T) {
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudfunctions2function_cloudfunctions2FullExample(t *testing.T) {
@@ -49,7 +48,6 @@ func TestAccCloudfunctions2function_cloudfunctions2FullExample(t *testing.T) {
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudfunctions2function_cloudfunctions2BasicGcsExample(t *testing.T) {
@@ -65,7 +63,6 @@ func TestAccCloudfunctions2function_cloudfunctions2BasicGcsExample(t *testing.T)
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudfunctions2function_cloudfunctions2BasicAuditlogsExample(t *testing.T) {
@@ -81,7 +78,6 @@ func TestAccCloudfunctions2function_cloudfunctions2BasicAuditlogsExample(t *test
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudfunctions2function_cloudfunctions2BasicBuilderExample(t *testing.T) {
@@ -97,7 +93,6 @@ func TestAccCloudfunctions2function_cloudfunctions2BasicBuilderExample(t *testin
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudfunctions2function_cloudfunctions2SecretEnvExample(t *testing.T) {
@@ -113,7 +108,6 @@ func TestAccCloudfunctions2function_cloudfunctions2SecretEnvExample(t *testing.T
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudfunctions2function_cloudfunctions2SecretVolumeExample(t *testing.T) {
@@ -129,7 +123,6 @@ func TestAccCloudfunctions2function_cloudfunctions2SecretVolumeExample(t *testin
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccCloudfunctions2function_cloudfunctions2PrivateWorkerpoolExample(t *testing.T) {
@@ -145,6 +138,5 @@ func TestAccCloudfunctions2function_cloudfunctions2PrivateWorkerpoolExample(t *t
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }

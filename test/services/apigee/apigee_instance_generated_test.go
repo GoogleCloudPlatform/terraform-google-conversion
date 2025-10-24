@@ -34,7 +34,6 @@ func TestAccApigeeInstance_apigeeInstanceBasicTestExample(t *testing.T) {
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccApigeeInstance_apigeeInstanceCidrRangeTestExample(t *testing.T) {
@@ -51,7 +50,6 @@ func TestAccApigeeInstance_apigeeInstanceCidrRangeTestExample(t *testing.T) {
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccApigeeInstance_apigeeInstanceIpRangeTestExample(t *testing.T) {
@@ -68,7 +66,22 @@ func TestAccApigeeInstance_apigeeInstanceIpRangeTestExample(t *testing.T) {
 			"org_id",
 			"provider",
 		},
-		[]string{},
+	)
+}
+func TestAccApigeeInstance_apigeeInstanceFullTestExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"ip_range",
+			"lifecycle",
+			"org_id",
+			"provider",
+		},
 	)
 }
 func TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample(t *testing.T) {
@@ -85,6 +98,5 @@ func TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample(t *te
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }

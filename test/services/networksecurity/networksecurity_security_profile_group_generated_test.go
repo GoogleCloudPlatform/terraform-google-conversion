@@ -35,6 +35,5 @@ func TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGr
 			"parent",
 			"provider",
 		},
-		[]string{},
 	)
 }

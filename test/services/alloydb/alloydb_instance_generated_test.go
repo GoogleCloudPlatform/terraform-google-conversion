@@ -35,7 +35,6 @@ func TestAccAlloydbInstance_alloydbInstanceBasicTestExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbInstance_alloydbSecondaryInstanceBasicTestExample(t *testing.T) {
@@ -53,7 +52,6 @@ func TestAccAlloydbInstance_alloydbSecondaryInstanceBasicTestExample(t *testing.
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbInstance_alloydbInstancePscTestExample(t *testing.T) {
@@ -71,6 +69,5 @@ func TestAccAlloydbInstance_alloydbInstancePscTestExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }

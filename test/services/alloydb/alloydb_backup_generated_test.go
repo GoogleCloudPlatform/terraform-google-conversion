@@ -34,7 +34,6 @@ func TestAccAlloydbBackup_alloydbBackupBasicTestExample(t *testing.T) {
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbBackup_alloydbBackupFullTestExample(t *testing.T) {
@@ -51,6 +50,5 @@ func TestAccAlloydbBackup_alloydbBackupFullTestExample(t *testing.T) {
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }

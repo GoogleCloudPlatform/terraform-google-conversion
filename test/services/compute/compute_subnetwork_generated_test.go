@@ -36,7 +36,6 @@ func TestAccComputeSubnetwork_subnetworkBasicExample(t *testing.T) {
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkLoggingConfigExample(t *testing.T) {
@@ -55,7 +54,6 @@ func TestAccComputeSubnetwork_subnetworkLoggingConfigExample(t *testing.T) {
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkIpv6Example(t *testing.T) {
@@ -74,7 +72,6 @@ func TestAccComputeSubnetwork_subnetworkIpv6Example(t *testing.T) {
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkInternalIpv6Example(t *testing.T) {
@@ -93,7 +90,6 @@ func TestAccComputeSubnetwork_subnetworkInternalIpv6Example(t *testing.T) {
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkIpv6OnlyInternalExample(t *testing.T) {
@@ -112,7 +108,6 @@ func TestAccComputeSubnetwork_subnetworkIpv6OnlyInternalExample(t *testing.T) {
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample(t *testing.T) {
@@ -131,7 +126,6 @@ func TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample(t *testing.T) {
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkIpv6OnlyExternalExample(t *testing.T) {
@@ -150,6 +144,5 @@ func TestAccComputeSubnetwork_subnetworkIpv6OnlyExternalExample(t *testing.T) {
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }

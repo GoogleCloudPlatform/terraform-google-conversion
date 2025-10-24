@@ -35,7 +35,6 @@ func TestAccComputeUrlMap_urlMapBucketAndServiceExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTrafficDirectorRouteExample(t *testing.T) {
@@ -53,7 +52,6 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorRouteExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTrafficDirectorRoutePartialExample(t *testing.T) {
@@ -71,7 +69,6 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorRoutePartialExample(t *testing.T)
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTrafficDirectorPathExample(t *testing.T) {
@@ -89,7 +86,6 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorPathExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTrafficDirectorPathPartialExample(t *testing.T) {
@@ -107,7 +103,6 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorPathPartialExample(t *testing.T) 
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapHeaderBasedRoutingExample(t *testing.T) {
@@ -125,7 +120,6 @@ func TestAccComputeUrlMap_urlMapHeaderBasedRoutingExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapParameterBasedRoutingExample(t *testing.T) {
@@ -143,7 +137,6 @@ func TestAccComputeUrlMap_urlMapParameterBasedRoutingExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTestHeadersExample(t *testing.T) {
@@ -161,7 +154,6 @@ func TestAccComputeUrlMap_urlMapTestHeadersExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTestExpectedOutputUrlExample(t *testing.T) {
@@ -179,7 +171,6 @@ func TestAccComputeUrlMap_urlMapTestExpectedOutputUrlExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTestRedirectResponseCodeExample(t *testing.T) {
@@ -197,7 +188,6 @@ func TestAccComputeUrlMap_urlMapTestRedirectResponseCodeExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapPathTemplateMatchExample(t *testing.T) {
@@ -215,7 +205,6 @@ func TestAccComputeUrlMap_urlMapPathTemplateMatchExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyExample(t *testing.T) {
@@ -233,6 +222,5 @@ func TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyExample(t *testing.T) {
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -35,7 +35,6 @@ func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileBasicEx
 			"parent",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileOverridesExample(t *testing.T) {
@@ -53,6 +52,5 @@ func TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileOverrid
 			"parent",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -37,7 +37,6 @@ func TestAccPubsubTopic_pubsubTopicBasicExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicGeoRestrictedExample(t *testing.T) {
@@ -57,7 +56,6 @@ func TestAccPubsubTopic_pubsubTopicGeoRestrictedExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicSchemaSettingsExample(t *testing.T) {
@@ -77,7 +75,6 @@ func TestAccPubsubTopic_pubsubTopicSchemaSettingsExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicIngestionKinesisExample(t *testing.T) {
@@ -97,7 +94,6 @@ func TestAccPubsubTopic_pubsubTopicIngestionKinesisExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicIngestionCloudStorageExample(t *testing.T) {
@@ -117,7 +113,6 @@ func TestAccPubsubTopic_pubsubTopicIngestionCloudStorageExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicIngestionAzureEventHubsExample(t *testing.T) {
@@ -137,7 +132,6 @@ func TestAccPubsubTopic_pubsubTopicIngestionAzureEventHubsExample(t *testing.T) 
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicIngestionAwsMskExample(t *testing.T) {
@@ -157,7 +151,6 @@ func TestAccPubsubTopic_pubsubTopicIngestionAwsMskExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicIngestionConfluentCloudExample(t *testing.T) {
@@ -177,7 +170,6 @@ func TestAccPubsubTopic_pubsubTopicIngestionConfluentCloudExample(t *testing.T) 
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicSingleSmtExample(t *testing.T) {
@@ -197,7 +189,6 @@ func TestAccPubsubTopic_pubsubTopicSingleSmtExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicMultipleSmtsExample(t *testing.T) {
@@ -218,7 +209,6 @@ func TestAccPubsubTopic_pubsubTopicMultipleSmtsExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubTopic_pubsubTopicTagsExample(t *testing.T) {
@@ -238,6 +228,5 @@ func TestAccPubsubTopic_pubsubTopicTagsExample(t *testing.T) {
 			"schema_settings",
 			"tags",
 		},
-		[]string{},
 	)
 }

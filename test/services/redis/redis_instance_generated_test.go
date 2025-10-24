@@ -35,7 +35,6 @@ func TestAccRedisInstance_redisInstanceBasicExample(t *testing.T) {
 			"region",
 			"reserved_ip_range",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisInstance_redisInstanceFullExample(t *testing.T) {
@@ -53,7 +52,6 @@ func TestAccRedisInstance_redisInstanceFullExample(t *testing.T) {
 			"region",
 			"reserved_ip_range",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample(t *testing.T) {
@@ -71,7 +69,6 @@ func TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample(t *testi
 			"region",
 			"reserved_ip_range",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisInstance_redisInstancePrivateServiceTestExample(t *testing.T) {
@@ -89,7 +86,6 @@ func TestAccRedisInstance_redisInstancePrivateServiceTestExample(t *testing.T) {
 			"region",
 			"reserved_ip_range",
 		},
-		[]string{},
 	)
 }
 func TestAccRedisInstance_redisInstanceMrrExample(t *testing.T) {
@@ -107,6 +103,5 @@ func TestAccRedisInstance_redisInstanceMrrExample(t *testing.T) {
 			"region",
 			"reserved_ip_range",
 		},
-		[]string{},
 	)
 }

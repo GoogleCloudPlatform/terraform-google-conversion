@@ -34,7 +34,6 @@ func TestAccComputeFirewall_firewallBasicExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeFirewall_firewallWithTargetTagsExample(t *testing.T) {
@@ -51,6 +50,5 @@ func TestAccComputeFirewall_firewallWithTargetTagsExample(t *testing.T) {
 			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }

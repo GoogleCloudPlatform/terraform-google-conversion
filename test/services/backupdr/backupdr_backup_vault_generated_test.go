@@ -42,6 +42,5 @@ func TestAccBackupDRBackupVault_backupDrBackupVaultFullExample(t *testing.T) {
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
