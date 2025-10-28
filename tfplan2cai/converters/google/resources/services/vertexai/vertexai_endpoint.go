@@ -198,6 +198,13 @@ func expandVertexAIEndpointPrivateServiceConnectConfig(v interface{}, d tpgresou
 		transformed["enableSecurePrivateServiceConnect"] = transformedEnableSecurePrivateServiceConnect
 	}
 
+	transformedPscAutomationConfigs, err := expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigs(original["psc_automation_configs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscAutomationConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscAutomationConfigs"] = transformedPscAutomationConfigs
+	}
+
 	return transformed, nil
 }
 
@@ -210,6 +217,90 @@ func expandVertexAIEndpointPrivateServiceConnectConfigProjectAllowlist(v interfa
 }
 
 func expandVertexAIEndpointPrivateServiceConnectConfigEnableSecurePrivateServiceConnect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedProjectId, err := expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsProjectId(original["project_id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["projectId"] = transformedProjectId
+		}
+
+		transformedNetwork, err := expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsNetwork(original["network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["network"] = transformedNetwork
+		}
+
+		transformedIpAddress, err := expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsIpAddress(original["ip_address"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpAddress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipAddress"] = transformedIpAddress
+		}
+
+		transformedForwardingRule, err := expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsForwardingRule(original["forwarding_rule"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedForwardingRule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["forwardingRule"] = transformedForwardingRule
+		}
+
+		transformedState, err := expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsState(original["state"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["state"] = transformedState
+		}
+
+		transformedErrorMessage, err := expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsErrorMessage(original["error_message"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedErrorMessage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["errorMessage"] = transformedErrorMessage
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsIpAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsForwardingRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointPrivateServiceConnectConfigPscAutomationConfigsErrorMessage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
