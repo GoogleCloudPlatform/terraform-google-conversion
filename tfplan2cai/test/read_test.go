@@ -173,6 +173,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "full_sql_database_instance"},
 		{name: "full_storage_bucket"},
 		{name: "instance"},
+		{name: "logging_organization_sink"},
 		{name: "sql"},
 	}
 	for i := range cases {
