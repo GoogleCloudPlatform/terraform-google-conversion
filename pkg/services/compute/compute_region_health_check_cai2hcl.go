@@ -92,6 +92,7 @@ func (c *ComputeRegionHealthCheckCai2hclConverter) convertResourceData(asset cai
 	hclData["ssl_health_check"] = flattenComputeRegionHealthCheckSslHealthCheck(res["sslHealthCheck"], d, config)
 	hclData["http2_health_check"] = flattenComputeRegionHealthCheckHttp2HealthCheck(res["http2HealthCheck"], d, config)
 	hclData["grpc_health_check"] = flattenComputeRegionHealthCheckGrpcHealthCheck(res["grpcHealthCheck"], d, config)
+	hclData["grpc_tls_health_check"] = flattenComputeRegionHealthCheckGrpcTlsHealthCheck(res["grpcTlsHealthCheck"], d, config)
 	hclData["log_config"] = flattenComputeRegionHealthCheckLogConfig(res["logConfig"], d, config)
 	hclData["region"] = flattenComputeRegionHealthCheckRegion(res["region"], d, config)
 
@@ -568,6 +569,52 @@ func flattenComputeRegionHealthCheckGrpcHealthCheckPortSpecification(v interface
 }
 
 func flattenComputeRegionHealthCheckGrpcHealthCheckGrpcServiceName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeRegionHealthCheckGrpcTlsHealthCheck(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["port"] =
+		flattenComputeRegionHealthCheckGrpcTlsHealthCheckPort(original["port"], d, config)
+	transformed["port_specification"] =
+		flattenComputeRegionHealthCheckGrpcTlsHealthCheckPortSpecification(original["portSpecification"], d, config)
+	transformed["grpc_service_name"] =
+		flattenComputeRegionHealthCheckGrpcTlsHealthCheckGrpcServiceName(original["grpcServiceName"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeRegionHealthCheckGrpcTlsHealthCheckPort(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeRegionHealthCheckGrpcTlsHealthCheckPortSpecification(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeRegionHealthCheckGrpcTlsHealthCheckGrpcServiceName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
