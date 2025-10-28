@@ -29,6 +29,7 @@ func TestAccComputeHealthCheck_healthCheckTcpExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -44,6 +45,7 @@ func TestAccComputeHealthCheck_healthCheckTcpFullExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -59,6 +61,7 @@ func TestAccComputeHealthCheck_healthCheckSslExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -74,6 +77,7 @@ func TestAccComputeHealthCheck_healthCheckSslFullExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -89,6 +93,7 @@ func TestAccComputeHealthCheck_healthCheckHttpExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -104,6 +109,7 @@ func TestAccComputeHealthCheck_healthCheckHttpFullExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -119,6 +125,7 @@ func TestAccComputeHealthCheck_healthCheckHttpsExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -134,6 +141,7 @@ func TestAccComputeHealthCheck_healthCheckHttpsFullExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -149,6 +157,7 @@ func TestAccComputeHealthCheck_healthCheckHttp2Example(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -164,6 +173,7 @@ func TestAccComputeHealthCheck_healthCheckHttp2FullExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -179,6 +189,7 @@ func TestAccComputeHealthCheck_healthCheckGrpcExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -194,6 +205,41 @@ func TestAccComputeHealthCheck_healthCheckGrpcFullExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
+			"lifecycle",
+			"provider",
+			"source_regions",
+		},
+	)
+}
+func TestAccComputeHealthCheck_healthCheckGrpcWithTlsExample(t *testing.T) {
+	t.Skip("grpcTlsHealthCheck is not in CAI asset, but is required in this test.")
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"grpc_tls_health_check",
+			"lifecycle",
+			"provider",
+			"source_regions",
+		},
+	)
+}
+func TestAccComputeHealthCheck_healthCheckGrpcWithTlsFullExample(t *testing.T) {
+	t.Skip("grpcTlsHealthCheck is not in CAI asset, but is required in this test.")
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -209,6 +255,7 @@ func TestAccComputeHealthCheck_computeHealthCheckHttpSourceRegionsExample(t *tes
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -224,6 +271,7 @@ func TestAccComputeHealthCheck_computeHealthCheckHttpsSourceRegionsExample(t *te
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",
@@ -239,6 +287,7 @@ func TestAccComputeHealthCheck_computeHealthCheckTcpSourceRegionsExample(t *test
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 			"source_regions",

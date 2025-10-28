@@ -29,6 +29,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckTcpExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -43,6 +44,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckTcpFullExample(t *testing.
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -57,6 +59,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckSslExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -71,6 +74,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckSslFullExample(t *testing.
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -85,6 +89,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttpExample(t *testing.T) 
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -99,6 +104,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttpFullExample(t *testing
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -113,6 +119,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttpsExample(t *testing.T)
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -127,6 +134,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttpsFullExample(t *testin
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -141,6 +149,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttp2Example(t *testing.T)
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -155,6 +164,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckHttp2FullExample(t *testin
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -169,6 +179,7 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcExample(t *testing.T) 
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
@@ -183,6 +194,39 @@ func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcFullExample(t *testing
 			"count",
 			"depends_on",
 			"for_each",
+			"grpc_tls_health_check",
+			"lifecycle",
+			"provider",
+		},
+	)
+}
+func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcWithTlsExample(t *testing.T) {
+	t.Skip("grpcTlsHealthCheck is not in CAI asset, but is required in this test.")
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"grpc_tls_health_check",
+			"lifecycle",
+			"provider",
+		},
+	)
+}
+func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcWithTlsFullExample(t *testing.T) {
+	t.Skip("grpcTlsHealthCheck is not in CAI asset, but is required in this test.")
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"grpc_tls_health_check",
 			"lifecycle",
 			"provider",
 		},
