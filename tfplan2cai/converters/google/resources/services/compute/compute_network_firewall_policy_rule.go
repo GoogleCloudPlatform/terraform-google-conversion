@@ -138,7 +138,7 @@ func GetComputeNetworkFirewallPolicyRuleApiObject(d tpgresource.TerraformResourc
 	disabledProp, err := expandComputeNetworkFirewallPolicyRuleDisabled(d.Get("disabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
+	} else if v, ok := d.GetOkExists("disabled"); ok || !reflect.DeepEqual(v, disabledProp) {
 		obj["disabled"] = disabledProp
 	}
 
