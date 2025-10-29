@@ -109,10 +109,21 @@ func expandVertexAIFeatureOnlineStoreFeatureviewSyncConfig(v interface{}, d tpgr
 		transformed["cron"] = transformedCron
 	}
 
+	transformedContinuous, err := expandVertexAIFeatureOnlineStoreFeatureviewSyncConfigContinuous(original["continuous"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContinuous); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["continuous"] = transformedContinuous
+	}
+
 	return transformed, nil
 }
 
 func expandVertexAIFeatureOnlineStoreFeatureviewSyncConfigCron(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIFeatureOnlineStoreFeatureviewSyncConfigContinuous(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
