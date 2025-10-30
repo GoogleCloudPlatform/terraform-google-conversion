@@ -18,11 +18,37 @@ package netapp
 
 import (
 	"reflect"
+	"strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
+
+// Suppress diffs when the value read from api
+// has the project ID instead of the project number
+func ProjectIDDiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
+
+	const marker = "/locations"
+
+	// Find the starting index of "/locations" in both strings.
+	index1 := strings.Index(old, marker)
+	index2 := strings.Index(new, marker)
+
+	// If "/locations" is not found in either string, they can't be compared as requested.
+	if index1 == -1 || index2 == -1 {
+		return false
+	}
+
+	// Extract the substrings from the marker to the end.
+	suffix1 := old[index1:]
+	suffix2 := new[index2:]
+
+	// Compare the extracted suffixes.
+	return suffix1 == suffix2
+}
 
 const NetappVolumeAssetType string = "netapp.googleapis.com/Volume"
 
@@ -175,6 +201,12 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 		return nil, err
 	} else if v, ok := d.GetOkExists("throughput_mibps"); !tpgresource.IsEmptyValue(reflect.ValueOf(throughputMibpsProp)) && (ok || !reflect.DeepEqual(v, throughputMibpsProp)) {
 		obj["throughputMibps"] = throughputMibpsProp
+	}
+	blockDevicesProp, err := expandNetappVolumeBlockDevices(d.Get("block_devices"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("block_devices"); !tpgresource.IsEmptyValue(reflect.ValueOf(blockDevicesProp)) && (ok || !reflect.DeepEqual(v, blockDevicesProp)) {
+		obj["blockDevices"] = blockDevicesProp
 	}
 	effectiveLabelsProp, err := expandNetappVolumeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -955,6 +987,79 @@ func expandNetappVolumeHybridReplicationParametersLargeVolumeConstituentCount(v 
 }
 
 func expandNetappVolumeThroughputMibps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandNetappVolumeBlockDevicesName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedHostGroups, err := expandNetappVolumeBlockDevicesHostGroups(original["host_groups"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHostGroups); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["hostGroups"] = transformedHostGroups
+		}
+
+		transformedIdentifier, err := expandNetappVolumeBlockDevicesIdentifier(original["identifier"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["identifier"] = transformedIdentifier
+		}
+
+		transformedSizeGib, err := expandNetappVolumeBlockDevicesSizeGib(original["size_gib"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSizeGib); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sizeGib"] = transformedSizeGib
+		}
+
+		transformedOsType, err := expandNetappVolumeBlockDevicesOsType(original["os_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOsType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["osType"] = transformedOsType
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetappVolumeBlockDevicesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevicesHostGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevicesIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevicesSizeGib(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevicesOsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
