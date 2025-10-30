@@ -520,6 +520,13 @@ func expandCloudRunV2WorkerPoolTemplateContainers(v interface{}, d tpgresource.T
 			transformed["args"] = transformedArgs
 		}
 
+		transformedDependsOn, err := expandCloudRunV2WorkerPoolTemplateContainersDependsOn(original["depends_on"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDependsOn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dependsOn"] = transformedDependsOn
+		}
+
 		transformedEnv, err := expandCloudRunV2WorkerPoolTemplateContainersEnv(original["env"], d, config)
 		if err != nil {
 			return nil, err
@@ -580,6 +587,10 @@ func expandCloudRunV2WorkerPoolTemplateContainersCommand(v interface{}, d tpgres
 }
 
 func expandCloudRunV2WorkerPoolTemplateContainersArgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2WorkerPoolTemplateContainersDependsOn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
