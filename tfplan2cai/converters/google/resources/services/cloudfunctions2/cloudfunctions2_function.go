@@ -566,6 +566,20 @@ func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.Ter
 		transformed["vpcConnectorEgressSettings"] = transformedVpcConnectorEgressSettings
 	}
 
+	transformedDirectVpcNetworkInterface, err := expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterface(original["direct_vpc_network_interface"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDirectVpcNetworkInterface); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["directVpcNetworkInterface"] = transformedDirectVpcNetworkInterface
+	}
+
+	transformedDirectVpcEgress, err := expandCloudfunctions2functionServiceConfigDirectVpcEgress(original["direct_vpc_egress"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDirectVpcEgress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["directVpcEgress"] = transformedDirectVpcEgress
+	}
+
 	transformedIngressSettings, err := expandCloudfunctions2functionServiceConfigIngressSettings(original["ingress_settings"], d, config)
 	if err != nil {
 		return nil, err
@@ -669,6 +683,61 @@ func expandCloudfunctions2functionServiceConfigVpcConnector(v interface{}, d tpg
 }
 
 func expandCloudfunctions2functionServiceConfigVpcConnectorEgressSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterface(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedNetwork, err := expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceNetwork(original["network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["network"] = transformedNetwork
+		}
+
+		transformedSubnetwork, err := expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceSubnetwork(original["subnetwork"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["subnetwork"] = transformedSubnetwork
+		}
+
+		transformedTags, err := expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceTags(original["tags"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tags"] = transformedTags
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcEgress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
