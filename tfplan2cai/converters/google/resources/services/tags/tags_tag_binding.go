@@ -34,7 +34,7 @@ func ResourceConverterTagsTagBinding() cai.ResourceConverter {
 }
 
 func GetTagsTagBindingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//cloudresourcemanager.googleapis.com/tagBindings/?parent={{parent}}&pageSize=300")
+	name, err := cai.AssetName(d, config, "//cloudresourcemanager.googleapis.com/tagBindings/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

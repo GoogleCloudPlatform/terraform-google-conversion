@@ -34,7 +34,7 @@ func ResourceConverterApigeeEnvironmentAddonsConfig() cai.ResourceConverter {
 }
 
 func GetApigeeEnvironmentAddonsConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//apigee.googleapis.com/{{env_id}}/addonsConfig")
+	name, err := cai.AssetName(d, config, "//apigee.googleapis.com/{{env_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

@@ -36,7 +36,7 @@ func ResourceConverterActiveDirectoryDomainTrust() cai.ResourceConverter {
 }
 
 func GetActiveDirectoryDomainTrustCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//managedidentities.googleapis.com/projects/{{project}}/locations/global/domains/{{domain}}")
+	name, err := cai.AssetName(d, config, "//managedidentities.googleapis.com/projects/{{project}}/locations/global/domains/{{domain}}/{{target_domain_name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

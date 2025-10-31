@@ -34,7 +34,7 @@ func ResourceConverterAppEngineApplicationUrlDispatchRules() cai.ResourceConvert
 }
 
 func GetAppEngineApplicationUrlDispatchRulesCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//appengine.googleapis.com/apps/{{project}}")
+	name, err := cai.AssetName(d, config, "//appengine.googleapis.com/{{project}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

@@ -34,7 +34,7 @@ func ResourceConverterComputeRegionNetworkFirewallPolicyRule() cai.ResourceConve
 }
 
 func GetComputeRegionNetworkFirewallPolicyRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/firewallPolicies/{{firewall_policy}}/getRule?priority={{priority}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/firewallPolicies/{{firewall_policy}}/{{priority}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

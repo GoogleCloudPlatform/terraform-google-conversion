@@ -34,7 +34,7 @@ func ResourceConverterDialogflowCXEntityType() cai.ResourceConverter {
 }
 
 func GetDialogflowCXEntityTypeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/entityTypes")
+	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/entityTypes/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

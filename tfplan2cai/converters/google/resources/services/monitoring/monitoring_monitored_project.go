@@ -65,7 +65,7 @@ func ResourceConverterMonitoringMonitoredProject() cai.ResourceConverter {
 }
 
 func GetMonitoringMonitoredProjectCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//monitoring.googleapis.com/locations/global/metricsScopes/{{metrics_scope}}")
+	name, err := cai.AssetName(d, config, "//monitoring.googleapis.com/locations/global/metricsScopes/{{metrics_scope}}/projects/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

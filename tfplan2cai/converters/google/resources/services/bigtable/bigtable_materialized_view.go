@@ -34,7 +34,7 @@ func ResourceConverterBigtableMaterializedView() cai.ResourceConverter {
 }
 
 func GetBigtableMaterializedViewCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//bigtableadmin.googleapis.com/projects/{{project}}/instances/{{instance}}/materializedViews/{{materialized_view_id}}")
+	name, err := cai.AssetName(d, config, "//bigtable.googleapis.com/projects/{{project}}/instances/{{instance}}/materializedViews/{{materialized_view_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

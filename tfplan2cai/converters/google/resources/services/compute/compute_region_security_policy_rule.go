@@ -34,7 +34,7 @@ func ResourceConverterComputeRegionSecurityPolicyRule() cai.ResourceConverter {
 }
 
 func GetComputeRegionSecurityPolicyRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/securityPolicies/{{security_policy}}/getRule?priority={{priority}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/securityPolicies/{{security_policy}}/priority/{{priority}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

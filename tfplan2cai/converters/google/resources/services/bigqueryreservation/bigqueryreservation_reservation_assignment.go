@@ -34,7 +34,7 @@ func ResourceConverterBigqueryReservationReservationAssignment() cai.ResourceCon
 }
 
 func GetBigqueryReservationReservationAssignmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/reservations/{{reservation}}/assignments")
+	name, err := cai.AssetName(d, config, "//bigqueryreservation.googleapis.com/projects/{{project}}/locations/{{location}}/reservations/{{reservation}}/assignments/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

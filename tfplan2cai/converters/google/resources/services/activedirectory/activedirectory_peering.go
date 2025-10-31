@@ -34,7 +34,7 @@ func ResourceConverterActiveDirectoryPeering() cai.ResourceConverter {
 }
 
 func GetActiveDirectoryPeeringCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//managedidentities.googleapis.com/{{name}}")
+	name, err := cai.AssetName(d, config, "//managedidentities.googleapis.com/projects/{{project}}/locations/global/domains/{{peering_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
