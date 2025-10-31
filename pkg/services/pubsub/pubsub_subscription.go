@@ -17,19 +17,24 @@
 package pubsub
 
 import (
+	"bytes"
+	"context"
+	"fmt"
 	"log"
+	"reflect"
+	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
-
-const PubsubSubscriptionAssetType string = "pubsub.googleapis.com/Subscription"
-
-const PubsubSubscriptionSchemaName string = "google_pubsub_subscription"
 
 func comparePubsubSubscriptionExpirationPolicy(_, old, new string, _ *schema.ResourceData) bool {
 	trimmedNew := strings.TrimLeft(new, "0")
@@ -64,6 +69,28 @@ func IgnoreMissingKeyInMap(key string) schema.SchemaDiffSuppressFunc {
 		return false
 	}
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+)
+
+const PubsubSubscriptionAssetType string = "pubsub.googleapis.com/Subscription"
+
+const PubsubSubscriptionSchemaName string = "google_pubsub_subscription"
 
 func ResourcePubsubSubscription() *schema.Resource {
 	return &schema.Resource{
