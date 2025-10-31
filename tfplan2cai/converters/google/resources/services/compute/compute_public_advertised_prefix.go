@@ -86,6 +86,12 @@ func GetComputePublicAdvertisedPrefixApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("pdp_scope"); !tpgresource.IsEmptyValue(reflect.ValueOf(pdpScopeProp)) && (ok || !reflect.DeepEqual(v, pdpScopeProp)) {
 		obj["pdpScope"] = pdpScopeProp
 	}
+	ipv6AccessTypeProp, err := expandComputePublicAdvertisedPrefixIpv6AccessType(d.Get("ipv6_access_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ipv6_access_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipv6AccessTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6AccessTypeProp)) {
+		obj["ipv6AccessType"] = ipv6AccessTypeProp
+	}
 
 	return obj, nil
 }
@@ -107,5 +113,9 @@ func expandComputePublicAdvertisedPrefixIpCidrRange(v interface{}, d tpgresource
 }
 
 func expandComputePublicAdvertisedPrefixPdpScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputePublicAdvertisedPrefixIpv6AccessType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
