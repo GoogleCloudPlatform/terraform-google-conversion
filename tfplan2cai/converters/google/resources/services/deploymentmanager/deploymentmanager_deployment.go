@@ -63,7 +63,7 @@ func ResourceConverterDeploymentManagerDeployment() cai.ResourceConverter {
 }
 
 func GetDeploymentManagerDeploymentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//deploymentmanager.googleapis.com/projects/{{project}}/global/deployments/{{name}}")
+	name, err := cai.AssetName(d, config, "//deploymentmanager.googleapis.com/projects/{{project}}/deployments/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

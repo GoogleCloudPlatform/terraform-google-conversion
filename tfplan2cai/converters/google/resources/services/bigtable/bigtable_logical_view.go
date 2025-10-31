@@ -34,7 +34,7 @@ func ResourceConverterBigtableLogicalView() cai.ResourceConverter {
 }
 
 func GetBigtableLogicalViewCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//bigtableadmin.googleapis.com/projects/{{project}}/instances/{{instance}}/logicalViews/{{logical_view_id}}")
+	name, err := cai.AssetName(d, config, "//bigtable.googleapis.com/projects/{{project}}/instances/{{instance}}/logicalViews/{{logical_view_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

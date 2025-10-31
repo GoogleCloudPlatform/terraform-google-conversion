@@ -34,7 +34,7 @@ func ResourceConverterApigeeSyncAuthorization() cai.ResourceConverter {
 }
 
 func GetApigeeSyncAuthorizationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//apigee.googleapis.com/organizations/{{name}}:getSyncAuthorization")
+	name, err := cai.AssetName(d, config, "//apigee.googleapis.com/organizations/{{name}}/syncAuthorization")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

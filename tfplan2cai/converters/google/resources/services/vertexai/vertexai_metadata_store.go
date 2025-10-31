@@ -34,7 +34,7 @@ func ResourceConverterVertexAIMetadataStore() cai.ResourceConverter {
 }
 
 func GetVertexAIMetadataStoreCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/projects/{{project}}/locations/{{region}}/metadataStores/{{name}}")
+	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

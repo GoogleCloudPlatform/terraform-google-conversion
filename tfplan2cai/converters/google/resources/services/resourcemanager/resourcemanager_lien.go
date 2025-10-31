@@ -34,7 +34,7 @@ func ResourceConverterResourceManagerLien() cai.ResourceConverter {
 }
 
 func GetResourceManagerLienCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//cloudresourcemanager.googleapis.com/liens?parent={{parent}}")
+	name, err := cai.AssetName(d, config, "//cloudresourcemanager.googleapis.com/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

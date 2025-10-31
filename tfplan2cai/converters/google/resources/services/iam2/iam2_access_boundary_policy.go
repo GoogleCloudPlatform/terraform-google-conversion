@@ -34,7 +34,7 @@ func ResourceConverterIAM2AccessBoundaryPolicy() cai.ResourceConverter {
 }
 
 func GetIAM2AccessBoundaryPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//iam.googleapis.com/policies/{{parent}}/accessboundarypolicies/{{name}}")
+	name, err := cai.AssetName(d, config, "//iam.googleapis.com/{{parent}}/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

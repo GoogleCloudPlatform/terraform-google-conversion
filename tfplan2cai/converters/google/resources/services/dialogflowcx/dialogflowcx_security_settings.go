@@ -34,7 +34,7 @@ func ResourceConverterDialogflowCXSecuritySettings() cai.ResourceConverter {
 }
 
 func GetDialogflowCXSecuritySettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/projects/{{project}}/locations/{{location}}/securitySettings")
+	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/projects/{{project}}/locations/{{location}}/securitySettings/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

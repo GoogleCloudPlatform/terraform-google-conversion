@@ -35,7 +35,7 @@ func ResourceConverterComputeDiskResourcePolicyAttachment() cai.ResourceConverte
 }
 
 func GetComputeDiskResourcePolicyAttachmentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{disk}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/{{project}}/{{zone}}/{{disk}}/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

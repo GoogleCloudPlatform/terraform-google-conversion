@@ -35,7 +35,7 @@ func ResourceConverterComputeInstanceSettings() cai.ResourceConverter {
 }
 
 func GetComputeInstanceSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceSettings")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceSettings/InstanceSettings")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

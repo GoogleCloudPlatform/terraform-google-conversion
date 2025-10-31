@@ -34,7 +34,7 @@ func ResourceConverterComputeOrganizationSecurityPolicyAssociation() cai.Resourc
 }
 
 func GetComputeOrganizationSecurityPolicyAssociationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/{{policy_id}}/getAssociation?name={{name}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/{{policy_id}}/association/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

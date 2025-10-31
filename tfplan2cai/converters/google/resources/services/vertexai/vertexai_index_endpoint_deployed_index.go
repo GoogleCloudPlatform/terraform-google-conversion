@@ -34,7 +34,7 @@ func ResourceConverterVertexAIIndexEndpointDeployedIndex() cai.ResourceConverter
 }
 
 func GetVertexAIIndexEndpointDeployedIndexCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/{{index_endpoint}}")
+	name, err := cai.AssetName(d, config, "//aiplatform.googleapis.com/{{index_endpoint}}/deployedIndex/{{deployed_index_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

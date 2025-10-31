@@ -34,7 +34,7 @@ func ResourceConverterDialogflowAgent() cai.ResourceConverter {
 }
 
 func GetDialogflowAgentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//dialogflow.googleapis.com/projects/{{project}}/agent")
+	name, err := cai.AssetName(d, config, "//dialogflow.googleapis.com/{{project}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

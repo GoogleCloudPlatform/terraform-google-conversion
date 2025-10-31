@@ -35,7 +35,7 @@ func ResourceConverterComputeFirewallPolicyAssociation() cai.ResourceConverter {
 }
 
 func GetComputeFirewallPolicyAssociationCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/locations/global/firewallPolicies/{{firewall_policy}}/getAssociation?name={{name}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/locations/global/firewallPolicies/{{firewall_policy}}/associations/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

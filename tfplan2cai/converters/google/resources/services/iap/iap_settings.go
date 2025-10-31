@@ -34,7 +34,7 @@ func ResourceConverterIapSettings() cai.ResourceConverter {
 }
 
 func GetIapSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//iap.googleapis.com/{{name}}:iapSettings")
+	name, err := cai.AssetName(d, config, "//iap.googleapis.com/{{name}}/iapSettings")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

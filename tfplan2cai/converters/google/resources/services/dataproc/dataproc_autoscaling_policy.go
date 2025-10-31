@@ -34,7 +34,7 @@ func ResourceConverterDataprocAutoscalingPolicy() cai.ResourceConverter {
 }
 
 func GetDataprocAutoscalingPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//dataproc.googleapis.com/projects/{{project}}/locations/{{location}}/autoscalingPolicies/{{policy_id}}")
+	name, err := cai.AssetName(d, config, "//dataproc.googleapis.com/projects/{{project}}/regions/{{location}}/autoscalingPolicies/{{policy_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

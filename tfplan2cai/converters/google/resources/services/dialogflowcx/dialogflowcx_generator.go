@@ -34,7 +34,7 @@ func ResourceConverterDialogflowCXGenerator() cai.ResourceConverter {
 }
 
 func GetDialogflowCXGeneratorCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/generators")
+	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/generators/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

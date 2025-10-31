@@ -34,7 +34,7 @@ func ResourceConverterServiceUsageConsumerQuotaOverride() cai.ResourceConverter 
 }
 
 func GetServiceUsageConsumerQuotaOverrideCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//serviceusage.googleapis.com/projects/{{project}}/services/{{service}}/consumerQuotaMetrics/{{metric}}/limits/{{limit}}/consumerOverrides/")
+	name, err := cai.AssetName(d, config, "//serviceusage.googleapis.com/projects/{{project}}/services/{{service}}/consumerQuotaMetrics/{{metric}}/limits/{{limit}}/consumerOverrides/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

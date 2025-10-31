@@ -34,7 +34,7 @@ func ResourceConverterStorageDefaultObjectAccessControl() cai.ResourceConverter 
 }
 
 func GetStorageDefaultObjectAccessControlCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//storage.googleapis.com/b/{{bucket}}/defaultObjectAcl/{{entity}}")
+	name, err := cai.AssetName(d, config, "//storage.googleapis.com/{{bucket}}/{{entity}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

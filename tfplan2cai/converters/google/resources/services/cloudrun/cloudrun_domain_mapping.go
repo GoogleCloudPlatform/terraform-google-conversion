@@ -48,7 +48,7 @@ func ResourceConverterCloudRunDomainMapping() cai.ResourceConverter {
 }
 
 func GetCloudRunDomainMappingCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/DomainMappings/{{name}}")
+	name, err := cai.AssetName(d, config, "//run.googleapis.com/projects/{{project}}/locations/{{location}}/domainmappings/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

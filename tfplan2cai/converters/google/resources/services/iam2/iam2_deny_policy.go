@@ -34,7 +34,7 @@ func ResourceConverterIAM2DenyPolicy() cai.ResourceConverter {
 }
 
 func GetIAM2DenyPolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//iam.googleapis.com/policies/{{parent}}/denypolicies/{{name}}")
+	name, err := cai.AssetName(d, config, "//iam.googleapis.com/{{parent}}/denypolicies/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

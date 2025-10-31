@@ -34,7 +34,7 @@ func ResourceConverterComputeRouterRoutePolicy() cai.ResourceConverter {
 }
 
 func GetComputeRouterRoutePolicyCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/routers/{{router}}/getRoutePolicy?policy={{name}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/{{project}}/{{region}}/{{router}}/routePolicies/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

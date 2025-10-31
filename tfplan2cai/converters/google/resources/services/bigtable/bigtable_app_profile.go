@@ -37,7 +37,7 @@ func ResourceConverterBigtableAppProfile() cai.ResourceConverter {
 }
 
 func GetBigtableAppProfileCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//bigtableadmin.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
+	name, err := cai.AssetName(d, config, "//bigtable.googleapis.com/projects/{{project}}/instances/{{instance}}/appProfiles/{{app_profile_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

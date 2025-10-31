@@ -35,7 +35,7 @@ func ResourceConverterComputeInstanceGroupNamedPort() cai.ResourceConverter {
 }
 
 func GetComputeInstanceGroupNamedPortCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceGroups/{{group}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/instanceGroups/{{group}}/{{port}}/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

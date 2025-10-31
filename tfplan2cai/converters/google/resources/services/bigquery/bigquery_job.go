@@ -41,7 +41,7 @@ func ResourceConverterBigQueryJob() cai.ResourceConverter {
 }
 
 func GetBigQueryJobCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/jobs/{{job_id}}?location={{location}}")
+	name, err := cai.AssetName(d, config, "//bigquery.googleapis.com/projects/{{project}}/jobs/{{job_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

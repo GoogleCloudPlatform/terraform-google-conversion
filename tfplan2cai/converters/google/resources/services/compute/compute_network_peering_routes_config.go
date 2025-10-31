@@ -34,7 +34,7 @@ func ResourceConverterComputeNetworkPeeringRoutesConfig() cai.ResourceConverter 
 }
 
 func GetComputeNetworkPeeringRoutesConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networks/{{network}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/networks/{{network}}/networkPeerings/{{peering}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

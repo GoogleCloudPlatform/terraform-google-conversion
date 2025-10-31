@@ -34,7 +34,7 @@ func ResourceConverterComputeNetworkFirewallPolicyPacketMirroringRule() cai.Reso
 }
 
 func GetComputeNetworkFirewallPolicyPacketMirroringRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/firewallPolicies/{{firewall_policy}}/getPacketMirroringRule?priority={{priority}}")
+	name, err := cai.AssetName(d, config, "//compute.googleapis.com/projects/{{project}}/global/firewallPolicies/{{firewall_policy}}/packetMirroringRules/{{priority}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
