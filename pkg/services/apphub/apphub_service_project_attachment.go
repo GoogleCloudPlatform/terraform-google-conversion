@@ -17,17 +17,51 @@
 package apphub
 
 import (
+	"bytes"
+	"context"
+	"fmt"
+	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
-
-const ApphubServiceProjectAttachmentAssetType string = "apphub.googleapis.com/ServiceProjectAttachment"
-
-const ApphubServiceProjectAttachmentSchemaName string = "google_apphub_service_project_attachment"
 
 // Suppress all diff for the field Service Project
 func ServiceProjectDiffSuppress(_, _, _ string, _ *schema.ResourceData) bool {
 	return true
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+)
+
+const ApphubServiceProjectAttachmentAssetType string = "apphub.googleapis.com/ServiceProjectAttachment"
+
+const ApphubServiceProjectAttachmentSchemaName string = "google_apphub_service_project_attachment"
 
 func ResourceApphubServiceProjectAttachment() *schema.Resource {
 	return &schema.Resource{

@@ -17,17 +17,24 @@
 package bigquery
 
 import (
+	"bytes"
+	"context"
 	"fmt"
+	"log"
+	"reflect"
 	"regexp"
+	"sort"
+	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
-
-const BigQueryDatasetAssetType string = "bigquery.googleapis.com/Dataset"
-
-const BigQueryDatasetSchemaName string = "google_bigquery_dataset"
 
 const datasetIdRegexp = `^[0-9A-Za-z_]+$`
 
@@ -85,6 +92,28 @@ func resourceBigqueryDatasetAccessHash(v interface{}) int {
 	// Use the default HashResource function on the (potentially modified) copy.
 	return schema.HashResource(bigqueryDatasetAccessSchema())(copy)
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+)
+
+const BigQueryDatasetAssetType string = "bigquery.googleapis.com/Dataset"
+
+const BigQueryDatasetSchemaName string = "google_bigquery_dataset"
 
 func ResourceBigQueryDataset() *schema.Resource {
 	return &schema.Resource{

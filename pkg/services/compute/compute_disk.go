@@ -17,20 +17,28 @@
 package compute
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
 
-const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
+import "errors"
 
-const ComputeDiskSchemaName string = "google_compute_disk"
+var _ = errors.New
 
 // diffsuppress for hyperdisk provisioned_iops
 func hyperDiskIopsUpdateDiffSuppress(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
@@ -336,6 +344,28 @@ func ExpandStoragePoolUrl(v interface{}, d tpgresource.TerraformResourceData, co
 	}
 	return replacedStr, nil
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+)
+
+const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
+
+const ComputeDiskSchemaName string = "google_compute_disk"
 
 func ResourceComputeDisk() *schema.Resource {
 	return &schema.Resource{

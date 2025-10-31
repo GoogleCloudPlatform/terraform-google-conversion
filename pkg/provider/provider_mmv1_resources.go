@@ -1,6 +1,8 @@
 package provider
 
 import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
@@ -25,10 +27,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 var handwrittenTfplan2caiResources = map[string]*schema.Resource{
