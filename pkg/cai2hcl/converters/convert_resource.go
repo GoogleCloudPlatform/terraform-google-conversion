@@ -47,6 +47,12 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 			} else {
 				converter = ConverterMap[asset.Type]["SecretManagerSecret"]
 			}
+		case "secretmanager.googleapis.com/SecretVersion":
+			if strings.Contains(asset.Name, "") {
+				converter = ConverterMap[asset.Type]["SecretManagerRegionalRegionalSecretVersion"]
+			} else {
+				converter = ConverterMap[asset.Type]["SecretManagerSecretVersion"]
+			}
 		}
 	}
 

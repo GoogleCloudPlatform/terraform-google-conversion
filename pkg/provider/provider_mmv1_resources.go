@@ -38,7 +38,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 68
+// Generated resources: 70
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -107,5 +107,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_redis_cluster":                                 redis.ResourceRedisCluster(),
 	"google_redis_instance":                                redis.ResourceRedisInstance(),
 	"google_secret_manager_secret":                         secretmanager.ResourceSecretManagerSecret(),
+	"google_secret_manager_secret_version":                 secretmanager.ResourceSecretManagerSecretVersion(),
 	"google_secret_manager_regional_secret":                secretmanagerregional.ResourceSecretManagerRegionalRegionalSecret(),
+	"google_secret_manager_regional_secret_version":        secretmanagerregional.ResourceSecretManagerRegionalRegionalSecretVersion(),
 }

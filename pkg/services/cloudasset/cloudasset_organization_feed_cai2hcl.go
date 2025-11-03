@@ -105,8 +105,12 @@ func (c *CloudAssetOrganizationFeedCai2hclConverter) convertResourceData(asset c
 	d := fakeResource.TestResourceData()
 
 	assetNameParts := strings.Split(asset.Name, "/")
-	hclBlockName := assetNameParts[len(assetNameParts)-1]
 
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+	digitRegex := regexp.MustCompile(`^\d+$`)
+	if digitRegex.MatchString(hclBlockName) {
+		hclBlockName = fmt.Sprintf("resource%s", utils.RandString(8))
+	}
 	hclData := make(map[string]interface{})
 
 	res, hclData, err = resourceCloudAssetOrganizationFeedTgcDecoder(d, config, res, hclData)
