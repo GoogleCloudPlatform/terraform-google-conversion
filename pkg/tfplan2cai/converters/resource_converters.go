@@ -116,5 +116,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_redis_cluster":                                 redis.RedisClusterTfplan2caiConverter(),
 	"google_redis_instance":                                redis.RedisInstanceTfplan2caiConverter(),
 	"google_secret_manager_secret":                         secretmanager.SecretManagerSecretTfplan2caiConverter(),
+	"google_secret_manager_secret_version":                 secretmanager.SecretManagerSecretVersionTfplan2caiConverter(),
 	"google_secret_manager_regional_secret":                secretmanagerregional.SecretManagerRegionalRegionalSecretTfplan2caiConverter(),
+	"google_secret_manager_regional_secret_version":        secretmanagerregional.SecretManagerRegionalRegionalSecretVersionTfplan2caiConverter(),
 }

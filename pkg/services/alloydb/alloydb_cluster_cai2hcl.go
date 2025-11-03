@@ -105,8 +105,12 @@ func (c *AlloydbClusterCai2hclConverter) convertResourceData(asset caiasset.Asse
 	d := fakeResource.TestResourceData()
 
 	assetNameParts := strings.Split(asset.Name, "/")
-	hclBlockName := assetNameParts[len(assetNameParts)-1]
 
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+	digitRegex := regexp.MustCompile(`^\d+$`)
+	if digitRegex.MatchString(hclBlockName) {
+		hclBlockName = fmt.Sprintf("resource%s", utils.RandString(8))
+	}
 	hclData := make(map[string]interface{})
 
 	outputFields := map[string]struct{}{"backup_source": struct{}{}, "continuous_backup_info": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "encryption_info": struct{}{}, "migration_source": struct{}{}, "name": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "trial_metadata": struct{}{}, "uid": struct{}{}}

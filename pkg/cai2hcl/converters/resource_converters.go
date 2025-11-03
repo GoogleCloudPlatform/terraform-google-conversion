@@ -253,4 +253,8 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"SecretManagerRegionalRegionalSecret": secretmanagerregional.NewSecretManagerRegionalRegionalSecretCai2hclConverter(provider),
 		"SecretManagerSecret":                 secretmanager.NewSecretManagerSecretCai2hclConverter(provider),
 	},
+	"secretmanager.googleapis.com/SecretVersion": {
+		"SecretManagerRegionalRegionalSecretVersion": secretmanagerregional.NewSecretManagerRegionalRegionalSecretVersionCai2hclConverter(provider),
+		"SecretManagerSecretVersion":                 secretmanager.NewSecretManagerSecretVersionCai2hclConverter(provider),
+	},
 }

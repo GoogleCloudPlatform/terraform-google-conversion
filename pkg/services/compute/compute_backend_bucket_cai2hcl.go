@@ -105,8 +105,12 @@ func (c *ComputeBackendBucketCai2hclConverter) convertResourceData(asset caiasse
 	d := fakeResource.TestResourceData()
 
 	assetNameParts := strings.Split(asset.Name, "/")
-	hclBlockName := assetNameParts[len(assetNameParts)-1]
 
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+	digitRegex := regexp.MustCompile(`^\d+$`)
+	if digitRegex.MatchString(hclBlockName) {
+		hclBlockName = fmt.Sprintf("resource%s", utils.RandString(8))
+	}
 	hclData := make(map[string]interface{})
 
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}

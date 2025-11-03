@@ -105,8 +105,12 @@ func (c *FilestoreBackupCai2hclConverter) convertResourceData(asset caiasset.Ass
 	d := fakeResource.TestResourceData()
 
 	assetNameParts := strings.Split(asset.Name, "/")
-	hclBlockName := assetNameParts[len(assetNameParts)-1]
 
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+	digitRegex := regexp.MustCompile(`^\d+$`)
+	if digitRegex.MatchString(hclBlockName) {
+		hclBlockName = fmt.Sprintf("resource%s", utils.RandString(8))
+	}
 	hclData := make(map[string]interface{})
 
 	outputFields := map[string]struct{}{"capacity_gb": struct{}{}, "create_time": struct{}{}, "download_bytes": struct{}{}, "effective_labels": struct{}{}, "kms_key_name": struct{}{}, "source_instance_tier": struct{}{}, "state": struct{}{}, "storage_bytes": struct{}{}, "terraform_labels": struct{}{}}

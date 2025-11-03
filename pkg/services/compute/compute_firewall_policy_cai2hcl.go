@@ -104,8 +104,13 @@ func (c *ComputeFirewallPolicyCai2hclConverter) convertResourceData(asset caiass
 	}
 	d := fakeResource.TestResourceData()
 
-	hclBlockName := res["shortName"].(string)
+	assetNameParts := strings.Split(asset.Name, "/")
 
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+	digitRegex := regexp.MustCompile(`^\d+$`)
+	if digitRegex.MatchString(hclBlockName) {
+		hclBlockName = fmt.Sprintf("resource%s", utils.RandString(8))
+	}
 	hclData := make(map[string]interface{})
 
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "fingerprint": struct{}{}, "firewall_policy_id": struct{}{}, "name": struct{}{}, "rule_tuple_count": struct{}{}, "self_link": struct{}{}, "self_link_with_id": struct{}{}}
