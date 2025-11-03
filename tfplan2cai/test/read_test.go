@@ -32,6 +32,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_project_iam_member_empty_project"},
 		// auto inserted tests that are not in list above or manually inserted in cli_test.go
 		{name: "bucket"},
+		{name: "compute_image"},
 		{name: "disk"},
 		{name: "example_access_context_manager_access_policy"},
 		{name: "example_access_context_manager_service_perimeter"},
