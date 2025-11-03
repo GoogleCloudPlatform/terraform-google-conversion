@@ -126,7 +126,7 @@ func GetWorkstationsWorkstationApiObject(d tpgresource.TerraformResourceData, co
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("source_workstation"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceWorkstationProp)) && (ok || !reflect.DeepEqual(v, sourceWorkstationProp)) {
-		obj["source_workstation"] = sourceWorkstationProp
+		obj["sourceWorkstation"] = sourceWorkstationProp
 	}
 	effectiveLabelsProp, err := expandWorkstationsWorkstationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
