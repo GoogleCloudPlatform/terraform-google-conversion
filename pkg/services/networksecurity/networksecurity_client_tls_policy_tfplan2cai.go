@@ -17,6 +17,7 @@
 package networksecurity
 
 import (
+	"encoding/base64"
 	"fmt"
 	"log"
 	"reflect"
@@ -45,6 +46,7 @@ import (
 )
 
 var (
+	_ = base64.StdEncoding
 	_ = fmt.Sprintf
 	_ = log.Print
 	_ = reflect.ValueOf
