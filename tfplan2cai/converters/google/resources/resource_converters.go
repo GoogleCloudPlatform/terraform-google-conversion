@@ -191,6 +191,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_cloudfunctions_function":                                {cloudfunctions.ResourceConverterCloudFunctionsCloudFunction()},
 		"google_monitoring_notification_channel":                        {monitoring.ResourceConverterMonitoringNotificationChannel()},
 		"google_monitoring_alert_policy":                                {monitoring.ResourceConverterMonitoringAlertPolicy()},
+		"google_workbench_instance":                                     {workbench.ResourceConverterWorkbenchInstance()},
 		"google_vertex_ai_dataset":                                      {vertexai.ResourceConverterVertexAIDataset()},
 		"google_vmwareengine_network_peering":                           {vmwareengine.ResourceConverterVmwareengineNetworkPeering()},
 		"google_access_context_manager_access_policy_iam_policy":        {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamPolicy()},

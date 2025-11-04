@@ -179,6 +179,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "kms_crypto_key_version"},
 		{name: "logging_organization_sink"},
 		{name: "sql"},
+		{name: "workbench_instance"},
 	}
 	for i := range cases {
 		// Allocate a variable to make sure test can run in parallel.
