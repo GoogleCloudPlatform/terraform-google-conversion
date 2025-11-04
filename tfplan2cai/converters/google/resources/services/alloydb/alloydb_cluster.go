@@ -49,6 +49,18 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+func alloydbClusterCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	_, nType := diff.GetChange("cluster_type")
+	// Only check on new resource creation for primary clusters
+	if diff.Id() == "" && nType == "PRIMARY" {
+		_, n := diff.GetChange("initial_user.0.password")
+		if n == "" {
+			return fmt.Errorf("New AlloyDB Clusters must have initial_user.password specified")
+		}
+	}
+	return nil
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
