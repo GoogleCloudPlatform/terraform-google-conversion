@@ -19,6 +19,7 @@ package redis
 import (
 	"fmt"
 	"reflect"
+	"regexp"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
