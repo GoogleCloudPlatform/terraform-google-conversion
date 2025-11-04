@@ -196,6 +196,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_monitoring_notification_channel":                        {monitoring.ResourceConverterMonitoringNotificationChannel()},
 		"google_monitoring_alert_policy":                                {monitoring.ResourceConverterMonitoringAlertPolicy()},
 		"google_vertex_ai_dataset":                                      {vertexai.ResourceConverterVertexAIDataset()},
+		"google_workbench_instance":                                     {workbench.ResourceConverterWorkbenchInstance()},
 		"google_access_context_manager_access_policy_iam_policy":        {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamPolicy()},
 		"google_access_context_manager_access_policy_iam_binding":       {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamBinding()},
 		"google_access_context_manager_access_policy_iam_member":        {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamMember()},

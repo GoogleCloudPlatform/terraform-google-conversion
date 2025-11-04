@@ -179,6 +179,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "instance"},
 		{name: "logging_organization_sink"},
 		{name: "sql"},
+		{name: "workbench_instance"},
 	}
 	for i := range cases {
 		// Allocate a variable to make sure test can run in parallel.
