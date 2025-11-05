@@ -179,6 +179,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "kms_crypto_key_version"},
 		{name: "logging_organization_sink"},
 		{name: "sql"},
+		{name: "vmwareengine_network_policy"},
 		{name: "workbench_instance"},
 	}
 	for i := range cases {
