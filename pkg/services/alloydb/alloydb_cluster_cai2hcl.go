@@ -114,6 +114,11 @@ func (c *AlloydbClusterCai2hclConverter) convertResourceData(asset caiasset.Asse
 	}
 	hclData := make(map[string]interface{})
 
+	res, hclData, err = resourceAlloydbClusterTgcDecoder(d, config, res, hclData)
+	if err != nil {
+		return nil, err
+	}
+
 	outputFields := map[string]struct{}{"backup_source": struct{}{}, "continuous_backup_info": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "encryption_info": struct{}{}, "migration_source": struct{}{}, "name": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "trial_metadata": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}", outputFields, hclData)
 
@@ -768,4 +773,15 @@ func flattenAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeNano
 
 func flattenAlloydbClusterSubscriptionType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func resourceAlloydbClusterTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
+	// password is missing in CAI asset, but password is required in Terraform
+	if res["initialUser"] == nil && res["clusterType"] == "PRIMARY" {
+		res["initialUser"] = map[string]interface{}{
+			"password": "hidden",
+		}
+	}
+
+	return res, hclData, nil
 }
