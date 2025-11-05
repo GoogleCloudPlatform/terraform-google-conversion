@@ -201,6 +201,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_vmwareengine_network_policy":                            {vmwareengine.ResourceConverterVmwareengineNetworkPolicy()},
 		"google_vmwareengine_network_peering":                           {vmwareengine.ResourceConverterVmwareengineNetworkPeering()},
 		"google_workbench_instance":                                     {workbench.ResourceConverterWorkbenchInstance()},
+		"google_vmwareengine_private_cloud":                             {vmwareengine.ResourceConverterVmwareenginePrivateCloud()},
 		"google_access_context_manager_access_policy_iam_policy":        {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamPolicy()},
 		"google_access_context_manager_access_policy_iam_binding":       {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamBinding()},
 		"google_access_context_manager_access_policy_iam_member":        {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamMember()},
