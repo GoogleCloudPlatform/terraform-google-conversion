@@ -128,6 +128,42 @@ func TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample(t *testing.T) {
 		},
 	)
 }
+func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"ip_collection",
+			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+			"send_secondary_ip_range_if_empty",
+		},
+	)
+}
+func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExplicitIpPrefixExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"ip_collection",
+			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+			"send_secondary_ip_range_if_empty",
+		},
+	)
+}
 func TestAccComputeSubnetwork_subnetworkIpv6OnlyExternalExample(t *testing.T) {
 	t.Parallel()
 

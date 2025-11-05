@@ -105,6 +105,38 @@ func sendSecondaryIpRangeIfEmptyDiff(_ context.Context, diff *schema.ResourceDif
 	return nil
 }
 
+func IpDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
+	if d.Id() == "" {
+		return false
+	}
+	if old == "" || new == "" {
+		return old == new
+	}
+	addr_equality := false
+	netmask_equality := false
+
+	addr_netmask_old := strings.Split(old, "/")
+	addr_netmask_new := strings.Split(new, "/")
+
+	if !((len(addr_netmask_old)) == 2 && (len(addr_netmask_new) == 2)) {
+		return false
+	}
+
+	var addr_old net.IP = net.ParseIP(addr_netmask_old[0])
+	if addr_old == nil {
+		return false
+	}
+	var addr_new net.IP = net.ParseIP(addr_netmask_new[0])
+	if addr_new == nil {
+		return false
+	}
+
+	addr_equality = net.IP.Equal(addr_old, addr_new)
+	netmask_equality = addr_netmask_old[1] == addr_netmask_new[1]
+
+	return addr_equality && netmask_equality
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -249,6 +281,12 @@ func GetComputeSubnetworkApiObject(d tpgresource.TerraformResourceData, config *
 		return nil, err
 	} else if v, ok := d.GetOkExists("ipv6_access_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipv6AccessTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6AccessTypeProp)) {
 		obj["ipv6AccessType"] = ipv6AccessTypeProp
+	}
+	internalIpv6PrefixProp, err := expandComputeSubnetworkInternalIpv6Prefix(d.Get("internal_ipv6_prefix"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("internal_ipv6_prefix"); !tpgresource.IsEmptyValue(reflect.ValueOf(internalIpv6PrefixProp)) && (ok || !reflect.DeepEqual(v, internalIpv6PrefixProp)) {
+		obj["internalIpv6Prefix"] = internalIpv6PrefixProp
 	}
 	externalIpv6PrefixProp, err := expandComputeSubnetworkExternalIpv6Prefix(d.Get("external_ipv6_prefix"), d, config)
 	if err != nil {
@@ -414,6 +452,10 @@ func expandComputeSubnetworkStackType(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandComputeSubnetworkIpv6AccessType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkInternalIpv6Prefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

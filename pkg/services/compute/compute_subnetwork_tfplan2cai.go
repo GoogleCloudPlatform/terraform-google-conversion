@@ -189,6 +189,12 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("ipv6_access_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipv6AccessTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6AccessTypeProp)) {
 		obj["ipv6AccessType"] = ipv6AccessTypeProp
 	}
+	internalIpv6PrefixProp, err := expandComputeSubnetworkInternalIpv6Prefix(d.Get("internal_ipv6_prefix"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("internal_ipv6_prefix"); !tpgresource.IsEmptyValue(reflect.ValueOf(internalIpv6PrefixProp)) && (ok || !reflect.DeepEqual(v, internalIpv6PrefixProp)) {
+		obj["internalIpv6Prefix"] = internalIpv6PrefixProp
+	}
 	externalIpv6PrefixProp, err := expandComputeSubnetworkExternalIpv6Prefix(d.Get("external_ipv6_prefix"), d, config)
 	if err != nil {
 		return nil, err
@@ -349,6 +355,10 @@ func expandComputeSubnetworkStackType(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandComputeSubnetworkIpv6AccessType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkInternalIpv6Prefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

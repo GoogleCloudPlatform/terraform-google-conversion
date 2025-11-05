@@ -119,7 +119,7 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 		return nil, err
 	}
 
-	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "gateway_address": struct{}{}, "internal_ipv6_prefix": struct{}{}, "ipv6_cidr_range": struct{}{}, "ipv6_gce_endpoint": struct{}{}, "state": struct{}{}, "subnetwork_id": struct{}{}}
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "gateway_address": struct{}{}, "ipv6_cidr_range": struct{}{}, "ipv6_gce_endpoint": struct{}{}, "state": struct{}{}, "subnetwork_id": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/subnetworks/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenComputeSubnetworkDescription(res["description"], d, config)
@@ -136,6 +136,7 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["log_config"] = flattenComputeSubnetworkLogConfig(res["logConfig"], d, config)
 	hclData["stack_type"] = flattenComputeSubnetworkStackType(res["stackType"], d, config)
 	hclData["ipv6_access_type"] = flattenComputeSubnetworkIpv6AccessType(res["ipv6AccessType"], d, config)
+	hclData["internal_ipv6_prefix"] = flattenComputeSubnetworkInternalIpv6Prefix(res["internalIpv6Prefix"], d, config)
 	hclData["external_ipv6_prefix"] = flattenComputeSubnetworkExternalIpv6Prefix(res["externalIpv6Prefix"], d, config)
 	hclData["ip_collection"] = flattenComputeSubnetworkIpCollection(res["ipCollection"], d, config)
 	hclData["params"] = flattenComputeSubnetworkParams(res["params"], d, config)
@@ -285,6 +286,10 @@ func flattenComputeSubnetworkStackType(v interface{}, d *schema.ResourceData, co
 }
 
 func flattenComputeSubnetworkIpv6AccessType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeSubnetworkInternalIpv6Prefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
