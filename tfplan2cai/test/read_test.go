@@ -174,6 +174,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "full_spanner_instance"},
 		{name: "full_sql_database_instance"},
 		{name: "full_storage_bucket"},
+		{name: "google_vmwareengine_network_peering"},
 		{name: "instance"},
 		{name: "kms_crypto_key_version"},
 		{name: "logging_organization_sink"},

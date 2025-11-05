@@ -74,6 +74,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/sql"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/storage"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/vertexai"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/vmwareengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/tfplan2cai/converters/google/resources/services/workbench"
 )
@@ -191,6 +192,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_monitoring_notification_channel":                        {monitoring.ResourceConverterMonitoringNotificationChannel()},
 		"google_monitoring_alert_policy":                                {monitoring.ResourceConverterMonitoringAlertPolicy()},
 		"google_vertex_ai_dataset":                                      {vertexai.ResourceConverterVertexAIDataset()},
+		"google_vmwareengine_network_peering":                           {vmwareengine.ResourceConverterVmwareengineNetworkPeering()},
 		"google_access_context_manager_access_policy_iam_policy":        {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamPolicy()},
 		"google_access_context_manager_access_policy_iam_binding":       {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamBinding()},
 		"google_access_context_manager_access_policy_iam_member":        {accesscontextmanager.ResourceConverterAccessContextManagerAccessPolicyIamMember()},
