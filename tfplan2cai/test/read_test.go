@@ -178,6 +178,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "full_storage_bucket"},
 		{name: "google_iam_workload_identity_pool_provider"},
 		{name: "google_vmwareengine_network_peering"},
+		{name: "google_vmwareengine_private_cloud"},
 		{name: "instance"},
 		{name: "kms_crypto_key_version"},
 		{name: "logging_organization_sink"},
