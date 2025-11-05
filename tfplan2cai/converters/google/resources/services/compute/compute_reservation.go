@@ -289,6 +289,13 @@ func expandComputeReservationSpecificReservation(v interface{}, d tpgresource.Te
 		transformed["inUseCount"] = transformedInUseCount
 	}
 
+	transformedAssuredCount, err := expandComputeReservationSpecificReservationAssuredCount(original["assured_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAssuredCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["assuredCount"] = transformedAssuredCount
+	}
+
 	transformedInstanceProperties, err := expandComputeReservationSpecificReservationInstanceProperties(original["instance_properties"], d, config)
 	if err != nil {
 		return nil, err
@@ -311,6 +318,10 @@ func expandComputeReservationSpecificReservationCount(v interface{}, d tpgresour
 }
 
 func expandComputeReservationSpecificReservationInUseCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationSpecificReservationAssuredCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -359,6 +370,13 @@ func expandComputeReservationSpecificReservationInstanceProperties(v interface{}
 		return nil, err
 	} else if val := reflect.ValueOf(transformedMaintenanceInterval); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["maintenanceInterval"] = transformedMaintenanceInterval
+	}
+
+	transformedLocationHint, err := expandComputeReservationSpecificReservationInstancePropertiesLocationHint(original["location_hint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLocationHint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["locationHint"] = transformedLocationHint
 	}
 
 	return transformed, nil
@@ -453,6 +471,10 @@ func expandComputeReservationSpecificReservationInstancePropertiesLocalSsdsDiskS
 }
 
 func expandComputeReservationSpecificReservationInstancePropertiesMaintenanceInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeReservationSpecificReservationInstancePropertiesLocationHint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
