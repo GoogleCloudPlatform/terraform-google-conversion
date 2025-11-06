@@ -146,6 +146,12 @@ func GetLustreInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("per_unit_storage_throughput"); !tpgresource.IsEmptyValue(reflect.ValueOf(perUnitStorageThroughputProp)) && (ok || !reflect.DeepEqual(v, perUnitStorageThroughputProp)) {
 		obj["perUnitStorageThroughput"] = perUnitStorageThroughputProp
 	}
+	placementPolicyProp, err := expandLustreInstancePlacementPolicy(d.Get("placement_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("placement_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(placementPolicyProp)) && (ok || !reflect.DeepEqual(v, placementPolicyProp)) {
+		obj["placementPolicy"] = placementPolicyProp
+	}
 	effectiveLabelsProp, err := expandLustreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -177,6 +183,10 @@ func expandLustreInstanceDescription(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandLustreInstancePerUnitStorageThroughput(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstancePlacementPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
