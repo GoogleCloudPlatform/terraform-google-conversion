@@ -28,6 +28,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
@@ -54,6 +55,7 @@ var (
 	_ = strconv.Atoi
 	_ = strings.Trim
 	_ = schema.Noop
+	_ = structure.NormalizeJsonString
 	_ = validation.All
 	_ = tgcresource.RemoveTerraformAttributionLabel
 	_ = tpgresource.GetRegion

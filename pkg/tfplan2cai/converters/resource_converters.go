@@ -34,6 +34,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
@@ -101,6 +102,8 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_filestore_instance":                            filestore.FilestoreInstanceTfplan2caiConverter(),
 	"google_filestore_snapshot":                            filestore.FilestoreSnapshotTfplan2caiConverter(),
 	"google_firebase_data_connect_service":                 firebasedataconnect.FirebaseDataConnectServiceTfplan2caiConverter(),
+	"google_iam_workload_identity_pool":                    iambeta.IAMBetaWorkloadIdentityPoolTfplan2caiConverter(),
+	"google_iam_workload_identity_pool_provider":           iambeta.IAMBetaWorkloadIdentityPoolProviderTfplan2caiConverter(),
 	"google_kms_autokey_config":                            kms.KMSAutokeyConfigTfplan2caiConverter(),
 	"google_kms_key_handle":                                kms.KMSKeyHandleTfplan2caiConverter(),
 	"google_network_security_address_group":                networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),
