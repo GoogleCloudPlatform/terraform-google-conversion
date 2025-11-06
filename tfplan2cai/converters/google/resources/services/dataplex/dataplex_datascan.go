@@ -152,6 +152,12 @@ func GetDataplexDatascanApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("data_discovery_spec"); ok || !reflect.DeepEqual(v, dataDiscoverySpecProp) {
 		obj["dataDiscoverySpec"] = dataDiscoverySpecProp
 	}
+	dataDocumentationSpecProp, err := expandDataplexDatascanDataDocumentationSpec(d.Get("data_documentation_spec"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("data_documentation_spec"); ok || !reflect.DeepEqual(v, dataDocumentationSpecProp) {
+		obj["dataDocumentationSpec"] = dataDocumentationSpecProp
+	}
 	effectiveLabelsProp, err := expandDataplexDatascanEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -1426,6 +1432,24 @@ func expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptionsEncoding(v i
 
 func expandDataplexDatascanDataDiscoverySpecStorageConfigJsonOptionsTypeInferenceDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataplexDatascanDataDocumentationSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandDataplexDatascanEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
