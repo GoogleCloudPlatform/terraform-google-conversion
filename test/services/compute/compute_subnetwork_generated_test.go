@@ -75,6 +75,7 @@ func TestAccComputeSubnetwork_subnetworkIpv6Example(t *testing.T) {
 	)
 }
 func TestAccComputeSubnetwork_subnetworkInternalIpv6Example(t *testing.T) {
+	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -93,6 +94,7 @@ func TestAccComputeSubnetwork_subnetworkInternalIpv6Example(t *testing.T) {
 	)
 }
 func TestAccComputeSubnetwork_subnetworkIpv6OnlyInternalExample(t *testing.T) {
+	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -129,6 +131,7 @@ func TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample(t *testing.T) {
 	)
 }
 func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExample(t *testing.T) {
+	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
@@ -147,6 +150,7 @@ func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExample(t *test
 	)
 }
 func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExplicitIpPrefixExample(t *testing.T) {
+	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
