@@ -194,6 +194,7 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_monitoring_alert_policy":                                {monitoring.ResourceConverterMonitoringAlertPolicy()},
 		"google_workbench_instance":                                     {workbench.ResourceConverterWorkbenchInstance()},
 		"google_vertex_ai_dataset":                                      {vertexai.ResourceConverterVertexAIDataset()},
+		"google_vmwareengine_cluster":                                   {vmwareengine.ResourceConverterVmwareengineCluster()},
 		"google_vmwareengine_private_cloud":                             {vmwareengine.ResourceConverterVmwareenginePrivateCloud()},
 		"google_vmwareengine_network_policy":                            {vmwareengine.ResourceConverterVmwareengineNetworkPolicy()},
 		"google_vmwareengine_network_peering":                           {vmwareengine.ResourceConverterVmwareengineNetworkPeering()},
