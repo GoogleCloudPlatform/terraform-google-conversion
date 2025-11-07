@@ -122,6 +122,12 @@ func GetManagedKafkaClusterApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("capacity_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(capacityConfigProp)) && (ok || !reflect.DeepEqual(v, capacityConfigProp)) {
 		obj["capacityConfig"] = capacityConfigProp
 	}
+	brokerCapacityConfigProp, err := expandManagedKafkaClusterBrokerCapacityConfig(d.Get("broker_capacity_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("broker_capacity_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(brokerCapacityConfigProp)) && (ok || !reflect.DeepEqual(v, brokerCapacityConfigProp)) {
+		obj["brokerCapacityConfig"] = brokerCapacityConfigProp
+	}
 	rebalanceConfigProp, err := expandManagedKafkaClusterRebalanceConfig(d.Get("rebalance_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -262,6 +268,32 @@ func expandManagedKafkaClusterCapacityConfigVcpuCount(v interface{}, d tpgresour
 }
 
 func expandManagedKafkaClusterCapacityConfigMemoryBytes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandManagedKafkaClusterBrokerCapacityConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDiskSizeGb, err := expandManagedKafkaClusterBrokerCapacityConfigDiskSizeGb(original["disk_size_gb"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDiskSizeGb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["diskSizeGb"] = transformedDiskSizeGb
+	}
+
+	return transformed, nil
+}
+
+func expandManagedKafkaClusterBrokerCapacityConfigDiskSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
