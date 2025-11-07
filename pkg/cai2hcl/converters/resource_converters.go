@@ -43,6 +43,8 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -244,6 +246,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"networksecurity.googleapis.com/UrlList": {
 		"Default": networksecurity.NewNetworkSecurityUrlListsCai2hclConverter(provider),
 	},
+	"notebooks.googleapis.com/Instance": {
+		"Default": workbench.NewWorkbenchInstanceCai2hclConverter(provider),
+	},
 	"pubsub.googleapis.com/Subscription": {
 		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),
 	},
@@ -263,5 +268,8 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"secretmanager.googleapis.com/SecretVersion": {
 		"SecretManagerRegionalRegionalSecretVersion": secretmanagerregional.NewSecretManagerRegionalRegionalSecretVersionCai2hclConverter(provider),
 		"SecretManagerSecretVersion":                 secretmanager.NewSecretManagerSecretVersionCai2hclConverter(provider),
+	},
+	"vmwareengine.googleapis.com/NetworkPeering": {
+		"Default": vmwareengine.NewVmwareengineNetworkPeeringCai2hclConverter(provider),
 	},
 }
