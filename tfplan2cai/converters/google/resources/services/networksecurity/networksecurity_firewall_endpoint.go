@@ -116,6 +116,12 @@ func GetNetworkSecurityFirewallEndpointApiObject(d tpgresource.TerraformResource
 	} else if v, ok := d.GetOkExists("billing_project_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(billingProjectIdProp)) && (ok || !reflect.DeepEqual(v, billingProjectIdProp)) {
 		obj["billingProjectId"] = billingProjectIdProp
 	}
+	endpointSettingsProp, err := expandNetworkSecurityFirewallEndpointEndpointSettings(d.Get("endpoint_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("endpoint_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(endpointSettingsProp)) && (ok || !reflect.DeepEqual(v, endpointSettingsProp)) {
+		obj["endpointSettings"] = endpointSettingsProp
+	}
 	effectiveLabelsProp, err := expandNetworkSecurityFirewallEndpointEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -127,6 +133,32 @@ func GetNetworkSecurityFirewallEndpointApiObject(d tpgresource.TerraformResource
 }
 
 func expandNetworkSecurityFirewallEndpointBillingProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointEndpointSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedJumboFramesEnabled, err := expandNetworkSecurityFirewallEndpointEndpointSettingsJumboFramesEnabled(original["jumbo_frames_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["jumboFramesEnabled"] = transformedJumboFramesEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityFirewallEndpointEndpointSettingsJumboFramesEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
