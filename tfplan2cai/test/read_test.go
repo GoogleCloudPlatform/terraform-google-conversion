@@ -32,6 +32,7 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_project_iam_member_empty_project"},
 		// auto inserted tests that are not in list above or manually inserted in cli_test.go
 		{name: "bucket"},
+		{name: "compute_image"},
 		{name: "disk"},
 		{name: "example_access_context_manager_access_policy"},
 		{name: "example_access_context_manager_service_perimeter"},
@@ -107,8 +108,10 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "example_google_gke_hub_membership"},
 		{name: "example_google_logging_billing_account_bucket_config"},
 		{name: "example_google_logging_folder_bucket_config"},
+		{name: "example_google_logging_folder_sink"},
 		{name: "example_google_logging_organization_bucket_config"},
 		{name: "example_google_logging_project_bucket_config"},
+		{name: "example_google_logging_project_sink"},
 		{name: "example_google_sql_database"},
 		{name: "example_kms_crypto_key"},
 		{name: "example_kms_crypto_key_iam_binding"},
@@ -172,8 +175,17 @@ func TestReadPlannedAssetsCoverage(t *testing.T) {
 		{name: "full_spanner_instance"},
 		{name: "full_sql_database_instance"},
 		{name: "full_storage_bucket"},
+		{name: "google_iam_workload_identity_pool_provider"},
+		{name: "google_vmwareengine_cluster"},
+		{name: "google_vmwareengine_external_address"},
+		{name: "google_vmwareengine_network_peering"},
+		{name: "google_vmwareengine_private_cloud"},
 		{name: "instance"},
+		{name: "kms_crypto_key_version"},
+		{name: "logging_organization_sink"},
 		{name: "sql"},
+		{name: "vmwareengine_network_policy"},
+		{name: "workbench_instance"},
 	}
 	for i := range cases {
 		// Allocate a variable to make sure test can run in parallel.
