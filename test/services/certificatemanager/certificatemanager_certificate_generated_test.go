@@ -17,7 +17,7 @@ package certificatemanager_test
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsExample(t *testing.T) {

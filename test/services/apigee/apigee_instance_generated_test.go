@@ -17,7 +17,7 @@ package apigee_test
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccApigeeInstance_apigeeInstanceBasicTestExample(t *testing.T) {

@@ -17,7 +17,7 @@ package cloudfunctions2_test
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccCloudfunctions2function_cloudfunctions2BasicExample(t *testing.T) {

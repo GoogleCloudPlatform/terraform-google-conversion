@@ -17,7 +17,7 @@ package cloudasset_test
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccCloudAssetFolderFeed_cloudAssetFolderFeedExample(t *testing.T) {

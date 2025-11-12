@@ -10,8 +10,8 @@ import (
 
 	compute "google.golang.org/api/compute/v0.beta"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/tpgresource"
-	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v6/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 )
 
 // Since the google compute API uses optimistic locking, there is a chance

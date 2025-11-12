@@ -17,7 +17,7 @@ package compute_test
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v6/test"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccComputeFirewall_firewallBasicExample(t *testing.T) {
