@@ -35,14 +35,16 @@ func TestAccAlloydbCluster_alloydbClusterBasicExample(t *testing.T) {
 			"deletion_protection",
 			"depends_on",
 			"for_each",
+			"initial_user",
 			"initial_user.password",
 			"initial_user.user",
 			"lifecycle",
 			"location",
 			"provider",
+			"restore_backup_source",
+			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample(t *testing.T) {
@@ -60,14 +62,16 @@ func TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample(t *testing.T) {
 			"deletion_protection",
 			"depends_on",
 			"for_each",
+			"initial_user",
 			"initial_user.password",
 			"initial_user.user",
 			"lifecycle",
 			"location",
 			"provider",
+			"restore_backup_source",
+			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample(t *testing.T) {
@@ -85,14 +89,16 @@ func TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample(t *testing.T) {
 			"deletion_protection",
 			"depends_on",
 			"for_each",
+			"initial_user",
 			"initial_user.password",
 			"initial_user.user",
 			"lifecycle",
 			"location",
 			"provider",
+			"restore_backup_source",
+			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbCluster_alloydbClusterFullExample(t *testing.T) {
@@ -110,14 +116,16 @@ func TestAccAlloydbCluster_alloydbClusterFullExample(t *testing.T) {
 			"deletion_protection",
 			"depends_on",
 			"for_each",
+			"initial_user",
 			"initial_user.password",
 			"initial_user.user",
 			"lifecycle",
 			"location",
 			"provider",
+			"restore_backup_source",
+			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }
 func TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample(t *testing.T) {
@@ -135,13 +143,15 @@ func TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample(t *testing.T)
 			"deletion_protection",
 			"depends_on",
 			"for_each",
+			"initial_user",
 			"initial_user.password",
 			"initial_user.user",
 			"lifecycle",
 			"location",
 			"provider",
+			"restore_backup_source",
+			"restore_continuous_backup_source",
 			"skip_await_major_version_upgrade",
 		},
-		[]string{},
 	)
 }

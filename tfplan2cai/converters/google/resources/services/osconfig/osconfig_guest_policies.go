@@ -17,11 +17,65 @@
 package osconfig
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 const OSConfigGuestPoliciesAssetType string = "osconfig.googleapis.com/GuestPolicies"
@@ -101,6 +155,9 @@ func expandOSConfigGuestPoliciesDescription(v interface{}, d tpgresource.Terrafo
 }
 
 func expandOSConfigGuestPoliciesAssignment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -148,6 +205,9 @@ func expandOSConfigGuestPoliciesAssignment(v interface{}, d tpgresource.Terrafor
 }
 
 func expandOSConfigGuestPoliciesAssignmentGroupLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -193,6 +253,9 @@ func expandOSConfigGuestPoliciesAssignmentInstanceNamePrefixes(v interface{}, d 
 }
 
 func expandOSConfigGuestPoliciesAssignmentOsTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -241,6 +304,9 @@ func expandOSConfigGuestPoliciesAssignmentOsTypesOsArchitecture(v interface{}, d
 }
 
 func expandOSConfigGuestPoliciesPackages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -289,6 +355,9 @@ func expandOSConfigGuestPoliciesPackagesManager(v interface{}, d tpgresource.Ter
 }
 
 func expandOSConfigGuestPoliciesPackageRepositories(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -332,6 +401,9 @@ func expandOSConfigGuestPoliciesPackageRepositories(v interface{}, d tpgresource
 }
 
 func expandOSConfigGuestPoliciesPackageRepositoriesApt(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -399,6 +471,9 @@ func expandOSConfigGuestPoliciesPackageRepositoriesAptGpgKey(v interface{}, d tp
 }
 
 func expandOSConfigGuestPoliciesPackageRepositoriesYum(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -455,6 +530,9 @@ func expandOSConfigGuestPoliciesPackageRepositoriesYumGpgKeys(v interface{}, d t
 }
 
 func expandOSConfigGuestPoliciesPackageRepositoriesZypper(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -511,6 +589,9 @@ func expandOSConfigGuestPoliciesPackageRepositoriesZypperGpgKeys(v interface{}, 
 }
 
 func expandOSConfigGuestPoliciesPackageRepositoriesGoo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -545,6 +626,9 @@ func expandOSConfigGuestPoliciesPackageRepositoriesGooUrl(v interface{}, d tpgre
 }
 
 func expandOSConfigGuestPoliciesRecipes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -610,6 +694,9 @@ func expandOSConfigGuestPoliciesRecipesVersion(v interface{}, d tpgresource.Terr
 }
 
 func expandOSConfigGuestPoliciesRecipesArtifacts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -661,6 +748,9 @@ func expandOSConfigGuestPoliciesRecipesArtifactsAllowInsecure(v interface{}, d t
 }
 
 func expandOSConfigGuestPoliciesRecipesArtifactsRemote(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -695,6 +785,9 @@ func expandOSConfigGuestPoliciesRecipesArtifactsRemoteCheckSum(v interface{}, d 
 }
 
 func expandOSConfigGuestPoliciesRecipesArtifactsGcs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -740,6 +833,9 @@ func expandOSConfigGuestPoliciesRecipesArtifactsGcsGeneration(v interface{}, d t
 }
 
 func expandOSConfigGuestPoliciesRecipesInstallSteps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -804,6 +900,9 @@ func expandOSConfigGuestPoliciesRecipesInstallSteps(v interface{}, d tpgresource
 }
 
 func expandOSConfigGuestPoliciesRecipesInstallStepsFileCopy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -860,6 +959,9 @@ func expandOSConfigGuestPoliciesRecipesInstallStepsFileCopyPermissions(v interfa
 }
 
 func expandOSConfigGuestPoliciesRecipesInstallStepsArchiveExtraction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -905,6 +1007,9 @@ func expandOSConfigGuestPoliciesRecipesInstallStepsArchiveExtractionType(v inter
 }
 
 func expandOSConfigGuestPoliciesRecipesInstallStepsMsiInstallation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -950,6 +1055,9 @@ func expandOSConfigGuestPoliciesRecipesInstallStepsMsiInstallationAllowedExitCod
 }
 
 func expandOSConfigGuestPoliciesRecipesInstallStepsDpkgInstallation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -973,6 +1081,9 @@ func expandOSConfigGuestPoliciesRecipesInstallStepsDpkgInstallationArtifactId(v 
 }
 
 func expandOSConfigGuestPoliciesRecipesInstallStepsRpmInstallation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -996,6 +1107,9 @@ func expandOSConfigGuestPoliciesRecipesInstallStepsRpmInstallationArtifactId(v i
 }
 
 func expandOSConfigGuestPoliciesRecipesInstallStepsFileExec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1052,6 +1166,9 @@ func expandOSConfigGuestPoliciesRecipesInstallStepsFileExecLocalPath(v interface
 }
 
 func expandOSConfigGuestPoliciesRecipesInstallStepsScriptRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1097,6 +1214,9 @@ func expandOSConfigGuestPoliciesRecipesInstallStepsScriptRunInterpreter(v interf
 }
 
 func expandOSConfigGuestPoliciesRecipesUpdateSteps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1161,6 +1281,9 @@ func expandOSConfigGuestPoliciesRecipesUpdateSteps(v interface{}, d tpgresource.
 }
 
 func expandOSConfigGuestPoliciesRecipesUpdateStepsFileCopy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1217,6 +1340,9 @@ func expandOSConfigGuestPoliciesRecipesUpdateStepsFileCopyPermissions(v interfac
 }
 
 func expandOSConfigGuestPoliciesRecipesUpdateStepsArchiveExtraction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1262,6 +1388,9 @@ func expandOSConfigGuestPoliciesRecipesUpdateStepsArchiveExtractionType(v interf
 }
 
 func expandOSConfigGuestPoliciesRecipesUpdateStepsMsiInstallation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1307,6 +1436,9 @@ func expandOSConfigGuestPoliciesRecipesUpdateStepsMsiInstallationAllowedExitCode
 }
 
 func expandOSConfigGuestPoliciesRecipesUpdateStepsDpkgInstallation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1330,6 +1462,9 @@ func expandOSConfigGuestPoliciesRecipesUpdateStepsDpkgInstallationArtifactId(v i
 }
 
 func expandOSConfigGuestPoliciesRecipesUpdateStepsRpmInstallation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1353,6 +1488,9 @@ func expandOSConfigGuestPoliciesRecipesUpdateStepsRpmInstallationArtifactId(v in
 }
 
 func expandOSConfigGuestPoliciesRecipesUpdateStepsFileExec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1409,6 +1547,9 @@ func expandOSConfigGuestPoliciesRecipesUpdateStepsFileExecLocalPath(v interface{
 }
 
 func expandOSConfigGuestPoliciesRecipesUpdateStepsScriptRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

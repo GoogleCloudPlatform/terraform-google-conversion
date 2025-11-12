@@ -17,11 +17,65 @@
 package databasemigrationservice
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 const DatabaseMigrationServiceConnectionProfileAssetType string = "datamigration.googleapis.com/ConnectionProfile"
@@ -107,6 +161,9 @@ func expandDatabaseMigrationServiceConnectionProfileDisplayName(v interface{}, d
 }
 
 func expandDatabaseMigrationServiceConnectionProfileMysql(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -188,6 +245,9 @@ func expandDatabaseMigrationServiceConnectionProfileMysqlPasswordSet(v interface
 }
 
 func expandDatabaseMigrationServiceConnectionProfileMysqlSsl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -248,6 +308,9 @@ func expandDatabaseMigrationServiceConnectionProfileMysqlCloudSqlId(v interface{
 }
 
 func expandDatabaseMigrationServiceConnectionProfilePostgresql(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -343,6 +406,9 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresqlPasswordSet(v inte
 }
 
 func expandDatabaseMigrationServiceConnectionProfilePostgresqlSsl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -411,6 +477,9 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresqlNetworkArchitectur
 }
 
 func expandDatabaseMigrationServiceConnectionProfileOracle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -517,6 +586,9 @@ func expandDatabaseMigrationServiceConnectionProfileOracleDatabaseService(v inte
 }
 
 func expandDatabaseMigrationServiceConnectionProfileOracleSsl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -573,6 +645,9 @@ func expandDatabaseMigrationServiceConnectionProfileOracleSslCaCertificate(v int
 }
 
 func expandDatabaseMigrationServiceConnectionProfileOracleStaticServiceIpConnectivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -588,6 +663,9 @@ func expandDatabaseMigrationServiceConnectionProfileOracleStaticServiceIpConnect
 }
 
 func expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -655,6 +733,9 @@ func expandDatabaseMigrationServiceConnectionProfileOracleForwardSshConnectivity
 }
 
 func expandDatabaseMigrationServiceConnectionProfileOraclePrivateConnectivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -678,6 +759,9 @@ func expandDatabaseMigrationServiceConnectionProfileOraclePrivateConnectivityPri
 }
 
 func expandDatabaseMigrationServiceConnectionProfileCloudsql(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -722,6 +806,9 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlCloudSqlId(v interfa
 }
 
 func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -880,6 +967,9 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsActivationPo
 }
 
 func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -932,6 +1022,9 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigRequ
 }
 
 func expandDatabaseMigrationServiceConnectionProfileCloudsqlSettingsIpConfigAuthorizedNetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1050,6 +1143,9 @@ func expandDatabaseMigrationServiceConnectionProfileCloudsqlPublicIp(v interface
 }
 
 func expandDatabaseMigrationServiceConnectionProfileAlloydb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1080,6 +1176,9 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbClusterId(v interface
 }
 
 func expandDatabaseMigrationServiceConnectionProfileAlloydbSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1120,6 +1219,9 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettings(v interface{
 }
 
 func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsInitialUser(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1180,6 +1282,9 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsLabels(v inte
 }
 
 func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1231,6 +1336,9 @@ func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstan
 }
 
 func expandDatabaseMigrationServiceConnectionProfileAlloydbSettingsPrimaryInstanceSettingsMachineConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

@@ -17,14 +17,36 @@
 package compute
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 // Suppresses a diff on cases like 1:00 when it should be 01:00.
@@ -32,6 +54,35 @@ import (
 func HourlyFormatSuppressDiff(_, old, new string, _ *schema.ResourceData) bool {
 	return old == "0"+new
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const ComputeResourcePolicyAssetType string = "compute.googleapis.com/ResourcePolicy"
 
@@ -126,6 +177,9 @@ func expandComputeResourcePolicyDescription(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputeResourcePolicySnapshotSchedulePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -159,6 +213,9 @@ func expandComputeResourcePolicySnapshotSchedulePolicy(v interface{}, d tpgresou
 }
 
 func expandComputeResourcePolicySnapshotSchedulePolicySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -192,6 +249,9 @@ func expandComputeResourcePolicySnapshotSchedulePolicySchedule(v interface{}, d 
 }
 
 func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -226,6 +286,9 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleStar
 }
 
 func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -260,6 +323,9 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleStart
 }
 
 func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -280,6 +346,9 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklySchedule(v i
 
 func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -317,6 +386,9 @@ func expandComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayO
 }
 
 func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -351,6 +423,9 @@ func expandComputeResourcePolicySnapshotSchedulePolicyRetentionPolicyOnSourceDis
 }
 
 func expandComputeResourcePolicySnapshotSchedulePolicySnapshotProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -415,6 +490,9 @@ func expandComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesChainNam
 }
 
 func expandComputeResourcePolicyGroupPlacementPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -493,6 +571,9 @@ func expandComputeResourcePolicyGroupPlacementPolicyTpuTopology(v interface{}, d
 }
 
 func expandComputeResourcePolicyInstanceSchedulePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -540,6 +621,9 @@ func expandComputeResourcePolicyInstanceSchedulePolicy(v interface{}, d tpgresou
 }
 
 func expandComputeResourcePolicyInstanceSchedulePolicyVmStartSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -563,6 +647,9 @@ func expandComputeResourcePolicyInstanceSchedulePolicyVmStartScheduleSchedule(v 
 }
 
 func expandComputeResourcePolicyInstanceSchedulePolicyVmStopSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -615,6 +702,9 @@ func expandComputeResourcePolicyDiskConsistencyGroupPolicy(v interface{}, d tpgr
 }
 
 func expandComputeResourcePolicyWorkloadPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

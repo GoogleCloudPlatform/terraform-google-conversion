@@ -17,14 +17,36 @@
 package cloudfunctions2
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
 	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 // Suppress diffs for the system environment variables
@@ -41,6 +63,35 @@ func environmentVariablesDiffSuppress(k, old, new string, d *schema.ResourceData
 	// For other keys, don't suppress diff.
 	return false
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const Cloudfunctions2functionAssetType string = "cloudfunctions.googleapis.com/function"
 
@@ -147,6 +198,9 @@ func expandCloudfunctions2functionDescription(v interface{}, d tpgresource.Terra
 }
 
 func expandCloudfunctions2functionBuildConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -241,6 +295,9 @@ func expandCloudfunctions2functionBuildConfigEntryPoint(v interface{}, d tpgreso
 }
 
 func expandCloudfunctions2functionBuildConfigSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -267,6 +324,9 @@ func expandCloudfunctions2functionBuildConfigSource(v interface{}, d tpgresource
 }
 
 func expandCloudfunctions2functionBuildConfigSourceStorageSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -312,6 +372,9 @@ func expandCloudfunctions2functionBuildConfigSourceStorageSourceGeneration(v int
 }
 
 func expandCloudfunctions2functionBuildConfigSourceRepoSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -424,6 +487,9 @@ func expandCloudfunctions2functionBuildConfigServiceAccount(v interface{}, d tpg
 }
 
 func expandCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -439,6 +505,9 @@ func expandCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(v interface{}
 }
 
 func expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -467,6 +536,9 @@ func expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicyRuntimeVersion(
 }
 
 func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -543,6 +615,20 @@ func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.Ter
 		return nil, err
 	} else if val := reflect.ValueOf(transformedVpcConnectorEgressSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["vpcConnectorEgressSettings"] = transformedVpcConnectorEgressSettings
+	}
+
+	transformedDirectVpcNetworkInterface, err := expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterface(original["direct_vpc_network_interface"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDirectVpcNetworkInterface); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["directVpcNetworkInterface"] = transformedDirectVpcNetworkInterface
+	}
+
+	transformedDirectVpcEgress, err := expandCloudfunctions2functionServiceConfigDirectVpcEgress(original["direct_vpc_egress"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDirectVpcEgress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["directVpcEgress"] = transformedDirectVpcEgress
 	}
 
 	transformedIngressSettings, err := expandCloudfunctions2functionServiceConfigIngressSettings(original["ingress_settings"], d, config)
@@ -651,6 +737,61 @@ func expandCloudfunctions2functionServiceConfigVpcConnectorEgressSettings(v inte
 	return v, nil
 }
 
+func expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterface(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedNetwork, err := expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceNetwork(original["network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["network"] = transformedNetwork
+		}
+
+		transformedSubnetwork, err := expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceSubnetwork(original["subnetwork"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["subnetwork"] = transformedSubnetwork
+		}
+
+		transformedTags, err := expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceTags(original["tags"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tags"] = transformedTags
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudfunctions2functionServiceConfigDirectVpcEgress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandCloudfunctions2functionServiceConfigIngressSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -672,6 +813,9 @@ func expandCloudfunctions2functionServiceConfigAllTrafficOnLatestRevision(v inte
 }
 
 func expandCloudfunctions2functionServiceConfigSecretEnvironmentVariables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -731,6 +875,9 @@ func expandCloudfunctions2functionServiceConfigSecretEnvironmentVariablesVersion
 }
 
 func expandCloudfunctions2functionServiceConfigSecretVolumes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -786,6 +933,9 @@ func expandCloudfunctions2functionServiceConfigSecretVolumesSecret(v interface{}
 }
 
 func expandCloudfunctions2functionServiceConfigSecretVolumesVersions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -827,6 +977,9 @@ func expandCloudfunctions2functionServiceConfigBinaryAuthorizationPolicy(v inter
 }
 
 func expandCloudfunctions2functionEventTrigger(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -901,6 +1054,9 @@ func expandCloudfunctions2functionEventTriggerEventType(v interface{}, d tpgreso
 
 func expandCloudfunctions2functionEventTriggerEventFilters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

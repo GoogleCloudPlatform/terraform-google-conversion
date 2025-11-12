@@ -17,14 +17,36 @@
 package dataproc
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
 	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 /*
@@ -42,6 +64,35 @@ func CloudDataprocBatchRuntimeConfigVersionDiffSuppressFunc(old, new string) boo
 func CloudDataprocBatchRuntimeConfigVersionDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
 	return CloudDataprocBatchRuntimeConfigVersionDiffSuppressFunc(old, new)
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const DataprocBatchAssetType string = "dataproc.googleapis.com/Batch"
 
@@ -122,6 +173,9 @@ func GetDataprocBatchApiObject(d tpgresource.TerraformResourceData, config *tran
 }
 
 func expandDataprocBatchRuntimeConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -206,6 +260,9 @@ func expandDataprocBatchRuntimeConfigEffectiveProperties(v interface{}, d tpgres
 }
 
 func expandDataprocBatchRuntimeConfigAutotuningConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -233,6 +290,9 @@ func expandDataprocBatchRuntimeConfigCohort(v interface{}, d tpgresource.Terrafo
 }
 
 func expandDataprocBatchEnvironmentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -259,6 +319,9 @@ func expandDataprocBatchEnvironmentConfig(v interface{}, d tpgresource.Terraform
 }
 
 func expandDataprocBatchEnvironmentConfigExecutionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -355,6 +418,9 @@ func expandDataprocBatchEnvironmentConfigExecutionConfigSubnetworkUri(v interfac
 }
 
 func expandDataprocBatchEnvironmentConfigExecutionConfigAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -378,6 +444,9 @@ func expandDataprocBatchEnvironmentConfigExecutionConfigAuthenticationConfigUser
 }
 
 func expandDataprocBatchEnvironmentConfigPeripheralsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -413,6 +482,9 @@ func expandDataprocBatchEnvironmentConfigPeripheralsConfigMetastoreService(v int
 }
 
 func expandDataprocBatchEnvironmentConfigPeripheralsConfigSparkHistoryServerConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -436,6 +508,9 @@ func expandDataprocBatchEnvironmentConfigPeripheralsConfigSparkHistoryServerConf
 }
 
 func expandDataprocBatchPysparkBatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -514,6 +589,9 @@ func expandDataprocBatchPysparkBatchArchiveUris(v interface{}, d tpgresource.Ter
 }
 
 func expandDataprocBatchSparkBatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -592,6 +670,9 @@ func expandDataprocBatchSparkBatchMainClass(v interface{}, d tpgresource.Terrafo
 }
 
 func expandDataprocBatchSparkRBatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -648,6 +729,9 @@ func expandDataprocBatchSparkRBatchArchiveUris(v interface{}, d tpgresource.Terr
 }
 
 func expandDataprocBatchSparkSqlBatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

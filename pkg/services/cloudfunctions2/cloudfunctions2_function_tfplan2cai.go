@@ -17,14 +17,56 @@
 package cloudfunctions2
 
 import (
+	"encoding/base64"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"strconv"
+	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tfplan2cai/converters/cai"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 func Cloudfunctions2functionTfplan2caiConverter() cai.Tfplan2caiConverter {
@@ -48,8 +90,8 @@ func GetCloudfunctions2functionCaiAssets(d tpgresource.TerraformResourceData, co
 				Name: name,
 				Type: Cloudfunctions2FunctionAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "v2beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudfunctions/v2beta/rest",
+					Version:              "v2",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/cloudfunctions/v2/rest",
 					DiscoveryName:        "Function",
 					Data:                 obj,
 					Location:             location,
@@ -140,6 +182,9 @@ func expandCloudfunctions2functionDescription(v interface{}, d tpgresource.Terra
 }
 
 func expandCloudfunctions2functionBuildConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -223,6 +268,9 @@ func expandCloudfunctions2functionBuildConfigEntryPoint(v interface{}, d tpgreso
 }
 
 func expandCloudfunctions2functionBuildConfigSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -249,6 +297,9 @@ func expandCloudfunctions2functionBuildConfigSource(v interface{}, d tpgresource
 }
 
 func expandCloudfunctions2functionBuildConfigSourceStorageSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -294,6 +345,9 @@ func expandCloudfunctions2functionBuildConfigSourceStorageSourceGeneration(v int
 }
 
 func expandCloudfunctions2functionBuildConfigSourceRepoSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -406,6 +460,9 @@ func expandCloudfunctions2functionBuildConfigServiceAccount(v interface{}, d tpg
 }
 
 func expandCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -421,6 +478,9 @@ func expandCloudfunctions2functionBuildConfigAutomaticUpdatePolicy(v interface{}
 }
 
 func expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -436,6 +496,9 @@ func expandCloudfunctions2functionBuildConfigOnDeployUpdatePolicy(v interface{},
 }
 
 func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -608,6 +671,9 @@ func expandCloudfunctions2functionServiceConfigAllTrafficOnLatestRevision(v inte
 }
 
 func expandCloudfunctions2functionServiceConfigSecretEnvironmentVariables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -667,6 +733,9 @@ func expandCloudfunctions2functionServiceConfigSecretEnvironmentVariablesVersion
 }
 
 func expandCloudfunctions2functionServiceConfigSecretVolumes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -722,6 +791,9 @@ func expandCloudfunctions2functionServiceConfigSecretVolumesSecret(v interface{}
 }
 
 func expandCloudfunctions2functionServiceConfigSecretVolumesVersions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -763,6 +835,9 @@ func expandCloudfunctions2functionServiceConfigBinaryAuthorizationPolicy(v inter
 }
 
 func expandCloudfunctions2functionEventTrigger(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -826,6 +901,9 @@ func expandCloudfunctions2functionEventTriggerEventType(v interface{}, d tpgreso
 
 func expandCloudfunctions2functionEventTriggerEventFilters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

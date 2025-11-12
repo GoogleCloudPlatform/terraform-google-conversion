@@ -17,11 +17,65 @@
 package datalossprevention
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 const DataLossPreventionDiscoveryConfigAssetType string = "dlp.googleapis.com/DiscoveryConfig"
@@ -68,6 +122,12 @@ func GetDataLossPreventionDiscoveryConfigApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("org_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(orgConfigProp)) && (ok || !reflect.DeepEqual(v, orgConfigProp)) {
 		obj["orgConfig"] = orgConfigProp
 	}
+	otherCloudStartingLocationProp, err := expandDataLossPreventionDiscoveryConfigOtherCloudStartingLocation(d.Get("other_cloud_starting_location"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("other_cloud_starting_location"); !tpgresource.IsEmptyValue(reflect.ValueOf(otherCloudStartingLocationProp)) && (ok || !reflect.DeepEqual(v, otherCloudStartingLocationProp)) {
+		obj["otherCloudStartingLocation"] = otherCloudStartingLocationProp
+	}
 	inspectTemplatesProp, err := expandDataLossPreventionDiscoveryConfigInspectTemplates(d.Get("inspect_templates"), d, config)
 	if err != nil {
 		return nil, err
@@ -107,6 +167,9 @@ func expandDataLossPreventionDiscoveryConfigDisplayName(v interface{}, d tpgreso
 }
 
 func expandDataLossPreventionDiscoveryConfigOrgConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -137,6 +200,9 @@ func expandDataLossPreventionDiscoveryConfigOrgConfigProjectId(v interface{}, d 
 }
 
 func expandDataLossPreventionDiscoveryConfigOrgConfigLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -170,11 +236,73 @@ func expandDataLossPreventionDiscoveryConfigOrgConfigLocationFolderId(v interfac
 	return v, nil
 }
 
+func expandDataLossPreventionDiscoveryConfigOtherCloudStartingLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAwsLocation, err := expandDataLossPreventionDiscoveryConfigOtherCloudStartingLocationAwsLocation(original["aws_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAwsLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["awsLocation"] = transformedAwsLocation
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigOtherCloudStartingLocationAwsLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAccountId, err := expandDataLossPreventionDiscoveryConfigOtherCloudStartingLocationAwsLocationAccountId(original["account_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccountId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accountId"] = transformedAccountId
+	}
+
+	transformedAllAssetInventoryAssets, err := expandDataLossPreventionDiscoveryConfigOtherCloudStartingLocationAwsLocationAllAssetInventoryAssets(original["all_asset_inventory_assets"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllAssetInventoryAssets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allAssetInventoryAssets"] = transformedAllAssetInventoryAssets
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigOtherCloudStartingLocationAwsLocationAccountId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigOtherCloudStartingLocationAwsLocationAllAssetInventoryAssets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDataLossPreventionDiscoveryConfigInspectTemplates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
 func expandDataLossPreventionDiscoveryConfigActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -205,12 +333,22 @@ func expandDataLossPreventionDiscoveryConfigActions(v interface{}, d tpgresource
 			transformed["tagResources"] = transformedTagResources
 		}
 
+		transformedPublishToDataplexCatalog, err := expandDataLossPreventionDiscoveryConfigActionsPublishToDataplexCatalog(original["publish_to_dataplex_catalog"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["publishToDataplexCatalog"] = transformedPublishToDataplexCatalog
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsExportData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -230,6 +368,9 @@ func expandDataLossPreventionDiscoveryConfigActionsExportData(v interface{}, d t
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsExportDataProfileTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -275,6 +416,9 @@ func expandDataLossPreventionDiscoveryConfigActionsExportDataProfileTableTableId
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsPubSubNotification(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -323,6 +467,9 @@ func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationEvent(v int
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationPubsubCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -342,6 +489,9 @@ func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationPubsubCondi
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationPubsubConditionExpressions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -372,6 +522,9 @@ func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationPubsubCondi
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationPubsubConditionExpressionsConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -413,6 +566,9 @@ func expandDataLossPreventionDiscoveryConfigActionsPubSubNotificationDetailOfMes
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsTagResources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -446,6 +602,9 @@ func expandDataLossPreventionDiscoveryConfigActionsTagResources(v interface{}, d
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -475,6 +634,9 @@ func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditions(v i
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -498,6 +660,9 @@ func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsTagN
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsTagResourcesTagConditionsSensitivityScore(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -528,7 +693,28 @@ func expandDataLossPreventionDiscoveryConfigActionsTagResourcesLowerDataRiskToLo
 	return v, nil
 }
 
+func expandDataLossPreventionDiscoveryConfigActionsPublishToDataplexCatalog(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
 func expandDataLossPreventionDiscoveryConfigTargets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -566,12 +752,22 @@ func expandDataLossPreventionDiscoveryConfigTargets(v interface{}, d tpgresource
 			transformed["cloudStorageTarget"] = transformedCloudStorageTarget
 		}
 
+		transformedOtherCloudTarget, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTarget(original["other_cloud_target"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOtherCloudTarget); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["otherCloudTarget"] = transformedOtherCloudTarget
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -612,6 +808,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTarget(v interface{},
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -645,6 +844,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilter(v interf
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -664,6 +866,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTables(v 
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTablesIncludeRegexes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -683,6 +888,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTablesInc
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTablesIncludeRegexesPatterns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -731,6 +939,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTablesInc
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterOtherTables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -746,6 +957,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterOtherTabl
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -780,6 +994,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableRefe
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -824,6 +1041,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetConditionsCreat
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetConditionsOrConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -858,6 +1078,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetConditionsOrCon
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetConditionsTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -885,6 +1108,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetConditionsTypeC
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -918,6 +1144,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadence(v inter
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceSchemaModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -952,6 +1181,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceSchemaMo
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceTableModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -986,6 +1218,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceTableMod
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceInspectTemplateModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1009,6 +1244,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceInspectT
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -1024,6 +1262,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetDisabled(v inte
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1064,6 +1305,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTarget(v interface{},
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1097,6 +1341,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilter(v interf
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1116,6 +1363,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterCollectio
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterCollectionIncludeRegexes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1135,6 +1385,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterCollectio
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterCollectionIncludeRegexesPatterns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1194,6 +1447,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterCollectio
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterOthers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -1209,6 +1465,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterOthers(v 
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseResourceReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1265,6 +1524,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetFilterDatabaseR
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1299,6 +1561,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetConditionsTypes
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1332,6 +1597,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCaden
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCadenceSchemaModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1370,6 +1638,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCaden
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCadenceInspectTemplateModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1393,6 +1664,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetGenerationCaden
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -1408,6 +1682,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudSqlTargetDisabled(v inte
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsSecretsTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -1423,6 +1700,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsSecretsTarget(v interface{}, 
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1463,6 +1743,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTarget(v interfac
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1496,6 +1779,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilter(v in
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1515,6 +1801,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterColle
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeRegexes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1534,6 +1823,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterColle
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeRegexesPatterns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1556,6 +1848,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterColle
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeRegexesPatternsCloudStorageRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1590,6 +1885,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterColle
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCloudStorageResourceReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1624,6 +1922,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCloud
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterOthers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -1639,6 +1940,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterOther
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1680,6 +1984,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetConditionsM
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetConditionsCloudStorageConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1714,6 +2021,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetConditionsC
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetGenerationCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1744,6 +2054,9 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetGenerationC
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetGenerationCadenceInspectTemplateModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1767,6 +2080,495 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetGenerationC
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDataSourceType, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetDataSourceType(original["data_source_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataSourceType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataSourceType"] = transformedDataSourceType
+	}
+
+	transformedFilter, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilter(original["filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filter"] = transformedFilter
+	}
+
+	transformedConditions, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditions(original["conditions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConditions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conditions"] = transformedConditions
+	}
+
+	transformedGenerationCadence, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetGenerationCadence(original["generation_cadence"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGenerationCadence); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["generationCadence"] = transformedGenerationCadence
+	}
+
+	transformedDisabled, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetDisabled(original["disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["disabled"] = transformedDisabled
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetDataSourceType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDataSource, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetDataSourceTypeDataSource(original["data_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataSource"] = transformedDataSource
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetDataSourceTypeDataSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCollection, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollection(original["collection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCollection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["collection"] = transformedCollection
+	}
+
+	transformedSingleResource, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResource(original["single_resource"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSingleResource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["singleResource"] = transformedSingleResource
+	}
+
+	transformedOthers, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterOthers(original["others"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["others"] = transformedOthers
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIncludeRegexes, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexes(original["include_regexes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeRegexes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeRegexes"] = transformedIncludeRegexes
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPatterns, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatterns(original["patterns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPatterns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["patterns"] = transformedPatterns
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatterns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAmazonS3BucketRegex, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatternsAmazonS3BucketRegex(original["amazon_s3_bucket_regex"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAmazonS3BucketRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["amazonS3BucketRegex"] = transformedAmazonS3BucketRegex
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatternsAmazonS3BucketRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAwsAccountRegex, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatternsAmazonS3BucketRegexAwsAccountRegex(original["aws_account_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAwsAccountRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["awsAccountRegex"] = transformedAwsAccountRegex
+	}
+
+	transformedBucketNameRegex, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatternsAmazonS3BucketRegexBucketNameRegex(original["bucket_name_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucketNameRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bucketNameRegex"] = transformedBucketNameRegex
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatternsAmazonS3BucketRegexAwsAccountRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAccountIdRegex, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatternsAmazonS3BucketRegexAwsAccountRegexAccountIdRegex(original["account_id_regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccountIdRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accountIdRegex"] = transformedAccountIdRegex
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatternsAmazonS3BucketRegexAwsAccountRegexAccountIdRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterCollectionIncludeRegexesPatternsAmazonS3BucketRegexBucketNameRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAmazonS3Bucket, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResourceAmazonS3Bucket(original["amazon_s3_bucket"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAmazonS3Bucket); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["amazonS3Bucket"] = transformedAmazonS3Bucket
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResourceAmazonS3Bucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAwsAccount, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResourceAmazonS3BucketAwsAccount(original["aws_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAwsAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["awsAccount"] = transformedAwsAccount
+	}
+
+	transformedBucketName, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResourceAmazonS3BucketBucketName(original["bucket_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucketName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bucketName"] = transformedBucketName
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResourceAmazonS3BucketAwsAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAccountId, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResourceAmazonS3BucketAwsAccountAccountId(original["account_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccountId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accountId"] = transformedAccountId
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResourceAmazonS3BucketAwsAccountAccountId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterSingleResourceAmazonS3BucketBucketName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetFilterOthers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMinAge, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditionsMinAge(original["min_age"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinAge); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minAge"] = transformedMinAge
+	}
+
+	transformedAmazonS3BucketConditions, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditionsAmazonS3BucketConditions(original["amazon_s3_bucket_conditions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAmazonS3BucketConditions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["amazonS3BucketConditions"] = transformedAmazonS3BucketConditions
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditionsMinAge(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditionsAmazonS3BucketConditions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBucketTypes, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditionsAmazonS3BucketConditionsBucketTypes(original["bucket_types"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucketTypes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bucketTypes"] = transformedBucketTypes
+	}
+
+	transformedObjectStorageClasses, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditionsAmazonS3BucketConditionsObjectStorageClasses(original["object_storage_classes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedObjectStorageClasses); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["objectStorageClasses"] = transformedObjectStorageClasses
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditionsAmazonS3BucketConditionsBucketTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetConditionsAmazonS3BucketConditionsObjectStorageClasses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetGenerationCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRefreshFrequency, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetGenerationCadenceRefreshFrequency(original["refresh_frequency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRefreshFrequency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["refreshFrequency"] = transformedRefreshFrequency
+	}
+
+	transformedInspectTemplateModifiedCadence, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetGenerationCadenceInspectTemplateModifiedCadence(original["inspect_template_modified_cadence"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInspectTemplateModifiedCadence); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["inspectTemplateModifiedCadence"] = transformedInspectTemplateModifiedCadence
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetGenerationCadenceRefreshFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetGenerationCadenceInspectTemplateModifiedCadence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFrequency, err := expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetGenerationCadenceInspectTemplateModifiedCadenceFrequency(original["frequency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFrequency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["frequency"] = transformedFrequency
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetGenerationCadenceInspectTemplateModifiedCadenceFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsOtherCloudTargetDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil

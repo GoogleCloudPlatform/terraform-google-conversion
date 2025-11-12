@@ -17,17 +17,56 @@
 package compute
 
 import (
+	"encoding/base64"
 	"fmt"
 	"log"
 	"reflect"
+	"regexp"
+	"strconv"
+	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tfplan2cai/converters/cai"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 func ComputeDiskTfplan2caiConverter() cai.Tfplan2caiConverter {
@@ -51,8 +90,8 @@ func GetComputeDiskCaiAssets(d tpgresource.TerraformResourceData, config *transp
 				Name: name,
 				Type: ComputeDiskAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
 					DiscoveryName:        "Disk",
 					Data:                 obj,
 					Location:             location,
@@ -144,23 +183,11 @@ func GetComputeDiskCaiObject(d tpgresource.TerraformResourceData, config *transp
 	} else if v, ok := d.GetOkExists("image"); !tpgresource.IsEmptyValue(reflect.ValueOf(imageProp)) && (ok || !reflect.DeepEqual(v, imageProp)) {
 		obj["sourceImage"] = imageProp
 	}
-	resourcePoliciesProp, err := expandComputeDiskResourcePolicies(d.Get("resource_policies"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("resource_policies"); !tpgresource.IsEmptyValue(reflect.ValueOf(resourcePoliciesProp)) && (ok || !reflect.DeepEqual(v, resourcePoliciesProp)) {
-		obj["resourcePolicies"] = resourcePoliciesProp
-	}
 	enableConfidentialComputeProp, err := expandComputeDiskEnableConfidentialCompute(d.Get("enable_confidential_compute"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("enable_confidential_compute"); ok || !reflect.DeepEqual(v, enableConfidentialComputeProp) {
 		obj["enableConfidentialCompute"] = enableConfidentialComputeProp
-	}
-	multiWriterProp, err := expandComputeDiskMultiWriter(d.Get("multi_writer"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("multi_writer"); !tpgresource.IsEmptyValue(reflect.ValueOf(multiWriterProp)) && (ok || !reflect.DeepEqual(v, multiWriterProp)) {
-		obj["multiWriter"] = multiWriterProp
 	}
 	provisionedIopsProp, err := expandComputeDiskProvisionedIops(d.Get("provisioned_iops"), d, config)
 	if err != nil {
@@ -292,6 +319,9 @@ func resourceComputeDiskTgcEncoder(d tpgresource.TerraformResourceData, meta int
 }
 
 func expandComputeDiskSourceImageEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -341,6 +371,9 @@ func expandComputeDiskSourceInstantSnapshot(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputeDiskDiskEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -397,6 +430,9 @@ func expandComputeDiskDiskEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpg
 }
 
 func expandComputeDiskSourceSnapshotEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -482,28 +518,7 @@ func expandComputeDiskImage(v interface{}, d tpgresource.TerraformResourceData, 
 	return v, nil
 }
 
-func expandComputeDiskResourcePolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			return nil, fmt.Errorf("Invalid value for resource_policies: nil")
-		}
-		f, err := tpgresource.ParseRegionalFieldValue("resourcePolicies", raw.(string), "project", "region", "zone", d, config, true)
-		if err != nil {
-			return nil, fmt.Errorf("Invalid value for resource_policies: %s", err)
-		}
-		url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
-		req = append(req, url)
-	}
-	return req, nil
-}
-
 func expandComputeDiskEnableConfidentialCompute(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeDiskMultiWriter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -516,6 +531,9 @@ func expandComputeDiskProvisionedThroughput(v interface{}, d tpgresource.Terrafo
 }
 
 func expandComputeDiskAsyncPrimaryDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -543,6 +561,9 @@ func expandComputeDiskArchitecture(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandComputeDiskParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -574,6 +595,9 @@ func expandComputeDiskParamsResourceManagerTags(v interface{}, d tpgresource.Ter
 
 func expandComputeDiskGuestOsFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

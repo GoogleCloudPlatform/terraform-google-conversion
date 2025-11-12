@@ -18,6 +18,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
@@ -30,9 +31,21 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -43,155 +56,227 @@ var provider *schema.Provider = tpg_provider.Provider()
 // ConverterMap is a collection of converters instances, indexed by cai asset type.
 var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	// ####### START handwritten resources ###########
-	resourcemanager.ProjectAssetType: {
+	"cloudresourcemanager.googleapis.com/Project": {
 		"Default": resourcemanager.NewProjectCai2hclConverter(provider),
 	},
-	compute.ComputeInstanceAssetType: {
+	"compute.googleapis.com/Instance": {
 		"Default": compute.NewComputeInstanceCai2hclConverter(provider),
 	},
 	// ####### END handwritten resources ###########
-	alloydb.AlloydbBackupAssetType: {
+	"alloydb.googleapis.com/Backup": {
 		"Default": alloydb.NewAlloydbBackupCai2hclConverter(provider),
 	},
-	alloydb.AlloydbClusterAssetType: {
+	"alloydb.googleapis.com/Cluster": {
 		"Default": alloydb.NewAlloydbClusterCai2hclConverter(provider),
 	},
-	alloydb.AlloydbInstanceAssetType: {
+	"alloydb.googleapis.com/Instance": {
 		"Default": alloydb.NewAlloydbInstanceCai2hclConverter(provider),
 	},
-	apigee.ApigeeInstanceAssetType: {
+	"apigee.googleapis.com/Instance": {
 		"Default": apigee.NewApigeeInstanceCai2hclConverter(provider),
 	},
-	apphub.ApphubApplicationAssetType: {
+	"apphub.googleapis.com/Application": {
 		"Default": apphub.NewApphubApplicationCai2hclConverter(provider),
 	},
-	apphub.ApphubServiceAssetType: {
+	"apphub.googleapis.com/Service": {
 		"Default": apphub.NewApphubServiceCai2hclConverter(provider),
 	},
-	apphub.ApphubWorkloadAssetType: {
+	"apphub.googleapis.com/ServiceProjectAttachment": {
+		"Default": apphub.NewApphubServiceProjectAttachmentCai2hclConverter(provider),
+	},
+	"apphub.googleapis.com/Workload": {
 		"Default": apphub.NewApphubWorkloadCai2hclConverter(provider),
 	},
-	backupdr.BackupDRBackupPlanAssetType: {
+	"artifactregistry.googleapis.com/Repository": {
+		"Default": artifactregistry.NewArtifactRegistryRepositoryCai2hclConverter(provider),
+	},
+	"backupdr.googleapis.com/BackupPlan": {
 		"Default": backupdr.NewBackupDRBackupPlanCai2hclConverter(provider),
 	},
-	backupdr.BackupDRBackupVaultAssetType: {
+	"backupdr.googleapis.com/BackupVault": {
 		"Default": backupdr.NewBackupDRBackupVaultCai2hclConverter(provider),
 	},
-	beyondcorp.BeyondcorpAppConnectionAssetType: {
+	"beyondcorp.googleapis.com/AppConnection": {
 		"Default": beyondcorp.NewBeyondcorpAppConnectionCai2hclConverter(provider),
 	},
-	beyondcorp.BeyondcorpAppConnectorAssetType: {
+	"beyondcorp.googleapis.com/AppConnector": {
 		"Default": beyondcorp.NewBeyondcorpAppConnectorCai2hclConverter(provider),
 	},
-	beyondcorp.BeyondcorpAppGatewayAssetType: {
+	"beyondcorp.googleapis.com/AppGateway": {
 		"Default": beyondcorp.NewBeyondcorpAppGatewayCai2hclConverter(provider),
 	},
-	bigquery.BigQueryDatasetAssetType: {
+	"bigquery.googleapis.com/Dataset": {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),
 	},
-	binaryauthorization.BinaryAuthorizationAttestorAssetType: {
+	"binaryauthorization.googleapis.com/Attestor": {
 		"Default": binaryauthorization.NewBinaryAuthorizationAttestorCai2hclConverter(provider),
 	},
-	blockchainnodeengine.BlockchainNodeEngineBlockchainNodeAssetType: {
+	"blockchainnodeengine.googleapis.com/BlockchainNode": {
 		"Default": blockchainnodeengine.NewBlockchainNodeEngineBlockchainNodesCai2hclConverter(provider),
 	},
-	certificatemanager.CertificateManagerCertificateAssetType: {
+	"certificatemanager.googleapis.com/Certificate": {
 		"Default": certificatemanager.NewCertificateManagerCertificateCai2hclConverter(provider),
 	},
-	cloudasset.CloudAssetFeedAssetType: {
+	"cloudasset.googleapis.com/Feed": {
 		"CloudAssetFolderFeed":       cloudasset.NewCloudAssetFolderFeedCai2hclConverter(provider),
 		"CloudAssetOrganizationFeed": cloudasset.NewCloudAssetOrganizationFeedCai2hclConverter(provider),
 		"CloudAssetProjectFeed":      cloudasset.NewCloudAssetProjectFeedCai2hclConverter(provider),
 	},
-	cloudbuild.CloudBuildBitbucketServerConfigAssetType: {
+	"cloudbuild.googleapis.com/BitbucketServerConfig": {
 		"Default": cloudbuild.NewCloudBuildBitbucketServerConfigCai2hclConverter(provider),
 	},
-	cloudbuildv2.Cloudbuildv2ConnectionAssetType: {
+	"cloudbuild.googleapis.com/Connection": {
 		"Default": cloudbuildv2.NewCloudbuildv2ConnectionCai2hclConverter(provider),
 	},
-	cloudbuildv2.Cloudbuildv2RepositoryAssetType: {
+	"cloudbuild.googleapis.com/Repository": {
 		"Default": cloudbuildv2.NewCloudbuildv2RepositoryCai2hclConverter(provider),
 	},
-	clouddeploy.ClouddeployCustomTargetTypeAssetType: {
+	"clouddeploy.googleapis.com/Automation": {
+		"Default": clouddeploy.NewClouddeployAutomationCai2hclConverter(provider),
+	},
+	"clouddeploy.googleapis.com/CustomTargetType": {
 		"Default": clouddeploy.NewClouddeployCustomTargetTypeCai2hclConverter(provider),
 	},
-	cloudfunctions2.Cloudfunctions2FunctionAssetType: {
+	"clouddeploy.googleapis.com/DeployPolicy": {
+		"Default": clouddeploy.NewClouddeployDeployPolicyCai2hclConverter(provider),
+	},
+	"cloudfunctions.googleapis.com/Function": {
 		"Default": cloudfunctions2.NewCloudfunctions2functionCai2hclConverter(provider),
 	},
-	compute.ComputeAddressAssetType: {
+	"cloudkms.googleapis.com/AutokeyConfig": {
+		"Default": kms.NewKMSAutokeyConfigCai2hclConverter(provider),
+	},
+	"cloudkms.googleapis.com/KeyHandle": {
+		"Default": kms.NewKMSKeyHandleCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Address": {
 		"Default": compute.NewComputeAddressCai2hclConverter(provider),
 	},
-	compute.ComputeAutoscalerAssetType: {
+	"compute.googleapis.com/Autoscaler": {
 		"ComputeAutoscaler":       compute.NewComputeAutoscalerCai2hclConverter(provider),
 		"ComputeRegionAutoscaler": compute.NewComputeRegionAutoscalerCai2hclConverter(provider),
 	},
-	compute.ComputeBackendBucketAssetType: {
+	"compute.googleapis.com/BackendBucket": {
 		"Default": compute.NewComputeBackendBucketCai2hclConverter(provider),
 	},
-	compute.ComputeBackendServiceAssetType: {
+	"compute.googleapis.com/BackendService": {
 		"Default": compute.NewComputeBackendServiceCai2hclConverter(provider),
 	},
-	compute.ComputeDiskAssetType: {
+	"compute.googleapis.com/Disk": {
 		"Default": compute.NewComputeDiskCai2hclConverter(provider),
 	},
-	compute.ComputeExternalVpnGatewayAssetType: {
+	"compute.googleapis.com/ExternalVpnGateway": {
 		"Default": compute.NewComputeExternalVpnGatewayCai2hclConverter(provider),
 	},
-	compute.ComputeFirewallAssetType: {
+	"compute.googleapis.com/Firewall": {
 		"Default": compute.NewComputeFirewallCai2hclConverter(provider),
 	},
-	compute.ComputeFirewallPolicyAssetType: {
+	"compute.googleapis.com/FirewallPolicy": {
 		"Default": compute.NewComputeFirewallPolicyCai2hclConverter(provider),
 	},
-	compute.ComputeGlobalAddressAssetType: {
+	"compute.googleapis.com/GlobalAddress": {
 		"Default": compute.NewComputeGlobalAddressCai2hclConverter(provider),
 	},
-	compute.ComputeHealthCheckAssetType: {
-		"Default": compute.NewComputeHealthCheckCai2hclConverter(provider),
+	"compute.googleapis.com/HealthCheck": {
+		"ComputeHealthCheck":       compute.NewComputeHealthCheckCai2hclConverter(provider),
+		"ComputeRegionHealthCheck": compute.NewComputeRegionHealthCheckCai2hclConverter(provider),
 	},
-	compute.ComputeImageAssetType: {
+	"compute.googleapis.com/Image": {
 		"Default": compute.NewComputeImageCai2hclConverter(provider),
 	},
-	compute.ComputeNetworkAssetType: {
+	"compute.googleapis.com/Network": {
 		"Default": compute.NewComputeNetworkCai2hclConverter(provider),
 	},
-	compute.ComputeSubnetworkAssetType: {
+	"compute.googleapis.com/Subnetwork": {
 		"Default": compute.NewComputeSubnetworkCai2hclConverter(provider),
 	},
-	compute.ComputeUrlMapAssetType: {
+	"compute.googleapis.com/UrlMap": {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
 	},
-	networksecurity.NetworkSecurityAddressGroupAssetType: {
+	"dataproc.googleapis.com/Batch": {
+		"Default": dataproc.NewDataprocBatchCai2hclConverter(provider),
+	},
+	"datastream.googleapis.com/ConnectionProfile": {
+		"Default": datastream.NewDatastreamConnectionProfileCai2hclConverter(provider),
+	},
+	"datastream.googleapis.com/PrivateConnection": {
+		"Default": datastream.NewDatastreamPrivateConnectionCai2hclConverter(provider),
+	},
+	"datastream.googleapis.com/Stream": {
+		"Default": datastream.NewDatastreamStreamCai2hclConverter(provider),
+	},
+	"file.googleapis.com/Backup": {
+		"Default": filestore.NewFilestoreBackupCai2hclConverter(provider),
+	},
+	"file.googleapis.com/Instance": {
+		"Default": filestore.NewFilestoreInstanceCai2hclConverter(provider),
+	},
+	"file.googleapis.com/Snapshot": {
+		"Default": filestore.NewFilestoreSnapshotCai2hclConverter(provider),
+	},
+	"firebasedataconnect.googleapis.com/Service": {
+		"Default": firebasedataconnect.NewFirebaseDataConnectServiceCai2hclConverter(provider),
+	},
+	"iam.googleapis.com/WorkloadIdentityPool": {
+		"Default": iambeta.NewIAMBetaWorkloadIdentityPoolCai2hclConverter(provider),
+	},
+	"iam.googleapis.com/WorkloadIdentityPoolProvider": {
+		"Default": iambeta.NewIAMBetaWorkloadIdentityPoolProviderCai2hclConverter(provider),
+	},
+	"monitoring.googleapis.com/NotificationChannel": {
+		"Default": monitoring.NewMonitoringNotificationChannelCai2hclConverter(provider),
+	},
+	"monitoring.googleapis.com/UptimeCheckConfig": {
+		"Default": monitoring.NewMonitoringUptimeCheckConfigCai2hclConverter(provider),
+	},
+	"networksecurity.googleapis.com/AddressGroup": {
 		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),
 	},
-	networksecurity.NetworkSecurityAuthorizationPolicyAssetType: {
-		"Default": networksecurity.NewNetworkSecurityAuthorizationPolicyCai2hclConverter(provider),
-	},
-	networksecurity.NetworkSecurityClientTlsPolicyAssetType: {
+	"networksecurity.googleapis.com/ClientTlsPolicy": {
 		"Default": networksecurity.NewNetworkSecurityClientTlsPolicyCai2hclConverter(provider),
 	},
-	networksecurity.NetworkSecurityGatewaySecurityPolicyAssetType: {
+	"networksecurity.googleapis.com/GatewaySecurityPolicy": {
 		"Default": networksecurity.NewNetworkSecurityGatewaySecurityPolicyCai2hclConverter(provider),
 	},
-	networksecurity.NetworkSecurityGatewaySecurityPolicyRuleAssetType: {
+	"networksecurity.googleapis.com/GatewaySecurityPolicyRule": {
 		"Default": networksecurity.NewNetworkSecurityGatewaySecurityPolicyRuleCai2hclConverter(provider),
 	},
-	networksecurity.NetworkSecuritySecurityProfileAssetType: {
+	"networksecurity.googleapis.com/SecurityProfile": {
 		"Default": networksecurity.NewNetworkSecuritySecurityProfileCai2hclConverter(provider),
 	},
-	networksecurity.NetworkSecuritySecurityProfileGroupAssetType: {
+	"networksecurity.googleapis.com/SecurityProfileGroup": {
 		"Default": networksecurity.NewNetworkSecuritySecurityProfileGroupCai2hclConverter(provider),
 	},
-	networksecurity.NetworkSecurityServerTlsPolicyAssetType: {
+	"networksecurity.googleapis.com/ServerTlsPolicy": {
 		"Default": networksecurity.NewNetworkSecurityServerTlsPolicyCai2hclConverter(provider),
 	},
-	networksecurity.NetworkSecurityUrlListAssetType: {
+	"networksecurity.googleapis.com/UrlList": {
 		"Default": networksecurity.NewNetworkSecurityUrlListsCai2hclConverter(provider),
 	},
-	pubsub.PubsubSubscriptionAssetType: {
+	"notebooks.googleapis.com/Instance": {
+		"Default": workbench.NewWorkbenchInstanceCai2hclConverter(provider),
+	},
+	"pubsub.googleapis.com/Subscription": {
 		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),
 	},
-	pubsub.PubsubTopicAssetType: {
+	"pubsub.googleapis.com/Topic": {
 		"Default": pubsub.NewPubsubTopicCai2hclConverter(provider),
+	},
+	"redis.googleapis.com/Cluster": {
+		"Default": redis.NewRedisClusterCai2hclConverter(provider),
+	},
+	"redis.googleapis.com/Instance": {
+		"Default": redis.NewRedisInstanceCai2hclConverter(provider),
+	},
+	"secretmanager.googleapis.com/Secret": {
+		"SecretManagerRegionalRegionalSecret": secretmanagerregional.NewSecretManagerRegionalRegionalSecretCai2hclConverter(provider),
+		"SecretManagerSecret":                 secretmanager.NewSecretManagerSecretCai2hclConverter(provider),
+	},
+	"secretmanager.googleapis.com/SecretVersion": {
+		"SecretManagerRegionalRegionalSecretVersion": secretmanagerregional.NewSecretManagerRegionalRegionalSecretVersionCai2hclConverter(provider),
+		"SecretManagerSecretVersion":                 secretmanager.NewSecretManagerSecretVersionCai2hclConverter(provider),
+	},
+	"vmwareengine.googleapis.com/NetworkPeering": {
+		"Default": vmwareengine.NewVmwareengineNetworkPeeringCai2hclConverter(provider),
 	},
 }

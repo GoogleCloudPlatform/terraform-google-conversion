@@ -35,7 +35,6 @@ func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsBasicExample
 			"parent",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsOrganizationBasicExample(t *testing.T) {
@@ -53,7 +52,6 @@ func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsOrganization
 			"parent",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsAdvancedExample(t *testing.T) {
@@ -71,24 +69,5 @@ func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsAdvancedExam
 			"parent",
 			"provider",
 		},
-		[]string{},
-	)
-}
-func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsCloudArmorExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"parent",
-			"provider",
-		},
-		[]string{},
 	)
 }

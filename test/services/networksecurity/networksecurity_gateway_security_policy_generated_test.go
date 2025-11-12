@@ -33,8 +33,8 @@ func TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityP
 			"location",
 			"name",
 			"provider",
+			"tls_inspection_policy",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityPolicyTlsInspectionBasicExample(t *testing.T) {
@@ -50,7 +50,7 @@ func TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityP
 			"location",
 			"name",
 			"provider",
+			"tls_inspection_policy",
 		},
-		[]string{},
 	)
 }

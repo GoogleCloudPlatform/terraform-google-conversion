@@ -17,19 +17,40 @@
 package iambeta
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"log"
 	"reflect"
 	"regexp"
+	"slices"
+	"sort"
+	"strconv"
 	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 const workloadIdentityPoolIdRegexp = `^[0-9a-z-]+$`
+const defaultWorkloadIdentityPoolIdSuffix = ".svc.id.goog"
 
 func ValidateWorkloadIdentityPoolId(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
@@ -39,9 +60,13 @@ func ValidateWorkloadIdentityPoolId(v interface{}, k string) (ws []string, error
 			"%q (%q) can not start with \"gcp-\"", k, value))
 	}
 
+	if strings.HasSuffix(value, defaultWorkloadIdentityPoolIdSuffix) {
+		value = strings.TrimRight(value, defaultWorkloadIdentityPoolIdSuffix)
+	}
+
 	if !regexp.MustCompile(workloadIdentityPoolIdRegexp).MatchString(value) {
 		errors = append(errors, fmt.Errorf(
-			"%q must contain only lowercase letters (a-z), numbers (0-9), or dashes (-)", k))
+			"%q must contain only lowercase letters (a-z), numbers (0-9), or dashes (-), or end in '.svc.id.goog'", k))
 	}
 
 	if len(value) < 4 {
@@ -56,6 +81,35 @@ func ValidateWorkloadIdentityPoolId(v interface{}, k string) (ws []string, error
 
 	return
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const IAMBetaWorkloadIdentityPoolAssetType string = "iam.googleapis.com/WorkloadIdentityPool"
 
@@ -146,6 +200,9 @@ func expandIAMBetaWorkloadIdentityPoolMode(v interface{}, d tpgresource.Terrafor
 }
 
 func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -209,6 +266,9 @@ func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigKeyAlgorith
 }
 
 func expandIAMBetaWorkloadIdentityPoolInlineTrustConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -253,6 +313,9 @@ func expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundles(v 
 }
 
 func expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchors(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

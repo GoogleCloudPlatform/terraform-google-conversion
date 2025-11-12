@@ -12,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"google.golang.org/api/googleapi"
 
-	compute "google.golang.org/api/compute/v0.beta"
+	"google.golang.org/api/compute/v1"
 )
 
 func instanceSchedulingNodeAffinitiesElemSchema() *schema.Resource {
@@ -162,34 +162,6 @@ func expandScheduling(v interface{}) (*compute.Scheduling, error) {
 		scheduling.OnInstanceStopAction = transformedOnInstanceStopAction
 		scheduling.ForceSendFields = append(scheduling.ForceSendFields, "OnInstanceStopAction")
 	}
-	if v, ok := original["host_error_timeout_seconds"]; ok {
-		scheduling.HostErrorTimeoutSeconds = int64(v.(int))
-		//host_error_timeout_seconds doesn't get removed correctly due to an API bug on instances.SetScheduling.
-		//We need to set it to NullFields as a workaround because nil is rounded to 0
-		if v == 0 || v == nil {
-			scheduling.NullFields = append(scheduling.NullFields, "HostErrorTimeoutSeconds")
-		} else {
-			scheduling.ForceSendFields = append(scheduling.ForceSendFields, "HostErrorTimeoutSeconds")
-		}
-	}
-
-	if v, ok := original["maintenance_interval"]; ok {
-		scheduling.MaintenanceInterval = v.(string)
-	}
-
-	if v, ok := original["graceful_shutdown"]; ok {
-		transformedGracefulShutdown, err := expandGracefulShutdown(v)
-		if err != nil {
-			return nil, err
-		}
-		scheduling.GracefulShutdown = transformedGracefulShutdown
-		scheduling.ForceSendFields = append(scheduling.ForceSendFields, "GracefulShutdown")
-	}
-
-	if v, ok := original["skip_guest_os_shutdown"]; ok {
-		scheduling.SkipGuestOsShutdown = v.(bool)
-		scheduling.ForceSendFields = append(scheduling.ForceSendFields, "SkipGuestOsShutdown")
-	}
 	if v, ok := original["local_ssd_recovery_timeout"]; ok {
 		transformedLocalSsdRecoveryTimeout, err := expandComputeLocalSsdRecoveryTimeout(v)
 		if err != nil {
@@ -288,52 +260,6 @@ func expandComputeLocalSsdRecoveryTimeoutNanos(v interface{}) (interface{}, erro
 func expandComputeLocalSsdRecoveryTimeoutSeconds(v interface{}) (interface{}, error) {
 	return v, nil
 }
-func expandGracefulShutdown(v interface{}) (*compute.SchedulingGracefulShutdown, error) {
-	l := v.([]interface{})
-	gracefulShutdown := compute.SchedulingGracefulShutdown{}
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-
-	originalMaxDuration := original["max_duration"].([]interface{})
-	maxDuration, err := expandGracefulShutdownMaxDuration(originalMaxDuration)
-	if err != nil {
-		return nil, err
-	}
-	if maxDuration != nil {
-		gracefulShutdown.MaxDuration = maxDuration
-	}
-
-	gracefulShutdown.Enabled = original["enabled"].(bool)
-	gracefulShutdown.ForceSendFields = append(gracefulShutdown.ForceSendFields, "Enabled")
-	return &gracefulShutdown, nil
-}
-
-func expandGracefulShutdownMaxDuration(v interface{}) (*compute.Duration, error) {
-	l := v.([]interface{})
-	duration := compute.Duration{}
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-
-	maxDurationMap := raw.(map[string]interface{})
-	transformedNanos := maxDurationMap["nanos"]
-	transformedSeconds := maxDurationMap["seconds"]
-
-	if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		duration.Nanos = int64(transformedNanos.(int))
-	}
-	if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		duration.Seconds = int64(transformedSeconds.(int))
-	}
-
-	duration.ForceSendFields = append(duration.ForceSendFields, "Seconds")
-
-	return &duration, nil
-}
 
 func flattenScheduling(resp *compute.Scheduling) []map[string]interface{} {
 	schedulingMap := map[string]interface{}{
@@ -356,20 +282,6 @@ func flattenScheduling(resp *compute.Scheduling) []map[string]interface{} {
 
 	if resp.OnInstanceStopAction != nil {
 		schedulingMap["on_instance_stop_action"] = flattenOnInstanceStopAction(resp.OnInstanceStopAction)
-	}
-
-	schedulingMap["skip_guest_os_shutdown"] = resp.SkipGuestOsShutdown
-
-	if resp.HostErrorTimeoutSeconds != 0 {
-		schedulingMap["host_error_timeout_seconds"] = resp.HostErrorTimeoutSeconds
-	}
-
-	if resp.MaintenanceInterval != "" {
-		schedulingMap["maintenance_interval"] = resp.MaintenanceInterval
-	}
-
-	if resp.GracefulShutdown != nil {
-		schedulingMap["graceful_shutdown"] = flattenGracefulShutdown(resp.GracefulShutdown)
 	}
 
 	if resp.LocalSsdRecoveryTimeout != nil {
@@ -418,26 +330,6 @@ func flattenComputeLocalSsdRecoveryTimeout(v *compute.Duration) []interface{} {
 	return []interface{}{transformed}
 }
 
-func flattenGracefulShutdown(v *compute.SchedulingGracefulShutdown) []interface{} {
-	if v == nil {
-		return nil
-	}
-	transformed := make(map[string]interface{})
-	transformed["enabled"] = v.Enabled
-	transformed["max_duration"] = flattenGracefulShutdownMaxDuration(v.MaxDuration)
-	return []interface{}{transformed}
-}
-
-func flattenGracefulShutdownMaxDuration(v *compute.Duration) []interface{} {
-	if v == nil {
-		return nil
-	}
-	transformed := make(map[string]interface{})
-	transformed["nanos"] = v.Nanos
-	transformed["seconds"] = v.Seconds
-	return []interface{}{transformed}
-}
-
 func flattenAccessConfigs(accessConfigs []*compute.AccessConfig) ([]map[string]interface{}, string) {
 	flattened := make([]map[string]interface{}, len(accessConfigs))
 	natIP := ""
@@ -451,9 +343,6 @@ func flattenAccessConfigs(accessConfigs []*compute.AccessConfig) ([]map[string]i
 		}
 		if natIP == "" {
 			natIP = ac.NatIP
-		}
-		if ac.SecurityPolicy != "" {
-			flattened[i]["security_policy"] = ac.SecurityPolicy
 		}
 	}
 	return flattened, natIP
@@ -469,9 +358,6 @@ func flattenIpv6AccessConfigs(ipv6AccessConfigs []*compute.AccessConfig) []map[s
 		flattened[i]["external_ipv6"] = ac.ExternalIpv6
 		flattened[i]["external_ipv6_prefix_length"] = strconv.FormatInt(ac.ExternalIpv6PrefixLength, 10)
 		flattened[i]["name"] = ac.Name
-		if ac.SecurityPolicy != "" {
-			flattened[i]["security_policy"] = ac.SecurityPolicy
-		}
 	}
 	return flattened
 }
@@ -523,12 +409,6 @@ func flattenNetworkInterfaces(d *schema.ResourceData, config *transport_tpg.Conf
 			flattened[i]["network_attachment"] = networkAttachment
 		}
 
-		// the security_policy for a network_interface is found in one of its accessConfigs.
-		if len(iface.AccessConfigs) > 0 && iface.AccessConfigs[0].SecurityPolicy != "" {
-			flattened[i]["security_policy"] = iface.AccessConfigs[0].SecurityPolicy
-		} else if len(iface.Ipv6AccessConfigs) > 0 && iface.Ipv6AccessConfigs[0].SecurityPolicy != "" {
-			flattened[i]["security_policy"] = iface.Ipv6AccessConfigs[0].SecurityPolicy
-		}
 	}
 	return flattened, region, internalIP, externalIP, nil
 }
@@ -785,10 +665,9 @@ func schedulingHasChangeRequiringReboot(d *schema.ResourceData) bool {
 	oScheduling := o.([]interface{})[0].(map[string]interface{})
 	newScheduling := n.([]interface{})[0].(map[string]interface{})
 
-	return hasNodeAffinitiesChanged(oScheduling, newScheduling) ||
+	return (hasNodeAffinitiesChanged(oScheduling, newScheduling) ||
 		hasMaxRunDurationChanged(oScheduling, newScheduling) ||
-		hasGracefulShutdownChangedWithReboot(d, oScheduling, newScheduling) ||
-		hasTerminationTimeChanged(oScheduling, newScheduling)
+		hasTerminationTimeChanged(oScheduling, newScheduling))
 }
 
 // Terraform doesn't correctly calculate changes on schema.Set, so we do it manually
@@ -829,17 +708,6 @@ func schedulingHasChangeWithoutReboot(d *schema.ResourceData) bool {
 	if oScheduling["availability_domain"] != newScheduling["availability_domain"] {
 		return true
 	}
-	if oScheduling["host_error_timeout_seconds"] != newScheduling["host_error_timeout_seconds"] {
-		return true
-	}
-
-	if oScheduling["skip_guest_os_shutdown"] != newScheduling["skip_guest_os_shutdown"] {
-		return true
-	}
-
-	if hasGracefulShutdownChanged(oScheduling, newScheduling) {
-		return true
-	}
 
 	return false
 }
@@ -856,57 +724,6 @@ func hasTerminationTimeChanged(oScheduling, nScheduling map[string]interface{}) 
 	}
 
 	if oTerminationTime != nTerminationTime {
-		return true
-	}
-
-	return false
-}
-
-func hasGracefulShutdownChangedWithReboot(d *schema.ResourceData, oScheduling, nScheduling map[string]interface{}) bool {
-	allow_stopping_for_update := d.Get("allow_stopping_for_update").(bool)
-	if !allow_stopping_for_update {
-		return false
-	}
-	return hasGracefulShutdownChanged(oScheduling, nScheduling)
-}
-
-func hasGracefulShutdownChanged(oScheduling, nScheduling map[string]interface{}) bool {
-	oGrShut := oScheduling["graceful_shutdown"].([]interface{})
-	nGrShut := nScheduling["graceful_shutdown"].([]interface{})
-
-	if (len(oGrShut) == 0 || oGrShut[0] == nil) && (len(nGrShut) == 0 || nGrShut[0] == nil) {
-		return false
-	}
-	if (len(oGrShut) == 0 || oGrShut[0] == nil) || (len(nGrShut) == 0 || nGrShut[0] == nil) {
-		return true
-	}
-
-	oldGrShut := oGrShut[0].(map[string]interface{})
-	newGrShut := nGrShut[0].(map[string]interface{})
-	oldMaxDuration := oldGrShut["max_duration"].([]interface{})
-	newMaxDuration := newGrShut["max_duration"].([]interface{})
-	var oldMaxDurationMap map[string]interface{}
-	var newMaxDurationMap map[string]interface{}
-
-	if len(oldMaxDuration) > 0 && oldMaxDuration[0] != nil {
-		oldMaxDurationMap = oldMaxDuration[0].(map[string]interface{})
-	} else {
-		oldMaxDurationMap = nil
-	}
-
-	if len(newMaxDuration) > 0 && newMaxDuration[0] != nil {
-		newMaxDurationMap = newMaxDuration[0].(map[string]interface{})
-	} else {
-		newMaxDurationMap = nil
-	}
-
-	if oldGrShut["enabled"] != newGrShut["enabled"] {
-		return true
-	}
-	if oldMaxDurationMap["seconds"] != newMaxDurationMap["seconds"] {
-		return true
-	}
-	if oldMaxDurationMap["nanos"] != newMaxDurationMap["nanos"] {
 		return true
 	}
 

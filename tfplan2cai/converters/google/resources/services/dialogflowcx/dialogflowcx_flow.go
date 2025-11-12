@@ -17,12 +17,65 @@
 package dialogflowcx
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
 	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 const DialogflowCXFlowAssetType string = "{{location}}-dialogflow.googleapis.com/Flow"
@@ -35,7 +88,7 @@ func ResourceConverterDialogflowCXFlow() cai.ResourceConverter {
 }
 
 func GetDialogflowCXFlowCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/flows")
+	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/flows/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -124,6 +177,9 @@ func expandDialogflowCXFlowDescription(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandDialogflowCXFlowTransitionRoutes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -193,6 +249,9 @@ func expandDialogflowCXFlowTransitionRoutesCondition(v interface{}, d tpgresourc
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -247,6 +306,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillment(v interface{}, d t
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -322,6 +384,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesChannel(v i
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -368,6 +433,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesPayload(v i
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -399,6 +467,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesConversatio
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -444,6 +515,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesOutputAudio
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -475,6 +549,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesLiveAgentHa
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -509,6 +586,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesPlayAudioAl
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -544,6 +624,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentTag(v interface{}, 
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -589,6 +672,9 @@ func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentSetParameterActions
 }
 
 func expandDialogflowCXFlowTransitionRoutesTriggerFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -631,6 +717,9 @@ func expandDialogflowCXFlowTransitionRoutesTargetFlow(v interface{}, d tpgresour
 }
 
 func expandDialogflowCXFlowEventHandlers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -689,6 +778,9 @@ func expandDialogflowCXFlowEventHandlersEvent(v interface{}, d tpgresource.Terra
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -750,6 +842,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillment(v interface{}, d tpgr
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -825,6 +920,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesChannel(v inte
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -871,6 +969,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesPayload(v inte
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -902,6 +1003,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesConversationSu
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -947,6 +1051,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesOutputAudioTex
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -978,6 +1085,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesLiveAgentHando
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1012,6 +1122,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesPlayAudioAllow
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1047,6 +1160,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentTag(v interface{}, d t
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1092,6 +1208,9 @@ func expandDialogflowCXFlowEventHandlersTriggerFulfillmentSetParameterActionsVal
 }
 
 func expandDialogflowCXFlowEventHandlersTriggerFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1142,6 +1261,9 @@ func expandDialogflowCXFlowTransitionRouteGroups(v interface{}, d tpgresource.Te
 }
 
 func expandDialogflowCXFlowNluSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1187,6 +1309,9 @@ func expandDialogflowCXFlowNluSettingsModelTrainingMode(v interface{}, d tpgreso
 }
 
 func expandDialogflowCXFlowAdvancedSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1227,6 +1352,9 @@ func expandDialogflowCXFlowAdvancedSettings(v interface{}, d tpgresource.Terrafo
 }
 
 func expandDialogflowCXFlowAdvancedSettingsAudioExportGcsDestination(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1250,6 +1378,9 @@ func expandDialogflowCXFlowAdvancedSettingsAudioExportGcsDestinationUri(v interf
 }
 
 func expandDialogflowCXFlowAdvancedSettingsSpeechSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1313,6 +1444,9 @@ func expandDialogflowCXFlowAdvancedSettingsSpeechSettingsModels(v interface{}, d
 }
 
 func expandDialogflowCXFlowAdvancedSettingsDtmfSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1358,6 +1492,9 @@ func expandDialogflowCXFlowAdvancedSettingsDtmfSettingsFinishDigit(v interface{}
 }
 
 func expandDialogflowCXFlowAdvancedSettingsLoggingSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1403,6 +1540,9 @@ func expandDialogflowCXFlowAdvancedSettingsLoggingSettingsEnableConsentBasedReda
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1454,6 +1594,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsEnabled(v interface{}, d tp
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1522,6 +1665,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillment(v interf
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1618,6 +1764,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesC
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1664,6 +1813,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesP
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1695,6 +1847,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesC
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1740,6 +1895,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesO
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesLiveAgentHandoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1771,6 +1929,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesL
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesEndInteraction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -1786,6 +1947,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesE
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1820,6 +1984,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesP
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1839,6 +2006,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesM
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesMixedAudioSegments(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1887,6 +2057,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesM
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesTelephonyTransferCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1910,6 +2083,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesT
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentMessagesKnowledgeInfoCard(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -1937,6 +2113,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentTag(v int
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentSetParameterActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1982,6 +2161,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentSetParame
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentConditionalCases(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -2016,6 +2198,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentCondition
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2049,6 +2234,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedS
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsSpeechSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2112,6 +2300,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedS
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsDtmfSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2179,6 +2370,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedS
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentAdvancedSettingsLoggingSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2228,6 +2422,9 @@ func expandDialogflowCXFlowKnowledgeConnectorSettingsTriggerFulfillmentEnableGen
 }
 
 func expandDialogflowCXFlowKnowledgeConnectorSettingsDataStoreConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {

@@ -17,16 +17,36 @@
 package cloudbuild
 
 import (
+	"bytes"
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 func stepTimeoutCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
@@ -65,6 +85,35 @@ func stepTimeoutCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v in
 	}
 	return nil
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const CloudBuildTriggerAssetType string = "cloudbuild.googleapis.com/Trigger"
 
@@ -278,6 +327,9 @@ func expandCloudBuildTriggerFilter(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandCloudBuildTriggerGitFileSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -367,6 +419,9 @@ func expandCloudBuildTriggerGitFileSourceBitbucketServerConfig(v interface{}, d 
 }
 
 func expandCloudBuildTriggerRepositoryEventConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -404,6 +459,9 @@ func expandCloudBuildTriggerRepositoryEventConfigRepository(v interface{}, d tpg
 }
 
 func expandCloudBuildTriggerRepositoryEventConfigPullRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -449,6 +507,9 @@ func expandCloudBuildTriggerRepositoryEventConfigPullRequestCommentControl(v int
 }
 
 func expandCloudBuildTriggerRepositoryEventConfigPush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -494,6 +555,9 @@ func expandCloudBuildTriggerRepositoryEventConfigPushInvertRegex(v interface{}, 
 }
 
 func expandCloudBuildTriggerSourceToBuild(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -580,6 +644,9 @@ func expandCloudBuildTriggerIncludedFiles(v interface{}, d tpgresource.Terraform
 }
 
 func expandCloudBuildTriggerTriggerTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -669,6 +736,9 @@ func expandCloudBuildTriggerTriggerTemplateCommitSha(v interface{}, d tpgresourc
 }
 
 func expandCloudBuildTriggerGithub(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -724,6 +794,9 @@ func expandCloudBuildTriggerGithubName(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandCloudBuildTriggerGithubPullRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -769,6 +842,9 @@ func expandCloudBuildTriggerGithubPullRequestInvertRegex(v interface{}, d tpgres
 }
 
 func expandCloudBuildTriggerGithubPush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -818,6 +894,9 @@ func expandCloudBuildTriggerGithubEnterpriseConfigResourceName(v interface{}, d 
 }
 
 func expandCloudBuildTriggerBitbucketServerTriggerConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -877,6 +956,9 @@ func expandCloudBuildTriggerBitbucketServerTriggerConfigBitbucketServerConfigRes
 }
 
 func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -922,6 +1004,9 @@ func expandCloudBuildTriggerBitbucketServerTriggerConfigPullRequestInvertRegex(v
 }
 
 func expandCloudBuildTriggerBitbucketServerTriggerConfigPush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -967,6 +1052,9 @@ func expandCloudBuildTriggerBitbucketServerTriggerConfigPushTag(v interface{}, d
 }
 
 func expandCloudBuildTriggerPubsubConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1023,6 +1111,9 @@ func expandCloudBuildTriggerPubsubConfigState(v interface{}, d tpgresource.Terra
 }
 
 func expandCloudBuildTriggerWebhookConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1057,6 +1148,9 @@ func expandCloudBuildTriggerWebhookConfigState(v interface{}, d tpgresource.Terr
 }
 
 func expandCloudBuildTriggerApprovalConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1080,6 +1174,9 @@ func expandCloudBuildTriggerApprovalConfigApprovalRequired(v interface{}, d tpgr
 }
 
 func expandCloudBuildTriggerBuild(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1176,6 +1273,9 @@ func expandCloudBuildTriggerBuild(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandCloudBuildTriggerBuildSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1202,6 +1302,9 @@ func expandCloudBuildTriggerBuildSource(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandCloudBuildTriggerBuildSourceStorageSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1247,6 +1350,9 @@ func expandCloudBuildTriggerBuildSourceStorageSourceGeneration(v interface{}, d 
 }
 
 func expandCloudBuildTriggerBuildSourceRepoSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1385,6 +1491,9 @@ func expandCloudBuildTriggerBuildTimeout(v interface{}, d tpgresource.TerraformR
 }
 
 func expandCloudBuildTriggerBuildSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1429,6 +1538,9 @@ func expandCloudBuildTriggerBuildSecretSecretEnv(v interface{}, d tpgresource.Te
 }
 
 func expandCloudBuildTriggerBuildAvailableSecrets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1448,6 +1560,9 @@ func expandCloudBuildTriggerBuildAvailableSecrets(v interface{}, d tpgresource.T
 }
 
 func expandCloudBuildTriggerBuildAvailableSecretsSecretManager(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1485,6 +1600,9 @@ func expandCloudBuildTriggerBuildAvailableSecretsSecretManagerEnv(v interface{},
 }
 
 func expandCloudBuildTriggerBuildStep(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1634,6 +1752,9 @@ func expandCloudBuildTriggerBuildStepTiming(v interface{}, d tpgresource.Terrafo
 }
 
 func expandCloudBuildTriggerBuildStepVolumes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1687,6 +1808,9 @@ func expandCloudBuildTriggerBuildStepAllowExitCodes(v interface{}, d tpgresource
 }
 
 func expandCloudBuildTriggerBuildArtifacts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1738,6 +1862,9 @@ func expandCloudBuildTriggerBuildArtifactsImages(v interface{}, d tpgresource.Te
 }
 
 func expandCloudBuildTriggerBuildArtifactsObjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1779,6 +1906,9 @@ func expandCloudBuildTriggerBuildArtifactsObjectsPaths(v interface{}, d tpgresou
 }
 
 func expandCloudBuildTriggerBuildArtifactsObjectsTiming(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1813,6 +1943,9 @@ func expandCloudBuildTriggerBuildArtifactsObjectsTimingEndTime(v interface{}, d 
 }
 
 func expandCloudBuildTriggerBuildArtifactsMavenArtifacts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1883,6 +2016,9 @@ func expandCloudBuildTriggerBuildArtifactsMavenArtifactsVersion(v interface{}, d
 }
 
 func expandCloudBuildTriggerBuildArtifactsPythonPackages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1920,6 +2056,9 @@ func expandCloudBuildTriggerBuildArtifactsPythonPackagesPaths(v interface{}, d t
 }
 
 func expandCloudBuildTriggerBuildArtifactsNpmPackages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1957,6 +2096,9 @@ func expandCloudBuildTriggerBuildArtifactsNpmPackagesPackagePath(v interface{}, 
 }
 
 func expandCloudBuildTriggerBuildOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2097,6 +2239,9 @@ func expandCloudBuildTriggerBuildOptionsSecretEnv(v interface{}, d tpgresource.T
 }
 
 func expandCloudBuildTriggerBuildOptionsVolumes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -2134,6 +2279,9 @@ func expandCloudBuildTriggerBuildOptionsVolumesPath(v interface{}, d tpgresource
 }
 
 func expandCloudBuildTriggerDeveloperConnectEventConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2182,6 +2330,9 @@ func expandCloudBuildTriggerDeveloperConnectEventConfigGitRepositoryLinkType(v i
 }
 
 func expandCloudBuildTriggerDeveloperConnectEventConfigPullRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2227,6 +2378,9 @@ func expandCloudBuildTriggerDeveloperConnectEventConfigPullRequestInvertRegex(v 
 }
 
 func expandCloudBuildTriggerDeveloperConnectEventConfigPush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

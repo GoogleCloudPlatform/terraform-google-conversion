@@ -26,16 +26,16 @@ func TestAccComputeSubnetwork_subnetworkBasicExample(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_subnet_cidr_routes_overlap",
 			"count",
 			"depends_on",
 			"for_each",
 			"ip_collection",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkLoggingConfigExample(t *testing.T) {
@@ -44,34 +44,16 @@ func TestAccComputeSubnetwork_subnetworkLoggingConfigExample(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_subnet_cidr_routes_overlap",
 			"count",
 			"depends_on",
 			"for_each",
 			"ip_collection",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkInternalL7lbExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"allow_subnet_cidr_routes_overlap",
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"provider",
-			"send_secondary_ip_range_if_empty",
-		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkIpv6Example(t *testing.T) {
@@ -80,124 +62,54 @@ func TestAccComputeSubnetwork_subnetworkIpv6Example(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_subnet_cidr_routes_overlap",
 			"count",
 			"depends_on",
 			"for_each",
 			"ip_collection",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkInternalIpv6Example(t *testing.T) {
+	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_subnet_cidr_routes_overlap",
 			"count",
 			"depends_on",
 			"for_each",
 			"ip_collection",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkPurposePrivateNatExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"allow_subnet_cidr_routes_overlap",
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"provider",
-			"send_secondary_ip_range_if_empty",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkCidrOverlapExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"allow_subnet_cidr_routes_overlap",
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"provider",
-			"send_secondary_ip_range_if_empty",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkReservedInternalRangeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"allow_subnet_cidr_routes_overlap",
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"provider",
-			"send_secondary_ip_range_if_empty",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkReservedSecondaryRangeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"allow_subnet_cidr_routes_overlap",
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"provider",
-			"send_secondary_ip_range_if_empty",
-		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkIpv6OnlyInternalExample(t *testing.T) {
+	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
 	t.Parallel()
 
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_subnet_cidr_routes_overlap",
 			"count",
 			"depends_on",
 			"for_each",
 			"ip_collection",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample(t *testing.T) {
@@ -206,16 +118,54 @@ func TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_subnet_cidr_routes_overlap",
 			"count",
 			"depends_on",
 			"for_each",
 			"ip_collection",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
+	)
+}
+func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExample(t *testing.T) {
+	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"ip_collection",
+			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+			"send_secondary_ip_range_if_empty",
+		},
+	)
+}
+func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExplicitIpPrefixExample(t *testing.T) {
+	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"ip_collection",
+			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+			"send_secondary_ip_range_if_empty",
+		},
 	)
 }
 func TestAccComputeSubnetwork_subnetworkIpv6OnlyExternalExample(t *testing.T) {
@@ -224,15 +174,15 @@ func TestAccComputeSubnetwork_subnetworkIpv6OnlyExternalExample(t *testing.T) {
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_subnet_cidr_routes_overlap",
 			"count",
 			"depends_on",
 			"for_each",
 			"ip_collection",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 			"send_secondary_ip_range_if_empty",
 		},
-		[]string{},
 	)
 }

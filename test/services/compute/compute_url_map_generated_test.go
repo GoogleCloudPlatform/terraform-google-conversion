@@ -28,19 +28,13 @@ func TestAccComputeUrlMap_urlMapBucketAndServiceExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTrafficDirectorRouteExample(t *testing.T) {
@@ -51,20 +45,13 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorRouteExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
-			"path_matcher.route_rules.url_redirect.https_redirect",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTrafficDirectorRoutePartialExample(t *testing.T) {
@@ -75,19 +62,13 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorRoutePartialExample(t *testing.T)
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTrafficDirectorPathExample(t *testing.T) {
@@ -98,19 +79,13 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorPathExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTrafficDirectorPathPartialExample(t *testing.T) {
@@ -121,19 +96,13 @@ func TestAccComputeUrlMap_urlMapTrafficDirectorPathPartialExample(t *testing.T) 
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapHeaderBasedRoutingExample(t *testing.T) {
@@ -144,19 +113,13 @@ func TestAccComputeUrlMap_urlMapHeaderBasedRoutingExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapParameterBasedRoutingExample(t *testing.T) {
@@ -167,111 +130,13 @@ func TestAccComputeUrlMap_urlMapParameterBasedRoutingExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
-	)
-}
-func TestAccComputeUrlMap_urlMapDefaultMirrorPercentExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
-			"provider",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeUrlMap_urlMapPathMatcherDefaultMirrorPercentExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
-			"provider",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeUrlMap_urlMapPathRuleMirrorPercentExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
-			"provider",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeUrlMap_urlMapRouteRuleMirrorPercentExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
-			"provider",
-		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTestHeadersExample(t *testing.T) {
@@ -282,19 +147,13 @@ func TestAccComputeUrlMap_urlMapTestHeadersExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTestExpectedOutputUrlExample(t *testing.T) {
@@ -305,19 +164,13 @@ func TestAccComputeUrlMap_urlMapTestExpectedOutputUrlExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapTestRedirectResponseCodeExample(t *testing.T) {
@@ -328,19 +181,13 @@ func TestAccComputeUrlMap_urlMapTestRedirectResponseCodeExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapPathTemplateMatchExample(t *testing.T) {
@@ -351,19 +198,13 @@ func TestAccComputeUrlMap_urlMapPathTemplateMatchExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyExample(t *testing.T) {
@@ -374,64 +215,12 @@ func TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyExample(t *testing.T) {
 		[]string{
 			"count",
 			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
 			"depends_on",
 			"for_each",
 			"lifecycle",
 			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
 			"provider",
 		},
-		[]string{},
-	)
-}
-func TestAccComputeUrlMap_urlMapHttpFilterConfigsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
-			"provider",
-		},
-		[]string{},
-	)
-}
-func TestAccComputeUrlMap_urlMapHttpFilterMetadataExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"default_route_action.request_mirror_policy.mirror_percent",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
-			"path_matcher.route_rules.http_filter_configs",
-			"path_matcher.route_rules.http_filter_metadata",
-			"provider",
-		},
-		[]string{},
 	)
 }

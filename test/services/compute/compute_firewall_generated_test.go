@@ -30,9 +30,10 @@ func TestAccComputeFirewall_firewallBasicExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeFirewall_firewallWithTargetTagsExample(t *testing.T) {
@@ -45,8 +46,9 @@ func TestAccComputeFirewall_firewallWithTargetTagsExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }

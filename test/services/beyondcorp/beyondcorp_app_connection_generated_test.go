@@ -34,7 +34,6 @@ func TestAccBeyondcorpAppConnection_beyondcorpAppConnectionBasicExample(t *testi
 			"provider",
 			"region",
 		},
-		[]string{},
 	)
 }
 func TestAccBeyondcorpAppConnection_beyondcorpAppConnectionFullExample(t *testing.T) {
@@ -51,6 +50,5 @@ func TestAccBeyondcorpAppConnection_beyondcorpAppConnectionFullExample(t *testin
 			"provider",
 			"region",
 		},
-		[]string{},
 	)
 }

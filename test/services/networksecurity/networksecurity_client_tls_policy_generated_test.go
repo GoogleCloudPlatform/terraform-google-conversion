@@ -34,7 +34,6 @@ func TestAccNetworkSecurityClientTlsPolicy_networkSecurityClientTlsPolicyBasicEx
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityClientTlsPolicy_networkSecurityClientTlsPolicyAdvancedExample(t *testing.T) {
@@ -51,6 +50,5 @@ func TestAccNetworkSecurityClientTlsPolicy_networkSecurityClientTlsPolicyAdvance
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }

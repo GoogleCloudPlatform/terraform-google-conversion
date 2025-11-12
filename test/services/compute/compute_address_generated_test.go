@@ -32,7 +32,6 @@ func TestAccComputeAddress_addressBasicExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeAddress_addressWithSubnetworkExample(t *testing.T) {
@@ -47,7 +46,6 @@ func TestAccComputeAddress_addressWithSubnetworkExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeAddress_addressWithGceEndpointExample(t *testing.T) {
@@ -62,7 +60,6 @@ func TestAccComputeAddress_addressWithGceEndpointExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeAddress_addressWithSharedLoadbalancerVipExample(t *testing.T) {
@@ -77,7 +74,6 @@ func TestAccComputeAddress_addressWithSharedLoadbalancerVipExample(t *testing.T)
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeAddress_instanceWithIpExample(t *testing.T) {
@@ -92,7 +88,6 @@ func TestAccComputeAddress_instanceWithIpExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeAddress_computeAddressIpsecInterconnectExample(t *testing.T) {
@@ -107,6 +102,5 @@ func TestAccComputeAddress_computeAddressIpsecInterconnectExample(t *testing.T) 
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }

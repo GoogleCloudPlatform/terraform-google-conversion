@@ -32,7 +32,6 @@ func TestAccComputeExternalVpnGateway_externalVpnGatewayExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeExternalVpnGateway_onlyExternalVpnGatewayFullExample(t *testing.T) {
@@ -47,6 +46,5 @@ func TestAccComputeExternalVpnGateway_onlyExternalVpnGatewayFullExample(t *testi
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }

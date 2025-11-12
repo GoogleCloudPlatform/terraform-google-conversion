@@ -34,9 +34,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPullExample(t *testing.T) {
@@ -51,12 +52,12 @@ func TestAccPubsubSubscription_pubsubSubscriptionPullExample(t *testing.T) {
 			"cloud_storage_config",
 			"count",
 			"depends_on",
-			"enable_message_ordering",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPullFilterExample(t *testing.T) {
@@ -73,9 +74,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionPullFilterExample(t *testing.T)
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionDeadLetterExample(t *testing.T) {
@@ -92,9 +94,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionDeadLetterExample(t *testing.T)
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushBqExample(t *testing.T) {
@@ -111,9 +114,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushBqExample(t *testing.T) {
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushBqTableSchemaExample(t *testing.T) {
@@ -130,9 +134,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushBqTableSchemaExample(t *tes
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushBqServiceAccountExample(t *testing.T) {
@@ -149,9 +154,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushBqServiceAccountExample(t *
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageExample(t *testing.T) {
@@ -168,9 +174,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageExample(t *test
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageAvroExample(t *testing.T) {
@@ -187,9 +194,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageAvroExample(t *
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageServiceAccountExample(t *testing.T) {
@@ -206,9 +214,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageServiceAccountE
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionSingleSmtExample(t *testing.T) {
@@ -225,9 +234,10 @@ func TestAccPubsubSubscription_pubsubSubscriptionSingleSmtExample(t *testing.T) 
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
 	)
 }
 func TestAccPubsubSubscription_pubsubSubscriptionMultipleSmtsExample(t *testing.T) {
@@ -245,8 +255,29 @@ func TestAccPubsubSubscription_pubsubSubscriptionMultipleSmtsExample(t *testing.
 			"depends_on",
 			"for_each",
 			"lifecycle",
+			"message_transforms.javascript_udf",
 			"provider",
+			"tags",
 		},
-		[]string{},
+	)
+}
+func TestAccPubsubSubscription_pubsubSubscriptionTagsExample(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"bigquery_config.service_account_email",
+			"bigquery_config.table",
+			"bigquery_config.use_table_schema",
+			"cloud_storage_config",
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"message_transforms.javascript_udf",
+			"provider",
+			"tags",
+		},
 	)
 }

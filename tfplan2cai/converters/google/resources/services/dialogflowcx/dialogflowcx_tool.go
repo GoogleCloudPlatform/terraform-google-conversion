@@ -17,12 +17,65 @@
 package dialogflowcx
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
 	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 const DialogflowCXToolAssetType string = "{{location}}-dialogflow.googleapis.com/Tool"
@@ -35,7 +88,7 @@ func ResourceConverterDialogflowCXTool() cai.ResourceConverter {
 }
 
 func GetDialogflowCXToolCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/tools")
+	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/tools/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -100,6 +153,9 @@ func expandDialogflowCXToolDescription(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandDialogflowCXToolOpenApiSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -140,6 +196,9 @@ func expandDialogflowCXToolOpenApiSpec(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandDialogflowCXToolOpenApiSpecAuthentication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -180,6 +239,9 @@ func expandDialogflowCXToolOpenApiSpecAuthentication(v interface{}, d tpgresourc
 }
 
 func expandDialogflowCXToolOpenApiSpecAuthenticationApiKeyConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -236,6 +298,9 @@ func expandDialogflowCXToolOpenApiSpecAuthenticationApiKeyConfigRequestLocation(
 }
 
 func expandDialogflowCXToolOpenApiSpecAuthenticationOauthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -314,6 +379,9 @@ func expandDialogflowCXToolOpenApiSpecAuthenticationOauthConfigScopes(v interfac
 }
 
 func expandDialogflowCXToolOpenApiSpecAuthenticationServiceAgentAuthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -337,6 +405,9 @@ func expandDialogflowCXToolOpenApiSpecAuthenticationServiceAgentAuthConfigServic
 }
 
 func expandDialogflowCXToolOpenApiSpecAuthenticationBearerTokenConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -371,6 +442,9 @@ func expandDialogflowCXToolOpenApiSpecAuthenticationBearerTokenConfigSecretVersi
 }
 
 func expandDialogflowCXToolOpenApiSpecTlsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -390,6 +464,9 @@ func expandDialogflowCXToolOpenApiSpecTlsConfig(v interface{}, d tpgresource.Ter
 }
 
 func expandDialogflowCXToolOpenApiSpecTlsConfigCaCerts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -427,6 +504,9 @@ func expandDialogflowCXToolOpenApiSpecTlsConfigCaCertsCert(v interface{}, d tpgr
 }
 
 func expandDialogflowCXToolOpenApiSpecServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -454,6 +534,9 @@ func expandDialogflowCXToolOpenApiSpecTextSchema(v interface{}, d tpgresource.Te
 }
 
 func expandDialogflowCXToolDataStoreSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -480,6 +563,9 @@ func expandDialogflowCXToolDataStoreSpec(v interface{}, d tpgresource.TerraformR
 }
 
 func expandDialogflowCXToolDataStoreSpecDataStoreConnections(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -528,6 +614,9 @@ func expandDialogflowCXToolDataStoreSpecDataStoreConnectionsDocumentProcessingMo
 }
 
 func expandDialogflowCXToolDataStoreSpecFallbackPrompt(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -543,6 +632,9 @@ func expandDialogflowCXToolDataStoreSpecFallbackPrompt(v interface{}, d tpgresou
 }
 
 func expandDialogflowCXToolFunctionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

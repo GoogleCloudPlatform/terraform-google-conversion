@@ -17,11 +17,129 @@
 package netapp
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+// Suppress diffs when the value read from api
+// has the project ID instead of the project number
+func ProjectIDDiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
+
+	const marker = "/locations"
+
+	// Find the starting index of "/locations" in both strings.
+	index1 := strings.Index(old, marker)
+	index2 := strings.Index(new, marker)
+
+	// If "/locations" is not found in either string, they can't be compared as requested.
+	if index1 == -1 || index2 == -1 {
+		return false
+	}
+
+	// Extract the substrings from the marker to the end.
+	suffix1 := old[index1:]
+	suffix2 := new[index2:]
+
+	// Compare the extracted suffixes.
+	return suffix1 == suffix2
+}
+
+func suppressSquashModeDiff(k, old, new string, d *schema.ResourceData) bool {
+	// k: The key of the field, e.g., "export_policy.0.rules.1.squash_mode"
+	// old: The value in the state (what the API returned on last read)
+	// new: The value in the configuration (what the user set)
+	// d: The ResourceData for the entire resource
+
+	// 1. Only suppress if the user did NOT set squash_mode in the config.
+	// According to the requirements, a "classic rule" is identified by the ABSENCE of squash_mode.
+	if new == "ALL_SQUASH" {
+		// If 'new' is not an empty string, the user has explicitly provided a value
+		// for squash_mode in the Terraform configuration. In this scenario, any
+		// difference between the API's value ('old') and the configured value ('new')
+		// is a real change and should NOT be suppressed.
+		return false
+	}
+
+	if new == "" && old != "ALL_SQUASH" {
+		return true
+	}
+
+	// 2. The user did not specify squash_mode in the configuration ('new' is empty).
+	// Now, we suppress the diff if the API/state value ('old') is one of the
+	// specific values that should be treated as equivalent to an unset field.
+	// These values are "NO_ROOT_SQUASH", "ROOT_SQUASH".
+	switch old {
+	case "NO_ROOT_SQUASH", "ROOT_SQUASH", "":
+		// The API returned one of the values that we consider equivalent to the field
+		// being unconfigured by the user. Since the user also didn't configure it,
+		// we should suppress this diff.
+		return true
+	default:
+		// If 'old' is not one of the values to be suppressed (and 'new' is empty),
+		// we do not suppress the diff. This could happen if, for instance, the API
+		// returned an unexpected value or if 'old' is also empty.
+		return false
+	}
+	// Note: The previous logic involving parsing 'k' and checking 'has_root_access'
+	// has been removed because squash_mode is independent of has_root_access,
+	// and a "classic rule" is defined by the absence of squash_mode itself.
+}
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 const NetappVolumeAssetType string = "netapp.googleapis.com/Volume"
@@ -176,6 +294,18 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("throughput_mibps"); !tpgresource.IsEmptyValue(reflect.ValueOf(throughputMibpsProp)) && (ok || !reflect.DeepEqual(v, throughputMibpsProp)) {
 		obj["throughputMibps"] = throughputMibpsProp
 	}
+	cacheParametersProp, err := expandNetappVolumeCacheParameters(d.Get("cache_parameters"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("cache_parameters"); !tpgresource.IsEmptyValue(reflect.ValueOf(cacheParametersProp)) && (ok || !reflect.DeepEqual(v, cacheParametersProp)) {
+		obj["cacheParameters"] = cacheParametersProp
+	}
+	blockDevicesProp, err := expandNetappVolumeBlockDevices(d.Get("block_devices"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("block_devices"); !tpgresource.IsEmptyValue(reflect.ValueOf(blockDevicesProp)) && (ok || !reflect.DeepEqual(v, blockDevicesProp)) {
+		obj["blockDevices"] = blockDevicesProp
+	}
 	effectiveLabelsProp, err := expandNetappVolumeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -199,6 +329,9 @@ func expandNetappVolumeCapacityGib(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandNetappVolumeExportPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -218,6 +351,9 @@ func expandNetappVolumeExportPolicy(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandNetappVolumeExportPolicyRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -404,6 +540,9 @@ func expandNetappVolumeKerberosEnabled(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandNetappVolumeRestoreParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -442,6 +581,9 @@ func expandNetappVolumeRestrictedActions(v interface{}, d tpgresource.TerraformR
 }
 
 func expandNetappVolumeSnapshotPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -493,6 +635,9 @@ func expandNetappVolumeSnapshotPolicyEnabled(v interface{}, d tpgresource.Terraf
 }
 
 func expandNetappVolumeSnapshotPolicyHourlySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -527,6 +672,9 @@ func expandNetappVolumeSnapshotPolicyHourlyScheduleMinute(v interface{}, d tpgre
 }
 
 func expandNetappVolumeSnapshotPolicyDailySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -572,6 +720,9 @@ func expandNetappVolumeSnapshotPolicyDailyScheduleHour(v interface{}, d tpgresou
 }
 
 func expandNetappVolumeSnapshotPolicyWeeklySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -628,6 +779,9 @@ func expandNetappVolumeSnapshotPolicyWeeklyScheduleDay(v interface{}, d tpgresou
 }
 
 func expandNetappVolumeSnapshotPolicyMonthlySchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -684,6 +838,9 @@ func expandNetappVolumeSnapshotPolicyMonthlyScheduleDaysOfMonth(v interface{}, d
 }
 
 func expandNetappVolumeBackupConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -737,6 +894,9 @@ func expandNetappVolumeMultipleEndpoints(v interface{}, d tpgresource.TerraformR
 }
 
 func expandNetappVolumeTieringPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -782,6 +942,9 @@ func expandNetappVolumeTieringPolicyHotTierBypassModeEnabled(v interface{}, d tp
 }
 
 func expandNetappVolumeHybridReplicationParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -846,6 +1009,27 @@ func expandNetappVolumeHybridReplicationParameters(v interface{}, d tpgresource.
 		transformed["labels"] = transformedLabels
 	}
 
+	transformedReplicationSchedule, err := expandNetappVolumeHybridReplicationParametersReplicationSchedule(original["replication_schedule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReplicationSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["replicationSchedule"] = transformedReplicationSchedule
+	}
+
+	transformedHybridReplicationType, err := expandNetappVolumeHybridReplicationParametersHybridReplicationType(original["hybrid_replication_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHybridReplicationType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hybridReplicationType"] = transformedHybridReplicationType
+	}
+
+	transformedLargeVolumeConstituentCount, err := expandNetappVolumeHybridReplicationParametersLargeVolumeConstituentCount(original["large_volume_constituent_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLargeVolumeConstituentCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["largeVolumeConstituentCount"] = transformedLargeVolumeConstituentCount
+	}
+
 	return transformed, nil
 }
 
@@ -888,7 +1072,250 @@ func expandNetappVolumeHybridReplicationParametersLabels(v interface{}, d tpgres
 	return m, nil
 }
 
+func expandNetappVolumeHybridReplicationParametersReplicationSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersHybridReplicationType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeHybridReplicationParametersLargeVolumeConstituentCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandNetappVolumeThroughputMibps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPeerVolumeName, err := expandNetappVolumeCacheParametersPeerVolumeName(original["peer_volume_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeerVolumeName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peerVolumeName"] = transformedPeerVolumeName
+	}
+
+	transformedPeerClusterName, err := expandNetappVolumeCacheParametersPeerClusterName(original["peer_cluster_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeerClusterName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peerClusterName"] = transformedPeerClusterName
+	}
+
+	transformedPeerSvmName, err := expandNetappVolumeCacheParametersPeerSvmName(original["peer_svm_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeerSvmName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peerSvmName"] = transformedPeerSvmName
+	}
+
+	transformedPeerIpAddresses, err := expandNetappVolumeCacheParametersPeerIpAddresses(original["peer_ip_addresses"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeerIpAddresses); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peerIpAddresses"] = transformedPeerIpAddresses
+	}
+
+	transformedEnableGlobalFileLock, err := expandNetappVolumeCacheParametersEnableGlobalFileLock(original["enable_global_file_lock"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableGlobalFileLock); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableGlobalFileLock"] = transformedEnableGlobalFileLock
+	}
+
+	transformedPeeringCommandExpiryTime, err := expandNetappVolumeCacheParametersPeeringCommandExpiryTime(original["peering_command_expiry_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeeringCommandExpiryTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["peeringCommandExpiryTime"] = transformedPeeringCommandExpiryTime
+	}
+
+	transformedCacheState, err := expandNetappVolumeCacheParametersCacheState(original["cache_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCacheState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cacheState"] = transformedCacheState
+	}
+
+	transformedCommand, err := expandNetappVolumeCacheParametersCommand(original["command"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCommand); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["command"] = transformedCommand
+	}
+
+	transformedPassphrase, err := expandNetappVolumeCacheParametersPassphrase(original["passphrase"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPassphrase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["passphrase"] = transformedPassphrase
+	}
+
+	transformedStateDetails, err := expandNetappVolumeCacheParametersStateDetails(original["state_details"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStateDetails); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["stateDetails"] = transformedStateDetails
+	}
+
+	transformedCacheConfig, err := expandNetappVolumeCacheParametersCacheConfig(original["cache_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCacheConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cacheConfig"] = transformedCacheConfig
+	}
+
+	return transformed, nil
+}
+
+func expandNetappVolumeCacheParametersPeerVolumeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersPeerClusterName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersPeerSvmName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersPeerIpAddresses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersEnableGlobalFileLock(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersPeeringCommandExpiryTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersCacheState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersCommand(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersPassphrase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersStateDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeCacheParametersCacheConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCifsChangeNotifyEnabled, err := expandNetappVolumeCacheParametersCacheConfigCifsChangeNotifyEnabled(original["cifs_change_notify_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCifsChangeNotifyEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cifsChangeNotifyEnabled"] = transformedCifsChangeNotifyEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandNetappVolumeCacheParametersCacheConfigCifsChangeNotifyEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandNetappVolumeBlockDevicesName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedHostGroups, err := expandNetappVolumeBlockDevicesHostGroups(original["host_groups"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHostGroups); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["hostGroups"] = transformedHostGroups
+		}
+
+		transformedIdentifier, err := expandNetappVolumeBlockDevicesIdentifier(original["identifier"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["identifier"] = transformedIdentifier
+		}
+
+		transformedSizeGib, err := expandNetappVolumeBlockDevicesSizeGib(original["size_gib"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSizeGib); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sizeGib"] = transformedSizeGib
+		}
+
+		transformedOsType, err := expandNetappVolumeBlockDevicesOsType(original["os_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOsType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["osType"] = transformedOsType
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetappVolumeBlockDevicesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevicesHostGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevicesIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevicesSizeGib(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeBlockDevicesOsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

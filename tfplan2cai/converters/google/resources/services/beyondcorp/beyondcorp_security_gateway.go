@@ -18,14 +18,35 @@ package beyondcorp
 
 import (
 	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 func beyondcorpSecurityGatewayHubsHash(v interface{}) int {
@@ -40,6 +61,35 @@ func beyondcorpSecurityGatewayHubsHash(v interface{}) int {
 
 	return tpgresource.Hashcode(buf.String())
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const BeyondcorpSecurityGatewayAssetType string = "beyondcorp.googleapis.com/SecurityGateway"
 
@@ -85,6 +135,18 @@ func GetBeyondcorpSecurityGatewayApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
+	proxyProtocolConfigProp, err := expandBeyondcorpSecurityGatewayProxyProtocolConfig(d.Get("proxy_protocol_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("proxy_protocol_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(proxyProtocolConfigProp)) && (ok || !reflect.DeepEqual(v, proxyProtocolConfigProp)) {
+		obj["proxyProtocolConfig"] = proxyProtocolConfigProp
+	}
+	serviceDiscoveryProp, err := expandBeyondcorpSecurityGatewayServiceDiscovery(d.Get("service_discovery"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("service_discovery"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceDiscoveryProp)) && (ok || !reflect.DeepEqual(v, serviceDiscoveryProp)) {
+		obj["serviceDiscovery"] = serviceDiscoveryProp
+	}
 
 	return obj, nil
 }
@@ -115,6 +177,9 @@ func expandBeyondcorpSecurityGatewayHubs(v interface{}, d tpgresource.TerraformR
 }
 
 func expandBeyondcorpSecurityGatewayHubsInternetGateway(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -138,5 +203,273 @@ func expandBeyondcorpSecurityGatewayHubsInternetGatewayAssignedIps(v interface{}
 }
 
 func expandBeyondcorpSecurityGatewayDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedClientHeaders, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigAllowedClientHeaders(original["allowed_client_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedClientHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedClientHeaders"] = transformedAllowedClientHeaders
+	}
+
+	transformedContextualHeaders, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeaders(original["contextual_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContextualHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["contextualHeaders"] = transformedContextualHeaders
+	}
+
+	transformedMetadataHeaders, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigMetadataHeaders(original["metadata_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetadataHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metadataHeaders"] = transformedMetadataHeaders
+	}
+
+	transformedGatewayIdentity, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigGatewayIdentity(original["gateway_identity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGatewayIdentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gatewayIdentity"] = transformedGatewayIdentity
+	}
+
+	transformedClientIp, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigClientIp(original["client_ip"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientIp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientIp"] = transformedClientIp
+	}
+
+	return transformed, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigAllowedClientHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedUserInfo, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersUserInfo(original["user_info"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserInfo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userInfo"] = transformedUserInfo
+	}
+
+	transformedGroupInfo, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersGroupInfo(original["group_info"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGroupInfo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["groupInfo"] = transformedGroupInfo
+	}
+
+	transformedDeviceInfo, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersDeviceInfo(original["device_info"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDeviceInfo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["deviceInfo"] = transformedDeviceInfo
+	}
+
+	transformedOutputType, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersOutputType(original["output_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutputType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outputType"] = transformedOutputType
+	}
+
+	return transformed, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersUserInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOutputType, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersUserInfoOutputType(original["output_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutputType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outputType"] = transformedOutputType
+	}
+
+	return transformed, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersUserInfoOutputType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersGroupInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOutputType, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersGroupInfoOutputType(original["output_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutputType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outputType"] = transformedOutputType
+	}
+
+	return transformed, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersGroupInfoOutputType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersDeviceInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOutputType, err := expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersDeviceInfoOutputType(original["output_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutputType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outputType"] = transformedOutputType
+	}
+
+	return transformed, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersDeviceInfoOutputType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigContextualHeadersOutputType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigMetadataHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigGatewayIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayProxyProtocolConfigClientIp(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayServiceDiscovery(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedApiGateway, err := expandBeyondcorpSecurityGatewayServiceDiscoveryApiGateway(original["api_gateway"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApiGateway); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["apiGateway"] = transformedApiGateway
+	}
+
+	return transformed, nil
+}
+
+func expandBeyondcorpSecurityGatewayServiceDiscoveryApiGateway(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResourceOverride, err := expandBeyondcorpSecurityGatewayServiceDiscoveryApiGatewayResourceOverride(original["resource_override"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResourceOverride); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resourceOverride"] = transformedResourceOverride
+	}
+
+	return transformed, nil
+}
+
+func expandBeyondcorpSecurityGatewayServiceDiscoveryApiGatewayResourceOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPath, err := expandBeyondcorpSecurityGatewayServiceDiscoveryApiGatewayResourceOverridePath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	return transformed, nil
+}
+
+func expandBeyondcorpSecurityGatewayServiceDiscoveryApiGatewayResourceOverridePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

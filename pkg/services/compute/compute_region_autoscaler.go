@@ -17,10 +17,43 @@
 package compute
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"bytes"
+	"context"
+	"fmt"
+	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = structure.NormalizeJsonString
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
 )
 
 const ComputeRegionAutoscalerSchemaName string = "google_compute_region_autoscaler"
@@ -226,49 +259,6 @@ Stackdriver Monitoring metric. Possible values: ["GAUGE", "DELTA_PER_SECOND", "D
 							Optional:    true,
 							Description: `Defines operating mode for this policy.`,
 							Default:     "ON",
-						},
-						"scale_down_control": {
-							Type:     schema.TypeList,
-							Optional: true,
-							Description: `Defines scale down controls to reduce the risk of response latency
-and outages due to abrupt scale-in events`,
-							MaxItems: 1,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"max_scaled_down_replicas": {
-										Type:        schema.TypeList,
-										Optional:    true,
-										Description: `A nested object resource.`,
-										MaxItems:    1,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-												"fixed": {
-													Type:     schema.TypeInt,
-													Optional: true,
-													Description: `Specifies a fixed number of VM instances. This must be a positive
-integer.`,
-													AtLeastOneOf: []string{"autoscaling_policy.0.scale_down_control.0.max_scaled_down_replicas.0.fixed", "autoscaling_policy.0.scale_down_control.0.max_scaled_down_replicas.0.percent"},
-												},
-												"percent": {
-													Type:     schema.TypeInt,
-													Optional: true,
-													Description: `Specifies a percentage of instances between 0 to 100%, inclusive.
-For example, specify 80 for 80%.`,
-													AtLeastOneOf: []string{"autoscaling_policy.0.scale_down_control.0.max_scaled_down_replicas.0.fixed", "autoscaling_policy.0.scale_down_control.0.max_scaled_down_replicas.0.percent"},
-												},
-											},
-										},
-										AtLeastOneOf: []string{"autoscaling_policy.0.scale_down_control.0.max_scaled_down_replicas", "autoscaling_policy.0.scale_down_control.0.time_window_sec"},
-									},
-									"time_window_sec": {
-										Type:     schema.TypeInt,
-										Optional: true,
-										Description: `How long back autoscaling should look when computing recommendations
-to include directives regarding slower scale down, as described above.`,
-										AtLeastOneOf: []string{"autoscaling_policy.0.scale_down_control.0.max_scaled_down_replicas", "autoscaling_policy.0.scale_down_control.0.time_window_sec"},
-									},
-								},
-							},
 						},
 						"scale_in_control": {
 							Type:     schema.TypeList,

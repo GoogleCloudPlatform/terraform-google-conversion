@@ -17,18 +17,41 @@
 package compute
 
 import (
+	"bytes"
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"log"
-	"net"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
 
-	"github.com/apparentlymart/go-cidr/cidr"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+import (
+	"github.com/apparentlymart/go-cidr/cidr"
+	"net"
 )
 
 // Whether the IP CIDR change shrinks the block.
@@ -81,6 +104,67 @@ func sendSecondaryIpRangeIfEmptyDiff(_ context.Context, diff *schema.ResourceDif
 
 	return nil
 }
+
+func IpDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
+	if d.Id() == "" {
+		return false
+	}
+	if old == "" || new == "" {
+		return old == new
+	}
+	addr_equality := false
+	netmask_equality := false
+
+	addr_netmask_old := strings.Split(old, "/")
+	addr_netmask_new := strings.Split(new, "/")
+
+	if !((len(addr_netmask_old)) == 2 && (len(addr_netmask_new) == 2)) {
+		return false
+	}
+
+	var addr_old net.IP = net.ParseIP(addr_netmask_old[0])
+	if addr_old == nil {
+		return false
+	}
+	var addr_new net.IP = net.ParseIP(addr_netmask_new[0])
+	if addr_new == nil {
+		return false
+	}
+
+	addr_equality = net.IP.Equal(addr_old, addr_new)
+	netmask_equality = addr_netmask_old[1] == addr_netmask_new[1]
+
+	return addr_equality && netmask_equality
+}
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const ComputeSubnetworkAssetType string = "compute.googleapis.com/Subnetwork"
 
@@ -198,6 +282,12 @@ func GetComputeSubnetworkApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("ipv6_access_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipv6AccessTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6AccessTypeProp)) {
 		obj["ipv6AccessType"] = ipv6AccessTypeProp
 	}
+	internalIpv6PrefixProp, err := expandComputeSubnetworkInternalIpv6Prefix(d.Get("internal_ipv6_prefix"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("internal_ipv6_prefix"); !tpgresource.IsEmptyValue(reflect.ValueOf(internalIpv6PrefixProp)) && (ok || !reflect.DeepEqual(v, internalIpv6PrefixProp)) {
+		obj["internalIpv6Prefix"] = internalIpv6PrefixProp
+	}
 	externalIpv6PrefixProp, err := expandComputeSubnetworkExternalIpv6Prefix(d.Get("external_ipv6_prefix"), d, config)
 	if err != nil {
 		return nil, err
@@ -259,6 +349,9 @@ func expandComputeSubnetworkRole(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandComputeSubnetworkSecondaryIpRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -362,6 +455,10 @@ func expandComputeSubnetworkIpv6AccessType(v interface{}, d tpgresource.Terrafor
 	return v, nil
 }
 
+func expandComputeSubnetworkInternalIpv6Prefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeSubnetworkExternalIpv6Prefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -375,6 +472,9 @@ func expandComputeSubnetworkAllowSubnetCidrRoutesOverlap(v interface{}, d tpgres
 }
 
 func expandComputeSubnetworkParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

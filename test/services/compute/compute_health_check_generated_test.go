@@ -34,7 +34,6 @@ func TestAccComputeHealthCheck_healthCheckTcpExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckTcpFullExample(t *testing.T) {
@@ -51,7 +50,6 @@ func TestAccComputeHealthCheck_healthCheckTcpFullExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckSslExample(t *testing.T) {
@@ -68,7 +66,6 @@ func TestAccComputeHealthCheck_healthCheckSslExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckSslFullExample(t *testing.T) {
@@ -85,7 +82,6 @@ func TestAccComputeHealthCheck_healthCheckSslFullExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckHttpExample(t *testing.T) {
@@ -102,7 +98,6 @@ func TestAccComputeHealthCheck_healthCheckHttpExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckHttpFullExample(t *testing.T) {
@@ -119,7 +114,6 @@ func TestAccComputeHealthCheck_healthCheckHttpFullExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckHttpsExample(t *testing.T) {
@@ -136,7 +130,6 @@ func TestAccComputeHealthCheck_healthCheckHttpsExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckHttpsFullExample(t *testing.T) {
@@ -153,7 +146,6 @@ func TestAccComputeHealthCheck_healthCheckHttpsFullExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckHttp2Example(t *testing.T) {
@@ -170,7 +162,6 @@ func TestAccComputeHealthCheck_healthCheckHttp2Example(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckHttp2FullExample(t *testing.T) {
@@ -187,7 +178,6 @@ func TestAccComputeHealthCheck_healthCheckHttp2FullExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckGrpcExample(t *testing.T) {
@@ -204,7 +194,6 @@ func TestAccComputeHealthCheck_healthCheckGrpcExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckGrpcFullExample(t *testing.T) {
@@ -221,7 +210,6 @@ func TestAccComputeHealthCheck_healthCheckGrpcFullExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckGrpcWithTlsExample(t *testing.T) {
@@ -239,7 +227,6 @@ func TestAccComputeHealthCheck_healthCheckGrpcWithTlsExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_healthCheckGrpcWithTlsFullExample(t *testing.T) {
@@ -257,24 +244,6 @@ func TestAccComputeHealthCheck_healthCheckGrpcWithTlsFullExample(t *testing.T) {
 			"provider",
 			"source_regions",
 		},
-		[]string{},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckWithLoggingExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
-		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_computeHealthCheckHttpSourceRegionsExample(t *testing.T) {
@@ -291,7 +260,6 @@ func TestAccComputeHealthCheck_computeHealthCheckHttpSourceRegionsExample(t *tes
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_computeHealthCheckHttpsSourceRegionsExample(t *testing.T) {
@@ -308,7 +276,6 @@ func TestAccComputeHealthCheck_computeHealthCheckHttpsSourceRegionsExample(t *te
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeHealthCheck_computeHealthCheckTcpSourceRegionsExample(t *testing.T) {
@@ -325,6 +292,5 @@ func TestAccComputeHealthCheck_computeHealthCheckTcpSourceRegionsExample(t *test
 			"provider",
 			"source_regions",
 		},
-		[]string{},
 	)
 }

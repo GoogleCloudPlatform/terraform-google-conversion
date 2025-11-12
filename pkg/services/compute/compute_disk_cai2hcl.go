@@ -18,9 +18,19 @@ package compute
 
 import (
 	"fmt"
+	"reflect"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/cai2hcl/converters/utils"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/cai2hcl/models"
@@ -29,6 +39,29 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = fmt.Sprintf
+	_ = reflect.ValueOf
+	_ = strings.Trim
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 type ComputeDiskCai2hclConverter struct {
@@ -64,11 +97,21 @@ func (c *ComputeDiskCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 	var err error
 	res := asset.Resource.Data
 	config := transport.NewConfig()
-	d := &schema.ResourceData{}
+
+	// This is a fake resource used to get fake d
+	// d.Get will return empty map, instead of nil
+	fakeResource := &schema.Resource{
+		Schema: c.schema,
+	}
+	d := fakeResource.TestResourceData()
 
 	assetNameParts := strings.Split(asset.Name, "/")
-	hclBlockName := assetNameParts[len(assetNameParts)-1]
 
+	hclBlockName := assetNameParts[len(assetNameParts)-1]
+	digitRegex := regexp.MustCompile(`^\d+$`)
+	if digitRegex.MatchString(hclBlockName) {
+		hclBlockName = fmt.Sprintf("resource%s", utils.RandString(8))
+	}
 	hclData := make(map[string]interface{})
 
 	res, err = resourceComputeDiskDecoder(d, config, res)
@@ -97,9 +140,7 @@ func (c *ComputeDiskCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 	hclData["source_disk"] = flattenComputeDiskSourceDisk(res["sourceDisk"], d, config)
 	hclData["type"] = flattenComputeDiskType(res["type"], d, config)
 	hclData["image"] = flattenComputeDiskImage(res["sourceImage"], d, config)
-	hclData["resource_policies"] = flattenComputeDiskResourcePolicies(res["resourcePolicies"], d, config)
 	hclData["enable_confidential_compute"] = flattenComputeDiskEnableConfidentialCompute(res["enableConfidentialCompute"], d, config)
-	hclData["multi_writer"] = flattenComputeDiskMultiWriter(res["multiWriter"], d, config)
 	hclData["provisioned_iops"] = flattenComputeDiskProvisionedIops(res["provisionedIops"], d, config)
 	hclData["provisioned_throughput"] = flattenComputeDiskProvisionedThroughput(res["provisionedThroughput"], d, config)
 	hclData["async_primary_disk"] = flattenComputeDiskAsyncPrimaryDisk(res["asyncPrimaryDisk"], d, config)
@@ -295,18 +336,7 @@ func flattenComputeDiskImage(v interface{}, d *schema.ResourceData, config *tran
 	return v
 }
 
-func flattenComputeDiskResourcePolicies(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return v
-	}
-	return tpgresource.ConvertAndMapStringArr(v.([]interface{}), tpgresource.ConvertSelfLinkToV1)
-}
-
 func flattenComputeDiskEnableConfidentialCompute(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenComputeDiskMultiWriter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
