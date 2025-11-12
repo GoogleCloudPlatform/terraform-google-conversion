@@ -35,7 +35,6 @@ func TestAccApphubWorkload_apphubWorkloadBasicExample(t *testing.T) {
 			"provider",
 			"workload_id",
 		},
-		[]string{},
 	)
 }
 func TestAccApphubWorkload_apphubWorkloadFullExample(t *testing.T) {
@@ -53,6 +52,5 @@ func TestAccApphubWorkload_apphubWorkloadFullExample(t *testing.T) {
 			"provider",
 			"workload_id",
 		},
-		[]string{},
 	)
 }

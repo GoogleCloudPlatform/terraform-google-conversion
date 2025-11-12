@@ -17,20 +17,30 @@
 package compute
 
 import (
+	"bytes"
 	"context"
+	"fmt"
 	"log"
-	"net"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
-	"github.com/apparentlymart/go-cidr/cidr"
 )
 
-const ComputeSubnetworkAssetType string = "compute.googleapis.com/Subnetwork"
-
-const ComputeSubnetworkSchemaName string = "google_compute_subnetwork"
+import (
+	"github.com/apparentlymart/go-cidr/cidr"
+	"net"
+)
 
 // Whether the IP CIDR change shrinks the block.
 func IsShrinkageIpCidr(_ context.Context, old, new, _ interface{}) bool {
@@ -83,6 +93,61 @@ func sendSecondaryIpRangeIfEmptyDiff(_ context.Context, diff *schema.ResourceDif
 	return nil
 }
 
+func IpDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
+	if d.Id() == "" {
+		return false
+	}
+	if old == "" || new == "" {
+		return old == new
+	}
+	addr_equality := false
+	netmask_equality := false
+
+	addr_netmask_old := strings.Split(old, "/")
+	addr_netmask_new := strings.Split(new, "/")
+
+	if !((len(addr_netmask_old)) == 2 && (len(addr_netmask_new) == 2)) {
+		return false
+	}
+
+	var addr_old net.IP = net.ParseIP(addr_netmask_old[0])
+	if addr_old == nil {
+		return false
+	}
+	var addr_new net.IP = net.ParseIP(addr_netmask_new[0])
+	if addr_new == nil {
+		return false
+	}
+
+	addr_equality = net.IP.Equal(addr_old, addr_new)
+	netmask_equality = addr_netmask_old[1] == addr_netmask_new[1]
+
+	return addr_equality && netmask_equality
+}
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = structure.NormalizeJsonString
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+)
+
+const ComputeSubnetworkAssetType string = "compute.googleapis.com/Subnetwork"
+
+const ComputeSubnetworkSchemaName string = "google_compute_subnetwork"
+
 func ResourceComputeSubnetwork() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
@@ -107,15 +172,6 @@ except the last character, which cannot be a dash.`,
 				Description: `The network this subnet belongs to.
 Only networks that are in the distributed mode can have subnetworks.`,
 			},
-			"allow_subnet_cidr_routes_overlap": {
-				Type:     schema.TypeBool,
-				Computed: true,
-				Optional: true,
-				Description: `Typically packets destined to IPs within the subnetwork range that do not match
-existing resources are dropped and prevented from leaving the VPC.
-Setting this field to true will allow these packets to match dynamic routes injected
-via BGP even if their destinations match existing subnet ranges.`,
-			},
 			"description": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -130,6 +186,15 @@ creation time.`,
 				Optional:    true,
 				ForceNew:    true,
 				Description: `The range of external IPv6 addresses that are owned by this subnetwork.`,
+			},
+			"internal_ipv6_prefix": {
+				Type:             schema.TypeString,
+				Computed:         true,
+				Optional:         true,
+				ForceNew:         true,
+				ValidateFunc:     verify.ValidateIpCidrRange,
+				DiffSuppressFunc: IpDiffSuppress,
+				Description:      `The internal IPv6 address range that is assigned to this subnetwork.`,
 			},
 			"ip_cidr_range": {
 				Type:         schema.TypeString,
@@ -147,9 +212,9 @@ Field is optional when 'reserved_internal_range' is defined, otherwise required.
 				Optional: true,
 				ForceNew: true,
 				Description: `Resource reference of a PublicDelegatedPrefix. The PDP must be a sub-PDP
-in EXTERNAL_IPV6_SUBNETWORK_CREATION mode.
-Use one of the following formats to specify a sub-PDP when creating an
-IPv6 NetLB forwarding rule using BYOIP:
+in EXTERNAL_IPV6_SUBNETWORK_CREATION or INTERNAL_IPV6_SUBNETWORK_CREATION
+mode. Use one of the following formats to specify a sub-PDP when creating
+a dual stack or IPv6-only subnetwork using BYOIP:
 Full resource URL, as in:
   * 'https://www.googleapis.com/compute/v1/projects/{{projectId}}/regions/{{region}}/publicDelegatedPrefixes/{{sub-pdp-name}}'
 Partial URL, as in:
@@ -365,11 +430,6 @@ If not specified IPV4_ONLY will be used. Possible values: ["IPV4_ONLY", "IPV4_IP
 				Computed: true,
 				Description: `The gateway address for default routes to reach destination addresses
 outside this subnetwork.`,
-			},
-			"internal_ipv6_prefix": {
-				Type:        schema.TypeString,
-				Computed:    true,
-				Description: `The internal IPv6 address range that is assigned to this subnetwork.`,
 			},
 			"ipv6_cidr_range": {
 				Type:        schema.TypeString,

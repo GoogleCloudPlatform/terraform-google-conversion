@@ -17,14 +17,25 @@
 package binaryauthorization
 
 import (
+	"bytes"
+	"context"
+	"fmt"
+	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
-
-const BinaryAuthorizationAttestorAssetType string = "binaryauthorization.googleapis.com/Attestor"
-
-const BinaryAuthorizationAttestorSchemaName string = "google_binary_authorization_attestor"
 
 func CompareSignatureAlgorithm(_, old, new string, _ *schema.ResourceData) bool {
 	// See https://cloud.google.com/binary-authorization/docs/reference/rest/v1/projects.attestors#signaturealgorithm
@@ -53,6 +64,29 @@ func CompareSignatureAlgorithm(_, old, new string, _ *schema.ResourceData) bool 
 
 	return false
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = structure.NormalizeJsonString
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+)
+
+const BinaryAuthorizationAttestorAssetType string = "binaryauthorization.googleapis.com/Attestor"
+
+const BinaryAuthorizationAttestorSchemaName string = "google_binary_authorization_attestor"
 
 func ResourceBinaryAuthorizationAttestor() *schema.Resource {
 	return &schema.Resource{

@@ -33,11 +33,11 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertifi
 			"location",
 			"name",
 			"provider",
+			"self_managed",
 			"self_managed.certificate_pem",
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigExample(t *testing.T) {
@@ -53,11 +53,11 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertifi
 			"location",
 			"name",
 			"provider",
+			"self_managed",
 			"self_managed.certificate_pem",
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateExample(t *testing.T) {
@@ -73,11 +73,11 @@ func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertifica
 			"location",
 			"name",
 			"provider",
+			"self_managed",
 			"self_managed.certificate_pem",
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateRegionalExample(t *testing.T) {
@@ -93,11 +93,11 @@ func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertifica
 			"location",
 			"name",
 			"provider",
+			"self_managed",
 			"self_managed.certificate_pem",
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigAllRegionsExample(t *testing.T) {
@@ -113,11 +113,11 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertifi
 			"location",
 			"name",
 			"provider",
+			"self_managed",
 			"self_managed.certificate_pem",
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsAllRegionsExample(t *testing.T) {
@@ -133,11 +133,11 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertifi
 			"location",
 			"name",
 			"provider",
+			"self_managed",
 			"self_managed.certificate_pem",
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedRegionalCertificateDnsAuthExample(t *testing.T) {
@@ -153,11 +153,11 @@ func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedRegiona
 			"location",
 			"name",
 			"provider",
+			"self_managed",
 			"self_managed.certificate_pem",
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }
 func TestAccCertificateManagerCertificate_certificateManagerClientAuthCertificateExample(t *testing.T) {
@@ -173,10 +173,10 @@ func TestAccCertificateManagerCertificate_certificateManagerClientAuthCertificat
 			"location",
 			"name",
 			"provider",
+			"self_managed",
 			"self_managed.certificate_pem",
 			"self_managed.pem_private_key",
 			"self_managed.private_key_pem",
 		},
-		[]string{},
 	)
 }

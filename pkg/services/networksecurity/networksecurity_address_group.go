@@ -17,9 +17,43 @@
 package networksecurity
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"bytes"
+	"context"
+	"fmt"
+	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = structure.NormalizeJsonString
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
 )
 
 const NetworkSecurityAddressGroupAssetType string = "networksecurity.googleapis.com/AddressGroup"
@@ -81,16 +115,6 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 				Optional:    true,
 				ForceNew:    true,
 				Description: `The name of the parent this address group belongs to. Format: organizations/{organization_id} or projects/{project_id}.`,
-			},
-			"purpose": {
-				Type:        schema.TypeList,
-				Computed:    true,
-				Optional:    true,
-				Description: `List of supported purposes of the Address Group. Possible values: ["DEFAULT", "CLOUD_ARMOR"]`,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-					ValidateFunc: verify.ValidateEnum([]string{"DEFAULT", "CLOUD_ARMOR"}),
-				},
 			},
 			"create_time": {
 				Type:     schema.TypeString,

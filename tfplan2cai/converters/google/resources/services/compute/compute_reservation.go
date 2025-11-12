@@ -17,14 +17,69 @@
 package compute
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+import "net/url"
+
+var _ = url.Parse
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 const ComputeReservationAssetType string = "compute.googleapis.com/Reservation"
@@ -136,6 +191,9 @@ func expandComputeReservationSpecificReservationRequired(v interface{}, d tpgres
 }
 
 func expandComputeReservationShareSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -206,6 +264,9 @@ func expandComputeReservationShareSettingsProjects(v interface{}, d tpgresource.
 }
 
 func expandComputeReservationSpecificReservation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -226,6 +287,13 @@ func expandComputeReservationSpecificReservation(v interface{}, d tpgresource.Te
 		return nil, err
 	} else if val := reflect.ValueOf(transformedInUseCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["inUseCount"] = transformedInUseCount
+	}
+
+	transformedAssuredCount, err := expandComputeReservationSpecificReservationAssuredCount(original["assured_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAssuredCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["assuredCount"] = transformedAssuredCount
 	}
 
 	transformedInstanceProperties, err := expandComputeReservationSpecificReservationInstanceProperties(original["instance_properties"], d, config)
@@ -253,7 +321,14 @@ func expandComputeReservationSpecificReservationInUseCount(v interface{}, d tpgr
 	return v, nil
 }
 
+func expandComputeReservationSpecificReservationAssuredCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeReservationSpecificReservationInstanceProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -297,6 +372,13 @@ func expandComputeReservationSpecificReservationInstanceProperties(v interface{}
 		transformed["maintenanceInterval"] = transformedMaintenanceInterval
 	}
 
+	transformedLocationHint, err := expandComputeReservationSpecificReservationInstancePropertiesLocationHint(original["location_hint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLocationHint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["locationHint"] = transformedLocationHint
+	}
+
 	return transformed, nil
 }
 
@@ -309,6 +391,9 @@ func expandComputeReservationSpecificReservationInstancePropertiesMinCpuPlatform
 }
 
 func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerators(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -346,6 +431,9 @@ func expandComputeReservationSpecificReservationInstancePropertiesGuestAccelerat
 }
 
 func expandComputeReservationSpecificReservationInstancePropertiesLocalSsds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -386,6 +474,10 @@ func expandComputeReservationSpecificReservationInstancePropertiesMaintenanceInt
 	return v, nil
 }
 
+func expandComputeReservationSpecificReservationInstancePropertiesLocationHint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeReservationSpecificReservationSourceInstanceTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -395,6 +487,9 @@ func expandComputeReservationDeleteAtTime(v interface{}, d tpgresource.Terraform
 }
 
 func expandComputeReservationDeleteAfterDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -429,6 +524,9 @@ func expandComputeReservationDeleteAfterDurationNanos(v interface{}, d tpgresour
 }
 
 func expandComputeReservationReservationSharingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

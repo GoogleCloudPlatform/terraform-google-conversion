@@ -17,15 +17,56 @@
 package compute
 
 import (
+	"encoding/base64"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"strconv"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/caiasset"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tfplan2cai/converters/cai"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 func ComputeUrlMapTfplan2caiConverter() cai.Tfplan2caiConverter {
@@ -49,8 +90,8 @@ func GetComputeUrlMapCaiAssets(d tpgresource.TerraformResourceData, config *tran
 				Name: name,
 				Type: ComputeUrlMapAssetType,
 				Resource: &caiasset.AssetResource{
-					Version:              "beta",
-					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+					Version:              "v1",
+					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
 					DiscoveryName:        "UrlMap",
 					Data:                 obj,
 					Location:             location,
@@ -175,6 +216,9 @@ func expandComputeUrlMapFingerprint(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandComputeUrlMapHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -215,6 +259,9 @@ func expandComputeUrlMapHeaderAction(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandComputeUrlMapHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -267,6 +314,9 @@ func expandComputeUrlMapHeaderActionRequestHeadersToRemove(v interface{}, d tpgr
 }
 
 func expandComputeUrlMapHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -320,6 +370,9 @@ func expandComputeUrlMapHeaderActionResponseHeadersToRemove(v interface{}, d tpg
 
 func expandComputeUrlMapHostRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -373,6 +426,9 @@ func expandComputeUrlMapName(v interface{}, d tpgresource.TerraformResourceData,
 }
 
 func expandComputeUrlMapPathMatcher(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -487,6 +543,9 @@ func expandComputeUrlMapPathMatcherDescription(v interface{}, d tpgresource.Terr
 }
 
 func expandComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -513,6 +572,9 @@ func expandComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicy(v interface{
 }
 
 func expandComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicyErrorResponseRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -565,6 +627,9 @@ func expandComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicyErrorService(
 }
 
 func expandComputeUrlMapPathMatcherHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -605,6 +670,9 @@ func expandComputeUrlMapPathMatcherHeaderAction(v interface{}, d tpgresource.Ter
 }
 
 func expandComputeUrlMapPathMatcherHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -657,6 +725,9 @@ func expandComputeUrlMapPathMatcherHeaderActionRequestHeadersToRemove(v interfac
 }
 
 func expandComputeUrlMapPathMatcherHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -713,6 +784,9 @@ func expandComputeUrlMapPathMatcherName(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandComputeUrlMapPathMatcherPathRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -800,6 +874,9 @@ func expandComputeUrlMapPathMatcherPathRulePaths(v interface{}, d tpgresource.Te
 }
 
 func expandComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -826,6 +903,9 @@ func expandComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicy(v interface
 }
 
 func expandComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicyErrorResponseRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -878,6 +958,9 @@ func expandComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicyErrorService
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -946,6 +1029,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteAction(v interface{}, d tpgresou
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1046,6 +1132,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicyMaxAge(v interfa
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1072,6 +1161,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicy(v int
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1106,6 +1198,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbortP
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1132,6 +1227,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelay(
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayFixedDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1170,6 +1268,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayP
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1183,13 +1284,6 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy(v inte
 		return nil, err
 	} else if val := reflect.ValueOf(transformedBackendService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["backendService"] = transformedBackendService
-	}
-
-	transformedMirrorPercent, err := expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["mirrorPercent"] = transformedMirrorPercent
 	}
 
 	return transformed, nil
@@ -1227,11 +1321,10 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyBackend
 	return f.RelativeLink(), nil
 }
 
-func expandComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1269,6 +1362,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyNumRetries(v in
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1307,6 +1403,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyRetryConditions
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1341,6 +1440,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionTimeoutSeconds(v interface
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1375,6 +1477,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationSeconds(v
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionUrlRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1409,6 +1514,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionUrlRewritePathPrefixRewrit
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1477,6 +1585,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesBac
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1517,6 +1628,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHea
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1569,6 +1683,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHea
 }
 
 func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1625,6 +1742,9 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesWei
 }
 
 func expandComputeUrlMapPathMatcherPathRuleUrlRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1703,6 +1823,9 @@ func expandComputeUrlMapPathMatcherPathRuleUrlRedirectStripQuery(v interface{}, 
 }
 
 func expandComputeUrlMapPathMatcherRouteRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1761,20 +1884,6 @@ func expandComputeUrlMapPathMatcherRouteRules(v interface{}, d tpgresource.Terra
 			transformed["customErrorResponsePolicy"] = transformedCustomErrorResponsePolicy
 		}
 
-		transformedHttpFilterConfigs, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigs(original["http_filter_configs"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedHttpFilterConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["httpFilterConfigs"] = transformedHttpFilterConfigs
-		}
-
-		transformedHttpFilterMetadata, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadata(original["http_filter_metadata"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedHttpFilterMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["httpFilterMetadata"] = transformedHttpFilterMetadata
-		}
-
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1817,6 +1926,9 @@ func expandComputeUrlMapPathMatcherRouteRulesService(v interface{}, d tpgresourc
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1857,6 +1969,9 @@ func expandComputeUrlMapPathMatcherRouteRulesHeaderAction(v interface{}, d tpgre
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1909,6 +2024,9 @@ func expandComputeUrlMapPathMatcherRouteRulesHeaderActionRequestHeadersToRemove(
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1961,6 +2079,9 @@ func expandComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToRemove
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesMatchRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -2036,6 +2157,9 @@ func expandComputeUrlMapPathMatcherRouteRulesMatchRulesFullPathMatch(v interface
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatches(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -2127,6 +2251,9 @@ func expandComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesPresentMatch
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2173,6 +2300,9 @@ func expandComputeUrlMapPathMatcherRouteRulesMatchRulesIgnoreCase(v interface{},
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesMatchRulesMetadataFilters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -2202,6 +2332,9 @@ func expandComputeUrlMapPathMatcherRouteRulesMatchRulesMetadataFilters(v interfa
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesMatchRulesMetadataFiltersFilterLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -2247,6 +2380,9 @@ func expandComputeUrlMapPathMatcherRouteRulesMatchRulesPrefixMatch(v interface{}
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatches(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -2314,6 +2450,9 @@ func expandComputeUrlMapPathMatcherRouteRulesMatchRulesPathTemplateMatch(v inter
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2382,6 +2521,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteAction(v interface{}, d tpgres
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionCorsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2482,6 +2624,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionCorsPolicyMaxAge(v inter
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2508,6 +2653,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicy(v i
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2542,6 +2690,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbor
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2568,6 +2719,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDela
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelayFixedDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2606,6 +2760,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDela
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2619,13 +2776,6 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicy(v in
 		return nil, err
 	} else if val := reflect.ValueOf(transformedBackendService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["backendService"] = transformedBackendService
-	}
-
-	transformedMirrorPercent, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["mirrorPercent"] = transformedMirrorPercent
 	}
 
 	return transformed, nil
@@ -2663,11 +2813,10 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyBacke
 	return f.RelativeLink(), nil
 }
 
-func expandComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2705,6 +2854,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyNumRetries(v 
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2743,6 +2895,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyRetryConditio
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2777,6 +2932,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionTimeoutSeconds(v interfa
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2811,6 +2969,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationSeconds
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2856,6 +3017,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathTemplateRe
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -2924,6 +3088,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesB
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2964,6 +3131,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesH
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -3016,6 +3186,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesH
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -3072,6 +3245,9 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesW
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesUrlRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3150,6 +3326,9 @@ func expandComputeUrlMapPathMatcherRouteRulesUrlRedirectStripQuery(v interface{}
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3176,6 +3355,9 @@ func expandComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicy(v interfa
 }
 
 func expandComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicyErrorResponseRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -3227,103 +3409,10 @@ func expandComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicyErrorServi
 	return v, nil
 }
 
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedFilterName, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsFilterName(original["filter_name"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedFilterName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["filterName"] = transformedFilterName
-		}
-
-		transformedConfigTypeUrl, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsConfigTypeUrl(original["config_type_url"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedConfigTypeUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["configTypeUrl"] = transformedConfigTypeUrl
-		}
-
-		transformedConfig, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsConfig(original["config"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["config"] = transformedConfig
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsFilterName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsConfigTypeUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterConfigsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedFilterName, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataFilterName(original["filter_name"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedFilterName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["filterName"] = transformedFilterName
-		}
-
-		transformedConfigTypeUrl, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataConfigTypeUrl(original["config_type_url"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedConfigTypeUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["configTypeUrl"] = transformedConfigTypeUrl
-		}
-
-		transformedConfig, err := expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataConfig(original["config"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["config"] = transformedConfig
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataFilterName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataConfigTypeUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeUrlMapPathMatcherRouteRulesHttpFilterMetadataConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandComputeUrlMapPathMatcherDefaultUrlRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3402,6 +3491,9 @@ func expandComputeUrlMapPathMatcherDefaultUrlRedirectStripQuery(v interface{}, d
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3470,6 +3562,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteAction(v interface{}, d tpgresour
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -3542,6 +3637,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesWeig
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3586,6 +3684,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHead
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -3638,6 +3739,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHead
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -3686,6 +3790,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHead
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionUrlRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3720,6 +3827,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionUrlRewriteHostRewrite(v int
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3754,6 +3864,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionTimeoutNanos(v interface{},
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3788,6 +3901,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationSeconds(v 
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3829,6 +3945,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyNumRetries(v int
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3863,6 +3982,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeoutNan
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -3876,13 +3998,6 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicy(v inter
 		return nil, err
 	} else if val := reflect.ValueOf(transformedBackendService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["backendService"] = transformedBackendService
-	}
-
-	transformedMirrorPercent, err := expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["mirrorPercent"] = transformedMirrorPercent
 	}
 
 	return transformed, nil
@@ -3920,11 +4035,10 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyBackendS
 	return f.RelativeLink(), nil
 }
 
-func expandComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandComputeUrlMapPathMatcherDefaultRouteActionCorsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4025,6 +4139,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionCorsPolicyDisabled(v interf
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4051,6 +4168,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicy(v inte
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4077,6 +4197,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelay(v
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4115,6 +4238,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayPe
 }
 
 func expandComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4149,6 +4275,9 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbortPe
 }
 
 func expandComputeUrlMapDefaultCustomErrorResponsePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4175,6 +4304,9 @@ func expandComputeUrlMapDefaultCustomErrorResponsePolicy(v interface{}, d tpgres
 }
 
 func expandComputeUrlMapDefaultCustomErrorResponsePolicyErrorResponseRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -4227,6 +4359,9 @@ func expandComputeUrlMapDefaultCustomErrorResponsePolicyErrorService(v interface
 }
 
 func expandComputeUrlMapTest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -4303,6 +4438,9 @@ func expandComputeUrlMapTestPath(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandComputeUrlMapTestHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -4380,6 +4518,9 @@ func expandComputeUrlMapTestExpectedRedirectResponseCode(v interface{}, d tpgres
 }
 
 func expandComputeUrlMapDefaultUrlRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4458,6 +4599,9 @@ func expandComputeUrlMapDefaultUrlRedirectStripQuery(v interface{}, d tpgresourc
 }
 
 func expandComputeUrlMapDefaultRouteAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4526,6 +4670,9 @@ func expandComputeUrlMapDefaultRouteAction(v interface{}, d tpgresource.Terrafor
 }
 
 func expandComputeUrlMapDefaultRouteActionWeightedBackendServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -4598,6 +4745,9 @@ func expandComputeUrlMapDefaultRouteActionWeightedBackendServicesWeight(v interf
 }
 
 func expandComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4642,6 +4792,9 @@ func expandComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionReq
 }
 
 func expandComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -4694,6 +4847,9 @@ func expandComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionRes
 }
 
 func expandComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAdd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -4742,6 +4898,9 @@ func expandComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionRes
 }
 
 func expandComputeUrlMapDefaultRouteActionUrlRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4776,6 +4935,9 @@ func expandComputeUrlMapDefaultRouteActionUrlRewriteHostRewrite(v interface{}, d
 }
 
 func expandComputeUrlMapDefaultRouteActionTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4810,6 +4972,9 @@ func expandComputeUrlMapDefaultRouteActionTimeoutNanos(v interface{}, d tpgresou
 }
 
 func expandComputeUrlMapDefaultRouteActionMaxStreamDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4844,6 +5009,9 @@ func expandComputeUrlMapDefaultRouteActionMaxStreamDurationSeconds(v interface{}
 }
 
 func expandComputeUrlMapDefaultRouteActionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4885,6 +5053,9 @@ func expandComputeUrlMapDefaultRouteActionRetryPolicyNumRetries(v interface{}, d
 }
 
 func expandComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4919,6 +5090,9 @@ func expandComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeoutNanos(v interf
 }
 
 func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4932,13 +5106,6 @@ func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicy(v interface{}, d t
 		return nil, err
 	} else if val := reflect.ValueOf(transformedBackendService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["backendService"] = transformedBackendService
-	}
-
-	transformedMirrorPercent, err := expandComputeUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["mirrorPercent"] = transformedMirrorPercent
 	}
 
 	return transformed, nil
@@ -4976,11 +5143,10 @@ func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicyBackendService(v in
 	return f.RelativeLink(), nil
 }
 
-func expandComputeUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandComputeUrlMapDefaultRouteActionCorsPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5081,6 +5247,9 @@ func expandComputeUrlMapDefaultRouteActionCorsPolicyDisabled(v interface{}, d tp
 }
 
 func expandComputeUrlMapDefaultRouteActionFaultInjectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5107,6 +5276,9 @@ func expandComputeUrlMapDefaultRouteActionFaultInjectionPolicy(v interface{}, d 
 }
 
 func expandComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5133,6 +5305,9 @@ func expandComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelay(v interface{
 }
 
 func expandComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5171,6 +5346,9 @@ func expandComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayPercentage(v 
 }
 
 func expandComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

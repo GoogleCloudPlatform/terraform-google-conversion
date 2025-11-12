@@ -17,14 +17,36 @@
 package monitoring
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
 	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 func resourceMonitoringUptimeCheckConfigHttpCheckPathDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
@@ -39,6 +61,35 @@ func resourceMonitoringUptimeCheckConfigMonitoredResourceLabelsDiffSuppress(k, o
 	}
 	return false
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const MonitoringUptimeCheckConfigAssetType string = "monitoring.googleapis.com/UptimeCheckConfig"
 
@@ -185,6 +236,9 @@ func expandMonitoringUptimeCheckConfigTimeout(v interface{}, d tpgresource.Terra
 }
 
 func expandMonitoringUptimeCheckConfigContentMatchers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -229,6 +283,9 @@ func expandMonitoringUptimeCheckConfigContentMatchersMatcher(v interface{}, d tp
 }
 
 func expandMonitoringUptimeCheckConfigContentMatchersJsonPathMatcher(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -286,6 +343,9 @@ func expandMonitoringUptimeCheckConfigUserLabels(v interface{}, d tpgresource.Te
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheck(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -408,6 +468,9 @@ func expandMonitoringUptimeCheckConfigHttpCheckCustomContentType(v interface{}, 
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckAuthInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -464,6 +527,9 @@ func expandMonitoringUptimeCheckConfigHttpCheckAuthInfoUsername(v interface{}, d
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckServiceAgentAuthentication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -522,6 +588,9 @@ func expandMonitoringUptimeCheckConfigHttpCheckBody(v interface{}, d tpgresource
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckAcceptedResponseStatusCodes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -559,6 +628,9 @@ func expandMonitoringUptimeCheckConfigHttpCheckAcceptedResponseStatusCodesStatus
 }
 
 func expandMonitoringUptimeCheckConfigHttpCheckPingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -582,6 +654,9 @@ func expandMonitoringUptimeCheckConfigHttpCheckPingConfigPingsCount(v interface{
 }
 
 func expandMonitoringUptimeCheckConfigTcpCheck(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -612,6 +687,9 @@ func expandMonitoringUptimeCheckConfigTcpCheckPort(v interface{}, d tpgresource.
 }
 
 func expandMonitoringUptimeCheckConfigTcpCheckPingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -635,6 +713,9 @@ func expandMonitoringUptimeCheckConfigTcpCheckPingConfigPingsCount(v interface{}
 }
 
 func expandMonitoringUptimeCheckConfigResourceGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -669,6 +750,9 @@ func expandMonitoringUptimeCheckConfigResourceGroupGroupId(v interface{}, d tpgr
 }
 
 func expandMonitoringUptimeCheckConfigMonitoredResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -710,6 +794,9 @@ func expandMonitoringUptimeCheckConfigMonitoredResourceLabels(v interface{}, d t
 }
 
 func expandMonitoringUptimeCheckConfigSyntheticMonitor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -729,6 +816,9 @@ func expandMonitoringUptimeCheckConfigSyntheticMonitor(v interface{}, d tpgresou
 }
 
 func expandMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

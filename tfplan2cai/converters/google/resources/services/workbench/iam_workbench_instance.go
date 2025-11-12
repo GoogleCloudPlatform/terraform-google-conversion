@@ -18,6 +18,8 @@ package workbench
 
 import (
 	"fmt"
+	"regexp"
+	"strings"
 
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -26,6 +28,13 @@ import (
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgiamresource"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+)
+
+var (
+	_ = regexp.Match
+	_ = strings.Trim
+	_ = errwrap.Wrap
+	_ = schema.Noop
 )
 
 var WorkbenchInstanceIamSchema = map[string]*schema.Schema{
@@ -163,21 +172,22 @@ func (u *WorkbenchInstanceIamUpdater) GetResourceIamPolicy() (*cloudresourcemana
 	}
 
 	policy, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
-		Config:    u.Config,
-		Method:    "GET",
-		Project:   project,
-		RawURL:    url,
-		UserAgent: userAgent,
-		Body:      obj,
+		Config:               u.Config,
+		Method:               "GET",
+		Project:              project,
+		RawURL:               url,
+		UserAgent:            userAgent,
+		Body:                 obj,
+		ErrorRetryPredicates: []transport_tpg.RetryErrorPredicateFunc{transport_tpg.IsWorkbenchQueueError},
 	})
 	if err != nil {
-		return nil, errwrap.Wrapf(fmt.Sprintf("Error retrieving IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return nil, fmt.Errorf("Error retrieving IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	out := &cloudresourcemanager.Policy{}
 	err = tpgresource.Convert(policy, out)
 	if err != nil {
-		return nil, errwrap.Wrapf("Cannot convert a policy to a resource manager policy: {{err}}", err)
+		return nil, fmt.Errorf("Cannot convert a policy to a resource manager policy: %w", err)
 	}
 
 	return out, nil
@@ -207,16 +217,17 @@ func (u *WorkbenchInstanceIamUpdater) SetResourceIamPolicy(policy *cloudresource
 	}
 
 	_, err = transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
-		Config:    u.Config,
-		Method:    "POST",
-		Project:   project,
-		RawURL:    url,
-		UserAgent: userAgent,
-		Body:      obj,
-		Timeout:   u.d.Timeout(schema.TimeoutCreate),
+		Config:               u.Config,
+		Method:               "POST",
+		Project:              project,
+		RawURL:               url,
+		UserAgent:            userAgent,
+		Body:                 obj,
+		Timeout:              u.d.Timeout(schema.TimeoutCreate),
+		ErrorRetryPredicates: []transport_tpg.RetryErrorPredicateFunc{transport_tpg.IsWorkbenchQueueError},
 	})
 	if err != nil {
-		return errwrap.Wrapf(fmt.Sprintf("Error setting IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return fmt.Errorf("Error setting IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	return nil

@@ -34,7 +34,6 @@ func TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeBasicExample(
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGitSkaffoldModulesExample(t *testing.T) {
@@ -51,7 +50,6 @@ func TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGitSkaffoldMo
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGcsSkaffoldModulesExample(t *testing.T) {
@@ -68,7 +66,6 @@ func TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGcsSkaffoldMo
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGcbRepoSkaffoldModulesExample(t *testing.T) {
@@ -85,6 +82,5 @@ func TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGcbRepoSkaffo
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -17,20 +17,29 @@
 package compute
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
 
-const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
+import "errors"
 
-const ComputeDiskSchemaName string = "google_compute_disk"
+var _ = errors.New
 
 // diffsuppress for hyperdisk provisioned_iops
 func hyperDiskIopsUpdateDiffSuppress(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
@@ -46,11 +55,6 @@ func hyperDiskIopsUpdateDiffSuppress(_ context.Context, d *schema.ResourceDiff, 
 	}
 
 	return nil
-}
-
-// Suppress all diffs, used for Disk.Interface which is a nonfunctional field
-func AlwaysDiffSuppress(_, _, _ string, _ *schema.ResourceData) bool {
-	return true
 }
 
 // diffsuppress for beta and to check change in source_disk attribute
@@ -342,6 +346,29 @@ func ExpandStoragePoolUrl(v interface{}, d tpgresource.TerraformResourceData, co
 	return replacedStr, nil
 }
 
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = structure.NormalizeJsonString
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+)
+
+const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
+
+const ComputeDiskSchemaName string = "google_compute_disk"
+
 func ResourceComputeDisk() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
@@ -490,15 +517,6 @@ images names must include the family name. If they don't, use the
 For instance, the image 'centos-6-v20180104' includes its family name 'centos-6'.
 These images can be referred by family name here.`,
 			},
-			"interface": {
-				Type:             schema.TypeString,
-				Optional:         true,
-				Deprecated:       "`interface` is deprecated and will be removed in a future major release. This field is no longer used and can be safely removed from your configurations; disk interfaces are automatically determined on attachment.",
-				ForceNew:         true,
-				DiffSuppressFunc: AlwaysDiffSuppress,
-				Description:      `Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME. The default is SCSI.`,
-				Default:          "SCSI",
-			},
 			"labels": {
 				Type:     schema.TypeMap,
 				Optional: true,
@@ -519,12 +537,6 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 					Type:             schema.TypeString,
 					DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
 				},
-			},
-			"multi_writer": {
-				Type:        schema.TypeBool,
-				Optional:    true,
-				ForceNew:    true,
-				Description: `Indicates whether or not the disk can be read/write attached to more than one instance.`,
 			},
 			"params": {
 				Type:        schema.TypeList,
@@ -572,23 +584,6 @@ allows for an update of IOPS every 4 hours. To update your hyperdisk more freque
 				Description: `Indicates how much Throughput must be provisioned for the disk.
 Note: Updating currently is only supported by hyperdisk skus without the need to delete and recreate the disk, hyperdisk
 allows for an update of Throughput every 4 hours. To update your hyperdisk more frequently, you'll need to manually delete and recreate it`,
-			},
-			"resource_policies": {
-				Type:     schema.TypeList,
-				Computed: true,
-				Optional: true,
-				ForceNew: true,
-				Description: `Resource policies applied to this disk for automatic snapshot creations.
-
-~>**NOTE** This value does not support updating the
-resource policy, as resource policies can not be updated more than
-one at a time. Use
-['google_compute_disk_resource_policy_attachment'](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk_resource_policy_attachment)
-to allow for updating the resource policy attached to the disk.`,
-				Elem: &schema.Schema{
-					Type:             schema.TypeString,
-					DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
-				},
 			},
 			"size": {
 				Type:     schema.TypeInt,

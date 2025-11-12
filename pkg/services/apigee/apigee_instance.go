@@ -17,16 +17,25 @@
 package apigee
 
 import (
+	"bytes"
+	"context"
+	"fmt"
 	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
-
-const ApigeeInstanceAssetType string = "apigee.googleapis.com/Instance"
-
-const ApigeeInstanceSchemaName string = "google_apigee_instance"
 
 // Suppress diffs when the lists of project have the same number of entries to handle the case that
 // API does not return what the user originally provided. Instead, API does some transformation.
@@ -52,6 +61,29 @@ func ProjectListDiffSuppressFunc(d tpgresource.TerraformResourceDataChange) bool
 
 	return oldInt == newInt
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = structure.NormalizeJsonString
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+)
+
+const ApigeeInstanceAssetType string = "apigee.googleapis.com/Instance"
+
+const ApigeeInstanceSchemaName string = "google_apigee_instance"
 
 func ResourceApigeeInstance() *schema.Resource {
 	return &schema.Resource{

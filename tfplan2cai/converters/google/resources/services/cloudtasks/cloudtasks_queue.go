@@ -17,14 +17,36 @@
 package cloudtasks
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
 	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 func suppressOmittedMaxDuration(k, old, new string, d *schema.ResourceData) bool {
@@ -34,6 +56,35 @@ func suppressOmittedMaxDuration(k, old, new string, d *schema.ResourceData) bool
 	}
 	return tpgresource.DurationDiffSuppress(k, old, new, d)
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const CloudTasksQueueAssetType string = "cloudtasks.googleapis.com/Queue"
 
@@ -112,6 +163,9 @@ func expandCloudTasksQueueName(v interface{}, d tpgresource.TerraformResourceDat
 }
 
 func expandCloudTasksQueueAppEngineRoutingOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -168,6 +222,9 @@ func expandCloudTasksQueueAppEngineRoutingOverrideHost(v interface{}, d tpgresou
 }
 
 func expandCloudTasksQueueRateLimits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -213,6 +270,9 @@ func expandCloudTasksQueueRateLimitsMaxBurstSize(v interface{}, d tpgresource.Te
 }
 
 func expandCloudTasksQueueRetryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -280,6 +340,9 @@ func expandCloudTasksQueueRetryConfigMaxDoublings(v interface{}, d tpgresource.T
 }
 
 func expandCloudTasksQueueStackdriverLoggingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -303,6 +366,9 @@ func expandCloudTasksQueueStackdriverLoggingConfigSamplingRatio(v interface{}, d
 }
 
 func expandCloudTasksQueueHttpTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -354,6 +420,9 @@ func expandCloudTasksQueueHttpTargetHttpMethod(v interface{}, d tpgresource.Terr
 }
 
 func expandCloudTasksQueueHttpTargetUriOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -420,6 +489,9 @@ func expandCloudTasksQueueHttpTargetUriOverridePort(v interface{}, d tpgresource
 }
 
 func expandCloudTasksQueueHttpTargetUriOverridePathOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -443,6 +515,9 @@ func expandCloudTasksQueueHttpTargetUriOverridePathOverridePath(v interface{}, d
 }
 
 func expandCloudTasksQueueHttpTargetUriOverrideQueryOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -470,6 +545,9 @@ func expandCloudTasksQueueHttpTargetUriOverrideUriOverrideEnforceMode(v interfac
 }
 
 func expandCloudTasksQueueHttpTargetHeaderOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -492,6 +570,9 @@ func expandCloudTasksQueueHttpTargetHeaderOverrides(v interface{}, d tpgresource
 }
 
 func expandCloudTasksQueueHttpTargetHeaderOverridesHeader(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -526,6 +607,9 @@ func expandCloudTasksQueueHttpTargetHeaderOverridesHeaderValue(v interface{}, d 
 }
 
 func expandCloudTasksQueueHttpTargetOauthToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -560,6 +644,9 @@ func expandCloudTasksQueueHttpTargetOauthTokenScope(v interface{}, d tpgresource
 }
 
 func expandCloudTasksQueueHttpTargetOidcToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

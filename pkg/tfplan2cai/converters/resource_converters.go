@@ -17,6 +17,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
@@ -29,9 +30,21 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tfplan2cai/converters/cai"
 )
 
@@ -46,7 +59,9 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_apigee_instance":                               apigee.ApigeeInstanceTfplan2caiConverter(),
 	"google_apphub_application":                            apphub.ApphubApplicationTfplan2caiConverter(),
 	"google_apphub_service":                                apphub.ApphubServiceTfplan2caiConverter(),
+	"google_apphub_service_project_attachment":             apphub.ApphubServiceProjectAttachmentTfplan2caiConverter(),
 	"google_apphub_workload":                               apphub.ApphubWorkloadTfplan2caiConverter(),
+	"google_artifact_registry_repository":                  artifactregistry.ArtifactRegistryRepositoryTfplan2caiConverter(),
 	"google_backup_dr_backup_plan":                         backupdr.BackupDRBackupPlanTfplan2caiConverter(),
 	"google_backup_dr_backup_vault":                        backupdr.BackupDRBackupVaultTfplan2caiConverter(),
 	"google_beyondcorp_app_connection":                     beyondcorp.BeyondcorpAppConnectionTfplan2caiConverter(),
@@ -62,7 +77,9 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_cloudbuild_bitbucket_server_config":            cloudbuild.CloudBuildBitbucketServerConfigTfplan2caiConverter(),
 	"google_cloudbuildv2_connection":                       cloudbuildv2.Cloudbuildv2ConnectionTfplan2caiConverter(),
 	"google_cloudbuildv2_repository":                       cloudbuildv2.Cloudbuildv2RepositoryTfplan2caiConverter(),
+	"google_clouddeploy_automation":                        clouddeploy.ClouddeployAutomationTfplan2caiConverter(),
 	"google_clouddeploy_custom_target_type":                clouddeploy.ClouddeployCustomTargetTypeTfplan2caiConverter(),
+	"google_clouddeploy_deploy_policy":                     clouddeploy.ClouddeployDeployPolicyTfplan2caiConverter(),
 	"google_cloudfunctions2_function":                      cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
 	"google_compute_address":                               compute.ComputeAddressTfplan2caiConverter(),
 	"google_compute_autoscaler":                            compute.ComputeAutoscalerTfplan2caiConverter(),
@@ -77,10 +94,24 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_image":                                 compute.ComputeImageTfplan2caiConverter(),
 	"google_compute_network":                               compute.ComputeNetworkTfplan2caiConverter(),
 	"google_compute_region_autoscaler":                     compute.ComputeRegionAutoscalerTfplan2caiConverter(),
+	"google_compute_region_health_check":                   compute.ComputeRegionHealthCheckTfplan2caiConverter(),
 	"google_compute_subnetwork":                            compute.ComputeSubnetworkTfplan2caiConverter(),
 	"google_compute_url_map":                               compute.ComputeUrlMapTfplan2caiConverter(),
+	"google_dataproc_batch":                                dataproc.DataprocBatchTfplan2caiConverter(),
+	"google_datastream_connection_profile":                 datastream.DatastreamConnectionProfileTfplan2caiConverter(),
+	"google_datastream_private_connection":                 datastream.DatastreamPrivateConnectionTfplan2caiConverter(),
+	"google_datastream_stream":                             datastream.DatastreamStreamTfplan2caiConverter(),
+	"google_filestore_backup":                              filestore.FilestoreBackupTfplan2caiConverter(),
+	"google_filestore_instance":                            filestore.FilestoreInstanceTfplan2caiConverter(),
+	"google_filestore_snapshot":                            filestore.FilestoreSnapshotTfplan2caiConverter(),
+	"google_firebase_data_connect_service":                 firebasedataconnect.FirebaseDataConnectServiceTfplan2caiConverter(),
+	"google_iam_workload_identity_pool":                    iambeta.IAMBetaWorkloadIdentityPoolTfplan2caiConverter(),
+	"google_iam_workload_identity_pool_provider":           iambeta.IAMBetaWorkloadIdentityPoolProviderTfplan2caiConverter(),
+	"google_kms_autokey_config":                            kms.KMSAutokeyConfigTfplan2caiConverter(),
+	"google_kms_key_handle":                                kms.KMSKeyHandleTfplan2caiConverter(),
+	"google_monitoring_notification_channel":               monitoring.MonitoringNotificationChannelTfplan2caiConverter(),
+	"google_monitoring_uptime_check_config":                monitoring.MonitoringUptimeCheckConfigTfplan2caiConverter(),
 	"google_network_security_address_group":                networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),
-	"google_network_security_authorization_policy":         networksecurity.NetworkSecurityAuthorizationPolicyTfplan2caiConverter(),
 	"google_network_security_client_tls_policy":            networksecurity.NetworkSecurityClientTlsPolicyTfplan2caiConverter(),
 	"google_network_security_gateway_security_policy":      networksecurity.NetworkSecurityGatewaySecurityPolicyTfplan2caiConverter(),
 	"google_network_security_gateway_security_policy_rule": networksecurity.NetworkSecurityGatewaySecurityPolicyRuleTfplan2caiConverter(),
@@ -90,4 +121,12 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_network_security_url_lists":                    networksecurity.NetworkSecurityUrlListsTfplan2caiConverter(),
 	"google_pubsub_subscription":                           pubsub.PubsubSubscriptionTfplan2caiConverter(),
 	"google_pubsub_topic":                                  pubsub.PubsubTopicTfplan2caiConverter(),
+	"google_redis_cluster":                                 redis.RedisClusterTfplan2caiConverter(),
+	"google_redis_instance":                                redis.RedisInstanceTfplan2caiConverter(),
+	"google_secret_manager_secret":                         secretmanager.SecretManagerSecretTfplan2caiConverter(),
+	"google_secret_manager_secret_version":                 secretmanager.SecretManagerSecretVersionTfplan2caiConverter(),
+	"google_secret_manager_regional_secret":                secretmanagerregional.SecretManagerRegionalRegionalSecretTfplan2caiConverter(),
+	"google_secret_manager_regional_secret_version":        secretmanagerregional.SecretManagerRegionalRegionalSecretVersionTfplan2caiConverter(),
+	"google_vmwareengine_network_peering":                  vmwareengine.VmwareengineNetworkPeeringTfplan2caiConverter(),
+	"google_workbench_instance":                            workbench.WorkbenchInstanceTfplan2caiConverter(),
 }

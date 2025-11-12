@@ -35,7 +35,6 @@ func TestAccApphubService_apphubServiceBasicExample(t *testing.T) {
 			"provider",
 			"service_id",
 		},
-		[]string{},
 	)
 }
 func TestAccApphubService_apphubServiceFullExample(t *testing.T) {
@@ -53,6 +52,5 @@ func TestAccApphubService_apphubServiceFullExample(t *testing.T) {
 			"provider",
 			"service_id",
 		},
-		[]string{},
 	)
 }

@@ -17,11 +17,65 @@
 package oracledatabase
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
 )
 
 const OracleDatabaseAutonomousDatabaseAssetType string = "oracledatabase.googleapis.com/AutonomousDatabase"
@@ -127,6 +181,9 @@ func expandOracleDatabaseAutonomousDatabaseAdminPassword(v interface{}, d tpgres
 }
 
 func expandOracleDatabaseAutonomousDatabaseProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -573,6 +630,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesLicenseType(v interface{}, 
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesCustomerContacts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -619,6 +679,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesAllocatedStorageSizeTb(v in
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesApexDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -673,6 +736,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesAvailableUpgradeVersions(v 
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesConnectionStrings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -727,6 +793,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesConnectionStrings(v interfa
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesConnectionStringsAllConnectionStrings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -788,6 +857,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesConnectionStringsMedium(v i
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesConnectionStringsProfiles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -902,6 +974,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesConnectionStringsProfilesVa
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesConnectionUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1018,6 +1093,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesLocalAdgAutoFailoverMaxData
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesLocalStandbyDb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1133,6 +1211,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesRole(v interface{}, d tpgre
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesScheduledOperationDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -1173,6 +1254,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesScheduledOperationDetailsDa
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesScheduledOperationDetailsStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1229,6 +1313,9 @@ func expandOracleDatabaseAutonomousDatabasePropertiesScheduledOperationDetailsSt
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesScheduledOperationDetailsStopTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

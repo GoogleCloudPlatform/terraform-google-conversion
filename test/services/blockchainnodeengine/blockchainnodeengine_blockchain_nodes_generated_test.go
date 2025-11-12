@@ -34,7 +34,6 @@ func TestAccBlockchainNodeEngineBlockchainNodes_blockchainNodesBasicExample(t *t
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBlockchainNodeEngineBlockchainNodes_blockchainNodesGethDetailsExample(t *testing.T) {
@@ -51,6 +50,5 @@ func TestAccBlockchainNodeEngineBlockchainNodes_blockchainNodesGethDetailsExampl
 			"location",
 			"provider",
 		},
-		[]string{},
 	)
 }

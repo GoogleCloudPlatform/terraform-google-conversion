@@ -17,10 +17,56 @@
 package alloydb
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"bytes"
+	"context"
+	"fmt"
+	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
+)
+
+func alloydbClusterCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	_, nType := diff.GetChange("cluster_type")
+	// Only check on new resource creation for primary clusters
+	if diff.Id() == "" && nType == "PRIMARY" {
+		_, n := diff.GetChange("initial_user.0.password")
+		// If the value is not computed and is still empty, throw error
+		if n == "" && diff.NewValueKnown("initial_user.0.password") {
+			return fmt.Errorf("New AlloyDB Clusters must have initial_user.password specified")
+		}
+	}
+	return nil
+}
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = structure.NormalizeJsonString
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
 )
 
 const AlloydbClusterAssetType string = "alloydb.googleapis.com/Cluster"
@@ -275,7 +321,7 @@ Note: Changing this field to a higer version results in upgrading the AlloyDB cl
 			"initial_user": {
 				Type:        schema.TypeList,
 				Optional:    true,
-				Description: `Initial user to setup during cluster creation.`,
+				Description: `Initial user to setup during cluster creation. This must be set for all new Clusters.`,
 				MaxItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

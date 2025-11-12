@@ -26,7 +26,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyBasicEx
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_open",
 			"count",
 			"depends_on",
 			"for_each",
@@ -36,7 +35,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyBasicEx
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyAdvancedExample(t *testing.T) {
@@ -45,7 +43,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyAdvance
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_open",
 			"count",
 			"depends_on",
 			"for_each",
@@ -55,7 +52,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyAdvance
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyServerCertExample(t *testing.T) {
@@ -64,7 +60,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyServerC
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_open",
 			"count",
 			"depends_on",
 			"for_each",
@@ -74,7 +69,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyServerC
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyMtlsExample(t *testing.T) {
@@ -83,7 +77,6 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyMtlsExa
 	test.BidirectionalConversion(
 		t,
 		[]string{
-			"allow_open",
 			"count",
 			"depends_on",
 			"for_each",
@@ -93,6 +86,5 @@ func TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyMtlsExa
 			"name",
 			"provider",
 		},
-		[]string{},
 	)
 }

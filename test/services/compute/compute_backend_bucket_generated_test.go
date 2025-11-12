@@ -31,10 +31,9 @@ func TestAccComputeBackendBucket_backendBucketBasicExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
-		},
-		[]string{
-			"RESOURCE.cdnPolicy.signedUrlCacheMaxAgeSec",
 		},
 	)
 }
@@ -49,9 +48,10 @@ func TestAccComputeBackendBucket_backendBucketFullExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T) {
@@ -65,10 +65,9 @@ func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
-		},
-		[]string{
-			"RESOURCE.cdnPolicy.signedUrlCacheMaxAgeSec",
 		},
 	)
 }
@@ -83,9 +82,10 @@ func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *tes
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample(t *testing.T) {
@@ -99,9 +99,10 @@ func TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample(t *testi
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample(t *testing.T) {
@@ -115,9 +116,10 @@ func TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample(t *testin
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketBypassCacheExample(t *testing.T) {
@@ -131,9 +133,10 @@ func TestAccComputeBackendBucket_backendBucketBypassCacheExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
@@ -147,9 +150,10 @@ func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
@@ -163,8 +167,111 @@ func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
 			"for_each",
 			"lifecycle",
 			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
 			"provider",
 		},
-		[]string{},
+	)
+}
+func TestAccComputeBackendBucket_basicModified(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+		},
+	)
+}
+func TestAccComputeBackendBucket_withCdnPolicy(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+		},
+	)
+}
+func TestAccComputeBackendBucket_withSecurityPolicy(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+		},
+	)
+}
+func TestAccComputeBackendBucket_withCompressionMode(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+		},
+	)
+}
+func TestAccComputeBackendBucket_withCdnCacheMode_update(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+		},
+	)
+}
+func TestAccComputeBackendBucket_withTags(t *testing.T) {
+	t.Parallel()
+
+	test.BidirectionalConversion(
+		t,
+		[]string{
+			"count",
+			"depends_on",
+			"for_each",
+			"lifecycle",
+			"load_balancing_scheme",
+			"params",
+			"params.resource_manager_tags",
+			"provider",
+		},
 	)
 }

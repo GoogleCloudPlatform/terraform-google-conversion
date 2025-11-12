@@ -17,13 +17,36 @@
 package containerattached
 
 import (
+	"bytes"
+	"context"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"log"
 	"reflect"
+	"regexp"
+	"slices"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/id"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
+
+	"google.golang.org/api/googleapi"
 )
 
 func suppressAttachedClustersLoggingConfigDiff(_, old, new string, d *schema.ResourceData) bool {
@@ -36,6 +59,35 @@ func suppressAttachedClustersLoggingConfigDiff(_, old, new string, d *schema.Res
 	}
 	return false
 }
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = base64.StdEncoding
+	_ = fmt.Sprintf
+	_ = json.Marshal
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = slices.Min([]int{1})
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = time.Now
+	_ = diag.Diagnostic{}
+	_ = customdiff.All
+	_ = id.UniqueId
+	_ = logging.LogLevel
+	_ = retry.Retry
+	_ = schema.Noop
+	_ = structure.ExpandJsonFromString
+	_ = validation.All
+	_ = terraform.State{}
+	_ = tpgresource.SetLabels
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
+	_ = googleapi.Error{}
+)
 
 const ContainerAttachedClusterAssetType string = "{{location}}-gkemulticloud.googleapis.com/Cluster"
 
@@ -160,6 +212,9 @@ func expandContainerAttachedClusterDescription(v interface{}, d tpgresource.Terr
 }
 
 func expandContainerAttachedClusterOidcConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -202,6 +257,9 @@ func expandContainerAttachedClusterDistribution(v interface{}, d tpgresource.Ter
 }
 
 func expandContainerAttachedClusterFleet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -294,27 +352,27 @@ type attachedClusterGroup struct {
 // The custom expander transforms input into something like this:
 //
 //	authorization {
-//	   admin_users [
-//	     { username = "user1" },
-//	     { username = "user2" }
-//	   ]
-//	   admin_groups [
-//	     { group = "group1" },
-//	     { group = "group2" },
-//	   ]
+//		admin_users [
+//			{ username = "user1" },
+//			{ username = "user2" }
+//		]
+//		admin_groups [
+//			{ group = "group1" },
+//			{ group = "group2" },
+//		]
 //	}
 //
 // The custom flattener transforms input back into something like this:
 //
 //	authorization {
-//	   admin_users = [
-//	     "user1",
-//	     "user2"
-//	   ]
-//	   admin_groups = [
-//	     "group1",
-//	     "group2"
-//	   ],
+//		admin_users = [
+//			"user1",
+//			"user2"
+//		]
+//		admin_groups = [
+//			"group1",
+//			"group2"
+//		],
 //	}
 func expandContainerAttachedClusterAuthorization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
@@ -341,6 +399,9 @@ func expandContainerAttachedClusterAuthorization(v interface{}, d tpgresource.Te
 }
 
 func expandContainerAttachedClusterMonitoringConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -365,6 +426,9 @@ func expandContainerAttachedClusterMonitoringConfig(v interface{}, d tpgresource
 }
 
 func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -393,6 +457,9 @@ func expandContainerAttachedClusterMonitoringConfigManagedPrometheusConfigEnable
 }
 
 func expandContainerAttachedClusterBinaryAuthorization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
@@ -421,6 +488,9 @@ func expandContainerAttachedClusterBinaryAuthorizationEvaluationMode(v interface
 }
 
 func expandContainerAttachedClusterProxyConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -440,6 +510,9 @@ func expandContainerAttachedClusterProxyConfig(v interface{}, d tpgresource.Terr
 }
 
 func expandContainerAttachedClusterProxyConfigKubernetesSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -474,6 +547,9 @@ func expandContainerAttachedClusterProxyConfigKubernetesSecretNamespace(v interf
 }
 
 func expandContainerAttachedClusterSecurityPostureConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil

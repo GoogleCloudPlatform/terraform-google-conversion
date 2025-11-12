@@ -34,7 +34,6 @@ func TestAccBigQueryDataset_bigqueryDatasetBasicExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBigQueryDataset_bigqueryDatasetWithMaxTimeTravelHoursExample(t *testing.T) {
@@ -51,7 +50,6 @@ func TestAccBigQueryDataset_bigqueryDatasetWithMaxTimeTravelHoursExample(t *test
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBigQueryDataset_bigqueryDatasetAuthorizedDatasetExample(t *testing.T) {
@@ -68,7 +66,6 @@ func TestAccBigQueryDataset_bigqueryDatasetAuthorizedDatasetExample(t *testing.T
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBigQueryDataset_bigqueryDatasetAuthorizedRoutineExample(t *testing.T) {
@@ -85,7 +82,6 @@ func TestAccBigQueryDataset_bigqueryDatasetAuthorizedRoutineExample(t *testing.T
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBigQueryDataset_bigqueryDatasetCaseInsensitiveNamesExample(t *testing.T) {
@@ -102,7 +98,6 @@ func TestAccBigQueryDataset_bigqueryDatasetCaseInsensitiveNamesExample(t *testin
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBigQueryDataset_bigqueryDatasetDefaultCollationSetExample(t *testing.T) {
@@ -119,7 +114,6 @@ func TestAccBigQueryDataset_bigqueryDatasetDefaultCollationSetExample(t *testing
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBigQueryDataset_bigqueryDatasetExternalCatalogDatasetOptionsExample(t *testing.T) {
@@ -136,7 +130,6 @@ func TestAccBigQueryDataset_bigqueryDatasetExternalCatalogDatasetOptionsExample(
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccBigQueryDataset_bigqueryDatasetResourceTagsExample(t *testing.T) {
@@ -153,6 +146,5 @@ func TestAccBigQueryDataset_bigqueryDatasetResourceTagsExample(t *testing.T) {
 			"lifecycle",
 			"provider",
 		},
-		[]string{},
 	)
 }

@@ -29,11 +29,11 @@ func TestAccApigeeInstance_apigeeInstanceBasicTestExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"ip_range",
 			"lifecycle",
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccApigeeInstance_apigeeInstanceCidrRangeTestExample(t *testing.T) {
@@ -45,11 +45,11 @@ func TestAccApigeeInstance_apigeeInstanceCidrRangeTestExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"ip_range",
 			"lifecycle",
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccApigeeInstance_apigeeInstanceIpRangeTestExample(t *testing.T) {
@@ -61,11 +61,11 @@ func TestAccApigeeInstance_apigeeInstanceIpRangeTestExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"ip_range",
 			"lifecycle",
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccApigeeInstance_apigeeInstanceFullTestExample(t *testing.T) {
@@ -77,11 +77,11 @@ func TestAccApigeeInstance_apigeeInstanceFullTestExample(t *testing.T) {
 			"count",
 			"depends_on",
 			"for_each",
+			"ip_range",
 			"lifecycle",
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }
 func TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample(t *testing.T) {
@@ -93,10 +93,10 @@ func TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample(t *te
 			"count",
 			"depends_on",
 			"for_each",
+			"ip_range",
 			"lifecycle",
 			"org_id",
 			"provider",
 		},
-		[]string{},
 	)
 }

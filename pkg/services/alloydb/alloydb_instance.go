@@ -17,10 +17,43 @@
 package alloydb
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"bytes"
+	"context"
+	"fmt"
+	"log"
+	"reflect"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
+	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
+)
+
+var (
+	_ = bytes.Clone
+	_ = context.WithCancel
+	_ = fmt.Sprintf
+	_ = log.Print
+	_ = reflect.ValueOf
+	_ = regexp.Match
+	_ = sort.IntSlice{}
+	_ = strconv.Atoi
+	_ = strings.Trim
+	_ = schema.Noop
+	_ = structure.NormalizeJsonString
+	_ = validation.All
+	_ = tgcresource.RemoveTerraformAttributionLabel
+	_ = tpgresource.GetRegion
+	_ = transport_tpg.Config{}
+	_ = verify.ProjectRegex
 )
 
 const AlloydbInstanceAssetType string = "alloydb.googleapis.com/Instance"
@@ -221,62 +254,6 @@ true.`,
 							Description: `Enabling public ip for the instance. If a user wishes to disable this,
 please also clear the list of the authorized external networks set on
 the same instance.`,
-						},
-					},
-				},
-			},
-			"observability_config": {
-				Type:        schema.TypeList,
-				Computed:    true,
-				Optional:    true,
-				Description: `Configuration for enhanced query insights.`,
-				MaxItems:    1,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"assistive_experiences_enabled": {
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Description: `Whether assistive experiences are enabled for this AlloyDB instance.`,
-						},
-						"enabled": {
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Description: `Observability feature status for an instance.`,
-						},
-						"max_query_string_length": {
-							Type:        schema.TypeInt,
-							Optional:    true,
-							Description: `Query string length. The default value is 10240. Any integer between 1024 and 100000 is considered valid.`,
-						},
-						"preserve_comments": {
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Description: `Preserve comments in the query string.`,
-						},
-						"query_plans_per_minute": {
-							Type:        schema.TypeInt,
-							Optional:    true,
-							Description: `Number of query execution plans captured by Insights per minute for all queries combined. The default value is 5. Any integer between 0 and 200 is considered valid.`,
-						},
-						"record_application_tags": {
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Description: `Record application tags for an instance. This flag is turned "on" by default.`,
-						},
-						"track_active_queries": {
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Description: `Track actively running queries. If not set, default value is "off".`,
-						},
-						"track_wait_event_types": {
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Description: `Record wait event types during query execution for an instance.`,
-						},
-						"track_wait_events": {
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Description: `Record wait events during query execution for an instance.`,
 						},
 					},
 				},
