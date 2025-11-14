@@ -97,8 +97,8 @@ func GetDialogflowCXToolCaiObject(d tpgresource.TerraformResourceData, config *t
 			Name: name,
 			Type: DialogflowCXToolAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v3",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{location}}-dialogflow/v3/rest",
+				Version:              "v3beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{location}}-dialogflow/v3beta1/rest",
 				DiscoveryName:        "Tool",
 				Data:                 obj,
 			},
@@ -139,6 +139,12 @@ func GetDialogflowCXToolApiObject(d tpgresource.TerraformResourceData, config *t
 		return nil, err
 	} else if v, ok := d.GetOkExists("function_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(functionSpecProp)) && (ok || !reflect.DeepEqual(v, functionSpecProp)) {
 		obj["functionSpec"] = functionSpecProp
+	}
+	connectorSpecProp, err := expandDialogflowCXToolConnectorSpec(d.Get("connector_spec"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("connector_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(connectorSpecProp)) && (ok || !reflect.DeepEqual(v, connectorSpecProp)) {
+		obj["connectorSpec"] = connectorSpecProp
 	}
 
 	return obj, nil
@@ -682,4 +688,242 @@ func expandDialogflowCXToolFunctionSpecOutputSchema(v interface{}, d tpgresource
 		return nil, err
 	}
 	return m, nil
+}
+
+func expandDialogflowCXToolConnectorSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandDialogflowCXToolConnectorSpecName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedActions, err := expandDialogflowCXToolConnectorSpecActions(original["actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["actions"] = transformedActions
+	}
+
+	transformedEndUserAuthConfig, err := expandDialogflowCXToolConnectorSpecEndUserAuthConfig(original["end_user_auth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndUserAuthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endUserAuthConfig"] = transformedEndUserAuthConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXToolConnectorSpecName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedInputFields, err := expandDialogflowCXToolConnectorSpecActionsInputFields(original["input_fields"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedInputFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["inputFields"] = transformedInputFields
+		}
+
+		transformedOutputFields, err := expandDialogflowCXToolConnectorSpecActionsOutputFields(original["output_fields"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOutputFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["outputFields"] = transformedOutputFields
+		}
+
+		transformedConnectionActionId, err := expandDialogflowCXToolConnectorSpecActionsConnectionActionId(original["connection_action_id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConnectionActionId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["connectionActionId"] = transformedConnectionActionId
+		}
+
+		transformedEntityOperation, err := expandDialogflowCXToolConnectorSpecActionsEntityOperation(original["entity_operation"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEntityOperation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["entityOperation"] = transformedEntityOperation
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowCXToolConnectorSpecActionsInputFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecActionsOutputFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecActionsConnectionActionId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecActionsEntityOperation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEntityId, err := expandDialogflowCXToolConnectorSpecActionsEntityOperationEntityId(original["entity_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEntityId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["entityId"] = transformedEntityId
+	}
+
+	transformedOperation, err := expandDialogflowCXToolConnectorSpecActionsEntityOperationOperation(original["operation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOperation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["operation"] = transformedOperation
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXToolConnectorSpecActionsEntityOperationEntityId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecActionsEntityOperationOperation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecEndUserAuthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOauth2AuthCodeConfig, err := expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2AuthCodeConfig(original["oauth2_auth_code_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauth2AuthCodeConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauth2AuthCodeConfig"] = transformedOauth2AuthCodeConfig
+	}
+
+	transformedOauth2JwtBearerConfig, err := expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2JwtBearerConfig(original["oauth2_jwt_bearer_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauth2JwtBearerConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauth2JwtBearerConfig"] = transformedOauth2JwtBearerConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2AuthCodeConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOauthToken, err := expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2AuthCodeConfigOauthToken(original["oauth_token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauthToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauthToken"] = transformedOauthToken
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2AuthCodeConfigOauthToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2JwtBearerConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIssuer, err := expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2JwtBearerConfigIssuer(original["issuer"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIssuer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["issuer"] = transformedIssuer
+	}
+
+	transformedSubject, err := expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2JwtBearerConfigSubject(original["subject"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subject"] = transformedSubject
+	}
+
+	transformedClientKey, err := expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2JwtBearerConfigClientKey(original["client_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientKey"] = transformedClientKey
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2JwtBearerConfigIssuer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2JwtBearerConfigSubject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXToolConnectorSpecEndUserAuthConfigOauth2JwtBearerConfigClientKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
