@@ -97,8 +97,8 @@ func GetDialogflowCXTestCaseCaiObject(d tpgresource.TerraformResourceData, confi
 			Name: name,
 			Type: DialogflowCXTestCaseAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v3",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{location}}-dialogflow/v3/rest",
+				Version:              "v3beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/{{location}}-dialogflow/v3beta1/rest",
 				DiscoveryName:        "TestCase",
 				Data:                 obj,
 			},
