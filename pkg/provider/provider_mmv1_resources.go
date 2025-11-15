@@ -42,7 +42,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 76
+// Generated resources: 78
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -118,6 +118,8 @@ var generatedResources = map[string]*schema.Resource{
 	"google_secret_manager_secret_version":                 secretmanager.ResourceSecretManagerSecretVersion(),
 	"google_secret_manager_regional_secret":                secretmanagerregional.ResourceSecretManagerRegionalRegionalSecret(),
 	"google_secret_manager_regional_secret_version":        secretmanagerregional.ResourceSecretManagerRegionalRegionalSecretVersion(),
+	"google_vmwareengine_network":                          vmwareengine.ResourceVmwareengineNetwork(),
 	"google_vmwareengine_network_peering":                  vmwareengine.ResourceVmwareengineNetworkPeering(),
+	"google_vmwareengine_network_policy":                   vmwareengine.ResourceVmwareengineNetworkPolicy(),
 	"google_workbench_instance":                            workbench.ResourceWorkbenchInstance(),
 }
