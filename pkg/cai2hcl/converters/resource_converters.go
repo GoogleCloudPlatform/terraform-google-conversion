@@ -279,4 +279,10 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"vmwareengine.googleapis.com/NetworkPeering": {
 		"Default": vmwareengine.NewVmwareengineNetworkPeeringCai2hclConverter(provider),
 	},
+	"vmwareengine.googleapis.com/NetworkPolicy": {
+		"Default": vmwareengine.NewVmwareengineNetworkPolicyCai2hclConverter(provider),
+	},
+	"vmwareengine.googleapis.com/VmwareEngineNetwork": {
+		"Default": vmwareengine.NewVmwareengineNetworkCai2hclConverter(provider),
+	},
 }

@@ -127,6 +127,8 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_secret_manager_secret_version":                 secretmanager.SecretManagerSecretVersionTfplan2caiConverter(),
 	"google_secret_manager_regional_secret":                secretmanagerregional.SecretManagerRegionalRegionalSecretTfplan2caiConverter(),
 	"google_secret_manager_regional_secret_version":        secretmanagerregional.SecretManagerRegionalRegionalSecretVersionTfplan2caiConverter(),
+	"google_vmwareengine_network":                          vmwareengine.VmwareengineNetworkTfplan2caiConverter(),
 	"google_vmwareengine_network_peering":                  vmwareengine.VmwareengineNetworkPeeringTfplan2caiConverter(),
+	"google_vmwareengine_network_policy":                   vmwareengine.VmwareengineNetworkPolicyTfplan2caiConverter(),
 	"google_workbench_instance":                            workbench.WorkbenchInstanceTfplan2caiConverter(),
 }
