@@ -122,6 +122,12 @@ func GetCESExampleApiObject(d tpgresource.TerraformResourceData, config *transpo
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
+	entryAgentProp, err := expandCESExampleEntryAgent(d.Get("entry_agent"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("entry_agent"); !tpgresource.IsEmptyValue(reflect.ValueOf(entryAgentProp)) && (ok || !reflect.DeepEqual(v, entryAgentProp)) {
+		obj["entryAgent"] = entryAgentProp
+	}
 	etagProp, err := expandCESExampleEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
@@ -143,6 +149,10 @@ func expandCESExampleDescription(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandCESExampleDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleEntryAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -195,6 +205,13 @@ func expandCESExampleMessagesChunks(v interface{}, d tpgresource.TerraformResour
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
+		transformedAgentTransfer, err := expandCESExampleMessagesChunksAgentTransfer(original["agent_transfer"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAgentTransfer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["agentTransfer"] = transformedAgentTransfer
+		}
+
 		transformedImage, err := expandCESExampleMessagesChunksImage(original["image"], d, config)
 		if err != nil {
 			return nil, err
@@ -209,6 +226,20 @@ func expandCESExampleMessagesChunks(v interface{}, d tpgresource.TerraformResour
 			transformed["text"] = transformedText
 		}
 
+		transformedToolCall, err := expandCESExampleMessagesChunksToolCall(original["tool_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedToolCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["toolCall"] = transformedToolCall
+		}
+
+		transformedToolResponse, err := expandCESExampleMessagesChunksToolResponse(original["tool_response"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedToolResponse); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["toolResponse"] = transformedToolResponse
+		}
+
 		transformedUpdatedVariables, err := expandCESExampleMessagesChunksUpdatedVariables(original["updated_variables"], d, config)
 		if err != nil {
 			return nil, err
@@ -219,6 +250,43 @@ func expandCESExampleMessagesChunks(v interface{}, d tpgresource.TerraformResour
 		req = append(req, transformed)
 	}
 	return req, nil
+}
+
+func expandCESExampleMessagesChunksAgentTransfer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisplayName, err := expandCESExampleMessagesChunksAgentTransferDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedTargetAgent, err := expandCESExampleMessagesChunksAgentTransferTargetAgent(original["target_agent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetAgent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["targetAgent"] = transformedTargetAgent
+	}
+
+	return transformed, nil
+}
+
+func expandCESExampleMessagesChunksAgentTransferDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksAgentTransferTargetAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESExampleMessagesChunksImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -259,6 +327,228 @@ func expandCESExampleMessagesChunksImageMimeType(v interface{}, d tpgresource.Te
 }
 
 func expandCESExampleMessagesChunksText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedArgs, err := expandCESExampleMessagesChunksToolCallArgs(original["args"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedArgs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["args"] = transformedArgs
+	}
+
+	transformedDisplayName, err := expandCESExampleMessagesChunksToolCallDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedId, err := expandCESExampleMessagesChunksToolCallId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedTool, err := expandCESExampleMessagesChunksToolCallTool(original["tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tool"] = transformedTool
+	}
+
+	transformedToolsetTool, err := expandCESExampleMessagesChunksToolCallToolsetTool(original["toolset_tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolsetTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolsetTool"] = transformedToolsetTool
+	}
+
+	return transformed, nil
+}
+
+func expandCESExampleMessagesChunksToolCallArgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandCESExampleMessagesChunksToolCallDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolCallId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolCallTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolCallToolsetTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToolset, err := expandCESExampleMessagesChunksToolCallToolsetToolToolset(original["toolset"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolset"] = transformedToolset
+	}
+
+	transformedToolId, err := expandCESExampleMessagesChunksToolCallToolsetToolToolId(original["tool_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolId"] = transformedToolId
+	}
+
+	return transformed, nil
+}
+
+func expandCESExampleMessagesChunksToolCallToolsetToolToolset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolCallToolsetToolToolId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisplayName, err := expandCESExampleMessagesChunksToolResponseDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedId, err := expandCESExampleMessagesChunksToolResponseId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedResponse, err := expandCESExampleMessagesChunksToolResponseResponse(original["response"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponse); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["response"] = transformedResponse
+	}
+
+	transformedTool, err := expandCESExampleMessagesChunksToolResponseTool(original["tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tool"] = transformedTool
+	}
+
+	transformedToolsetTool, err := expandCESExampleMessagesChunksToolResponseToolsetTool(original["toolset_tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolsetTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolsetTool"] = transformedToolsetTool
+	}
+
+	return transformed, nil
+}
+
+func expandCESExampleMessagesChunksToolResponseDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolResponseId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolResponseResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandCESExampleMessagesChunksToolResponseTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolResponseToolsetTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToolset, err := expandCESExampleMessagesChunksToolResponseToolsetToolToolset(original["toolset"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolset"] = transformedToolset
+	}
+
+	transformedToolId, err := expandCESExampleMessagesChunksToolResponseToolsetToolToolId(original["tool_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolId"] = transformedToolId
+	}
+
+	return transformed, nil
+}
+
+func expandCESExampleMessagesChunksToolResponseToolsetToolToolset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksToolResponseToolsetToolToolId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
