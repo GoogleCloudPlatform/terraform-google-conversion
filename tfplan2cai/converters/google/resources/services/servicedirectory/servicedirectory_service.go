@@ -97,8 +97,8 @@ func GetServiceDirectoryServiceCaiObject(d tpgresource.TerraformResourceData, co
 			Name: name,
 			Type: ServiceDirectoryServiceAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1beta1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/servicedirectory/v1beta1/rest",
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/servicedirectory/v1/rest",
 				DiscoveryName:        "Service",
 				Data:                 obj,
 			},
@@ -117,6 +117,16 @@ func GetServiceDirectoryServiceApiObject(d tpgresource.TerraformResourceData, co
 		obj["metadata"] = metadataProp
 	}
 
+	return resourceServiceDirectoryServiceEncoder(d, config, obj)
+}
+
+func resourceServiceDirectoryServiceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	if obj["metadata"] == nil {
+		return nil, nil
+	}
+
+	obj["annotations"] = obj["metadata"].(map[string]string)
+	delete(obj, "metadata")
 	return obj, nil
 }
 
