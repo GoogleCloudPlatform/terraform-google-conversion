@@ -25,6 +25,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
@@ -42,7 +43,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 78
+// Generated resources: 79
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -100,6 +101,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_iam_workload_identity_pool_provider":           iambeta.ResourceIAMBetaWorkloadIdentityPoolProvider(),
 	"google_kms_autokey_config":                            kms.ResourceKMSAutokeyConfig(),
 	"google_kms_key_handle":                                kms.ResourceKMSKeyHandle(),
+	"google_logging_metric":                                logging.ResourceLoggingMetric(),
 	"google_monitoring_notification_channel":               monitoring.ResourceMonitoringNotificationChannel(),
 	"google_monitoring_uptime_check_config":                monitoring.ResourceMonitoringUptimeCheckConfig(),
 	"google_network_security_address_group":                networksecurity.ResourceNetworkSecurityAddressGroup(),

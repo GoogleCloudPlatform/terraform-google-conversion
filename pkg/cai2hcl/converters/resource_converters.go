@@ -37,6 +37,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
@@ -222,6 +223,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"iam.googleapis.com/WorkloadIdentityPoolProvider": {
 		"Default": iambeta.NewIAMBetaWorkloadIdentityPoolProviderCai2hclConverter(provider),
+	},
+	"logging.googleapis.com/LogMetric": {
+		"Default": logging.NewLoggingMetricCai2hclConverter(provider),
 	},
 	"monitoring.googleapis.com/NotificationChannel": {
 		"Default": monitoring.NewMonitoringNotificationChannelCai2hclConverter(provider),
