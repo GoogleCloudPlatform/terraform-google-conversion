@@ -34,6 +34,14 @@ func TestAccApphubApplication(t *testing.T) {
 			Name: "TestAccApphubApplication_apphubApplicationFullExample",
 			Skip: "",
 		},
+		{
+			Name: "TestAccApphubApplication_applicationUpdateFull",
+			Skip: "",
+		},
+		{
+			Name: "TestAccApphubApplication_invalidConfigFails",
+			Skip: "",
+		},
 	}
 
 	for _, tt := range tests {
