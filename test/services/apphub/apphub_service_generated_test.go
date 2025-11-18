@@ -30,6 +30,10 @@ func TestAccApphubService(t *testing.T) {
 			Name: "TestAccApphubService_apphubServiceFullExample",
 			Skip: "",
 		},
+		{
+			Name: "TestAccApphubService_serviceUpdate",
+			Skip: "",
+		},
 	}
 
 	for _, tt := range tests {

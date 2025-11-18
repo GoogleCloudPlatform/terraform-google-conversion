@@ -26,6 +26,58 @@ func TestAccCloudbuildv2Connection(t *testing.T) {
 			Name: "TestAccCloudbuildv2Connection_cloudbuildv2ConnectionExample",
 			Skip: "",
 		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GheCompleteConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GheConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GhePrivConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GhePrivUpdateConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GithubConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GitlabConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GleConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GleOldConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GlePrivConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GlePrivUpdateConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_BbdcPrivConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_BbdcPrivUpdateConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_BbcConnection",
+			Skip: "",
+		},
 	}
 
 	for _, tt := range tests {

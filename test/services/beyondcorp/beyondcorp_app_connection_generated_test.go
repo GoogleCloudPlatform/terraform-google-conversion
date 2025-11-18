@@ -30,6 +30,10 @@ func TestAccBeyondcorpAppConnection(t *testing.T) {
 			Name: "TestAccBeyondcorpAppConnection_beyondcorpAppConnectionFullExample",
 			Skip: "",
 		},
+		{
+			Name: "TestAccBeyondcorpAppConnection_beyondcorpAppConnectionUpdateExample",
+			Skip: "",
+		},
 	}
 
 	for _, tt := range tests {

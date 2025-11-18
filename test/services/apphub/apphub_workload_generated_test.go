@@ -30,6 +30,10 @@ func TestAccApphubWorkload(t *testing.T) {
 			Name: "TestAccApphubWorkload_apphubWorkloadFullExample",
 			Skip: "",
 		},
+		{
+			Name: "TestAccApphubWorkload_apphubWorkloadUpdate",
+			Skip: "",
+		},
 	}
 
 	for _, tt := range tests {

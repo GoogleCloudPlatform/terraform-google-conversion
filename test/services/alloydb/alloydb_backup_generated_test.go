@@ -30,6 +30,18 @@ func TestAccAlloydbBackup(t *testing.T) {
 			Name: "TestAccAlloydbBackup_alloydbBackupFullTestExample",
 			Skip: "",
 		},
+		{
+			Name: "TestAccAlloydbBackup_update",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbBackup_createBackupWithMandatoryFields",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbBackup_usingCMEK",
+			Skip: "",
+		},
 	}
 
 	for _, tt := range tests {
