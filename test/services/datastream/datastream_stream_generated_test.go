@@ -20,171 +20,68 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccDatastreamStream_datastreamStreamBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"count",
-			"create_without_validation",
-			"customer_managed_encryption_key",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"stream_id",
+func TestAccDatastreamStream(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccDatastreamStream_datastreamStreamBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDatastreamStream_datastreamStreamFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"count",
-			"create_without_validation",
-			"customer_managed_encryption_key",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"stream_id",
+		{
+			Name: "TestAccDatastreamStream_datastreamStreamFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDatastreamStream_datastreamStreamPostgresqlBigqueryDatasetIdExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"count",
-			"create_without_validation",
-			"customer_managed_encryption_key",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"stream_id",
+		{
+			Name: "TestAccDatastreamStream_datastreamStreamPostgresqlBigqueryDatasetIdExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDatastreamStream_datastreamStreamBigqueryExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"count",
-			"create_without_validation",
-			"customer_managed_encryption_key",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"stream_id",
+		{
+			Name: "TestAccDatastreamStream_datastreamStreamBigqueryExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDatastreamStream_datastreamStreamBigqueryCrossProjectSourceHierachyExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"count",
-			"create_without_validation",
-			"customer_managed_encryption_key",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"stream_id",
+		{
+			Name: "TestAccDatastreamStream_datastreamStreamBigqueryCrossProjectSourceHierachyExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDatastreamStream_datastreamStreamBigqueryAppendOnlyExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"count",
-			"create_without_validation",
-			"customer_managed_encryption_key",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
-			"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
-			"stream_id",
+		{
+			Name: "TestAccDatastreamStream_datastreamStreamBigqueryAppendOnlyExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
+					"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
+					"backfill_all.mysql_excluded_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
+					"count",
+					"create_without_validation",
+					"customer_managed_encryption_key",
+					"depends_on",
+					"desired_state",
+					"for_each",
+					"lifecycle",
+					"location",
+					"provider",
+					"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
+					"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
+					"source_config.mysql_source_config.exclude_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
+					"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.nullable",
+					"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
+					"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
+					"stream_id",
+				},
+			)
+		})
+	}
 }

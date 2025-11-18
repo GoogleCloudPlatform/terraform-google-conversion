@@ -20,264 +20,88 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccPubsubSubscription_pubsubSubscriptionPushExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+func TestAccPubsubSubscription(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionPullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionPullFilterExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPullFilterExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionDeadLetterExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionDeadLetterExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionPushBqExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushBqExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionPushBqTableSchemaExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushBqTableSchemaExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionPushBqServiceAccountExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushBqServiceAccountExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageAvroExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageAvroExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageServiceAccountExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageServiceAccountExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionSingleSmtExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionSingleSmtExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionMultipleSmtsExample(t *testing.T) {
-	t.Skip("The dynamic block is in test configuration. The test takes time to fix.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionMultipleSmtsExample",
+			Skip: "The dynamic block is in test configuration. The test takes time to fix.",
 		},
-	)
-}
-func TestAccPubsubSubscription_pubsubSubscriptionTagsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bigquery_config.service_account_email",
-			"bigquery_config.table",
-			"bigquery_config.use_table_schema",
-			"cloud_storage_config",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_transforms.javascript_udf",
-			"provider",
-			"tags",
+		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionTagsExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"bigquery_config.service_account_email",
+					"bigquery_config.table",
+					"bigquery_config.use_table_schema",
+					"cloud_storage_config",
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"message_transforms.javascript_udf",
+					"provider",
+					"tags",
+				},
+			)
+		})
+	}
 }

@@ -20,37 +20,41 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccFilestoreSnapshot_filestoreSnapshotBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"instance",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+func TestAccFilestoreSnapshot(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccFilestoreSnapshot_filestoreSnapshotBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccFilestoreSnapshot_filestoreSnapshotFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"instance",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccFilestoreSnapshot_filestoreSnapshotFullExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"instance",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+				},
+			)
+		})
+	}
 }

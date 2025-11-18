@@ -20,27 +20,44 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccBackupDRBackupVault_backupDrBackupVaultFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"allow_missing",
-			"annotations",
-			"backup_retention_inheritance",
-			"backup_vault_id",
-			"count",
-			"depends_on",
-			"for_each",
-			"force_delete",
-			"force_update",
-			"ignore_backup_plan_references",
-			"ignore_inactive_datasources",
-			"labels",
-			"lifecycle",
-			"location",
-			"provider",
+func TestAccBackupDRBackupVault(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultFullExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"allow_missing",
+					"annotations",
+					"backup_retention_inheritance",
+					"backup_vault_id",
+					"count",
+					"depends_on",
+					"for_each",
+					"force_delete",
+					"force_update",
+					"ignore_backup_plan_references",
+					"ignore_inactive_datasources",
+					"labels",
+					"lifecycle",
+					"location",
+					"provider",
+				},
+			)
+		})
+	}
 }

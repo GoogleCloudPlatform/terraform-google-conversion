@@ -20,213 +20,79 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccPubsubTopic_pubsubTopicBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+func TestAccPubsubTopic(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicGeoRestrictedExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicGeoRestrictedExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicSchemaSettingsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicSchemaSettingsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicIngestionKinesisExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicIngestionKinesisExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicIngestionCloudStorageExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicIngestionCloudStorageExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicIngestionAzureEventHubsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicIngestionAzureEventHubsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicIngestionAwsMskExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicIngestionAwsMskExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicIngestionConfluentCloudExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicIngestionConfluentCloudExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicSingleSmtExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicSingleSmtExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicMultipleSmtsExample(t *testing.T) {
-	t.Skip("The dynamic block is in test configuration. The test takes time to fix.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicMultipleSmtsExample",
+			Skip: "The dynamic block is in test configuration. The test takes time to fix.",
 		},
-	)
-}
-func TestAccPubsubTopic_pubsubTopicTagsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"message_retention_duration",
-			"message_storage_policy.enforce_in_transit",
-			"message_transforms.javascript_udf",
-			"provider",
-			"schema_settings",
-			"tags",
+		{
+			Name: "TestAccPubsubTopic_pubsubTopicTagsExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"message_retention_duration",
+					"message_storage_policy.enforce_in_transit",
+					"message_transforms.javascript_udf",
+					"provider",
+					"schema_settings",
+					"tags",
+				},
+			)
+		})
+	}
 }

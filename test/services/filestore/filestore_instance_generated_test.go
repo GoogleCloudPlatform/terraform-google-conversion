@@ -20,60 +20,47 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccFilestoreInstance_filestoreInstanceBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"initial_replication",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"tags",
-			"zone",
+func TestAccFilestoreInstance(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccFilestoreInstance_filestoreInstanceBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccFilestoreInstance_filestoreInstanceFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"initial_replication",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"tags",
-			"zone",
+		{
+			Name: "TestAccFilestoreInstance_filestoreInstanceFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccFilestoreInstance_filestoreInstanceProtocolExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"initial_replication",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"tags",
-			"zone",
+		{
+			Name: "TestAccFilestoreInstance_filestoreInstanceProtocolExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"initial_replication",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+					"tags",
+					"zone",
+				},
+			)
+		})
+	}
 }

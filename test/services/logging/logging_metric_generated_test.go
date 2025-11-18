@@ -20,129 +20,66 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccLoggingMetric_loggingMetricBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+func TestAccLoggingMetric(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccLoggingMetric_loggingMetricBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccLoggingMetric_loggingMetricCounterBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccLoggingMetric_loggingMetricCounterBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccLoggingMetric_loggingMetricCounterLabelsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccLoggingMetric_loggingMetricCounterLabelsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccLoggingMetric_loggingMetricLoggingBucketExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccLoggingMetric_loggingMetricLoggingBucketExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccLoggingMetric_loggingMetricDisabledExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccLoggingMetric_loggingMetricDisabledExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccLoggingMetric_update(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccLoggingMetric_update",
+			Skip: "",
 		},
-	)
-}
-func TestAccLoggingMetric_explicitBucket(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccLoggingMetric_explicitBucket",
+			Skip: "",
 		},
-	)
-}
-func TestAccLoggingMetric_loggingBucket(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccLoggingMetric_loggingBucket",
+			Skip: "",
 		},
-	)
-}
-func TestAccLoggingMetric_descriptionUpdated(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccLoggingMetric_descriptionUpdated",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"provider",
+				},
+			)
+		})
+	}
 }

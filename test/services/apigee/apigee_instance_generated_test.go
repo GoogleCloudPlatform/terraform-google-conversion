@@ -20,83 +20,52 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccApigeeInstance_apigeeInstanceBasicTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_range",
-			"lifecycle",
-			"org_id",
-			"provider",
+func TestAccApigeeInstance(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccApigeeInstance_apigeeInstanceBasicTestExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccApigeeInstance_apigeeInstanceCidrRangeTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_range",
-			"lifecycle",
-			"org_id",
-			"provider",
+		{
+			Name: "TestAccApigeeInstance_apigeeInstanceCidrRangeTestExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccApigeeInstance_apigeeInstanceIpRangeTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_range",
-			"lifecycle",
-			"org_id",
-			"provider",
+		{
+			Name: "TestAccApigeeInstance_apigeeInstanceIpRangeTestExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccApigeeInstance_apigeeInstanceFullTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_range",
-			"lifecycle",
-			"org_id",
-			"provider",
+		{
+			Name: "TestAccApigeeInstance_apigeeInstanceFullTestExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_range",
-			"lifecycle",
-			"org_id",
-			"provider",
+		{
+			Name: "TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"ip_range",
+					"lifecycle",
+					"org_id",
+					"provider",
+				},
+			)
+		})
+	}
 }

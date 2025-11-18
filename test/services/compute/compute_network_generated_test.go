@@ -20,123 +20,60 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeNetwork_networkBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bgp_always_compare_med",
-			"bgp_best_path_selection_mode",
-			"bgp_inter_region_cost",
-			"count",
-			"delete_default_routes_on_create",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+func TestAccComputeNetwork(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeNetwork_networkBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeNetwork_networkCustomMtuExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bgp_always_compare_med",
-			"bgp_best_path_selection_mode",
-			"bgp_inter_region_cost",
-			"count",
-			"delete_default_routes_on_create",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeNetwork_networkCustomMtuExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeNetwork_networkCustomFirewallEnforcementOrderExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bgp_always_compare_med",
-			"bgp_best_path_selection_mode",
-			"bgp_inter_region_cost",
-			"count",
-			"delete_default_routes_on_create",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeNetwork_networkCustomFirewallEnforcementOrderExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeNetwork_networkBgpBestPathSelectionModeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bgp_always_compare_med",
-			"bgp_best_path_selection_mode",
-			"bgp_inter_region_cost",
-			"count",
-			"delete_default_routes_on_create",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeNetwork_networkBgpBestPathSelectionModeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bgp_always_compare_med",
-			"bgp_best_path_selection_mode",
-			"bgp_inter_region_cost",
-			"count",
-			"delete_default_routes_on_create",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardCustomFieldsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"bgp_always_compare_med",
-			"bgp_best_path_selection_mode",
-			"bgp_inter_region_cost",
-			"count",
-			"delete_default_routes_on_create",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardCustomFieldsExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"bgp_always_compare_med",
+					"bgp_best_path_selection_mode",
+					"bgp_inter_region_cost",
+					"count",
+					"delete_default_routes_on_create",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
+					"provider",
+				},
+			)
+		})
+	}
 }

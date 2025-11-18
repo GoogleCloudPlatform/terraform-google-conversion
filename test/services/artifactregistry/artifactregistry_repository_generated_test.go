@@ -20,327 +20,106 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+func TestAccArtifactRegistryRepository(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryMultiRegionExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryMultiRegionExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryDockerExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryDockerExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryCmekExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryCmekExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryVirtualExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryVirtualExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteAptExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteAptExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteYumExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteYumExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryCleanupExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryCleanupExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerhubAuthExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerhubAuthExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerCustomWithAuthExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerCustomWithAuthExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteMavenCustomWithAuthExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteMavenCustomWithAuthExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteNpmCustomWithAuthExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteNpmCustomWithAuthExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemotePythonCustomWithAuthExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemotePythonCustomWithAuthExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithDockerExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithDockerExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithArtifactRegistryUriExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithArtifactRegistryUriExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithCustomUpstreamExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithCustomUpstreamExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccArtifactRegistryRepository_artifactRegistryRepositoryVulnerabilityScanningExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"remote_repository_config.disable_upstream_validation",
-			"remote_repository_config.upstream_credentials",
-			"repository_id",
+		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryVulnerabilityScanningExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"provider",
+					"remote_repository_config.disable_upstream_validation",
+					"remote_repository_config.upstream_credentials",
+					"repository_id",
+				},
+			)
+		})
+	}
 }

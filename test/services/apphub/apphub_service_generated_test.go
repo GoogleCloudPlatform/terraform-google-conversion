@@ -20,37 +20,41 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccApphubService_apphubServiceBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"application_id",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"service_id",
+func TestAccApphubService(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccApphubService_apphubServiceBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccApphubService_apphubServiceFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"application_id",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"service_id",
+		{
+			Name: "TestAccApphubService_apphubServiceFullExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"application_id",
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"provider",
+					"service_id",
+				},
+			)
+		})
+	}
 }

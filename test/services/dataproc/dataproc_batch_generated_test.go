@@ -20,129 +20,61 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccDataprocBatch_dataprocBatchSparkExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"batch_id",
-			"count",
-			"depends_on",
-			"environment_config.execution_config.ttl",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"pyspark_batch.args",
-			"spark_batch.args",
-			"spark_r_batch.args",
-			"spark_sql_batch.query_variables",
+func TestAccDataprocBatch(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccDataprocBatch_dataprocBatchSparkExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDataprocBatch_dataprocBatchSparkFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"batch_id",
-			"count",
-			"depends_on",
-			"environment_config.execution_config.ttl",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"pyspark_batch.args",
-			"spark_batch.args",
-			"spark_r_batch.args",
-			"spark_sql_batch.query_variables",
+		{
+			Name: "TestAccDataprocBatch_dataprocBatchSparkFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDataprocBatch_dataprocBatchSparksqlExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"batch_id",
-			"count",
-			"depends_on",
-			"environment_config.execution_config.ttl",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"pyspark_batch.args",
-			"spark_batch.args",
-			"spark_r_batch.args",
-			"spark_sql_batch.query_variables",
+		{
+			Name: "TestAccDataprocBatch_dataprocBatchSparksqlExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDataprocBatch_dataprocBatchPysparkExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"batch_id",
-			"count",
-			"depends_on",
-			"environment_config.execution_config.ttl",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"pyspark_batch.args",
-			"spark_batch.args",
-			"spark_r_batch.args",
-			"spark_sql_batch.query_variables",
+		{
+			Name: "TestAccDataprocBatch_dataprocBatchPysparkExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDataprocBatch_dataprocBatchSparkrExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"batch_id",
-			"count",
-			"depends_on",
-			"environment_config.execution_config.ttl",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"pyspark_batch.args",
-			"spark_batch.args",
-			"spark_r_batch.args",
-			"spark_sql_batch.query_variables",
+		{
+			Name: "TestAccDataprocBatch_dataprocBatchSparkrExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDataprocBatch_dataprocBatchAutotuningExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"batch_id",
-			"count",
-			"depends_on",
-			"environment_config.execution_config.ttl",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"pyspark_batch.args",
-			"spark_batch.args",
-			"spark_r_batch.args",
-			"spark_sql_batch.query_variables",
+		{
+			Name: "TestAccDataprocBatch_dataprocBatchAutotuningExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"batch_id",
+					"count",
+					"depends_on",
+					"environment_config.execution_config.ttl",
+					"for_each",
+					"lifecycle",
+					"location",
+					"provider",
+					"pyspark_batch.args",
+					"spark_batch.args",
+					"spark_r_batch.args",
+					"spark_sql_batch.query_variables",
+				},
+			)
+		})
+	}
 }

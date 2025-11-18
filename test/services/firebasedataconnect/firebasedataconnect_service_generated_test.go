@@ -20,41 +20,43 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccFirebaseDataConnectService_firebasedataconnectServiceBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"annotations",
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"labels",
-			"lifecycle",
-			"location",
-			"provider",
-			"service_id",
+func TestAccFirebaseDataConnectService(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccFirebaseDataConnectService_firebasedataconnectServiceBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccFirebaseDataConnectService_firebasedataconnectServiceWithForceDeletionExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"annotations",
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"labels",
-			"lifecycle",
-			"location",
-			"provider",
-			"service_id",
+		{
+			Name: "TestAccFirebaseDataConnectService_firebasedataconnectServiceWithForceDeletionExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"annotations",
+					"count",
+					"deletion_policy",
+					"depends_on",
+					"for_each",
+					"labels",
+					"lifecycle",
+					"location",
+					"provider",
+					"service_id",
+				},
+			)
+		})
+	}
 }

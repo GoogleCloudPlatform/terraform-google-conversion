@@ -20,51 +20,44 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccVmwareengineNetworkPolicy_vmwareEngineNetworkPolicyBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+func TestAccVmwareengineNetworkPolicy(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccVmwareengineNetworkPolicy_vmwareEngineNetworkPolicyBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccVmwareengineNetworkPolicy_vmwareEngineNetworkPolicyFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccVmwareengineNetworkPolicy_vmwareEngineNetworkPolicyFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccVmwareengineNetworkPolicy_update(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccVmwareengineNetworkPolicy_update",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+				},
+			)
+		})
+	}
 }
