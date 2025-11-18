@@ -122,6 +122,18 @@ func GetLookerInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("consumer_network"); !tpgresource.IsEmptyValue(reflect.ValueOf(consumerNetworkProp)) && (ok || !reflect.DeepEqual(v, consumerNetworkProp)) {
 		obj["consumerNetwork"] = consumerNetworkProp
 	}
+	controlledEgressConfigProp, err := expandLookerInstanceControlledEgressConfig(d.Get("controlled_egress_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("controlled_egress_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(controlledEgressConfigProp)) && (ok || !reflect.DeepEqual(v, controlledEgressConfigProp)) {
+		obj["controlledEgressConfig"] = controlledEgressConfigProp
+	}
+	controlledEgressEnabledProp, err := expandLookerInstanceControlledEgressEnabled(d.Get("controlled_egress_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("controlled_egress_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(controlledEgressEnabledProp)) && (ok || !reflect.DeepEqual(v, controlledEgressEnabledProp)) {
+		obj["controlledEgressEnabled"] = controlledEgressEnabledProp
+	}
 	denyMaintenancePeriodProp, err := expandLookerInstanceDenyMaintenancePeriod(d.Get("deny_maintenance_period"), d, config)
 	if err != nil {
 		return nil, err
@@ -237,6 +249,47 @@ func expandLookerInstanceAdminSettingsAllowedEmailDomains(v interface{}, d tpgre
 }
 
 func expandLookerInstanceConsumerNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstanceControlledEgressConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMarketplaceEnabled, err := expandLookerInstanceControlledEgressConfigMarketplaceEnabled(original["marketplace_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMarketplaceEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["marketplaceEnabled"] = transformedMarketplaceEnabled
+	}
+
+	transformedEgressFqdns, err := expandLookerInstanceControlledEgressConfigEgressFqdns(original["egress_fqdns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEgressFqdns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["egressFqdns"] = transformedEgressFqdns
+	}
+
+	return transformed, nil
+}
+
+func expandLookerInstanceControlledEgressConfigMarketplaceEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstanceControlledEgressConfigEgressFqdns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLookerInstanceControlledEgressEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
