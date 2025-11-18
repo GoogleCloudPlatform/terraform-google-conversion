@@ -23,7 +23,11 @@ import (
 func TestAccBackupDRBackupVault(t *testing.T) {
 	tests := []test.TestCase{
 		{
-			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultFullExample",
+			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultSimpleExample",
+			Skip: "",
+		},
+		{
+			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultCmekExample",
 			Skip: "",
 		},
 	}
