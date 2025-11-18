@@ -20,39 +20,42 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccClouddeployAutomation_clouddeployAutomationBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"delivery_pipeline",
-			"depends_on",
-			"for_each",
-			"labels",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+func TestAccClouddeployAutomation(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccClouddeployAutomation_clouddeployAutomationBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccClouddeployAutomation_clouddeployAutomationFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"delivery_pipeline",
-			"depends_on",
-			"for_each",
-			"labels",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccClouddeployAutomation_clouddeployAutomationFullExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"delivery_pipeline",
+					"depends_on",
+					"for_each",
+					"labels",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+				},
+			)
+		})
+	}
 }

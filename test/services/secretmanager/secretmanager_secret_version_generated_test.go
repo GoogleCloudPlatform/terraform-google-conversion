@@ -20,135 +20,61 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccSecretManagerSecretVersion_secretVersionBasicExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"project",
-			"provider",
-			"secret",
-			"secret_data",
-			"secret_data_wo",
-			"secret_data_wo_version",
+func TestAccSecretManagerSecretVersion(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccSecretManagerSecretVersion_secretVersionBasicExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerSecretVersion_secretVersionBasicWriteOnlyExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"project",
-			"provider",
-			"secret",
-			"secret_data",
-			"secret_data_wo",
-			"secret_data_wo_version",
+		{
+			Name: "TestAccSecretManagerSecretVersion_secretVersionBasicWriteOnlyExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerSecretVersion_secretVersionDeletionPolicyAbandonExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"project",
-			"provider",
-			"secret",
-			"secret_data",
-			"secret_data_wo",
-			"secret_data_wo_version",
+		{
+			Name: "TestAccSecretManagerSecretVersion_secretVersionDeletionPolicyAbandonExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerSecretVersion_secretVersionDeletionPolicyDisableExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"project",
-			"provider",
-			"secret",
-			"secret_data",
-			"secret_data_wo",
-			"secret_data_wo_version",
+		{
+			Name: "TestAccSecretManagerSecretVersion_secretVersionDeletionPolicyDisableExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"project",
-			"provider",
-			"secret",
-			"secret_data",
-			"secret_data_wo",
-			"secret_data_wo_version",
+		{
+			Name: "TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataWriteOnlyExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"project",
-			"provider",
-			"secret",
-			"secret_data",
-			"secret_data_wo",
-			"secret_data_wo_version",
+		{
+			Name: "TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataWriteOnlyExample",
+			Skip: "fix later",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"deletion_policy",
+					"depends_on",
+					"for_each",
+					"is_secret_data_base64",
+					"lifecycle",
+					"project",
+					"provider",
+					"secret",
+					"secret_data",
+					"secret_data_wo",
+					"secret_data_wo_version",
+				},
+			)
+		})
+	}
 }

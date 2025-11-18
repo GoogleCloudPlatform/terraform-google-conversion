@@ -20,88 +20,53 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccRedisInstance_redisInstanceBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"region",
-			"reserved_ip_range",
+func TestAccRedisInstance(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccRedisInstance_redisInstanceBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisInstance_redisInstanceFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"region",
-			"reserved_ip_range",
+		{
+			Name: "TestAccRedisInstance_redisInstanceFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"region",
-			"reserved_ip_range",
+		{
+			Name: "TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisInstance_redisInstancePrivateServiceTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"region",
-			"reserved_ip_range",
+		{
+			Name: "TestAccRedisInstance_redisInstancePrivateServiceTestExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisInstance_redisInstanceMrrExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"region",
-			"reserved_ip_range",
+		{
+			Name: "TestAccRedisInstance_redisInstanceMrrExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"deletion_protection",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"provider",
+					"region",
+					"reserved_ip_range",
+				},
+			)
+		})
+	}
 }

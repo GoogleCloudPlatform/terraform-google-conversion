@@ -20,277 +20,100 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeHealthCheck_healthCheckTcpExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+func TestAccComputeHealthCheck(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckTcpExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckTcpFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckTcpFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckSslExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckSslExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckSslFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckSslFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckHttpExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckHttpExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckHttpFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckHttpFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckHttpsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckHttpsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckHttpsFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckHttpsFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckHttp2Example(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckHttp2Example",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckHttp2FullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckHttp2FullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckGrpcExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckGrpcExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckGrpcFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckGrpcFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckGrpcWithTlsExample(t *testing.T) {
-	t.Skip("grpcTlsHealthCheck is not in CAI asset, but is required in this test.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckGrpcWithTlsExample",
+			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
 		},
-	)
-}
-func TestAccComputeHealthCheck_healthCheckGrpcWithTlsFullExample(t *testing.T) {
-	t.Skip("grpcTlsHealthCheck is not in CAI asset, but is required in this test.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_healthCheckGrpcWithTlsFullExample",
+			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
 		},
-	)
-}
-func TestAccComputeHealthCheck_computeHealthCheckHttpSourceRegionsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_computeHealthCheckHttpSourceRegionsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_computeHealthCheckHttpsSourceRegionsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_computeHealthCheckHttpsSourceRegionsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeHealthCheck_computeHealthCheckTcpSourceRegionsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
-			"source_regions",
+		{
+			Name: "TestAccComputeHealthCheck_computeHealthCheckTcpSourceRegionsExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"grpc_tls_health_check",
+					"lifecycle",
+					"provider",
+					"source_regions",
+				},
+			)
+		})
+	}
 }

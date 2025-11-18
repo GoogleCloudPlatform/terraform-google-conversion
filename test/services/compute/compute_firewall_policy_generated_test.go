@@ -20,17 +20,34 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeFirewallPolicy_firewallPolicyExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+func TestAccComputeFirewallPolicy(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeFirewallPolicy_firewallPolicyExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"provider",
+				},
+			)
+		})
+	}
 }

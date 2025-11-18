@@ -20,157 +20,66 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccWorkbenchInstance_workbenchInstanceBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"gce_setup.boot_disk.disk_type",
-			"gce_setup.data_disks.disk_type",
-			"gce_setup.vm_image",
-			"instance_id",
-			"instance_owners",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+func TestAccWorkbenchInstance(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccWorkbenchInstance_workbenchInstanceBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccWorkbenchInstance_workbenchInstanceBasicContainerExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"gce_setup.boot_disk.disk_type",
-			"gce_setup.data_disks.disk_type",
-			"gce_setup.vm_image",
-			"instance_id",
-			"instance_owners",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccWorkbenchInstance_workbenchInstanceBasicContainerExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccWorkbenchInstance_workbenchInstanceBasicGpuExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"gce_setup.boot_disk.disk_type",
-			"gce_setup.data_disks.disk_type",
-			"gce_setup.vm_image",
-			"instance_id",
-			"instance_owners",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccWorkbenchInstance_workbenchInstanceBasicGpuExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccWorkbenchInstance_workbenchInstanceLabelsStoppedExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"gce_setup.boot_disk.disk_type",
-			"gce_setup.data_disks.disk_type",
-			"gce_setup.vm_image",
-			"instance_id",
-			"instance_owners",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccWorkbenchInstance_workbenchInstanceLabelsStoppedExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccWorkbenchInstance_workbenchInstanceFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"gce_setup.boot_disk.disk_type",
-			"gce_setup.data_disks.disk_type",
-			"gce_setup.vm_image",
-			"instance_id",
-			"instance_owners",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccWorkbenchInstance_workbenchInstanceFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccWorkbenchInstance_workbenchInstanceConfidentialComputeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"gce_setup.boot_disk.disk_type",
-			"gce_setup.data_disks.disk_type",
-			"gce_setup.vm_image",
-			"instance_id",
-			"instance_owners",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccWorkbenchInstance_workbenchInstanceConfidentialComputeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccWorkbenchInstance_workbenchInstanceEucExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"desired_state",
-			"for_each",
-			"gce_setup.boot_disk.disk_type",
-			"gce_setup.data_disks.disk_type",
-			"gce_setup.vm_image",
-			"instance_id",
-			"instance_owners",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccWorkbenchInstance_workbenchInstanceEucExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"desired_state",
+					"for_each",
+					"gce_setup.boot_disk.disk_type",
+					"gce_setup.data_disks.disk_type",
+					"gce_setup.vm_image",
+					"instance_id",
+					"instance_owners",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+				},
+			)
+		})
+	}
 }

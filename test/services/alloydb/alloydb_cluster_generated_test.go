@@ -20,138 +20,63 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccAlloydbCluster_alloydbClusterBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+func TestAccAlloydbCluster(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccAlloydbCluster_alloydbClusterBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+		{
+			Name: "TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+		{
+			Name: "TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbCluster_alloydbClusterFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+		{
+			Name: "TestAccAlloydbCluster_alloydbClusterFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+		{
+			Name: "TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"automated_backup_policy.weekly_schedule.start_times.minutes",
+					"automated_backup_policy.weekly_schedule.start_times.nanos",
+					"automated_backup_policy.weekly_schedule.start_times.seconds",
+					"cluster_id",
+					"count",
+					"deletion_policy",
+					"deletion_protection",
+					"depends_on",
+					"for_each",
+					"initial_user",
+					"initial_user.password",
+					"initial_user.user",
+					"lifecycle",
+					"location",
+					"provider",
+					"restore_backup_source",
+					"restore_continuous_backup_source",
+					"skip_await_major_version_upgrade",
+				},
+			)
+		})
+	}
 }

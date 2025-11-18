@@ -20,20 +20,37 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccMonitoringNotificationChannel_notificationChannelBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"ASSETNAME",
-			"count",
-			"depends_on",
-			"for_each",
-			"force_delete",
-			"lifecycle",
-			"provider",
-			"sensitive_labels",
+func TestAccMonitoringNotificationChannel(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccMonitoringNotificationChannel_notificationChannelBasicExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"ASSETNAME",
+					"count",
+					"depends_on",
+					"for_each",
+					"force_delete",
+					"lifecycle",
+					"provider",
+					"sensitive_labels",
+				},
+			)
+		})
+	}
 }

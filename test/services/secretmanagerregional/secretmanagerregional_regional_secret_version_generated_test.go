@@ -20,103 +20,55 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionBasicExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret",
-			"secret_data",
+func TestAccSecretManagerRegionalRegionalSecretVersion(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionBasicExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionWithBase64DataExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret",
-			"secret_data",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionWithBase64DataExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionDisabledExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret",
-			"secret_data",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionDisabledExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionDeletionPolicyAbandonExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret",
-			"secret_data",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionDeletionPolicyAbandonExample",
+			Skip: "fix later",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionDeletionPolicyDisableExample(t *testing.T) {
-	t.Skip("fix later")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_policy",
-			"depends_on",
-			"for_each",
-			"is_secret_data_base64",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret",
-			"secret_data",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionDeletionPolicyDisableExample",
+			Skip: "fix later",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"deletion_policy",
+					"depends_on",
+					"for_each",
+					"is_secret_data_base64",
+					"lifecycle",
+					"location",
+					"provider",
+					"secret",
+					"secret_data",
+				},
+			)
+		})
+	}
 }

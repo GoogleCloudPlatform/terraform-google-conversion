@@ -20,19 +20,36 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccCloudbuildv2Connection_cloudbuildv2ConnectionExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+func TestAccCloudbuildv2Connection(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccCloudbuildv2Connection_cloudbuildv2ConnectionExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+				},
+			)
+		})
+	}
 }

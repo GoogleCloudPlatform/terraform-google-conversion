@@ -20,258 +20,93 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeBackendBucket_backendBucketBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+func TestAccComputeBackendBucket(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeBackendBucket_backendBucketBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_backendBucketFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_backendBucketFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_backendBucketSecurityPolicyExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_backendBucketSecurityPolicyExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_backendBucketBypassCacheExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_backendBucketBypassCacheExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_backendBucketCoalescingExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_backendBucketCoalescingExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_backendBucketGlobalIlbExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_backendBucketGlobalIlbExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_basicModified(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_basicModified",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_withCdnPolicy(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_withCdnPolicy",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_withSecurityPolicy(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_withSecurityPolicy",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_withCompressionMode(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_withCompressionMode",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_withCdnCacheMode_update(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_withCdnCacheMode_update",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendBucket_withTags(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"load_balancing_scheme",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeBackendBucket_withTags",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"load_balancing_scheme",
+					"params",
+					"params.resource_manager_tags",
+					"provider",
+				},
+			)
+		})
+	}
 }

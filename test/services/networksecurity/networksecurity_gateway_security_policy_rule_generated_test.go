@@ -20,37 +20,41 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccNetworkSecurityGatewaySecurityPolicyRule_networkSecurityGatewaySecurityPolicyRulesBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"gateway_security_policy",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+func TestAccNetworkSecurityGatewaySecurityPolicyRule(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccNetworkSecurityGatewaySecurityPolicyRule_networkSecurityGatewaySecurityPolicyRulesBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccNetworkSecurityGatewaySecurityPolicyRule_networkSecurityGatewaySecurityPolicyRulesAdvancedExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"gateway_security_policy",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccNetworkSecurityGatewaySecurityPolicyRule_networkSecurityGatewaySecurityPolicyRulesAdvancedExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"gateway_security_policy",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+				},
+			)
+		})
+	}
 }

@@ -20,111 +20,58 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"ASSETNAME",
-			"count",
-			"depends_on",
-			"for_each",
-			"http_check.auth_info.password_wo",
-			"http_check.auth_info.password_wo_version",
-			"http_check.body",
-			"lifecycle",
-			"provider",
+func TestAccMonitoringUptimeCheckConfig(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpPasswordWoExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"ASSETNAME",
-			"count",
-			"depends_on",
-			"for_each",
-			"http_check.auth_info.password_wo",
-			"http_check.auth_info.password_wo_version",
-			"http_check.body",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpPasswordWoExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigStatusCodeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"ASSETNAME",
-			"count",
-			"depends_on",
-			"for_each",
-			"http_check.auth_info.password_wo",
-			"http_check.auth_info.password_wo_version",
-			"http_check.body",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigStatusCodeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"ASSETNAME",
-			"count",
-			"depends_on",
-			"for_each",
-			"http_check.auth_info.password_wo",
-			"http_check.auth_info.password_wo_version",
-			"http_check.body",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccMonitoringUptimeCheckConfig_uptimeCheckTcpExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"ASSETNAME",
-			"count",
-			"depends_on",
-			"for_each",
-			"http_check.auth_info.password_wo",
-			"http_check.auth_info.password_wo_version",
-			"http_check.body",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckTcpExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigSyntheticMonitorExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"ASSETNAME",
-			"count",
-			"depends_on",
-			"for_each",
-			"http_check.auth_info.password_wo",
-			"http_check.auth_info.password_wo_version",
-			"http_check.body",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigSyntheticMonitorExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"ASSETNAME",
+					"count",
+					"depends_on",
+					"for_each",
+					"http_check.auth_info.password_wo",
+					"http_check.auth_info.password_wo_version",
+					"http_check.body",
+					"lifecycle",
+					"provider",
+				},
+			)
+		})
+	}
 }
