@@ -116,6 +116,12 @@ func GetCESAppApiObject(d tpgresource.TerraformResourceData, config *transport_t
 	} else if v, ok := d.GetOkExists("audio_processing_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(audioProcessingConfigProp)) && (ok || !reflect.DeepEqual(v, audioProcessingConfigProp)) {
 		obj["audioProcessingConfig"] = audioProcessingConfigProp
 	}
+	pinnedProp, err := expandCESAppPinned(d.Get("pinned"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("pinned"); !tpgresource.IsEmptyValue(reflect.ValueOf(pinnedProp)) && (ok || !reflect.DeepEqual(v, pinnedProp)) {
+		obj["pinned"] = pinnedProp
+	}
 	dataStoreSettingsProp, err := expandCESAppDataStoreSettings(d.Get("data_store_settings"), d, config)
 	if err != nil {
 		return nil, err
@@ -368,6 +374,10 @@ func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsVoice(v interface{}
 }
 
 func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsSpeakingRate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppPinned(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1141,6 +1151,13 @@ func expandCESAppVariableDeclarationsSchema(v interface{}, d tpgresource.Terrafo
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedTitle, err := expandCESAppVariableDeclarationsSchemaTitle(original["title"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["title"] = transformedTitle
+	}
+
 	transformedDescription, err := expandCESAppVariableDeclarationsSchemaDescription(original["description"], d, config)
 	if err != nil {
 		return nil, err
@@ -1240,6 +1257,10 @@ func expandCESAppVariableDeclarationsSchema(v interface{}, d tpgresource.Terrafo
 	}
 
 	return transformed, nil
+}
+
+func expandCESAppVariableDeclarationsSchemaTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESAppVariableDeclarationsSchemaDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
