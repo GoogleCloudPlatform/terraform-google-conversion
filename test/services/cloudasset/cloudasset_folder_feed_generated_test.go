@@ -50,6 +50,7 @@ func TestAccCloudAssetFolderFeed(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_cloud_asset_folder_feed",
 			)
 		})
 	}

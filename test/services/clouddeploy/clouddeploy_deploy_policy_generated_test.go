@@ -54,6 +54,7 @@ func TestAccClouddeployDeployPolicy(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_clouddeploy_deploy_policy",
 			)
 		})
 	}

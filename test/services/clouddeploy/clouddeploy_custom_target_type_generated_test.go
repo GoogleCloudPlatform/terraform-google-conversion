@@ -61,6 +61,7 @@ func TestAccClouddeployCustomTargetType(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_clouddeploy_custom_target_type",
 			)
 		})
 	}

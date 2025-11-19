@@ -58,6 +58,7 @@ func TestAccNetworkSecurityAddressGroup(t *testing.T) {
 					"parent",
 					"provider",
 				},
+				"google_network_security_address_group",
 			)
 		})
 	}

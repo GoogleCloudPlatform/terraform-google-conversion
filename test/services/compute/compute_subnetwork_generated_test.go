@@ -83,6 +83,7 @@ func TestAccComputeSubnetwork(t *testing.T) {
 					"provider",
 					"send_secondary_ip_range_if_empty",
 				},
+				"google_compute_subnetwork",
 			)
 		})
 	}

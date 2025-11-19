@@ -68,6 +68,7 @@ func TestAccSecretManagerRegionalRegionalSecretVersion(t *testing.T) {
 					"secret",
 					"secret_data",
 				},
+				"google_secret_manager_regional_secret_version",
 			)
 		})
 	}

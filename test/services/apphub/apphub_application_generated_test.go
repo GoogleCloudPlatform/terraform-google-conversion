@@ -65,6 +65,7 @@ func TestAccApphubApplication(t *testing.T) {
 					"location",
 					"provider",
 				},
+				"google_apphub_application",
 			)
 		})
 	}

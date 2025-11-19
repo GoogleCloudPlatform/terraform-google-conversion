@@ -47,6 +47,7 @@ func TestAccComputeGlobalAddress(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_compute_global_address",
 			)
 		})
 	}

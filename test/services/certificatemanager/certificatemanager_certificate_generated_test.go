@@ -81,6 +81,7 @@ func TestAccCertificateManagerCertificate(t *testing.T) {
 					"self_managed.pem_private_key",
 					"self_managed.private_key_pem",
 				},
+				"google_certificate_manager_certificate",
 			)
 		})
 	}

@@ -66,6 +66,7 @@ func TestAccRedisInstance(t *testing.T) {
 					"region",
 					"reserved_ip_range",
 				},
+				"google_redis_instance",
 			)
 		})
 	}

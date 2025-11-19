@@ -68,6 +68,7 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 					"postgresql_profile.password",
 					"provider",
 				},
+				"google_datastream_connection_profile",
 			)
 		})
 	}

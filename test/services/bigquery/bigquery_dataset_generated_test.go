@@ -77,6 +77,7 @@ func TestAccBigQueryDataset(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_bigquery_dataset",
 			)
 		})
 	}

@@ -47,6 +47,7 @@ func TestAccComputeFirewallPolicy(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_compute_firewall_policy",
 			)
 		})
 	}

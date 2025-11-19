@@ -79,6 +79,7 @@ func TestAccWorkbenchInstance(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_workbench_instance",
 			)
 		})
 	}

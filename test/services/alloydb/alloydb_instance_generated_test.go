@@ -114,6 +114,7 @@ func TestAccAlloydbInstance(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_alloydb_instance",
 			)
 		})
 	}

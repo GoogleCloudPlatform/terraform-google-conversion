@@ -56,6 +56,7 @@ func TestAccFirebaseDataConnectService(t *testing.T) {
 					"provider",
 					"service_id",
 				},
+				"google_firebase_data_connect_service",
 			)
 		})
 	}

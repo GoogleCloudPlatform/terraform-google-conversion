@@ -71,6 +71,7 @@ func TestAccMonitoringUptimeCheckConfig(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_monitoring_uptime_check_config",
 			)
 		})
 	}

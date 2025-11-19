@@ -92,6 +92,7 @@ func TestAccPubsubTopic(t *testing.T) {
 					"schema_settings",
 					"tags",
 				},
+				"google_pubsub_topic",
 			)
 		})
 	}

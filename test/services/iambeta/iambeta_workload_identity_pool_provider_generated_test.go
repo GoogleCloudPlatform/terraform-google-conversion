@@ -86,6 +86,7 @@ func TestAccIAMBetaWorkloadIdentityPoolProvider(t *testing.T) {
 					"workload_identity_pool_id",
 					"workload_identity_pool_provider_id",
 				},
+				"google_iam_workload_identity_pool_provider",
 			)
 		})
 	}

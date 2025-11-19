@@ -52,6 +52,7 @@ func TestAccApphubServiceProjectAttachment(t *testing.T) {
 					"provider",
 					"service_project_attachment_id",
 				},
+				"google_apphub_service_project_attachment",
 			)
 		})
 	}

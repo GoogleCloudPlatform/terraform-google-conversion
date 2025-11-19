@@ -76,6 +76,7 @@ func TestAccCloudfunctions2function(t *testing.T) {
 					"location",
 					"provider",
 				},
+				"google_cloudfunctions2_function",
 			)
 		})
 	}

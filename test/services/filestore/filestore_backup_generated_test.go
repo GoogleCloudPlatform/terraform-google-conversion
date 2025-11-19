@@ -50,6 +50,7 @@ func TestAccFilestoreBackup(t *testing.T) {
 					"provider",
 					"tags",
 				},
+				"google_filestore_backup",
 			)
 		})
 	}

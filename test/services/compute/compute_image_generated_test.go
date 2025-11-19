@@ -61,6 +61,7 @@ func TestAccComputeImage(t *testing.T) {
 					"source_image_encryption_key",
 					"source_snapshot_encryption_key",
 				},
+				"google_compute_image",
 			)
 		})
 	}

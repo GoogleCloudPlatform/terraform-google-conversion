@@ -113,6 +113,7 @@ func TestAccComputeHealthCheck(t *testing.T) {
 					"provider",
 					"source_regions",
 				},
+				"google_compute_health_check",
 			)
 		})
 	}

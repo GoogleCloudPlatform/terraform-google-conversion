@@ -54,6 +54,7 @@ func TestAccFilestoreSnapshot(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_filestore_snapshot",
 			)
 		})
 	}

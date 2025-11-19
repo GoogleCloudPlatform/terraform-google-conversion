@@ -61,6 +61,7 @@ func TestAccBackupDRBackupVault(t *testing.T) {
 					"location",
 					"provider",
 				},
+				"google_backup_dr_backup_vault",
 			)
 		})
 	}

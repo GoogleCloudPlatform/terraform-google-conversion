@@ -192,6 +192,7 @@ func TestAccAlloydbCluster(t *testing.T) {
 					"restore_continuous_backup_source",
 					"skip_await_major_version_upgrade",
 				},
+				"google_alloydb_cluster",
 			)
 		})
 	}

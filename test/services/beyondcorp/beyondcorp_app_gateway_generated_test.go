@@ -53,6 +53,7 @@ func TestAccBeyondcorpAppGateway(t *testing.T) {
 					"provider",
 					"region",
 				},
+				"google_beyondcorp_app_gateway",
 			)
 		})
 	}
