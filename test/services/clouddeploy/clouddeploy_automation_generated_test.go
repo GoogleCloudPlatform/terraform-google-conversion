@@ -55,6 +55,7 @@ func TestAccClouddeployAutomation(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_clouddeploy_automation",
 			)
 		})
 	}

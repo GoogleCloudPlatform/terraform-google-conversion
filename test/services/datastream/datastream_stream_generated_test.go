@@ -81,6 +81,7 @@ func TestAccDatastreamStream(t *testing.T) {
 					"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
 					"stream_id",
 				},
+				"google_datastream_stream",
 			)
 		})
 	}

@@ -53,6 +53,7 @@ func TestAccCloudBuildBitbucketServerConfig(t *testing.T) {
 					"location",
 					"provider",
 				},
+				"google_cloudbuild_bitbucket_server_config",
 			)
 		})
 	}

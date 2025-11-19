@@ -60,6 +60,7 @@ func TestAccFilestoreInstance(t *testing.T) {
 					"tags",
 					"zone",
 				},
+				"google_filestore_instance",
 			)
 		})
 	}

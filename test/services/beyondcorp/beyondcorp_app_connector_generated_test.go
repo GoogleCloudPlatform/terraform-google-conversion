@@ -57,6 +57,7 @@ func TestAccBeyondcorpAppConnector(t *testing.T) {
 					"provider",
 					"region",
 				},
+				"google_beyondcorp_app_connector",
 			)
 		})
 	}

@@ -53,6 +53,7 @@ func TestAccBlockchainNodeEngineBlockchainNodes(t *testing.T) {
 					"location",
 					"provider",
 				},
+				"google_blockchain_node_engine_blockchain_nodes",
 			)
 		})
 	}

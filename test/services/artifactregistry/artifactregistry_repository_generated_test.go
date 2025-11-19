@@ -119,6 +119,7 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 					"remote_repository_config.upstream_credentials",
 					"repository_id",
 				},
+				"google_artifact_registry_repository",
 			)
 		})
 	}

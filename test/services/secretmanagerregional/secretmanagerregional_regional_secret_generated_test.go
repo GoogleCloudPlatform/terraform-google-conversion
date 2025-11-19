@@ -72,6 +72,7 @@ func TestAccSecretManagerRegionalRegionalSecret(t *testing.T) {
 					"tags",
 					"ttl",
 				},
+				"google_secret_manager_regional_secret",
 			)
 		})
 	}

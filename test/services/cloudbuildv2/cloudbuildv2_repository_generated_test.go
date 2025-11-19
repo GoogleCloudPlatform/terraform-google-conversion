@@ -58,6 +58,7 @@ func TestAccCloudbuildv2Repository(t *testing.T) {
 					"parent_connection",
 					"provider",
 				},
+				"google_cloudbuildv2_repository",
 			)
 		})
 	}

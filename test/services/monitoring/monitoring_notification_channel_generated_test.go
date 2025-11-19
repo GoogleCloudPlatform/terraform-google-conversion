@@ -50,6 +50,7 @@ func TestAccMonitoringNotificationChannel(t *testing.T) {
 					"provider",
 					"sensitive_labels",
 				},
+				"google_monitoring_notification_channel",
 			)
 		})
 	}

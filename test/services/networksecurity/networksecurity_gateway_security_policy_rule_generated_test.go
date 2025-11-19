@@ -54,6 +54,7 @@ func TestAccNetworkSecurityGatewaySecurityPolicyRule(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_network_security_gateway_security_policy_rule",
 			)
 		})
 	}

@@ -100,6 +100,7 @@ func TestAccComputeRegionHealthCheck(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_compute_region_health_check",
 			)
 		})
 	}

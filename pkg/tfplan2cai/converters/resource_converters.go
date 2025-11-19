@@ -109,6 +109,8 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_iam_workload_identity_pool":                    iambeta.IAMBetaWorkloadIdentityPoolTfplan2caiConverter(),
 	"google_iam_workload_identity_pool_provider":           iambeta.IAMBetaWorkloadIdentityPoolProviderTfplan2caiConverter(),
 	"google_kms_autokey_config":                            kms.KMSAutokeyConfigTfplan2caiConverter(),
+	"google_kms_crypto_key":                                kms.KMSCryptoKeyTfplan2caiConverter(),
+	"google_kms_crypto_key_version":                        kms.KMSCryptoKeyVersionTfplan2caiConverter(),
 	"google_kms_key_handle":                                kms.KMSKeyHandleTfplan2caiConverter(),
 	"google_logging_metric":                                logging.LoggingMetricTfplan2caiConverter(),
 	"google_monitoring_notification_channel":               monitoring.MonitoringNotificationChannelTfplan2caiConverter(),

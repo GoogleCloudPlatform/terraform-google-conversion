@@ -91,6 +91,7 @@ func TestAccComputeBackendService(t *testing.T) {
 					"provider",
 					"security_settings.aws_v4_authentication.access_key",
 				},
+				"google_compute_backend_service",
 			)
 		})
 	}

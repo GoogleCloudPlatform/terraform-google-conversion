@@ -49,6 +49,7 @@ func TestAccCloudAssetProjectFeed(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_cloud_asset_project_feed",
 			)
 		})
 	}

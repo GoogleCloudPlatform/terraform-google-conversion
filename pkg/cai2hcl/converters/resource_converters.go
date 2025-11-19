@@ -147,6 +147,12 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"cloudkms.googleapis.com/AutokeyConfig": {
 		"Default": kms.NewKMSAutokeyConfigCai2hclConverter(provider),
 	},
+	"cloudkms.googleapis.com/CryptoKey": {
+		"Default": kms.NewKMSCryptoKeyCai2hclConverter(provider),
+	},
+	"cloudkms.googleapis.com/CryptoKeyVersion": {
+		"Default": kms.NewKMSCryptoKeyVersionCai2hclConverter(provider),
+	},
 	"cloudkms.googleapis.com/KeyHandle": {
 		"Default": kms.NewKMSKeyHandleCai2hclConverter(provider),
 	},

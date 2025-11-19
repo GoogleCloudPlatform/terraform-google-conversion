@@ -43,7 +43,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 79
+// Generated resources: 81
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -100,6 +100,8 @@ var generatedResources = map[string]*schema.Resource{
 	"google_iam_workload_identity_pool":                    iambeta.ResourceIAMBetaWorkloadIdentityPool(),
 	"google_iam_workload_identity_pool_provider":           iambeta.ResourceIAMBetaWorkloadIdentityPoolProvider(),
 	"google_kms_autokey_config":                            kms.ResourceKMSAutokeyConfig(),
+	"google_kms_crypto_key":                                kms.ResourceKMSCryptoKey(),
+	"google_kms_crypto_key_version":                        kms.ResourceKMSCryptoKeyVersion(),
 	"google_kms_key_handle":                                kms.ResourceKMSKeyHandle(),
 	"google_logging_metric":                                logging.ResourceLoggingMetric(),
 	"google_monitoring_notification_channel":               monitoring.ResourceMonitoringNotificationChannel(),

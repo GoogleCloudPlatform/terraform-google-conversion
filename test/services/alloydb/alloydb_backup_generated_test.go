@@ -65,6 +65,7 @@ func TestAccAlloydbBackup(t *testing.T) {
 					"location",
 					"provider",
 				},
+				"google_alloydb_backup",
 			)
 		})
 	}

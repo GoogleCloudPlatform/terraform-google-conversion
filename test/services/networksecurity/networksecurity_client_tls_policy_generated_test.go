@@ -53,6 +53,7 @@ func TestAccNetworkSecurityClientTlsPolicy(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_network_security_client_tls_policy",
 			)
 		})
 	}

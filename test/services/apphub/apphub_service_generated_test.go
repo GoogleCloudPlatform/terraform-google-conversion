@@ -58,6 +58,7 @@ func TestAccApphubService(t *testing.T) {
 					"provider",
 					"service_id",
 				},
+				"google_apphub_service",
 			)
 		})
 	}

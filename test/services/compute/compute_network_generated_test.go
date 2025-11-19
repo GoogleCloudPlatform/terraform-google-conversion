@@ -73,6 +73,7 @@ func TestAccComputeNetwork(t *testing.T) {
 					"params.resource_manager_tags",
 					"provider",
 				},
+				"google_compute_network",
 			)
 		})
 	}

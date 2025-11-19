@@ -54,6 +54,7 @@ func TestAccDatastreamPrivateConnection(t *testing.T) {
 					"private_connection_id",
 					"provider",
 				},
+				"google_datastream_private_connection",
 			)
 		})
 	}

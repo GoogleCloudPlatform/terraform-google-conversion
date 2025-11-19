@@ -65,6 +65,7 @@ func TestAccApigeeInstance(t *testing.T) {
 					"org_id",
 					"provider",
 				},
+				"google_apigee_instance",
 			)
 		})
 	}

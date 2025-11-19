@@ -54,6 +54,7 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 					"parent",
 					"provider",
 				},
+				"google_network_security_security_profile",
 			)
 		})
 	}

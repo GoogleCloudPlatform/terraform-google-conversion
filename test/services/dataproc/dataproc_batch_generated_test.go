@@ -74,6 +74,7 @@ func TestAccDataprocBatch(t *testing.T) {
 					"spark_r_batch.args",
 					"spark_sql_batch.query_variables",
 				},
+				"google_dataproc_batch",
 			)
 		})
 	}

@@ -61,6 +61,7 @@ func TestAccComputeDisk(t *testing.T) {
 					"provider",
 					"source_storage_object",
 				},
+				"google_compute_disk",
 			)
 		})
 	}

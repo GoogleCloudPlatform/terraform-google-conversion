@@ -101,6 +101,7 @@ func TestAccPubsubSubscription(t *testing.T) {
 					"provider",
 					"tags",
 				},
+				"google_pubsub_subscription",
 			)
 		})
 	}

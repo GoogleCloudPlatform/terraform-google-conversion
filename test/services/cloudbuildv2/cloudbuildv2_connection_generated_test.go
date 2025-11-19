@@ -101,6 +101,7 @@ func TestAccCloudbuildv2Connection(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_cloudbuildv2_connection",
 			)
 		})
 	}

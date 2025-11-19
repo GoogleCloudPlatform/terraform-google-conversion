@@ -48,6 +48,7 @@ func TestAccComputeAutoscaler(t *testing.T) {
 					"provider",
 					"zone",
 				},
+				"google_compute_autoscaler",
 			)
 		})
 	}

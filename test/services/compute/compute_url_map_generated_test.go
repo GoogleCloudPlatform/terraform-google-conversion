@@ -94,6 +94,7 @@ func TestAccComputeUrlMap(t *testing.T) {
 					"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 					"provider",
 				},
+				"google_compute_url_map",
 			)
 		})
 	}

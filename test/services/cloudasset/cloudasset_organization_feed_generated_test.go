@@ -50,6 +50,7 @@ func TestAccCloudAssetOrganizationFeed(t *testing.T) {
 					"org_id",
 					"provider",
 				},
+				"google_cloud_asset_organization_feed",
 			)
 		})
 	}

@@ -72,6 +72,7 @@ func TestAccRedisCluster(t *testing.T) {
 					"psc_configs",
 					"region",
 				},
+				"google_redis_cluster",
 			)
 		})
 	}

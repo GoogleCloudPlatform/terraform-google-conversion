@@ -67,6 +67,7 @@ func TestAccComputeAddress(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_compute_address",
 			)
 		})
 	}

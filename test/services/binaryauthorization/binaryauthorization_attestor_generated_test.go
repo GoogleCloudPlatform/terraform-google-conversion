@@ -47,6 +47,7 @@ func TestAccBinaryAuthorizationAttestor(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_binary_authorization_attestor",
 			)
 		})
 	}

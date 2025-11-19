@@ -58,6 +58,7 @@ func TestAccApphubWorkload(t *testing.T) {
 					"provider",
 					"workload_id",
 				},
+				"google_apphub_workload",
 			)
 		})
 	}

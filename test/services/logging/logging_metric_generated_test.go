@@ -79,6 +79,7 @@ func TestAccLoggingMetric(t *testing.T) {
 					"lifecycle",
 					"provider",
 				},
+				"google_logging_metric",
 			)
 		})
 	}

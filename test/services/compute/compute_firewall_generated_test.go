@@ -53,6 +53,7 @@ func TestAccComputeFirewall(t *testing.T) {
 					"params.resource_manager_tags",
 					"provider",
 				},
+				"google_compute_firewall",
 			)
 		})
 	}

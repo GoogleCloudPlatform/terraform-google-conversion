@@ -52,6 +52,7 @@ func TestAccVmwareengineNetworkPeering(t *testing.T) {
 					"name",
 					"provider",
 				},
+				"google_vmwareengine_network_peering",
 			)
 		})
 	}
