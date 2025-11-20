@@ -268,6 +268,9 @@ func GetComputeDiskCaiObject(d tpgresource.TerraformResourceData, config *transp
 	if err != nil {
 		return nil, err
 	}
+	if obj == nil {
+		obj = make(map[string]interface{})
+	}
 	return resourceComputeDiskTgcEncoder(d, config, obj)
 }
 

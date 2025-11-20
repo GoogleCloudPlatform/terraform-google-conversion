@@ -172,6 +172,9 @@ func GetComputeNetworkCaiObject(d tpgresource.TerraformResourceData, config *tra
 	if err != nil {
 		return nil, err
 	}
+	if obj == nil {
+		obj = make(map[string]interface{})
+	}
 	return obj, nil
 }
 
