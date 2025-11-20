@@ -172,6 +172,9 @@ func GetComputeBackendBucketCaiObject(d tpgresource.TerraformResourceData, confi
 	if err != nil {
 		return nil, err
 	}
+	if obj == nil {
+		obj = make(map[string]interface{})
+	}
 	return obj, nil
 }
 

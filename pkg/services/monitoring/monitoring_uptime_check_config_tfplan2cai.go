@@ -190,6 +190,9 @@ func GetMonitoringUptimeCheckConfigCaiObject(d tpgresource.TerraformResourceData
 	if err != nil {
 		return nil, err
 	}
+	if obj == nil {
+		obj = make(map[string]interface{})
+	}
 	return obj, nil
 }
 

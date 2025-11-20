@@ -202,6 +202,9 @@ func GetComputeRegionHealthCheckCaiObject(d tpgresource.TerraformResourceData, c
 	if err != nil {
 		return nil, err
 	}
+	if obj == nil {
+		obj = make(map[string]interface{})
+	}
 	return obj, nil
 }
 

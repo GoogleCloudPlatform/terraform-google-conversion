@@ -153,8 +153,17 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"cloudkms.googleapis.com/CryptoKeyVersion": {
 		"Default": kms.NewKMSCryptoKeyVersionCai2hclConverter(provider),
 	},
+	"cloudkms.googleapis.com/EkmConnection": {
+		"Default": kms.NewKMSEkmConnectionCai2hclConverter(provider),
+	},
+	"cloudkms.googleapis.com/ImportJob": {
+		"Default": kms.NewKMSKeyRingImportJobCai2hclConverter(provider),
+	},
 	"cloudkms.googleapis.com/KeyHandle": {
 		"Default": kms.NewKMSKeyHandleCai2hclConverter(provider),
+	},
+	"cloudkms.googleapis.com/KeyRing": {
+		"Default": kms.NewKMSKeyRingCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/Address": {
 		"Default": compute.NewComputeAddressCai2hclConverter(provider),
