@@ -206,6 +206,13 @@ func expandOracleDatabaseAutonomousDatabaseProperties(v interface{}, d tpgresour
 		transformed["computeCount"] = transformedComputeCount
 	}
 
+	transformedCpuCoreCount, err := expandOracleDatabaseAutonomousDatabasePropertiesCpuCoreCount(original["cpu_core_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCpuCoreCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cpuCoreCount"] = transformedCpuCoreCount
+	}
+
 	transformedDataStorageSizeTb, err := expandOracleDatabaseAutonomousDatabasePropertiesDataStorageSizeTb(original["data_storage_size_tb"], d, config)
 	if err != nil {
 		return nil, err
@@ -295,6 +302,20 @@ func expandOracleDatabaseAutonomousDatabaseProperties(v interface{}, d tpgresour
 		return nil, err
 	} else if val := reflect.ValueOf(transformedCustomerContacts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["customerContacts"] = transformedCustomerContacts
+	}
+
+	transformedSecretId, err := expandOracleDatabaseAutonomousDatabasePropertiesSecretId(original["secret_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretId"] = transformedSecretId
+	}
+
+	transformedVaultId, err := expandOracleDatabaseAutonomousDatabasePropertiesVaultId(original["vault_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVaultId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["vaultId"] = transformedVaultId
 	}
 
 	transformedMaintenanceScheduleType, err := expandOracleDatabaseAutonomousDatabasePropertiesMaintenanceScheduleType(original["maintenance_schedule_type"], d, config)
@@ -581,6 +602,10 @@ func expandOracleDatabaseAutonomousDatabasePropertiesComputeCount(v interface{},
 	return v, nil
 }
 
+func expandOracleDatabaseAutonomousDatabasePropertiesCpuCoreCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandOracleDatabaseAutonomousDatabasePropertiesDataStorageSizeTb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -655,6 +680,14 @@ func expandOracleDatabaseAutonomousDatabasePropertiesCustomerContacts(v interfac
 }
 
 func expandOracleDatabaseAutonomousDatabasePropertiesCustomerContactsEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseAutonomousDatabasePropertiesSecretId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseAutonomousDatabasePropertiesVaultId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

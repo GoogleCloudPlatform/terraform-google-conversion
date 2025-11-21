@@ -452,10 +452,21 @@ func expandOracleDatabaseCloudVmClusterPropertiesTimeZone(v interface{}, d tpgre
 		transformed["id"] = transformedId
 	}
 
+	transformedVersion, err := expandOracleDatabaseCloudVmClusterPropertiesTimeZoneVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
 	return transformed, nil
 }
 
 func expandOracleDatabaseCloudVmClusterPropertiesTimeZoneId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseCloudVmClusterPropertiesTimeZoneVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
