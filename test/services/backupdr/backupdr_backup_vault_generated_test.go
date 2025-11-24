@@ -15,12 +15,16 @@
 package backupdr_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccBackupDRBackupVault(t *testing.T) {
+	if os.Getenv("WRITE_FILES") != "" {
+		t.Parallel()
+	}
 	tests := []test.TestCase{
 		{
 			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultSimpleExample",
@@ -51,6 +55,7 @@ func TestAccBackupDRBackupVault(t *testing.T) {
 					"backup_vault_id",
 					"count",
 					"depends_on",
+					"encryption_config.kms_key_name",
 					"for_each",
 					"force_delete",
 					"force_update",
