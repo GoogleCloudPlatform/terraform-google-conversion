@@ -182,6 +182,13 @@ This value can only be set if the --bgp-best-path-selection-mode is STANDARD`,
 				ValidateFunc: verify.ValidateEnum([]string{"DEFAULT", "ADD_COST_TO_MED", ""}),
 				Description:  `Choice of the behavior of inter-regional cost and MED in the BPS algorithm. Possible values: ["DEFAULT", "ADD_COST_TO_MED"]`,
 			},
+			"delete_bgp_always_compare_med": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Description: `If set to 'true', the 'bgp_always_compare_med' field will be cleared.
+If set to 'false' (the default), 'bgp_always_compare_med' will be set to the value specified in the configuration.`,
+				Default: false,
+			},
 			"routing_mode": {
 				Type:         schema.TypeString,
 				Computed:     true,

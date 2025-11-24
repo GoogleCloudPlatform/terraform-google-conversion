@@ -187,6 +187,8 @@ func flattenComputeNetworkRoutingConfig(v interface{}, d *schema.ResourceData, c
 		flattenComputeNetworkRoutingConfigBgpAlwaysCompareMed(original["bgpAlwaysCompareMed"], d, config)
 	transformed["bgp_inter_region_cost"] =
 		flattenComputeNetworkRoutingConfigBgpInterRegionCost(original["bgpInterRegionCost"], d, config)
+	transformed["delete_bgp_always_compare_med"] =
+		flattenComputeNetworkRoutingConfigDeleteBgpAlwaysCompareMed(original["delete_bgp_always_compare_med"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -206,6 +208,10 @@ func flattenComputeNetworkRoutingConfigBgpAlwaysCompareMed(v interface{}, d *sch
 }
 
 func flattenComputeNetworkRoutingConfigBgpInterRegionCost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeNetworkRoutingConfigDeleteBgpAlwaysCompareMed(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
