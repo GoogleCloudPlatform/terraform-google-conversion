@@ -15,12 +15,16 @@
 package cloudbuildv2_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccCloudbuildv2Connection(t *testing.T) {
+	if os.Getenv("WRITE_FILES") != "" {
+		t.Parallel()
+	}
 	tests := []test.TestCase{
 		{
 			Name: "TestAccCloudbuildv2Connection_cloudbuildv2ConnectionExample",
