@@ -45,6 +45,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 
@@ -294,6 +295,12 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"secretmanager.googleapis.com/SecretVersion": {
 		"SecretManagerRegionalRegionalSecretVersion": secretmanagerregional.NewSecretManagerRegionalRegionalSecretVersionCai2hclConverter(provider),
 		"SecretManagerSecretVersion":                 secretmanager.NewSecretManagerSecretVersionCai2hclConverter(provider),
+	},
+	"spanner.googleapis.com/Database": {
+		"Default": spanner.NewSpannerDatabaseCai2hclConverter(provider),
+	},
+	"spanner.googleapis.com/Instance": {
+		"Default": spanner.NewSpannerInstanceCai2hclConverter(provider),
 	},
 	"vmwareengine.googleapis.com/NetworkPeering": {
 		"Default": vmwareengine.NewVmwareengineNetworkPeeringCai2hclConverter(provider),
