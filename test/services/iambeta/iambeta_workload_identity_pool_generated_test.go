@@ -20,18 +20,36 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccIAMBetaWorkloadIdentityPool_iamWorkloadIdentityPoolBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"workload_identity_pool_id",
+func TestAccIAMBetaWorkloadIdentityPool(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPool_iamWorkloadIdentityPoolBasicExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"provider",
+					"workload_identity_pool_id",
+				},
+				"google_iam_workload_identity_pool",
+			)
+		})
+	}
 }

@@ -20,215 +20,88 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeRegionHealthCheck_regionHealthCheckTcpExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+func TestAccComputeRegionHealthCheck(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckTcpExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckTcpFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckTcpFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckSslExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckSslExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckSslFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckSslFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckHttpExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttpExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckHttpFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttpFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckHttpsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttpsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckHttpsFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttpsFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckHttp2Example(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttp2Example",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckHttp2FullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttp2FullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckGrpcExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckGrpcFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcWithTlsExample(t *testing.T) {
-	t.Skip("grpcTlsHealthCheck is not in CAI asset, but is required in this test.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckGrpcWithTlsExample",
+			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
 		},
-	)
-}
-func TestAccComputeRegionHealthCheck_regionHealthCheckGrpcWithTlsFullExample(t *testing.T) {
-	t.Skip("grpcTlsHealthCheck is not in CAI asset, but is required in this test.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"grpc_tls_health_check",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckGrpcWithTlsFullExample",
+			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"grpc_tls_health_check",
+					"lifecycle",
+					"provider",
+				},
+				"google_compute_region_health_check",
+			)
+		})
+	}
 }

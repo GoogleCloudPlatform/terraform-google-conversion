@@ -247,6 +247,13 @@ func expandCESToolsetOpenApiToolsetApiAuthentication(v interface{}, d tpgresourc
 		transformed["serviceAgentIdTokenAuthConfig"] = transformedServiceAgentIdTokenAuthConfig
 	}
 
+	transformedBearerTokenConfig, err := expandCESToolsetOpenApiToolsetApiAuthenticationBearerTokenConfig(original["bearer_token_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBearerTokenConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bearerTokenConfig"] = transformedBearerTokenConfig
+	}
+
 	return transformed, nil
 }
 
@@ -410,6 +417,32 @@ func expandCESToolsetOpenApiToolsetApiAuthenticationServiceAgentIdTokenAuthConfi
 	transformed := make(map[string]interface{})
 
 	return transformed, nil
+}
+
+func expandCESToolsetOpenApiToolsetApiAuthenticationBearerTokenConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToken, err := expandCESToolsetOpenApiToolsetApiAuthenticationBearerTokenConfigToken(original["token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["token"] = transformedToken
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetOpenApiToolsetApiAuthenticationBearerTokenConfigToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESToolsetOpenApiToolsetIgnoreUnknownFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

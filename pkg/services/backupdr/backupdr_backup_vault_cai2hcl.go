@@ -17,6 +17,8 @@
 package backupdr
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"reflect"
 	"regexp"
@@ -109,8 +111,12 @@ func (c *BackupDRBackupVaultCai2hclConverter) convertResourceData(asset caiasset
 
 	hclBlockName := assetNameParts[len(assetNameParts)-1]
 	digitRegex := regexp.MustCompile(`^\d+$`)
-	if digitRegex.MatchString(hclBlockName) {
-		hclBlockName = fmt.Sprintf("resource%s", utils.RandString(8))
+	nameValidator := regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_-]*$")
+	if digitRegex.MatchString(hclBlockName) || !nameValidator.MatchString(hclBlockName) {
+		hasher := sha256.New()
+		hasher.Write([]byte(hclBlockName))
+		fullHash := hex.EncodeToString(hasher.Sum(nil))
+		hclBlockName = fmt.Sprintf("resource%s", fullHash[:8])
 	}
 	hclData := make(map[string]interface{})
 
@@ -124,6 +130,7 @@ func (c *BackupDRBackupVaultCai2hclConverter) convertResourceData(asset caiasset
 	hclData["annotations"] = flattenBackupDRBackupVaultAnnotations(res["annotations"], d, config)
 	hclData["access_restriction"] = flattenBackupDRBackupVaultAccessRestriction(res["accessRestriction"], d, config)
 	hclData["backup_retention_inheritance"] = flattenBackupDRBackupVaultBackupRetentionInheritance(res["backupRetentionInheritance"], d, config)
+	hclData["encryption_config"] = flattenBackupDRBackupVaultEncryptionConfig(res["encryptionConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -158,5 +165,26 @@ func flattenBackupDRBackupVaultAccessRestriction(v interface{}, d *schema.Resour
 }
 
 func flattenBackupDRBackupVaultBackupRetentionInheritance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenBackupDRBackupVaultEncryptionConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["kms_key_name"] =
+		flattenBackupDRBackupVaultEncryptionConfigKmsKeyName(original["kmsKeyName"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenBackupDRBackupVaultEncryptionConfigKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

@@ -20,169 +20,71 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeSubnetwork_subnetworkBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+func TestAccComputeSubnetwork(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkLoggingConfigExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkLoggingConfigExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkIpv6Example(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkIpv6Example",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkInternalIpv6Example(t *testing.T) {
-	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkInternalIpv6Example",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkIpv6OnlyInternalExample(t *testing.T) {
-	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkIpv6OnlyInternalExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExample(t *testing.T) {
-	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExplicitIpPrefixExample(t *testing.T) {
-	t.Skip("internalIpv6Prefix is changed to C + O, but TGC uses latest provider version to run tests and does not have this change.")
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExplicitIpPrefixExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeSubnetwork_subnetworkIpv6OnlyExternalExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"ip_collection",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"send_secondary_ip_range_if_empty",
+		{
+			Name: "TestAccComputeSubnetwork_subnetworkIpv6OnlyExternalExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"ip_collection",
+					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
+					"provider",
+					"send_secondary_ip_range_if_empty",
+				},
+				"google_compute_subnetwork",
+			)
+		})
+	}
 }

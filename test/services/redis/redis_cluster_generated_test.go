@@ -20,117 +20,60 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccRedisCluster_redisClusterHaExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"gcs_source",
-			"lifecycle",
-			"managed_backup_source",
-			"name",
-			"provider",
-			"psc_configs",
-			"region",
+func TestAccRedisCluster(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccRedisCluster_redisClusterHaExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisCluster_redisClusterHaSingleZoneExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"gcs_source",
-			"lifecycle",
-			"managed_backup_source",
-			"name",
-			"provider",
-			"psc_configs",
-			"region",
+		{
+			Name: "TestAccRedisCluster_redisClusterHaSingleZoneExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisCluster_redisClusterSecondaryExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"gcs_source",
-			"lifecycle",
-			"managed_backup_source",
-			"name",
-			"provider",
-			"psc_configs",
-			"region",
+		{
+			Name: "TestAccRedisCluster_redisClusterSecondaryExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisCluster_redisClusterRdbExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"gcs_source",
-			"lifecycle",
-			"managed_backup_source",
-			"name",
-			"provider",
-			"psc_configs",
-			"region",
+		{
+			Name: "TestAccRedisCluster_redisClusterRdbExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisCluster_redisClusterAofExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"gcs_source",
-			"lifecycle",
-			"managed_backup_source",
-			"name",
-			"provider",
-			"psc_configs",
-			"region",
+		{
+			Name: "TestAccRedisCluster_redisClusterAofExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccRedisCluster_redisClusterCmekExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"gcs_source",
-			"lifecycle",
-			"managed_backup_source",
-			"name",
-			"provider",
-			"psc_configs",
-			"region",
+		{
+			Name: "TestAccRedisCluster_redisClusterCmekExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"gcs_source",
+					"lifecycle",
+					"managed_backup_source",
+					"name",
+					"provider",
+					"psc_configs",
+					"region",
+				},
+				"google_redis_cluster",
+			)
+		})
+	}
 }

@@ -20,31 +20,39 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeExternalVpnGateway_externalVpnGatewayExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+func TestAccComputeExternalVpnGateway(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeExternalVpnGateway_externalVpnGatewayExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeExternalVpnGateway_onlyExternalVpnGatewayFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccComputeExternalVpnGateway_onlyExternalVpnGatewayFullExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"provider",
+				},
+				"google_compute_external_vpn_gateway",
+			)
+		})
+	}
 }

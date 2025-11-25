@@ -20,173 +20,74 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderAwsBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+func TestAccIAMBetaWorkloadIdentityPoolProvider(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderAwsBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderAwsFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderAwsFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderGithubActionsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderGithubActionsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderSamlBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderSamlBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderSamlFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderSamlFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcUploadKeyExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcUploadKeyExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderX509BasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderX509BasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderX509FullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"oidc.jwks_json",
-			"provider",
-			"workload_identity_pool_id",
-			"workload_identity_pool_provider_id",
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderX509FullExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"oidc.jwks_json",
+					"provider",
+					"workload_identity_pool_id",
+					"workload_identity_pool_provider_id",
+				},
+				"google_iam_workload_identity_pool_provider",
+			)
+		})
+	}
 }

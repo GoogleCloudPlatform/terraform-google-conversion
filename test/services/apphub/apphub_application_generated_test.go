@@ -20,51 +20,53 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccApphubApplication_apphubApplicationBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"application_id",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+func TestAccApphubApplication(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccApphubApplication_apphubApplicationBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccApphubApplication_apphubApplicationGlobalBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"application_id",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccApphubApplication_apphubApplicationGlobalBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccApphubApplication_apphubApplicationFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"application_id",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccApphubApplication_apphubApplicationFullExample",
+			Skip: "",
 		},
-	)
+		{
+			Name: "TestAccApphubApplication_applicationUpdateFull",
+			Skip: "",
+		},
+		{
+			Name: "TestAccApphubApplication_invalidConfigFails",
+			Skip: "",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"application_id",
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"provider",
+				},
+				"google_apphub_application",
+			)
+		})
+	}
 }

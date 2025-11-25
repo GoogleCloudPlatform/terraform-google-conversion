@@ -20,75 +20,51 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccSecretManagerSecret_secretConfigBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+func TestAccSecretManagerSecret(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccSecretManagerSecret_secretConfigBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccSecretManagerSecret_secretWithAnnotationsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+		{
+			Name: "TestAccSecretManagerSecret_secretWithAnnotationsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccSecretManagerSecret_secretWithVersionDestroyTtlExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+		{
+			Name: "TestAccSecretManagerSecret_secretWithVersionDestroyTtlExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccSecretManagerSecret_secretWithAutomaticCmekExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+		{
+			Name: "TestAccSecretManagerSecret_secretWithAutomaticCmekExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"deletion_protection",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"provider",
+					"secret_id",
+					"tags",
+					"ttl",
+				},
+				"google_secret_manager_secret",
+			)
+		})
+	}
 }

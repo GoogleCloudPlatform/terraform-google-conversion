@@ -116,6 +116,12 @@ func GetCESAppApiObject(d tpgresource.TerraformResourceData, config *transport_t
 	} else if v, ok := d.GetOkExists("audio_processing_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(audioProcessingConfigProp)) && (ok || !reflect.DeepEqual(v, audioProcessingConfigProp)) {
 		obj["audioProcessingConfig"] = audioProcessingConfigProp
 	}
+	pinnedProp, err := expandCESAppPinned(d.Get("pinned"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("pinned"); !tpgresource.IsEmptyValue(reflect.ValueOf(pinnedProp)) && (ok || !reflect.DeepEqual(v, pinnedProp)) {
+		obj["pinned"] = pinnedProp
+	}
 	dataStoreSettingsProp, err := expandCESAppDataStoreSettings(d.Get("data_store_settings"), d, config)
 	if err != nil {
 		return nil, err
@@ -199,6 +205,12 @@ func GetCESAppApiObject(d tpgresource.TerraformResourceData, config *transport_t
 		return nil, err
 	} else if v, ok := d.GetOkExists("variable_declarations"); !tpgresource.IsEmptyValue(reflect.ValueOf(variableDeclarationsProp)) && (ok || !reflect.DeepEqual(v, variableDeclarationsProp)) {
 		obj["variableDeclarations"] = variableDeclarationsProp
+	}
+	clientCertificateSettingsProp, err := expandCESAppClientCertificateSettings(d.Get("client_certificate_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("client_certificate_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(clientCertificateSettingsProp)) && (ok || !reflect.DeepEqual(v, clientCertificateSettingsProp)) {
+		obj["clientCertificateSettings"] = clientCertificateSettingsProp
 	}
 
 	return obj, nil
@@ -362,6 +374,10 @@ func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsVoice(v interface{}
 }
 
 func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsSpeakingRate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppPinned(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1135,6 +1151,13 @@ func expandCESAppVariableDeclarationsSchema(v interface{}, d tpgresource.Terrafo
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedTitle, err := expandCESAppVariableDeclarationsSchemaTitle(original["title"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["title"] = transformedTitle
+	}
+
 	transformedDescription, err := expandCESAppVariableDeclarationsSchemaDescription(original["description"], d, config)
 	if err != nil {
 		return nil, err
@@ -1234,6 +1257,10 @@ func expandCESAppVariableDeclarationsSchema(v interface{}, d tpgresource.Terrafo
 	}
 
 	return transformed, nil
+}
+
+func expandCESAppVariableDeclarationsSchemaTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESAppVariableDeclarationsSchemaDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1338,4 +1365,52 @@ func expandCESAppVariableDeclarationsSchemaItems(v interface{}, d tpgresource.Te
 		return nil, err
 	}
 	return j, nil
+}
+
+func expandCESAppClientCertificateSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTlsCertificate, err := expandCESAppClientCertificateSettingsTlsCertificate(original["tls_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTlsCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tlsCertificate"] = transformedTlsCertificate
+	}
+
+	transformedPrivateKey, err := expandCESAppClientCertificateSettingsPrivateKey(original["private_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateKey"] = transformedPrivateKey
+	}
+
+	transformedPassphrase, err := expandCESAppClientCertificateSettingsPassphrase(original["passphrase"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPassphrase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["passphrase"] = transformedPassphrase
+	}
+
+	return transformed, nil
+}
+
+func expandCESAppClientCertificateSettingsTlsCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppClientCertificateSettingsPrivateKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppClientCertificateSettingsPassphrase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }

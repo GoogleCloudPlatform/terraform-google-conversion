@@ -20,35 +20,41 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccBeyondcorpAppGateway_beyondcorpAppGatewayBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"name",
-			"provider",
-			"region",
+func TestAccBeyondcorpAppGateway(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccBeyondcorpAppGateway_beyondcorpAppGatewayBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccBeyondcorpAppGateway_beyondcorpAppGatewayFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"name",
-			"provider",
-			"region",
+		{
+			Name: "TestAccBeyondcorpAppGateway_beyondcorpAppGatewayFullExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"name",
+					"provider",
+					"region",
+				},
+				"google_beyondcorp_app_gateway",
+			)
+		})
+	}
 }

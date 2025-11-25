@@ -423,10 +423,32 @@ func expandNetworkSecuritySecurityProfileCustomMirroringProfile(v interface{}, d
 		transformed["mirroringEndpointGroup"] = transformedMirroringEndpointGroup
 	}
 
+	transformedMirroringDeploymentGroups, err := expandNetworkSecuritySecurityProfileCustomMirroringProfileMirroringDeploymentGroups(original["mirroring_deployment_groups"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMirroringDeploymentGroups); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mirroringDeploymentGroups"] = transformedMirroringDeploymentGroups
+	}
+
+	transformedMirroringEndpointGroupType, err := expandNetworkSecuritySecurityProfileCustomMirroringProfileMirroringEndpointGroupType(original["mirroring_endpoint_group_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMirroringEndpointGroupType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mirroringEndpointGroupType"] = transformedMirroringEndpointGroupType
+	}
+
 	return transformed, nil
 }
 
 func expandNetworkSecuritySecurityProfileCustomMirroringProfileMirroringEndpointGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileCustomMirroringProfileMirroringDeploymentGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileCustomMirroringProfileMirroringEndpointGroupType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

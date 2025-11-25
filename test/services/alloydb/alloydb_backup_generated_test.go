@@ -20,35 +20,53 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccAlloydbBackup_alloydbBackupBasicTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"backup_id",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+func TestAccAlloydbBackup(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccAlloydbBackup_alloydbBackupBasicTestExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbBackup_alloydbBackupFullTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"backup_id",
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccAlloydbBackup_alloydbBackupFullTestExample",
+			Skip: "",
 		},
-	)
+		{
+			Name: "TestAccAlloydbBackup_update",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbBackup_createBackupWithMandatoryFields",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbBackup_usingCMEK",
+			Skip: "",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"backup_id",
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"provider",
+				},
+				"google_alloydb_backup",
+			)
+		})
+	}
 }

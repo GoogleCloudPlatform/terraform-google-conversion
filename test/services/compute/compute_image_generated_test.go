@@ -20,63 +20,49 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeImage_imageBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"image_encryption_key.raw_key",
-			"image_encryption_key.rsa_encrypted_key",
-			"lifecycle",
-			"provider",
-			"raw_disk",
-			"source_disk_encryption_key",
-			"source_image_encryption_key",
-			"source_snapshot_encryption_key",
+func TestAccComputeImage(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeImage_imageBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeImage_imageGuestOsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"image_encryption_key.raw_key",
-			"image_encryption_key.rsa_encrypted_key",
-			"lifecycle",
-			"provider",
-			"raw_disk",
-			"source_disk_encryption_key",
-			"source_image_encryption_key",
-			"source_snapshot_encryption_key",
+		{
+			Name: "TestAccComputeImage_imageGuestOsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeImage_imageBasicStorageLocationExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"image_encryption_key.raw_key",
-			"image_encryption_key.rsa_encrypted_key",
-			"lifecycle",
-			"provider",
-			"raw_disk",
-			"source_disk_encryption_key",
-			"source_image_encryption_key",
-			"source_snapshot_encryption_key",
+		{
+			Name: "TestAccComputeImage_imageBasicStorageLocationExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"image_encryption_key.raw_key",
+					"image_encryption_key.rsa_encrypted_key",
+					"lifecycle",
+					"provider",
+					"raw_disk",
+					"source_disk_encryption_key",
+					"source_image_encryption_key",
+					"source_snapshot_encryption_key",
+				},
+				"google_compute_image",
+			)
+		})
+	}
 }

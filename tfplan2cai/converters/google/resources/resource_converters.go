@@ -73,6 +73,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/services/securesourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/services/securitycenter"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/services/securitycenterv2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/services/servicedirectory"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/services/servicemanagement"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/services/spanner"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/services/sql"
@@ -453,6 +454,12 @@ func ResourceConverters() map[string][]cai.ResourceConverter {
 		"google_scc_v2_organization_source_iam_policy":                  {securitycenterv2.ResourceConverterSecurityCenterV2OrganizationSourceIamPolicy()},
 		"google_scc_v2_organization_source_iam_binding":                 {securitycenterv2.ResourceConverterSecurityCenterV2OrganizationSourceIamBinding()},
 		"google_scc_v2_organization_source_iam_member":                  {securitycenterv2.ResourceConverterSecurityCenterV2OrganizationSourceIamMember()},
+		"google_service_directory_namespace_iam_policy":                 {servicedirectory.ResourceConverterServiceDirectoryNamespaceIamPolicy()},
+		"google_service_directory_namespace_iam_binding":                {servicedirectory.ResourceConverterServiceDirectoryNamespaceIamBinding()},
+		"google_service_directory_namespace_iam_member":                 {servicedirectory.ResourceConverterServiceDirectoryNamespaceIamMember()},
+		"google_service_directory_service_iam_policy":                   {servicedirectory.ResourceConverterServiceDirectoryServiceIamPolicy()},
+		"google_service_directory_service_iam_binding":                  {servicedirectory.ResourceConverterServiceDirectoryServiceIamBinding()},
+		"google_service_directory_service_iam_member":                   {servicedirectory.ResourceConverterServiceDirectoryServiceIamMember()},
 		"google_endpoints_service_iam_policy":                           {servicemanagement.ResourceConverterServiceManagementServiceIamPolicy()},
 		"google_endpoints_service_iam_binding":                          {servicemanagement.ResourceConverterServiceManagementServiceIamBinding()},
 		"google_endpoints_service_iam_member":                           {servicemanagement.ResourceConverterServiceManagementServiceIamMember()},

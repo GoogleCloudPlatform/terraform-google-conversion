@@ -37,6 +37,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
@@ -146,8 +147,23 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"cloudkms.googleapis.com/AutokeyConfig": {
 		"Default": kms.NewKMSAutokeyConfigCai2hclConverter(provider),
 	},
+	"cloudkms.googleapis.com/CryptoKey": {
+		"Default": kms.NewKMSCryptoKeyCai2hclConverter(provider),
+	},
+	"cloudkms.googleapis.com/CryptoKeyVersion": {
+		"Default": kms.NewKMSCryptoKeyVersionCai2hclConverter(provider),
+	},
+	"cloudkms.googleapis.com/EkmConnection": {
+		"Default": kms.NewKMSEkmConnectionCai2hclConverter(provider),
+	},
+	"cloudkms.googleapis.com/ImportJob": {
+		"Default": kms.NewKMSKeyRingImportJobCai2hclConverter(provider),
+	},
 	"cloudkms.googleapis.com/KeyHandle": {
 		"Default": kms.NewKMSKeyHandleCai2hclConverter(provider),
+	},
+	"cloudkms.googleapis.com/KeyRing": {
+		"Default": kms.NewKMSKeyRingCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/Address": {
 		"Default": compute.NewComputeAddressCai2hclConverter(provider),
@@ -223,6 +239,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"iam.googleapis.com/WorkloadIdentityPoolProvider": {
 		"Default": iambeta.NewIAMBetaWorkloadIdentityPoolProviderCai2hclConverter(provider),
 	},
+	"logging.googleapis.com/LogMetric": {
+		"Default": logging.NewLoggingMetricCai2hclConverter(provider),
+	},
 	"monitoring.googleapis.com/NotificationChannel": {
 		"Default": monitoring.NewMonitoringNotificationChannelCai2hclConverter(provider),
 	},
@@ -278,5 +297,11 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"vmwareengine.googleapis.com/NetworkPeering": {
 		"Default": vmwareengine.NewVmwareengineNetworkPeeringCai2hclConverter(provider),
+	},
+	"vmwareengine.googleapis.com/NetworkPolicy": {
+		"Default": vmwareengine.NewVmwareengineNetworkPolicyCai2hclConverter(provider),
+	},
+	"vmwareengine.googleapis.com/VmwareEngineNetwork": {
+		"Default": vmwareengine.NewVmwareengineNetworkCai2hclConverter(provider),
 	},
 }

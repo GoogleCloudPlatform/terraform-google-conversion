@@ -20,63 +20,49 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeDisk_diskBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"architecture",
-			"count",
-			"create_snapshot_before_destroy",
-			"create_snapshot_before_destroy_prefix",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"source_storage_object",
+func TestAccComputeDisk(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeDisk_diskBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeDisk_diskAsyncExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"architecture",
-			"count",
-			"create_snapshot_before_destroy",
-			"create_snapshot_before_destroy_prefix",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"source_storage_object",
+		{
+			Name: "TestAccComputeDisk_diskAsyncExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeDisk_diskFeaturesExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"architecture",
-			"count",
-			"create_snapshot_before_destroy",
-			"create_snapshot_before_destroy_prefix",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"source_storage_object",
+		{
+			Name: "TestAccComputeDisk_diskFeaturesExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"architecture",
+					"count",
+					"create_snapshot_before_destroy",
+					"create_snapshot_before_destroy_prefix",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
+					"provider",
+					"source_storage_object",
+				},
+				"google_compute_disk",
+			)
+		})
+	}
 }

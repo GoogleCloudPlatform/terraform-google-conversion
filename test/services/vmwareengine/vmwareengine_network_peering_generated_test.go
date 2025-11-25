@@ -20,33 +20,40 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccVmwareengineNetworkPeering_vmwareEngineNetworkPeeringVenExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"name",
-			"provider",
+func TestAccVmwareengineNetworkPeering(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccVmwareengineNetworkPeering_vmwareEngineNetworkPeeringVenExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccVmwareengineNetworkPeering_vmwareEngineNetworkPeeringStandardExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"name",
-			"provider",
+		{
+			Name: "TestAccVmwareengineNetworkPeering_vmwareEngineNetworkPeeringStandardExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"name",
+					"provider",
+				},
+				"google_vmwareengine_network_peering",
+			)
+		})
+	}
 }
