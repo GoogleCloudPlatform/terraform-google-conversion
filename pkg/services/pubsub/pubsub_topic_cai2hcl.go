@@ -17,6 +17,8 @@
 package pubsub
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"reflect"
 	"regexp"
@@ -109,8 +111,12 @@ func (c *PubsubTopicCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 
 	hclBlockName := assetNameParts[len(assetNameParts)-1]
 	digitRegex := regexp.MustCompile(`^\d+$`)
-	if digitRegex.MatchString(hclBlockName) {
-		hclBlockName = fmt.Sprintf("resource%s", utils.RandString(8))
+	nameValidator := regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_-]*$")
+	if digitRegex.MatchString(hclBlockName) || !nameValidator.MatchString(hclBlockName) {
+		hasher := sha256.New()
+		hasher.Write([]byte(hclBlockName))
+		fullHash := hex.EncodeToString(hasher.Sum(nil))
+		hclBlockName = fmt.Sprintf("resource%s", fullHash[:8])
 	}
 	hclData := make(map[string]interface{})
 

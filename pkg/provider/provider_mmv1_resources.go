@@ -25,6 +25,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
@@ -42,7 +43,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 76
+// Generated resources: 84
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -99,7 +100,13 @@ var generatedResources = map[string]*schema.Resource{
 	"google_iam_workload_identity_pool":                    iambeta.ResourceIAMBetaWorkloadIdentityPool(),
 	"google_iam_workload_identity_pool_provider":           iambeta.ResourceIAMBetaWorkloadIdentityPoolProvider(),
 	"google_kms_autokey_config":                            kms.ResourceKMSAutokeyConfig(),
+	"google_kms_crypto_key":                                kms.ResourceKMSCryptoKey(),
+	"google_kms_crypto_key_version":                        kms.ResourceKMSCryptoKeyVersion(),
+	"google_kms_ekm_connection":                            kms.ResourceKMSEkmConnection(),
 	"google_kms_key_handle":                                kms.ResourceKMSKeyHandle(),
+	"google_kms_key_ring":                                  kms.ResourceKMSKeyRing(),
+	"google_kms_key_ring_import_job":                       kms.ResourceKMSKeyRingImportJob(),
+	"google_logging_metric":                                logging.ResourceLoggingMetric(),
 	"google_monitoring_notification_channel":               monitoring.ResourceMonitoringNotificationChannel(),
 	"google_monitoring_uptime_check_config":                monitoring.ResourceMonitoringUptimeCheckConfig(),
 	"google_network_security_address_group":                networksecurity.ResourceNetworkSecurityAddressGroup(),
@@ -118,6 +125,8 @@ var generatedResources = map[string]*schema.Resource{
 	"google_secret_manager_secret_version":                 secretmanager.ResourceSecretManagerSecretVersion(),
 	"google_secret_manager_regional_secret":                secretmanagerregional.ResourceSecretManagerRegionalRegionalSecret(),
 	"google_secret_manager_regional_secret_version":        secretmanagerregional.ResourceSecretManagerRegionalRegionalSecretVersion(),
+	"google_vmwareengine_network":                          vmwareengine.ResourceVmwareengineNetwork(),
 	"google_vmwareengine_network_peering":                  vmwareengine.ResourceVmwareengineNetworkPeering(),
+	"google_vmwareengine_network_policy":                   vmwareengine.ResourceVmwareengineNetworkPolicy(),
 	"google_workbench_instance":                            workbench.ResourceWorkbenchInstance(),
 }

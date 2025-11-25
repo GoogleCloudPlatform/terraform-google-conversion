@@ -590,6 +590,13 @@ func expandCloudRunServiceSpecTemplateSpecContainers(v interface{}, d tpgresourc
 			transformed["startupProbe"] = transformedStartupProbe
 		}
 
+		transformedReadinessProbe, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbe(original["readiness_probe"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedReadinessProbe); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["readinessProbe"] = transformedReadinessProbe
+		}
+
 		transformedLivenessProbe, err := expandCloudRunServiceSpecTemplateSpecContainersLivenessProbe(original["liveness_probe"], d, config)
 		if err != nil {
 			return nil, err
@@ -1282,6 +1289,163 @@ func expandCloudRunServiceSpecTemplateSpecContainersStartupProbeGrpcPort(v inter
 }
 
 func expandCloudRunServiceSpecTemplateSpecContainersStartupProbeGrpcService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbe(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTimeoutSeconds, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeTimeoutSeconds(original["timeout_seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTimeoutSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["timeoutSeconds"] = transformedTimeoutSeconds
+	}
+
+	transformedPeriodSeconds, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbePeriodSeconds(original["period_seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPeriodSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["periodSeconds"] = transformedPeriodSeconds
+	}
+
+	transformedFailureThreshold, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeFailureThreshold(original["failure_threshold"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFailureThreshold); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["failureThreshold"] = transformedFailureThreshold
+	}
+
+	transformedSuccessThreshold, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeSuccessThreshold(original["success_threshold"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSuccessThreshold); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["successThreshold"] = transformedSuccessThreshold
+	}
+
+	transformedHttpGet, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeHttpGet(original["http_get"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["httpGet"] = transformedHttpGet
+	}
+
+	transformedGrpc, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeGrpc(original["grpc"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["grpc"] = transformedGrpc
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeTimeoutSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbePeriodSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeFailureThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeSuccessThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeHttpGet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPath, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeHttpGetPath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	transformedPort, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeHttpGetPort(original["port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["port"] = transformedPort
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeHttpGetPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeHttpGetPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeGrpc(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPort, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeGrpcPort(original["port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["port"] = transformedPort
+	}
+
+	transformedService, err := expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeGrpcService(original["service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service"] = transformedService
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeGrpcPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunServiceSpecTemplateSpecContainersReadinessProbeGrpcService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

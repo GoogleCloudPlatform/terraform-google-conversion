@@ -20,138 +20,180 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccAlloydbCluster_alloydbClusterBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+func TestAccAlloydbCluster(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccAlloydbCluster_alloydbClusterBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+		{
+			Name: "TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+		{
+			Name: "TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbCluster_alloydbClusterFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+		{
+			Name: "TestAccAlloydbCluster_alloydbClusterFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"automated_backup_policy.weekly_schedule.start_times.minutes",
-			"automated_backup_policy.weekly_schedule.start_times.nanos",
-			"automated_backup_policy.weekly_schedule.start_times.seconds",
-			"cluster_id",
-			"count",
-			"deletion_policy",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"initial_user",
-			"initial_user.password",
-			"initial_user.user",
-			"lifecycle",
-			"location",
-			"provider",
-			"restore_backup_source",
-			"restore_continuous_backup_source",
-			"skip_await_major_version_upgrade",
+		{
+			Name: "TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample",
+			Skip: "",
 		},
-	)
+		{
+			Name: "TestAccAlloydbCluster_update",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_upgrade",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withSubscriptionTypeTrial",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withSubscriptionTypeStandard",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_addAutomatedBackupPolicyAndInitialUser",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_deleteAutomatedBackupPolicyAndInitialUser",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_AutomatedBackupPolicyHandlesMidnight",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_missingWeeklySchedule",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_mandatoryFields",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_maximumFields",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_deleteTimeBasedRetentionPolicy",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_usingCMEK",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_CMEKInAutomatedBackupIsUpdatable",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_continuousBackup_enabledByDefault",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_continuousBackup_update_noChangeIfDefaultsSet",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_continuousBackup_noChangeIfRemoved",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_continuousBackup_update",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_continuousBackup_CMEKIsUpdatable",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withNetworkConfig",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withNetworkConfigAndAllocatedIPRange",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withMaintenanceWindows",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withMaintenanceWindowsMissingFields",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withPrivateServiceConnect",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_standardClusterUpdate",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_trialClusterUpdate",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_standardClusterUpdateFailure",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withoutInitialUserFailure",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withoutInitialUserUpdate",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbCluster_randomPassword",
+			Skip: "",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"automated_backup_policy.weekly_schedule.start_times.minutes",
+					"automated_backup_policy.weekly_schedule.start_times.nanos",
+					"automated_backup_policy.weekly_schedule.start_times.seconds",
+					"cluster_id",
+					"count",
+					"deletion_policy",
+					"deletion_protection",
+					"depends_on",
+					"for_each",
+					"initial_user",
+					"initial_user.password",
+					"initial_user.user",
+					"lifecycle",
+					"location",
+					"provider",
+					"restore_backup_source",
+					"restore_continuous_backup_source",
+					"skip_await_major_version_upgrade",
+				},
+				"google_alloydb_cluster",
+			)
+		})
+	}
 }

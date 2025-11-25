@@ -1072,6 +1072,13 @@ func expandDataplexDatascanDataProfileSpec(v interface{}, d tpgresource.Terrafor
 		transformed["excludeFields"] = transformedExcludeFields
 	}
 
+	transformedCatalogPublishingEnabled, err := expandDataplexDatascanDataProfileSpecCatalogPublishingEnabled(original["catalog_publishing_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCatalogPublishingEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["catalogPublishingEnabled"] = transformedCatalogPublishingEnabled
+	}
+
 	return transformed, nil
 }
 
@@ -1180,6 +1187,10 @@ func expandDataplexDatascanDataProfileSpecExcludeFields(v interface{}, d tpgreso
 }
 
 func expandDataplexDatascanDataProfileSpecExcludeFieldsFieldNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataProfileSpecCatalogPublishingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

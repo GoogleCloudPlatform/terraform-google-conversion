@@ -20,54 +20,46 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"parent",
-			"provider",
+func TestAccNetworkSecurityAddressGroup(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsOrganizationBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"parent",
-			"provider",
+		{
+			Name: "TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsOrganizationBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsAdvancedExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"parent",
-			"provider",
+		{
+			Name: "TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsAdvancedExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"name",
+					"parent",
+					"provider",
+				},
+				"google_network_security_address_group",
+			)
+		})
+	}
 }

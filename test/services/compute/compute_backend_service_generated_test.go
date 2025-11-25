@@ -20,201 +20,79 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeBackendService_backendServiceBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+func TestAccComputeBackendService(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeBackendService_backendServiceBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceExternalIapExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceExternalIapExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceCacheSimpleExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceCacheSimpleExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceCacheIncludeHttpHeadersExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceCacheIncludeHttpHeadersExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceCacheIncludeNamedCookiesExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceCacheIncludeNamedCookiesExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceCacheExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceCacheExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceCacheBypassCacheOnRequestHeadersExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceCacheBypassCacheOnRequestHeadersExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceExternalManagedExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceExternalManagedExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceIpAddressSelectionPolicyExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceIpAddressSelectionPolicyExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceCustomMetricsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceCustomMetricsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeBackendService_backendServiceTlsSettingsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"iap.oauth2_client_secret",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
-			"security_settings.aws_v4_authentication.access_key",
+		{
+			Name: "TestAccComputeBackendService_backendServiceTlsSettingsExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"iap.oauth2_client_secret",
+					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
+					"provider",
+					"security_settings.aws_v4_authentication.access_key",
+				},
+				"google_compute_backend_service",
+			)
+		})
+	}
 }

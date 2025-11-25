@@ -20,95 +20,56 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccDatastreamConnectionProfile_datastreamConnectionProfileBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"connection_profile_id",
-			"count",
-			"create_without_validation",
-			"depends_on",
-			"for_each",
-			"forward_ssh_connectivity.password",
-			"lifecycle",
-			"location",
-			"mongodb_profile.ssl_config.ca_certificate",
-			"mongodb_profile.ssl_config.client_certificate",
-			"mongodb_profile.ssl_config.client_key",
-			"mongodb_profile.ssl_config.secret_manager_stored_client_key",
-			"postgresql_profile.password",
-			"provider",
+func TestAccDatastreamConnectionProfile(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfileBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresqlPrivateConnectionExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"connection_profile_id",
-			"count",
-			"create_without_validation",
-			"depends_on",
-			"for_each",
-			"forward_ssh_connectivity.password",
-			"lifecycle",
-			"location",
-			"mongodb_profile.ssl_config.ca_certificate",
-			"mongodb_profile.ssl_config.client_certificate",
-			"mongodb_profile.ssl_config.client_key",
-			"mongodb_profile.ssl_config.secret_manager_stored_client_key",
-			"postgresql_profile.password",
-			"provider",
+		{
+			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresqlPrivateConnectionExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDatastreamConnectionProfile_datastreamConnectionProfileFullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"connection_profile_id",
-			"count",
-			"create_without_validation",
-			"depends_on",
-			"for_each",
-			"forward_ssh_connectivity.password",
-			"lifecycle",
-			"location",
-			"mongodb_profile.ssl_config.ca_certificate",
-			"mongodb_profile.ssl_config.client_certificate",
-			"mongodb_profile.ssl_config.client_key",
-			"mongodb_profile.ssl_config.secret_manager_stored_client_key",
-			"postgresql_profile.password",
-			"provider",
+		{
+			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfileFullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecretManagerExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"connection_profile_id",
-			"count",
-			"create_without_validation",
-			"depends_on",
-			"for_each",
-			"forward_ssh_connectivity.password",
-			"lifecycle",
-			"location",
-			"mongodb_profile.ssl_config.ca_certificate",
-			"mongodb_profile.ssl_config.client_certificate",
-			"mongodb_profile.ssl_config.client_key",
-			"mongodb_profile.ssl_config.secret_manager_stored_client_key",
-			"postgresql_profile.password",
-			"provider",
+		{
+			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecretManagerExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"connection_profile_id",
+					"count",
+					"create_without_validation",
+					"depends_on",
+					"for_each",
+					"forward_ssh_connectivity.password",
+					"lifecycle",
+					"location",
+					"mongodb_profile.ssl_config.ca_certificate",
+					"mongodb_profile.ssl_config.client_certificate",
+					"mongodb_profile.ssl_config.client_key",
+					"mongodb_profile.ssl_config.secret_manager_stored_client_key",
+					"postgresql_profile.password",
+					"provider",
+				},
+				"google_datastream_connection_profile",
+			)
+		})
+	}
 }

@@ -24,6 +24,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
@@ -60,6 +61,7 @@ var (
 	_ = retry.Retry
 	_ = schema.Noop
 	_ = structure.ExpandJsonFromString
+	_ = time.Now
 	_ = validation.All
 	_ = terraform.State{}
 	_ = tgcresource.RemoveTerraformAttributionLabel
@@ -181,6 +183,9 @@ func GetArtifactRegistryRepositoryCaiObject(d tpgresource.TerraformResourceData,
 	obj, err = resourceArtifactRegistryRepositoryEncoder(d, config, obj)
 	if err != nil {
 		return nil, err
+	}
+	if obj == nil {
+		obj = make(map[string]interface{})
 	}
 	return obj, nil
 }

@@ -88,7 +88,7 @@ func ResourceConverterKMSKeyRingImportJob() cai.ResourceConverter {
 }
 
 func GetKMSKeyRingImportJobCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//cloudkms.googleapis.com/{{name}}")
+	name, err := cai.AssetName(d, config, "//cloudkms.googleapis.com/{{key_ring}}/importJobs/{{import_job_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

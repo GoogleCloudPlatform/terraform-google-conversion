@@ -20,19 +20,89 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccCloudbuildv2Connection_cloudbuildv2ConnectionExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+func TestAccCloudbuildv2Connection(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccCloudbuildv2Connection_cloudbuildv2ConnectionExample",
+			Skip: "",
 		},
-	)
+		{
+			Name: "TestAccCloudbuildv2Connection_GheCompleteConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GheConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GhePrivConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GhePrivUpdateConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GithubConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GitlabConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GleConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GleOldConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GlePrivConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_GlePrivUpdateConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_BbdcPrivConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_BbdcPrivUpdateConnection",
+			Skip: "",
+		},
+		{
+			Name: "TestAccCloudbuildv2Connection_BbcConnection",
+			Skip: "",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+				},
+				"google_cloudbuildv2_connection",
+			)
+		})
+	}
 }

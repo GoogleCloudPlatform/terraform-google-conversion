@@ -301,6 +301,12 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("custom_metrics"); !tpgresource.IsEmptyValue(reflect.ValueOf(customMetricsProp)) && (ok || !reflect.DeepEqual(v, customMetricsProp)) {
 		obj["customMetrics"] = customMetricsProp
 	}
+	networkPassThroughLbTrafficPolicyProp, err := expandComputeRegionBackendServiceNetworkPassThroughLbTrafficPolicy(d.Get("network_pass_through_lb_traffic_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network_pass_through_lb_traffic_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkPassThroughLbTrafficPolicyProp)) && (ok || !reflect.DeepEqual(v, networkPassThroughLbTrafficPolicyProp)) {
+		obj["networkPassThroughLbTrafficPolicy"] = networkPassThroughLbTrafficPolicyProp
+	}
 	outlierDetectionProp, err := expandComputeRegionBackendServiceOutlierDetection(d.Get("outlier_detection"), d, config)
 	if err != nil {
 		return nil, err
@@ -1370,6 +1376,65 @@ func expandComputeRegionBackendServiceCustomMetricsName(v interface{}, d tpgreso
 }
 
 func expandComputeRegionBackendServiceCustomMetricsDryRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceNetworkPassThroughLbTrafficPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedZonalAffinity, err := expandComputeRegionBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity(original["zonal_affinity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedZonalAffinity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["zonalAffinity"] = transformedZonalAffinity
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSpillover, err := expandComputeRegionBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpillover(original["spillover"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSpillover); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["spillover"] = transformedSpillover
+	}
+
+	transformedSpilloverRatio, err := expandComputeRegionBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpilloverRatio(original["spillover_ratio"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSpilloverRatio); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["spilloverRatio"] = transformedSpilloverRatio
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpillover(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinitySpilloverRatio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

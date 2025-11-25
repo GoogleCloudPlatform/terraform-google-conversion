@@ -120,6 +120,21 @@ Please refer to the field 'effective_annotations' for all of the annotations pre
 				Optional:    true,
 				Description: `Optional. Time after which the BackupVault resource is locked.`,
 			},
+			"encryption_config": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: `Encryption configuration for the backup vault.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"kms_key_name": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: `The Resource name of the Cloud KMS key to be used to encrypt new backups. The key must be in the same location as the backup vault. The key must be a Cloud KMS CryptoKey.`,
+						},
+					},
+				},
+			},
 			"force_delete": {
 				Type:       schema.TypeBool,
 				Optional:   true,

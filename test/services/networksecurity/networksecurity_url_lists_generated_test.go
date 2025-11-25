@@ -20,35 +20,41 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccNetworkSecurityUrlLists_networkSecurityUrlListsBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+func TestAccNetworkSecurityUrlLists(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccNetworkSecurityUrlLists_networkSecurityUrlListsBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccNetworkSecurityUrlLists_networkSecurityUrlListsAdvancedExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
+		{
+			Name: "TestAccNetworkSecurityUrlLists_networkSecurityUrlListsAdvancedExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+				},
+				"google_network_security_url_lists",
+			)
+		})
+	}
 }

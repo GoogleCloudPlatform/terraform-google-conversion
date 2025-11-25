@@ -20,131 +20,65 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccBigQueryDataset_bigqueryDatasetBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"access",
-			"count",
-			"delete_contents_on_destroy",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+func TestAccBigQueryDataset(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccBigQueryDataset_bigqueryDatasetWithMaxTimeTravelHoursExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"access",
-			"count",
-			"delete_contents_on_destroy",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetWithMaxTimeTravelHoursExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccBigQueryDataset_bigqueryDatasetAuthorizedDatasetExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"access",
-			"count",
-			"delete_contents_on_destroy",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetAuthorizedDatasetExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccBigQueryDataset_bigqueryDatasetAuthorizedRoutineExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"access",
-			"count",
-			"delete_contents_on_destroy",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetAuthorizedRoutineExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccBigQueryDataset_bigqueryDatasetCaseInsensitiveNamesExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"access",
-			"count",
-			"delete_contents_on_destroy",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetCaseInsensitiveNamesExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccBigQueryDataset_bigqueryDatasetDefaultCollationSetExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"access",
-			"count",
-			"delete_contents_on_destroy",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetDefaultCollationSetExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccBigQueryDataset_bigqueryDatasetExternalCatalogDatasetOptionsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"access",
-			"count",
-			"delete_contents_on_destroy",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetExternalCatalogDatasetOptionsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccBigQueryDataset_bigqueryDatasetResourceTagsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"access",
-			"count",
-			"delete_contents_on_destroy",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetResourceTagsExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"access",
+					"count",
+					"delete_contents_on_destroy",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"provider",
+				},
+				"google_bigquery_dataset",
+			)
+		})
+	}
 }

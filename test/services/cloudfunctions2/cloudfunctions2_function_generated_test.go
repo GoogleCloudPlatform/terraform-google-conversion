@@ -20,123 +20,64 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccCloudfunctions2function_cloudfunctions2BasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+func TestAccCloudfunctions2function(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2BasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCloudfunctions2function_cloudfunctions2FullExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2FullExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCloudfunctions2function_cloudfunctions2BasicGcsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2BasicGcsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCloudfunctions2function_cloudfunctions2BasicAuditlogsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2BasicAuditlogsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCloudfunctions2function_cloudfunctions2BasicBuilderExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2BasicBuilderExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCloudfunctions2function_cloudfunctions2SecretEnvExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2SecretEnvExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCloudfunctions2function_cloudfunctions2SecretVolumeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2SecretVolumeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCloudfunctions2function_cloudfunctions2PrivateWorkerpoolExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2PrivateWorkerpoolExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"provider",
+				},
+				"google_cloudfunctions2_function",
+			)
+		})
+	}
 }

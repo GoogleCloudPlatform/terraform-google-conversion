@@ -97,8 +97,8 @@ func GetServiceDirectoryEndpointCaiObject(d tpgresource.TerraformResourceData, c
 			Name: name,
 			Type: ServiceDirectoryEndpointAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1beta1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/servicedirectory/v1beta1/rest",
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/servicedirectory/v1/rest",
 				DiscoveryName:        "Endpoint",
 				Data:                 obj,
 			},
@@ -135,6 +135,16 @@ func GetServiceDirectoryEndpointApiObject(d tpgresource.TerraformResourceData, c
 		obj["network"] = networkProp
 	}
 
+	return resourceServiceDirectoryEndpointEncoder(d, config, obj)
+}
+
+func resourceServiceDirectoryEndpointEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	if obj["metadata"] == nil {
+		return nil, nil
+	}
+
+	obj["annotations"] = obj["metadata"].(map[string]string)
+	delete(obj, "metadata")
 	return obj, nil
 }
 

@@ -20,54 +20,102 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccAlloydbInstance_alloydbInstanceBasicTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"cluster",
-			"count",
-			"depends_on",
-			"display_name",
-			"for_each",
-			"instance_id",
-			"lifecycle",
-			"provider",
+func TestAccAlloydbInstance(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccAlloydbInstance_alloydbInstanceBasicTestExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbInstance_alloydbSecondaryInstanceBasicTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"cluster",
-			"count",
-			"depends_on",
-			"display_name",
-			"for_each",
-			"instance_id",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccAlloydbInstance_alloydbSecondaryInstanceBasicTestExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccAlloydbInstance_alloydbInstancePscTestExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"cluster",
-			"count",
-			"depends_on",
-			"display_name",
-			"for_each",
-			"instance_id",
-			"lifecycle",
-			"provider",
+		{
+			Name: "TestAccAlloydbInstance_alloydbInstancePscTestExample",
+			Skip: "",
 		},
-	)
+		{
+			Name: "TestAccAlloydbInstance_update",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_createInstanceWithMandatoryFields",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_stopstart",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_createInstanceWithMaximumFields",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_createPrimaryAndReadPoolInstance",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_updateDatabaseFlagInPrimaryInstance",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_createInstanceWithNetworkConfigAndAllocatedIPRange",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_clientConnectionConfig",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_networkConfig",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_updatePscInstanceConfig",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_createInstanceWithPscInterfaceConfigs",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_updateInstanceWithPscInterfaceConfigs",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_updatePscAutoConnections",
+			Skip: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_createPrimaryAndReadPoolInstanceWithAllocatedIpRangeOverride",
+			Skip: "",
+		},
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"cluster",
+					"count",
+					"depends_on",
+					"display_name",
+					"for_each",
+					"instance_id",
+					"lifecycle",
+					"provider",
+				},
+				"google_alloydb_instance",
+			)
+		})
+	}
 }

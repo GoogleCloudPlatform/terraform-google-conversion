@@ -20,207 +20,82 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeUrlMap_urlMapBucketAndServiceExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+func TestAccComputeUrlMap(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeUrlMap_urlMapBucketAndServiceExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapTrafficDirectorRouteExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapTrafficDirectorRouteExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapTrafficDirectorRoutePartialExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapTrafficDirectorRoutePartialExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapTrafficDirectorPathExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapTrafficDirectorPathExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapTrafficDirectorPathPartialExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapTrafficDirectorPathPartialExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapHeaderBasedRoutingExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapHeaderBasedRoutingExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapParameterBasedRoutingExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapParameterBasedRoutingExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapTestHeadersExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapTestHeadersExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapTestExpectedOutputUrlExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapTestExpectedOutputUrlExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapTestRedirectResponseCodeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapTestRedirectResponseCodeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapPathTemplateMatchExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapPathTemplateMatchExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"default_custom_error_response_policy.error_response_rule",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"path_matcher.default_custom_error_response_policy.error_response_rule",
-			"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
-			"provider",
+		{
+			Name: "TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"default_custom_error_response_policy.error_response_rule",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"path_matcher.default_custom_error_response_policy.error_response_rule",
+					"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
+					"provider",
+				},
+				"google_compute_url_map",
+			)
+		})
+	}
 }

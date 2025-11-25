@@ -122,6 +122,12 @@ func GetIAMWorkforcePoolWorkforcePoolProviderScimTenantApiObject(d tpgresource.T
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	claimMappingProp, err := expandIAMWorkforcePoolWorkforcePoolProviderScimTenantClaimMapping(d.Get("claim_mapping"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("claim_mapping"); !tpgresource.IsEmptyValue(reflect.ValueOf(claimMappingProp)) && (ok || !reflect.DeepEqual(v, claimMappingProp)) {
+		obj["claimMapping"] = claimMappingProp
+	}
 
 	return obj, nil
 }
@@ -132,4 +138,15 @@ func expandIAMWorkforcePoolWorkforcePoolProviderScimTenantDisplayName(v interfac
 
 func expandIAMWorkforcePoolWorkforcePoolProviderScimTenantDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderScimTenantClaimMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

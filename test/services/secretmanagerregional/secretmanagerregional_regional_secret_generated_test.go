@@ -20,117 +20,60 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccSecretManagerRegionalRegionalSecret_regionalSecretConfigBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+func TestAccSecretManagerRegionalRegionalSecret(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretConfigBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithCmekExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithCmekExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithRotationExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithRotationExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithTtlExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithTtlExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithExpireTimeExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithExpireTimeExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithVersionDestroyTtlExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"deletion_protection",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"provider",
-			"secret_id",
-			"tags",
-			"ttl",
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithVersionDestroyTtlExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"deletion_protection",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"provider",
+					"secret_id",
+					"tags",
+					"ttl",
+				},
+				"google_secret_manager_regional_secret",
+			)
+		})
+	}
 }

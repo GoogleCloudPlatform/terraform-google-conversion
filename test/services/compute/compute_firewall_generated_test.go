@@ -20,35 +20,41 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeFirewall_firewallBasicExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+func TestAccComputeFirewall(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccComputeFirewall_firewallBasicExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccComputeFirewall_firewallWithTargetTagsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"params",
-			"params.resource_manager_tags",
-			"provider",
+		{
+			Name: "TestAccComputeFirewall_firewallWithTargetTagsExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
+					"provider",
+				},
+				"google_compute_firewall",
+			)
+		})
+	}
 }

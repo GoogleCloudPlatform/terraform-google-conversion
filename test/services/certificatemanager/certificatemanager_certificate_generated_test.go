@@ -20,163 +20,69 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"self_managed",
-			"self_managed.certificate_pem",
-			"self_managed.pem_private_key",
-			"self_managed.private_key_pem",
+func TestAccCertificateManagerCertificate(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"self_managed",
-			"self_managed.certificate_pem",
-			"self_managed.pem_private_key",
-			"self_managed.private_key_pem",
+		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"self_managed",
-			"self_managed.certificate_pem",
-			"self_managed.pem_private_key",
-			"self_managed.private_key_pem",
+		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateRegionalExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"self_managed",
-			"self_managed.certificate_pem",
-			"self_managed.pem_private_key",
-			"self_managed.private_key_pem",
+		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateRegionalExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigAllRegionsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"self_managed",
-			"self_managed.certificate_pem",
-			"self_managed.pem_private_key",
-			"self_managed.private_key_pem",
+		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigAllRegionsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsAllRegionsExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"self_managed",
-			"self_managed.certificate_pem",
-			"self_managed.pem_private_key",
-			"self_managed.private_key_pem",
+		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsAllRegionsExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCertificateManagerCertificate_certificateManagerGoogleManagedRegionalCertificateDnsAuthExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"self_managed",
-			"self_managed.certificate_pem",
-			"self_managed.pem_private_key",
-			"self_managed.private_key_pem",
+		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedRegionalCertificateDnsAuthExample",
+			Skip: "",
 		},
-	)
-}
-func TestAccCertificateManagerCertificate_certificateManagerClientAuthCertificateExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"count",
-			"depends_on",
-			"for_each",
-			"lifecycle",
-			"location",
-			"name",
-			"provider",
-			"self_managed",
-			"self_managed.certificate_pem",
-			"self_managed.pem_private_key",
-			"self_managed.private_key_pem",
+		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerClientAuthCertificateExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"count",
+					"depends_on",
+					"for_each",
+					"lifecycle",
+					"location",
+					"name",
+					"provider",
+					"self_managed",
+					"self_managed.certificate_pem",
+					"self_managed.pem_private_key",
+					"self_managed.private_key_pem",
+				},
+				"google_certificate_manager_certificate",
+			)
+		})
+	}
 }

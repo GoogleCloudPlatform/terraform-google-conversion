@@ -20,19 +20,37 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccCloudAssetProjectFeed_cloudAssetProjectFeedExample(t *testing.T) {
-	t.Parallel()
-
-	test.BidirectionalConversion(
-		t,
-		[]string{
-			"billing_project",
-			"count",
-			"depends_on",
-			"feed_id",
-			"for_each",
-			"lifecycle",
-			"provider",
+func TestAccCloudAssetProjectFeed(t *testing.T) {
+	tests := []test.TestCase{
+		{
+			Name: "TestAccCloudAssetProjectFeed_cloudAssetProjectFeedExample",
+			Skip: "",
 		},
-	)
+	}
+
+	for _, tt := range tests {
+		tt := tt
+
+		t.Run(tt.Name, func(t *testing.T) {
+			t.Parallel()
+
+			if tt.Skip != "" {
+				t.Skipf("Skipping %s test case: This case is currently disabled due to Issue.", tt.Name)
+			}
+
+			test.BidirectionalConversion(
+				t,
+				[]string{
+					"billing_project",
+					"count",
+					"depends_on",
+					"feed_id",
+					"for_each",
+					"lifecycle",
+					"provider",
+				},
+				"google_cloud_asset_project_feed",
+			)
+		})
+	}
 }
