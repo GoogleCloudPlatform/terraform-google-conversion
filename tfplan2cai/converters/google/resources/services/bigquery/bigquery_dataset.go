@@ -340,7 +340,11 @@ func expandBigQueryDatasetAccessDomain(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandBigQueryDatasetAccessGroupByEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
+	if v == nil {
+		return nil, nil
+	}
+
+	return strings.ToLower(v.(string)), nil
 }
 
 func expandBigQueryDatasetAccessRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -356,7 +360,11 @@ func expandBigQueryDatasetAccessIamMember(v interface{}, d tpgresource.Terraform
 }
 
 func expandBigQueryDatasetAccessUserByEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
+	if v == nil {
+		return nil, nil
+	}
+
+	return strings.ToLower(v.(string)), nil
 }
 
 func expandBigQueryDatasetAccessView(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
