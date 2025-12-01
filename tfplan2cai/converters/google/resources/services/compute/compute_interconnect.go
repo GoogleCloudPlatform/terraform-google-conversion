@@ -156,6 +156,12 @@ func GetComputeInterconnectApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("admin_enabled"); ok || !reflect.DeepEqual(v, adminEnabledProp) {
 		obj["adminEnabled"] = adminEnabledProp
 	}
+	paramsProp, err := expandComputeInterconnectParams(d.Get("params"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("params"); !tpgresource.IsEmptyValue(reflect.ValueOf(paramsProp)) && (ok || !reflect.DeepEqual(v, paramsProp)) {
+		obj["params"] = paramsProp
+	}
 	nocContactEmailProp, err := expandComputeInterconnectNocContactEmail(d.Get("noc_contact_email"), d, config)
 	if err != nil {
 		return nil, err
@@ -246,6 +252,39 @@ func expandComputeInterconnectInterconnectType(v interface{}, d tpgresource.Terr
 
 func expandComputeInterconnectAdminEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeInterconnectParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedResourceManagerTags, err := expandComputeInterconnectParamsResourceManagerTags(original["resource_manager_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResourceManagerTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resourceManagerTags"] = transformedResourceManagerTags
+	}
+
+	return transformed, nil
+}
+
+func expandComputeInterconnectParamsResourceManagerTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandComputeInterconnectNocContactEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
