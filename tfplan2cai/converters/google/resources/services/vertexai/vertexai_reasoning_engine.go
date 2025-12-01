@@ -212,6 +212,13 @@ func expandVertexAIReasoningEngineSpec(v interface{}, d tpgresource.TerraformRes
 		transformed["packageSpec"] = transformedPackageSpec
 	}
 
+	transformedSourceCodeSpec, err := expandVertexAIReasoningEngineSpecSourceCodeSpec(original["source_code_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceCodeSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceCodeSpec"] = transformedSourceCodeSpec
+	}
+
 	transformedServiceAccount, err := expandVertexAIReasoningEngineSpecServiceAccount(original["service_account"], d, config)
 	if err != nil {
 		return nil, err
@@ -262,6 +269,34 @@ func expandVertexAIReasoningEngineSpecDeploymentSpec(v interface{}, d tpgresourc
 		return nil, err
 	} else if val := reflect.ValueOf(transformedSecretEnv); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["secretEnv"] = transformedSecretEnv
+	}
+
+	transformedResourceLimits, err := expandVertexAIReasoningEngineSpecDeploymentSpecResourceLimits(original["resource_limits"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResourceLimits); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resourceLimits"] = transformedResourceLimits
+	}
+
+	transformedMinInstances, err := expandVertexAIReasoningEngineSpecDeploymentSpecMinInstances(original["min_instances"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinInstances); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minInstances"] = transformedMinInstances
+	}
+
+	transformedMaxInstances, err := expandVertexAIReasoningEngineSpecDeploymentSpecMaxInstances(original["max_instances"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxInstances); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxInstances"] = transformedMaxInstances
+	}
+
+	transformedContainerConcurrency, err := expandVertexAIReasoningEngineSpecDeploymentSpecContainerConcurrency(original["container_concurrency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContainerConcurrency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["containerConcurrency"] = transformedContainerConcurrency
 	}
 
 	return transformed, nil
@@ -382,6 +417,29 @@ func expandVertexAIReasoningEngineSpecDeploymentSpecSecretEnvSecretRefVersion(v 
 	return v, nil
 }
 
+func expandVertexAIReasoningEngineSpecDeploymentSpecResourceLimits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandVertexAIReasoningEngineSpecDeploymentSpecMinInstances(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecDeploymentSpecMaxInstances(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecDeploymentSpecContainerConcurrency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandVertexAIReasoningEngineSpecPackageSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -438,6 +496,120 @@ func expandVertexAIReasoningEngineSpecPackageSpecPythonVersion(v interface{}, d 
 }
 
 func expandVertexAIReasoningEngineSpecPackageSpecRequirementsGcsUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedInlineSource, err := expandVertexAIReasoningEngineSpecSourceCodeSpecInlineSource(original["inline_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInlineSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["inlineSource"] = transformedInlineSource
+	}
+
+	transformedPythonSpec, err := expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpec(original["python_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPythonSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pythonSpec"] = transformedPythonSpec
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecInlineSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSourceArchive, err := expandVertexAIReasoningEngineSpecSourceCodeSpecInlineSourceSourceArchive(original["source_archive"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceArchive); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceArchive"] = transformedSourceArchive
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecInlineSourceSourceArchive(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEntrypointModule, err := expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecEntrypointModule(original["entrypoint_module"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEntrypointModule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["entrypointModule"] = transformedEntrypointModule
+	}
+
+	transformedEntrypointObject, err := expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecEntrypointObject(original["entrypoint_object"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEntrypointObject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["entrypointObject"] = transformedEntrypointObject
+	}
+
+	transformedRequirementsFile, err := expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecRequirementsFile(original["requirements_file"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequirementsFile); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requirementsFile"] = transformedRequirementsFile
+	}
+
+	transformedVersion, err := expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecEntrypointModule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecEntrypointObject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecRequirementsFile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
