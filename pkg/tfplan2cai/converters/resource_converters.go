@@ -46,6 +46,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tfplan2cai/converters/cai"
 )
@@ -140,5 +141,6 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_vmwareengine_network":                          vmwareengine.VmwareengineNetworkTfplan2caiConverter(),
 	"google_vmwareengine_network_peering":                  vmwareengine.VmwareengineNetworkPeeringTfplan2caiConverter(),
 	"google_vmwareengine_network_policy":                   vmwareengine.VmwareengineNetworkPolicyTfplan2caiConverter(),
+	"google_vpc_access_connector":                          vpcaccess.VPCAccessConnectorTfplan2caiConverter(),
 	"google_workbench_instance":                            workbench.WorkbenchInstanceTfplan2caiConverter(),
 }

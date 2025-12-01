@@ -34,6 +34,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 )
 
@@ -44,7 +45,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 86
+// Generated resources: 87
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -131,5 +132,6 @@ var generatedResources = map[string]*schema.Resource{
 	"google_vmwareengine_network":                          vmwareengine.ResourceVmwareengineNetwork(),
 	"google_vmwareengine_network_peering":                  vmwareengine.ResourceVmwareengineNetworkPeering(),
 	"google_vmwareengine_network_policy":                   vmwareengine.ResourceVmwareengineNetworkPolicy(),
+	"google_vpc_access_connector":                          vpcaccess.ResourceVPCAccessConnector(),
 	"google_workbench_instance":                            workbench.ResourceWorkbenchInstance(),
 }

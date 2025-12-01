@@ -47,6 +47,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/provider"
@@ -310,5 +311,8 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"vmwareengine.googleapis.com/VmwareEngineNetwork": {
 		"Default": vmwareengine.NewVmwareengineNetworkCai2hclConverter(provider),
+	},
+	"vpcaccess.googleapis.com/Connector": {
+		"Default": vpcaccess.NewVPCAccessConnectorCai2hclConverter(provider),
 	},
 }
