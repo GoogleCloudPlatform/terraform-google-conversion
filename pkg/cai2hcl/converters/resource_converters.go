@@ -205,6 +205,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Network": {
 		"Default": compute.NewComputeNetworkCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/NodeGroup": {
+		"Default": compute.NewComputeNodeGroupCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/Subnetwork": {
 		"Default": compute.NewComputeSubnetworkCai2hclConverter(provider),
 	},
