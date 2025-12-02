@@ -151,14 +151,6 @@ func TestAccAlloydbCluster(t *testing.T) {
 			Skip: "",
 		},
 		{
-			Name: "TestAccAlloydbCluster_withoutInitialUserFailure",
-			Skip: "",
-		},
-		{
-			Name: "TestAccAlloydbCluster_withoutInitialUserUpdate",
-			Skip: "",
-		},
-		{
 			Name: "TestAccAlloydbCluster_randomPassword",
 			Skip: "",
 		},
