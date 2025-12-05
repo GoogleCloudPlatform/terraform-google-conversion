@@ -983,7 +983,6 @@ func expandComputeBackendServiceCdnPolicyCacheKeyPolicyQueryStringBlacklist(v in
 	}
 	return vSet.List(), nil
 }
-
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicyQueryStringWhitelist(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	vSet := v.(*schema.Set)
 	if vSet.Len() == 0 {
