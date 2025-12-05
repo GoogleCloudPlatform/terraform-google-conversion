@@ -28,27 +28,21 @@ func TestAccRedisCluster(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccRedisCluster_redisClusterHaExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisCluster_redisClusterHaSingleZoneExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisCluster_redisClusterSecondaryExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisCluster_redisClusterRdbExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisCluster_redisClusterAofExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisCluster_redisClusterCmekExample",
-			Skip: "",
 		},
 	}
 
@@ -75,6 +69,7 @@ func TestAccRedisCluster(t *testing.T) {
 					"provider",
 					"psc_configs",
 					"region",
+					"timeouts",
 				},
 				"google_redis_cluster",
 			)

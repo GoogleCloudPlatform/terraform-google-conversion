@@ -28,35 +28,27 @@ func TestAccCloudfunctions2function(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2BasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2FullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2BasicGcsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2BasicAuditlogsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2BasicBuilderExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2SecretEnvExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2SecretVolumeExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2PrivateWorkerpoolExample",
-			Skip: "",
 		},
 	}
 
@@ -79,6 +71,7 @@ func TestAccCloudfunctions2function(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_cloudfunctions2_function",
 			)

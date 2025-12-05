@@ -28,11 +28,12 @@ func TestAccClouddeployDeployPolicy(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccClouddeployDeployPolicy_clouddeployDeployPolicyBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccClouddeployDeployPolicy_clouddeployDeployPolicyFullExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccClouddeployDeployPolicy_update",
 		},
 	}
 
@@ -57,6 +58,7 @@ func TestAccClouddeployDeployPolicy(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_clouddeploy_deploy_policy",
 			)

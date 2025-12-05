@@ -28,11 +28,9 @@ func TestAccBackupDRBackupVault(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultSimpleExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultCmekExample",
-			Skip: "",
 		},
 	}
 
@@ -65,6 +63,7 @@ func TestAccBackupDRBackupVault(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_backup_dr_backup_vault",
 			)

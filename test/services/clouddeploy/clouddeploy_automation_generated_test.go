@@ -28,11 +28,12 @@ func TestAccClouddeployAutomation(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccClouddeployAutomation_clouddeployAutomationBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccClouddeployAutomation_clouddeployAutomationFullExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccClouddeployAutomation_update",
 		},
 	}
 
@@ -58,6 +59,7 @@ func TestAccClouddeployAutomation(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_clouddeploy_automation",
 			)

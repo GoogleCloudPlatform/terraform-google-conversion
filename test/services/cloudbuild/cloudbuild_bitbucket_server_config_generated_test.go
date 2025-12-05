@@ -28,11 +28,9 @@ func TestAccCloudBuildBitbucketServerConfig(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccCloudBuildBitbucketServerConfig_cloudbuildBitbucketServerConfigExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudBuildBitbucketServerConfig_cloudbuildBitbucketServerConfigPeeredNetworkExample",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccCloudBuildBitbucketServerConfig(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_cloudbuild_bitbucket_server_config",
 			)

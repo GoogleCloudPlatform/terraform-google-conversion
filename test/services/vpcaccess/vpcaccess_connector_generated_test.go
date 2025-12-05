@@ -28,11 +28,9 @@ func TestAccVPCAccessConnector(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccVPCAccessConnector_vpcAccessConnectorExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccVPCAccessConnector_vpcAccessConnectorSharedVpcExample",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccVPCAccessConnector(t *testing.T) {
 					"provider",
 					"region",
 					"self_link",
+					"timeouts",
 				},
 				"google_vpc_access_connector",
 			)

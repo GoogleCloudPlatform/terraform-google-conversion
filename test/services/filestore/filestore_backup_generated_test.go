@@ -28,7 +28,12 @@ func TestAccFilestoreBackup(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccFilestoreBackup_filestoreBackupBasicExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccFilestoreBackup_update",
+		},
+		{
+			Name: "TestAccFilestoreBackup_tags",
 		},
 	}
 
@@ -53,6 +58,7 @@ func TestAccFilestoreBackup(t *testing.T) {
 					"name",
 					"provider",
 					"tags",
+					"timeouts",
 				},
 				"google_filestore_backup",
 			)

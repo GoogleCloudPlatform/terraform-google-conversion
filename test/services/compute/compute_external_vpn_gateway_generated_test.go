@@ -28,11 +28,9 @@ func TestAccComputeExternalVpnGateway(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeExternalVpnGateway_externalVpnGatewayExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeExternalVpnGateway_onlyExternalVpnGatewayFullExample",
-			Skip: "",
 		},
 	}
 
@@ -54,6 +52,7 @@ func TestAccComputeExternalVpnGateway(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_external_vpn_gateway",
 			)

@@ -28,23 +28,18 @@ func TestAccRedisInstance(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccRedisInstance_redisInstanceBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisInstance_redisInstanceFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisInstance_redisInstanceFullWithPersistenceConfigExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisInstance_redisInstancePrivateServiceTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccRedisInstance_redisInstanceMrrExample",
-			Skip: "",
 		},
 	}
 
@@ -69,6 +64,7 @@ func TestAccRedisInstance(t *testing.T) {
 					"provider",
 					"region",
 					"reserved_ip_range",
+					"timeouts",
 				},
 				"google_redis_instance",
 			)

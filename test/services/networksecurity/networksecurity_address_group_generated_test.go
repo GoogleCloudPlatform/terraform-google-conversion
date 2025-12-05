@@ -28,15 +28,12 @@ func TestAccNetworkSecurityAddressGroup(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsOrganizationBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsAdvancedExample",
-			Skip: "",
 		},
 	}
 
@@ -61,6 +58,7 @@ func TestAccNetworkSecurityAddressGroup(t *testing.T) {
 					"name",
 					"parent",
 					"provider",
+					"timeouts",
 				},
 				"google_network_security_address_group",
 			)

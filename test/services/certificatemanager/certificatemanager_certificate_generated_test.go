@@ -28,35 +28,27 @@ func TestAccCertificateManagerCertificate(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateRegionalExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateIssuanceConfigAllRegionsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedCertificateDnsAllRegionsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerGoogleManagedRegionalCertificateDnsAuthExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerClientAuthCertificateExample",
-			Skip: "",
 		},
 	}
 
@@ -84,6 +76,7 @@ func TestAccCertificateManagerCertificate(t *testing.T) {
 					"self_managed.certificate_pem",
 					"self_managed.pem_private_key",
 					"self_managed.private_key_pem",
+					"timeouts",
 				},
 				"google_certificate_manager_certificate",
 			)

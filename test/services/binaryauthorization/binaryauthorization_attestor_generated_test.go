@@ -28,7 +28,6 @@ func TestAccBinaryAuthorizationAttestor(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccBinaryAuthorizationAttestor_binaryAuthorizationAttestorBasicExample",
-			Skip: "",
 		},
 	}
 
@@ -50,6 +49,7 @@ func TestAccBinaryAuthorizationAttestor(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_binary_authorization_attestor",
 			)

@@ -27,28 +27,26 @@ func TestAccKMSCryptoKey(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccKmsCryptoKey_basic",
-			Skip: "",
+			Name: "TestAccKmsCryptoKey_rotation",
+			Skip: "Test data has mismatched steps",
 		},
 		{
-			Name: "TestAccKmsCryptoKey_rotation",
-			Skip: "",
+			Name: "TestAccKmsCryptoKey_basic",
+		},
+		{
+			Name: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKey_template",
-			Skip: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKey_destroyDuration",
-			Skip: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKey_keyAccessJustificationsPolicy",
-			Skip: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKey_importOnly",
-			Skip: "",
 		},
 	}
 
@@ -73,6 +71,7 @@ func TestAccKMSCryptoKey(t *testing.T) {
 					"name",
 					"provider",
 					"skip_initial_version_creation",
+					"timeouts",
 				},
 				"google_kms_crypto_key",
 			)

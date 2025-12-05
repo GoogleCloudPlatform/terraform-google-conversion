@@ -28,7 +28,6 @@ func TestAccKMSKeyRing(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccKmsKeyRing_basic",
-			Skip: "",
 		},
 	}
 
@@ -51,6 +50,7 @@ func TestAccKMSKeyRing(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_kms_key_ring",
 			)

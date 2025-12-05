@@ -28,31 +28,24 @@ func TestAccWorkbenchInstance(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccWorkbenchInstance_workbenchInstanceBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccWorkbenchInstance_workbenchInstanceBasicContainerExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccWorkbenchInstance_workbenchInstanceBasicGpuExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccWorkbenchInstance_workbenchInstanceLabelsStoppedExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccWorkbenchInstance_workbenchInstanceFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccWorkbenchInstance_workbenchInstanceConfidentialComputeExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccWorkbenchInstance_workbenchInstanceEucExample",
-			Skip: "",
 		},
 	}
 
@@ -82,6 +75,7 @@ func TestAccWorkbenchInstance(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_workbench_instance",
 			)

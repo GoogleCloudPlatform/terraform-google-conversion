@@ -28,11 +28,9 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileOverridesExample",
-			Skip: "",
 		},
 	}
 
@@ -57,6 +55,7 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 					"name",
 					"parent",
 					"provider",
+					"timeouts",
 				},
 				"google_network_security_security_profile",
 			)

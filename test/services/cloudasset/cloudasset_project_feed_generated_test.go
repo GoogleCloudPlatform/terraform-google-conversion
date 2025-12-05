@@ -28,7 +28,6 @@ func TestAccCloudAssetProjectFeed(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccCloudAssetProjectFeed_cloudAssetProjectFeedExample",
-			Skip: "",
 		},
 	}
 
@@ -52,6 +51,7 @@ func TestAccCloudAssetProjectFeed(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_cloud_asset_project_feed",
 			)

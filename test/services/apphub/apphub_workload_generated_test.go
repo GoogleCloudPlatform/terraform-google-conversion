@@ -28,15 +28,12 @@ func TestAccApphubWorkload(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccApphubWorkload_apphubWorkloadBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApphubWorkload_apphubWorkloadFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApphubWorkload_apphubWorkloadUpdate",
-			Skip: "",
 		},
 	}
 
@@ -60,6 +57,7 @@ func TestAccApphubWorkload(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 					"workload_id",
 				},
 				"google_apphub_workload",

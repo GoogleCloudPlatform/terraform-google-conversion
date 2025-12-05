@@ -28,39 +28,30 @@ func TestAccPubsubTopic(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicGeoRestrictedExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicSchemaSettingsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicIngestionKinesisExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicIngestionCloudStorageExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicIngestionAzureEventHubsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicIngestionAwsMskExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicIngestionConfluentCloudExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicSingleSmtExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicMultipleSmtsExample",
@@ -68,7 +59,6 @@ func TestAccPubsubTopic(t *testing.T) {
 		},
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicTagsExample",
-			Skip: "",
 		},
 	}
 
@@ -95,6 +85,7 @@ func TestAccPubsubTopic(t *testing.T) {
 					"provider",
 					"schema_settings",
 					"tags",
+					"timeouts",
 				},
 				"google_pubsub_topic",
 			)

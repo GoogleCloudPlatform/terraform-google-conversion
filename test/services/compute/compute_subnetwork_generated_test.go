@@ -27,40 +27,65 @@ func TestAccComputeSubnetwork(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeSubnetwork_secondaryIpRanges",
+			Skip: "Test data has mismatched steps",
+		},
+		{
 			Name: "TestAccComputeSubnetwork_subnetworkBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_subnetworkLoggingConfigExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_subnetworkIpv6Example",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_subnetworkInternalIpv6Example",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_subnetworkIpv6OnlyInternalExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_subnetworkWithSubnetModePdpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_subnetworkWithInternalSubnetModePdpExplicitIpPrefixExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_subnetworkIpv6OnlyExternalExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_basic",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_update",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_purposeUpdate",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_secondaryIpRanges_sendEmpty",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_flowLogs",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_flowLogsMigrate",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_ipv6",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_internal_ipv6",
+		},
+		{
+			Name: "TestAccComputeSubnetwork_resourceManagerTags",
 		},
 	}
 
@@ -86,6 +111,7 @@ func TestAccComputeSubnetwork(t *testing.T) {
 					"params.resource_manager_tags",
 					"provider",
 					"send_secondary_ip_range_if_empty",
+					"timeouts",
 				},
 				"google_compute_subnetwork",
 			)
