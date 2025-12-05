@@ -28,31 +28,75 @@ func TestAccComputeNetwork(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeNetwork_networkBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNetwork_networkCustomMtuExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNetwork_networkCustomFirewallEnforcementOrderExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNetwork_networkBgpBestPathSelectionModeExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardCustomFieldsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNetwork_networkBgpStandardModeDeleteMedExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccComputeNetwork_explicitAutoSubnet",
+		},
+		{
+			Name: "TestAccComputeNetwork_customSubnet",
+		},
+		{
+			Name: "TestAccComputeNetwork_mtuAndUpdate",
+		},
+		{
+			Name: "TestAccComputeNetwork_routingModeAndUpdate",
+		},
+		{
+			Name: "TestAccComputeNetwork_bgpBestPathSelectionModeAndUpdate",
+		},
+		{
+			Name: "TestAccComputeNetwork_bgpAlwaysCompareMedAndUpdate",
+		},
+		{
+			Name: "TestAccComputeNetwork_bgpInterRegionCostAndUpdate",
+		},
+		{
+			Name: "TestAccComputeNetwork_networkProfile",
+		},
+		{
+			Name: "TestAccComputeNetwork_numericId",
+		},
+		{
+			Name: "TestAccComputeNetwork_default_routing_mode",
+		},
+		{
+			Name: "TestAccComputeNetwork_default_bgp_best_path_selection_mode",
+		},
+		{
+			Name: "TestAccComputeNetwork_default_bgp_always_compare_med",
+		},
+		{
+			Name: "TestAccComputeNetwork_networkDeleteDefaultRoute",
+		},
+		{
+			Name: "TestAccComputeNetwork_networkFirewallPolicyEnforcementOrderAndUpdate",
+		},
+		{
+			Name: "TestAccComputeNetwork_resourceManagerTags",
+		},
+		{
+			Name: "TestAccComputeNetwork_bgpModeAndMedInteractions",
+		},
+		{
+			Name: "TestAccComputeNetwork_networkBgpStandardModeDeleteMed",
 		},
 	}
 
@@ -81,6 +125,7 @@ func TestAccComputeNetwork(t *testing.T) {
 					"params",
 					"params.resource_manager_tags",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_network",
 			)

@@ -28,75 +28,57 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryMultiRegionExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryDockerExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryCmekExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryVirtualExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteAptExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteYumExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryCleanupExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerhubAuthExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteDockerCustomWithAuthExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteMavenCustomWithAuthExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteNpmCustomWithAuthExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemotePythonCustomWithAuthExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithDockerExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithArtifactRegistryUriExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteCommonRepositoryWithCustomUpstreamExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryVulnerabilityScanningExample",
-			Skip: "",
 		},
 	}
 
@@ -122,6 +104,7 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 					"remote_repository_config.disable_upstream_validation",
 					"remote_repository_config.upstream_credentials",
 					"repository_id",
+					"timeouts",
 				},
 				"google_artifact_registry_repository",
 			)

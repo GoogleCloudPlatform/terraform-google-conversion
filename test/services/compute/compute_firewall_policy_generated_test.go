@@ -28,7 +28,6 @@ func TestAccComputeFirewallPolicy(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeFirewallPolicy_firewallPolicyExample",
-			Skip: "",
 		},
 	}
 
@@ -50,6 +49,7 @@ func TestAccComputeFirewallPolicy(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_firewall_policy",
 			)

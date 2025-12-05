@@ -28,27 +28,21 @@ func TestAccKMSCryptoKeyVersion(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccKmsCryptoKeyVersion_basic",
-			Skip: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKeyVersionWithSymmetricHSM",
-			Skip: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKeyVersion_skipInitialVersion",
-			Skip: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKeyVersion_patch",
-			Skip: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKeyVersion_externalProtectionLevelOptions",
-			Skip: "",
 		},
 		{
 			Name: "TestAccKmsCryptoKeyVersion_externalProtectionLevelOptionsVpc",
-			Skip: "",
 		},
 	}
 
@@ -72,6 +66,7 @@ func TestAccKMSCryptoKeyVersion(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_kms_crypto_key_version",
 			)

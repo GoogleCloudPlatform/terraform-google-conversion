@@ -28,11 +28,9 @@ func TestAccBackupDRBackupPlan(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanSimpleExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanForCsqlResourceExample",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccBackupDRBackupPlan(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_backup_dr_backup_plan",
 			)

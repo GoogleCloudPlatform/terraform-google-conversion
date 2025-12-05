@@ -28,11 +28,9 @@ func TestAccNetworkSecurityUrlLists(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccNetworkSecurityUrlLists_networkSecurityUrlListsBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccNetworkSecurityUrlLists_networkSecurityUrlListsAdvancedExample",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccNetworkSecurityUrlLists(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_network_security_url_lists",
 			)

@@ -28,15 +28,12 @@ func TestAccSpannerInstance(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccSpannerInstance_spannerInstanceBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerInstance_spannerInstanceProcessingUnitsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerInstance_spannerInstanceMultiRegionalExample",
-			Skip: "",
 		},
 	}
 
@@ -59,6 +56,7 @@ func TestAccSpannerInstance(t *testing.T) {
 					"force_destroy",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_spanner_instance",
 			)

@@ -28,47 +28,36 @@ func TestAccPubsubSubscription(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPullFilterExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionDeadLetterExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushBqExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushBqTableSchemaExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushBqServiceAccountExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageAvroExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageServiceAccountExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionSingleSmtExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionMultipleSmtsExample",
@@ -76,7 +65,6 @@ func TestAccPubsubSubscription(t *testing.T) {
 		},
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionTagsExample",
-			Skip: "",
 		},
 	}
 
@@ -104,6 +92,7 @@ func TestAccPubsubSubscription(t *testing.T) {
 					"message_transforms.javascript_udf",
 					"provider",
 					"tags",
+					"timeouts",
 				},
 				"google_pubsub_subscription",
 			)

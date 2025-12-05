@@ -28,71 +28,54 @@ func TestAccAlloydbInstance(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccAlloydbInstance_alloydbInstanceBasicTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_alloydbSecondaryInstanceBasicTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_alloydbInstancePscTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_update",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_createInstanceWithMandatoryFields",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_stopstart",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_createInstanceWithMaximumFields",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_createPrimaryAndReadPoolInstance",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_updateDatabaseFlagInPrimaryInstance",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_createInstanceWithNetworkConfigAndAllocatedIPRange",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_clientConnectionConfig",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_networkConfig",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_updatePscInstanceConfig",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_createInstanceWithPscInterfaceConfigs",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_updateInstanceWithPscInterfaceConfigs",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_updatePscAutoConnections",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbInstance_createPrimaryAndReadPoolInstanceWithAllocatedIpRangeOverride",
-			Skip: "",
 		},
 	}
 
@@ -117,6 +100,7 @@ func TestAccAlloydbInstance(t *testing.T) {
 					"instance_id",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_alloydb_instance",
 			)

@@ -28,15 +28,12 @@ func TestAccCloudbuildv2Repository(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccCloudbuildv2Repository_cloudbuildv2RepositoryGheExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudbuildv2Repository_cloudbuildv2RepositoryGithubExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccCloudbuildv2Repository_cloudbuildv2RepositoryGleExample",
-			Skip: "",
 		},
 	}
 
@@ -61,6 +58,7 @@ func TestAccCloudbuildv2Repository(t *testing.T) {
 					"name",
 					"parent_connection",
 					"provider",
+					"timeouts",
 				},
 				"google_cloudbuildv2_repository",
 			)

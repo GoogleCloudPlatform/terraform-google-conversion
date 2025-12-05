@@ -28,11 +28,9 @@ func TestAccFirebaseDataConnectService(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccFirebaseDataConnectService_firebasedataconnectServiceBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccFirebaseDataConnectService_firebasedataconnectServiceWithForceDeletionExample",
-			Skip: "",
 		},
 	}
 
@@ -59,6 +57,7 @@ func TestAccFirebaseDataConnectService(t *testing.T) {
 					"location",
 					"provider",
 					"service_id",
+					"timeouts",
 				},
 				"google_firebase_data_connect_service",
 			)

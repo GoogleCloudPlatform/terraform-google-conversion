@@ -28,39 +28,30 @@ func TestAccLoggingMetric(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccLoggingMetric_loggingMetricBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccLoggingMetric_loggingMetricCounterBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccLoggingMetric_loggingMetricCounterLabelsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccLoggingMetric_loggingMetricLoggingBucketExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccLoggingMetric_loggingMetricDisabledExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccLoggingMetric_update",
-			Skip: "",
 		},
 		{
 			Name: "TestAccLoggingMetric_explicitBucket",
-			Skip: "",
 		},
 		{
 			Name: "TestAccLoggingMetric_loggingBucket",
-			Skip: "",
 		},
 		{
 			Name: "TestAccLoggingMetric_descriptionUpdated",
-			Skip: "",
 		},
 	}
 
@@ -82,6 +73,7 @@ func TestAccLoggingMetric(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_logging_metric",
 			)

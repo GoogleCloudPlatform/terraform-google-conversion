@@ -28,27 +28,21 @@ func TestAccDataprocBatch(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccDataprocBatch_dataprocBatchSparkExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDataprocBatch_dataprocBatchSparkFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDataprocBatch_dataprocBatchSparksqlExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDataprocBatch_dataprocBatchPysparkExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDataprocBatch_dataprocBatchSparkrExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDataprocBatch_dataprocBatchAutotuningExample",
-			Skip: "",
 		},
 	}
 
@@ -77,6 +71,7 @@ func TestAccDataprocBatch(t *testing.T) {
 					"spark_batch.args",
 					"spark_r_batch.args",
 					"spark_sql_batch.query_variables",
+					"timeouts",
 				},
 				"google_dataproc_batch",
 			)

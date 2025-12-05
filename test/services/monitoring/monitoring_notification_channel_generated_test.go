@@ -28,7 +28,6 @@ func TestAccMonitoringNotificationChannel(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccMonitoringNotificationChannel_notificationChannelBasicExample",
-			Skip: "",
 		},
 	}
 
@@ -53,6 +52,7 @@ func TestAccMonitoringNotificationChannel(t *testing.T) {
 					"lifecycle",
 					"provider",
 					"sensitive_labels",
+					"timeouts",
 				},
 				"google_monitoring_notification_channel",
 			)

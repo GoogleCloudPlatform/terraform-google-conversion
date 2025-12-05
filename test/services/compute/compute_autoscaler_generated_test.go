@@ -28,7 +28,6 @@ func TestAccComputeAutoscaler(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeAutoscaler_autoscalerBasicExample",
-			Skip: "",
 		},
 	}
 
@@ -50,6 +49,7 @@ func TestAccComputeAutoscaler(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 					"zone",
 				},
 				"google_compute_autoscaler",

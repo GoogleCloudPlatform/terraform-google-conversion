@@ -28,7 +28,6 @@ func TestAccKMSEkmConnection(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccKMSEkmConnection_kmsEkmConnectionBasicExample_update",
-			Skip: "",
 		},
 	}
 
@@ -51,6 +50,7 @@ func TestAccKMSEkmConnection(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_kms_ekm_connection",
 			)

@@ -28,7 +28,6 @@ func TestAccKMSKeyRingImportJob(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccKmsKeyRingImportJob_basic",
-			Skip: "",
 		},
 	}
 
@@ -52,6 +51,7 @@ func TestAccKMSKeyRingImportJob(t *testing.T) {
 					"key_ring",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_kms_key_ring_import_job",
 			)

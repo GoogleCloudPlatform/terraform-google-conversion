@@ -28,131 +28,99 @@ func TestAccAlloydbCluster(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccAlloydbCluster_alloydbClusterBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_alloydbClusterBeforeUpgradeExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_alloydbClusterAfterUpgradeExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_alloydbClusterFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_alloydbSecondaryClusterBasicTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_update",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_upgrade",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_withSubscriptionTypeTrial",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_withSubscriptionTypeStandard",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_addAutomatedBackupPolicyAndInitialUser",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_deleteAutomatedBackupPolicyAndInitialUser",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_AutomatedBackupPolicyHandlesMidnight",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_missingWeeklySchedule",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_mandatoryFields",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_maximumFields",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_deleteTimeBasedRetentionPolicy",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_usingCMEK",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_CMEKInAutomatedBackupIsUpdatable",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_continuousBackup_enabledByDefault",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_continuousBackup_update_noChangeIfDefaultsSet",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_continuousBackup_noChangeIfRemoved",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_continuousBackup_update",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_continuousBackup_CMEKIsUpdatable",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_withNetworkConfig",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_withNetworkConfigAndAllocatedIPRange",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_withMaintenanceWindows",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_withMaintenanceWindowsMissingFields",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_withPrivateServiceConnect",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_standardClusterUpdate",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_trialClusterUpdate",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_standardClusterUpdateFailure",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbCluster_randomPassword",
-			Skip: "",
 		},
 	}
 
@@ -187,6 +155,7 @@ func TestAccAlloydbCluster(t *testing.T) {
 					"restore_backup_source",
 					"restore_continuous_backup_source",
 					"skip_await_major_version_upgrade",
+					"timeouts",
 				},
 				"google_alloydb_cluster",
 			)

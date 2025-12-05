@@ -28,19 +28,15 @@ func TestAccSecretManagerSecret(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccSecretManagerSecret_secretConfigBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSecretManagerSecret_secretWithAnnotationsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSecretManagerSecret_secretWithVersionDestroyTtlExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSecretManagerSecret_secretWithAutomaticCmekExample",
-			Skip: "",
 		},
 	}
 
@@ -65,6 +61,7 @@ func TestAccSecretManagerSecret(t *testing.T) {
 					"provider",
 					"secret_id",
 					"tags",
+					"timeouts",
 					"ttl",
 				},
 				"google_secret_manager_secret",

@@ -28,35 +28,27 @@ func TestAccBigQueryDataset(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetWithMaxTimeTravelHoursExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetAuthorizedDatasetExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetAuthorizedRoutineExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetCaseInsensitiveNamesExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetDefaultCollationSetExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetExternalCatalogDatasetOptionsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetResourceTagsExample",
-			Skip: "",
 		},
 	}
 
@@ -80,6 +72,7 @@ func TestAccBigQueryDataset(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_bigquery_dataset",
 			)

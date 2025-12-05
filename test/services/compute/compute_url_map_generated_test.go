@@ -27,52 +27,83 @@ func TestAccComputeUrlMap(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeUrlMap_trafficDirectorRemoveRouteRule",
+			Skip: "Test data has mismatched steps",
+		},
+		{
 			Name: "TestAccComputeUrlMap_urlMapBucketAndServiceExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapTrafficDirectorRouteExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapTrafficDirectorRoutePartialExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapTrafficDirectorPathExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapTrafficDirectorPathPartialExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapHeaderBasedRoutingExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapParameterBasedRoutingExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapTestHeadersExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapTestExpectedOutputUrlExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapTestRedirectResponseCodeExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapPathTemplateMatchExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccComputeUrlMap_update_path_matcher",
+		},
+		{
+			Name: "TestAccComputeUrlMap_advanced",
+		},
+		{
+			Name: "TestAccComputeUrlMap_defaultRouteActionPathUrlRewrite",
+		},
+		{
+			Name: "TestAccComputeUrlMap_defaultRouteActionUrlRewrite",
+		},
+		{
+			Name: "TestAccComputeUrlMap_noPathRulesWithUpdate",
+		},
+		{
+			Name: "TestAccComputeUrlMap_defaultRouteActionTrafficDirectorPathUpdate",
+		},
+		{
+			Name: "TestAccComputeUrlMap_defaultRouteActionTrafficDirectorUpdate",
+		},
+		{
+			Name: "TestAccComputeUrlMap_trafficDirectorUpdate",
+		},
+		{
+			Name: "TestAccComputeUrlMap_trafficDirectorPathUpdate",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "TestAccComputeUrlMap_defaultUrlRedirect",
+		},
+		{
+			Name: "TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyUpdate",
+		},
+		{
+			Name: "TestAccComputeUrlMap_routeRulesCustomErrorResponsePolicy",
 		},
 	}
 
@@ -97,6 +128,7 @@ func TestAccComputeUrlMap(t *testing.T) {
 					"path_matcher.default_custom_error_response_policy.error_response_rule",
 					"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_url_map",
 			)

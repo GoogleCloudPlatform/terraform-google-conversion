@@ -28,15 +28,12 @@ func TestAccVmwareengineNetworkPolicy(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccVmwareengineNetworkPolicy_vmwareEngineNetworkPolicyBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccVmwareengineNetworkPolicy_vmwareEngineNetworkPolicyFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccVmwareengineNetworkPolicy_update",
-			Skip: "",
 		},
 	}
 
@@ -60,6 +57,7 @@ func TestAccVmwareengineNetworkPolicy(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_vmwareengine_network_policy",
 			)

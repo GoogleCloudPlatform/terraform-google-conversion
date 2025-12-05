@@ -27,16 +27,44 @@ func TestAccFilestoreInstance(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccFilestoreInstance_directoryServices",
+			Skip: "Test data has mismatched steps",
+		},
+		{
 			Name: "TestAccFilestoreInstance_filestoreInstanceBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccFilestoreInstance_filestoreInstanceFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccFilestoreInstance_filestoreInstanceProtocolExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccFilestoreInstance_update",
+		},
+		{
+			Name: "TestAccFilestoreInstance_reservedIpRange_update",
+		},
+		{
+			Name: "TestAccFilestoreInstance_deletionProtection_update",
+		},
+		{
+			Name: "TestAccFilestoreInstance_performanceConfig",
+		},
+		{
+			Name: "TestAccFilestoreInstance_tags",
+		},
+		{
+			Name: "TestAccFilestoreInstance_replication",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "TestAccFilestoreInstance_psc",
+		},
+		{
+			Name: "TestAccFilestoreInstance_nfsExportOptionsNetwork_update",
 		},
 	}
 
@@ -62,6 +90,7 @@ func TestAccFilestoreInstance(t *testing.T) {
 					"name",
 					"provider",
 					"tags",
+					"timeouts",
 					"zone",
 				},
 				"google_filestore_instance",

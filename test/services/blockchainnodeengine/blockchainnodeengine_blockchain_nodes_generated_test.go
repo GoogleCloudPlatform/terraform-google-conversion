@@ -28,11 +28,9 @@ func TestAccBlockchainNodeEngineBlockchainNodes(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccBlockchainNodeEngineBlockchainNodes_blockchainNodesBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBlockchainNodeEngineBlockchainNodes_blockchainNodesGethDetailsExample",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccBlockchainNodeEngineBlockchainNodes(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_blockchain_node_engine_blockchain_nodes",
 			)

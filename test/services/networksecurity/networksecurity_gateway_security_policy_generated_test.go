@@ -28,11 +28,9 @@ func TestAccNetworkSecurityGatewaySecurityPolicy(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityPolicyBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccNetworkSecurityGatewaySecurityPolicy_networkSecurityGatewaySecurityPolicyTlsInspectionBasicExample",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccNetworkSecurityGatewaySecurityPolicy(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 					"tls_inspection_policy",
 				},
 				"google_network_security_gateway_security_policy",

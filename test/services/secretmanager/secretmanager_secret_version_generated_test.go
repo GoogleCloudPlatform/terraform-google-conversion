@@ -77,6 +77,7 @@ func TestAccSecretManagerSecretVersion(t *testing.T) {
 					"secret_data",
 					"secret_data_wo",
 					"secret_data_wo_version",
+					"timeouts",
 				},
 				"google_secret_manager_secret_version",
 			)
