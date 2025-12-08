@@ -15,12 +15,16 @@
 package artifactregistry_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccArtifactRegistryRepository(t *testing.T) {
+	if os.Getenv("WRITE_FILES") != "" {
+		t.Parallel()
+	}
 	tests := []test.TestCase{
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryBasicExample",

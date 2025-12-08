@@ -246,6 +246,59 @@ Possible values include: STANDARD, PREMIUM, BASIC_HDD, BASIC_SSD, HIGH_SCALE_SSD
 				Optional:    true,
 				Description: `A description of the instance.`,
 			},
+			"directory_services": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `Directory Services configuration.
+Should only be set if protocol is "NFS_V4_1".`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"ldap": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Configuration for LDAP servers.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"domain": {
+										Type:        schema.TypeString,
+										Required:    true,
+										Description: `The LDAP domain name in the format of 'my-domain.com'.`,
+									},
+									"servers": {
+										Type:     schema.TypeList,
+										Required: true,
+										Description: `The servers names are used for specifying the LDAP servers names.
+The LDAP servers names can come with two formats:
+1. DNS name, for example: 'ldap.example1.com', 'ldap.example2.com'.
+2. IP address, for example: '10.0.0.1', '10.0.0.2', '10.0.0.3'.
+All servers names must be in the same format: either all DNS names or all
+IP addresses.`,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"groups_ou": {
+										Type:     schema.TypeString,
+										Optional: true,
+										Description: `The groups Organizational Unit (OU) is optional. This parameter is a hint
+to allow faster lookup in the LDAP namespace. In case that this parameter
+is not provided, Filestore instance will query the whole LDAP namespace.`,
+									},
+									"users_ou": {
+										Type:     schema.TypeString,
+										Optional: true,
+										Description: `The users Organizational Unit (OU) is optional. This parameter is a hint
+to allow faster lookup in the LDAP namespace. In case that this parameter
+is not provided, Filestore instance will query the whole LDAP namespace.`,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"initial_replication": {
 				Type:     schema.TypeList,
 				Optional: true,

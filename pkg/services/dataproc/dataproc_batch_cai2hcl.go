@@ -20,6 +20,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"reflect"
 	"regexp"
 	"strings"
@@ -54,6 +55,7 @@ var (
 	_ = customdiff.All
 	_ = id.UniqueId
 	_ = logging.LogLevel
+	_ = log.Printf
 	_ = retry.Retry
 	_ = schema.Noop
 	_ = structure.ExpandJsonFromString

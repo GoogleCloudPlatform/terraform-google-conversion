@@ -146,6 +146,12 @@ func GetColabNotebookExecutionApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("notebook_runtime_template_resource_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(notebookRuntimeTemplateResourceNameProp)) && (ok || !reflect.DeepEqual(v, notebookRuntimeTemplateResourceNameProp)) {
 		obj["notebookRuntimeTemplateResourceName"] = notebookRuntimeTemplateResourceNameProp
 	}
+	customEnvironmentSpecProp, err := expandColabNotebookExecutionCustomEnvironmentSpec(d.Get("custom_environment_spec"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_environment_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(customEnvironmentSpecProp)) && (ok || !reflect.DeepEqual(v, customEnvironmentSpecProp)) {
+		obj["customEnvironmentSpec"] = customEnvironmentSpecProp
+	}
 	gcsOutputUriProp, err := expandColabNotebookExecutionGcsOutputUri(d.Get("gcs_output_uri"), d, config)
 	if err != nil {
 		return nil, err
@@ -277,6 +283,175 @@ func expandColabNotebookExecutionExecutionTimeout(v interface{}, d tpgresource.T
 }
 
 func expandColabNotebookExecutionNotebookRuntimeTemplateResourceName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMachineSpec, err := expandColabNotebookExecutionCustomEnvironmentSpecMachineSpec(original["machine_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMachineSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["machineSpec"] = transformedMachineSpec
+	}
+
+	transformedPersistentDiskSpec, err := expandColabNotebookExecutionCustomEnvironmentSpecPersistentDiskSpec(original["persistent_disk_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPersistentDiskSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["persistentDiskSpec"] = transformedPersistentDiskSpec
+	}
+
+	transformedNetworkSpec, err := expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpec(original["network_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkSpec"] = transformedNetworkSpec
+	}
+
+	return transformed, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecMachineSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMachineType, err := expandColabNotebookExecutionCustomEnvironmentSpecMachineSpecMachineType(original["machine_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMachineType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["machineType"] = transformedMachineType
+	}
+
+	transformedAcceleratorType, err := expandColabNotebookExecutionCustomEnvironmentSpecMachineSpecAcceleratorType(original["accelerator_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAcceleratorType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["acceleratorType"] = transformedAcceleratorType
+	}
+
+	transformedAcceleratorCount, err := expandColabNotebookExecutionCustomEnvironmentSpecMachineSpecAcceleratorCount(original["accelerator_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAcceleratorCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["acceleratorCount"] = transformedAcceleratorCount
+	}
+
+	return transformed, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecMachineSpecMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecMachineSpecAcceleratorType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecMachineSpecAcceleratorCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecPersistentDiskSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDiskType, err := expandColabNotebookExecutionCustomEnvironmentSpecPersistentDiskSpecDiskType(original["disk_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDiskType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["diskType"] = transformedDiskType
+	}
+
+	transformedDiskSizeGb, err := expandColabNotebookExecutionCustomEnvironmentSpecPersistentDiskSpecDiskSizeGb(original["disk_size_gb"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDiskSizeGb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["diskSizeGb"] = transformedDiskSizeGb
+	}
+
+	return transformed, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecPersistentDiskSpecDiskType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecPersistentDiskSpecDiskSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableInternetAccess, err := expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpecEnableInternetAccess(original["enable_internet_access"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableInternetAccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableInternetAccess"] = transformedEnableInternetAccess
+	}
+
+	transformedNetwork, err := expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpecNetwork(original["network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["network"] = transformedNetwork
+	}
+
+	transformedSubnetwork, err := expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpecSubnetwork(original["subnetwork"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subnetwork"] = transformedSubnetwork
+	}
+
+	return transformed, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpecEnableInternetAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpecNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpecSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

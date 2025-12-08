@@ -32,7 +32,9 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 )
 
@@ -43,7 +45,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 84
+// Generated resources: 88
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -85,6 +87,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_health_check":                          compute.ResourceComputeHealthCheck(),
 	"google_compute_image":                                 compute.ResourceComputeImage(),
 	"google_compute_network":                               compute.ResourceComputeNetwork(),
+	"google_compute_node_group":                            compute.ResourceComputeNodeGroup(),
 	"google_compute_region_autoscaler":                     compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_region_health_check":                   compute.ResourceComputeRegionHealthCheck(),
 	"google_compute_subnetwork":                            compute.ResourceComputeSubnetwork(),
@@ -125,8 +128,11 @@ var generatedResources = map[string]*schema.Resource{
 	"google_secret_manager_secret_version":                 secretmanager.ResourceSecretManagerSecretVersion(),
 	"google_secret_manager_regional_secret":                secretmanagerregional.ResourceSecretManagerRegionalRegionalSecret(),
 	"google_secret_manager_regional_secret_version":        secretmanagerregional.ResourceSecretManagerRegionalRegionalSecretVersion(),
+	"google_spanner_database":                              spanner.ResourceSpannerDatabase(),
+	"google_spanner_instance":                              spanner.ResourceSpannerInstance(),
 	"google_vmwareengine_network":                          vmwareengine.ResourceVmwareengineNetwork(),
 	"google_vmwareengine_network_peering":                  vmwareengine.ResourceVmwareengineNetworkPeering(),
 	"google_vmwareengine_network_policy":                   vmwareengine.ResourceVmwareengineNetworkPolicy(),
+	"google_vpc_access_connector":                          vpcaccess.ResourceVPCAccessConnector(),
 	"google_workbench_instance":                            workbench.ResourceWorkbenchInstance(),
 }
