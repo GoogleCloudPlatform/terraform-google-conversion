@@ -28,27 +28,21 @@ func TestAccComputeAddress(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeAddress_addressBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeAddress_addressWithSubnetworkExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeAddress_addressWithGceEndpointExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeAddress_addressWithSharedLoadbalancerVipExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeAddress_instanceWithIpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeAddress_computeAddressIpsecInterconnectExample",
-			Skip: "",
 		},
 	}
 
@@ -70,6 +64,7 @@ func TestAccComputeAddress(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_address",
 			)

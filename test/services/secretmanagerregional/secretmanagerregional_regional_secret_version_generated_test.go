@@ -71,6 +71,7 @@ func TestAccSecretManagerRegionalRegionalSecretVersion(t *testing.T) {
 					"provider",
 					"secret",
 					"secret_data",
+					"timeouts",
 				},
 				"google_secret_manager_regional_secret_version",
 			)

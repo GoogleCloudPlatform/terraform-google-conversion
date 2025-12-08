@@ -28,7 +28,6 @@ func TestAccIAMBetaWorkloadIdentityPool(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPool_iamWorkloadIdentityPoolBasicExample",
-			Skip: "",
 		},
 	}
 
@@ -50,6 +49,7 @@ func TestAccIAMBetaWorkloadIdentityPool(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 					"workload_identity_pool_id",
 				},
 				"google_iam_workload_identity_pool",

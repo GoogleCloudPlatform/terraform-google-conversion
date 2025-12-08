@@ -28,11 +28,9 @@ func TestAccFilestoreSnapshot(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccFilestoreSnapshot_filestoreSnapshotBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccFilestoreSnapshot_filestoreSnapshotFullExample",
-			Skip: "",
 		},
 	}
 
@@ -57,6 +55,7 @@ func TestAccFilestoreSnapshot(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_filestore_snapshot",
 			)

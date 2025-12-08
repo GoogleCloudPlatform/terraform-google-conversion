@@ -28,63 +28,48 @@ func TestAccComputeBackendBucket(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeBackendBucket_backendBucketBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_backendBucketFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_backendBucketSecurityPolicyExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_backendBucketQueryStringWhitelistExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_backendBucketIncludeHttpHeadersExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_externalCdnLbWithBackendBucketExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_backendBucketBypassCacheExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_backendBucketCoalescingExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_backendBucketGlobalIlbExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_basicModified",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_withCdnPolicy",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_withSecurityPolicy",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_withCompressionMode",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_withCdnCacheMode_update",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendBucket_withTags",
-			Skip: "",
 		},
 	}
 
@@ -109,6 +94,7 @@ func TestAccComputeBackendBucket(t *testing.T) {
 					"params",
 					"params.resource_manager_tags",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_backend_bucket",
 			)

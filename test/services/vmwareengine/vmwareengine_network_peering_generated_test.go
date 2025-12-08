@@ -28,11 +28,9 @@ func TestAccVmwareengineNetworkPeering(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccVmwareengineNetworkPeering_vmwareEngineNetworkPeeringVenExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccVmwareengineNetworkPeering_vmwareEngineNetworkPeeringStandardExample",
-			Skip: "",
 		},
 	}
 
@@ -55,6 +53,7 @@ func TestAccVmwareengineNetworkPeering(t *testing.T) {
 					"lifecycle",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_vmwareengine_network_peering",
 			)

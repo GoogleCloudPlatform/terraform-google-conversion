@@ -28,23 +28,18 @@ func TestAccApphubApplication(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccApphubApplication_apphubApplicationBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApphubApplication_apphubApplicationGlobalBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApphubApplication_apphubApplicationFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApphubApplication_applicationUpdateFull",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApphubApplication_invalidConfigFails",
-			Skip: "",
 		},
 	}
 
@@ -68,6 +63,7 @@ func TestAccApphubApplication(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_apphub_application",
 			)

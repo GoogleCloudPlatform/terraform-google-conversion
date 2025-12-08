@@ -28,15 +28,12 @@ func TestAccComputeDisk(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeDisk_diskBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeDisk_diskAsyncExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeDisk_diskFeaturesExample",
-			Skip: "",
 		},
 	}
 
@@ -64,6 +61,7 @@ func TestAccComputeDisk(t *testing.T) {
 					"params.resource_manager_tags",
 					"provider",
 					"source_storage_object",
+					"timeouts",
 				},
 				"google_compute_disk",
 			)

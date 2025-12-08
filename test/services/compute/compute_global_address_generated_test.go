@@ -28,7 +28,6 @@ func TestAccComputeGlobalAddress(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeGlobalAddress_globalAddressBasicExample",
-			Skip: "",
 		},
 	}
 
@@ -50,6 +49,7 @@ func TestAccComputeGlobalAddress(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_global_address",
 			)

@@ -28,23 +28,18 @@ func TestAccAlloydbBackup(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccAlloydbBackup_alloydbBackupBasicTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbBackup_alloydbBackupFullTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbBackup_update",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbBackup_createBackupWithMandatoryFields",
-			Skip: "",
 		},
 		{
 			Name: "TestAccAlloydbBackup_usingCMEK",
-			Skip: "",
 		},
 	}
 
@@ -68,6 +63,7 @@ func TestAccAlloydbBackup(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"timeouts",
 				},
 				"google_alloydb_backup",
 			)

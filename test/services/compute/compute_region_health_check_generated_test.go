@@ -27,52 +27,52 @@ func TestAccComputeRegionHealthCheck(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeRegionHealthCheck_typeTransition",
+			Skip: "Test data has mismatched steps",
+		},
+		{
+			Name: "TestAccComputeRegionHealthCheck_grpcWithTls_create",
+			Skip: "Test data has mismatched steps",
+		},
+		{
+			Name: "TestAccComputeRegionHealthCheck_grpcWithTls_update",
+			Skip: "Test data has mismatched steps",
+		},
+		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckTcpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckTcpFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckSslExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckSslFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttpFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttpsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttpsFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttp2Example",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckHttp2FullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckGrpcExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckGrpcFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckGrpcWithTlsExample",
@@ -81,6 +81,30 @@ func TestAccComputeRegionHealthCheck(t *testing.T) {
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckGrpcWithTlsFullExample",
 			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
+		},
+		{
+			Name: "TestAccComputeRegionHealthCheck_tcp_update",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "TestAccComputeRegionHealthCheck_ssl_port_spec",
+		},
+		{
+			Name: "TestAccComputeRegionHealthCheck_http_port_spec",
+		},
+		{
+			Name: "TestAccComputeRegionHealthCheck_https_serving_port",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "TestAccComputeRegionHealthCheck_logConfigDisabled",
 		},
 	}
 
@@ -103,6 +127,7 @@ func TestAccComputeRegionHealthCheck(t *testing.T) {
 					"grpc_tls_health_check",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_region_health_check",
 			)

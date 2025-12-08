@@ -28,11 +28,9 @@ func TestAccComputeFirewall(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeFirewall_firewallBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeFirewall_firewallWithTargetTagsExample",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccComputeFirewall(t *testing.T) {
 					"params",
 					"params.resource_manager_tags",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_firewall",
 			)

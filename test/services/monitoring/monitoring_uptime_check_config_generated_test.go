@@ -28,27 +28,21 @@ func TestAccMonitoringUptimeCheckConfig(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpPasswordWoExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigStatusCodeExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigHttpsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckTcpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigSyntheticMonitorExample",
-			Skip: "",
 		},
 	}
 
@@ -74,6 +68,7 @@ func TestAccMonitoringUptimeCheckConfig(t *testing.T) {
 					"http_check.body",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_monitoring_uptime_check_config",
 			)

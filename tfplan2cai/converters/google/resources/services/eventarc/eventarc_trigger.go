@@ -152,6 +152,12 @@ func GetEventarcTriggerApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("event_data_content_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(eventDataContentTypeProp)) && (ok || !reflect.DeepEqual(v, eventDataContentTypeProp)) {
 		obj["eventDataContentType"] = eventDataContentTypeProp
 	}
+	retryPolicyProp, err := expandEventarcTriggerRetryPolicy(d.Get("retry_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("retry_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(retryPolicyProp)) && (ok || !reflect.DeepEqual(v, retryPolicyProp)) {
+		obj["retryPolicy"] = retryPolicyProp
+	}
 	effectiveLabelsProp, err := expandEventarcTriggerEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -521,6 +527,32 @@ func expandEventarcTriggerChannel(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandEventarcTriggerEventDataContentType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandEventarcTriggerRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMaxAttempts, err := expandEventarcTriggerRetryPolicyMaxAttempts(original["max_attempts"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxAttempts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxAttempts"] = transformedMaxAttempts
+	}
+
+	return transformed, nil
+}
+
+func expandEventarcTriggerRetryPolicyMaxAttempts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

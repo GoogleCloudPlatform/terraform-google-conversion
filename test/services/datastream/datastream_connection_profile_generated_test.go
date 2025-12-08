@@ -28,19 +28,24 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfileBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresqlPrivateConnectionExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfileFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecretManagerExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccDatastreamConnectionProfile_update",
+		},
+		{
+			Name: "TestAccDatastreamConnectionProfile_sshKey_update",
+		},
+		{
+			Name: "TestAccDatastreamConnectionProfile_mongoDb",
 		},
 	}
 
@@ -63,14 +68,18 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 					"depends_on",
 					"for_each",
 					"forward_ssh_connectivity.password",
+					"forward_ssh_connectivity.private_key",
 					"lifecycle",
 					"location",
+					"mongodb_profile.password",
 					"mongodb_profile.ssl_config.ca_certificate",
 					"mongodb_profile.ssl_config.client_certificate",
 					"mongodb_profile.ssl_config.client_key",
 					"mongodb_profile.ssl_config.secret_manager_stored_client_key",
+					"mysql_profile.password",
 					"postgresql_profile.password",
 					"provider",
+					"timeouts",
 				},
 				"google_datastream_connection_profile",
 			)

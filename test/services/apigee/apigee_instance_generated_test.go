@@ -28,23 +28,18 @@ func TestAccApigeeInstance(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccApigeeInstance_apigeeInstanceBasicTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApigeeInstance_apigeeInstanceCidrRangeTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApigeeInstance_apigeeInstanceIpRangeTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApigeeInstance_apigeeInstanceFullTestExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample",
-			Skip: "",
 		},
 	}
 
@@ -68,6 +63,7 @@ func TestAccApigeeInstance(t *testing.T) {
 					"lifecycle",
 					"org_id",
 					"provider",
+					"timeouts",
 				},
 				"google_apigee_instance",
 			)

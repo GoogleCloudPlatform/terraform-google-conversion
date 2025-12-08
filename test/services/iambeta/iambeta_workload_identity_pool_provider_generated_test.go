@@ -28,43 +28,33 @@ func TestAccIAMBetaWorkloadIdentityPoolProvider(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderAwsBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderAwsFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderGithubActionsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderSamlBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderSamlFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderOidcUploadKeyExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderX509BasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderX509FullExample",
-			Skip: "",
 		},
 	}
 
@@ -87,6 +77,7 @@ func TestAccIAMBetaWorkloadIdentityPoolProvider(t *testing.T) {
 					"lifecycle",
 					"oidc.jwks_json",
 					"provider",
+					"timeouts",
 					"workload_identity_pool_id",
 					"workload_identity_pool_provider_id",
 				},
