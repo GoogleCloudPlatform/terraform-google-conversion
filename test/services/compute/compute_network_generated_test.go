@@ -98,6 +98,9 @@ func TestAccComputeNetwork(t *testing.T) {
 		{
 			Name: "TestAccComputeNetwork_networkBgpStandardModeDeleteMed",
 		},
+		{
+			Name: "TestAccComputeNetwork_updateEnableUlaInternalIpv6",
+		},
 	}
 
 	for _, tt := range tests {
