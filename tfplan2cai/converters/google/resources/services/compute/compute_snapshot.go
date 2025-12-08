@@ -140,6 +140,12 @@ func GetComputeSnapshotApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("label_fingerprint"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
 		obj["labelFingerprint"] = labelFingerprintProp
 	}
+	snapshotTypeProp, err := expandComputeSnapshotSnapshotType(d.Get("snapshot_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("snapshot_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(snapshotTypeProp)) && (ok || !reflect.DeepEqual(v, snapshotTypeProp)) {
+		obj["snapshotType"] = snapshotTypeProp
+	}
 	effectiveLabelsProp, err := expandComputeSnapshotEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -191,6 +197,10 @@ func expandComputeSnapshotStorageLocations(v interface{}, d tpgresource.Terrafor
 }
 
 func expandComputeSnapshotLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSnapshotSnapshotType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

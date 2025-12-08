@@ -15,12 +15,16 @@
 package backupdr_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccBackupDRBackupPlan(t *testing.T) {
+	if os.Getenv("WRITE_FILES") != "" {
+		t.Parallel()
+	}
 	tests := []test.TestCase{
 		{
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanSimpleExample",

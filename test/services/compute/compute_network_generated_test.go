@@ -15,12 +15,16 @@
 package compute_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccComputeNetwork(t *testing.T) {
+	if os.Getenv("WRITE_FILES") != "" {
+		t.Parallel()
+	}
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeNetwork_networkBasicExample",
@@ -46,6 +50,10 @@ func TestAccComputeNetwork(t *testing.T) {
 			Name: "TestAccComputeNetwork_networkBgpBestPathSelectionModeStandardCustomFieldsExample",
 			Skip: "",
 		},
+		{
+			Name: "TestAccComputeNetwork_networkBgpStandardModeDeleteMedExample",
+			Skip: "",
+		},
 	}
 
 	for _, tt := range tests {
@@ -65,6 +73,7 @@ func TestAccComputeNetwork(t *testing.T) {
 					"bgp_best_path_selection_mode",
 					"bgp_inter_region_cost",
 					"count",
+					"delete_bgp_always_compare_med",
 					"delete_default_routes_on_create",
 					"depends_on",
 					"for_each",

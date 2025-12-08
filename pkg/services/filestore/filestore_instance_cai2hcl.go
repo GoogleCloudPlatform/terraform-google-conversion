@@ -20,6 +20,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"reflect"
 	"regexp"
 	"strings"
@@ -54,6 +55,7 @@ var (
 	_ = customdiff.All
 	_ = id.UniqueId
 	_ = logging.LogLevel
+	_ = log.Printf
 	_ = retry.Retry
 	_ = schema.Noop
 	_ = structure.ExpandJsonFromString
@@ -135,6 +137,7 @@ func (c *FilestoreInstanceCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["performance_config"] = flattenFilestoreInstancePerformanceConfig(res["performanceConfig"], d, config)
 	hclData["tags"] = flattenFilestoreInstanceTags(res["tags"], d, config)
 	hclData["initial_replication"] = flattenFilestoreInstanceInitialReplication(res["replication"], d, config)
+	hclData["directory_services"] = flattenFilestoreInstanceDirectoryServices(res["directoryServices"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -499,5 +502,61 @@ func flattenFilestoreInstanceInitialReplicationReplicas(v interface{}, d *schema
 }
 
 func flattenFilestoreInstanceInitialReplicationReplicasPeerInstance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenFilestoreInstanceDirectoryServices(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["ldap"] =
+		flattenFilestoreInstanceDirectoryServicesLdap(original["ldap"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenFilestoreInstanceDirectoryServicesLdap(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	if len(original) == 0 {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	transformed["domain"] =
+		flattenFilestoreInstanceDirectoryServicesLdapDomain(original["domain"], d, config)
+	transformed["servers"] =
+		flattenFilestoreInstanceDirectoryServicesLdapServers(original["servers"], d, config)
+	transformed["users_ou"] =
+		flattenFilestoreInstanceDirectoryServicesLdapUsersOu(original["usersOu"], d, config)
+	transformed["groups_ou"] =
+		flattenFilestoreInstanceDirectoryServicesLdapGroupsOu(original["groupsOu"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenFilestoreInstanceDirectoryServicesLdapDomain(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenFilestoreInstanceDirectoryServicesLdapServers(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenFilestoreInstanceDirectoryServicesLdapUsersOu(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenFilestoreInstanceDirectoryServicesLdapGroupsOu(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
