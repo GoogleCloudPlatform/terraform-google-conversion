@@ -122,6 +122,11 @@ func (c *ComputeImageCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	}
 	hclData := make(map[string]interface{})
 
+	res, hclData, err = resourceComputeImageTgcDecoder(d, config, res, hclData)
+	if err != nil {
+		return nil, err
+	}
+
 	outputFields := map[string]struct{}{"archive_size_bytes": struct{}{}, "creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/images/{{name}}", outputFields, hclData)
 
@@ -589,4 +594,13 @@ func flattenComputeImageSourceSnapshotEncryptionKeyKmsKeySelfLink(v interface{},
 
 func flattenComputeImageSourceSnapshotEncryptionKeyKmsKeyServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func resourceComputeImageTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
+	// These fields are missing in CAI assets, but requried in Terraform
+	if rawDisk, ok := res["rawDisk"].(map[string]interface{}); ok {
+		rawDisk["source"] = "unknown"
+	}
+
+	return res, hclData, nil
 }

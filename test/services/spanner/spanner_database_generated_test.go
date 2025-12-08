@@ -28,39 +28,30 @@ func TestAccSpannerDatabase(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccSpannerDatabase_spannerDatabaseBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerDatabase_basic",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerDatabase_postgres",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerDatabase_versionRetentionPeriod",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerDatabase_defaultTimeZone",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerDatabase_enableDropProtection",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerDatabase_deletionProtection",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerDatabase_cmek",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSpannerDatabase_mrcmek",
-			Skip: "",
 		},
 	}
 
@@ -86,6 +77,7 @@ func TestAccSpannerDatabase(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_spanner_database",
 			)

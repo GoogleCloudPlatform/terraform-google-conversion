@@ -28,27 +28,21 @@ func TestAccSecretManagerRegionalRegionalSecret(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretConfigBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithCmekExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithRotationExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithTtlExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithExpireTimeExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithVersionDestroyTtlExample",
-			Skip: "",
 		},
 	}
 
@@ -74,6 +68,7 @@ func TestAccSecretManagerRegionalRegionalSecret(t *testing.T) {
 					"provider",
 					"secret_id",
 					"tags",
+					"timeouts",
 					"ttl",
 				},
 				"google_secret_manager_regional_secret",

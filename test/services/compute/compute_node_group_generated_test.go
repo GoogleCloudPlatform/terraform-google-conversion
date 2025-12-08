@@ -28,23 +28,18 @@ func TestAccComputeNodeGroup(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeNodeGroup_nodeGroupBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNodeGroup_nodeGroupAutoscalingPolicyExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNodeGroup_nodeGroupShareSettingsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNodeGroup_update",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeNodeGroup_fail",
-			Skip: "",
 		},
 	}
 
@@ -67,6 +62,7 @@ func TestAccComputeNodeGroup(t *testing.T) {
 					"initial_size",
 					"lifecycle",
 					"provider",
+					"timeouts",
 				},
 				"google_compute_node_group",
 			)

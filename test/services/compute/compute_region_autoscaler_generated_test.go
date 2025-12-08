@@ -28,7 +28,6 @@ func TestAccComputeRegionAutoscaler(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeRegionAutoscaler_regionAutoscalerBasicExample",
-			Skip: "",
 		},
 	}
 
@@ -51,6 +50,7 @@ func TestAccComputeRegionAutoscaler(t *testing.T) {
 					"lifecycle",
 					"provider",
 					"region",
+					"timeouts",
 				},
 				"google_compute_region_autoscaler",
 			)

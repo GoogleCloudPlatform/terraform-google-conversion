@@ -28,11 +28,9 @@ func TestAccApphubServiceProjectAttachment(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccApphubServiceProjectAttachment_serviceProjectAttachmentBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccApphubServiceProjectAttachment_serviceProjectAttachmentFullExample",
-			Skip: "",
 		},
 	}
 
@@ -55,6 +53,7 @@ func TestAccApphubServiceProjectAttachment(t *testing.T) {
 					"lifecycle",
 					"provider",
 					"service_project_attachment_id",
+					"timeouts",
 				},
 				"google_apphub_service_project_attachment",
 			)

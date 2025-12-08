@@ -28,19 +28,15 @@ func TestAccClouddeployCustomTargetType(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGitSkaffoldModulesExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGcsSkaffoldModulesExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGcbRepoSkaffoldModulesExample",
-			Skip: "",
 		},
 	}
 
@@ -64,6 +60,7 @@ func TestAccClouddeployCustomTargetType(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_clouddeploy_custom_target_type",
 			)

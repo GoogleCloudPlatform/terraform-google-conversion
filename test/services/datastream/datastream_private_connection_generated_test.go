@@ -28,11 +28,9 @@ func TestAccDatastreamPrivateConnection(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccDatastreamPrivateConnection_datastreamPrivateConnectionFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamPrivateConnection_datastreamPrivateConnectionPscInterfaceExample",
-			Skip: "",
 		},
 	}
 
@@ -57,6 +55,7 @@ func TestAccDatastreamPrivateConnection(t *testing.T) {
 					"location",
 					"private_connection_id",
 					"provider",
+					"timeouts",
 				},
 				"google_datastream_private_connection",
 			)

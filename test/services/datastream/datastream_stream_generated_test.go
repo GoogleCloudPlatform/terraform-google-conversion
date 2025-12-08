@@ -27,28 +27,32 @@ func TestAccDatastreamStream(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccDatastreamStream_mongoDb",
+			Skip: "Test data has mismatched steps",
+		},
+		{
 			Name: "TestAccDatastreamStream_datastreamStreamBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamStream_datastreamStreamFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamStream_datastreamStreamPostgresqlBigqueryDatasetIdExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamStream_datastreamStreamBigqueryExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamStream_datastreamStreamBigqueryCrossProjectSourceHierachyExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccDatastreamStream_datastreamStreamBigqueryAppendOnlyExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccDatastreamStream_update",
+		},
+		{
+			Name: "",
 		},
 	}
 
@@ -84,6 +88,7 @@ func TestAccDatastreamStream(t *testing.T) {
 					"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.ordinal_position",
 					"source_config.mysql_source_config.include_objects.mysql_databases.mysql_tables.mysql_columns.primary_key",
 					"stream_id",
+					"timeouts",
 				},
 				"google_datastream_stream",
 			)

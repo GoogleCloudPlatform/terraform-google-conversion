@@ -28,11 +28,9 @@ func TestAccNetworkSecurityClientTlsPolicy(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccNetworkSecurityClientTlsPolicy_networkSecurityClientTlsPolicyBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccNetworkSecurityClientTlsPolicy_networkSecurityClientTlsPolicyAdvancedExample",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccNetworkSecurityClientTlsPolicy(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_network_security_client_tls_policy",
 			)

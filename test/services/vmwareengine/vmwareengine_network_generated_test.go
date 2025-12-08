@@ -28,11 +28,9 @@ func TestAccVmwareengineNetwork(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccVmwareengineNetwork_vmwareEngineNetworkStandardExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccVmwareengineNetwork_vmwareEngineNetworkUpdate",
-			Skip: "",
 		},
 	}
 
@@ -56,6 +54,7 @@ func TestAccVmwareengineNetwork(t *testing.T) {
 					"location",
 					"name",
 					"provider",
+					"timeouts",
 				},
 				"google_vmwareengine_network",
 			)

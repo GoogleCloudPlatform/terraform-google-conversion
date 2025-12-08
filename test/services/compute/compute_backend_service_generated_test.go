@@ -28,47 +28,36 @@ func TestAccComputeBackendService(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeBackendService_backendServiceBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceExternalIapExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceCacheSimpleExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceCacheIncludeHttpHeadersExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceCacheIncludeNamedCookiesExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceCacheExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceCacheBypassCacheOnRequestHeadersExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceExternalManagedExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceIpAddressSelectionPolicyExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceCustomMetricsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeBackendService_backendServiceTlsSettingsExample",
-			Skip: "",
 		},
 	}
 
@@ -94,6 +83,7 @@ func TestAccComputeBackendService(t *testing.T) {
 					"params.resource_manager_tags",
 					"provider",
 					"security_settings.aws_v4_authentication.access_key",
+					"timeouts",
 				},
 				"google_compute_backend_service",
 			)

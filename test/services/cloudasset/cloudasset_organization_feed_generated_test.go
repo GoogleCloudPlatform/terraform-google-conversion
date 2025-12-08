@@ -28,7 +28,6 @@ func TestAccCloudAssetOrganizationFeed(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccCloudAssetOrganizationFeed_cloudAssetOrganizationFeedExample",
-			Skip: "",
 		},
 	}
 
@@ -53,6 +52,7 @@ func TestAccCloudAssetOrganizationFeed(t *testing.T) {
 					"lifecycle",
 					"org_id",
 					"provider",
+					"timeouts",
 				},
 				"google_cloud_asset_organization_feed",
 			)

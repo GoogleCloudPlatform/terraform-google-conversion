@@ -28,15 +28,48 @@ func TestAccComputeImage(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeImage_imageBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeImage_imageGuestOsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeImage_imageBasicStorageLocationExample",
-			Skip: "",
+		},
+		{
+			Name: "TestAccComputeImage_withLicense",
+		},
+		{
+			Name: "TestAccComputeImage_update",
+		},
+		{
+			Name: "TestAccComputeImage_basedondisk",
+		},
+		{
+			Name: "TestAccComputeImage_shieldedInstance_InitialState",
+		},
+		{
+			Name: "TestAccComputeImage_shieldedInstance_UpdatedState",
+		},
+		{
+			Name: "TestAccComputeImage_sourceImage",
+		},
+		{
+			Name: "TestAccComputeImage_sourceSnapshot",
+		},
+		{
+			Name: "TestAccComputeImage_resolveImage",
+		},
+		{
+			Name: "TestAccComputeImage_imageEncryptionKey",
+		},
+		{
+			Name: "TestAccComputeImage_sourceImageEncryptionKey",
+		},
+		{
+			Name: "TestAccComputeImage_sourceSnapshotEncryptionKey",
+		},
+		{
+			Name: "TestAccComputeImage_sourceDiskEncryptionKey",
 		},
 	}
 
@@ -61,9 +94,11 @@ func TestAccComputeImage(t *testing.T) {
 					"lifecycle",
 					"provider",
 					"raw_disk",
+					"raw_disk.source",
 					"source_disk_encryption_key",
 					"source_image_encryption_key",
 					"source_snapshot_encryption_key",
+					"timeouts",
 				},
 				"google_compute_image",
 			)

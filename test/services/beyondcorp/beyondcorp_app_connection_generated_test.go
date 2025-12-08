@@ -28,15 +28,12 @@ func TestAccBeyondcorpAppConnection(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccBeyondcorpAppConnection_beyondcorpAppConnectionBasicExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBeyondcorpAppConnection_beyondcorpAppConnectionFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccBeyondcorpAppConnection_beyondcorpAppConnectionUpdateExample",
-			Skip: "",
 		},
 	}
 
@@ -60,6 +57,7 @@ func TestAccBeyondcorpAppConnection(t *testing.T) {
 					"name",
 					"provider",
 					"region",
+					"timeouts",
 				},
 				"google_beyondcorp_app_connection",
 			)

@@ -28,51 +28,39 @@ func TestAccComputeHealthCheck(t *testing.T) {
 	tests := []test.TestCase{
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckTcpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckTcpFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckSslExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckSslFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckHttpExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckHttpFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckHttpsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckHttpsFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckHttp2Example",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckHttp2FullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckGrpcExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckGrpcFullExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_healthCheckGrpcWithTlsExample",
@@ -84,15 +72,12 @@ func TestAccComputeHealthCheck(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeHealthCheck_computeHealthCheckHttpSourceRegionsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_computeHealthCheckHttpsSourceRegionsExample",
-			Skip: "",
 		},
 		{
 			Name: "TestAccComputeHealthCheck_computeHealthCheckTcpSourceRegionsExample",
-			Skip: "",
 		},
 	}
 
@@ -116,6 +101,7 @@ func TestAccComputeHealthCheck(t *testing.T) {
 					"lifecycle",
 					"provider",
 					"source_regions",
+					"timeouts",
 				},
 				"google_compute_health_check",
 			)
