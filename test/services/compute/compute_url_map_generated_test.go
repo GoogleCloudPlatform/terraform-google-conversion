@@ -27,10 +27,6 @@ func TestAccComputeUrlMap(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccComputeUrlMap_trafficDirectorRemoveRouteRule",
-			Skip: "Test data has mismatched steps",
-		},
-		{
 			Name: "TestAccComputeUrlMap_urlMapBucketAndServiceExample",
 		},
 		{
@@ -94,7 +90,7 @@ func TestAccComputeUrlMap(t *testing.T) {
 			Name: "TestAccComputeUrlMap_trafficDirectorPathUpdate",
 		},
 		{
-			Name: "",
+			Name: "TestAccComputeUrlMap_trafficDirectorRemoveRouteRule",
 		},
 		{
 			Name: "TestAccComputeUrlMap_defaultUrlRedirect",

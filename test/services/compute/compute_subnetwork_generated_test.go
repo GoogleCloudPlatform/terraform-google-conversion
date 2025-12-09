@@ -27,10 +27,6 @@ func TestAccComputeSubnetwork(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccComputeSubnetwork_secondaryIpRanges",
-			Skip: "Test data has mismatched steps",
-		},
-		{
 			Name: "TestAccComputeSubnetwork_subnetworkBasicExample",
 		},
 		{
@@ -67,7 +63,7 @@ func TestAccComputeSubnetwork(t *testing.T) {
 			Name: "TestAccComputeSubnetwork_purposeUpdate",
 		},
 		{
-			Name: "",
+			Name: "TestAccComputeSubnetwork_secondaryIpRanges",
 		},
 		{
 			Name: "TestAccComputeSubnetwork_secondaryIpRanges_sendEmpty",
