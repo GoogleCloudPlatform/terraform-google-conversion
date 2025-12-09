@@ -159,6 +159,35 @@ Possible values are: 'AVAILABILITY_TYPE_UNSPECIFIED', 'ZONAL', 'REGIONAL'.' Poss
 					},
 				},
 			},
+			"connection_pool_config": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: `Configuration for Managed Connection Pool.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"enabled": {
+							Type:        schema.TypeBool,
+							Required:    true,
+							Description: `Whether to enabled Managed Connection Pool.`,
+						},
+						"flags": {
+							Type:     schema.TypeMap,
+							Optional: true,
+							Description: `Flags for configuring managed connection pooling when it is enabled.
+These flags will only be set if 'connection_pool_config.enabled' is
+true.
+Please see
+https://cloud.google.com/alloydb/docs/configure-managed-connection-pooling#configuration-options
+for a comprehensive list of flags that can be set. To specify the flags
+in Terraform, please remove the "connection-pooling-" prefix and use
+underscores instead of dashes in the name. For example,
+"connection-pooling-pool-mode" would be "pool_mode".`,
+							Elem: &schema.Schema{Type: schema.TypeString},
+						},
+					},
+				},
+			},
 			"database_flags": {
 				Type:        schema.TypeMap,
 				Computed:    true,
