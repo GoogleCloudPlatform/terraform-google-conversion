@@ -179,6 +179,12 @@ func GetAlloydbInstanceCaiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("network_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkConfigProp)) && (ok || !reflect.DeepEqual(v, networkConfigProp)) {
 		obj["networkConfig"] = networkConfigProp
 	}
+	connectionPoolConfigProp, err := expandAlloydbInstanceConnectionPoolConfig(d.Get("connection_pool_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("connection_pool_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(connectionPoolConfigProp)) && (ok || !reflect.DeepEqual(v, connectionPoolConfigProp)) {
+		obj["connectionPoolConfig"] = connectionPoolConfigProp
+	}
 	effectiveLabelsProp, err := expandAlloydbInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -598,6 +604,50 @@ func expandAlloydbInstanceNetworkConfigEnableOutboundPublicIp(v interface{}, d t
 
 func expandAlloydbInstanceNetworkConfigAllocatedIpRangeOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandAlloydbInstanceConnectionPoolConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandAlloydbInstanceConnectionPoolConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedFlags, err := expandAlloydbInstanceConnectionPoolConfigFlags(original["flags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFlags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["flags"] = transformedFlags
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbInstanceConnectionPoolConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstanceConnectionPoolConfigFlags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandAlloydbInstanceEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
