@@ -98,7 +98,7 @@ func newDataFusionInstanceIamAsset(
 		return []cai.Asset{}, fmt.Errorf("expanding bindings: %v", err)
 	}
 
-	name, err := cai.AssetName(d, config, "//datafusion.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}")
+	name, err := cai.AssetName(d, config, "//datafusion.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -125,7 +125,7 @@ func FetchDataFusionInstanceIamPolicy(d tpgresource.TerraformResourceData, confi
 		DataFusionInstanceIamUpdaterProducer,
 		d,
 		config,
-		"//datafusion.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}",
+		"//datafusion.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}",
 		DataFusionInstanceIAMAssetType,
 	)
 }
