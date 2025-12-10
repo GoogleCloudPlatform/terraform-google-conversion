@@ -409,6 +409,13 @@ func expandSpannerInstanceAutoscalingConfigAutoscalingTargets(v interface{}, d t
 		transformed["storageUtilizationPercent"] = transformedStorageUtilizationPercent
 	}
 
+	transformedTotalCpuUtilizationPercent, err := expandSpannerInstanceAutoscalingConfigAutoscalingTargetsTotalCpuUtilizationPercent(original["total_cpu_utilization_percent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTotalCpuUtilizationPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["totalCpuUtilizationPercent"] = transformedTotalCpuUtilizationPercent
+	}
+
 	return transformed, nil
 }
 
@@ -417,6 +424,10 @@ func expandSpannerInstanceAutoscalingConfigAutoscalingTargetsHighPriorityCpuUtil
 }
 
 func expandSpannerInstanceAutoscalingConfigAutoscalingTargetsStorageUtilizationPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAutoscalingTargetsTotalCpuUtilizationPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
