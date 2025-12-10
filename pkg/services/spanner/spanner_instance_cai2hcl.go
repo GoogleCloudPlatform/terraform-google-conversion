@@ -335,6 +335,8 @@ func flattenSpannerInstanceAutoscalingConfigAutoscalingTargets(v interface{}, d 
 		flattenSpannerInstanceAutoscalingConfigAutoscalingTargetsHighPriorityCpuUtilizationPercent(original["highPriorityCpuUtilizationPercent"], d, config)
 	transformed["storage_utilization_percent"] =
 		flattenSpannerInstanceAutoscalingConfigAutoscalingTargetsStorageUtilizationPercent(original["storageUtilizationPercent"], d, config)
+	transformed["total_cpu_utilization_percent"] =
+		flattenSpannerInstanceAutoscalingConfigAutoscalingTargetsTotalCpuUtilizationPercent(original["totalCpuUtilizationPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -359,6 +361,23 @@ func flattenSpannerInstanceAutoscalingConfigAutoscalingTargetsHighPriorityCpuUti
 }
 
 func flattenSpannerInstanceAutoscalingConfigAutoscalingTargetsStorageUtilizationPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenSpannerInstanceAutoscalingConfigAutoscalingTargetsTotalCpuUtilizationPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {
 		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
