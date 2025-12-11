@@ -29,6 +29,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
@@ -84,6 +85,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_clouddeploy_custom_target_type":                clouddeploy.ClouddeployCustomTargetTypeTfplan2caiConverter(),
 	"google_clouddeploy_deploy_policy":                     clouddeploy.ClouddeployDeployPolicyTfplan2caiConverter(),
 	"google_cloudfunctions2_function":                      cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
+	"google_cloud_tasks_queue":                             cloudtasks.CloudTasksQueueTfplan2caiConverter(),
 	"google_compute_address":                               compute.ComputeAddressTfplan2caiConverter(),
 	"google_compute_autoscaler":                            compute.ComputeAutoscalerTfplan2caiConverter(),
 	"google_compute_backend_bucket":                        compute.ComputeBackendBucketTfplan2caiConverter(),
