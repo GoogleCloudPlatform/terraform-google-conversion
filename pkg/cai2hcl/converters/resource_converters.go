@@ -40,6 +40,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
@@ -256,6 +257,12 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"monitoring.googleapis.com/UptimeCheckConfig": {
 		"Default": monitoring.NewMonitoringUptimeCheckConfigCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/ActiveDirectory": {
+		"Default": netapp.NewNetappActiveDirectoryCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/Backup": {
+		"Default": netapp.NewNetappBackupCai2hclConverter(provider),
 	},
 	"networksecurity.googleapis.com/AddressGroup": {
 		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),

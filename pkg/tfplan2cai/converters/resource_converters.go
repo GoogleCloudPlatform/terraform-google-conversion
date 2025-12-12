@@ -39,6 +39,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
@@ -123,6 +124,8 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_logging_metric":                                logging.LoggingMetricTfplan2caiConverter(),
 	"google_monitoring_notification_channel":               monitoring.MonitoringNotificationChannelTfplan2caiConverter(),
 	"google_monitoring_uptime_check_config":                monitoring.MonitoringUptimeCheckConfigTfplan2caiConverter(),
+	"google_netapp_active_directory":                       netapp.NetappActiveDirectoryTfplan2caiConverter(),
+	"google_netapp_backup":                                 netapp.NetappBackupTfplan2caiConverter(),
 	"google_network_security_address_group":                networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),
 	"google_network_security_client_tls_policy":            networksecurity.NetworkSecurityClientTlsPolicyTfplan2caiConverter(),
 	"google_network_security_gateway_security_policy":      networksecurity.NetworkSecurityGatewaySecurityPolicyTfplan2caiConverter(),
