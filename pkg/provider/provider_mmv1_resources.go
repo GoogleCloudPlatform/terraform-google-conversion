@@ -28,6 +28,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
@@ -46,7 +47,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 89
+// Generated resources: 91
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -114,6 +115,8 @@ var generatedResources = map[string]*schema.Resource{
 	"google_logging_metric":                                logging.ResourceLoggingMetric(),
 	"google_monitoring_notification_channel":               monitoring.ResourceMonitoringNotificationChannel(),
 	"google_monitoring_uptime_check_config":                monitoring.ResourceMonitoringUptimeCheckConfig(),
+	"google_netapp_active_directory":                       netapp.ResourceNetappActiveDirectory(),
+	"google_netapp_backup":                                 netapp.ResourceNetappBackup(),
 	"google_network_security_address_group":                networksecurity.ResourceNetworkSecurityAddressGroup(),
 	"google_network_security_client_tls_policy":            networksecurity.ResourceNetworkSecurityClientTlsPolicy(),
 	"google_network_security_gateway_security_policy":      networksecurity.ResourceNetworkSecurityGatewaySecurityPolicy(),
