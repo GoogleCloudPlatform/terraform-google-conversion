@@ -30,6 +30,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
@@ -47,7 +48,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 91
+// Generated resources: 94
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -87,12 +88,14 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_firewall":                              compute.ResourceComputeFirewall(),
 	"google_compute_firewall_policy":                       compute.ResourceComputeFirewallPolicy(),
 	"google_compute_global_address":                        compute.ResourceComputeGlobalAddress(),
+	"google_compute_ha_vpn_gateway":                        compute.ResourceComputeHaVpnGateway(),
 	"google_compute_health_check":                          compute.ResourceComputeHealthCheck(),
 	"google_compute_image":                                 compute.ResourceComputeImage(),
 	"google_compute_network":                               compute.ResourceComputeNetwork(),
 	"google_compute_node_group":                            compute.ResourceComputeNodeGroup(),
 	"google_compute_region_autoscaler":                     compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_region_health_check":                   compute.ResourceComputeRegionHealthCheck(),
+	"google_compute_storage_pool":                          compute.ResourceComputeStoragePool(),
 	"google_compute_subnetwork":                            compute.ResourceComputeSubnetwork(),
 	"google_compute_url_map":                               compute.ResourceComputeUrlMap(),
 	"google_dataproc_batch":                                dataproc.ResourceDataprocBatch(),
@@ -125,6 +128,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_network_security_security_profile_group":       networksecurity.ResourceNetworkSecuritySecurityProfileGroup(),
 	"google_network_security_server_tls_policy":            networksecurity.ResourceNetworkSecurityServerTlsPolicy(),
 	"google_network_security_url_lists":                    networksecurity.ResourceNetworkSecurityUrlLists(),
+	"google_privateca_ca_pool":                             privateca.ResourcePrivatecaCaPool(),
 	"google_pubsub_subscription":                           pubsub.ResourcePubsubSubscription(),
 	"google_pubsub_topic":                                  pubsub.ResourcePubsubTopic(),
 	"google_redis_cluster":                                 redis.ResourceRedisCluster(),
