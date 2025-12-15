@@ -315,29 +315,22 @@ func expandAlloydbInstanceObservabilityConfig(v interface{}, d tpgresource.Terra
 	transformedEnabled, err := expandAlloydbInstanceObservabilityConfigEnabled(original["enabled"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else if transformedEnabled != nil {
 		transformed["enabled"] = transformedEnabled
 	}
 
 	transformedPreserveComments, err := expandAlloydbInstanceObservabilityConfigPreserveComments(original["preserve_comments"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedPreserveComments); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else if transformedPreserveComments != nil {
 		transformed["preserveComments"] = transformedPreserveComments
 	}
 
 	transformedTrackWaitEvents, err := expandAlloydbInstanceObservabilityConfigTrackWaitEvents(original["track_wait_events"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedTrackWaitEvents); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else if transformedTrackWaitEvents != nil {
 		transformed["trackWaitEvents"] = transformedTrackWaitEvents
-	}
-
-	transformedTrackWaitEventTypes, err := expandAlloydbInstanceObservabilityConfigTrackWaitEventTypes(original["track_wait_event_types"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedTrackWaitEventTypes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["trackWaitEventTypes"] = transformedTrackWaitEventTypes
 	}
 
 	transformedMaxQueryStringLength, err := expandAlloydbInstanceObservabilityConfigMaxQueryStringLength(original["max_query_string_length"], d, config)
@@ -350,7 +343,7 @@ func expandAlloydbInstanceObservabilityConfig(v interface{}, d tpgresource.Terra
 	transformedRecordApplicationTags, err := expandAlloydbInstanceObservabilityConfigRecordApplicationTags(original["record_application_tags"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedRecordApplicationTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else if transformedRecordApplicationTags != nil {
 		transformed["recordApplicationTags"] = transformedRecordApplicationTags
 	}
 
@@ -364,17 +357,17 @@ func expandAlloydbInstanceObservabilityConfig(v interface{}, d tpgresource.Terra
 	transformedTrackActiveQueries, err := expandAlloydbInstanceObservabilityConfigTrackActiveQueries(original["track_active_queries"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedTrackActiveQueries); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else if transformedTrackActiveQueries != nil {
 		transformed["trackActiveQueries"] = transformedTrackActiveQueries
 	}
 
 	transformedAssistiveExperiencesEnabled, err := expandAlloydbInstanceObservabilityConfigAssistiveExperiencesEnabled(original["assistive_experiences_enabled"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAssistiveExperiencesEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else if transformedAssistiveExperiencesEnabled != nil {
 		transformed["assistiveExperiencesEnabled"] = transformedAssistiveExperiencesEnabled
 	}
-
+	log.Printf("vkanishk: expandAlloydbInstanceObservabilityConfig transformed %v", transformed)
 	return transformed, nil
 }
 
