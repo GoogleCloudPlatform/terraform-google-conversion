@@ -84,6 +84,9 @@ func TestAccAlloydbInstance(t *testing.T) {
 		{
 			Name: "",
 		},
+		{
+			Name: "TestAccAlloydbInstance_ObservabilityConfig_Update",
+		},
 	}
 
 	for _, tt := range tests {
