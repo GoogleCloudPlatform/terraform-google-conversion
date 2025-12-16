@@ -140,7 +140,7 @@ func GetServiceDirectoryEndpointApiObject(d tpgresource.TerraformResourceData, c
 
 func resourceServiceDirectoryEndpointEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	if obj["metadata"] == nil {
-		return nil, nil
+		return obj, nil
 	}
 
 	obj["annotations"] = obj["metadata"].(map[string]string)
