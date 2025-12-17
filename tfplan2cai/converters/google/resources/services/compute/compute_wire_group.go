@@ -203,7 +203,7 @@ func expandComputeWireGroupEndpointsInterconnects(v interface{}, d tpgresource.T
 		if err != nil {
 			return nil, err
 		} else if val := reflect.ValueOf(transformedVlanTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["vlan_tags"] = transformedVlanTags
+			transformed["vlanTags"] = transformedVlanTags
 		}
 
 		transformedInterconnectName, err := tpgresource.ExpandString(original["interconnect_name"], d, config)
