@@ -50,6 +50,54 @@ func TestAccBigQueryDataset(t *testing.T) {
 		{
 			Name: "TestAccBigQueryDataset_bigqueryDatasetResourceTagsExample",
 		},
+		{
+			Name: "TestAccBigQueryDataset_basic",
+		},
+		{
+			Name: "TestAccBigQueryDataset_withComputedLabels",
+		},
+		{
+			Name: "TestAccBigQueryDataset_withProvider5",
+		},
+		{
+			Name: "TestAccBigQueryDataset_withOutOfBandLabels",
+		},
+		{
+			Name: "TestAccBigQueryDataset_datasetWithContents",
+		},
+		{
+			Name: "TestAccBigQueryDataset_access",
+		},
+		{
+			Name: "TestAccBigQueryDataset_accessMixedCase_userByEmail",
+		},
+		{
+			Name: "TestAccBigQueryDataset_accessMixedCase_groupByEmail",
+		},
+		{
+			Name: "TestAccBigQueryDataset_regionalLocation",
+		},
+		{
+			Name: "TestAccBigQueryDataset_cmek",
+		},
+		{
+			Name: "TestAccBigQueryDataset_storageBillModel",
+		},
+		{
+			Name: "TestAccBigQueryDataset_invalidCharacterInID",
+		},
+		{
+			Name: "TestAccBigQueryDataset_invalidLongID",
+		},
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetResourceTags_update",
+		},
+		{
+			Name: "TestAccBigQueryDataset_bigqueryDatasetExternalReferenceAws",
+		},
+		{
+			Name: "TestAccBigQueryDataset_externalCatalogDatasetOptions_update",
+		},
 	}
 
 	for _, tt := range tests {

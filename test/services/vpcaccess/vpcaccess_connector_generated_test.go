@@ -27,10 +27,32 @@ func TestAccVPCAccessConnector(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccVPCAccessConnector_vpcAccessConnectorThroughput_usingThroughputOrInstancesLimits",
+			Skip: "For instances vs throughput, prefer instances during cai2hcl conversion as throughput is discouraged.",
+		},
+		{
 			Name: "TestAccVPCAccessConnector_vpcAccessConnectorExample",
 		},
 		{
 			Name: "TestAccVPCAccessConnector_vpcAccessConnectorSharedVpcExample",
+		},
+		{
+			Name: "TestAccVPCAccessConnector_vpcAccessConnectorThroughput",
+		},
+		{
+			Name: "TestAccVPCAccessConnector_vpcAccessConnectorUpdateAllMutableFieldsCauseUpdateInPlace",
+		},
+		{
+			Name: "TestAccVPCAccessConnector_vpcAccessConnectorUpdateOnlyMinInstancesCauseUpdateInPlace",
+		},
+		{
+			Name: "TestAccVPCAccessConnector_vpcAccessConnectorUpdateImmutableFieldCauseReplace",
+		},
+		{
+			Name: "TestAccVPCAccessConnector_vpcAccessConnectorThroughput_combiningThroughputAndInstancesFields_conflict",
+		},
+		{
+			Name: "",
 		},
 	}
 

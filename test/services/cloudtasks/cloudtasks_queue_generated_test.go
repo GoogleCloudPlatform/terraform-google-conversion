@@ -38,6 +38,27 @@ func TestAccCloudTasksQueue(t *testing.T) {
 		{
 			Name: "TestAccCloudTasksQueue_cloudTasksQueueHttpTargetOauthExample",
 		},
+		{
+			Name: "TestAccCloudTasksQueue_update",
+		},
+		{
+			Name: "TestAccCloudTasksQueue_update2Basic",
+		},
+		{
+			Name: "TestAccCloudTasksQueue_MaxRetryDiffSuppress0s",
+		},
+		{
+			Name: "TestAccCloudTasksQueue_TimeUnitDiff",
+		},
+		{
+			Name: "TestAccCloudTasksQueue_HttpTargetOIDC_update",
+		},
+		{
+			Name: "TestAccCloudTasksQueue_HttpTargetOAuth_update",
+		},
+		{
+			Name: "TestAccCloudTasksQueue_paused",
+		},
 	}
 
 	for _, tt := range tests {
