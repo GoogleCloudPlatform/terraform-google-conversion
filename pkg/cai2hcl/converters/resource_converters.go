@@ -214,6 +214,18 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/NodeGroup": {
 		"Default": compute.NewComputeNodeGroupCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/NodeTemplate": {
+		"Default": compute.NewComputeNodeTemplateCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/ResourcePolicy": {
+		"Default": compute.NewComputeResourcePolicyCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Route": {
+		"Default": compute.NewComputeRouteCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Router": {
+		"Default": compute.NewComputeRouterCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/StoragePool": {
 		"Default": compute.NewComputeStoragePoolCai2hclConverter(provider),
 	},
