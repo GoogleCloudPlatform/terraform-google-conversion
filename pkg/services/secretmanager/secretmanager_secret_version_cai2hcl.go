@@ -132,15 +132,23 @@ func (c *SecretManagerSecretVersionCai2hclConverter) convertResourceData(asset c
 		return nil, nil
 	}
 
-	outputFields := map[string]struct{}{"create_time": struct{}{}, "destroy_time": struct{}{}, "name": struct{}{}, "version": struct{}{}}
-	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//secretmanager.googleapis.com/{{secret}}/versions/{{version}}", outputFields, hclData)
-
-	hclData["enabled"] = flattenSecretManagerSecretVersionEnabled(res["state"], d, config)
+	if err := d.Set("enabled", flattenSecretManagerSecretVersionEnabled(res["state"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading SecretVersion: %s", err)
+	}
 	if flattenedProp := flattenSecretManagerSecretVersionPayload(res["payload"], d, config); flattenedProp != nil {
 		if err := tgcresource.MergeFlattenedProperties(hclData, flattenedProp); err != nil {
 			return nil, fmt.Errorf("error merging flattened properties from payload: %s", err)
 		}
 	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
+	outputFields := map[string]struct{}{"create_time": struct{}{}, "destroy_time": struct{}{}, "name": struct{}{}, "version": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//secretmanager.googleapis.com/{{secret}}/versions/{{version}}", outputFields, hclData)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

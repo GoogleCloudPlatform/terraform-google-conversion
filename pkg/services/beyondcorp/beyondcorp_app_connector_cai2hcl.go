@@ -122,12 +122,24 @@ func (c *BeyondcorpAppConnectorCai2hclConverter) convertResourceData(asset caias
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("display_name", flattenBeyondcorpAppConnectorDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnector: %s", err)
+	}
+	if err := d.Set("labels", flattenBeyondcorpAppConnectorLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnector: %s", err)
+	}
+	if err := d.Set("principal_info", flattenBeyondcorpAppConnectorPrincipalInfo(res["principalInfo"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnector: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//beyondcorp.googleapis.com/projects/{{project}}/locations/{{region}}/appConnectors/{{name}}", outputFields, hclData)
-
-	hclData["display_name"] = flattenBeyondcorpAppConnectorDisplayName(res["displayName"], d, config)
-	hclData["labels"] = flattenBeyondcorpAppConnectorLabels(res["labels"], d, config)
-	hclData["principal_info"] = flattenBeyondcorpAppConnectorPrincipalInfo(res["principalInfo"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

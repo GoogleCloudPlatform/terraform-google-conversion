@@ -122,15 +122,33 @@ func (c *BeyondcorpAppConnectionCai2hclConverter) convertResourceData(asset caia
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("display_name", flattenBeyondcorpAppConnectionDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnection: %s", err)
+	}
+	if err := d.Set("labels", flattenBeyondcorpAppConnectionLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnection: %s", err)
+	}
+	if err := d.Set("type", flattenBeyondcorpAppConnectionType(res["type"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnection: %s", err)
+	}
+	if err := d.Set("application_endpoint", flattenBeyondcorpAppConnectionApplicationEndpoint(res["applicationEndpoint"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnection: %s", err)
+	}
+	if err := d.Set("connectors", flattenBeyondcorpAppConnectionConnectors(res["connectors"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnection: %s", err)
+	}
+	if err := d.Set("gateway", flattenBeyondcorpAppConnectionGateway(res["gateway"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AppConnection: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//beyondcorp.googleapis.com/projects/{{project}}/locations/{{region}}/appConnections/{{name}}", outputFields, hclData)
-
-	hclData["display_name"] = flattenBeyondcorpAppConnectionDisplayName(res["displayName"], d, config)
-	hclData["labels"] = flattenBeyondcorpAppConnectionLabels(res["labels"], d, config)
-	hclData["type"] = flattenBeyondcorpAppConnectionType(res["type"], d, config)
-	hclData["application_endpoint"] = flattenBeyondcorpAppConnectionApplicationEndpoint(res["applicationEndpoint"], d, config)
-	hclData["connectors"] = flattenBeyondcorpAppConnectionConnectors(res["connectors"], d, config)
-	hclData["gateway"] = flattenBeyondcorpAppConnectionGateway(res["gateway"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

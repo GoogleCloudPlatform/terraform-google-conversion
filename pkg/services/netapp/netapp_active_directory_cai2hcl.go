@@ -127,27 +127,69 @@ func (c *NetappActiveDirectoryCai2hclConverter) convertResourceData(asset caiass
 		return nil, err
 	}
 
+	if err := d.Set("domain", flattenNetappActiveDirectoryDomain(res["domain"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("site", flattenNetappActiveDirectorySite(res["site"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("dns", flattenNetappActiveDirectoryDns(res["dns"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("net_bios_prefix", flattenNetappActiveDirectoryNetBiosPrefix(res["netBiosPrefix"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("organizational_unit", flattenNetappActiveDirectoryOrganizationalUnit(res["organizationalUnit"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("aes_encryption", flattenNetappActiveDirectoryAesEncryption(res["aesEncryption"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("username", flattenNetappActiveDirectoryUsername(res["username"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("password", flattenNetappActiveDirectoryPassword(res["password"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("backup_operators", flattenNetappActiveDirectoryBackupOperators(res["backupOperators"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("administrators", flattenNetappActiveDirectoryAdministrators(res["administrators"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("security_operators", flattenNetappActiveDirectorySecurityOperators(res["securityOperators"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("kdc_hostname", flattenNetappActiveDirectoryKdcHostname(res["kdcHostname"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("kdc_ip", flattenNetappActiveDirectoryKdcIp(res["kdcIp"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("nfs_users_with_ldap", flattenNetappActiveDirectoryNfsUsersWithLdap(res["nfsUsersWithLdap"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("description", flattenNetappActiveDirectoryDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("ldap_signing", flattenNetappActiveDirectoryLdapSigning(res["ldapSigning"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("encrypt_dc_connections", flattenNetappActiveDirectoryEncryptDcConnections(res["encryptDcConnections"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+	if err := d.Set("labels", flattenNetappActiveDirectoryLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ActiveDirectory: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "state": struct{}{}, "state_details": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//netapp.googleapis.com/projects/{{project}}/locations/{{location}}/activeDirectories/{{name}}", outputFields, hclData)
-
-	hclData["domain"] = flattenNetappActiveDirectoryDomain(res["domain"], d, config)
-	hclData["site"] = flattenNetappActiveDirectorySite(res["site"], d, config)
-	hclData["dns"] = flattenNetappActiveDirectoryDns(res["dns"], d, config)
-	hclData["net_bios_prefix"] = flattenNetappActiveDirectoryNetBiosPrefix(res["netBiosPrefix"], d, config)
-	hclData["organizational_unit"] = flattenNetappActiveDirectoryOrganizationalUnit(res["organizationalUnit"], d, config)
-	hclData["aes_encryption"] = flattenNetappActiveDirectoryAesEncryption(res["aesEncryption"], d, config)
-	hclData["username"] = flattenNetappActiveDirectoryUsername(res["username"], d, config)
-	hclData["password"] = flattenNetappActiveDirectoryPassword(res["password"], d, config)
-	hclData["backup_operators"] = flattenNetappActiveDirectoryBackupOperators(res["backupOperators"], d, config)
-	hclData["administrators"] = flattenNetappActiveDirectoryAdministrators(res["administrators"], d, config)
-	hclData["security_operators"] = flattenNetappActiveDirectorySecurityOperators(res["securityOperators"], d, config)
-	hclData["kdc_hostname"] = flattenNetappActiveDirectoryKdcHostname(res["kdcHostname"], d, config)
-	hclData["kdc_ip"] = flattenNetappActiveDirectoryKdcIp(res["kdcIp"], d, config)
-	hclData["nfs_users_with_ldap"] = flattenNetappActiveDirectoryNfsUsersWithLdap(res["nfsUsersWithLdap"], d, config)
-	hclData["description"] = flattenNetappActiveDirectoryDescription(res["description"], d, config)
-	hclData["ldap_signing"] = flattenNetappActiveDirectoryLdapSigning(res["ldapSigning"], d, config)
-	hclData["encrypt_dc_connections"] = flattenNetappActiveDirectoryEncryptDcConnections(res["encryptDcConnections"], d, config)
-	hclData["labels"] = flattenNetappActiveDirectoryLabels(res["labels"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

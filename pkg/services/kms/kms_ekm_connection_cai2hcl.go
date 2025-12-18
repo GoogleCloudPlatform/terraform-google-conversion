@@ -122,14 +122,30 @@ func (c *KMSEkmConnectionCai2hclConverter) convertResourceData(asset caiasset.As
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("name", flattenKMSEkmConnectionName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading EkmConnection: %s", err)
+	}
+	if err := d.Set("service_resolvers", flattenKMSEkmConnectionServiceResolvers(res["serviceResolvers"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading EkmConnection: %s", err)
+	}
+	if err := d.Set("key_management_mode", flattenKMSEkmConnectionKeyManagementMode(res["keyManagementMode"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading EkmConnection: %s", err)
+	}
+	if err := d.Set("etag", flattenKMSEkmConnectionEtag(res["etag"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading EkmConnection: %s", err)
+	}
+	if err := d.Set("crypto_space_path", flattenKMSEkmConnectionCryptoSpacePath(res["cryptoSpacePath"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading EkmConnection: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudkms.googleapis.com/projects/{{project}}/locations/{{location}}/ekmConnections/{{name}}", outputFields, hclData)
-
-	hclData["name"] = flattenKMSEkmConnectionName(res["name"], d, config)
-	hclData["service_resolvers"] = flattenKMSEkmConnectionServiceResolvers(res["serviceResolvers"], d, config)
-	hclData["key_management_mode"] = flattenKMSEkmConnectionKeyManagementMode(res["keyManagementMode"], d, config)
-	hclData["etag"] = flattenKMSEkmConnectionEtag(res["etag"], d, config)
-	hclData["crypto_space_path"] = flattenKMSEkmConnectionCryptoSpacePath(res["cryptoSpacePath"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

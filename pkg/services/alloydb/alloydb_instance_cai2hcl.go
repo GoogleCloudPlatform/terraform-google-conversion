@@ -122,24 +122,60 @@ func (c *AlloydbInstanceCai2hclConverter) convertResourceData(asset caiasset.Ass
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("labels", flattenAlloydbInstanceLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("annotations", flattenAlloydbInstanceAnnotations(res["annotations"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("display_name", flattenAlloydbInstanceDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("gce_zone", flattenAlloydbInstanceGceZone(res["gceZone"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("database_flags", flattenAlloydbInstanceDatabaseFlags(res["databaseFlags"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("availability_type", flattenAlloydbInstanceAvailabilityType(res["availabilityType"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("activation_policy", flattenAlloydbInstanceActivationPolicy(res["activationPolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("instance_type", flattenAlloydbInstanceInstanceType(res["instanceType"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("query_insights_config", flattenAlloydbInstanceQueryInsightsConfig(res["queryInsightsConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("read_pool_config", flattenAlloydbInstanceReadPoolConfig(res["readPoolConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("machine_config", flattenAlloydbInstanceMachineConfig(res["machineConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("client_connection_config", flattenAlloydbInstanceClientConnectionConfig(res["clientConnectionConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("psc_instance_config", flattenAlloydbInstancePscInstanceConfig(res["pscInstanceConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("network_config", flattenAlloydbInstanceNetworkConfig(res["networkConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("connection_pool_config", flattenAlloydbInstanceConnectionPoolConfig(res["connectionPoolConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "ip_address": struct{}{}, "name": struct{}{}, "outbound_public_ip_addresses": struct{}{}, "public_ip_address": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//alloydb.googleapis.com/{{cluster}}/instances/{{instance_id}}", outputFields, hclData)
-
-	hclData["labels"] = flattenAlloydbInstanceLabels(res["labels"], d, config)
-	hclData["annotations"] = flattenAlloydbInstanceAnnotations(res["annotations"], d, config)
-	hclData["display_name"] = flattenAlloydbInstanceDisplayName(res["displayName"], d, config)
-	hclData["gce_zone"] = flattenAlloydbInstanceGceZone(res["gceZone"], d, config)
-	hclData["database_flags"] = flattenAlloydbInstanceDatabaseFlags(res["databaseFlags"], d, config)
-	hclData["availability_type"] = flattenAlloydbInstanceAvailabilityType(res["availabilityType"], d, config)
-	hclData["activation_policy"] = flattenAlloydbInstanceActivationPolicy(res["activationPolicy"], d, config)
-	hclData["instance_type"] = flattenAlloydbInstanceInstanceType(res["instanceType"], d, config)
-	hclData["query_insights_config"] = flattenAlloydbInstanceQueryInsightsConfig(res["queryInsightsConfig"], d, config)
-	hclData["read_pool_config"] = flattenAlloydbInstanceReadPoolConfig(res["readPoolConfig"], d, config)
-	hclData["machine_config"] = flattenAlloydbInstanceMachineConfig(res["machineConfig"], d, config)
-	hclData["client_connection_config"] = flattenAlloydbInstanceClientConnectionConfig(res["clientConnectionConfig"], d, config)
-	hclData["psc_instance_config"] = flattenAlloydbInstancePscInstanceConfig(res["pscInstanceConfig"], d, config)
-	hclData["network_config"] = flattenAlloydbInstanceNetworkConfig(res["networkConfig"], d, config)
-	hclData["connection_pool_config"] = flattenAlloydbInstanceConnectionPoolConfig(res["connectionPoolConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

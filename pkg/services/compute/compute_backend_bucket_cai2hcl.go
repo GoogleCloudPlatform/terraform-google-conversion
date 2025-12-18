@@ -122,19 +122,45 @@ func (c *ComputeBackendBucketCai2hclConverter) convertResourceData(asset caiasse
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("bucket_name", flattenComputeBackendBucketBucketName(res["bucketName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("cdn_policy", flattenComputeBackendBucketCdnPolicy(res["cdnPolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("compression_mode", flattenComputeBackendBucketCompressionMode(res["compressionMode"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("edge_security_policy", flattenComputeBackendBucketEdgeSecurityPolicy(res["edgeSecurityPolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("custom_response_headers", flattenComputeBackendBucketCustomResponseHeaders(res["customResponseHeaders"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("description", flattenComputeBackendBucketDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("enable_cdn", flattenComputeBackendBucketEnableCdn(res["enableCdn"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("name", flattenComputeBackendBucketName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("load_balancing_scheme", flattenComputeBackendBucketLoadBalancingScheme(res["loadBalancingScheme"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+	if err := d.Set("params", flattenComputeBackendBucketParams(res["params"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackendBucket: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/backendBuckets/{{name}}", outputFields, hclData)
-
-	hclData["bucket_name"] = flattenComputeBackendBucketBucketName(res["bucketName"], d, config)
-	hclData["cdn_policy"] = flattenComputeBackendBucketCdnPolicy(res["cdnPolicy"], d, config)
-	hclData["compression_mode"] = flattenComputeBackendBucketCompressionMode(res["compressionMode"], d, config)
-	hclData["edge_security_policy"] = flattenComputeBackendBucketEdgeSecurityPolicy(res["edgeSecurityPolicy"], d, config)
-	hclData["custom_response_headers"] = flattenComputeBackendBucketCustomResponseHeaders(res["customResponseHeaders"], d, config)
-	hclData["description"] = flattenComputeBackendBucketDescription(res["description"], d, config)
-	hclData["enable_cdn"] = flattenComputeBackendBucketEnableCdn(res["enableCdn"], d, config)
-	hclData["name"] = flattenComputeBackendBucketName(res["name"], d, config)
-	hclData["load_balancing_scheme"] = flattenComputeBackendBucketLoadBalancingScheme(res["loadBalancingScheme"], d, config)
-	hclData["params"] = flattenComputeBackendBucketParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -122,11 +122,21 @@ func (c *Cloudbuildv2RepositoryCai2hclConverter) convertResourceData(asset caias
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("remote_uri", flattenCloudbuildv2RepositoryRemoteUri(res["remoteUri"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("annotations", flattenCloudbuildv2RepositoryAnnotations(res["annotations"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "etag": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudbuild.googleapis.com/projects/{{project}}/locations/{{location}}/connections/{{parent_connection}}/repositories/{{name}}", outputFields, hclData)
-
-	hclData["remote_uri"] = flattenCloudbuildv2RepositoryRemoteUri(res["remoteUri"], d, config)
-	hclData["annotations"] = flattenCloudbuildv2RepositoryAnnotations(res["annotations"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

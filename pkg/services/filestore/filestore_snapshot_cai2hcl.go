@@ -122,11 +122,21 @@ func (c *FilestoreSnapshotCai2hclConverter) convertResourceData(asset caiasset.A
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenFilestoreSnapshotDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Snapshot: %s", err)
+	}
+	if err := d.Set("labels", flattenFilestoreSnapshotLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Snapshot: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "filesystem_used_bytes": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//file.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/snapshots/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenFilestoreSnapshotDescription(res["description"], d, config)
-	hclData["labels"] = flattenFilestoreSnapshotLabels(res["labels"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -132,16 +132,36 @@ func (c *KMSCryptoKeyCai2hclConverter) convertResourceData(asset caiasset.Asset)
 		return nil, nil
 	}
 
+	if err := d.Set("labels", flattenKMSCryptoKeyLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKey: %s", err)
+	}
+	if err := d.Set("purpose", flattenKMSCryptoKeyPurpose(res["purpose"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKey: %s", err)
+	}
+	if err := d.Set("rotation_period", flattenKMSCryptoKeyRotationPeriod(res["rotationPeriod"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKey: %s", err)
+	}
+	if err := d.Set("version_template", flattenKMSCryptoKeyVersionTemplate(res["versionTemplate"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKey: %s", err)
+	}
+	if err := d.Set("destroy_scheduled_duration", flattenKMSCryptoKeyDestroyScheduledDuration(res["destroyScheduledDuration"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKey: %s", err)
+	}
+	if err := d.Set("import_only", flattenKMSCryptoKeyImportOnly(res["importOnly"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKey: %s", err)
+	}
+	if err := d.Set("crypto_key_backend", flattenKMSCryptoKeyCryptoKeyBackend(res["cryptoKeyBackend"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKey: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "primary": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudkms.googleapis.com/{{key_ring}}/cryptoKeys/{{name}}", outputFields, hclData)
-
-	hclData["labels"] = flattenKMSCryptoKeyLabels(res["labels"], d, config)
-	hclData["purpose"] = flattenKMSCryptoKeyPurpose(res["purpose"], d, config)
-	hclData["rotation_period"] = flattenKMSCryptoKeyRotationPeriod(res["rotationPeriod"], d, config)
-	hclData["version_template"] = flattenKMSCryptoKeyVersionTemplate(res["versionTemplate"], d, config)
-	hclData["destroy_scheduled_duration"] = flattenKMSCryptoKeyDestroyScheduledDuration(res["destroyScheduledDuration"], d, config)
-	hclData["import_only"] = flattenKMSCryptoKeyImportOnly(res["importOnly"], d, config)
-	hclData["crypto_key_backend"] = flattenKMSCryptoKeyCryptoKeyBackend(res["cryptoKeyBackend"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

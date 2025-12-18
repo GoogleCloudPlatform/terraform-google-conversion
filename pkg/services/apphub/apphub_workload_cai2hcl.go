@@ -122,13 +122,27 @@ func (c *ApphubWorkloadCai2hclConverter) convertResourceData(asset caiasset.Asse
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("display_name", flattenApphubWorkloadDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Workload: %s", err)
+	}
+	if err := d.Set("description", flattenApphubWorkloadDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Workload: %s", err)
+	}
+	if err := d.Set("discovered_workload", flattenApphubWorkloadDiscoveredWorkload(res["discoveredWorkload"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Workload: %s", err)
+	}
+	if err := d.Set("attributes", flattenApphubWorkloadAttributes(res["attributes"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Workload: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "name": struct{}{}, "state": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}, "workload_properties": struct{}{}, "workload_reference": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//apphub.googleapis.com/projects/{{project}}/locations/{{location}}/applications/{{application_id}}/workloads/{{workload_id}}", outputFields, hclData)
-
-	hclData["display_name"] = flattenApphubWorkloadDisplayName(res["displayName"], d, config)
-	hclData["description"] = flattenApphubWorkloadDescription(res["description"], d, config)
-	hclData["discovered_workload"] = flattenApphubWorkloadDiscoveredWorkload(res["discoveredWorkload"], d, config)
-	hclData["attributes"] = flattenApphubWorkloadAttributes(res["attributes"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

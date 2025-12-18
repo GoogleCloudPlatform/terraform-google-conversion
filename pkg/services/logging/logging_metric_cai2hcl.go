@@ -122,18 +122,42 @@ func (c *LoggingMetricCai2hclConverter) convertResourceData(asset caiasset.Asset
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("name", flattenLoggingMetricName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+	if err := d.Set("description", flattenLoggingMetricDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+	if err := d.Set("bucket_name", flattenLoggingMetricBucketName(res["bucketName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+	if err := d.Set("disabled", flattenLoggingMetricDisabled(res["disabled"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+	if err := d.Set("filter", flattenLoggingMetricFilter(res["filter"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+	if err := d.Set("metric_descriptor", flattenLoggingMetricMetricDescriptor(res["metricDescriptor"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+	if err := d.Set("label_extractors", flattenLoggingMetricLabelExtractors(res["labelExtractors"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+	if err := d.Set("value_extractor", flattenLoggingMetricValueExtractor(res["valueExtractor"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+	if err := d.Set("bucket_options", flattenLoggingMetricBucketOptions(res["bucketOptions"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Metric: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//logging.googleapis.com/projects/{{project}}/metrics/{{%name}}", outputFields, hclData)
-
-	hclData["name"] = flattenLoggingMetricName(res["name"], d, config)
-	hclData["description"] = flattenLoggingMetricDescription(res["description"], d, config)
-	hclData["bucket_name"] = flattenLoggingMetricBucketName(res["bucketName"], d, config)
-	hclData["disabled"] = flattenLoggingMetricDisabled(res["disabled"], d, config)
-	hclData["filter"] = flattenLoggingMetricFilter(res["filter"], d, config)
-	hclData["metric_descriptor"] = flattenLoggingMetricMetricDescriptor(res["metricDescriptor"], d, config)
-	hclData["label_extractors"] = flattenLoggingMetricLabelExtractors(res["labelExtractors"], d, config)
-	hclData["value_extractor"] = flattenLoggingMetricValueExtractor(res["valueExtractor"], d, config)
-	hclData["bucket_options"] = flattenLoggingMetricBucketOptions(res["bucketOptions"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

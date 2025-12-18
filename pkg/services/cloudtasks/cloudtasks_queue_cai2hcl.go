@@ -122,15 +122,33 @@ func (c *CloudTasksQueueCai2hclConverter) convertResourceData(asset caiasset.Ass
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("name", flattenCloudTasksQueueName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Queue: %s", err)
+	}
+	if err := d.Set("app_engine_routing_override", flattenCloudTasksQueueAppEngineRoutingOverride(res["appEngineRoutingOverride"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Queue: %s", err)
+	}
+	if err := d.Set("rate_limits", flattenCloudTasksQueueRateLimits(res["rateLimits"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Queue: %s", err)
+	}
+	if err := d.Set("retry_config", flattenCloudTasksQueueRetryConfig(res["retryConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Queue: %s", err)
+	}
+	if err := d.Set("stackdriver_logging_config", flattenCloudTasksQueueStackdriverLoggingConfig(res["stackdriverLoggingConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Queue: %s", err)
+	}
+	if err := d.Set("http_target", flattenCloudTasksQueueHttpTarget(res["httpTarget"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Queue: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"state": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudtasks.googleapis.com/projects/{{project}}/locations/{{location}}/queues/{{name}}", outputFields, hclData)
-
-	hclData["name"] = flattenCloudTasksQueueName(res["name"], d, config)
-	hclData["app_engine_routing_override"] = flattenCloudTasksQueueAppEngineRoutingOverride(res["appEngineRoutingOverride"], d, config)
-	hclData["rate_limits"] = flattenCloudTasksQueueRateLimits(res["rateLimits"], d, config)
-	hclData["retry_config"] = flattenCloudTasksQueueRetryConfig(res["retryConfig"], d, config)
-	hclData["stackdriver_logging_config"] = flattenCloudTasksQueueStackdriverLoggingConfig(res["stackdriverLoggingConfig"], d, config)
-	hclData["http_target"] = flattenCloudTasksQueueHttpTarget(res["httpTarget"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

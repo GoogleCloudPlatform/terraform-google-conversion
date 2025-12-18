@@ -122,10 +122,18 @@ func (c *KMSAutokeyConfigCai2hclConverter) convertResourceData(asset caiasset.As
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("key_project", flattenKMSAutokeyConfigKeyProject(res["keyProject"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading AutokeyConfig: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"etag": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudkms.googleapis.com/folders/{{folder}}/autokeyConfig", outputFields, hclData)
-
-	hclData["key_project"] = flattenKMSAutokeyConfigKeyProject(res["keyProject"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

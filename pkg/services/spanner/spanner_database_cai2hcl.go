@@ -127,14 +127,30 @@ func (c *SpannerDatabaseCai2hclConverter) convertResourceData(asset caiasset.Ass
 		return nil, err
 	}
 
+	if err := d.Set("version_retention_period", flattenSpannerDatabaseVersionRetentionPeriod(res["versionRetentionPeriod"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Database: %s", err)
+	}
+	if err := d.Set("ddl", flattenSpannerDatabaseDdl(res["extraStatements"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Database: %s", err)
+	}
+	if err := d.Set("encryption_config", flattenSpannerDatabaseEncryptionConfig(res["encryptionConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Database: %s", err)
+	}
+	if err := d.Set("database_dialect", flattenSpannerDatabaseDatabaseDialect(res["databaseDialect"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Database: %s", err)
+	}
+	if err := d.Set("enable_drop_protection", flattenSpannerDatabaseEnableDropProtection(res["enableDropProtection"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Database: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"state": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//spanner.googleapis.com/projects/{{project}}/instances/{{instance}}/databases/{{name}}", outputFields, hclData)
-
-	hclData["version_retention_period"] = flattenSpannerDatabaseVersionRetentionPeriod(res["versionRetentionPeriod"], d, config)
-	hclData["ddl"] = flattenSpannerDatabaseDdl(res["extraStatements"], d, config)
-	hclData["encryption_config"] = flattenSpannerDatabaseEncryptionConfig(res["encryptionConfig"], d, config)
-	hclData["database_dialect"] = flattenSpannerDatabaseDatabaseDialect(res["databaseDialect"], d, config)
-	hclData["enable_drop_protection"] = flattenSpannerDatabaseEnableDropProtection(res["enableDropProtection"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

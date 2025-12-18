@@ -122,17 +122,39 @@ func (c *ComputeRouterCai2hclConverter) convertResourceData(asset caiasset.Asset
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("name", flattenComputeRouterName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Router: %s", err)
+	}
+	if err := d.Set("description", flattenComputeRouterDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Router: %s", err)
+	}
+	if err := d.Set("network", flattenComputeRouterNetwork(res["network"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Router: %s", err)
+	}
+	if err := d.Set("bgp", flattenComputeRouterBgp(res["bgp"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Router: %s", err)
+	}
+	if err := d.Set("encrypted_interconnect_router", flattenComputeRouterEncryptedInterconnectRouter(res["encryptedInterconnectRouter"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Router: %s", err)
+	}
+	if err := d.Set("md5_authentication_keys", flattenComputeRouterMd5AuthenticationKeys(res["md5AuthenticationKeys"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Router: %s", err)
+	}
+	if err := d.Set("params", flattenComputeRouterParams(res["params"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Router: %s", err)
+	}
+	if err := d.Set("region", flattenComputeRouterRegion(res["region"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Router: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/routers/{{name}}", outputFields, hclData)
-
-	hclData["name"] = flattenComputeRouterName(res["name"], d, config)
-	hclData["description"] = flattenComputeRouterDescription(res["description"], d, config)
-	hclData["network"] = flattenComputeRouterNetwork(res["network"], d, config)
-	hclData["bgp"] = flattenComputeRouterBgp(res["bgp"], d, config)
-	hclData["encrypted_interconnect_router"] = flattenComputeRouterEncryptedInterconnectRouter(res["encryptedInterconnectRouter"], d, config)
-	hclData["md5_authentication_keys"] = flattenComputeRouterMd5AuthenticationKeys(res["md5AuthenticationKeys"], d, config)
-	hclData["params"] = flattenComputeRouterParams(res["params"], d, config)
-	hclData["region"] = flattenComputeRouterRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

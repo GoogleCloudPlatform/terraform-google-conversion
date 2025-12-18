@@ -132,34 +132,90 @@ func (c *ComputeDiskCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 		return nil, nil
 	}
 
+	if err := d.Set("source_image_encryption_key", flattenComputeDiskSourceImageEncryptionKey(res["sourceImageEncryptionKey"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("source_instant_snapshot", flattenComputeDiskSourceInstantSnapshot(res["sourceInstantSnapshot"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("disk_encryption_key", flattenComputeDiskDiskEncryptionKey(res["diskEncryptionKey"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("source_snapshot_encryption_key", flattenComputeDiskSourceSnapshotEncryptionKey(res["sourceSnapshotEncryptionKey"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("source_storage_object", flattenComputeDiskSourceStorageObject(res["sourceStorageObject"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("description", flattenComputeDiskDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("labels", flattenComputeDiskLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("name", flattenComputeDiskName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("size", flattenComputeDiskSize(res["sizeGb"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("physical_block_size_bytes", flattenComputeDiskPhysicalBlockSizeBytes(res["physicalBlockSizeBytes"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("source_disk", flattenComputeDiskSourceDisk(res["sourceDisk"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("type", flattenComputeDiskType(res["type"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("image", flattenComputeDiskImage(res["sourceImage"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("enable_confidential_compute", flattenComputeDiskEnableConfidentialCompute(res["enableConfidentialCompute"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("provisioned_iops", flattenComputeDiskProvisionedIops(res["provisionedIops"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("provisioned_throughput", flattenComputeDiskProvisionedThroughput(res["provisionedThroughput"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("async_primary_disk", flattenComputeDiskAsyncPrimaryDisk(res["asyncPrimaryDisk"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("architecture", flattenComputeDiskArchitecture(res["architecture"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("params", flattenComputeDiskParams(res["params"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("guest_os_features", flattenComputeDiskGuestOsFeatures(res["guestOsFeatures"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("licenses", flattenComputeDiskLicenses(res["licenses"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("storage_pool", flattenComputeDiskStoragePool(res["storagePool"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("access_mode", flattenComputeDiskAccessMode(res["accessMode"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("zone", flattenComputeDiskZone(res["zone"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+	if err := d.Set("snapshot", flattenComputeDiskSnapshot(res["sourceSnapshot"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Disk: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "disk_id": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "last_attach_timestamp": struct{}{}, "last_detach_timestamp": struct{}{}, "source_disk_id": struct{}{}, "source_image_id": struct{}{}, "source_instant_snapshot_id": struct{}{}, "source_snapshot_id": struct{}{}, "terraform_labels": struct{}{}, "users": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/disks/{{name}}", outputFields, hclData)
-
-	hclData["source_image_encryption_key"] = flattenComputeDiskSourceImageEncryptionKey(res["sourceImageEncryptionKey"], d, config)
-	hclData["source_instant_snapshot"] = flattenComputeDiskSourceInstantSnapshot(res["sourceInstantSnapshot"], d, config)
-	hclData["disk_encryption_key"] = flattenComputeDiskDiskEncryptionKey(res["diskEncryptionKey"], d, config)
-	hclData["source_snapshot_encryption_key"] = flattenComputeDiskSourceSnapshotEncryptionKey(res["sourceSnapshotEncryptionKey"], d, config)
-	hclData["source_storage_object"] = flattenComputeDiskSourceStorageObject(res["sourceStorageObject"], d, config)
-	hclData["description"] = flattenComputeDiskDescription(res["description"], d, config)
-	hclData["labels"] = flattenComputeDiskLabels(res["labels"], d, config)
-	hclData["name"] = flattenComputeDiskName(res["name"], d, config)
-	hclData["size"] = flattenComputeDiskSize(res["sizeGb"], d, config)
-	hclData["physical_block_size_bytes"] = flattenComputeDiskPhysicalBlockSizeBytes(res["physicalBlockSizeBytes"], d, config)
-	hclData["source_disk"] = flattenComputeDiskSourceDisk(res["sourceDisk"], d, config)
-	hclData["type"] = flattenComputeDiskType(res["type"], d, config)
-	hclData["image"] = flattenComputeDiskImage(res["sourceImage"], d, config)
-	hclData["enable_confidential_compute"] = flattenComputeDiskEnableConfidentialCompute(res["enableConfidentialCompute"], d, config)
-	hclData["provisioned_iops"] = flattenComputeDiskProvisionedIops(res["provisionedIops"], d, config)
-	hclData["provisioned_throughput"] = flattenComputeDiskProvisionedThroughput(res["provisionedThroughput"], d, config)
-	hclData["async_primary_disk"] = flattenComputeDiskAsyncPrimaryDisk(res["asyncPrimaryDisk"], d, config)
-	hclData["architecture"] = flattenComputeDiskArchitecture(res["architecture"], d, config)
-	hclData["params"] = flattenComputeDiskParams(res["params"], d, config)
-	hclData["guest_os_features"] = flattenComputeDiskGuestOsFeatures(res["guestOsFeatures"], d, config)
-	hclData["licenses"] = flattenComputeDiskLicenses(res["licenses"], d, config)
-	hclData["storage_pool"] = flattenComputeDiskStoragePool(res["storagePool"], d, config)
-	hclData["access_mode"] = flattenComputeDiskAccessMode(res["accessMode"], d, config)
-	hclData["zone"] = flattenComputeDiskZone(res["zone"], d, config)
-	hclData["snapshot"] = flattenComputeDiskSnapshot(res["sourceSnapshot"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

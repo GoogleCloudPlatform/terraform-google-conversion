@@ -122,16 +122,36 @@ func (c *NetworkSecurityGatewaySecurityPolicyRuleCai2hclConverter) convertResour
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("enabled", flattenNetworkSecurityGatewaySecurityPolicyRuleEnabled(res["enabled"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicyRule: %s", err)
+	}
+	if err := d.Set("priority", flattenNetworkSecurityGatewaySecurityPolicyRulePriority(res["priority"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicyRule: %s", err)
+	}
+	if err := d.Set("description", flattenNetworkSecurityGatewaySecurityPolicyRuleDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicyRule: %s", err)
+	}
+	if err := d.Set("session_matcher", flattenNetworkSecurityGatewaySecurityPolicyRuleSessionMatcher(res["sessionMatcher"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicyRule: %s", err)
+	}
+	if err := d.Set("application_matcher", flattenNetworkSecurityGatewaySecurityPolicyRuleApplicationMatcher(res["applicationMatcher"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicyRule: %s", err)
+	}
+	if err := d.Set("tls_inspection_enabled", flattenNetworkSecurityGatewaySecurityPolicyRuleTlsInspectionEnabled(res["tlsInspectionEnabled"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicyRule: %s", err)
+	}
+	if err := d.Set("basic_profile", flattenNetworkSecurityGatewaySecurityPolicyRuleBasicProfile(res["basicProfile"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicyRule: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "self_link": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//networksecurity.googleapis.com/projects/{{project}}/locations/{{location}}/gatewaySecurityPolicies/{{gateway_security_policy}}/rules/{{name}}", outputFields, hclData)
-
-	hclData["enabled"] = flattenNetworkSecurityGatewaySecurityPolicyRuleEnabled(res["enabled"], d, config)
-	hclData["priority"] = flattenNetworkSecurityGatewaySecurityPolicyRulePriority(res["priority"], d, config)
-	hclData["description"] = flattenNetworkSecurityGatewaySecurityPolicyRuleDescription(res["description"], d, config)
-	hclData["session_matcher"] = flattenNetworkSecurityGatewaySecurityPolicyRuleSessionMatcher(res["sessionMatcher"], d, config)
-	hclData["application_matcher"] = flattenNetworkSecurityGatewaySecurityPolicyRuleApplicationMatcher(res["applicationMatcher"], d, config)
-	hclData["tls_inspection_enabled"] = flattenNetworkSecurityGatewaySecurityPolicyRuleTlsInspectionEnabled(res["tlsInspectionEnabled"], d, config)
-	hclData["basic_profile"] = flattenNetworkSecurityGatewaySecurityPolicyRuleBasicProfile(res["basicProfile"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

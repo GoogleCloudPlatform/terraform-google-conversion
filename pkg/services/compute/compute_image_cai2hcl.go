@@ -127,26 +127,66 @@ func (c *ComputeImageCai2hclConverter) convertResourceData(asset caiasset.Asset)
 		return nil, err
 	}
 
+	if err := d.Set("description", flattenComputeImageDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("storage_locations", flattenComputeImageStorageLocations(res["storageLocations"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("disk_size_gb", flattenComputeImageDiskSizeGb(res["diskSizeGb"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("family", flattenComputeImageFamily(res["family"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("guest_os_features", flattenComputeImageGuestOsFeatures(res["guestOsFeatures"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("image_encryption_key", flattenComputeImageImageEncryptionKey(res["imageEncryptionKey"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("labels", flattenComputeImageLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("licenses", flattenComputeImageLicenses(res["licenses"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("name", flattenComputeImageName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("raw_disk", flattenComputeImageRawDisk(res["rawDisk"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("source_disk", flattenComputeImageSourceDisk(res["sourceDisk"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("source_disk_encryption_key", flattenComputeImageSourceDiskEncryptionKey(res["sourceDiskEncryptionKey"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("source_image", flattenComputeImageSourceImage(res["sourceImage"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("source_image_encryption_key", flattenComputeImageSourceImageEncryptionKey(res["sourceImageEncryptionKey"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("source_snapshot", flattenComputeImageSourceSnapshot(res["sourceSnapshot"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("shielded_instance_initial_state", flattenComputeImageShieldedInstanceInitialState(res["shieldedInstanceInitialState"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+	if err := d.Set("source_snapshot_encryption_key", flattenComputeImageSourceSnapshotEncryptionKey(res["sourceSnapshotEncryptionKey"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Image: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"archive_size_bytes": struct{}{}, "creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/images/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenComputeImageDescription(res["description"], d, config)
-	hclData["storage_locations"] = flattenComputeImageStorageLocations(res["storageLocations"], d, config)
-	hclData["disk_size_gb"] = flattenComputeImageDiskSizeGb(res["diskSizeGb"], d, config)
-	hclData["family"] = flattenComputeImageFamily(res["family"], d, config)
-	hclData["guest_os_features"] = flattenComputeImageGuestOsFeatures(res["guestOsFeatures"], d, config)
-	hclData["image_encryption_key"] = flattenComputeImageImageEncryptionKey(res["imageEncryptionKey"], d, config)
-	hclData["labels"] = flattenComputeImageLabels(res["labels"], d, config)
-	hclData["licenses"] = flattenComputeImageLicenses(res["licenses"], d, config)
-	hclData["name"] = flattenComputeImageName(res["name"], d, config)
-	hclData["raw_disk"] = flattenComputeImageRawDisk(res["rawDisk"], d, config)
-	hclData["source_disk"] = flattenComputeImageSourceDisk(res["sourceDisk"], d, config)
-	hclData["source_disk_encryption_key"] = flattenComputeImageSourceDiskEncryptionKey(res["sourceDiskEncryptionKey"], d, config)
-	hclData["source_image"] = flattenComputeImageSourceImage(res["sourceImage"], d, config)
-	hclData["source_image_encryption_key"] = flattenComputeImageSourceImageEncryptionKey(res["sourceImageEncryptionKey"], d, config)
-	hclData["source_snapshot"] = flattenComputeImageSourceSnapshot(res["sourceSnapshot"], d, config)
-	hclData["shielded_instance_initial_state"] = flattenComputeImageShieldedInstanceInitialState(res["shieldedInstanceInitialState"], d, config)
-	hclData["source_snapshot_encryption_key"] = flattenComputeImageSourceSnapshotEncryptionKey(res["sourceSnapshotEncryptionKey"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

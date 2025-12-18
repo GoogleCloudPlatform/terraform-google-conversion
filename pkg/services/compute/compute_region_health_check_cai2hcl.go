@@ -122,24 +122,60 @@ func (c *ComputeRegionHealthCheckCai2hclConverter) convertResourceData(asset cai
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("check_interval_sec", flattenComputeRegionHealthCheckCheckIntervalSec(res["checkIntervalSec"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("description", flattenComputeRegionHealthCheckDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("healthy_threshold", flattenComputeRegionHealthCheckHealthyThreshold(res["healthyThreshold"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("name", flattenComputeRegionHealthCheckName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("unhealthy_threshold", flattenComputeRegionHealthCheckUnhealthyThreshold(res["unhealthyThreshold"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("timeout_sec", flattenComputeRegionHealthCheckTimeoutSec(res["timeoutSec"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("http_health_check", flattenComputeRegionHealthCheckHttpHealthCheck(res["httpHealthCheck"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("https_health_check", flattenComputeRegionHealthCheckHttpsHealthCheck(res["httpsHealthCheck"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("tcp_health_check", flattenComputeRegionHealthCheckTcpHealthCheck(res["tcpHealthCheck"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("ssl_health_check", flattenComputeRegionHealthCheckSslHealthCheck(res["sslHealthCheck"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("http2_health_check", flattenComputeRegionHealthCheckHttp2HealthCheck(res["http2HealthCheck"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("grpc_health_check", flattenComputeRegionHealthCheckGrpcHealthCheck(res["grpcHealthCheck"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("grpc_tls_health_check", flattenComputeRegionHealthCheckGrpcTlsHealthCheck(res["grpcTlsHealthCheck"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("log_config", flattenComputeRegionHealthCheckLogConfig(res["logConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+	if err := d.Set("region", flattenComputeRegionHealthCheckRegion(res["region"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionHealthCheck: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "health_check_id": struct{}{}, "type": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/healthChecks/{{name}}", outputFields, hclData)
-
-	hclData["check_interval_sec"] = flattenComputeRegionHealthCheckCheckIntervalSec(res["checkIntervalSec"], d, config)
-	hclData["description"] = flattenComputeRegionHealthCheckDescription(res["description"], d, config)
-	hclData["healthy_threshold"] = flattenComputeRegionHealthCheckHealthyThreshold(res["healthyThreshold"], d, config)
-	hclData["name"] = flattenComputeRegionHealthCheckName(res["name"], d, config)
-	hclData["unhealthy_threshold"] = flattenComputeRegionHealthCheckUnhealthyThreshold(res["unhealthyThreshold"], d, config)
-	hclData["timeout_sec"] = flattenComputeRegionHealthCheckTimeoutSec(res["timeoutSec"], d, config)
-	hclData["http_health_check"] = flattenComputeRegionHealthCheckHttpHealthCheck(res["httpHealthCheck"], d, config)
-	hclData["https_health_check"] = flattenComputeRegionHealthCheckHttpsHealthCheck(res["httpsHealthCheck"], d, config)
-	hclData["tcp_health_check"] = flattenComputeRegionHealthCheckTcpHealthCheck(res["tcpHealthCheck"], d, config)
-	hclData["ssl_health_check"] = flattenComputeRegionHealthCheckSslHealthCheck(res["sslHealthCheck"], d, config)
-	hclData["http2_health_check"] = flattenComputeRegionHealthCheckHttp2HealthCheck(res["http2HealthCheck"], d, config)
-	hclData["grpc_health_check"] = flattenComputeRegionHealthCheckGrpcHealthCheck(res["grpcHealthCheck"], d, config)
-	hclData["grpc_tls_health_check"] = flattenComputeRegionHealthCheckGrpcTlsHealthCheck(res["grpcTlsHealthCheck"], d, config)
-	hclData["log_config"] = flattenComputeRegionHealthCheckLogConfig(res["logConfig"], d, config)
-	hclData["region"] = flattenComputeRegionHealthCheckRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

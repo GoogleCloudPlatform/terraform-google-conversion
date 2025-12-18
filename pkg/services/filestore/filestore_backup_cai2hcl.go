@@ -122,14 +122,30 @@ func (c *FilestoreBackupCai2hclConverter) convertResourceData(asset caiasset.Ass
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenFilestoreBackupDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+	if err := d.Set("labels", flattenFilestoreBackupLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+	if err := d.Set("source_instance", flattenFilestoreBackupSourceInstance(res["sourceInstance"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+	if err := d.Set("source_file_share", flattenFilestoreBackupSourceFileShare(res["sourceFileShare"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+	if err := d.Set("tags", flattenFilestoreBackupTags(res["tags"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"capacity_gb": struct{}{}, "create_time": struct{}{}, "download_bytes": struct{}{}, "effective_labels": struct{}{}, "kms_key_name": struct{}{}, "source_instance_tier": struct{}{}, "state": struct{}{}, "storage_bytes": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//file.googleapis.com/projects/{{project}}/locations/{{location}}/backups/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenFilestoreBackupDescription(res["description"], d, config)
-	hclData["labels"] = flattenFilestoreBackupLabels(res["labels"], d, config)
-	hclData["source_instance"] = flattenFilestoreBackupSourceInstance(res["sourceInstance"], d, config)
-	hclData["source_file_share"] = flattenFilestoreBackupSourceFileShare(res["sourceFileShare"], d, config)
-	hclData["tags"] = flattenFilestoreBackupTags(res["tags"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

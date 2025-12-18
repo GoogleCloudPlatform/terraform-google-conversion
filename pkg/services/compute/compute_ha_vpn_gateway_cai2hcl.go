@@ -122,17 +122,39 @@ func (c *ComputeHaVpnGatewayCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenComputeHaVpnGatewayDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading HaVpnGateway: %s", err)
+	}
+	if err := d.Set("name", flattenComputeHaVpnGatewayName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading HaVpnGateway: %s", err)
+	}
+	if err := d.Set("network", flattenComputeHaVpnGatewayNetwork(res["network"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading HaVpnGateway: %s", err)
+	}
+	if err := d.Set("stack_type", flattenComputeHaVpnGatewayStackType(res["stackType"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading HaVpnGateway: %s", err)
+	}
+	if err := d.Set("gateway_ip_version", flattenComputeHaVpnGatewayGatewayIpVersion(res["gatewayIpVersion"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading HaVpnGateway: %s", err)
+	}
+	if err := d.Set("vpn_interfaces", flattenComputeHaVpnGatewayVpnInterfaces(res["vpnInterfaces"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading HaVpnGateway: %s", err)
+	}
+	if err := d.Set("labels", flattenComputeHaVpnGatewayLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading HaVpnGateway: %s", err)
+	}
+	if err := d.Set("region", flattenComputeHaVpnGatewayRegion(res["region"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading HaVpnGateway: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/vpnGateways/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenComputeHaVpnGatewayDescription(res["description"], d, config)
-	hclData["name"] = flattenComputeHaVpnGatewayName(res["name"], d, config)
-	hclData["network"] = flattenComputeHaVpnGatewayNetwork(res["network"], d, config)
-	hclData["stack_type"] = flattenComputeHaVpnGatewayStackType(res["stackType"], d, config)
-	hclData["gateway_ip_version"] = flattenComputeHaVpnGatewayGatewayIpVersion(res["gatewayIpVersion"], d, config)
-	hclData["vpn_interfaces"] = flattenComputeHaVpnGatewayVpnInterfaces(res["vpnInterfaces"], d, config)
-	hclData["labels"] = flattenComputeHaVpnGatewayLabels(res["labels"], d, config)
-	hclData["region"] = flattenComputeHaVpnGatewayRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

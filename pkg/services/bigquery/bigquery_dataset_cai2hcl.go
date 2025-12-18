@@ -122,29 +122,65 @@ func (c *BigQueryDatasetCai2hclConverter) convertResourceData(asset caiasset.Ass
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"creation_time": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "last_modified_time": struct{}{}, "terraform_labels": struct{}{}}
-	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}", outputFields, hclData)
-
-	hclData["max_time_travel_hours"] = flattenBigQueryDatasetMaxTimeTravelHours(res["maxTimeTravelHours"], d, config)
-	hclData["access"] = flattenBigQueryDatasetAccess(res["access"], d, config)
+	if err := d.Set("max_time_travel_hours", flattenBigQueryDatasetMaxTimeTravelHours(res["maxTimeTravelHours"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("access", flattenBigQueryDatasetAccess(res["access"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
 	if flattenedProp := flattenBigQueryDatasetDatasetReference(res["datasetReference"], d, config); flattenedProp != nil {
 		if err := tgcresource.MergeFlattenedProperties(hclData, flattenedProp); err != nil {
 			return nil, fmt.Errorf("error merging flattened properties from datasetReference: %s", err)
 		}
 	}
-	hclData["default_table_expiration_ms"] = flattenBigQueryDatasetDefaultTableExpirationMs(res["defaultTableExpirationMs"], d, config)
-	hclData["default_partition_expiration_ms"] = flattenBigQueryDatasetDefaultPartitionExpirationMs(res["defaultPartitionExpirationMs"], d, config)
-	hclData["description"] = flattenBigQueryDatasetDescription(res["description"], d, config)
-	hclData["external_dataset_reference"] = flattenBigQueryDatasetExternalDatasetReference(res["externalDatasetReference"], d, config)
-	hclData["friendly_name"] = flattenBigQueryDatasetFriendlyName(res["friendlyName"], d, config)
-	hclData["labels"] = flattenBigQueryDatasetLabels(res["labels"], d, config)
-	hclData["location"] = flattenBigQueryDatasetLocation(res["location"], d, config)
-	hclData["default_encryption_configuration"] = flattenBigQueryDatasetDefaultEncryptionConfiguration(res["defaultEncryptionConfiguration"], d, config)
-	hclData["is_case_insensitive"] = flattenBigQueryDatasetIsCaseInsensitive(res["isCaseInsensitive"], d, config)
-	hclData["default_collation"] = flattenBigQueryDatasetDefaultCollation(res["defaultCollation"], d, config)
-	hclData["storage_billing_model"] = flattenBigQueryDatasetStorageBillingModel(res["storageBillingModel"], d, config)
-	hclData["resource_tags"] = flattenBigQueryDatasetResourceTags(res["resourceTags"], d, config)
-	hclData["external_catalog_dataset_options"] = flattenBigQueryDatasetExternalCatalogDatasetOptions(res["externalCatalogDatasetOptions"], d, config)
+	if err := d.Set("default_table_expiration_ms", flattenBigQueryDatasetDefaultTableExpirationMs(res["defaultTableExpirationMs"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("default_partition_expiration_ms", flattenBigQueryDatasetDefaultPartitionExpirationMs(res["defaultPartitionExpirationMs"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("description", flattenBigQueryDatasetDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("external_dataset_reference", flattenBigQueryDatasetExternalDatasetReference(res["externalDatasetReference"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("friendly_name", flattenBigQueryDatasetFriendlyName(res["friendlyName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("labels", flattenBigQueryDatasetLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("location", flattenBigQueryDatasetLocation(res["location"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("default_encryption_configuration", flattenBigQueryDatasetDefaultEncryptionConfiguration(res["defaultEncryptionConfiguration"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("is_case_insensitive", flattenBigQueryDatasetIsCaseInsensitive(res["isCaseInsensitive"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("default_collation", flattenBigQueryDatasetDefaultCollation(res["defaultCollation"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("storage_billing_model", flattenBigQueryDatasetStorageBillingModel(res["storageBillingModel"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("resource_tags", flattenBigQueryDatasetResourceTags(res["resourceTags"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+	if err := d.Set("external_catalog_dataset_options", flattenBigQueryDatasetExternalCatalogDatasetOptions(res["externalCatalogDatasetOptions"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Dataset: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
+	outputFields := map[string]struct{}{"creation_time": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "last_modified_time": struct{}{}, "terraform_labels": struct{}{}}
+	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//bigquery.googleapis.com/projects/{{project}}/datasets/{{dataset_id}}", outputFields, hclData)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
