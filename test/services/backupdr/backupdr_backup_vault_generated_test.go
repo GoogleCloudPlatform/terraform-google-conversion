@@ -32,6 +32,9 @@ func TestAccBackupDRBackupVault(t *testing.T) {
 		{
 			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultCmekExample",
 		},
+		{
+			Name: "TestAccBackupDRBackupVault_fullUpdate",
+		},
 	}
 
 	for _, tt := range tests {

@@ -29,6 +29,18 @@ func TestAccBinaryAuthorizationAttestor(t *testing.T) {
 		{
 			Name: "TestAccBinaryAuthorizationAttestor_binaryAuthorizationAttestorBasicExample",
 		},
+		{
+			Name: "TestAccBinaryAuthorizationAttestor_basic",
+		},
+		{
+			Name: "TestAccBinaryAuthorizationAttestor_full",
+		},
+		{
+			Name: "TestAccBinaryAuthorizationAttestor_kms",
+		},
+		{
+			Name: "TestAccBinaryAuthorizationAttestor_update",
+		},
 	}
 
 	for _, tt := range tests {
