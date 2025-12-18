@@ -122,13 +122,27 @@ func (c *DatastreamPrivateConnectionCai2hclConverter) convertResourceData(asset 
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("labels", flattenDatastreamPrivateConnectionLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading PrivateConnection: %s", err)
+	}
+	if err := d.Set("display_name", flattenDatastreamPrivateConnectionDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading PrivateConnection: %s", err)
+	}
+	if err := d.Set("vpc_peering_config", flattenDatastreamPrivateConnectionVpcPeeringConfig(res["vpcPeeringConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading PrivateConnection: %s", err)
+	}
+	if err := d.Set("psc_interface_config", flattenDatastreamPrivateConnectionPscInterfaceConfig(res["pscInterfaceConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading PrivateConnection: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "error": struct{}{}, "name": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/privateConnections/{{private_connection_id}}", outputFields, hclData)
-
-	hclData["labels"] = flattenDatastreamPrivateConnectionLabels(res["labels"], d, config)
-	hclData["display_name"] = flattenDatastreamPrivateConnectionDisplayName(res["displayName"], d, config)
-	hclData["vpc_peering_config"] = flattenDatastreamPrivateConnectionVpcPeeringConfig(res["vpcPeeringConfig"], d, config)
-	hclData["psc_interface_config"] = flattenDatastreamPrivateConnectionPscInterfaceConfig(res["pscInterfaceConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

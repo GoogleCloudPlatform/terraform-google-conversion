@@ -122,11 +122,21 @@ func (c *NetworkSecurityGatewaySecurityPolicyCai2hclConverter) convertResourceDa
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenNetworkSecurityGatewaySecurityPolicyDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicy: %s", err)
+	}
+	if err := d.Set("tls_inspection_policy", flattenNetworkSecurityGatewaySecurityPolicyTlsInspectionPolicy(res["tlsInspectionPolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading GatewaySecurityPolicy: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "self_link": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//networksecurity.googleapis.com/projects/{{project}}/locations/{{location}}/gatewaySecurityPolicies/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenNetworkSecurityGatewaySecurityPolicyDescription(res["description"], d, config)
-	hclData["tls_inspection_policy"] = flattenNetworkSecurityGatewaySecurityPolicyTlsInspectionPolicy(res["tlsInspectionPolicy"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

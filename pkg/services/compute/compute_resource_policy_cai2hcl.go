@@ -122,17 +122,39 @@ func (c *ComputeResourcePolicyCai2hclConverter) convertResourceData(asset caiass
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("name", flattenComputeResourcePolicyName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ResourcePolicy: %s", err)
+	}
+	if err := d.Set("description", flattenComputeResourcePolicyDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ResourcePolicy: %s", err)
+	}
+	if err := d.Set("snapshot_schedule_policy", flattenComputeResourcePolicySnapshotSchedulePolicy(res["snapshotSchedulePolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ResourcePolicy: %s", err)
+	}
+	if err := d.Set("group_placement_policy", flattenComputeResourcePolicyGroupPlacementPolicy(res["groupPlacementPolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ResourcePolicy: %s", err)
+	}
+	if err := d.Set("instance_schedule_policy", flattenComputeResourcePolicyInstanceSchedulePolicy(res["instanceSchedulePolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ResourcePolicy: %s", err)
+	}
+	if err := d.Set("disk_consistency_group_policy", flattenComputeResourcePolicyDiskConsistencyGroupPolicy(res["diskConsistencyGroupPolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ResourcePolicy: %s", err)
+	}
+	if err := d.Set("workload_policy", flattenComputeResourcePolicyWorkloadPolicy(res["workloadPolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ResourcePolicy: %s", err)
+	}
+	if err := d.Set("region", flattenComputeResourcePolicyRegion(res["region"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading ResourcePolicy: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/resourcePolicies/{{name}}", outputFields, hclData)
-
-	hclData["name"] = flattenComputeResourcePolicyName(res["name"], d, config)
-	hclData["description"] = flattenComputeResourcePolicyDescription(res["description"], d, config)
-	hclData["snapshot_schedule_policy"] = flattenComputeResourcePolicySnapshotSchedulePolicy(res["snapshotSchedulePolicy"], d, config)
-	hclData["group_placement_policy"] = flattenComputeResourcePolicyGroupPlacementPolicy(res["groupPlacementPolicy"], d, config)
-	hclData["instance_schedule_policy"] = flattenComputeResourcePolicyInstanceSchedulePolicy(res["instanceSchedulePolicy"], d, config)
-	hclData["disk_consistency_group_policy"] = flattenComputeResourcePolicyDiskConsistencyGroupPolicy(res["diskConsistencyGroupPolicy"], d, config)
-	hclData["workload_policy"] = flattenComputeResourcePolicyWorkloadPolicy(res["workloadPolicy"], d, config)
-	hclData["region"] = flattenComputeResourcePolicyRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

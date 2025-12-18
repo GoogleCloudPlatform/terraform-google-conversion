@@ -127,14 +127,30 @@ func (c *BackupDRBackupPlanCai2hclConverter) convertResourceData(asset caiasset.
 		return nil, err
 	}
 
+	if err := d.Set("description", flattenBackupDRBackupPlanDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupPlan: %s", err)
+	}
+	if err := d.Set("backup_vault", flattenBackupDRBackupPlanBackupVault(res["backupVault"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupPlan: %s", err)
+	}
+	if err := d.Set("resource_type", flattenBackupDRBackupPlanResourceType(res["resourceType"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupPlan: %s", err)
+	}
+	if err := d.Set("backup_rules", flattenBackupDRBackupPlanBackupRules(res["backupRules"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupPlan: %s", err)
+	}
+	if err := d.Set("log_retention_days", flattenBackupDRBackupPlanLogRetentionDays(res["logRetentionDays"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupPlan: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"backup_vault_service_account": struct{}{}, "create_time": struct{}{}, "name": struct{}{}, "supported_resource_types": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//backupdr.googleapis.com/projects/{{project}}/locations/{{location}}/backupPlans/{{backup_plan_id}}", outputFields, hclData)
-
-	hclData["description"] = flattenBackupDRBackupPlanDescription(res["description"], d, config)
-	hclData["backup_vault"] = flattenBackupDRBackupPlanBackupVault(res["backupVault"], d, config)
-	hclData["resource_type"] = flattenBackupDRBackupPlanResourceType(res["resourceType"], d, config)
-	hclData["backup_rules"] = flattenBackupDRBackupPlanBackupRules(res["backupRules"], d, config)
-	hclData["log_retention_days"] = flattenBackupDRBackupPlanLogRetentionDays(res["logRetentionDays"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

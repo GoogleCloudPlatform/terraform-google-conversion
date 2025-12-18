@@ -132,12 +132,24 @@ func (c *IAMBetaWorkloadIdentityPoolCai2hclConverter) convertResourceData(asset 
 		return nil, nil
 	}
 
+	if err := d.Set("display_name", flattenIAMBetaWorkloadIdentityPoolDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPool: %s", err)
+	}
+	if err := d.Set("description", flattenIAMBetaWorkloadIdentityPoolDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPool: %s", err)
+	}
+	if err := d.Set("disabled", flattenIAMBetaWorkloadIdentityPoolDisabled(res["disabled"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPool: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"name": struct{}{}, "state": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//iam.googleapis.com/projects/{{project}}/locations/global/workloadIdentityPools/{{workload_identity_pool_id}}", outputFields, hclData)
-
-	hclData["display_name"] = flattenIAMBetaWorkloadIdentityPoolDisplayName(res["displayName"], d, config)
-	hclData["description"] = flattenIAMBetaWorkloadIdentityPoolDescription(res["description"], d, config)
-	hclData["disabled"] = flattenIAMBetaWorkloadIdentityPoolDisabled(res["disabled"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

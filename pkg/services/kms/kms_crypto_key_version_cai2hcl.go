@@ -122,11 +122,21 @@ func (c *KMSCryptoKeyVersionCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("state", flattenKMSCryptoKeyVersionState(res["state"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKeyVersion: %s", err)
+	}
+	if err := d.Set("external_protection_level_options", flattenKMSCryptoKeyVersionExternalProtectionLevelOptions(res["externalProtectionLevelOptions"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CryptoKeyVersion: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"algorithm": struct{}{}, "attestation": struct{}{}, "generate_time": struct{}{}, "name": struct{}{}, "protection_level": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudkms.googleapis.com/{{crypto_key}}/cryptoKeyVersions/", outputFields, hclData)
-
-	hclData["state"] = flattenKMSCryptoKeyVersionState(res["state"], d, config)
-	hclData["external_protection_level_options"] = flattenKMSCryptoKeyVersionExternalProtectionLevelOptions(res["externalProtectionLevelOptions"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

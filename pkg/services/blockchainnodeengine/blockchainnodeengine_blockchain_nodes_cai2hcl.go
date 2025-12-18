@@ -122,12 +122,24 @@ func (c *BlockchainNodeEngineBlockchainNodesCai2hclConverter) convertResourceDat
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("labels", flattenBlockchainNodeEngineBlockchainNodesLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BlockchainNodes: %s", err)
+	}
+	if err := d.Set("ethereum_details", flattenBlockchainNodeEngineBlockchainNodesEthereumDetails(res["ethereumDetails"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BlockchainNodes: %s", err)
+	}
+	if err := d.Set("blockchain_type", flattenBlockchainNodeEngineBlockchainNodesBlockchainType(res["blockchainType"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BlockchainNodes: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"connection_info": struct{}{}, "create_time": struct{}{}, "effective_labels": struct{}{}, "name": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//blockchainnodeengine.googleapis.com/projects/{{project}}/locations/{{location}}/blockchainNodes/{{blockchain_node_id}}", outputFields, hclData)
-
-	hclData["labels"] = flattenBlockchainNodeEngineBlockchainNodesLabels(res["labels"], d, config)
-	hclData["ethereum_details"] = flattenBlockchainNodeEngineBlockchainNodesEthereumDetails(res["ethereumDetails"], d, config)
-	hclData["blockchain_type"] = flattenBlockchainNodeEngineBlockchainNodesBlockchainType(res["blockchainType"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

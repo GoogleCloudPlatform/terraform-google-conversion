@@ -122,12 +122,24 @@ func (c *FirebaseDataConnectServiceCai2hclConverter) convertResourceData(asset c
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("display_name", flattenFirebaseDataConnectServiceDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Service: %s", err)
+	}
+	if err := d.Set("annotations", flattenFirebaseDataConnectServiceAnnotations(res["annotations"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Service: %s", err)
+	}
+	if err := d.Set("labels", flattenFirebaseDataConnectServiceLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Service: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "name": struct{}{}, "reconciling": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//firebasedataconnect.googleapis.com/projects/{{project}}/locations/{{location}}/services/{{service_id}}", outputFields, hclData)
-
-	hclData["display_name"] = flattenFirebaseDataConnectServiceDisplayName(res["displayName"], d, config)
-	hclData["annotations"] = flattenFirebaseDataConnectServiceAnnotations(res["annotations"], d, config)
-	hclData["labels"] = flattenFirebaseDataConnectServiceLabels(res["labels"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

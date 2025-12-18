@@ -122,19 +122,45 @@ func (c *SecretManagerRegionalRegionalSecretCai2hclConverter) convertResourceDat
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("labels", flattenSecretManagerRegionalRegionalSecretLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("annotations", flattenSecretManagerRegionalRegionalSecretAnnotations(res["annotations"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("version_aliases", flattenSecretManagerRegionalRegionalSecretVersionAliases(res["versionAliases"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("customer_managed_encryption", flattenSecretManagerRegionalRegionalSecretCustomerManagedEncryption(res["customerManagedEncryption"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("topics", flattenSecretManagerRegionalRegionalSecretTopics(res["topics"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("rotation", flattenSecretManagerRegionalRegionalSecretRotation(res["rotation"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("expire_time", flattenSecretManagerRegionalRegionalSecretExpireTime(res["expireTime"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("ttl", flattenSecretManagerRegionalRegionalSecretTtl(res["ttl"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("version_destroy_ttl", flattenSecretManagerRegionalRegionalSecretVersionDestroyTtl(res["versionDestroyTtl"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+	if err := d.Set("tags", flattenSecretManagerRegionalRegionalSecretTags(res["tags"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading RegionalSecret: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "name": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//secretmanager.googleapis.com/projects/{{project}}/locations/{{location}}/secrets/{{secret_id}}", outputFields, hclData)
-
-	hclData["labels"] = flattenSecretManagerRegionalRegionalSecretLabels(res["labels"], d, config)
-	hclData["annotations"] = flattenSecretManagerRegionalRegionalSecretAnnotations(res["annotations"], d, config)
-	hclData["version_aliases"] = flattenSecretManagerRegionalRegionalSecretVersionAliases(res["versionAliases"], d, config)
-	hclData["customer_managed_encryption"] = flattenSecretManagerRegionalRegionalSecretCustomerManagedEncryption(res["customerManagedEncryption"], d, config)
-	hclData["topics"] = flattenSecretManagerRegionalRegionalSecretTopics(res["topics"], d, config)
-	hclData["rotation"] = flattenSecretManagerRegionalRegionalSecretRotation(res["rotation"], d, config)
-	hclData["expire_time"] = flattenSecretManagerRegionalRegionalSecretExpireTime(res["expireTime"], d, config)
-	hclData["ttl"] = flattenSecretManagerRegionalRegionalSecretTtl(res["ttl"], d, config)
-	hclData["version_destroy_ttl"] = flattenSecretManagerRegionalRegionalSecretVersionDestroyTtl(res["versionDestroyTtl"], d, config)
-	hclData["tags"] = flattenSecretManagerRegionalRegionalSecretTags(res["tags"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

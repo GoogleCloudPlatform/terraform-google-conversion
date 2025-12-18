@@ -122,14 +122,30 @@ func (c *VmwareengineNetworkPolicyCai2hclConverter) convertResourceData(asset ca
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("edge_services_cidr", flattenVmwareengineNetworkPolicyEdgeServicesCidr(res["edgeServicesCidr"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NetworkPolicy: %s", err)
+	}
+	if err := d.Set("description", flattenVmwareengineNetworkPolicyDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NetworkPolicy: %s", err)
+	}
+	if err := d.Set("vmware_engine_network", flattenVmwareengineNetworkPolicyVmwareEngineNetwork(res["vmwareEngineNetwork"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NetworkPolicy: %s", err)
+	}
+	if err := d.Set("internet_access", flattenVmwareengineNetworkPolicyInternetAccess(res["internetAccess"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NetworkPolicy: %s", err)
+	}
+	if err := d.Set("external_ip", flattenVmwareengineNetworkPolicyExternalIp(res["externalIp"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NetworkPolicy: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}, "vmware_engine_network_canonical": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//vmwareengine.googleapis.com/projects/{{project}}/locations/{{location}}/networkPolicies/{{name}}", outputFields, hclData)
-
-	hclData["edge_services_cidr"] = flattenVmwareengineNetworkPolicyEdgeServicesCidr(res["edgeServicesCidr"], d, config)
-	hclData["description"] = flattenVmwareengineNetworkPolicyDescription(res["description"], d, config)
-	hclData["vmware_engine_network"] = flattenVmwareengineNetworkPolicyVmwareEngineNetwork(res["vmwareEngineNetwork"], d, config)
-	hclData["internet_access"] = flattenVmwareengineNetworkPolicyInternetAccess(res["internetAccess"], d, config)
-	hclData["external_ip"] = flattenVmwareengineNetworkPolicyExternalIp(res["externalIp"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -122,13 +122,27 @@ func (c *ApphubApplicationCai2hclConverter) convertResourceData(asset caiasset.A
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("display_name", flattenApphubApplicationDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Application: %s", err)
+	}
+	if err := d.Set("description", flattenApphubApplicationDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Application: %s", err)
+	}
+	if err := d.Set("attributes", flattenApphubApplicationAttributes(res["attributes"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Application: %s", err)
+	}
+	if err := d.Set("scope", flattenApphubApplicationScope(res["scope"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Application: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "name": struct{}{}, "state": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//apphub.googleapis.com/projects/{{project}}/locations/{{location}}/applications/{{application_id}}", outputFields, hclData)
-
-	hclData["display_name"] = flattenApphubApplicationDisplayName(res["displayName"], d, config)
-	hclData["description"] = flattenApphubApplicationDescription(res["description"], d, config)
-	hclData["attributes"] = flattenApphubApplicationAttributes(res["attributes"], d, config)
-	hclData["scope"] = flattenApphubApplicationScope(res["scope"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

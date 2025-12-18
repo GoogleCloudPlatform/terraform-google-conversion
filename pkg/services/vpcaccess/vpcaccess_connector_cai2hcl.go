@@ -127,17 +127,39 @@ func (c *VPCAccessConnectorCai2hclConverter) convertResourceData(asset caiasset.
 		return nil, err
 	}
 
+	if err := d.Set("network", flattenVPCAccessConnectorNetwork(res["network"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Connector: %s", err)
+	}
+	if err := d.Set("ip_cidr_range", flattenVPCAccessConnectorIpCidrRange(res["ipCidrRange"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Connector: %s", err)
+	}
+	if err := d.Set("machine_type", flattenVPCAccessConnectorMachineType(res["machineType"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Connector: %s", err)
+	}
+	if err := d.Set("min_throughput", flattenVPCAccessConnectorMinThroughput(res["minThroughput"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Connector: %s", err)
+	}
+	if err := d.Set("min_instances", flattenVPCAccessConnectorMinInstances(res["minInstances"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Connector: %s", err)
+	}
+	if err := d.Set("max_instances", flattenVPCAccessConnectorMaxInstances(res["maxInstances"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Connector: %s", err)
+	}
+	if err := d.Set("max_throughput", flattenVPCAccessConnectorMaxThroughput(res["maxThroughput"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Connector: %s", err)
+	}
+	if err := d.Set("subnet", flattenVPCAccessConnectorSubnet(res["subnet"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Connector: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"connected_projects": struct{}{}, "self_link": struct{}{}, "state": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//vpcaccess.googleapis.com/projects/{{project}}/locations/{{region}}/connectors/{{name}}", outputFields, hclData)
-
-	hclData["network"] = flattenVPCAccessConnectorNetwork(res["network"], d, config)
-	hclData["ip_cidr_range"] = flattenVPCAccessConnectorIpCidrRange(res["ipCidrRange"], d, config)
-	hclData["machine_type"] = flattenVPCAccessConnectorMachineType(res["machineType"], d, config)
-	hclData["min_throughput"] = flattenVPCAccessConnectorMinThroughput(res["minThroughput"], d, config)
-	hclData["min_instances"] = flattenVPCAccessConnectorMinInstances(res["minInstances"], d, config)
-	hclData["max_instances"] = flattenVPCAccessConnectorMaxInstances(res["maxInstances"], d, config)
-	hclData["max_throughput"] = flattenVPCAccessConnectorMaxThroughput(res["maxThroughput"], d, config)
-	hclData["subnet"] = flattenVPCAccessConnectorSubnet(res["subnet"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

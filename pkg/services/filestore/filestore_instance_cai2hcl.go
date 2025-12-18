@@ -122,22 +122,54 @@ func (c *FilestoreInstanceCai2hclConverter) convertResourceData(asset caiasset.A
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenFilestoreInstanceDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("tier", flattenFilestoreInstanceTier(res["tier"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("protocol", flattenFilestoreInstanceProtocol(res["protocol"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("labels", flattenFilestoreInstanceLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("file_shares", flattenFilestoreInstanceFileShares(res["fileShares"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("networks", flattenFilestoreInstanceNetworks(res["networks"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("kms_key_name", flattenFilestoreInstanceKmsKeyName(res["kmsKeyName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("deletion_protection_enabled", flattenFilestoreInstanceDeletionProtectionEnabled(res["deletionProtectionEnabled"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("deletion_protection_reason", flattenFilestoreInstanceDeletionProtectionReason(res["deletionProtectionReason"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("performance_config", flattenFilestoreInstancePerformanceConfig(res["performanceConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("tags", flattenFilestoreInstanceTags(res["tags"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("initial_replication", flattenFilestoreInstanceInitialReplication(res["replication"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+	if err := d.Set("directory_services", flattenFilestoreInstanceDirectoryServices(res["directoryServices"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Instance: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "effective_replication": struct{}{}, "etag": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//file.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenFilestoreInstanceDescription(res["description"], d, config)
-	hclData["tier"] = flattenFilestoreInstanceTier(res["tier"], d, config)
-	hclData["protocol"] = flattenFilestoreInstanceProtocol(res["protocol"], d, config)
-	hclData["labels"] = flattenFilestoreInstanceLabels(res["labels"], d, config)
-	hclData["file_shares"] = flattenFilestoreInstanceFileShares(res["fileShares"], d, config)
-	hclData["networks"] = flattenFilestoreInstanceNetworks(res["networks"], d, config)
-	hclData["kms_key_name"] = flattenFilestoreInstanceKmsKeyName(res["kmsKeyName"], d, config)
-	hclData["deletion_protection_enabled"] = flattenFilestoreInstanceDeletionProtectionEnabled(res["deletionProtectionEnabled"], d, config)
-	hclData["deletion_protection_reason"] = flattenFilestoreInstanceDeletionProtectionReason(res["deletionProtectionReason"], d, config)
-	hclData["performance_config"] = flattenFilestoreInstancePerformanceConfig(res["performanceConfig"], d, config)
-	hclData["tags"] = flattenFilestoreInstanceTags(res["tags"], d, config)
-	hclData["initial_replication"] = flattenFilestoreInstanceInitialReplication(res["replication"], d, config)
-	hclData["directory_services"] = flattenFilestoreInstanceDirectoryServices(res["directoryServices"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

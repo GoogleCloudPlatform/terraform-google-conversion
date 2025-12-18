@@ -122,21 +122,51 @@ func (c *ArtifactRegistryRepositoryCai2hclConverter) convertResourceData(asset c
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("format", flattenArtifactRegistryRepositoryFormat(res["format"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("description", flattenArtifactRegistryRepositoryDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("labels", flattenArtifactRegistryRepositoryLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("kms_key_name", flattenArtifactRegistryRepositoryKmsKeyName(res["kmsKeyName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("docker_config", flattenArtifactRegistryRepositoryDockerConfig(res["dockerConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("maven_config", flattenArtifactRegistryRepositoryMavenConfig(res["mavenConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("mode", flattenArtifactRegistryRepositoryMode(res["mode"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("virtual_repository_config", flattenArtifactRegistryRepositoryVirtualRepositoryConfig(res["virtualRepositoryConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("cleanup_policies", flattenArtifactRegistryRepositoryCleanupPolicies(res["cleanupPolicies"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("remote_repository_config", flattenArtifactRegistryRepositoryRemoteRepositoryConfig(res["remoteRepositoryConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("cleanup_policy_dry_run", flattenArtifactRegistryRepositoryCleanupPolicyDryRun(res["cleanupPolicyDryRun"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+	if err := d.Set("vulnerability_scanning_config", flattenArtifactRegistryRepositoryVulnerabilityScanningConfig(res["vulnerabilityScanningConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Repository: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "name": struct{}{}, "registry_uri": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//artifactregistry.googleapis.com/projects/{{project}}/locations/{{location}}/repositories/{{repository_id}}", outputFields, hclData)
-
-	hclData["format"] = flattenArtifactRegistryRepositoryFormat(res["format"], d, config)
-	hclData["description"] = flattenArtifactRegistryRepositoryDescription(res["description"], d, config)
-	hclData["labels"] = flattenArtifactRegistryRepositoryLabels(res["labels"], d, config)
-	hclData["kms_key_name"] = flattenArtifactRegistryRepositoryKmsKeyName(res["kmsKeyName"], d, config)
-	hclData["docker_config"] = flattenArtifactRegistryRepositoryDockerConfig(res["dockerConfig"], d, config)
-	hclData["maven_config"] = flattenArtifactRegistryRepositoryMavenConfig(res["mavenConfig"], d, config)
-	hclData["mode"] = flattenArtifactRegistryRepositoryMode(res["mode"], d, config)
-	hclData["virtual_repository_config"] = flattenArtifactRegistryRepositoryVirtualRepositoryConfig(res["virtualRepositoryConfig"], d, config)
-	hclData["cleanup_policies"] = flattenArtifactRegistryRepositoryCleanupPolicies(res["cleanupPolicies"], d, config)
-	hclData["remote_repository_config"] = flattenArtifactRegistryRepositoryRemoteRepositoryConfig(res["remoteRepositoryConfig"], d, config)
-	hclData["cleanup_policy_dry_run"] = flattenArtifactRegistryRepositoryCleanupPolicyDryRun(res["cleanupPolicyDryRun"], d, config)
-	hclData["vulnerability_scanning_config"] = flattenArtifactRegistryRepositoryVulnerabilityScanningConfig(res["vulnerabilityScanningConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

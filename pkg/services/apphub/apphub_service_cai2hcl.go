@@ -122,13 +122,27 @@ func (c *ApphubServiceCai2hclConverter) convertResourceData(asset caiasset.Asset
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("display_name", flattenApphubServiceDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Service: %s", err)
+	}
+	if err := d.Set("description", flattenApphubServiceDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Service: %s", err)
+	}
+	if err := d.Set("attributes", flattenApphubServiceAttributes(res["attributes"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Service: %s", err)
+	}
+	if err := d.Set("discovered_service", flattenApphubServiceDiscoveredService(res["discoveredService"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Service: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "name": struct{}{}, "service_properties": struct{}{}, "service_reference": struct{}{}, "state": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//apphub.googleapis.com/projects/{{project}}/locations/{{location}}/applications/{{application_id}}/services/{{service_id}}", outputFields, hclData)
-
-	hclData["display_name"] = flattenApphubServiceDisplayName(res["displayName"], d, config)
-	hclData["description"] = flattenApphubServiceDescription(res["description"], d, config)
-	hclData["attributes"] = flattenApphubServiceAttributes(res["attributes"], d, config)
-	hclData["discovered_service"] = flattenApphubServiceDiscoveredService(res["discoveredService"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

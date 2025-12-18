@@ -132,15 +132,33 @@ func (c *MonitoringNotificationChannelCai2hclConverter) convertResourceData(asse
 		return nil, nil
 	}
 
+	if err := d.Set("labels", flattenMonitoringNotificationChannelLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NotificationChannel: %s", err)
+	}
+	if err := d.Set("type", flattenMonitoringNotificationChannelType(res["type"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NotificationChannel: %s", err)
+	}
+	if err := d.Set("user_labels", flattenMonitoringNotificationChannelUserLabels(res["userLabels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NotificationChannel: %s", err)
+	}
+	if err := d.Set("description", flattenMonitoringNotificationChannelDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NotificationChannel: %s", err)
+	}
+	if err := d.Set("display_name", flattenMonitoringNotificationChannelDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NotificationChannel: %s", err)
+	}
+	if err := d.Set("enabled", flattenMonitoringNotificationChannelEnabled(res["enabled"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NotificationChannel: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"name": struct{}{}, "verification_status": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//monitoring.googleapis.com/{{name}}", outputFields, hclData)
-
-	hclData["labels"] = flattenMonitoringNotificationChannelLabels(res["labels"], d, config)
-	hclData["type"] = flattenMonitoringNotificationChannelType(res["type"], d, config)
-	hclData["user_labels"] = flattenMonitoringNotificationChannelUserLabels(res["userLabels"], d, config)
-	hclData["description"] = flattenMonitoringNotificationChannelDescription(res["description"], d, config)
-	hclData["display_name"] = flattenMonitoringNotificationChannelDisplayName(res["displayName"], d, config)
-	hclData["enabled"] = flattenMonitoringNotificationChannelEnabled(res["enabled"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

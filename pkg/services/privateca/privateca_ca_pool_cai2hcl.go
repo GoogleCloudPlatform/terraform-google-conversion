@@ -127,14 +127,30 @@ func (c *PrivatecaCaPoolCai2hclConverter) convertResourceData(asset caiasset.Ass
 		return nil, err
 	}
 
+	if err := d.Set("tier", flattenPrivatecaCaPoolTier(res["tier"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CaPool: %s", err)
+	}
+	if err := d.Set("issuance_policy", flattenPrivatecaCaPoolIssuancePolicy(res["issuancePolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CaPool: %s", err)
+	}
+	if err := d.Set("publishing_options", flattenPrivatecaCaPoolPublishingOptions(res["publishingOptions"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CaPool: %s", err)
+	}
+	if err := d.Set("labels", flattenPrivatecaCaPoolLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CaPool: %s", err)
+	}
+	if err := d.Set("encryption_spec", flattenPrivatecaCaPoolEncryptionSpec(res["encryptionSpec"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading CaPool: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//privateca.googleapis.com/projects/{{project}}/locations/{{location}}/caPools/{{name}}", outputFields, hclData)
-
-	hclData["tier"] = flattenPrivatecaCaPoolTier(res["tier"], d, config)
-	hclData["issuance_policy"] = flattenPrivatecaCaPoolIssuancePolicy(res["issuancePolicy"], d, config)
-	hclData["publishing_options"] = flattenPrivatecaCaPoolPublishingOptions(res["publishingOptions"], d, config)
-	hclData["labels"] = flattenPrivatecaCaPoolLabels(res["labels"], d, config)
-	hclData["encryption_spec"] = flattenPrivatecaCaPoolEncryptionSpec(res["encryptionSpec"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

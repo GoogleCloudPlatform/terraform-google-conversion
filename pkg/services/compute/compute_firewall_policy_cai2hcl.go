@@ -122,12 +122,24 @@ func (c *ComputeFirewallPolicyCai2hclConverter) convertResourceData(asset caiass
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("short_name", flattenComputeFirewallPolicyShortName(res["shortName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading FirewallPolicy: %s", err)
+	}
+	if err := d.Set("description", flattenComputeFirewallPolicyDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading FirewallPolicy: %s", err)
+	}
+	if err := d.Set("parent", flattenComputeFirewallPolicyParent(res["parent"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading FirewallPolicy: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "fingerprint": struct{}{}, "firewall_policy_id": struct{}{}, "name": struct{}{}, "rule_tuple_count": struct{}{}, "self_link": struct{}{}, "self_link_with_id": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/locations/global/firewallPolicies/{{name}}", outputFields, hclData)
-
-	hclData["short_name"] = flattenComputeFirewallPolicyShortName(res["shortName"], d, config)
-	hclData["description"] = flattenComputeFirewallPolicyDescription(res["description"], d, config)
-	hclData["parent"] = flattenComputeFirewallPolicyParent(res["parent"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

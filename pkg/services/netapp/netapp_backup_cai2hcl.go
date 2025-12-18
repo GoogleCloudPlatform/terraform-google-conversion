@@ -122,13 +122,27 @@ func (c *NetappBackupCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenNetappBackupDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+	if err := d.Set("source_volume", flattenNetappBackupSourceVolume(res["sourceVolume"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+	if err := d.Set("labels", flattenNetappBackupLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+	if err := d.Set("source_snapshot", flattenNetappBackupSourceSnapshot(res["sourceSnapshot"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Backup: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"backup_region": struct{}{}, "backup_type": struct{}{}, "chain_storage_bytes": struct{}{}, "create_time": struct{}{}, "effective_labels": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "volume_region": struct{}{}, "volume_usage_bytes": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//netapp.googleapis.com/projects/{{project}}/locations/{{location}}/backupVaults/{{vault_name}}/backups/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenNetappBackupDescription(res["description"], d, config)
-	hclData["source_volume"] = flattenNetappBackupSourceVolume(res["sourceVolume"], d, config)
-	hclData["labels"] = flattenNetappBackupLabels(res["labels"], d, config)
-	hclData["source_snapshot"] = flattenNetappBackupSourceSnapshot(res["sourceSnapshot"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

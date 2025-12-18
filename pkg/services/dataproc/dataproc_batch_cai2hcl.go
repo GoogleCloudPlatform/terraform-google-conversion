@@ -122,16 +122,36 @@ func (c *DataprocBatchCai2hclConverter) convertResourceData(asset caiasset.Asset
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("labels", flattenDataprocBatchLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Batch: %s", err)
+	}
+	if err := d.Set("runtime_config", flattenDataprocBatchRuntimeConfig(res["runtimeConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Batch: %s", err)
+	}
+	if err := d.Set("environment_config", flattenDataprocBatchEnvironmentConfig(res["environmentConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Batch: %s", err)
+	}
+	if err := d.Set("pyspark_batch", flattenDataprocBatchPysparkBatch(res["pysparkBatch"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Batch: %s", err)
+	}
+	if err := d.Set("spark_batch", flattenDataprocBatchSparkBatch(res["sparkBatch"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Batch: %s", err)
+	}
+	if err := d.Set("spark_r_batch", flattenDataprocBatchSparkRBatch(res["sparkRBatch"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Batch: %s", err)
+	}
+	if err := d.Set("spark_sql_batch", flattenDataprocBatchSparkSqlBatch(res["sparkSqlBatch"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading Batch: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "creator": struct{}{}, "effective_labels": struct{}{}, "name": struct{}{}, "operation": struct{}{}, "runtime_info": struct{}{}, "state": struct{}{}, "state_history": struct{}{}, "state_message": struct{}{}, "state_time": struct{}{}, "terraform_labels": struct{}{}, "uuid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//dataproc.googleapis.com/projects/{{project}}/locations/{{location}}/batches/{{batch_id}}", outputFields, hclData)
-
-	hclData["labels"] = flattenDataprocBatchLabels(res["labels"], d, config)
-	hclData["runtime_config"] = flattenDataprocBatchRuntimeConfig(res["runtimeConfig"], d, config)
-	hclData["environment_config"] = flattenDataprocBatchEnvironmentConfig(res["environmentConfig"], d, config)
-	hclData["pyspark_batch"] = flattenDataprocBatchPysparkBatch(res["pysparkBatch"], d, config)
-	hclData["spark_batch"] = flattenDataprocBatchSparkBatch(res["sparkBatch"], d, config)
-	hclData["spark_r_batch"] = flattenDataprocBatchSparkRBatch(res["sparkRBatch"], d, config)
-	hclData["spark_sql_batch"] = flattenDataprocBatchSparkSqlBatch(res["sparkSqlBatch"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -122,11 +122,21 @@ func (c *NetworkSecurityUrlListsCai2hclConverter) convertResourceData(asset caia
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenNetworkSecurityUrlListsDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading UrlLists: %s", err)
+	}
+	if err := d.Set("values", flattenNetworkSecurityUrlListsValues(res["values"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading UrlLists: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//networksecurity.googleapis.com/projects/{{project}}/locations/{{location}}/urlLists/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenNetworkSecurityUrlListsDescription(res["description"], d, config)
-	hclData["values"] = flattenNetworkSecurityUrlListsValues(res["values"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

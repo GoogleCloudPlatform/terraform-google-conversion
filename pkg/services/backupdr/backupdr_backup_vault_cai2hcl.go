@@ -122,17 +122,39 @@ func (c *BackupDRBackupVaultCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenBackupDRBackupVaultDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupVault: %s", err)
+	}
+	if err := d.Set("labels", flattenBackupDRBackupVaultLabels(res["labels"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupVault: %s", err)
+	}
+	if err := d.Set("backup_minimum_enforced_retention_duration", flattenBackupDRBackupVaultBackupMinimumEnforcedRetentionDuration(res["backupMinimumEnforcedRetentionDuration"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupVault: %s", err)
+	}
+	if err := d.Set("effective_time", flattenBackupDRBackupVaultEffectiveTime(res["effectiveTime"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupVault: %s", err)
+	}
+	if err := d.Set("annotations", flattenBackupDRBackupVaultAnnotations(res["annotations"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupVault: %s", err)
+	}
+	if err := d.Set("access_restriction", flattenBackupDRBackupVaultAccessRestriction(res["accessRestriction"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupVault: %s", err)
+	}
+	if err := d.Set("backup_retention_inheritance", flattenBackupDRBackupVaultBackupRetentionInheritance(res["backupRetentionInheritance"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupVault: %s", err)
+	}
+	if err := d.Set("encryption_config", flattenBackupDRBackupVaultEncryptionConfig(res["encryptionConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading BackupVault: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"backup_count": struct{}{}, "create_time": struct{}{}, "deletable": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "name": struct{}{}, "service_account": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "total_stored_bytes": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//backupdr.googleapis.com/projects/{{project}}/locations/{{location}}/backupVaults/{{backup_vault_id}}", outputFields, hclData)
-
-	hclData["description"] = flattenBackupDRBackupVaultDescription(res["description"], d, config)
-	hclData["labels"] = flattenBackupDRBackupVaultLabels(res["labels"], d, config)
-	hclData["backup_minimum_enforced_retention_duration"] = flattenBackupDRBackupVaultBackupMinimumEnforcedRetentionDuration(res["backupMinimumEnforcedRetentionDuration"], d, config)
-	hclData["effective_time"] = flattenBackupDRBackupVaultEffectiveTime(res["effectiveTime"], d, config)
-	hclData["annotations"] = flattenBackupDRBackupVaultAnnotations(res["annotations"], d, config)
-	hclData["access_restriction"] = flattenBackupDRBackupVaultAccessRestriction(res["accessRestriction"], d, config)
-	hclData["backup_retention_inheritance"] = flattenBackupDRBackupVaultBackupRetentionInheritance(res["backupRetentionInheritance"], d, config)
-	hclData["encryption_config"] = flattenBackupDRBackupVaultEncryptionConfig(res["encryptionConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -137,18 +137,42 @@ func (c *IAMBetaWorkloadIdentityPoolProviderCai2hclConverter) convertResourceDat
 		return nil, nil
 	}
 
+	if err := d.Set("display_name", flattenIAMBetaWorkloadIdentityPoolProviderDisplayName(res["displayName"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+	if err := d.Set("description", flattenIAMBetaWorkloadIdentityPoolProviderDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+	if err := d.Set("disabled", flattenIAMBetaWorkloadIdentityPoolProviderDisabled(res["disabled"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+	if err := d.Set("attribute_mapping", flattenIAMBetaWorkloadIdentityPoolProviderAttributeMapping(res["attributeMapping"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+	if err := d.Set("attribute_condition", flattenIAMBetaWorkloadIdentityPoolProviderAttributeCondition(res["attributeCondition"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+	if err := d.Set("aws", flattenIAMBetaWorkloadIdentityPoolProviderAws(res["aws"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+	if err := d.Set("oidc", flattenIAMBetaWorkloadIdentityPoolProviderOidc(res["oidc"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+	if err := d.Set("saml", flattenIAMBetaWorkloadIdentityPoolProviderSaml(res["saml"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+	if err := d.Set("x509", flattenIAMBetaWorkloadIdentityPoolProviderX509(res["x509"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading WorkloadIdentityPoolProvider: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"name": struct{}{}, "state": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//iam.googleapis.com/projects/{{project}}/locations/global/workloadIdentityPools/{{workload_identity_pool_id}}/providers/{{workload_identity_pool_provider_id}}", outputFields, hclData)
-
-	hclData["display_name"] = flattenIAMBetaWorkloadIdentityPoolProviderDisplayName(res["displayName"], d, config)
-	hclData["description"] = flattenIAMBetaWorkloadIdentityPoolProviderDescription(res["description"], d, config)
-	hclData["disabled"] = flattenIAMBetaWorkloadIdentityPoolProviderDisabled(res["disabled"], d, config)
-	hclData["attribute_mapping"] = flattenIAMBetaWorkloadIdentityPoolProviderAttributeMapping(res["attributeMapping"], d, config)
-	hclData["attribute_condition"] = flattenIAMBetaWorkloadIdentityPoolProviderAttributeCondition(res["attributeCondition"], d, config)
-	hclData["aws"] = flattenIAMBetaWorkloadIdentityPoolProviderAws(res["aws"], d, config)
-	hclData["oidc"] = flattenIAMBetaWorkloadIdentityPoolProviderOidc(res["oidc"], d, config)
-	hclData["saml"] = flattenIAMBetaWorkloadIdentityPoolProviderSaml(res["saml"], d, config)
-	hclData["x509"] = flattenIAMBetaWorkloadIdentityPoolProviderX509(res["x509"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

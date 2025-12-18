@@ -122,17 +122,39 @@ func (c *ComputeNodeGroupCai2hclConverter) convertResourceData(asset caiasset.As
 	}
 	hclData := make(map[string]interface{})
 
+	if err := d.Set("description", flattenComputeNodeGroupDescription(res["description"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NodeGroup: %s", err)
+	}
+	if err := d.Set("name", flattenComputeNodeGroupName(res["name"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NodeGroup: %s", err)
+	}
+	if err := d.Set("node_template", flattenComputeNodeGroupNodeTemplate(res["nodeTemplate"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NodeGroup: %s", err)
+	}
+	if err := d.Set("maintenance_policy", flattenComputeNodeGroupMaintenancePolicy(res["maintenancePolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NodeGroup: %s", err)
+	}
+	if err := d.Set("maintenance_window", flattenComputeNodeGroupMaintenanceWindow(res["maintenanceWindow"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NodeGroup: %s", err)
+	}
+	if err := d.Set("autoscaling_policy", flattenComputeNodeGroupAutoscalingPolicy(res["autoscalingPolicy"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NodeGroup: %s", err)
+	}
+	if err := d.Set("share_settings", flattenComputeNodeGroupShareSettings(res["shareSettings"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NodeGroup: %s", err)
+	}
+	if err := d.Set("zone", flattenComputeNodeGroupZone(res["zone"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading NodeGroup: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "size": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/nodeGroups/{{name}}", outputFields, hclData)
-
-	hclData["description"] = flattenComputeNodeGroupDescription(res["description"], d, config)
-	hclData["name"] = flattenComputeNodeGroupName(res["name"], d, config)
-	hclData["node_template"] = flattenComputeNodeGroupNodeTemplate(res["nodeTemplate"], d, config)
-	hclData["maintenance_policy"] = flattenComputeNodeGroupMaintenancePolicy(res["maintenancePolicy"], d, config)
-	hclData["maintenance_window"] = flattenComputeNodeGroupMaintenanceWindow(res["maintenanceWindow"], d, config)
-	hclData["autoscaling_policy"] = flattenComputeNodeGroupAutoscalingPolicy(res["autoscalingPolicy"], d, config)
-	hclData["share_settings"] = flattenComputeNodeGroupShareSettings(res["shareSettings"], d, config)
-	hclData["zone"] = flattenComputeNodeGroupZone(res["zone"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

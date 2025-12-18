@@ -127,14 +127,30 @@ func (c *CloudAssetOrganizationFeedCai2hclConverter) convertResourceData(asset c
 		return nil, err
 	}
 
+	if err := d.Set("asset_names", flattenCloudAssetOrganizationFeedAssetNames(res["assetNames"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading OrganizationFeed: %s", err)
+	}
+	if err := d.Set("asset_types", flattenCloudAssetOrganizationFeedAssetTypes(res["assetTypes"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading OrganizationFeed: %s", err)
+	}
+	if err := d.Set("content_type", flattenCloudAssetOrganizationFeedContentType(res["contentType"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading OrganizationFeed: %s", err)
+	}
+	if err := d.Set("feed_output_config", flattenCloudAssetOrganizationFeedFeedOutputConfig(res["feedOutputConfig"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading OrganizationFeed: %s", err)
+	}
+	if err := d.Set("condition", flattenCloudAssetOrganizationFeedCondition(res["condition"], d, config)); err != nil {
+		return nil, fmt.Errorf("Error reading OrganizationFeed: %s", err)
+	}
+
+	for key, sch := range c.schema {
+		if val, ok := d.GetOk(key); ok || sch.Required {
+			hclData[key] = val
+		}
+	}
+
 	outputFields := map[string]struct{}{"name": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudasset.googleapis.com/organizations/{{org_id}}/feeds/{{feed_id}}", outputFields, hclData)
-
-	hclData["asset_names"] = flattenCloudAssetOrganizationFeedAssetNames(res["assetNames"], d, config)
-	hclData["asset_types"] = flattenCloudAssetOrganizationFeedAssetTypes(res["assetTypes"], d, config)
-	hclData["content_type"] = flattenCloudAssetOrganizationFeedContentType(res["contentType"], d, config)
-	hclData["feed_output_config"] = flattenCloudAssetOrganizationFeedFeedOutputConfig(res["feedOutputConfig"], d, config)
-	hclData["condition"] = flattenCloudAssetOrganizationFeedCondition(res["condition"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -238,6 +254,6 @@ func flattenCloudAssetOrganizationFeedConditionLocation(v interface{}, d *schema
 func resourceCloudAssetOrganizationFeedTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	// billing_project is the required url_param_only property, but is not in CAI asset name or data
 	// TODO: handle it in a generic way
-	hclData["billing_project"] = "null"
+	d.Set("billing_project", "null")
 	return res, hclData, nil
 }
