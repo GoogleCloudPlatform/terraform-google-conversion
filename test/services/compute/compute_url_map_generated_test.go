@@ -121,6 +121,8 @@ func TestAccComputeUrlMap(t *testing.T) {
 					"depends_on",
 					"for_each",
 					"lifecycle",
+					"metadata",
+					"metadata_startup_script",
 					"path_matcher.default_custom_error_response_policy.error_response_rule",
 					"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 					"provider",

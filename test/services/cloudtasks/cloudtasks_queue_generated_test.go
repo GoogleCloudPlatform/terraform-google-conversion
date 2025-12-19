@@ -74,6 +74,9 @@ func TestAccCloudTasksQueue(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
+					"app_engine_routing_override.0.instance",
+					"app_engine_routing_override.0.service",
+					"app_engine_routing_override.0.version",
 					"count",
 					"depends_on",
 					"desired_state",

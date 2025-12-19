@@ -125,6 +125,7 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"remote_repository_config.0.disable_upstream_validation",
 					"remote_repository_config.disable_upstream_validation",
 					"remote_repository_config.upstream_credentials",
 					"repository_id",

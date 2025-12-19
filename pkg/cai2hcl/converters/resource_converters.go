@@ -226,6 +226,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Router": {
 		"Default": compute.NewComputeRouterCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/SslCertificate": {
+		"Default": compute.NewComputeRegionSslCertificateCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/StoragePool": {
 		"Default": compute.NewComputeStoragePoolCai2hclConverter(provider),
 	},
@@ -270,6 +273,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"logging.googleapis.com/LogMetric": {
 		"Default": logging.NewLoggingMetricCai2hclConverter(provider),
+	},
+	"monitoring.googleapis.com/AlertPolicy": {
+		"Default": monitoring.NewMonitoringAlertPolicyCai2hclConverter(provider),
 	},
 	"monitoring.googleapis.com/NotificationChannel": {
 		"Default": monitoring.NewMonitoringNotificationChannelCai2hclConverter(provider),
