@@ -127,12 +127,6 @@ func (c *KMSKeyRingCai2hclConverter) convertResourceData(asset caiasset.Asset) (
 		return nil, err
 	}
 
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudkms.googleapis.com/projects/{{project}}/locations/{{location}}/keyRings/{{name}}", outputFields, hclData)
 

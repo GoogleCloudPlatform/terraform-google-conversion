@@ -132,66 +132,26 @@ func (c *RedisClusterCai2hclConverter) convertResourceData(asset caiasset.Asset)
 		return nil, nil
 	}
 
-	if err := d.Set("gcs_source", flattenRedisClusterGcsSource(res["gcsSource"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("managed_backup_source", flattenRedisClusterManagedBackupSource(res["managedBackupSource"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("automated_backup_config", flattenRedisClusterAutomatedBackupConfig(res["automatedBackupConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("authorization_mode", flattenRedisClusterAuthorizationMode(res["authorizationMode"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("transit_encryption_mode", flattenRedisClusterTransitEncryptionMode(res["transitEncryptionMode"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("node_type", flattenRedisClusterNodeType(res["nodeType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("zone_distribution_config", flattenRedisClusterZoneDistributionConfig(res["zoneDistributionConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("psc_configs", flattenRedisClusterPscConfigs(res["pscConfigs"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("replica_count", flattenRedisClusterReplicaCount(res["replicaCount"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("shard_count", flattenRedisClusterShardCount(res["shardCount"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("deletion_protection_enabled", flattenRedisClusterDeletionProtectionEnabled(res["deletionProtectionEnabled"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("redis_configs", flattenRedisClusterRedisConfigs(res["redisConfigs"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("persistence_config", flattenRedisClusterPersistenceConfig(res["persistenceConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("maintenance_policy", flattenRedisClusterMaintenancePolicy(res["maintenancePolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("maintenance_version", flattenRedisClusterMaintenanceVersion(res["maintenanceVersion"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("cross_cluster_replication_config", flattenRedisClusterCrossClusterReplicationConfig(res["crossClusterReplicationConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("kms_key", flattenRedisClusterKmsKey(res["kmsKey"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"available_maintenance_versions": struct{}{}, "backup_collection": struct{}{}, "create_time": struct{}{}, "discovery_endpoints": struct{}{}, "effective_maintenance_version": struct{}{}, "maintenance_schedule": struct{}{}, "managed_server_ca": struct{}{}, "precise_size_gb": struct{}{}, "psc_connections": struct{}{}, "psc_service_attachments": struct{}{}, "size_gb": struct{}{}, "state": struct{}{}, "state_info": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/clusters/{{name}}", outputFields, hclData)
+
+	hclData["gcs_source"] = flattenRedisClusterGcsSource(res["gcsSource"], d, config)
+	hclData["managed_backup_source"] = flattenRedisClusterManagedBackupSource(res["managedBackupSource"], d, config)
+	hclData["automated_backup_config"] = flattenRedisClusterAutomatedBackupConfig(res["automatedBackupConfig"], d, config)
+	hclData["authorization_mode"] = flattenRedisClusterAuthorizationMode(res["authorizationMode"], d, config)
+	hclData["transit_encryption_mode"] = flattenRedisClusterTransitEncryptionMode(res["transitEncryptionMode"], d, config)
+	hclData["node_type"] = flattenRedisClusterNodeType(res["nodeType"], d, config)
+	hclData["zone_distribution_config"] = flattenRedisClusterZoneDistributionConfig(res["zoneDistributionConfig"], d, config)
+	hclData["psc_configs"] = flattenRedisClusterPscConfigs(res["pscConfigs"], d, config)
+	hclData["replica_count"] = flattenRedisClusterReplicaCount(res["replicaCount"], d, config)
+	hclData["shard_count"] = flattenRedisClusterShardCount(res["shardCount"], d, config)
+	hclData["deletion_protection_enabled"] = flattenRedisClusterDeletionProtectionEnabled(res["deletionProtectionEnabled"], d, config)
+	hclData["redis_configs"] = flattenRedisClusterRedisConfigs(res["redisConfigs"], d, config)
+	hclData["persistence_config"] = flattenRedisClusterPersistenceConfig(res["persistenceConfig"], d, config)
+	hclData["maintenance_policy"] = flattenRedisClusterMaintenancePolicy(res["maintenancePolicy"], d, config)
+	hclData["maintenance_version"] = flattenRedisClusterMaintenanceVersion(res["maintenanceVersion"], d, config)
+	hclData["cross_cluster_replication_config"] = flattenRedisClusterCrossClusterReplicationConfig(res["crossClusterReplicationConfig"], d, config)
+	hclData["kms_key"] = flattenRedisClusterKmsKey(res["kmsKey"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

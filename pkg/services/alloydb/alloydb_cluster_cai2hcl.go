@@ -127,66 +127,26 @@ func (c *AlloydbClusterCai2hclConverter) convertResourceData(asset caiasset.Asse
 		return nil, err
 	}
 
-	if err := d.Set("labels", flattenAlloydbClusterLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("encryption_config", flattenAlloydbClusterEncryptionConfig(res["encryptionConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("network_config", flattenAlloydbClusterNetworkConfig(res["networkConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("display_name", flattenAlloydbClusterDisplayName(res["displayName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("etag", flattenAlloydbClusterEtag(res["etag"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("annotations", flattenAlloydbClusterAnnotations(res["annotations"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("database_version", flattenAlloydbClusterDatabaseVersion(res["databaseVersion"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("psc_config", flattenAlloydbClusterPscConfig(res["pscConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("initial_user", flattenAlloydbClusterInitialUser(res["initialUser"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("restore_backup_source", flattenAlloydbClusterRestoreBackupSource(res["restoreBackupSource"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("restore_continuous_backup_source", flattenAlloydbClusterRestoreContinuousBackupSource(res["restoreContinuousBackupSource"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("continuous_backup_config", flattenAlloydbClusterContinuousBackupConfig(res["continuousBackupConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("automated_backup_policy", flattenAlloydbClusterAutomatedBackupPolicy(res["automatedBackupPolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("cluster_type", flattenAlloydbClusterClusterType(res["clusterType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("secondary_config", flattenAlloydbClusterSecondaryConfig(res["secondaryConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("maintenance_update_policy", flattenAlloydbClusterMaintenanceUpdatePolicy(res["maintenanceUpdatePolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-	if err := d.Set("subscription_type", flattenAlloydbClusterSubscriptionType(res["subscriptionType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Cluster: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"backup_source": struct{}{}, "continuous_backup_info": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "encryption_info": struct{}{}, "migration_source": struct{}{}, "name": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "trial_metadata": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}", outputFields, hclData)
+
+	hclData["labels"] = flattenAlloydbClusterLabels(res["labels"], d, config)
+	hclData["encryption_config"] = flattenAlloydbClusterEncryptionConfig(res["encryptionConfig"], d, config)
+	hclData["network_config"] = flattenAlloydbClusterNetworkConfig(res["networkConfig"], d, config)
+	hclData["display_name"] = flattenAlloydbClusterDisplayName(res["displayName"], d, config)
+	hclData["etag"] = flattenAlloydbClusterEtag(res["etag"], d, config)
+	hclData["annotations"] = flattenAlloydbClusterAnnotations(res["annotations"], d, config)
+	hclData["database_version"] = flattenAlloydbClusterDatabaseVersion(res["databaseVersion"], d, config)
+	hclData["psc_config"] = flattenAlloydbClusterPscConfig(res["pscConfig"], d, config)
+	hclData["initial_user"] = flattenAlloydbClusterInitialUser(res["initialUser"], d, config)
+	hclData["restore_backup_source"] = flattenAlloydbClusterRestoreBackupSource(res["restoreBackupSource"], d, config)
+	hclData["restore_continuous_backup_source"] = flattenAlloydbClusterRestoreContinuousBackupSource(res["restoreContinuousBackupSource"], d, config)
+	hclData["continuous_backup_config"] = flattenAlloydbClusterContinuousBackupConfig(res["continuousBackupConfig"], d, config)
+	hclData["automated_backup_policy"] = flattenAlloydbClusterAutomatedBackupPolicy(res["automatedBackupPolicy"], d, config)
+	hclData["cluster_type"] = flattenAlloydbClusterClusterType(res["clusterType"], d, config)
+	hclData["secondary_config"] = flattenAlloydbClusterSecondaryConfig(res["secondaryConfig"], d, config)
+	hclData["maintenance_update_policy"] = flattenAlloydbClusterMaintenanceUpdatePolicy(res["maintenanceUpdatePolicy"], d, config)
+	hclData["subscription_type"] = flattenAlloydbClusterSubscriptionType(res["subscriptionType"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

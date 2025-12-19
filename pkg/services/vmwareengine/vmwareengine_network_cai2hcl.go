@@ -122,21 +122,11 @@ func (c *VmwareengineNetworkCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("description", flattenVmwareengineNetworkDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Network: %s", err)
-	}
-	if err := d.Set("type", flattenVmwareengineNetworkType(res["type"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Network: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "etag": struct{}{}, "state": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}, "vpc_networks": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//vmwareengine.googleapis.com/projects/{{project}}/locations/{{location}}/vmwareEngineNetworks/{{name}}", outputFields, hclData)
+
+	hclData["description"] = flattenVmwareengineNetworkDescription(res["description"], d, config)
+	hclData["type"] = flattenVmwareengineNetworkType(res["type"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

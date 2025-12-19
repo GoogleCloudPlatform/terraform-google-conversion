@@ -122,30 +122,14 @@ func (c *NetworkSecurityServerTlsPolicyCai2hclConverter) convertResourceData(ass
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("labels", flattenNetworkSecurityServerTlsPolicyLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ServerTlsPolicy: %s", err)
-	}
-	if err := d.Set("description", flattenNetworkSecurityServerTlsPolicyDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ServerTlsPolicy: %s", err)
-	}
-	if err := d.Set("allow_open", flattenNetworkSecurityServerTlsPolicyAllowOpen(res["allowOpen"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ServerTlsPolicy: %s", err)
-	}
-	if err := d.Set("server_certificate", flattenNetworkSecurityServerTlsPolicyServerCertificate(res["serverCertificate"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ServerTlsPolicy: %s", err)
-	}
-	if err := d.Set("mtls_policy", flattenNetworkSecurityServerTlsPolicyMtlsPolicy(res["mtlsPolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ServerTlsPolicy: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//networksecurity.googleapis.com/projects/{{project}}/locations/{{location}}/serverTlsPolicies/{{name}}", outputFields, hclData)
+
+	hclData["labels"] = flattenNetworkSecurityServerTlsPolicyLabels(res["labels"], d, config)
+	hclData["description"] = flattenNetworkSecurityServerTlsPolicyDescription(res["description"], d, config)
+	hclData["allow_open"] = flattenNetworkSecurityServerTlsPolicyAllowOpen(res["allowOpen"], d, config)
+	hclData["server_certificate"] = flattenNetworkSecurityServerTlsPolicyServerCertificate(res["serverCertificate"], d, config)
+	hclData["mtls_policy"] = flattenNetworkSecurityServerTlsPolicyMtlsPolicy(res["mtlsPolicy"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

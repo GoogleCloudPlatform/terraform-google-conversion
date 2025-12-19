@@ -122,36 +122,16 @@ func (c *Cloudfunctions2functionCai2hclConverter) convertResourceData(asset caia
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("name", flattenCloudfunctions2functionName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading function: %s", err)
-	}
-	if err := d.Set("description", flattenCloudfunctions2functionDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading function: %s", err)
-	}
-	if err := d.Set("build_config", flattenCloudfunctions2functionBuildConfig(res["buildConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading function: %s", err)
-	}
-	if err := d.Set("service_config", flattenCloudfunctions2functionServiceConfig(res["serviceConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading function: %s", err)
-	}
-	if err := d.Set("event_trigger", flattenCloudfunctions2functionEventTrigger(res["eventTrigger"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading function: %s", err)
-	}
-	if err := d.Set("labels", flattenCloudfunctions2functionLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading function: %s", err)
-	}
-	if err := d.Set("kms_key_name", flattenCloudfunctions2functionKmsKeyName(res["kmsKeyName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading function: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "environment": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}, "url": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudfunctions.googleapis.com/projects/{{project}}/locations/{{location}}/functions/{{name}}", outputFields, hclData)
+
+	hclData["name"] = flattenCloudfunctions2functionName(res["name"], d, config)
+	hclData["description"] = flattenCloudfunctions2functionDescription(res["description"], d, config)
+	hclData["build_config"] = flattenCloudfunctions2functionBuildConfig(res["buildConfig"], d, config)
+	hclData["service_config"] = flattenCloudfunctions2functionServiceConfig(res["serviceConfig"], d, config)
+	hclData["event_trigger"] = flattenCloudfunctions2functionEventTrigger(res["eventTrigger"], d, config)
+	hclData["labels"] = flattenCloudfunctions2functionLabels(res["labels"], d, config)
+	hclData["kms_key_name"] = flattenCloudfunctions2functionKmsKeyName(res["kmsKeyName"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

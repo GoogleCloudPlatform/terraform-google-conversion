@@ -122,30 +122,14 @@ func (c *ComputeRegionAutoscalerCai2hclConverter) convertResourceData(asset caia
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("name", flattenComputeRegionAutoscalerName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading RegionAutoscaler: %s", err)
-	}
-	if err := d.Set("description", flattenComputeRegionAutoscalerDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading RegionAutoscaler: %s", err)
-	}
-	if err := d.Set("autoscaling_policy", flattenComputeRegionAutoscalerAutoscalingPolicy(res["autoscalingPolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading RegionAutoscaler: %s", err)
-	}
-	if err := d.Set("target", flattenComputeRegionAutoscalerTarget(res["target"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading RegionAutoscaler: %s", err)
-	}
-	if err := d.Set("region", flattenComputeRegionAutoscalerRegion(res["region"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading RegionAutoscaler: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/autoscalers/{{name}}", outputFields, hclData)
+
+	hclData["name"] = flattenComputeRegionAutoscalerName(res["name"], d, config)
+	hclData["description"] = flattenComputeRegionAutoscalerDescription(res["description"], d, config)
+	hclData["autoscaling_policy"] = flattenComputeRegionAutoscalerAutoscalingPolicy(res["autoscalingPolicy"], d, config)
+	hclData["target"] = flattenComputeRegionAutoscalerTarget(res["target"], d, config)
+	hclData["region"] = flattenComputeRegionAutoscalerRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

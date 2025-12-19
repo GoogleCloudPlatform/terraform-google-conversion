@@ -122,54 +122,22 @@ func (c *ComputeAddressCai2hclConverter) convertResourceData(asset caiasset.Asse
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("address", flattenComputeAddressAddress(res["address"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("address_type", flattenComputeAddressAddressType(res["addressType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("description", flattenComputeAddressDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("name", flattenComputeAddressName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("purpose", flattenComputeAddressPurpose(res["purpose"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("network_tier", flattenComputeAddressNetworkTier(res["networkTier"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("subnetwork", flattenComputeAddressSubnetwork(res["subnetwork"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("labels", flattenComputeAddressLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("network", flattenComputeAddressNetwork(res["network"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("prefix_length", flattenComputeAddressPrefixLength(res["prefixLength"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("ip_version", flattenComputeAddressIpVersion(res["ipVersion"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("ipv6_endpoint_type", flattenComputeAddressIpv6EndpointType(res["ipv6EndpointType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-	if err := d.Set("region", flattenComputeAddressRegion(res["region"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Address: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}, "users": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/addresses/{{name}}", outputFields, hclData)
+
+	hclData["address"] = flattenComputeAddressAddress(res["address"], d, config)
+	hclData["address_type"] = flattenComputeAddressAddressType(res["addressType"], d, config)
+	hclData["description"] = flattenComputeAddressDescription(res["description"], d, config)
+	hclData["name"] = flattenComputeAddressName(res["name"], d, config)
+	hclData["purpose"] = flattenComputeAddressPurpose(res["purpose"], d, config)
+	hclData["network_tier"] = flattenComputeAddressNetworkTier(res["networkTier"], d, config)
+	hclData["subnetwork"] = flattenComputeAddressSubnetwork(res["subnetwork"], d, config)
+	hclData["labels"] = flattenComputeAddressLabels(res["labels"], d, config)
+	hclData["network"] = flattenComputeAddressNetwork(res["network"], d, config)
+	hclData["prefix_length"] = flattenComputeAddressPrefixLength(res["prefixLength"], d, config)
+	hclData["ip_version"] = flattenComputeAddressIpVersion(res["ipVersion"], d, config)
+	hclData["ipv6_endpoint_type"] = flattenComputeAddressIpv6EndpointType(res["ipv6EndpointType"], d, config)
+	hclData["region"] = flattenComputeAddressRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

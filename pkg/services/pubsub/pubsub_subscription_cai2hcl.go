@@ -122,66 +122,26 @@ func (c *PubsubSubscriptionCai2hclConverter) convertResourceData(asset caiasset.
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("name", flattenPubsubSubscriptionName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("topic", flattenPubsubSubscriptionTopic(res["topic"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("labels", flattenPubsubSubscriptionLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("bigquery_config", flattenPubsubSubscriptionBigqueryConfig(res["bigqueryConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("cloud_storage_config", flattenPubsubSubscriptionCloudStorageConfig(res["cloudStorageConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("push_config", flattenPubsubSubscriptionPushConfig(res["pushConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("ack_deadline_seconds", flattenPubsubSubscriptionAckDeadlineSeconds(res["ackDeadlineSeconds"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("message_retention_duration", flattenPubsubSubscriptionMessageRetentionDuration(res["messageRetentionDuration"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("retain_acked_messages", flattenPubsubSubscriptionRetainAckedMessages(res["retainAckedMessages"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("expiration_policy", flattenPubsubSubscriptionExpirationPolicy(res["expirationPolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("filter", flattenPubsubSubscriptionFilter(res["filter"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("dead_letter_policy", flattenPubsubSubscriptionDeadLetterPolicy(res["deadLetterPolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("retry_policy", flattenPubsubSubscriptionRetryPolicy(res["retryPolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("enable_message_ordering", flattenPubsubSubscriptionEnableMessageOrdering(res["enableMessageOrdering"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("enable_exactly_once_delivery", flattenPubsubSubscriptionEnableExactlyOnceDelivery(res["enableExactlyOnceDelivery"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("message_transforms", flattenPubsubSubscriptionMessageTransforms(res["messageTransforms"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-	if err := d.Set("tags", flattenPubsubSubscriptionTags(res["tags"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Subscription: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//pubsub.googleapis.com/projects/{{project}}/subscriptions/{{name}}", outputFields, hclData)
+
+	hclData["name"] = flattenPubsubSubscriptionName(res["name"], d, config)
+	hclData["topic"] = flattenPubsubSubscriptionTopic(res["topic"], d, config)
+	hclData["labels"] = flattenPubsubSubscriptionLabels(res["labels"], d, config)
+	hclData["bigquery_config"] = flattenPubsubSubscriptionBigqueryConfig(res["bigqueryConfig"], d, config)
+	hclData["cloud_storage_config"] = flattenPubsubSubscriptionCloudStorageConfig(res["cloudStorageConfig"], d, config)
+	hclData["push_config"] = flattenPubsubSubscriptionPushConfig(res["pushConfig"], d, config)
+	hclData["ack_deadline_seconds"] = flattenPubsubSubscriptionAckDeadlineSeconds(res["ackDeadlineSeconds"], d, config)
+	hclData["message_retention_duration"] = flattenPubsubSubscriptionMessageRetentionDuration(res["messageRetentionDuration"], d, config)
+	hclData["retain_acked_messages"] = flattenPubsubSubscriptionRetainAckedMessages(res["retainAckedMessages"], d, config)
+	hclData["expiration_policy"] = flattenPubsubSubscriptionExpirationPolicy(res["expirationPolicy"], d, config)
+	hclData["filter"] = flattenPubsubSubscriptionFilter(res["filter"], d, config)
+	hclData["dead_letter_policy"] = flattenPubsubSubscriptionDeadLetterPolicy(res["deadLetterPolicy"], d, config)
+	hclData["retry_policy"] = flattenPubsubSubscriptionRetryPolicy(res["retryPolicy"], d, config)
+	hclData["enable_message_ordering"] = flattenPubsubSubscriptionEnableMessageOrdering(res["enableMessageOrdering"], d, config)
+	hclData["enable_exactly_once_delivery"] = flattenPubsubSubscriptionEnableExactlyOnceDelivery(res["enableExactlyOnceDelivery"], d, config)
+	hclData["message_transforms"] = flattenPubsubSubscriptionMessageTransforms(res["messageTransforms"], d, config)
+	hclData["tags"] = flattenPubsubSubscriptionTags(res["tags"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

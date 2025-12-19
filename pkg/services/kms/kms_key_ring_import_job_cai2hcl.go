@@ -122,21 +122,11 @@ func (c *KMSKeyRingImportJobCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("import_method", flattenKMSKeyRingImportJobImportMethod(res["importMethod"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading KeyRingImportJob: %s", err)
-	}
-	if err := d.Set("protection_level", flattenKMSKeyRingImportJobProtectionLevel(res["protectionLevel"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading KeyRingImportJob: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"attestation": struct{}{}, "expire_time": struct{}{}, "name": struct{}{}, "public_key": struct{}{}, "state": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudkms.googleapis.com/{{key_ring}}/importJobs/{{import_job_id}}", outputFields, hclData)
+
+	hclData["import_method"] = flattenKMSKeyRingImportJobImportMethod(res["importMethod"], d, config)
+	hclData["protection_level"] = flattenKMSKeyRingImportJobProtectionLevel(res["protectionLevel"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

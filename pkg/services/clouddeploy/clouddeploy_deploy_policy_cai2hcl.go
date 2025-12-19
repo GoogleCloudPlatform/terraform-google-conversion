@@ -122,33 +122,15 @@ func (c *ClouddeployDeployPolicyCai2hclConverter) convertResourceData(asset caia
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("description", flattenClouddeployDeployPolicyDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading DeployPolicy: %s", err)
-	}
-	if err := d.Set("annotations", flattenClouddeployDeployPolicyAnnotations(res["annotations"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading DeployPolicy: %s", err)
-	}
-	if err := d.Set("labels", flattenClouddeployDeployPolicyLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading DeployPolicy: %s", err)
-	}
-	if err := d.Set("suspended", flattenClouddeployDeployPolicySuspended(res["suspended"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading DeployPolicy: %s", err)
-	}
-	if err := d.Set("selectors", flattenClouddeployDeployPolicySelectors(res["selectors"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading DeployPolicy: %s", err)
-	}
-	if err := d.Set("rules", flattenClouddeployDeployPolicyRules(res["rules"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading DeployPolicy: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//clouddeploy.googleapis.com/projects/{{project}}/locations/{{location}}/deployPolicies/{{name}}", outputFields, hclData)
+
+	hclData["description"] = flattenClouddeployDeployPolicyDescription(res["description"], d, config)
+	hclData["annotations"] = flattenClouddeployDeployPolicyAnnotations(res["annotations"], d, config)
+	hclData["labels"] = flattenClouddeployDeployPolicyLabels(res["labels"], d, config)
+	hclData["suspended"] = flattenClouddeployDeployPolicySuspended(res["suspended"], d, config)
+	hclData["selectors"] = flattenClouddeployDeployPolicySelectors(res["selectors"], d, config)
+	hclData["rules"] = flattenClouddeployDeployPolicyRules(res["rules"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

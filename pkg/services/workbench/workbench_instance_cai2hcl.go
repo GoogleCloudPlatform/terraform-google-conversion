@@ -122,33 +122,15 @@ func (c *WorkbenchInstanceCai2hclConverter) convertResourceData(asset caiasset.A
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("gce_setup", flattenWorkbenchInstanceGceSetup(res["gceSetup"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("instance_owners", flattenWorkbenchInstanceInstanceOwners(res["instanceOwners"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("disable_proxy_access", flattenWorkbenchInstanceDisableProxyAccess(res["disableProxyAccess"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("labels", flattenWorkbenchInstanceLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("enable_third_party_identity", flattenWorkbenchInstanceEnableThirdPartyIdentity(res["enableThirdPartyIdentity"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("enable_managed_euc", flattenWorkbenchInstanceEnableManagedEuc(res["enableManagedEuc"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "creator": struct{}{}, "effective_labels": struct{}{}, "health_info": struct{}{}, "health_state": struct{}{}, "proxy_uri": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}, "upgrade_history": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//notebooks.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{name}}", outputFields, hclData)
+
+	hclData["gce_setup"] = flattenWorkbenchInstanceGceSetup(res["gceSetup"], d, config)
+	hclData["instance_owners"] = flattenWorkbenchInstanceInstanceOwners(res["instanceOwners"], d, config)
+	hclData["disable_proxy_access"] = flattenWorkbenchInstanceDisableProxyAccess(res["disableProxyAccess"], d, config)
+	hclData["labels"] = flattenWorkbenchInstanceLabels(res["labels"], d, config)
+	hclData["enable_third_party_identity"] = flattenWorkbenchInstanceEnableThirdPartyIdentity(res["enableThirdPartyIdentity"], d, config)
+	hclData["enable_managed_euc"] = flattenWorkbenchInstanceEnableManagedEuc(res["enableManagedEuc"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

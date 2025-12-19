@@ -122,63 +122,25 @@ func (c *ComputeFirewallCai2hclConverter) convertResourceData(asset caiasset.Ass
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("allow", flattenComputeFirewallAllow(res["allowed"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("deny", flattenComputeFirewallDeny(res["denied"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("description", flattenComputeFirewallDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("destination_ranges", flattenComputeFirewallDestinationRanges(res["destinationRanges"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("direction", flattenComputeFirewallDirection(res["direction"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("disabled", flattenComputeFirewallDisabled(res["disabled"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("log_config", flattenComputeFirewallLogConfig(res["logConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("name", flattenComputeFirewallName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("network", flattenComputeFirewallNetwork(res["network"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("priority", flattenComputeFirewallPriority(res["priority"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("source_ranges", flattenComputeFirewallSourceRanges(res["sourceRanges"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("source_service_accounts", flattenComputeFirewallSourceServiceAccounts(res["sourceServiceAccounts"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("source_tags", flattenComputeFirewallSourceTags(res["sourceTags"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("target_service_accounts", flattenComputeFirewallTargetServiceAccounts(res["targetServiceAccounts"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("target_tags", flattenComputeFirewallTargetTags(res["targetTags"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-	if err := d.Set("params", flattenComputeFirewallParams(res["params"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Firewall: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/firewalls/{{name}}", outputFields, hclData)
+
+	hclData["allow"] = flattenComputeFirewallAllow(res["allowed"], d, config)
+	hclData["deny"] = flattenComputeFirewallDeny(res["denied"], d, config)
+	hclData["description"] = flattenComputeFirewallDescription(res["description"], d, config)
+	hclData["destination_ranges"] = flattenComputeFirewallDestinationRanges(res["destinationRanges"], d, config)
+	hclData["direction"] = flattenComputeFirewallDirection(res["direction"], d, config)
+	hclData["disabled"] = flattenComputeFirewallDisabled(res["disabled"], d, config)
+	hclData["log_config"] = flattenComputeFirewallLogConfig(res["logConfig"], d, config)
+	hclData["name"] = flattenComputeFirewallName(res["name"], d, config)
+	hclData["network"] = flattenComputeFirewallNetwork(res["network"], d, config)
+	hclData["priority"] = flattenComputeFirewallPriority(res["priority"], d, config)
+	hclData["source_ranges"] = flattenComputeFirewallSourceRanges(res["sourceRanges"], d, config)
+	hclData["source_service_accounts"] = flattenComputeFirewallSourceServiceAccounts(res["sourceServiceAccounts"], d, config)
+	hclData["source_tags"] = flattenComputeFirewallSourceTags(res["sourceTags"], d, config)
+	hclData["target_service_accounts"] = flattenComputeFirewallTargetServiceAccounts(res["targetServiceAccounts"], d, config)
+	hclData["target_tags"] = flattenComputeFirewallTargetTags(res["targetTags"], d, config)
+	hclData["params"] = flattenComputeFirewallParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -122,42 +122,18 @@ func (c *ApigeeInstanceCai2hclConverter) convertResourceData(asset caiasset.Asse
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("name", flattenApigeeInstanceName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("location", flattenApigeeInstanceLocation(res["location"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("peering_cidr_range", flattenApigeeInstancePeeringCidrRange(res["peeringCidrRange"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("ip_range", flattenApigeeInstanceIpRange(res["ipRange"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("description", flattenApigeeInstanceDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("display_name", flattenApigeeInstanceDisplayName(res["displayName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("disk_encryption_key_name", flattenApigeeInstanceDiskEncryptionKeyName(res["diskEncryptionKeyName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("consumer_accept_list", flattenApigeeInstanceConsumerAcceptList(res["consumerAcceptList"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("access_logging_config", flattenApigeeInstanceAccessLoggingConfig(res["accessLoggingConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"host": struct{}{}, "port": struct{}{}, "service_attachment": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//apigee.googleapis.com/{{org_id}}/instances/{{name}}", outputFields, hclData)
+
+	hclData["name"] = flattenApigeeInstanceName(res["name"], d, config)
+	hclData["location"] = flattenApigeeInstanceLocation(res["location"], d, config)
+	hclData["peering_cidr_range"] = flattenApigeeInstancePeeringCidrRange(res["peeringCidrRange"], d, config)
+	hclData["ip_range"] = flattenApigeeInstanceIpRange(res["ipRange"], d, config)
+	hclData["description"] = flattenApigeeInstanceDescription(res["description"], d, config)
+	hclData["display_name"] = flattenApigeeInstanceDisplayName(res["displayName"], d, config)
+	hclData["disk_encryption_key_name"] = flattenApigeeInstanceDiskEncryptionKeyName(res["diskEncryptionKeyName"], d, config)
+	hclData["consumer_accept_list"] = flattenApigeeInstanceConsumerAcceptList(res["consumerAcceptList"], d, config)
+	hclData["access_logging_config"] = flattenApigeeInstanceAccessLoggingConfig(res["accessLoggingConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

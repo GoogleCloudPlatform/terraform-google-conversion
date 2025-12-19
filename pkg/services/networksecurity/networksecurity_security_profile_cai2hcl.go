@@ -122,33 +122,15 @@ func (c *NetworkSecuritySecurityProfileCai2hclConverter) convertResourceData(ass
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("description", flattenNetworkSecuritySecurityProfileDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading SecurityProfile: %s", err)
-	}
-	if err := d.Set("labels", flattenNetworkSecuritySecurityProfileLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading SecurityProfile: %s", err)
-	}
-	if err := d.Set("threat_prevention_profile", flattenNetworkSecuritySecurityProfileThreatPreventionProfile(res["threatPreventionProfile"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading SecurityProfile: %s", err)
-	}
-	if err := d.Set("custom_mirroring_profile", flattenNetworkSecuritySecurityProfileCustomMirroringProfile(res["customMirroringProfile"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading SecurityProfile: %s", err)
-	}
-	if err := d.Set("custom_intercept_profile", flattenNetworkSecuritySecurityProfileCustomInterceptProfile(res["customInterceptProfile"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading SecurityProfile: %s", err)
-	}
-	if err := d.Set("type", flattenNetworkSecuritySecurityProfileType(res["type"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading SecurityProfile: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "self_link": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//networksecurity.googleapis.com/{{parent}}/locations/{{location}}/securityProfiles/{{name}}", outputFields, hclData)
+
+	hclData["description"] = flattenNetworkSecuritySecurityProfileDescription(res["description"], d, config)
+	hclData["labels"] = flattenNetworkSecuritySecurityProfileLabels(res["labels"], d, config)
+	hclData["threat_prevention_profile"] = flattenNetworkSecuritySecurityProfileThreatPreventionProfile(res["threatPreventionProfile"], d, config)
+	hclData["custom_mirroring_profile"] = flattenNetworkSecuritySecurityProfileCustomMirroringProfile(res["customMirroringProfile"], d, config)
+	hclData["custom_intercept_profile"] = flattenNetworkSecuritySecurityProfileCustomInterceptProfile(res["customInterceptProfile"], d, config)
+	hclData["type"] = flattenNetworkSecuritySecurityProfileType(res["type"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

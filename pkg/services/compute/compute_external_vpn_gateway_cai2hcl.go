@@ -122,30 +122,14 @@ func (c *ComputeExternalVpnGatewayCai2hclConverter) convertResourceData(asset ca
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("description", flattenComputeExternalVpnGatewayDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ExternalVpnGateway: %s", err)
-	}
-	if err := d.Set("labels", flattenComputeExternalVpnGatewayLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ExternalVpnGateway: %s", err)
-	}
-	if err := d.Set("name", flattenComputeExternalVpnGatewayName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ExternalVpnGateway: %s", err)
-	}
-	if err := d.Set("redundancy_type", flattenComputeExternalVpnGatewayRedundancyType(res["redundancyType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ExternalVpnGateway: %s", err)
-	}
-	if err := d.Set("interface", flattenComputeExternalVpnGatewayInterface(res["interfaces"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ExternalVpnGateway: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/externalVpnGateways/{{name}}", outputFields, hclData)
+
+	hclData["description"] = flattenComputeExternalVpnGatewayDescription(res["description"], d, config)
+	hclData["labels"] = flattenComputeExternalVpnGatewayLabels(res["labels"], d, config)
+	hclData["name"] = flattenComputeExternalVpnGatewayName(res["name"], d, config)
+	hclData["redundancy_type"] = flattenComputeExternalVpnGatewayRedundancyType(res["redundancyType"], d, config)
+	hclData["interface"] = flattenComputeExternalVpnGatewayInterface(res["interfaces"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

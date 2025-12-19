@@ -122,30 +122,14 @@ func (c *CloudAssetProjectFeedCai2hclConverter) convertResourceData(asset caiass
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("asset_names", flattenCloudAssetProjectFeedAssetNames(res["assetNames"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ProjectFeed: %s", err)
-	}
-	if err := d.Set("asset_types", flattenCloudAssetProjectFeedAssetTypes(res["assetTypes"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ProjectFeed: %s", err)
-	}
-	if err := d.Set("content_type", flattenCloudAssetProjectFeedContentType(res["contentType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ProjectFeed: %s", err)
-	}
-	if err := d.Set("feed_output_config", flattenCloudAssetProjectFeedFeedOutputConfig(res["feedOutputConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ProjectFeed: %s", err)
-	}
-	if err := d.Set("condition", flattenCloudAssetProjectFeedCondition(res["condition"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ProjectFeed: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"name": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudasset.googleapis.com/projects/{{project}}/feeds/{{feed_id}}", outputFields, hclData)
+
+	hclData["asset_names"] = flattenCloudAssetProjectFeedAssetNames(res["assetNames"], d, config)
+	hclData["asset_types"] = flattenCloudAssetProjectFeedAssetTypes(res["assetTypes"], d, config)
+	hclData["content_type"] = flattenCloudAssetProjectFeedContentType(res["contentType"], d, config)
+	hclData["feed_output_config"] = flattenCloudAssetProjectFeedFeedOutputConfig(res["feedOutputConfig"], d, config)
+	hclData["condition"] = flattenCloudAssetProjectFeedCondition(res["condition"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

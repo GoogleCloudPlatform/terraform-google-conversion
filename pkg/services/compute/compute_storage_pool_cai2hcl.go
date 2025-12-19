@@ -122,45 +122,19 @@ func (c *ComputeStoragePoolCai2hclConverter) convertResourceData(asset caiasset.
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("name", flattenComputeStoragePoolName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("description", flattenComputeStoragePoolDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("pool_provisioned_capacity_gb", flattenComputeStoragePoolPoolProvisionedCapacityGb(res["poolProvisionedCapacityGb"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("pool_provisioned_iops", flattenComputeStoragePoolPoolProvisionedIops(res["poolProvisionedIops"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("pool_provisioned_throughput", flattenComputeStoragePoolPoolProvisionedThroughput(res["poolProvisionedThroughput"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("storage_pool_type", flattenComputeStoragePoolStoragePoolType(res["storagePoolType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("capacity_provisioning_type", flattenComputeStoragePoolCapacityProvisioningType(res["capacityProvisioningType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("performance_provisioning_type", flattenComputeStoragePoolPerformanceProvisioningType(res["performanceProvisioningType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("labels", flattenComputeStoragePoolLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-	if err := d.Set("zone", flattenComputeStoragePoolZone(res["zone"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading StoragePool: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "id": struct{}{}, "kind": struct{}{}, "label_fingerprint": struct{}{}, "resource_status": struct{}{}, "status": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/storagePools/{{name}}", outputFields, hclData)
+
+	hclData["name"] = flattenComputeStoragePoolName(res["name"], d, config)
+	hclData["description"] = flattenComputeStoragePoolDescription(res["description"], d, config)
+	hclData["pool_provisioned_capacity_gb"] = flattenComputeStoragePoolPoolProvisionedCapacityGb(res["poolProvisionedCapacityGb"], d, config)
+	hclData["pool_provisioned_iops"] = flattenComputeStoragePoolPoolProvisionedIops(res["poolProvisionedIops"], d, config)
+	hclData["pool_provisioned_throughput"] = flattenComputeStoragePoolPoolProvisionedThroughput(res["poolProvisionedThroughput"], d, config)
+	hclData["storage_pool_type"] = flattenComputeStoragePoolStoragePoolType(res["storagePoolType"], d, config)
+	hclData["capacity_provisioning_type"] = flattenComputeStoragePoolCapacityProvisioningType(res["capacityProvisioningType"], d, config)
+	hclData["performance_provisioning_type"] = flattenComputeStoragePoolPerformanceProvisioningType(res["performanceProvisioningType"], d, config)
+	hclData["labels"] = flattenComputeStoragePoolLabels(res["labels"], d, config)
+	hclData["zone"] = flattenComputeStoragePoolZone(res["zone"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

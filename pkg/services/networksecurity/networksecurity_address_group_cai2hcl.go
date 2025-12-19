@@ -122,30 +122,14 @@ func (c *NetworkSecurityAddressGroupCai2hclConverter) convertResourceData(asset 
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("description", flattenNetworkSecurityAddressGroupDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AddressGroup: %s", err)
-	}
-	if err := d.Set("labels", flattenNetworkSecurityAddressGroupLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AddressGroup: %s", err)
-	}
-	if err := d.Set("type", flattenNetworkSecurityAddressGroupType(res["type"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AddressGroup: %s", err)
-	}
-	if err := d.Set("items", flattenNetworkSecurityAddressGroupItems(res["items"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AddressGroup: %s", err)
-	}
-	if err := d.Set("capacity", flattenNetworkSecurityAddressGroupCapacity(res["capacity"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AddressGroup: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//networksecurity.googleapis.com/{{parent}}/locations/{{location}}/addressGroups/{{name}}", outputFields, hclData)
+
+	hclData["description"] = flattenNetworkSecurityAddressGroupDescription(res["description"], d, config)
+	hclData["labels"] = flattenNetworkSecurityAddressGroupLabels(res["labels"], d, config)
+	hclData["type"] = flattenNetworkSecurityAddressGroupType(res["type"], d, config)
+	hclData["items"] = flattenNetworkSecurityAddressGroupItems(res["items"], d, config)
+	hclData["capacity"] = flattenNetworkSecurityAddressGroupCapacity(res["capacity"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

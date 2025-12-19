@@ -122,36 +122,16 @@ func (c *ClouddeployAutomationCai2hclConverter) convertResourceData(asset caiass
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("description", flattenClouddeployAutomationDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Automation: %s", err)
-	}
-	if err := d.Set("annotations", flattenClouddeployAutomationAnnotations(res["annotations"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Automation: %s", err)
-	}
-	if err := d.Set("labels", flattenClouddeployAutomationLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Automation: %s", err)
-	}
-	if err := d.Set("suspended", flattenClouddeployAutomationSuspended(res["suspended"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Automation: %s", err)
-	}
-	if err := d.Set("service_account", flattenClouddeployAutomationServiceAccount(res["serviceAccount"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Automation: %s", err)
-	}
-	if err := d.Set("selector", flattenClouddeployAutomationSelector(res["selector"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Automation: %s", err)
-	}
-	if err := d.Set("rules", flattenClouddeployAutomationRules(res["rules"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Automation: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//clouddeploy.googleapis.com/projects/{{project}}/locations/{{location}}/deliveryPipelines/{{delivery_pipeline}}/automations/{{name}}", outputFields, hclData)
+
+	hclData["description"] = flattenClouddeployAutomationDescription(res["description"], d, config)
+	hclData["annotations"] = flattenClouddeployAutomationAnnotations(res["annotations"], d, config)
+	hclData["labels"] = flattenClouddeployAutomationLabels(res["labels"], d, config)
+	hclData["suspended"] = flattenClouddeployAutomationSuspended(res["suspended"], d, config)
+	hclData["service_account"] = flattenClouddeployAutomationServiceAccount(res["serviceAccount"], d, config)
+	hclData["selector"] = flattenClouddeployAutomationSelector(res["selector"], d, config)
+	hclData["rules"] = flattenClouddeployAutomationRules(res["rules"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

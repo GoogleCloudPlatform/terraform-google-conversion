@@ -122,45 +122,19 @@ func (c *ComputeUrlMapCai2hclConverter) convertResourceData(asset caiasset.Asset
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("default_service", flattenComputeUrlMapDefaultService(res["defaultService"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("description", flattenComputeUrlMapDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("header_action", flattenComputeUrlMapHeaderAction(res["headerAction"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("host_rule", flattenComputeUrlMapHostRule(res["hostRules"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("name", flattenComputeUrlMapName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("path_matcher", flattenComputeUrlMapPathMatcher(res["pathMatchers"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("default_custom_error_response_policy", flattenComputeUrlMapDefaultCustomErrorResponsePolicy(res["defaultCustomErrorResponsePolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("test", flattenComputeUrlMapTest(res["tests"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("default_url_redirect", flattenComputeUrlMapDefaultUrlRedirect(res["defaultUrlRedirect"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-	if err := d.Set("default_route_action", flattenComputeUrlMapDefaultRouteAction(res["defaultRouteAction"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading UrlMap: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "fingerprint": struct{}{}, "map_id": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/urlMaps/{{name}}", outputFields, hclData)
+
+	hclData["default_service"] = flattenComputeUrlMapDefaultService(res["defaultService"], d, config)
+	hclData["description"] = flattenComputeUrlMapDescription(res["description"], d, config)
+	hclData["header_action"] = flattenComputeUrlMapHeaderAction(res["headerAction"], d, config)
+	hclData["host_rule"] = flattenComputeUrlMapHostRule(res["hostRules"], d, config)
+	hclData["name"] = flattenComputeUrlMapName(res["name"], d, config)
+	hclData["path_matcher"] = flattenComputeUrlMapPathMatcher(res["pathMatchers"], d, config)
+	hclData["default_custom_error_response_policy"] = flattenComputeUrlMapDefaultCustomErrorResponsePolicy(res["defaultCustomErrorResponsePolicy"], d, config)
+	hclData["test"] = flattenComputeUrlMapTest(res["tests"], d, config)
+	hclData["default_url_redirect"] = flattenComputeUrlMapDefaultUrlRedirect(res["defaultUrlRedirect"], d, config)
+	hclData["default_route_action"] = flattenComputeUrlMapDefaultRouteAction(res["defaultRouteAction"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
