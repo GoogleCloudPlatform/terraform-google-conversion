@@ -66,6 +66,9 @@ func TestAccWorkbenchInstance(t *testing.T) {
 					"depends_on",
 					"desired_state",
 					"for_each",
+					"gce_setup.0.boot_disk.0.disk_type",
+					"gce_setup.0.data_disks.0.disk_type",
+					"gce_setup.0.vm_image",
 					"gce_setup.boot_disk.disk_type",
 					"gce_setup.data_disks.disk_type",
 					"gce_setup.vm_image",
@@ -76,6 +79,7 @@ func TestAccWorkbenchInstance(t *testing.T) {
 					"name",
 					"provider",
 					"timeouts",
+					"update_time",
 				},
 				"google_workbench_instance",
 			)

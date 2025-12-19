@@ -63,7 +63,9 @@ func TestAccAlloydbBackup(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"reconciling",
 					"timeouts",
+					"update_time",
 				},
 				"google_alloydb_backup",
 			)

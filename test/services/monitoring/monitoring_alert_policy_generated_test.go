@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------------
 
-package compute_test
+package monitoring_test
 
 import (
 	"os"
@@ -21,43 +21,34 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeRouter(t *testing.T) {
+func TestAccMonitoringAlertPolicy(t *testing.T) {
 	if os.Getenv("WRITE_FILES") != "" {
 		t.Parallel()
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccComputeRouter_routerBasicExample",
+			Name: "TestAccMonitoringAlertPolicy/basic",
 		},
 		{
-			Name: "TestAccComputeRouter_computeRouterEncryptedInterconnectExample",
+			Name: "TestAccMonitoringAlertPolicy/forecast",
 		},
 		{
-			Name: "TestAccComputeRouter_computeRouterMd5encryptedExample",
+			Name: "TestAccMonitoringAlertPolicy/full",
 		},
 		{
-			Name: "TestAccComputeRouter_basic",
+			Name: "TestAccMonitoringAlertPolicy/log",
 		},
 		{
-			Name: "TestAccComputeRouter_noRegion",
+			Name: "TestAccMonitoringAlertPolicy/mql",
 		},
 		{
-			Name: "TestAccComputeRouter_full",
+			Name: "TestAccMonitoringAlertPolicy/promql",
 		},
 		{
-			Name: "TestAccComputeRouter_advertisedIpRangesOrder",
+			Name: "TestAccMonitoringAlertPolicy/update",
 		},
 		{
-			Name: "TestAccComputeRouter_update",
-		},
-		{
-			Name: "TestAccComputeRouter_updateAddRemoveBGP",
-		},
-		{
-			Name: "TestAccComputeRouter_addAndUpdateIdentifierRangeBgp",
-		},
-		{
-			Name: "TestAccComputeRouter_resourceManagerTags",
+			Name: "TestAccMonitoringAlertPolicy",
 		},
 	}
 
@@ -74,18 +65,15 @@ func TestAccComputeRouter(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
-					"advertisedIpRanges",
+					"ASSETNAME",
 					"count",
 					"depends_on",
 					"for_each",
 					"lifecycle",
-					"md5_authentication_keys",
-					"params",
-					"params.resource_manager_tags",
 					"provider",
 					"timeouts",
 				},
-				"google_compute_router",
+				"google_monitoring_alert_policy",
 			)
 		})
 	}

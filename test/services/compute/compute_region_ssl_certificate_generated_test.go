@@ -21,43 +21,19 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeRouter(t *testing.T) {
+func TestAccComputeRegionSslCertificate(t *testing.T) {
 	if os.Getenv("WRITE_FILES") != "" {
 		t.Parallel()
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccComputeRouter_routerBasicExample",
+			Name: "TestAccComputeRegionSslCertificate_regionSslCertificateBasicExample",
 		},
 		{
-			Name: "TestAccComputeRouter_computeRouterEncryptedInterconnectExample",
+			Name: "TestAccComputeRegionSslCertificate_regionSslCertificateRandomProviderExample",
 		},
 		{
-			Name: "TestAccComputeRouter_computeRouterMd5encryptedExample",
-		},
-		{
-			Name: "TestAccComputeRouter_basic",
-		},
-		{
-			Name: "TestAccComputeRouter_noRegion",
-		},
-		{
-			Name: "TestAccComputeRouter_full",
-		},
-		{
-			Name: "TestAccComputeRouter_advertisedIpRangesOrder",
-		},
-		{
-			Name: "TestAccComputeRouter_update",
-		},
-		{
-			Name: "TestAccComputeRouter_updateAddRemoveBGP",
-		},
-		{
-			Name: "TestAccComputeRouter_addAndUpdateIdentifierRangeBgp",
-		},
-		{
-			Name: "TestAccComputeRouter_resourceManagerTags",
+			Name: "TestAccComputeRegionSslCertificate_regionSslCertificateTargetHttpsProxiesExample",
 		},
 	}
 
@@ -74,18 +50,17 @@ func TestAccComputeRouter(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
-					"advertisedIpRanges",
+					"certificate",
 					"count",
 					"depends_on",
 					"for_each",
 					"lifecycle",
-					"md5_authentication_keys",
-					"params",
-					"params.resource_manager_tags",
+					"name_prefix",
+					"private_key",
 					"provider",
 					"timeouts",
 				},
-				"google_compute_router",
+				"google_compute_region_ssl_certificate",
 			)
 		})
 	}

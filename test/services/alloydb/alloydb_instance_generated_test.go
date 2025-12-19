@@ -110,7 +110,9 @@ func TestAccAlloydbInstance(t *testing.T) {
 					"instance_id",
 					"lifecycle",
 					"provider",
+					"reconciling",
 					"timeouts",
+					"update_time",
 				},
 				"google_alloydb_instance",
 			)

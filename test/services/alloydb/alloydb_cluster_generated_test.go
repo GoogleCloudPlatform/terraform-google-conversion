@@ -152,10 +152,12 @@ func TestAccAlloydbCluster(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"reconciling",
 					"restore_backup_source",
 					"restore_continuous_backup_source",
 					"skip_await_major_version_upgrade",
 					"timeouts",
+					"update_time",
 				},
 				"google_alloydb_cluster",
 			)

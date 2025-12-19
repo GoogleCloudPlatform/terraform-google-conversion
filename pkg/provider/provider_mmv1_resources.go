@@ -48,7 +48,7 @@ var handwrittenTfplan2caiResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 98
+// Generated resources: 100
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                               alloydb.ResourceAlloydbCluster(),
@@ -96,6 +96,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_node_template":                         compute.ResourceComputeNodeTemplate(),
 	"google_compute_region_autoscaler":                     compute.ResourceComputeRegionAutoscaler(),
 	"google_compute_region_health_check":                   compute.ResourceComputeRegionHealthCheck(),
+	"google_compute_region_ssl_certificate":                compute.ResourceComputeRegionSslCertificate(),
 	"google_compute_resource_policy":                       compute.ResourceComputeResourcePolicy(),
 	"google_compute_route":                                 compute.ResourceComputeRoute(),
 	"google_compute_router":                                compute.ResourceComputeRouter(),
@@ -120,6 +121,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_kms_key_ring":                                  kms.ResourceKMSKeyRing(),
 	"google_kms_key_ring_import_job":                       kms.ResourceKMSKeyRingImportJob(),
 	"google_logging_metric":                                logging.ResourceLoggingMetric(),
+	"google_monitoring_alert_policy":                       monitoring.ResourceMonitoringAlertPolicy(),
 	"google_monitoring_notification_channel":               monitoring.ResourceMonitoringNotificationChannel(),
 	"google_monitoring_uptime_check_config":                monitoring.ResourceMonitoringUptimeCheckConfig(),
 	"google_netapp_active_directory":                       netapp.ResourceNetappActiveDirectory(),
