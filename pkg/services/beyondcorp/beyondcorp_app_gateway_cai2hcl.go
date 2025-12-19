@@ -122,27 +122,13 @@ func (c *BeyondcorpAppGatewayCai2hclConverter) convertResourceData(asset caiasse
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("type", flattenBeyondcorpAppGatewayType(res["type"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AppGateway: %s", err)
-	}
-	if err := d.Set("host_type", flattenBeyondcorpAppGatewayHostType(res["hostType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AppGateway: %s", err)
-	}
-	if err := d.Set("display_name", flattenBeyondcorpAppGatewayDisplayName(res["displayName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AppGateway: %s", err)
-	}
-	if err := d.Set("labels", flattenBeyondcorpAppGatewayLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading AppGateway: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"allocated_connections": struct{}{}, "effective_labels": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "uri": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//beyondcorp.googleapis.com/projects/{{project}}/locations/{{region}}/appGateways/{{name}}", outputFields, hclData)
+
+	hclData["type"] = flattenBeyondcorpAppGatewayType(res["type"], d, config)
+	hclData["host_type"] = flattenBeyondcorpAppGatewayHostType(res["hostType"], d, config)
+	hclData["display_name"] = flattenBeyondcorpAppGatewayDisplayName(res["displayName"], d, config)
+	hclData["labels"] = flattenBeyondcorpAppGatewayLabels(res["labels"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

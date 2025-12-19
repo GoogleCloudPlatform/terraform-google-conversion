@@ -137,21 +137,11 @@ func (c *KMSKeyHandleCai2hclConverter) convertResourceData(asset caiasset.Asset)
 		return nil, nil
 	}
 
-	if err := d.Set("name", flattenKMSKeyHandleName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading KeyHandle: %s", err)
-	}
-	if err := d.Set("resource_type_selector", flattenKMSKeyHandleResourceTypeSelector(res["resourceTypeSelector"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading KeyHandle: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"kms_key": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudkms.googleapis.com/projects/{{project}}/locations/{{location}}/keyHandles/{{name}}", outputFields, hclData)
+
+	hclData["name"] = flattenKMSKeyHandleName(res["name"], d, config)
+	hclData["resource_type_selector"] = flattenKMSKeyHandleResourceTypeSelector(res["resourceTypeSelector"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -122,36 +122,16 @@ func (c *AlloydbBackupCai2hclConverter) convertResourceData(asset caiasset.Asset
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("display_name", flattenAlloydbBackupDisplayName(res["displayName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Backup: %s", err)
-	}
-	if err := d.Set("labels", flattenAlloydbBackupLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Backup: %s", err)
-	}
-	if err := d.Set("type", flattenAlloydbBackupType(res["type"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Backup: %s", err)
-	}
-	if err := d.Set("description", flattenAlloydbBackupDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Backup: %s", err)
-	}
-	if err := d.Set("cluster_name", flattenAlloydbBackupClusterName(res["clusterName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Backup: %s", err)
-	}
-	if err := d.Set("encryption_config", flattenAlloydbBackupEncryptionConfig(res["encryptionConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Backup: %s", err)
-	}
-	if err := d.Set("annotations", flattenAlloydbBackupAnnotations(res["annotations"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Backup: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"cluster_uid": struct{}{}, "create_time": struct{}{}, "delete_time": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "encryption_info": struct{}{}, "etag": struct{}{}, "expiry_quantity": struct{}{}, "expiry_time": struct{}{}, "name": struct{}{}, "reconciling": struct{}{}, "size_bytes": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/backups/{{backup_id}}", outputFields, hclData)
+
+	hclData["display_name"] = flattenAlloydbBackupDisplayName(res["displayName"], d, config)
+	hclData["labels"] = flattenAlloydbBackupLabels(res["labels"], d, config)
+	hclData["type"] = flattenAlloydbBackupType(res["type"], d, config)
+	hclData["description"] = flattenAlloydbBackupDescription(res["description"], d, config)
+	hclData["cluster_name"] = flattenAlloydbBackupClusterName(res["clusterName"], d, config)
+	hclData["encryption_config"] = flattenAlloydbBackupEncryptionConfig(res["encryptionConfig"], d, config)
+	hclData["annotations"] = flattenAlloydbBackupAnnotations(res["annotations"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

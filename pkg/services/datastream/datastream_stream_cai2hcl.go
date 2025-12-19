@@ -122,39 +122,17 @@ func (c *DatastreamStreamCai2hclConverter) convertResourceData(asset caiasset.As
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("labels", flattenDatastreamStreamLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Stream: %s", err)
-	}
-	if err := d.Set("display_name", flattenDatastreamStreamDisplayName(res["displayName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Stream: %s", err)
-	}
-	if err := d.Set("source_config", flattenDatastreamStreamSourceConfig(res["sourceConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Stream: %s", err)
-	}
-	if err := d.Set("destination_config", flattenDatastreamStreamDestinationConfig(res["destinationConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Stream: %s", err)
-	}
-	if err := d.Set("backfill_all", flattenDatastreamStreamBackfillAll(res["backfillAll"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Stream: %s", err)
-	}
-	if err := d.Set("backfill_none", flattenDatastreamStreamBackfillNone(res["backfillNone"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Stream: %s", err)
-	}
-	if err := d.Set("customer_managed_encryption_key", flattenDatastreamStreamCustomerManagedEncryptionKey(res["customerManagedEncryptionKey"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Stream: %s", err)
-	}
-	if err := d.Set("rule_sets", flattenDatastreamStreamRuleSets(res["ruleSets"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Stream: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "name": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//datastream.googleapis.com/projects/{{project}}/locations/{{location}}/streams/{{stream_id}}", outputFields, hclData)
+
+	hclData["labels"] = flattenDatastreamStreamLabels(res["labels"], d, config)
+	hclData["display_name"] = flattenDatastreamStreamDisplayName(res["displayName"], d, config)
+	hclData["source_config"] = flattenDatastreamStreamSourceConfig(res["sourceConfig"], d, config)
+	hclData["destination_config"] = flattenDatastreamStreamDestinationConfig(res["destinationConfig"], d, config)
+	hclData["backfill_all"] = flattenDatastreamStreamBackfillAll(res["backfillAll"], d, config)
+	hclData["backfill_none"] = flattenDatastreamStreamBackfillNone(res["backfillNone"], d, config)
+	hclData["customer_managed_encryption_key"] = flattenDatastreamStreamCustomerManagedEncryptionKey(res["customerManagedEncryptionKey"], d, config)
+	hclData["rule_sets"] = flattenDatastreamStreamRuleSets(res["ruleSets"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -122,42 +122,18 @@ func (c *PubsubTopicCai2hclConverter) convertResourceData(asset caiasset.Asset) 
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("name", flattenPubsubTopicName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-	if err := d.Set("kms_key_name", flattenPubsubTopicKmsKeyName(res["kmsKeyName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-	if err := d.Set("labels", flattenPubsubTopicLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-	if err := d.Set("message_storage_policy", flattenPubsubTopicMessageStoragePolicy(res["messageStoragePolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-	if err := d.Set("schema_settings", flattenPubsubTopicSchemaSettings(res["schemaSettings"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-	if err := d.Set("message_retention_duration", flattenPubsubTopicMessageRetentionDuration(res["messageRetentionDuration"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-	if err := d.Set("ingestion_data_source_settings", flattenPubsubTopicIngestionDataSourceSettings(res["ingestionDataSourceSettings"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-	if err := d.Set("message_transforms", flattenPubsubTopicMessageTransforms(res["messageTransforms"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-	if err := d.Set("tags", flattenPubsubTopicTags(res["tags"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Topic: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//pubsub.googleapis.com/projects/{{project}}/topics/{{name}}", outputFields, hclData)
+
+	hclData["name"] = flattenPubsubTopicName(res["name"], d, config)
+	hclData["kms_key_name"] = flattenPubsubTopicKmsKeyName(res["kmsKeyName"], d, config)
+	hclData["labels"] = flattenPubsubTopicLabels(res["labels"], d, config)
+	hclData["message_storage_policy"] = flattenPubsubTopicMessageStoragePolicy(res["messageStoragePolicy"], d, config)
+	hclData["schema_settings"] = flattenPubsubTopicSchemaSettings(res["schemaSettings"], d, config)
+	hclData["message_retention_duration"] = flattenPubsubTopicMessageRetentionDuration(res["messageRetentionDuration"], d, config)
+	hclData["ingestion_data_source_settings"] = flattenPubsubTopicIngestionDataSourceSettings(res["ingestionDataSourceSettings"], d, config)
+	hclData["message_transforms"] = flattenPubsubTopicMessageTransforms(res["messageTransforms"], d, config)
+	hclData["tags"] = flattenPubsubTopicTags(res["tags"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

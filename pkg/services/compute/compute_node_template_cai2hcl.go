@@ -122,45 +122,19 @@ func (c *ComputeNodeTemplateCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("description", flattenComputeNodeTemplateDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("name", flattenComputeNodeTemplateName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("node_affinity_labels", flattenComputeNodeTemplateNodeAffinityLabels(res["nodeAffinityLabels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("node_type", flattenComputeNodeTemplateNodeType(res["nodeType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("node_type_flexibility", flattenComputeNodeTemplateNodeTypeFlexibility(res["nodeTypeFlexibility"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("server_binding", flattenComputeNodeTemplateServerBinding(res["serverBinding"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("accelerators", flattenComputeNodeTemplateAccelerators(res["accelerators"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("cpu_overcommit_type", flattenComputeNodeTemplateCpuOvercommitType(res["cpuOvercommitType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("disks", flattenComputeNodeTemplateDisks(res["disks"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-	if err := d.Set("region", flattenComputeNodeTemplateRegion(res["region"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NodeTemplate: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/nodeTemplates/{{name}}", outputFields, hclData)
+
+	hclData["description"] = flattenComputeNodeTemplateDescription(res["description"], d, config)
+	hclData["name"] = flattenComputeNodeTemplateName(res["name"], d, config)
+	hclData["node_affinity_labels"] = flattenComputeNodeTemplateNodeAffinityLabels(res["nodeAffinityLabels"], d, config)
+	hclData["node_type"] = flattenComputeNodeTemplateNodeType(res["nodeType"], d, config)
+	hclData["node_type_flexibility"] = flattenComputeNodeTemplateNodeTypeFlexibility(res["nodeTypeFlexibility"], d, config)
+	hclData["server_binding"] = flattenComputeNodeTemplateServerBinding(res["serverBinding"], d, config)
+	hclData["accelerators"] = flattenComputeNodeTemplateAccelerators(res["accelerators"], d, config)
+	hclData["cpu_overcommit_type"] = flattenComputeNodeTemplateCpuOvercommitType(res["cpuOvercommitType"], d, config)
+	hclData["disks"] = flattenComputeNodeTemplateDisks(res["disks"], d, config)
+	hclData["region"] = flattenComputeNodeTemplateRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

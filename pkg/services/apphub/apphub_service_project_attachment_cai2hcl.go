@@ -122,18 +122,10 @@ func (c *ApphubServiceProjectAttachmentCai2hclConverter) convertResourceData(ass
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("service_project", flattenApphubServiceProjectAttachmentServiceProject(res["serviceProject"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading ServiceProjectAttachment: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "name": struct{}{}, "state": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//apphub.googleapis.com/projects/{{project}}/locations/global/serviceProjectAttachments/{{service_project_attachment_id}}", outputFields, hclData)
+
+	hclData["service_project"] = flattenApphubServiceProjectAttachmentServiceProject(res["serviceProject"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

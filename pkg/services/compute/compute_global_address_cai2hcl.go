@@ -122,42 +122,18 @@ func (c *ComputeGlobalAddressCai2hclConverter) convertResourceData(asset caiasse
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("address", flattenComputeGlobalAddressAddress(res["address"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-	if err := d.Set("description", flattenComputeGlobalAddressDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-	if err := d.Set("name", flattenComputeGlobalAddressName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-	if err := d.Set("labels", flattenComputeGlobalAddressLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-	if err := d.Set("ip_version", flattenComputeGlobalAddressIpVersion(res["ipVersion"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-	if err := d.Set("prefix_length", flattenComputeGlobalAddressPrefixLength(res["prefixLength"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-	if err := d.Set("address_type", flattenComputeGlobalAddressAddressType(res["addressType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-	if err := d.Set("purpose", flattenComputeGlobalAddressPurpose(res["purpose"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-	if err := d.Set("network", flattenComputeGlobalAddressNetwork(res["network"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading GlobalAddress: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/addresses/{{name}}", outputFields, hclData)
+
+	hclData["address"] = flattenComputeGlobalAddressAddress(res["address"], d, config)
+	hclData["description"] = flattenComputeGlobalAddressDescription(res["description"], d, config)
+	hclData["name"] = flattenComputeGlobalAddressName(res["name"], d, config)
+	hclData["labels"] = flattenComputeGlobalAddressLabels(res["labels"], d, config)
+	hclData["ip_version"] = flattenComputeGlobalAddressIpVersion(res["ipVersion"], d, config)
+	hclData["prefix_length"] = flattenComputeGlobalAddressPrefixLength(res["prefixLength"], d, config)
+	hclData["address_type"] = flattenComputeGlobalAddressAddressType(res["addressType"], d, config)
+	hclData["purpose"] = flattenComputeGlobalAddressPurpose(res["purpose"], d, config)
+	hclData["network"] = flattenComputeGlobalAddressNetwork(res["network"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -137,51 +137,21 @@ func (c *ComputeRouteCai2hclConverter) convertResourceData(asset caiasset.Asset)
 		return nil, nil
 	}
 
-	if err := d.Set("dest_range", flattenComputeRouteDestRange(res["destRange"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("description", flattenComputeRouteDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("name", flattenComputeRouteName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("network", flattenComputeRouteNetwork(res["network"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("priority", flattenComputeRoutePriority(res["priority"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("tags", flattenComputeRouteTags(res["tags"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("next_hop_gateway", flattenComputeRouteNextHopGateway(res["nextHopGateway"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("next_hop_instance", flattenComputeRouteNextHopInstance(res["nextHopInstance"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("next_hop_ip", flattenComputeRouteNextHopIp(res["nextHopIp"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("next_hop_vpn_tunnel", flattenComputeRouteNextHopVpnTunnel(res["nextHopVpnTunnel"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("next_hop_ilb", flattenComputeRouteNextHopIlb(res["nextHopIlb"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-	if err := d.Set("params", flattenComputeRouteParams(res["params"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Route: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"as_paths": struct{}{}, "creation_timestamp": struct{}{}, "next_hop_hub": struct{}{}, "next_hop_inter_region_cost": struct{}{}, "next_hop_med": struct{}{}, "next_hop_network": struct{}{}, "next_hop_origin": struct{}{}, "next_hop_peering": struct{}{}, "route_status": struct{}{}, "route_type": struct{}{}, "warnings": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/routes/{{name}}", outputFields, hclData)
+
+	hclData["dest_range"] = flattenComputeRouteDestRange(res["destRange"], d, config)
+	hclData["description"] = flattenComputeRouteDescription(res["description"], d, config)
+	hclData["name"] = flattenComputeRouteName(res["name"], d, config)
+	hclData["network"] = flattenComputeRouteNetwork(res["network"], d, config)
+	hclData["priority"] = flattenComputeRoutePriority(res["priority"], d, config)
+	hclData["tags"] = flattenComputeRouteTags(res["tags"], d, config)
+	hclData["next_hop_gateway"] = flattenComputeRouteNextHopGateway(res["nextHopGateway"], d, config)
+	hclData["next_hop_instance"] = flattenComputeRouteNextHopInstance(res["nextHopInstance"], d, config)
+	hclData["next_hop_ip"] = flattenComputeRouteNextHopIp(res["nextHopIp"], d, config)
+	hclData["next_hop_vpn_tunnel"] = flattenComputeRouteNextHopVpnTunnel(res["nextHopVpnTunnel"], d, config)
+	hclData["next_hop_ilb"] = flattenComputeRouteNextHopIlb(res["nextHopIlb"], d, config)
+	hclData["params"] = flattenComputeRouteParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -296,6 +266,15 @@ func flattenComputeRouteParamsResourceManagerTags(v interface{}, d *schema.Resou
 }
 
 func resourceComputeRouteTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
+	if v, ok := res["nextHopInstance"]; ok {
+		val, err := tpgresource.ParseZonalFieldValue("instances", v.(string), "project", "next_hop_instance_zone", d, meta.(*transport_tpg.Config), true)
+		if err != nil {
+			return nil, nil, err
+		}
+		hclData["next_hop_instance_zone"] = val.Zone
+		res["nextHopInstance"] = val.RelativeLink()
+	}
+
 	// next_hop_ip is Computed + Optional and conflict with next_hop_ilb
 	if _, ok := res["nextHopIp"]; ok {
 		if _, ok := res["nextHopIlb"]; ok {

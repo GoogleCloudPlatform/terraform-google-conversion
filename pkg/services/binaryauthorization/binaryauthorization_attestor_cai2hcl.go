@@ -122,24 +122,12 @@ func (c *BinaryAuthorizationAttestorCai2hclConverter) convertResourceData(asset 
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("name", flattenBinaryAuthorizationAttestorName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Attestor: %s", err)
-	}
-	if err := d.Set("description", flattenBinaryAuthorizationAttestorDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Attestor: %s", err)
-	}
-	if err := d.Set("attestation_authority_note", flattenBinaryAuthorizationAttestorAttestationAuthorityNote(res["userOwnedGrafeasNote"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Attestor: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//binaryauthorization.googleapis.com/projects/{{project}}/attestors/{{name}}", outputFields, hclData)
+
+	hclData["name"] = flattenBinaryAuthorizationAttestorName(res["name"], d, config)
+	hclData["description"] = flattenBinaryAuthorizationAttestorDescription(res["description"], d, config)
+	hclData["attestation_authority_note"] = flattenBinaryAuthorizationAttestorAttestationAuthorityNote(res["userOwnedGrafeasNote"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

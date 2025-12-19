@@ -122,36 +122,16 @@ func (c *CloudBuildBitbucketServerConfigCai2hclConverter) convertResourceData(as
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("host_uri", flattenCloudBuildBitbucketServerConfigHostUri(res["hostUri"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading BitbucketServerConfig: %s", err)
-	}
-	if err := d.Set("secrets", flattenCloudBuildBitbucketServerConfigSecrets(res["secrets"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading BitbucketServerConfig: %s", err)
-	}
-	if err := d.Set("username", flattenCloudBuildBitbucketServerConfigUsername(res["username"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading BitbucketServerConfig: %s", err)
-	}
-	if err := d.Set("api_key", flattenCloudBuildBitbucketServerConfigApiKey(res["apiKey"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading BitbucketServerConfig: %s", err)
-	}
-	if err := d.Set("connected_repositories", flattenCloudBuildBitbucketServerConfigConnectedRepositories(res["connectedRepositories"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading BitbucketServerConfig: %s", err)
-	}
-	if err := d.Set("peered_network", flattenCloudBuildBitbucketServerConfigPeeredNetwork(res["peeredNetwork"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading BitbucketServerConfig: %s", err)
-	}
-	if err := d.Set("ssl_ca", flattenCloudBuildBitbucketServerConfigSslCa(res["sslCa"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading BitbucketServerConfig: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"name": struct{}{}, "webhook_key": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudbuild.googleapis.com/projects/{{project}}/locations/{{location}}/bitbucketServerConfigs/{{config_id}}", outputFields, hclData)
+
+	hclData["host_uri"] = flattenCloudBuildBitbucketServerConfigHostUri(res["hostUri"], d, config)
+	hclData["secrets"] = flattenCloudBuildBitbucketServerConfigSecrets(res["secrets"], d, config)
+	hclData["username"] = flattenCloudBuildBitbucketServerConfigUsername(res["username"], d, config)
+	hclData["api_key"] = flattenCloudBuildBitbucketServerConfigApiKey(res["apiKey"], d, config)
+	hclData["connected_repositories"] = flattenCloudBuildBitbucketServerConfigConnectedRepositories(res["connectedRepositories"], d, config)
+	hclData["peered_network"] = flattenCloudBuildBitbucketServerConfigPeeredNetwork(res["peeredNetwork"], d, config)
+	hclData["ssl_ca"] = flattenCloudBuildBitbucketServerConfigSslCa(res["sslCa"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

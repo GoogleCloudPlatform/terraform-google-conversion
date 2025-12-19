@@ -132,78 +132,30 @@ func (c *RedisInstanceCai2hclConverter) convertResourceData(asset caiasset.Asset
 		return nil, nil
 	}
 
-	if err := d.Set("alternative_location_id", flattenRedisInstanceAlternativeLocationId(res["alternativeLocationId"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("auth_enabled", flattenRedisInstanceAuthEnabled(res["authEnabled"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("authorized_network", flattenRedisInstanceAuthorizedNetwork(res["authorizedNetwork"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("connect_mode", flattenRedisInstanceConnectMode(res["connectMode"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("display_name", flattenRedisInstanceDisplayName(res["displayName"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("labels", flattenRedisInstanceLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("redis_configs", flattenRedisInstanceRedisConfigs(res["redisConfigs"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("location_id", flattenRedisInstanceLocationId(res["locationId"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("name", flattenRedisInstanceName(res["name"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("persistence_config", flattenRedisInstancePersistenceConfig(res["persistenceConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("maintenance_policy", flattenRedisInstanceMaintenancePolicy(res["maintenancePolicy"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("maintenance_version", flattenRedisInstanceMaintenanceVersion(res["maintenanceVersion"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("memory_size_gb", flattenRedisInstanceMemorySizeGb(res["memorySizeGb"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("redis_version", flattenRedisInstanceRedisVersion(res["redisVersion"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("reserved_ip_range", flattenRedisInstanceReservedIpRange(res["reservedIpRange"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("tier", flattenRedisInstanceTier(res["tier"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("transit_encryption_mode", flattenRedisInstanceTransitEncryptionMode(res["transitEncryptionMode"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("replica_count", flattenRedisInstanceReplicaCount(res["replicaCount"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("read_replicas_mode", flattenRedisInstanceReadReplicasMode(res["readReplicasMode"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("secondary_ip_range", flattenRedisInstanceSecondaryIpRange(res["secondaryIpRange"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-	if err := d.Set("customer_managed_key", flattenRedisInstanceCustomerManagedKey(res["customerManagedKey"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Instance: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "current_location_id": struct{}{}, "effective_labels": struct{}{}, "effective_reserved_ip_range": struct{}{}, "host": struct{}{}, "maintenance_schedule": struct{}{}, "nodes": struct{}{}, "persistence_iam_identity": struct{}{}, "port": struct{}{}, "read_endpoint": struct{}{}, "read_endpoint_port": struct{}{}, "server_ca_certs": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}", outputFields, hclData)
+
+	hclData["alternative_location_id"] = flattenRedisInstanceAlternativeLocationId(res["alternativeLocationId"], d, config)
+	hclData["auth_enabled"] = flattenRedisInstanceAuthEnabled(res["authEnabled"], d, config)
+	hclData["authorized_network"] = flattenRedisInstanceAuthorizedNetwork(res["authorizedNetwork"], d, config)
+	hclData["connect_mode"] = flattenRedisInstanceConnectMode(res["connectMode"], d, config)
+	hclData["display_name"] = flattenRedisInstanceDisplayName(res["displayName"], d, config)
+	hclData["labels"] = flattenRedisInstanceLabels(res["labels"], d, config)
+	hclData["redis_configs"] = flattenRedisInstanceRedisConfigs(res["redisConfigs"], d, config)
+	hclData["location_id"] = flattenRedisInstanceLocationId(res["locationId"], d, config)
+	hclData["name"] = flattenRedisInstanceName(res["name"], d, config)
+	hclData["persistence_config"] = flattenRedisInstancePersistenceConfig(res["persistenceConfig"], d, config)
+	hclData["maintenance_policy"] = flattenRedisInstanceMaintenancePolicy(res["maintenancePolicy"], d, config)
+	hclData["maintenance_version"] = flattenRedisInstanceMaintenanceVersion(res["maintenanceVersion"], d, config)
+	hclData["memory_size_gb"] = flattenRedisInstanceMemorySizeGb(res["memorySizeGb"], d, config)
+	hclData["redis_version"] = flattenRedisInstanceRedisVersion(res["redisVersion"], d, config)
+	hclData["reserved_ip_range"] = flattenRedisInstanceReservedIpRange(res["reservedIpRange"], d, config)
+	hclData["tier"] = flattenRedisInstanceTier(res["tier"], d, config)
+	hclData["transit_encryption_mode"] = flattenRedisInstanceTransitEncryptionMode(res["transitEncryptionMode"], d, config)
+	hclData["replica_count"] = flattenRedisInstanceReplicaCount(res["replicaCount"], d, config)
+	hclData["read_replicas_mode"] = flattenRedisInstanceReadReplicasMode(res["readReplicasMode"], d, config)
+	hclData["secondary_ip_range"] = flattenRedisInstanceSecondaryIpRange(res["secondaryIpRange"], d, config)
+	hclData["customer_managed_key"] = flattenRedisInstanceCustomerManagedKey(res["customerManagedKey"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

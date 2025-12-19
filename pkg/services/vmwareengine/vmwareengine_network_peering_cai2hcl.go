@@ -122,39 +122,17 @@ func (c *VmwareengineNetworkPeeringCai2hclConverter) convertResourceData(asset c
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("peer_network", flattenVmwareengineNetworkPeeringPeerNetwork(res["peerNetwork"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NetworkPeering: %s", err)
-	}
-	if err := d.Set("export_custom_routes", flattenVmwareengineNetworkPeeringExportCustomRoutes(res["exportCustomRoutes"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NetworkPeering: %s", err)
-	}
-	if err := d.Set("import_custom_routes", flattenVmwareengineNetworkPeeringImportCustomRoutes(res["importCustomRoutes"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NetworkPeering: %s", err)
-	}
-	if err := d.Set("export_custom_routes_with_public_ip", flattenVmwareengineNetworkPeeringExportCustomRoutesWithPublicIp(res["exportCustomRoutesWithPublicIp"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NetworkPeering: %s", err)
-	}
-	if err := d.Set("import_custom_routes_with_public_ip", flattenVmwareengineNetworkPeeringImportCustomRoutesWithPublicIp(res["importCustomRoutesWithPublicIp"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NetworkPeering: %s", err)
-	}
-	if err := d.Set("peer_network_type", flattenVmwareengineNetworkPeeringPeerNetworkType(res["peerNetworkType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NetworkPeering: %s", err)
-	}
-	if err := d.Set("vmware_engine_network", flattenVmwareengineNetworkPeeringVmwareEngineNetwork(res["vmwareEngineNetwork"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NetworkPeering: %s", err)
-	}
-	if err := d.Set("description", flattenVmwareengineNetworkPeeringDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading NetworkPeering: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "state": struct{}{}, "state_details": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}, "vmware_engine_network_canonical": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//vmwareengine.googleapis.com/projects/{{project}}/locations/global/networkPeerings/{{name}}", outputFields, hclData)
+
+	hclData["peer_network"] = flattenVmwareengineNetworkPeeringPeerNetwork(res["peerNetwork"], d, config)
+	hclData["export_custom_routes"] = flattenVmwareengineNetworkPeeringExportCustomRoutes(res["exportCustomRoutes"], d, config)
+	hclData["import_custom_routes"] = flattenVmwareengineNetworkPeeringImportCustomRoutes(res["importCustomRoutes"], d, config)
+	hclData["export_custom_routes_with_public_ip"] = flattenVmwareengineNetworkPeeringExportCustomRoutesWithPublicIp(res["exportCustomRoutesWithPublicIp"], d, config)
+	hclData["import_custom_routes_with_public_ip"] = flattenVmwareengineNetworkPeeringImportCustomRoutesWithPublicIp(res["importCustomRoutesWithPublicIp"], d, config)
+	hclData["peer_network_type"] = flattenVmwareengineNetworkPeeringPeerNetworkType(res["peerNetworkType"], d, config)
+	hclData["vmware_engine_network"] = flattenVmwareengineNetworkPeeringVmwareEngineNetwork(res["vmwareEngineNetwork"], d, config)
+	hclData["description"] = flattenVmwareengineNetworkPeeringDescription(res["description"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

@@ -122,27 +122,13 @@ func (c *ClouddeployCustomTargetTypeCai2hclConverter) convertResourceData(asset 
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("description", flattenClouddeployCustomTargetTypeDescription(res["description"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading CustomTargetType: %s", err)
-	}
-	if err := d.Set("annotations", flattenClouddeployCustomTargetTypeAnnotations(res["annotations"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading CustomTargetType: %s", err)
-	}
-	if err := d.Set("labels", flattenClouddeployCustomTargetTypeLabels(res["labels"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading CustomTargetType: %s", err)
-	}
-	if err := d.Set("custom_actions", flattenClouddeployCustomTargetTypeCustomActions(res["customActions"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading CustomTargetType: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "custom_target_type_id": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//clouddeploy.googleapis.com/projects/{{project}}/locations/{{location}}/customTargetTypes/{{name}}", outputFields, hclData)
+
+	hclData["description"] = flattenClouddeployCustomTargetTypeDescription(res["description"], d, config)
+	hclData["annotations"] = flattenClouddeployCustomTargetTypeAnnotations(res["annotations"], d, config)
+	hclData["labels"] = flattenClouddeployCustomTargetTypeLabels(res["labels"], d, config)
+	hclData["custom_actions"] = flattenClouddeployCustomTargetTypeCustomActions(res["customActions"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {

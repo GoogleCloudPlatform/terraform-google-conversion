@@ -127,30 +127,14 @@ func (c *CloudAssetFolderFeedCai2hclConverter) convertResourceData(asset caiasse
 		return nil, err
 	}
 
-	if err := d.Set("asset_names", flattenCloudAssetFolderFeedAssetNames(res["assetNames"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading FolderFeed: %s", err)
-	}
-	if err := d.Set("asset_types", flattenCloudAssetFolderFeedAssetTypes(res["assetTypes"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading FolderFeed: %s", err)
-	}
-	if err := d.Set("content_type", flattenCloudAssetFolderFeedContentType(res["contentType"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading FolderFeed: %s", err)
-	}
-	if err := d.Set("feed_output_config", flattenCloudAssetFolderFeedFeedOutputConfig(res["feedOutputConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading FolderFeed: %s", err)
-	}
-	if err := d.Set("condition", flattenCloudAssetFolderFeedCondition(res["condition"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading FolderFeed: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"folder_id": struct{}{}, "name": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudasset.googleapis.com/folders/{{folder}}/feeds/{{feed_id}}", outputFields, hclData)
+
+	hclData["asset_names"] = flattenCloudAssetFolderFeedAssetNames(res["assetNames"], d, config)
+	hclData["asset_types"] = flattenCloudAssetFolderFeedAssetTypes(res["assetTypes"], d, config)
+	hclData["content_type"] = flattenCloudAssetFolderFeedContentType(res["contentType"], d, config)
+	hclData["feed_output_config"] = flattenCloudAssetFolderFeedFeedOutputConfig(res["feedOutputConfig"], d, config)
+	hclData["condition"] = flattenCloudAssetFolderFeedCondition(res["condition"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -254,6 +238,6 @@ func flattenCloudAssetFolderFeedConditionLocation(v interface{}, d *schema.Resou
 func resourceCloudAssetFolderFeedTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	// billing_project is the required url_param_only property, but is not in CAI asset name or data
 	// TODO: handle it in a generic way
-	d.Set("billing_project", "null")
+	hclData["billing_project"] = "null"
 	return res, hclData, nil
 }

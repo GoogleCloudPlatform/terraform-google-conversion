@@ -122,36 +122,16 @@ func (c *Cloudbuildv2ConnectionCai2hclConverter) convertResourceData(asset caias
 	}
 	hclData := make(map[string]interface{})
 
-	if err := d.Set("github_config", flattenCloudbuildv2ConnectionGithubConfig(res["githubConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Connection: %s", err)
-	}
-	if err := d.Set("github_enterprise_config", flattenCloudbuildv2ConnectionGithubEnterpriseConfig(res["githubEnterpriseConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Connection: %s", err)
-	}
-	if err := d.Set("gitlab_config", flattenCloudbuildv2ConnectionGitlabConfig(res["gitlabConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Connection: %s", err)
-	}
-	if err := d.Set("bitbucket_data_center_config", flattenCloudbuildv2ConnectionBitbucketDataCenterConfig(res["bitbucketDataCenterConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Connection: %s", err)
-	}
-	if err := d.Set("bitbucket_cloud_config", flattenCloudbuildv2ConnectionBitbucketCloudConfig(res["bitbucketCloudConfig"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Connection: %s", err)
-	}
-	if err := d.Set("disabled", flattenCloudbuildv2ConnectionDisabled(res["disabled"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Connection: %s", err)
-	}
-	if err := d.Set("annotations", flattenCloudbuildv2ConnectionAnnotations(res["annotations"], d, config)); err != nil {
-		return nil, fmt.Errorf("Error reading Connection: %s", err)
-	}
-
-	for key, sch := range c.schema {
-		if val, ok := d.GetOk(key); ok || sch.Required {
-			hclData[key] = val
-		}
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "etag": struct{}{}, "installation_state": struct{}{}, "reconciling": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//cloudbuild.googleapis.com/projects/{{project}}/locations/{{location}}/connections/{{name}}", outputFields, hclData)
+
+	hclData["github_config"] = flattenCloudbuildv2ConnectionGithubConfig(res["githubConfig"], d, config)
+	hclData["github_enterprise_config"] = flattenCloudbuildv2ConnectionGithubEnterpriseConfig(res["githubEnterpriseConfig"], d, config)
+	hclData["gitlab_config"] = flattenCloudbuildv2ConnectionGitlabConfig(res["gitlabConfig"], d, config)
+	hclData["bitbucket_data_center_config"] = flattenCloudbuildv2ConnectionBitbucketDataCenterConfig(res["bitbucketDataCenterConfig"], d, config)
+	hclData["bitbucket_cloud_config"] = flattenCloudbuildv2ConnectionBitbucketCloudConfig(res["bitbucketCloudConfig"], d, config)
+	hclData["disabled"] = flattenCloudbuildv2ConnectionDisabled(res["disabled"], d, config)
+	hclData["annotations"] = flattenCloudbuildv2ConnectionAnnotations(res["annotations"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
