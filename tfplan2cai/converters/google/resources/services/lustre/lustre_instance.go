@@ -158,6 +158,12 @@ func GetLustreInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
 		obj["kmsKey"] = kmsKeyProp
 	}
+	accessRulesOptionsProp, err := expandLustreInstanceAccessRulesOptions(d.Get("access_rules_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("access_rules_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessRulesOptionsProp)) && (ok || !reflect.DeepEqual(v, accessRulesOptionsProp)) {
+		obj["accessRulesOptions"] = accessRulesOptionsProp
+	}
 	effectiveLabelsProp, err := expandLustreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -197,6 +203,112 @@ func expandLustreInstancePlacementPolicy(v interface{}, d tpgresource.TerraformR
 }
 
 func expandLustreInstanceKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDefaultSquashMode, err := expandLustreInstanceAccessRulesOptionsDefaultSquashMode(original["default_squash_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultSquashMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultSquashMode"] = transformedDefaultSquashMode
+	}
+
+	transformedDefaultSquashUid, err := expandLustreInstanceAccessRulesOptionsDefaultSquashUid(original["default_squash_uid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultSquashUid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultSquashUid"] = transformedDefaultSquashUid
+	}
+
+	transformedDefaultSquashGid, err := expandLustreInstanceAccessRulesOptionsDefaultSquashGid(original["default_squash_gid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultSquashGid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultSquashGid"] = transformedDefaultSquashGid
+	}
+
+	transformedAccessRules, err := expandLustreInstanceAccessRulesOptionsAccessRules(original["access_rules"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccessRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accessRules"] = transformedAccessRules
+	}
+
+	return transformed, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsDefaultSquashMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsDefaultSquashUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsDefaultSquashGid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsAccessRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandLustreInstanceAccessRulesOptionsAccessRulesName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedIpAddressRanges, err := expandLustreInstanceAccessRulesOptionsAccessRulesIpAddressRanges(original["ip_address_ranges"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpAddressRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipAddressRanges"] = transformedIpAddressRanges
+		}
+
+		transformedSquashMode, err := expandLustreInstanceAccessRulesOptionsAccessRulesSquashMode(original["squash_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSquashMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["squashMode"] = transformedSquashMode
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsAccessRulesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsAccessRulesIpAddressRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsAccessRulesSquashMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
