@@ -185,9 +185,6 @@ func flattenIAMBetaWorkloadIdentityPoolProviderAws(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["account_id"] =
 		flattenIAMBetaWorkloadIdentityPoolProviderAwsAccountId(original["accountId"], d, config)
@@ -198,6 +195,13 @@ func flattenIAMBetaWorkloadIdentityPoolProviderAws(v interface{}, d *schema.Reso
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderAwsAccountId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -206,9 +210,6 @@ func flattenIAMBetaWorkloadIdentityPoolProviderOidc(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allowed_audiences"] =
 		flattenIAMBetaWorkloadIdentityPoolProviderOidcAllowedAudiences(original["allowedAudiences"], d, config)
@@ -227,6 +228,13 @@ func flattenIAMBetaWorkloadIdentityPoolProviderOidcAllowedAudiences(v interface{
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderOidcIssuerUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -239,9 +247,6 @@ func flattenIAMBetaWorkloadIdentityPoolProviderSaml(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["idp_metadata_xml"] =
 		flattenIAMBetaWorkloadIdentityPoolProviderSamlIdpMetadataXml(original["idpMetadataXml"], d, config)
@@ -252,6 +257,13 @@ func flattenIAMBetaWorkloadIdentityPoolProviderSaml(v interface{}, d *schema.Res
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderSamlIdpMetadataXml(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -260,9 +272,6 @@ func flattenIAMBetaWorkloadIdentityPoolProviderX509(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["trust_store"] =
 		flattenIAMBetaWorkloadIdentityPoolProviderX509TrustStore(original["trustStore"], d, config)
@@ -277,9 +286,6 @@ func flattenIAMBetaWorkloadIdentityPoolProviderX509TrustStore(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["trust_anchors"] =
 		flattenIAMBetaWorkloadIdentityPoolProviderX509TrustStoreTrustAnchors(original["trustAnchors"], d, config)
@@ -339,13 +345,10 @@ func flattenIAMBetaWorkloadIdentityPoolProviderX509TrustStoreIntermediateCasPemC
 
 func resourceIAMBetaWorkloadIdentityPoolProviderTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	// These fields are missing in CAI assets, but requried in Terraform
-	if saml, ok := res["saml"].(map[string]interface{}); ok {
-		saml["idpMetadataXml"] = "unknown"
-	}
-
 	if x509, ok := res["x509"].(map[string]interface{}); ok {
 		if trustStore, ok := x509["trustStore"].(map[string]interface{}); ok {
 			if trustAnchors, ok := trustStore["trustAnchors"].([]interface{}); ok {
+				// trust_anchors is missing in CAI assets, but requried in Terraform
 				for _, trustAnchorRaw := range trustAnchors {
 					if trustAnchor, ok := trustAnchorRaw.(map[string]interface{}); ok {
 						trustAnchor["pemCertificate"] = "hidden"

@@ -154,10 +154,24 @@ func (c *KMSKeyHandleCai2hclConverter) convertResourceData(asset caiasset.Asset)
 }
 
 func flattenKMSKeyHandleName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenKMSKeyHandleResourceTypeSelector(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

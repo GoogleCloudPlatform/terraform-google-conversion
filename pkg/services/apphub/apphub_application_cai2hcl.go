@@ -153,9 +153,6 @@ func flattenApphubApplicationAttributes(v interface{}, d *schema.ResourceData, c
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["criticality"] =
 		flattenApphubApplicationAttributesCriticality(original["criticality"], d, config)
@@ -178,9 +175,6 @@ func flattenApphubApplicationAttributesCriticality(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["type"] =
 		flattenApphubApplicationAttributesCriticalityType(original["type"], d, config)
@@ -199,9 +193,6 @@ func flattenApphubApplicationAttributesEnvironment(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["type"] =
 		flattenApphubApplicationAttributesEnvironmentType(original["type"], d, config)
@@ -240,6 +231,13 @@ func flattenApphubApplicationAttributesDeveloperOwnersDisplayName(v interface{},
 }
 
 func flattenApphubApplicationAttributesDeveloperOwnersEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -268,6 +266,13 @@ func flattenApphubApplicationAttributesOperatorOwnersDisplayName(v interface{}, 
 }
 
 func flattenApphubApplicationAttributesOperatorOwnersEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -296,6 +301,13 @@ func flattenApphubApplicationAttributesBusinessOwnersDisplayName(v interface{}, 
 }
 
 func flattenApphubApplicationAttributesBusinessOwnersEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -304,9 +316,6 @@ func flattenApphubApplicationScope(v interface{}, d *schema.ResourceData, config
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["type"] =
 		flattenApphubApplicationScopeType(original["type"], d, config)

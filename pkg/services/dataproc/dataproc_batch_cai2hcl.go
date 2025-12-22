@@ -151,9 +151,6 @@ func flattenDataprocBatchRuntimeConfig(v interface{}, d *schema.ResourceData, co
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["version"] =
 		flattenDataprocBatchRuntimeConfigVersion(original["version"], d, config)
@@ -198,9 +195,6 @@ func flattenDataprocBatchRuntimeConfigAutotuningConfig(v interface{}, d *schema.
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["scenarios"] =
 		flattenDataprocBatchRuntimeConfigAutotuningConfigScenarios(original["scenarios"], d, config)
@@ -223,9 +217,6 @@ func flattenDataprocBatchEnvironmentConfig(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["execution_config"] =
 		flattenDataprocBatchEnvironmentConfigExecutionConfig(original["executionConfig"], d, config)
@@ -242,9 +233,6 @@ func flattenDataprocBatchEnvironmentConfigExecutionConfig(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["service_account"] =
 		flattenDataprocBatchEnvironmentConfigExecutionConfigServiceAccount(original["serviceAccount"], d, config)
@@ -301,9 +289,6 @@ func flattenDataprocBatchEnvironmentConfigExecutionConfigAuthenticationConfig(v 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["user_workload_authentication_type"] =
 		flattenDataprocBatchEnvironmentConfigExecutionConfigAuthenticationConfigUserWorkloadAuthenticationType(original["userWorkloadAuthenticationType"], d, config)
@@ -339,9 +324,6 @@ func flattenDataprocBatchEnvironmentConfigPeripheralsConfigSparkHistoryServerCon
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["dataproc_cluster"] =
 		flattenDataprocBatchEnvironmentConfigPeripheralsConfigSparkHistoryServerConfigDataprocCluster(original["dataprocCluster"], d, config)
@@ -360,9 +342,6 @@ func flattenDataprocBatchPysparkBatch(v interface{}, d *schema.ResourceData, con
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["main_python_file_uri"] =
 		flattenDataprocBatchPysparkBatchMainPythonFileUri(original["mainPythonFileUri"], d, config)
@@ -411,9 +390,6 @@ func flattenDataprocBatchSparkBatch(v interface{}, d *schema.ResourceData, confi
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["args"] =
 		flattenDataprocBatchSparkBatchArgs(original["args"], d, config)
@@ -462,9 +438,6 @@ func flattenDataprocBatchSparkRBatch(v interface{}, d *schema.ResourceData, conf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["main_r_file_uri"] =
 		flattenDataprocBatchSparkRBatchMainRFileUri(original["mainRFileUri"], d, config)
@@ -501,9 +474,6 @@ func flattenDataprocBatchSparkSqlBatch(v interface{}, d *schema.ResourceData, co
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["query_file_uri"] =
 		flattenDataprocBatchSparkSqlBatchQueryFileUri(original["queryFileUri"], d, config)

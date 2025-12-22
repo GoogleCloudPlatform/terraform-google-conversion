@@ -154,9 +154,6 @@ func flattenCloudTasksQueueAppEngineRoutingOverride(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["service"] =
 		flattenCloudTasksQueueAppEngineRoutingOverrideService(original["service"], d, config)
@@ -187,9 +184,6 @@ func flattenCloudTasksQueueRateLimits(v interface{}, d *schema.ResourceData, con
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["max_dispatches_per_second"] =
 		flattenCloudTasksQueueRateLimitsMaxDispatchesPerSecond(original["maxDispatchesPerSecond"], d, config)
@@ -227,9 +221,6 @@ func flattenCloudTasksQueueRetryConfig(v interface{}, d *schema.ResourceData, co
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["max_attempts"] =
 		flattenCloudTasksQueueRetryConfigMaxAttempts(original["maxAttempts"], d, config)
@@ -301,9 +292,6 @@ func flattenCloudTasksQueueStackdriverLoggingConfig(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["sampling_ratio"] =
 		flattenCloudTasksQueueStackdriverLoggingConfigSamplingRatio(original["samplingRatio"], d, config)
@@ -322,9 +310,6 @@ func flattenCloudTasksQueueHttpTarget(v interface{}, d *schema.ResourceData, con
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["http_method"] =
 		flattenCloudTasksQueueHttpTargetHttpMethod(original["httpMethod"], d, config)
@@ -351,9 +336,6 @@ func flattenCloudTasksQueueHttpTargetUriOverride(v interface{}, d *schema.Resour
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["scheme"] =
 		flattenCloudTasksQueueHttpTargetUriOverrideScheme(original["scheme"], d, config)
@@ -390,9 +372,6 @@ func flattenCloudTasksQueueHttpTargetUriOverridePathOverride(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["path"] =
 		flattenCloudTasksQueueHttpTargetUriOverridePathOverridePath(original["path"], d, config)
@@ -411,9 +390,6 @@ func flattenCloudTasksQueueHttpTargetUriOverrideQueryOverride(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["query_params"] =
 		flattenCloudTasksQueueHttpTargetUriOverrideQueryOverrideQueryParams(original["queryParams"], d, config)
@@ -455,9 +431,6 @@ func flattenCloudTasksQueueHttpTargetHeaderOverridesHeader(v interface{}, d *sch
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["key"] =
 		flattenCloudTasksQueueHttpTargetHeaderOverridesHeaderKey(original["key"], d, config)
@@ -470,10 +443,24 @@ func flattenCloudTasksQueueHttpTargetHeaderOverridesHeader(v interface{}, d *sch
 }
 
 func flattenCloudTasksQueueHttpTargetHeaderOverridesHeaderKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudTasksQueueHttpTargetHeaderOverridesHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -482,9 +469,6 @@ func flattenCloudTasksQueueHttpTargetOauthToken(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["service_account_email"] =
 		flattenCloudTasksQueueHttpTargetOauthTokenServiceAccountEmail(original["serviceAccountEmail"], d, config)
@@ -497,6 +481,13 @@ func flattenCloudTasksQueueHttpTargetOauthToken(v interface{}, d *schema.Resourc
 }
 
 func flattenCloudTasksQueueHttpTargetOauthTokenServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -509,9 +500,6 @@ func flattenCloudTasksQueueHttpTargetOidcToken(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["service_account_email"] =
 		flattenCloudTasksQueueHttpTargetOidcTokenServiceAccountEmail(original["serviceAccountEmail"], d, config)
@@ -524,6 +512,13 @@ func flattenCloudTasksQueueHttpTargetOidcToken(v interface{}, d *schema.Resource
 }
 
 func flattenCloudTasksQueueHttpTargetOidcTokenServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

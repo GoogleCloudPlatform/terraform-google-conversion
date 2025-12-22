@@ -186,9 +186,6 @@ func flattenAlloydbInstanceQueryInsightsConfig(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["query_string_length"] =
 		flattenAlloydbInstanceQueryInsightsConfigQueryStringLength(original["queryStringLength"], d, config)
@@ -251,9 +248,6 @@ func flattenAlloydbInstanceReadPoolConfig(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["node_count"] =
 		flattenAlloydbInstanceReadPoolConfigNodeCount(original["nodeCount"], d, config)
@@ -285,9 +279,6 @@ func flattenAlloydbInstanceMachineConfig(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cpu_count"] =
 		flattenAlloydbInstanceMachineConfigCpuCount(original["cpuCount"], d, config)
@@ -325,9 +316,6 @@ func flattenAlloydbInstanceClientConnectionConfig(v interface{}, d *schema.Resou
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["require_connectors"] =
 		flattenAlloydbInstanceClientConnectionConfigRequireConnectors(original["requireConnectors"], d, config)
@@ -348,9 +336,6 @@ func flattenAlloydbInstanceClientConnectionConfigSslConfig(v interface{}, d *sch
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["ssl_mode"] =
 		flattenAlloydbInstanceClientConnectionConfigSslConfigSslMode(original["sslMode"], d, config)
@@ -369,9 +354,6 @@ func flattenAlloydbInstancePscInstanceConfig(v interface{}, d *schema.ResourceDa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allowed_consumer_projects"] =
 		flattenAlloydbInstancePscInstanceConfigAllowedConsumerProjects(original["allowedConsumerProjects"], d, config)
@@ -445,9 +427,6 @@ func flattenAlloydbInstanceNetworkConfig(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["authorized_external_networks"] =
 		flattenAlloydbInstanceNetworkConfigAuthorizedExternalNetworks(original["authorizedExternalNetworks"], d, config)

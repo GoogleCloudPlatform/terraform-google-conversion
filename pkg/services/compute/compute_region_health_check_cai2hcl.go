@@ -190,6 +190,13 @@ func flattenComputeRegionHealthCheckHealthyThreshold(v interface{}, d *schema.Re
 }
 
 func flattenComputeRegionHealthCheckName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -232,9 +239,6 @@ func flattenComputeRegionHealthCheckHttpHealthCheck(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host"] =
 		flattenComputeRegionHealthCheckHttpHealthCheckHost(original["host"], d, config)
@@ -302,9 +306,6 @@ func flattenComputeRegionHealthCheckHttpsHealthCheck(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host"] =
 		flattenComputeRegionHealthCheckHttpsHealthCheckHost(original["host"], d, config)
@@ -372,9 +373,6 @@ func flattenComputeRegionHealthCheckTcpHealthCheck(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request"] =
 		flattenComputeRegionHealthCheckTcpHealthCheckRequest(original["request"], d, config)
@@ -436,9 +434,6 @@ func flattenComputeRegionHealthCheckSslHealthCheck(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request"] =
 		flattenComputeRegionHealthCheckSslHealthCheckRequest(original["request"], d, config)
@@ -500,9 +495,6 @@ func flattenComputeRegionHealthCheckHttp2HealthCheck(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host"] =
 		flattenComputeRegionHealthCheckHttp2HealthCheckHost(original["host"], d, config)
@@ -570,9 +562,6 @@ func flattenComputeRegionHealthCheckGrpcHealthCheck(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["port"] =
 		flattenComputeRegionHealthCheckGrpcHealthCheckPort(original["port"], d, config)
@@ -622,9 +611,6 @@ func flattenComputeRegionHealthCheckGrpcTlsHealthCheck(v interface{}, d *schema.
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["port"] =
 		flattenComputeRegionHealthCheckGrpcTlsHealthCheckPort(original["port"], d, config)

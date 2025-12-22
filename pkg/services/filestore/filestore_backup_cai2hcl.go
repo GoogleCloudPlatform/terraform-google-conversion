@@ -149,10 +149,24 @@ func flattenFilestoreBackupLabels(v interface{}, d *schema.ResourceData, config 
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenFilestoreBackupSourceInstance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenFilestoreBackupSourceFileShare(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

@@ -164,9 +164,6 @@ func flattenPubsubTopicMessageStoragePolicy(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allowed_persistence_regions"] =
 		flattenPubsubTopicMessageStoragePolicyAllowedPersistenceRegions(original["allowedPersistenceRegions"], d, config)
@@ -194,9 +191,6 @@ func flattenPubsubTopicSchemaSettings(v interface{}, d *schema.ResourceData, con
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["schema"] =
 		flattenPubsubTopicSchemaSettingsSchema(original["schema"], d, config)
@@ -209,6 +203,13 @@ func flattenPubsubTopicSchemaSettings(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenPubsubTopicSchemaSettingsSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -225,9 +226,6 @@ func flattenPubsubTopicIngestionDataSourceSettings(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["aws_kinesis"] =
 		flattenPubsubTopicIngestionDataSourceSettingsAwsKinesis(original["awsKinesis"], d, config)
@@ -252,9 +250,6 @@ func flattenPubsubTopicIngestionDataSourceSettingsAwsKinesis(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["stream_arn"] =
 		flattenPubsubTopicIngestionDataSourceSettingsAwsKinesisStreamArn(original["streamArn"], d, config)
@@ -271,18 +266,46 @@ func flattenPubsubTopicIngestionDataSourceSettingsAwsKinesis(v interface{}, d *s
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAwsKinesisStreamArn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAwsKinesisConsumerArn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAwsKinesisAwsRoleArn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAwsKinesisGcpServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -291,9 +314,6 @@ func flattenPubsubTopicIngestionDataSourceSettingsCloudStorage(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["bucket"] =
 		flattenPubsubTopicIngestionDataSourceSettingsCloudStorageBucket(original["bucket"], d, config)
@@ -314,6 +334,13 @@ func flattenPubsubTopicIngestionDataSourceSettingsCloudStorage(v interface{}, d 
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsCloudStorageBucket(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -322,9 +349,6 @@ func flattenPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormat(v inter
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["delimiter"] =
 		flattenPubsubTopicIngestionDataSourceSettingsCloudStorageTextFormatDelimiter(original["delimiter"], d, config)
@@ -367,9 +391,6 @@ func flattenPubsubTopicIngestionDataSourceSettingsPlatformLogsSettings(v interfa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["severity"] =
 		flattenPubsubTopicIngestionDataSourceSettingsPlatformLogsSettingsSeverity(original["severity"], d, config)
@@ -388,9 +409,6 @@ func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubs(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_group"] =
 		flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsResourceGroup(original["resourceGroup"], d, config)
@@ -445,9 +463,6 @@ func flattenPubsubTopicIngestionDataSourceSettingsAwsMsk(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cluster_arn"] =
 		flattenPubsubTopicIngestionDataSourceSettingsAwsMskClusterArn(original["clusterArn"], d, config)
@@ -464,18 +479,46 @@ func flattenPubsubTopicIngestionDataSourceSettingsAwsMsk(v interface{}, d *schem
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAwsMskClusterArn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAwsMskTopic(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAwsMskAwsRoleArn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAwsMskGcpServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -484,9 +527,6 @@ func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloud(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["bootstrap_server"] =
 		flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudBootstrapServer(original["bootstrapServer"], d, config)
@@ -505,6 +545,13 @@ func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloud(v interface{}, 
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudBootstrapServer(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -513,14 +560,35 @@ func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudClusterId(v inte
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudTopic(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudIdentityPoolId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudGcpServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -549,9 +617,6 @@ func flattenPubsubTopicMessageTransformsJavascriptUdf(v interface{}, d *schema.R
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["function_name"] =
 		flattenPubsubTopicMessageTransformsJavascriptUdfFunctionName(original["functionName"], d, config)
@@ -564,10 +629,24 @@ func flattenPubsubTopicMessageTransformsJavascriptUdf(v interface{}, d *schema.R
 }
 
 func flattenPubsubTopicMessageTransformsJavascriptUdfFunctionName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenPubsubTopicMessageTransformsJavascriptUdfCode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

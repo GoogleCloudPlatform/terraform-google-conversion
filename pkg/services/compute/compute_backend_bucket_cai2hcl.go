@@ -147,6 +147,13 @@ func (c *ComputeBackendBucketCai2hclConverter) convertResourceData(asset caiasse
 }
 
 func flattenComputeBackendBucketBucketName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -155,9 +162,6 @@ func flattenComputeBackendBucketCdnPolicy(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cache_key_policy"] =
 		flattenComputeBackendBucketCdnPolicyCacheKeyPolicy(original["cacheKeyPolicy"], d, config)
@@ -192,9 +196,6 @@ func flattenComputeBackendBucketCdnPolicyCacheKeyPolicy(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["query_string_whitelist"] =
 		flattenComputeBackendBucketCdnPolicyCacheKeyPolicyQueryStringWhitelist(original["queryStringWhitelist"], d, config)
@@ -409,6 +410,13 @@ func flattenComputeBackendBucketEnableCdn(v interface{}, d *schema.ResourceData,
 }
 
 func flattenComputeBackendBucketName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -421,9 +429,6 @@ func flattenComputeBackendBucketParams(v interface{}, d *schema.ResourceData, co
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_manager_tags"] =
 		flattenComputeBackendBucketParamsResourceManagerTags(original["resourceManagerTags"], d, config)

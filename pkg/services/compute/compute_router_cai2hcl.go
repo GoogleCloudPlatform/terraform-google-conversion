@@ -145,6 +145,13 @@ func (c *ComputeRouterCai2hclConverter) convertResourceData(asset caiasset.Asset
 }
 
 func flattenComputeRouterName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -168,9 +175,6 @@ func flattenComputeRouterBgp(v interface{}, d *schema.ResourceData, config *tran
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["asn"] =
 		flattenComputeRouterBgpAsn(original["asn"], d, config)
@@ -239,6 +243,13 @@ func flattenComputeRouterBgpAdvertisedIpRanges(v interface{}, d *schema.Resource
 }
 
 func flattenComputeRouterBgpAdvertisedIpRangesRange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -276,9 +287,6 @@ func flattenComputeRouterMd5AuthenticationKeys(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["name"] =
 		flattenComputeRouterMd5AuthenticationKeysName(original["name"], d, config)
@@ -291,10 +299,24 @@ func flattenComputeRouterMd5AuthenticationKeys(v interface{}, d *schema.Resource
 }
 
 func flattenComputeRouterMd5AuthenticationKeysName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeRouterMd5AuthenticationKeysKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -303,9 +325,6 @@ func flattenComputeRouterParams(v interface{}, d *schema.ResourceData, config *t
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_manager_tags"] =
 		flattenComputeRouterParamsResourceManagerTags(original["resourceManagerTags"], d, config)

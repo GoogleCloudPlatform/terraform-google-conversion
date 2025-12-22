@@ -363,6 +363,13 @@ func flattenComputeBackendServiceBackendCustomMetrics(v interface{}, d *schema.R
 }
 
 func flattenComputeBackendServiceBackendCustomMetricsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -382,9 +389,6 @@ func flattenComputeBackendServiceCircuitBreakers(v interface{}, d *schema.Resour
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["max_requests_per_connection"] =
 		flattenComputeBackendServiceCircuitBreakersMaxRequestsPerConnection(original["maxRequestsPerConnection"], d, config)
@@ -496,9 +500,6 @@ func flattenComputeBackendServiceConsistentHash(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["http_cookie"] =
 		flattenComputeBackendServiceConsistentHashHttpCookie(original["httpCookie"], d, config)
@@ -517,9 +518,6 @@ func flattenComputeBackendServiceConsistentHashHttpCookie(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["ttl"] =
 		flattenComputeBackendServiceConsistentHashHttpCookieTtl(original["ttl"], d, config)
@@ -538,9 +536,6 @@ func flattenComputeBackendServiceConsistentHashHttpCookieTtl(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeBackendServiceConsistentHashHttpCookieTtlSeconds(original["seconds"], d, config)
@@ -623,9 +618,6 @@ func flattenComputeBackendServiceCdnPolicy(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_coalescing"] =
 		flattenComputeBackendServiceCdnPolicyRequestCoalescing(original["requestCoalescing"], d, config)
@@ -664,9 +656,6 @@ func flattenComputeBackendServiceCdnPolicyCacheKeyPolicy(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["include_host"] =
 		flattenComputeBackendServiceCdnPolicyCacheKeyPolicyIncludeHost(original["includeHost"], d, config)
@@ -893,6 +882,13 @@ func flattenComputeBackendServiceCdnPolicyBypassCacheOnRequestHeaders(v interfac
 }
 
 func flattenComputeBackendServiceCdnPolicyBypassCacheOnRequestHeadersHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -901,9 +897,6 @@ func flattenComputeBackendServiceConnectionDraining(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["connection_draining_timeout_sec"] =
 		flattenComputeBackendServiceConnectionDrainingConnectionDrainingTimeoutSec(original["drainingTimeoutSec"], d, config)
@@ -964,9 +957,6 @@ func flattenComputeBackendServiceIap(v interface{}, d *schema.ResourceData, conf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["enabled"] =
 		flattenComputeBackendServiceIapEnabled(original["enabled"], d, config)
@@ -1040,9 +1030,6 @@ func flattenComputeBackendServiceLocalityLbPoliciesPolicy(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["name"] =
 		flattenComputeBackendServiceLocalityLbPoliciesPolicyName(original["name"], d, config)
@@ -1061,9 +1048,6 @@ func flattenComputeBackendServiceLocalityLbPoliciesCustomPolicy(v interface{}, d
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["name"] =
 		flattenComputeBackendServiceLocalityLbPoliciesCustomPolicyName(original["name"], d, config)
@@ -1076,6 +1060,13 @@ func flattenComputeBackendServiceLocalityLbPoliciesCustomPolicy(v interface{}, d
 }
 
 func flattenComputeBackendServiceLocalityLbPoliciesCustomPolicyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1104,6 +1095,13 @@ func flattenComputeBackendServiceCustomMetrics(v interface{}, d *schema.Resource
 }
 
 func flattenComputeBackendServiceCustomMetricsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1115,6 +1113,13 @@ func flattenComputeBackendServiceCustomMetricsDryRun(v interface{}, d *schema.Re
 }
 
 func flattenComputeBackendServiceName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1123,9 +1128,6 @@ func flattenComputeBackendServiceOutlierDetection(v interface{}, d *schema.Resou
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["base_ejection_time"] =
 		flattenComputeBackendServiceOutlierDetectionBaseEjectionTime(original["baseEjectionTime"], d, config)
@@ -1160,9 +1162,6 @@ func flattenComputeBackendServiceOutlierDetectionBaseEjectionTime(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeBackendServiceOutlierDetectionBaseEjectionTimeSeconds(original["seconds"], d, config)
@@ -1301,9 +1300,6 @@ func flattenComputeBackendServiceOutlierDetectionInterval(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeBackendServiceOutlierDetectionIntervalSeconds(original["seconds"], d, config)
@@ -1441,9 +1437,6 @@ func flattenComputeBackendServiceSecuritySettings(v interface{}, d *schema.Resou
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["client_tls_policy"] =
 		flattenComputeBackendServiceSecuritySettingsClientTlsPolicy(original["clientTlsPolicy"], d, config)
@@ -1477,9 +1470,6 @@ func flattenComputeBackendServiceSecuritySettingsAwsV4Authentication(v interface
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["access_key_id"] =
 		flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyId(original["accessKeyId"], d, config)
@@ -1520,9 +1510,6 @@ func flattenComputeBackendServiceStrongSessionAffinityCookie(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["ttl"] =
 		flattenComputeBackendServiceStrongSessionAffinityCookieTtl(original["ttl"], d, config)
@@ -1541,9 +1528,6 @@ func flattenComputeBackendServiceStrongSessionAffinityCookieTtl(v interface{}, d
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeBackendServiceStrongSessionAffinityCookieTtlSeconds(original["seconds"], d, config)
@@ -1622,9 +1606,6 @@ func flattenComputeBackendServiceLogConfig(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["enable"] =
 		flattenComputeBackendServiceLogConfigEnable(original["enable"], d, config)
@@ -1665,9 +1646,6 @@ func flattenComputeBackendServiceTlsSettings(v interface{}, d *schema.ResourceDa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["sni"] =
 		flattenComputeBackendServiceTlsSettingsSni(original["sni"], d, config)
@@ -1722,9 +1700,6 @@ func flattenComputeBackendServiceMaxStreamDuration(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeBackendServiceMaxStreamDurationSeconds(original["seconds"], d, config)
@@ -1737,6 +1712,13 @@ func flattenComputeBackendServiceMaxStreamDuration(v interface{}, d *schema.Reso
 }
 
 func flattenComputeBackendServiceMaxStreamDurationSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1762,9 +1744,6 @@ func flattenComputeBackendServiceParams(v interface{}, d *schema.ResourceData, c
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_manager_tags"] =
 		flattenComputeBackendServiceParamsResourceManagerTags(original["resourceManagerTags"], d, config)

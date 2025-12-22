@@ -146,6 +146,13 @@ func (c *MonitoringAlertPolicyCai2hclConverter) convertResourceData(asset caiass
 }
 
 func flattenMonitoringAlertPolicyDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -187,9 +194,6 @@ func flattenMonitoringAlertPolicyConditionsConditionAbsent(v interface{}, d *sch
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["aggregations"] =
 		flattenMonitoringAlertPolicyConditionsConditionAbsentAggregations(original["aggregations"], d, config)
@@ -251,9 +255,6 @@ func flattenMonitoringAlertPolicyConditionsConditionAbsentTrigger(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["percent"] =
 		flattenMonitoringAlertPolicyConditionsConditionAbsentTriggerPercent(original["percent"], d, config)
@@ -287,6 +288,13 @@ func flattenMonitoringAlertPolicyConditionsConditionAbsentTriggerCount(v interfa
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionAbsentDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -299,9 +307,6 @@ func flattenMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguage(v in
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["query"] =
 		flattenMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageQuery(original["query"], d, config)
@@ -318,10 +323,24 @@ func flattenMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguage(v in
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageQuery(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -330,9 +349,6 @@ func flattenMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTrigg
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["percent"] =
 		flattenMonitoringAlertPolicyConditionsConditionMonitoringQueryLanguageTriggerPercent(original["percent"], d, config)
@@ -374,9 +390,6 @@ func flattenMonitoringAlertPolicyConditionsConditionThreshold(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["threshold_value"] =
 		flattenMonitoringAlertPolicyConditionsConditionThresholdThresholdValue(original["thresholdValue"], d, config)
@@ -454,6 +467,13 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregat
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionThresholdDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -462,9 +482,6 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdForecastOptions(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["forecast_horizon"] =
 		flattenMonitoringAlertPolicyConditionsConditionThresholdForecastOptionsForecastHorizon(original["forecastHorizon"], d, config)
@@ -475,6 +492,13 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdForecastOptions(v i
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionThresholdForecastOptionsForecastHorizon(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -487,9 +511,6 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdTrigger(v interface
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["percent"] =
 		flattenMonitoringAlertPolicyConditionsConditionThresholdTriggerPercent(original["percent"], d, config)
@@ -572,6 +593,13 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdEvaluationMissingDa
 }
 
 func flattenMonitoringAlertPolicyConditionsDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -580,9 +608,6 @@ func flattenMonitoringAlertPolicyConditionsConditionMatchedLog(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["filter"] =
 		flattenMonitoringAlertPolicyConditionsConditionMatchedLogFilter(original["filter"], d, config)
@@ -595,6 +620,13 @@ func flattenMonitoringAlertPolicyConditionsConditionMatchedLog(v interface{}, d 
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionMatchedLogFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -607,9 +639,6 @@ func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguage(v in
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["query"] =
 		flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageQuery(original["query"], d, config)
@@ -632,6 +661,13 @@ func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguage(v in
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageQuery(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -664,9 +700,6 @@ func flattenMonitoringAlertPolicyConditionsConditionSql(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["query"] =
 		flattenMonitoringAlertPolicyConditionsConditionSqlQuery(original["query"], d, config)
@@ -687,6 +720,13 @@ func flattenMonitoringAlertPolicyConditionsConditionSql(v interface{}, d *schema
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionSqlQuery(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -695,9 +735,6 @@ func flattenMonitoringAlertPolicyConditionsConditionSqlMinutes(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["periodicity"] =
 		flattenMonitoringAlertPolicyConditionsConditionSqlMinutesPeriodicity(original["periodicity"], d, config)
@@ -732,9 +769,6 @@ func flattenMonitoringAlertPolicyConditionsConditionSqlHourly(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["periodicity"] =
 		flattenMonitoringAlertPolicyConditionsConditionSqlHourlyPeriodicity(original["periodicity"], d, config)
@@ -788,9 +822,6 @@ func flattenMonitoringAlertPolicyConditionsConditionSqlDaily(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["periodicity"] =
 		flattenMonitoringAlertPolicyConditionsConditionSqlDailyPeriodicity(original["periodicity"], d, config)
@@ -827,9 +858,6 @@ func flattenMonitoringAlertPolicyConditionsConditionSqlDailyExecutionTime(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hours"] =
 		flattenMonitoringAlertPolicyConditionsConditionSqlDailyExecutionTimeHours(original["hours"], d, config)
@@ -918,9 +946,6 @@ func flattenMonitoringAlertPolicyConditionsConditionSqlRowCountTest(v interface{
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["comparison"] =
 		flattenMonitoringAlertPolicyConditionsConditionSqlRowCountTestComparison(original["comparison"], d, config)
@@ -961,9 +986,6 @@ func flattenMonitoringAlertPolicyConditionsConditionSqlBooleanTest(v interface{}
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["column"] =
 		flattenMonitoringAlertPolicyConditionsConditionSqlBooleanTestColumn(original["column"], d, config)
@@ -974,6 +996,13 @@ func flattenMonitoringAlertPolicyConditionsConditionSqlBooleanTest(v interface{}
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionSqlBooleanTestColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -986,9 +1015,6 @@ func flattenMonitoringAlertPolicyAlertStrategy(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["notification_rate_limit"] =
 		flattenMonitoringAlertPolicyAlertStrategyNotificationRateLimit(original["notificationRateLimit"], d, config)
@@ -1009,9 +1035,6 @@ func flattenMonitoringAlertPolicyAlertStrategyNotificationRateLimit(v interface{
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["period"] =
 		flattenMonitoringAlertPolicyAlertStrategyNotificationRateLimitPeriod(original["period"], d, config)
@@ -1074,9 +1097,6 @@ func flattenMonitoringAlertPolicyDocumentation(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["content"] =
 		flattenMonitoringAlertPolicyDocumentationContent(original["content"], d, config)

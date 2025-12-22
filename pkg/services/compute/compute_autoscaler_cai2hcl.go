@@ -142,6 +142,13 @@ func (c *ComputeAutoscalerCai2hclConverter) convertResourceData(asset caiasset.A
 }
 
 func flattenComputeAutoscalerName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -154,9 +161,6 @@ func flattenComputeAutoscalerAutoscalingPolicy(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["min_replicas"] =
 		flattenComputeAutoscalerAutoscalingPolicyMinReplicas(original["minNumReplicas"], d, config)
@@ -248,9 +252,6 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleInControl(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["max_scaled_in_replicas"] =
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(original["maxScaledInReplicas"], d, config)
@@ -267,9 +268,6 @@ func flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicas(
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["fixed"] =
 		flattenComputeAutoscalerAutoscalingPolicyScaleInControlMaxScaledInReplicasFixed(original["fixed"], d, config)
@@ -337,9 +335,6 @@ func flattenComputeAutoscalerAutoscalingPolicyCpuUtilization(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["target"] =
 		flattenComputeAutoscalerAutoscalingPolicyCpuUtilizationTarget(original["utilizationTarget"], d, config)
@@ -387,6 +382,13 @@ func flattenComputeAutoscalerAutoscalingPolicyMetric(v interface{}, d *schema.Re
 }
 
 func flattenComputeAutoscalerAutoscalingPolicyMetricName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -411,9 +413,6 @@ func flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilization(v interfa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["target"] =
 		flattenComputeAutoscalerAutoscalingPolicyLoadBalancingUtilizationTarget(original["utilizationTarget"], d, config)
@@ -469,6 +468,13 @@ func flattenComputeAutoscalerAutoscalingPolicyScalingSchedulesMinRequiredReplica
 }
 
 func flattenComputeAutoscalerAutoscalingPolicyScalingSchedulesSchedule(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

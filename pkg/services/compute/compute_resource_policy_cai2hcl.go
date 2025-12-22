@@ -145,6 +145,13 @@ func (c *ComputeResourcePolicyCai2hclConverter) convertResourceData(asset caiass
 }
 
 func flattenComputeResourcePolicyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -157,9 +164,6 @@ func flattenComputeResourcePolicySnapshotSchedulePolicy(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["schedule"] =
 		flattenComputeResourcePolicySnapshotSchedulePolicySchedule(original["schedule"], d, config)
@@ -178,9 +182,6 @@ func flattenComputeResourcePolicySnapshotSchedulePolicySchedule(v interface{}, d
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hourly_schedule"] =
 		flattenComputeResourcePolicySnapshotSchedulePolicyScheduleHourlySchedule(original["hourlySchedule"], d, config)
@@ -199,9 +200,6 @@ func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleHourlySchedule(v 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hours_in_cycle"] =
 		flattenComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleHoursInCycle(original["hoursInCycle"], d, config)
@@ -234,6 +232,13 @@ func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleHou
 }
 
 func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleHourlyScheduleStartTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -242,9 +247,6 @@ func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleDailySchedule(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["days_in_cycle"] =
 		flattenComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleDaysInCycle(original["daysInCycle"], d, config)
@@ -277,6 +279,13 @@ func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleDays
 }
 
 func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleDailyScheduleStartTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -285,9 +294,6 @@ func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklySchedule(v 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["day_of_weeks"] =
 		flattenComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeks(original["dayOfWeeks"], d, config)
@@ -318,6 +324,13 @@ func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDay
 }
 
 func flattenComputeResourcePolicySnapshotSchedulePolicyScheduleWeeklyScheduleDayOfWeeksStartTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -330,9 +343,6 @@ func flattenComputeResourcePolicySnapshotSchedulePolicyRetentionPolicy(v interfa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["max_retention_days"] =
 		flattenComputeResourcePolicySnapshotSchedulePolicyRetentionPolicyMaxRetentionDays(original["maxRetentionDays"], d, config)
@@ -373,9 +383,6 @@ func flattenComputeResourcePolicySnapshotSchedulePolicySnapshotProperties(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["labels"] =
 		flattenComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesLabels(original["labels"], d, config)
@@ -415,9 +422,6 @@ func flattenComputeResourcePolicyGroupPlacementPolicy(v interface{}, d *schema.R
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["vm_count"] =
 		flattenComputeResourcePolicyGroupPlacementPolicyVmCount(original["vmCount"], d, config)
@@ -480,9 +484,6 @@ func flattenComputeResourcePolicyInstanceSchedulePolicy(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["vm_start_schedule"] =
 		flattenComputeResourcePolicyInstanceSchedulePolicyVmStartSchedule(original["vmStartSchedule"], d, config)
@@ -505,9 +506,6 @@ func flattenComputeResourcePolicyInstanceSchedulePolicyVmStartSchedule(v interfa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["schedule"] =
 		flattenComputeResourcePolicyInstanceSchedulePolicyVmStartScheduleSchedule(original["schedule"], d, config)
@@ -518,6 +516,13 @@ func flattenComputeResourcePolicyInstanceSchedulePolicyVmStartSchedule(v interfa
 }
 
 func flattenComputeResourcePolicyInstanceSchedulePolicyVmStartScheduleSchedule(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -526,9 +531,6 @@ func flattenComputeResourcePolicyInstanceSchedulePolicyVmStopSchedule(v interfac
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["schedule"] =
 		flattenComputeResourcePolicyInstanceSchedulePolicyVmStopScheduleSchedule(original["schedule"], d, config)
@@ -539,10 +541,24 @@ func flattenComputeResourcePolicyInstanceSchedulePolicyVmStopSchedule(v interfac
 }
 
 func flattenComputeResourcePolicyInstanceSchedulePolicyVmStopScheduleSchedule(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeResourcePolicyInstanceSchedulePolicyTimeZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -568,9 +584,6 @@ func flattenComputeResourcePolicyWorkloadPolicy(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["type"] =
 		flattenComputeResourcePolicyWorkloadPolicyType(original["type"], d, config)

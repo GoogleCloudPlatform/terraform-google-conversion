@@ -154,6 +154,13 @@ func flattenFilestoreInstanceDescription(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenFilestoreInstanceTier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -191,6 +198,13 @@ func flattenFilestoreInstanceFileShares(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenFilestoreInstanceFileSharesName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -316,6 +330,13 @@ func flattenFilestoreInstanceNetworks(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenFilestoreInstanceNetworksNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -340,9 +361,6 @@ func flattenFilestoreInstanceNetworksPscConfig(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["endpoint_project"] =
 		flattenFilestoreInstanceNetworksPscConfigEndpointProject(original["endpointProject"], d, config)
@@ -373,9 +391,6 @@ func flattenFilestoreInstancePerformanceConfig(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["iops_per_tb"] =
 		flattenFilestoreInstancePerformanceConfigIopsPerTb(original["iopsPerTb"], d, config)
@@ -392,9 +407,6 @@ func flattenFilestoreInstancePerformanceConfigIopsPerTb(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["max_iops_per_tb"] =
 		flattenFilestoreInstancePerformanceConfigIopsPerTbMaxIopsPerTb(original["maxIopsPerTb"], d, config)
@@ -426,9 +438,6 @@ func flattenFilestoreInstancePerformanceConfigFixedIops(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["max_iops"] =
 		flattenFilestoreInstancePerformanceConfigFixedIopsMaxIops(original["maxIops"], d, config)
@@ -464,9 +473,6 @@ func flattenFilestoreInstanceInitialReplication(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["role"] =
 		flattenFilestoreInstanceInitialReplicationRole(original["role"], d, config)
@@ -502,6 +508,13 @@ func flattenFilestoreInstanceInitialReplicationReplicas(v interface{}, d *schema
 }
 
 func flattenFilestoreInstanceInitialReplicationReplicasPeerInstance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -510,9 +523,6 @@ func flattenFilestoreInstanceDirectoryServices(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["ldap"] =
 		flattenFilestoreInstanceDirectoryServicesLdap(original["ldap"], d, config)
@@ -527,9 +537,6 @@ func flattenFilestoreInstanceDirectoryServicesLdap(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["domain"] =
 		flattenFilestoreInstanceDirectoryServicesLdapDomain(original["domain"], d, config)
@@ -546,6 +553,13 @@ func flattenFilestoreInstanceDirectoryServicesLdap(v interface{}, d *schema.Reso
 }
 
 func flattenFilestoreInstanceDirectoryServicesLdapDomain(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

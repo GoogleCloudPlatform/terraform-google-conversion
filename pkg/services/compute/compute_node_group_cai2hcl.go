@@ -149,6 +149,13 @@ func flattenComputeNodeGroupDescription(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenComputeNodeGroupName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -172,9 +179,6 @@ func flattenComputeNodeGroupMaintenanceWindow(v interface{}, d *schema.ResourceD
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["start_time"] =
 		flattenComputeNodeGroupMaintenanceWindowStartTime(original["startTime"], d, config)
@@ -185,6 +189,13 @@ func flattenComputeNodeGroupMaintenanceWindow(v interface{}, d *schema.ResourceD
 }
 
 func flattenComputeNodeGroupMaintenanceWindowStartTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -193,9 +204,6 @@ func flattenComputeNodeGroupAutoscalingPolicy(v interface{}, d *schema.ResourceD
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["mode"] =
 		flattenComputeNodeGroupAutoscalingPolicyMode(original["mode"], d, config)
@@ -255,9 +263,6 @@ func flattenComputeNodeGroupShareSettings(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["share_type"] =
 		flattenComputeNodeGroupShareSettingsShareType(original["shareType"], d, config)
@@ -290,6 +295,13 @@ func flattenComputeNodeGroupShareSettingsProjectMap(v interface{}, d *schema.Res
 }
 
 func flattenComputeNodeGroupShareSettingsProjectMapProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

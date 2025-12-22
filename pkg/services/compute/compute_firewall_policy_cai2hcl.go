@@ -140,6 +140,13 @@ func (c *ComputeFirewallPolicyCai2hclConverter) convertResourceData(asset caiass
 }
 
 func flattenComputeFirewallPolicyShortName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -148,5 +155,12 @@ func flattenComputeFirewallPolicyDescription(v interface{}, d *schema.ResourceDa
 }
 
 func flattenComputeFirewallPolicyParent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }

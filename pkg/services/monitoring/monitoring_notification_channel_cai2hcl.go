@@ -157,6 +157,13 @@ func flattenMonitoringNotificationChannelLabels(v interface{}, d *schema.Resourc
 }
 
 func flattenMonitoringNotificationChannelType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

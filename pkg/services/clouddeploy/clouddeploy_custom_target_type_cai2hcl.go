@@ -155,9 +155,6 @@ func flattenClouddeployCustomTargetTypeCustomActions(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["render_action"] =
 		flattenClouddeployCustomTargetTypeCustomActionsRenderAction(original["renderAction"], d, config)
@@ -176,6 +173,13 @@ func flattenClouddeployCustomTargetTypeCustomActionsRenderAction(v interface{}, 
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsDeployAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -210,9 +214,6 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGit(v 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["repo"] =
 		flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGitRepo(original["repo"], d, config)
@@ -227,6 +228,13 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGit(v 
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGitRepo(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -243,9 +251,6 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogle
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["source"] =
 		flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudStorageSource(original["source"], d, config)
@@ -258,6 +263,13 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogle
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudStorageSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -270,9 +282,6 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogle
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["repository"] =
 		flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoRepository(original["repository"], d, config)
@@ -287,6 +296,13 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogle
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoRepository(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

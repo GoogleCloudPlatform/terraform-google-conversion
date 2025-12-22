@@ -168,9 +168,6 @@ func flattenRedisClusterGcsSource(v interface{}, d *schema.ResourceData, config 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["uris"] =
 		flattenRedisClusterGcsSourceUris(original["uris"], d, config)
@@ -192,9 +189,6 @@ func flattenRedisClusterManagedBackupSource(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["backup"] =
 		flattenRedisClusterManagedBackupSourceBackup(original["backup"], d, config)
@@ -205,6 +199,13 @@ func flattenRedisClusterManagedBackupSource(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRedisClusterManagedBackupSourceBackup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -291,9 +292,6 @@ func flattenRedisClusterZoneDistributionConfig(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["mode"] =
 		flattenRedisClusterZoneDistributionConfigMode(original["mode"], d, config)
@@ -333,6 +331,13 @@ func flattenRedisClusterPscConfigs(v interface{}, d *schema.ResourceData, config
 }
 
 func flattenRedisClusterPscConfigsNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -386,9 +391,6 @@ func flattenRedisClusterPersistenceConfig(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["mode"] =
 		flattenRedisClusterPersistenceConfigMode(original["mode"], d, config)
@@ -411,9 +413,6 @@ func flattenRedisClusterPersistenceConfigRdbConfig(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["rdb_snapshot_period"] =
 		flattenRedisClusterPersistenceConfigRdbConfigRdbSnapshotPeriod(original["rdbSnapshotPeriod"], d, config)
@@ -438,9 +437,6 @@ func flattenRedisClusterPersistenceConfigAofConfig(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["append_fsync"] =
 		flattenRedisClusterPersistenceConfigAofConfigAppendFsync(original["appendFsync"], d, config)
@@ -459,9 +455,6 @@ func flattenRedisClusterMaintenancePolicy(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["weekly_maintenance_window"] =
 		flattenRedisClusterMaintenancePolicyWeeklyMaintenanceWindow(original["weeklyMaintenanceWindow"], d, config)
@@ -589,9 +582,6 @@ func flattenRedisClusterCrossClusterReplicationConfig(v interface{}, d *schema.R
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cluster_role"] =
 		flattenRedisClusterCrossClusterReplicationConfigClusterRole(original["clusterRole"], d, config)
@@ -614,9 +604,6 @@ func flattenRedisClusterCrossClusterReplicationConfigPrimaryCluster(v interface{
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cluster"] =
 		flattenRedisClusterCrossClusterReplicationConfigPrimaryClusterCluster(original["cluster"], d, config)

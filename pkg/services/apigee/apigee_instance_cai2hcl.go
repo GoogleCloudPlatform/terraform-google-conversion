@@ -146,10 +146,24 @@ func (c *ApigeeInstanceCai2hclConverter) convertResourceData(asset caiasset.Asse
 }
 
 func flattenApigeeInstanceName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenApigeeInstanceLocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -182,9 +196,6 @@ func flattenApigeeInstanceAccessLoggingConfig(v interface{}, d *schema.ResourceD
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["enabled"] =
 		flattenApigeeInstanceAccessLoggingConfigEnabled(original["enabled"], d, config)

@@ -169,9 +169,6 @@ func flattenKMSCryptoKeyVersionTemplate(v interface{}, d *schema.ResourceData, c
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["algorithm"] =
 		flattenKMSCryptoKeyVersionTemplateAlgorithm(original["algorithm"], d, config)
@@ -184,6 +181,13 @@ func flattenKMSCryptoKeyVersionTemplate(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenKMSCryptoKeyVersionTemplateAlgorithm(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

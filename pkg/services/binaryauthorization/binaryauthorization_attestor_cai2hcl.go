@@ -155,9 +155,6 @@ func flattenBinaryAuthorizationAttestorAttestationAuthorityNote(v interface{}, d
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["note_reference"] =
 		flattenBinaryAuthorizationAttestorAttestationAuthorityNoteNoteReference(original["noteReference"], d, config)
@@ -170,6 +167,13 @@ func flattenBinaryAuthorizationAttestorAttestationAuthorityNote(v interface{}, d
 }
 
 func flattenBinaryAuthorizationAttestorAttestationAuthorityNoteNoteReference(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -212,9 +216,6 @@ func flattenBinaryAuthorizationAttestorAttestationAuthorityNotePublicKeysPkixPub
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["public_key_pem"] =
 		flattenBinaryAuthorizationAttestorAttestationAuthorityNotePublicKeysPkixPublicKeyPublicKeyPem(original["publicKeyPem"], d, config)

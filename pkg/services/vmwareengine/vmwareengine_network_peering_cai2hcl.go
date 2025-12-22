@@ -145,6 +145,13 @@ func (c *VmwareengineNetworkPeeringCai2hclConverter) convertResourceData(asset c
 }
 
 func flattenVmwareengineNetworkPeeringPeerNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -169,6 +176,13 @@ func flattenVmwareengineNetworkPeeringPeerNetworkType(v interface{}, d *schema.R
 }
 
 func flattenVmwareengineNetworkPeeringVmwareEngineNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

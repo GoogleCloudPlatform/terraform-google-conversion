@@ -158,9 +158,6 @@ func flattenCloudAssetProjectFeedFeedOutputConfig(v interface{}, d *schema.Resou
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["pubsub_destination"] =
 		flattenCloudAssetProjectFeedFeedOutputConfigPubsubDestination(original["pubsubDestination"], d, config)
@@ -175,9 +172,6 @@ func flattenCloudAssetProjectFeedFeedOutputConfigPubsubDestination(v interface{}
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["topic"] =
 		flattenCloudAssetProjectFeedFeedOutputConfigPubsubDestinationTopic(original["topic"], d, config)
@@ -188,6 +182,13 @@ func flattenCloudAssetProjectFeedFeedOutputConfigPubsubDestination(v interface{}
 }
 
 func flattenCloudAssetProjectFeedFeedOutputConfigPubsubDestinationTopic(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -196,9 +197,6 @@ func flattenCloudAssetProjectFeedCondition(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["expression"] =
 		flattenCloudAssetProjectFeedConditionExpression(original["expression"], d, config)
@@ -215,6 +213,13 @@ func flattenCloudAssetProjectFeedCondition(v interface{}, d *schema.ResourceData
 }
 
 func flattenCloudAssetProjectFeedConditionExpression(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

@@ -122,11 +122,6 @@ func (c *NetappActiveDirectoryCai2hclConverter) convertResourceData(asset caiass
 	}
 	hclData := make(map[string]interface{})
 
-	res, hclData, err = resourceNetappActiveDirectoryTgcDecoder(d, config, res, hclData)
-	if err != nil {
-		return nil, err
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "state": struct{}{}, "state_details": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//netapp.googleapis.com/projects/{{project}}/locations/{{location}}/activeDirectories/{{name}}", outputFields, hclData)
 
@@ -160,6 +155,13 @@ func (c *NetappActiveDirectoryCai2hclConverter) convertResourceData(asset caiass
 }
 
 func flattenNetappActiveDirectoryDomain(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -168,10 +170,24 @@ func flattenNetappActiveDirectorySite(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenNetappActiveDirectoryDns(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenNetappActiveDirectoryNetBiosPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -184,10 +200,24 @@ func flattenNetappActiveDirectoryAesEncryption(v interface{}, d *schema.Resource
 }
 
 func flattenNetappActiveDirectoryUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenNetappActiveDirectoryPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -229,16 +259,4 @@ func flattenNetappActiveDirectoryEncryptDcConnections(v interface{}, d *schema.R
 
 func flattenNetappActiveDirectoryLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
-}
-func resourceNetappActiveDirectoryTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
-	// password, username are missing in CAI asset, but required in Terraform
-	if _, ok := res["username"]; !ok {
-		res["username"] = "hidden"
-	}
-
-	if _, ok := res["password"]; !ok {
-		res["password"] = "hidden"
-	}
-
-	return res, hclData, nil
 }
