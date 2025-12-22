@@ -210,9 +210,6 @@ func flattenRedisInstancePersistenceConfig(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["persistence_mode"] =
 		flattenRedisInstancePersistenceConfigPersistenceMode(original["persistenceMode"], d, config)
@@ -243,9 +240,6 @@ func flattenRedisInstanceMaintenancePolicy(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["description"] =
 		flattenRedisInstanceMaintenancePolicyDescription(original["description"], d, config)

@@ -122,11 +122,6 @@ func (c *ComputeRegionSslCertificateCai2hclConverter) convertResourceData(asset 
 	}
 	hclData := make(map[string]interface{})
 
-	res, hclData, err = resourceComputeRegionSslCertificateTgcDecoder(d, config, res, hclData)
-	if err != nil {
-		return nil, err
-	}
-
 	outputFields := map[string]struct{}{"certificate_id": struct{}{}, "creation_timestamp": struct{}{}, "expire_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/sslCertificates/{{name}}", outputFields, hclData)
 
@@ -147,6 +142,13 @@ func (c *ComputeRegionSslCertificateCai2hclConverter) convertResourceData(asset 
 }
 
 func flattenComputeRegionSslCertificateCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -159,6 +161,13 @@ func flattenComputeRegionSslCertificateName(v interface{}, d *schema.ResourceDat
 }
 
 func flattenComputeRegionSslCertificatePrivateKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -167,15 +176,4 @@ func flattenComputeRegionSslCertificateRegion(v interface{}, d *schema.ResourceD
 		return v
 	}
 	return tpgresource.GetResourceNameFromSelfLink(v.(string))
-}
-
-func resourceComputeRegionSslCertificateTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
-	// Inject dummy values for required fields missing in CAI
-	if _, ok := res["privateKey"]; !ok {
-		res["privateKey"] = "mc_is_missing_in_cai"
-	}
-	if _, ok := res["certificate"]; !ok {
-		res["certificate"] = "mc_is_missing_in_cai"
-	}
-	return res, hclData, nil
 }

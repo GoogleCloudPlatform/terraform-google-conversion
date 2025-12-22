@@ -148,9 +148,6 @@ func flattenCloudbuildv2ConnectionGithubConfig(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["authorizer_credential"] =
 		flattenCloudbuildv2ConnectionGithubConfigAuthorizerCredential(original["authorizerCredential"], d, config)
@@ -167,9 +164,6 @@ func flattenCloudbuildv2ConnectionGithubConfigAuthorizerCredential(v interface{}
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["oauth_token_secret_version"] =
 		flattenCloudbuildv2ConnectionGithubConfigAuthorizerCredentialOauthTokenSecretVersion(original["oauthTokenSecretVersion"], d, config)
@@ -205,9 +199,6 @@ func flattenCloudbuildv2ConnectionGithubEnterpriseConfig(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_uri"] =
 		flattenCloudbuildv2ConnectionGithubEnterpriseConfigHostUri(original["hostUri"], d, config)
@@ -232,6 +223,13 @@ func flattenCloudbuildv2ConnectionGithubEnterpriseConfig(v interface{}, d *schem
 }
 
 func flattenCloudbuildv2ConnectionGithubEnterpriseConfigHostUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -286,9 +284,6 @@ func flattenCloudbuildv2ConnectionGithubEnterpriseConfigServiceDirectoryConfig(v
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["service"] =
 		flattenCloudbuildv2ConnectionGithubEnterpriseConfigServiceDirectoryConfigService(original["service"], d, config)
@@ -299,6 +294,13 @@ func flattenCloudbuildv2ConnectionGithubEnterpriseConfigServiceDirectoryConfig(v
 }
 
 func flattenCloudbuildv2ConnectionGithubEnterpriseConfigServiceDirectoryConfigService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -311,9 +313,6 @@ func flattenCloudbuildv2ConnectionGitlabConfig(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_uri"] =
 		flattenCloudbuildv2ConnectionGitlabConfigHostUri(original["hostUri"], d, config)
@@ -338,6 +337,13 @@ func flattenCloudbuildv2ConnectionGitlabConfigHostUri(v interface{}, d *schema.R
 }
 
 func flattenCloudbuildv2ConnectionGitlabConfigWebhookSecretSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -346,9 +352,6 @@ func flattenCloudbuildv2ConnectionGitlabConfigReadAuthorizerCredential(v interfa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["user_token_secret_version"] =
 		flattenCloudbuildv2ConnectionGitlabConfigReadAuthorizerCredentialUserTokenSecretVersion(original["userTokenSecretVersion"], d, config)
@@ -359,6 +362,13 @@ func flattenCloudbuildv2ConnectionGitlabConfigReadAuthorizerCredential(v interfa
 }
 
 func flattenCloudbuildv2ConnectionGitlabConfigReadAuthorizerCredentialUserTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -367,9 +377,6 @@ func flattenCloudbuildv2ConnectionGitlabConfigAuthorizerCredential(v interface{}
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["user_token_secret_version"] =
 		flattenCloudbuildv2ConnectionGitlabConfigAuthorizerCredentialUserTokenSecretVersion(original["userTokenSecretVersion"], d, config)
@@ -380,6 +387,13 @@ func flattenCloudbuildv2ConnectionGitlabConfigAuthorizerCredential(v interface{}
 }
 
 func flattenCloudbuildv2ConnectionGitlabConfigAuthorizerCredentialUserTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -388,9 +402,6 @@ func flattenCloudbuildv2ConnectionGitlabConfigServiceDirectoryConfig(v interface
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["service"] =
 		flattenCloudbuildv2ConnectionGitlabConfigServiceDirectoryConfigService(original["service"], d, config)
@@ -401,6 +412,13 @@ func flattenCloudbuildv2ConnectionGitlabConfigServiceDirectoryConfig(v interface
 }
 
 func flattenCloudbuildv2ConnectionGitlabConfigServiceDirectoryConfigService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -413,9 +431,6 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfig(v interface{}, d *sc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_uri"] =
 		flattenCloudbuildv2ConnectionBitbucketDataCenterConfigHostUri(original["hostUri"], d, config)
@@ -436,10 +451,24 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfig(v interface{}, d *sc
 }
 
 func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigHostUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigWebhookSecretSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -448,9 +477,6 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigReadAuthorizerCredent
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["user_token_secret_version"] =
 		flattenCloudbuildv2ConnectionBitbucketDataCenterConfigReadAuthorizerCredentialUserTokenSecretVersion(original["userTokenSecretVersion"], d, config)
@@ -461,6 +487,13 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigReadAuthorizerCredent
 }
 
 func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigReadAuthorizerCredentialUserTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -469,9 +502,6 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigAuthorizerCredential(
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["user_token_secret_version"] =
 		flattenCloudbuildv2ConnectionBitbucketDataCenterConfigAuthorizerCredentialUserTokenSecretVersion(original["userTokenSecretVersion"], d, config)
@@ -482,6 +512,13 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigAuthorizerCredential(
 }
 
 func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigAuthorizerCredentialUserTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -490,9 +527,6 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigServiceDirectoryConfi
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["service"] =
 		flattenCloudbuildv2ConnectionBitbucketDataCenterConfigServiceDirectoryConfigService(original["service"], d, config)
@@ -503,6 +537,13 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigServiceDirectoryConfi
 }
 
 func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigServiceDirectoryConfigService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -515,9 +556,6 @@ func flattenCloudbuildv2ConnectionBitbucketCloudConfig(v interface{}, d *schema.
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["workspace"] =
 		flattenCloudbuildv2ConnectionBitbucketCloudConfigWorkspace(original["workspace"], d, config)
@@ -534,10 +572,24 @@ func flattenCloudbuildv2ConnectionBitbucketCloudConfig(v interface{}, d *schema.
 }
 
 func flattenCloudbuildv2ConnectionBitbucketCloudConfigWorkspace(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudbuildv2ConnectionBitbucketCloudConfigWebhookSecretSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -546,9 +598,6 @@ func flattenCloudbuildv2ConnectionBitbucketCloudConfigReadAuthorizerCredential(v
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["user_token_secret_version"] =
 		flattenCloudbuildv2ConnectionBitbucketCloudConfigReadAuthorizerCredentialUserTokenSecretVersion(original["userTokenSecretVersion"], d, config)
@@ -559,6 +608,13 @@ func flattenCloudbuildv2ConnectionBitbucketCloudConfigReadAuthorizerCredential(v
 }
 
 func flattenCloudbuildv2ConnectionBitbucketCloudConfigReadAuthorizerCredentialUserTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -567,9 +623,6 @@ func flattenCloudbuildv2ConnectionBitbucketCloudConfigAuthorizerCredential(v int
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["user_token_secret_version"] =
 		flattenCloudbuildv2ConnectionBitbucketCloudConfigAuthorizerCredentialUserTokenSecretVersion(original["userTokenSecretVersion"], d, config)
@@ -580,6 +633,13 @@ func flattenCloudbuildv2ConnectionBitbucketCloudConfigAuthorizerCredential(v int
 }
 
 func flattenCloudbuildv2ConnectionBitbucketCloudConfigAuthorizerCredentialUserTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

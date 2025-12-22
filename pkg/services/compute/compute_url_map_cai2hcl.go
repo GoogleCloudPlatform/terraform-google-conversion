@@ -166,9 +166,6 @@ func flattenComputeUrlMapHeaderAction(v interface{}, d *schema.ResourceData, con
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_headers_to_add"] =
 		flattenComputeUrlMapHeaderActionRequestHeadersToAdd(original["requestHeadersToAdd"], d, config)
@@ -206,10 +203,24 @@ func flattenComputeUrlMapHeaderActionRequestHeadersToAdd(v interface{}, d *schem
 }
 
 func flattenComputeUrlMapHeaderActionRequestHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -246,10 +257,24 @@ func flattenComputeUrlMapHeaderActionResponseHeadersToAdd(v interface{}, d *sche
 }
 
 func flattenComputeUrlMapHeaderActionResponseHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -297,10 +322,24 @@ func flattenComputeUrlMapHostRuleHosts(v interface{}, d *schema.ResourceData, co
 }
 
 func flattenComputeUrlMapHostRulePathMatcher(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -351,9 +390,6 @@ func flattenComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicy(v interface
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["error_response_rule"] =
 		flattenComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicyErrorResponseRule(original["errorResponseRules"], d, config)
@@ -427,9 +463,6 @@ func flattenComputeUrlMapPathMatcherHeaderAction(v interface{}, d *schema.Resour
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_headers_to_add"] =
 		flattenComputeUrlMapPathMatcherHeaderActionRequestHeadersToAdd(original["requestHeadersToAdd"], d, config)
@@ -467,10 +500,24 @@ func flattenComputeUrlMapPathMatcherHeaderActionRequestHeadersToAdd(v interface{
 }
 
 func flattenComputeUrlMapPathMatcherHeaderActionRequestHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -507,10 +554,24 @@ func flattenComputeUrlMapPathMatcherHeaderActionResponseHeadersToAdd(v interface
 }
 
 func flattenComputeUrlMapPathMatcherHeaderActionResponseHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -526,6 +587,13 @@ func flattenComputeUrlMapPathMatcherHeaderActionResponseHeadersToRemove(v interf
 }
 
 func flattenComputeUrlMapPathMatcherName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -575,9 +643,6 @@ func flattenComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicy(v interfac
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["error_response_rule"] =
 		flattenComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicyErrorResponseRule(original["errorResponseRules"], d, config)
@@ -651,9 +716,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteAction(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cors_policy"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicy(original["corsPolicy"], d, config)
@@ -682,9 +744,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicy(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allow_credentials"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionCorsPolicyAllowCredentials(original["allowCredentials"], d, config)
@@ -761,9 +820,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicy(v in
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["abort"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbort(original["abort"], d, config)
@@ -780,9 +836,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbort
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["http_status"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyAbortHttpStatus(original["httpStatus"], d, config)
@@ -823,9 +876,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelay
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["fixed_delay"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayFixedDelay(original["fixedDelay"], d, config)
@@ -842,9 +892,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelay
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayFixedDelayNanos(original["nanos"], d, config)
@@ -874,6 +921,13 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelay
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -886,9 +940,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy(v int
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
@@ -914,9 +965,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicy(v interface{}
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["num_retries"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyNumRetries(original["numRetries"], d, config)
@@ -952,9 +1000,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeout(
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeoutNanos(original["nanos"], d, config)
@@ -984,6 +1029,13 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeoutN
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicyPerTryTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -996,9 +1048,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionTimeout(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionTimeoutNanos(original["nanos"], d, config)
@@ -1028,6 +1077,13 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionTimeoutNanos(v interface{
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1036,9 +1092,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDuration(v inter
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
@@ -1068,6 +1121,13 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationNanos(v 
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionMaxStreamDurationSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1076,9 +1136,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewrite(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_rewrite"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewriteHostRewrite(original["hostRewrite"], d, config)
@@ -1135,9 +1192,6 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHe
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_headers_to_add"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAdd(original["requestHeadersToAdd"], d, config)
@@ -1175,10 +1229,24 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHe
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1215,10 +1283,24 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHe
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1258,9 +1340,6 @@ func flattenComputeUrlMapPathMatcherPathRuleUrlRedirect(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_redirect"] =
 		flattenComputeUrlMapPathMatcherPathRuleUrlRedirectHostRedirect(original["hostRedirect"], d, config)
@@ -1368,9 +1447,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesHeaderAction(v interface{}, d *sch
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_headers_to_add"] =
 		flattenComputeUrlMapPathMatcherRouteRulesHeaderActionRequestHeadersToAdd(original["requestHeadersToAdd"], d, config)
@@ -1408,10 +1484,24 @@ func flattenComputeUrlMapPathMatcherRouteRulesHeaderActionRequestHeadersToAdd(v 
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesHeaderActionRequestHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1448,10 +1538,24 @@ func flattenComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToAdd(v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1527,6 +1631,13 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesExactMatch(
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1547,9 +1658,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatch(
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["range_end"] =
 		flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatchRangeEnd(original["rangeEnd"], d, config)
@@ -1654,10 +1762,24 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesMetadataFiltersFilterLab
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesMetadataFiltersFilterLabelsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesMetadataFiltersFilterLabelsValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1696,6 +1818,13 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatchesExa
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatchesName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1720,9 +1849,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteAction(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cors_policy"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCorsPolicy(original["corsPolicy"], d, config)
@@ -1751,9 +1877,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCorsPolicy(v interface{
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allow_credentials"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCorsPolicyAllowCredentials(original["allowCredentials"], d, config)
@@ -1827,9 +1950,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicy(v 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["abort"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbort(original["abort"], d, config)
@@ -1846,9 +1966,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbo
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["http_status"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyAbortHttpStatus(original["httpStatus"], d, config)
@@ -1886,9 +2003,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDel
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["fixed_delay"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelayFixedDelay(original["fixedDelay"], d, config)
@@ -1905,9 +2019,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDel
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelayFixedDelayNanos(original["nanos"], d, config)
@@ -1937,6 +2048,13 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDel
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1949,9 +2067,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicy(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
@@ -1977,9 +2092,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicy(v interface
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["num_retries"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyNumRetries(original["numRetries"], d, config)
@@ -2018,9 +2130,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeou
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeoutNanos(original["nanos"], d, config)
@@ -2050,6 +2159,13 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeou
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicyPerTryTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2062,9 +2178,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionTimeout(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionTimeoutNanos(original["nanos"], d, config)
@@ -2094,6 +2207,13 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionTimeoutNanos(v interfac
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2102,9 +2222,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDuration(v int
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
@@ -2134,6 +2251,13 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationNanos(
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionMaxStreamDurationSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2142,9 +2266,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(v interface{
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_rewrite"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewriteHostRewrite(original["hostRewrite"], d, config)
@@ -2207,9 +2328,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_headers_to_add"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAdd(original["requestHeadersToAdd"], d, config)
@@ -2247,10 +2365,24 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2287,10 +2419,24 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2330,9 +2476,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirect(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_redirect"] =
 		flattenComputeUrlMapPathMatcherRouteRulesUrlRedirectHostRedirect(original["hostRedirect"], d, config)
@@ -2381,9 +2524,6 @@ func flattenComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicy(v interf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["error_response_rule"] =
 		flattenComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicyErrorResponseRule(original["errorResponseRules"], d, config)
@@ -2457,9 +2597,6 @@ func flattenComputeUrlMapPathMatcherDefaultUrlRedirect(v interface{}, d *schema.
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_redirect"] =
 		flattenComputeUrlMapPathMatcherDefaultUrlRedirectHostRedirect(original["hostRedirect"], d, config)
@@ -2511,9 +2648,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteAction(v interface{}, d *schema.
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["weighted_backend_services"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServices(original["weightedBackendServices"], d, config)
@@ -2591,9 +2725,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHea
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_headers_to_remove"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionRequestHeadersToRemove(original["requestHeadersToRemove"], d, config)
@@ -2688,9 +2819,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionUrlRewrite(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["path_prefix_rewrite"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionUrlRewritePathPrefixRewrite(original["pathPrefixRewrite"], d, config)
@@ -2715,9 +2843,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionTimeout(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionTimeoutSeconds(original["seconds"], d, config)
@@ -2755,9 +2880,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDuration(v interf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
@@ -2787,6 +2909,13 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationNanos(v i
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionMaxStreamDurationSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2795,9 +2924,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicy(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["retry_conditions"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyRetryConditions(original["retryConditions"], d, config)
@@ -2837,9 +2963,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeout(v
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeoutSeconds(original["seconds"], d, config)
@@ -2877,9 +3000,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicy(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
@@ -2905,9 +3025,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionCorsPolicy(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allow_origins"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionCorsPolicyAllowOrigins(original["allowOrigins"], d, config)
@@ -2981,9 +3098,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicy(v int
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["delay"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelay(original["delay"], d, config)
@@ -3000,9 +3114,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelay(
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["fixed_delay"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(original["fixedDelay"], d, config)
@@ -3019,9 +3130,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayF
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(original["seconds"], d, config)
@@ -3063,9 +3171,6 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbort(
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["http_status"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbortHttpStatus(original["httpStatus"], d, config)
@@ -3103,9 +3208,6 @@ func flattenComputeUrlMapDefaultCustomErrorResponsePolicy(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["error_response_rule"] =
 		flattenComputeUrlMapDefaultCustomErrorResponsePolicyErrorResponseRule(original["errorResponseRules"], d, config)
@@ -3204,10 +3306,24 @@ func flattenComputeUrlMapTestDescription(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenComputeUrlMapTestHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapTestPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -3232,10 +3348,24 @@ func flattenComputeUrlMapTestHeaders(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenComputeUrlMapTestHeadersName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenComputeUrlMapTestHeadersValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -3276,9 +3406,6 @@ func flattenComputeUrlMapDefaultUrlRedirect(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_redirect"] =
 		flattenComputeUrlMapDefaultUrlRedirectHostRedirect(original["hostRedirect"], d, config)
@@ -3330,9 +3457,6 @@ func flattenComputeUrlMapDefaultRouteAction(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["weighted_backend_services"] =
 		flattenComputeUrlMapDefaultRouteActionWeightedBackendServices(original["weightedBackendServices"], d, config)
@@ -3410,9 +3534,6 @@ func flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderAction(v
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_headers_to_remove"] =
 		flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionRequestHeadersToRemove(original["requestHeadersToRemove"], d, config)
@@ -3507,9 +3628,6 @@ func flattenComputeUrlMapDefaultRouteActionUrlRewrite(v interface{}, d *schema.R
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["path_prefix_rewrite"] =
 		flattenComputeUrlMapDefaultRouteActionUrlRewritePathPrefixRewrite(original["pathPrefixRewrite"], d, config)
@@ -3534,9 +3652,6 @@ func flattenComputeUrlMapDefaultRouteActionTimeout(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeUrlMapDefaultRouteActionTimeoutSeconds(original["seconds"], d, config)
@@ -3574,9 +3689,6 @@ func flattenComputeUrlMapDefaultRouteActionMaxStreamDuration(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["nanos"] =
 		flattenComputeUrlMapDefaultRouteActionMaxStreamDurationNanos(original["nanos"], d, config)
@@ -3606,6 +3718,13 @@ func flattenComputeUrlMapDefaultRouteActionMaxStreamDurationNanos(v interface{},
 }
 
 func flattenComputeUrlMapDefaultRouteActionMaxStreamDurationSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -3614,9 +3733,6 @@ func flattenComputeUrlMapDefaultRouteActionRetryPolicy(v interface{}, d *schema.
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["retry_conditions"] =
 		flattenComputeUrlMapDefaultRouteActionRetryPolicyRetryConditions(original["retryConditions"], d, config)
@@ -3656,9 +3772,6 @@ func flattenComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeout(v interface{
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeoutSeconds(original["seconds"], d, config)
@@ -3696,9 +3809,6 @@ func flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicy(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
@@ -3724,9 +3834,6 @@ func flattenComputeUrlMapDefaultRouteActionCorsPolicy(v interface{}, d *schema.R
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allow_origins"] =
 		flattenComputeUrlMapDefaultRouteActionCorsPolicyAllowOrigins(original["allowOrigins"], d, config)
@@ -3800,9 +3907,6 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicy(v interface{}, d
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["delay"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelay(original["delay"], d, config)
@@ -3819,9 +3923,6 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelay(v interface
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["fixed_delay"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(original["fixedDelay"], d, config)
@@ -3838,9 +3939,6 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(v
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["seconds"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(original["seconds"], d, config)
@@ -3882,9 +3980,6 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbort(v interface
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["http_status"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbortHttpStatus(original["httpStatus"], d, config)

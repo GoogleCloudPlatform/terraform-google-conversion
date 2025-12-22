@@ -159,9 +159,6 @@ func flattenCloudfunctions2functionBuildConfig(v interface{}, d *schema.Resource
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["runtime"] =
 		flattenCloudfunctions2functionBuildConfigRuntime(original["runtime"], d, config)
@@ -200,9 +197,6 @@ func flattenCloudfunctions2functionBuildConfigSource(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["storage_source"] =
 		flattenCloudfunctions2functionBuildConfigSourceStorageSource(original["storageSource"], d, config)
@@ -219,9 +213,6 @@ func flattenCloudfunctions2functionBuildConfigSourceStorageSource(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["bucket"] =
 		flattenCloudfunctions2functionBuildConfigSourceStorageSourceBucket(original["bucket"], d, config)
@@ -301,9 +292,6 @@ func flattenCloudfunctions2functionBuildConfigSourceRepoSource(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["project_id"] =
 		flattenCloudfunctions2functionBuildConfigSourceRepoSourceProjectId(original["projectId"], d, config)
@@ -390,9 +378,6 @@ func flattenCloudfunctions2functionServiceConfig(v interface{}, d *schema.Resour
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["timeout_seconds"] =
 		flattenCloudfunctions2functionServiceConfigTimeoutSeconds(original["timeoutSeconds"], d, config)
@@ -553,18 +538,46 @@ func flattenCloudfunctions2functionServiceConfigSecretEnvironmentVariables(v int
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretEnvironmentVariablesKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretEnvironmentVariablesProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretEnvironmentVariablesSecret(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretEnvironmentVariablesVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -591,14 +604,35 @@ func flattenCloudfunctions2functionServiceConfigSecretVolumes(v interface{}, d *
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretVolumesMountPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretVolumesProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretVolumesSecret(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -623,10 +657,24 @@ func flattenCloudfunctions2functionServiceConfigSecretVolumesVersions(v interfac
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretVolumesVersionsVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionServiceConfigSecretVolumesVersionsPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -639,9 +687,6 @@ func flattenCloudfunctions2functionEventTrigger(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["trigger_region"] =
 		flattenCloudfunctions2functionEventTriggerTriggerRegion(original["triggerRegion"], d, config)
@@ -666,6 +711,13 @@ func flattenCloudfunctions2functionEventTriggerTriggerRegion(v interface{}, d *s
 }
 
 func flattenCloudfunctions2functionEventTriggerEventType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -691,10 +743,24 @@ func flattenCloudfunctions2functionEventTriggerEventFilters(v interface{}, d *sc
 }
 
 func flattenCloudfunctions2functionEventTriggerEventFiltersAttribute(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionEventTriggerEventFiltersValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

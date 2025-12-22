@@ -158,9 +158,6 @@ func flattenBeyondcorpAppConnectionApplicationEndpoint(v interface{}, d *schema.
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host"] =
 		flattenBeyondcorpAppConnectionApplicationEndpointHost(original["host"], d, config)
@@ -173,6 +170,13 @@ func flattenBeyondcorpAppConnectionApplicationEndpoint(v interface{}, d *schema.
 }
 
 func flattenBeyondcorpAppConnectionApplicationEndpointHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -205,9 +209,6 @@ func flattenBeyondcorpAppConnectionGateway(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["app_gateway"] =
 		flattenBeyondcorpAppConnectionGatewayAppGateway(original["appGateway"], d, config)
@@ -220,6 +221,13 @@ func flattenBeyondcorpAppConnectionGateway(v interface{}, d *schema.ResourceData
 }
 
 func flattenBeyondcorpAppConnectionGatewayAppGateway(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

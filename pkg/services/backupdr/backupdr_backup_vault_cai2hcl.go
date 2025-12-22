@@ -152,6 +152,13 @@ func flattenBackupDRBackupVaultLabels(v interface{}, d *schema.ResourceData, con
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenBackupDRBackupVaultBackupMinimumEnforcedRetentionDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -175,9 +182,6 @@ func flattenBackupDRBackupVaultEncryptionConfig(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenBackupDRBackupVaultEncryptionConfigKmsKeyName(original["kmsKeyName"], d, config)

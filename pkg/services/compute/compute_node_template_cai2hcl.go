@@ -151,6 +151,13 @@ func flattenComputeNodeTemplateDescription(v interface{}, d *schema.ResourceData
 }
 
 func flattenComputeNodeTemplateName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -167,9 +174,6 @@ func flattenComputeNodeTemplateNodeTypeFlexibility(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cpus"] =
 		flattenComputeNodeTemplateNodeTypeFlexibilityCpus(original["cpus"], d, config)
@@ -194,9 +198,6 @@ func flattenComputeNodeTemplateServerBinding(v interface{}, d *schema.ResourceDa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["type"] =
 		flattenComputeNodeTemplateServerBindingType(original["type"], d, config)

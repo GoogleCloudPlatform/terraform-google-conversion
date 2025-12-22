@@ -164,6 +164,13 @@ func (c *ComputeRouteCai2hclConverter) convertResourceData(asset caiasset.Asset)
 }
 
 func flattenComputeRouteDestRange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -172,6 +179,13 @@ func flattenComputeRouteDescription(v interface{}, d *schema.ResourceData, confi
 }
 
 func flattenComputeRouteName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -249,9 +263,6 @@ func flattenComputeRouteParams(v interface{}, d *schema.ResourceData, config *tr
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_manager_tags"] =
 		flattenComputeRouteParamsResourceManagerTags(original["resourceManagerTags"], d, config)

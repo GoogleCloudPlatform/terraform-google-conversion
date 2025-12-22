@@ -162,9 +162,6 @@ func flattenCertificateManagerCertificateSelfManaged(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["certificate_pem"] =
 		flattenCertificateManagerCertificateSelfManagedCertificatePem(original["certificatePem"], d, config)
@@ -201,9 +198,6 @@ func flattenCertificateManagerCertificateManaged(v interface{}, d *schema.Resour
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["domains"] =
 		flattenCertificateManagerCertificateManagedDomains(original["domains"], d, config)

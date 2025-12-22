@@ -150,6 +150,13 @@ func (c *MonitoringUptimeCheckConfigCai2hclConverter) convertResourceData(asset 
 }
 
 func flattenMonitoringUptimeCheckConfigDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -158,6 +165,13 @@ func flattenMonitoringUptimeCheckConfigPeriod(v interface{}, d *schema.ResourceD
 }
 
 func flattenMonitoringUptimeCheckConfigTimeout(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -183,6 +197,13 @@ func flattenMonitoringUptimeCheckConfigContentMatchers(v interface{}, d *schema.
 }
 
 func flattenMonitoringUptimeCheckConfigContentMatchersContent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -195,9 +216,6 @@ func flattenMonitoringUptimeCheckConfigContentMatchersJsonPathMatcher(v interfac
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["json_path"] =
 		flattenMonitoringUptimeCheckConfigContentMatchersJsonPathMatcherJsonPath(original["jsonPath"], d, config)
@@ -210,6 +228,13 @@ func flattenMonitoringUptimeCheckConfigContentMatchersJsonPathMatcher(v interfac
 }
 
 func flattenMonitoringUptimeCheckConfigContentMatchersJsonPathMatcherJsonPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -238,9 +263,6 @@ func flattenMonitoringUptimeCheckConfigHttpCheck(v interface{}, d *schema.Resour
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["request_method"] =
 		flattenMonitoringUptimeCheckConfigHttpCheckRequestMethod(original["requestMethod"], d, config)
@@ -293,9 +315,6 @@ func flattenMonitoringUptimeCheckConfigHttpCheckAuthInfo(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["password"] =
 		flattenMonitoringUptimeCheckConfigHttpCheckAuthInfoPassword(original["password"], d, config)
@@ -318,6 +337,13 @@ func flattenMonitoringUptimeCheckConfigHttpCheckAuthInfoPasswordWoVersion(v inte
 }
 
 func flattenMonitoringUptimeCheckConfigHttpCheckAuthInfoUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -326,9 +352,6 @@ func flattenMonitoringUptimeCheckConfigHttpCheckServiceAgentAuthentication(v int
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["type"] =
 		flattenMonitoringUptimeCheckConfigHttpCheckServiceAgentAuthenticationType(original["type"], d, config)
@@ -429,9 +452,6 @@ func flattenMonitoringUptimeCheckConfigHttpCheckPingConfig(v interface{}, d *sch
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["pings_count"] =
 		flattenMonitoringUptimeCheckConfigHttpCheckPingConfigPingsCount(original["pingsCount"], d, config)
@@ -466,9 +486,6 @@ func flattenMonitoringUptimeCheckConfigTcpCheck(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["port"] =
 		flattenMonitoringUptimeCheckConfigTcpCheckPort(original["port"], d, config)
@@ -505,9 +522,6 @@ func flattenMonitoringUptimeCheckConfigTcpCheckPingConfig(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["pings_count"] =
 		flattenMonitoringUptimeCheckConfigTcpCheckPingConfigPingsCount(original["pingsCount"], d, config)
@@ -542,9 +556,6 @@ func flattenMonitoringUptimeCheckConfigResourceGroup(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_type"] =
 		flattenMonitoringUptimeCheckConfigResourceGroupResourceType(original["resourceType"], d, config)
@@ -570,9 +581,6 @@ func flattenMonitoringUptimeCheckConfigMonitoredResource(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["type"] =
 		flattenMonitoringUptimeCheckConfigMonitoredResourceType(original["type"], d, config)
@@ -585,6 +593,13 @@ func flattenMonitoringUptimeCheckConfigMonitoredResource(v interface{}, d *schem
 }
 
 func flattenMonitoringUptimeCheckConfigMonitoredResourceType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -597,9 +612,6 @@ func flattenMonitoringUptimeCheckConfigSyntheticMonitor(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cloud_function_v2"] =
 		flattenMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2(original["cloudFunctionV2"], d, config)
@@ -614,9 +626,6 @@ func flattenMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2(v interfa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["name"] =
 		flattenMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2Name(original["name"], d, config)
@@ -627,5 +636,12 @@ func flattenMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2(v interfa
 }
 
 func flattenMonitoringUptimeCheckConfigSyntheticMonitorCloudFunctionV2Name(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }

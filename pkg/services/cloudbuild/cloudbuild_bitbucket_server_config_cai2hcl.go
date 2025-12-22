@@ -144,6 +144,13 @@ func (c *CloudBuildBitbucketServerConfigCai2hclConverter) convertResourceData(as
 }
 
 func flattenCloudBuildBitbucketServerConfigHostUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -152,9 +159,6 @@ func flattenCloudBuildBitbucketServerConfigSecrets(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["admin_access_token_version_name"] =
 		flattenCloudBuildBitbucketServerConfigSecretsAdminAccessTokenVersionName(original["adminAccessTokenVersionName"], d, config)
@@ -169,22 +173,57 @@ func flattenCloudBuildBitbucketServerConfigSecrets(v interface{}, d *schema.Reso
 }
 
 func flattenCloudBuildBitbucketServerConfigSecretsAdminAccessTokenVersionName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudBuildBitbucketServerConfigSecretsReadAccessTokenVersionName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudBuildBitbucketServerConfigSecretsWebhookSecretVersionName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudBuildBitbucketServerConfigUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudBuildBitbucketServerConfigApiKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -209,10 +248,24 @@ func flattenCloudBuildBitbucketServerConfigConnectedRepositories(v interface{}, 
 }
 
 func flattenCloudBuildBitbucketServerConfigConnectedRepositoriesProjectKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenCloudBuildBitbucketServerConfigConnectedRepositoriesRepoSlug(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

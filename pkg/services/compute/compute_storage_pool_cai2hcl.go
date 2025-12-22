@@ -147,6 +147,13 @@ func (c *ComputeStoragePoolCai2hclConverter) convertResourceData(asset caiasset.
 }
 
 func flattenComputeStoragePoolName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -155,6 +162,13 @@ func flattenComputeStoragePoolDescription(v interface{}, d *schema.ResourceData,
 }
 
 func flattenComputeStoragePoolPoolProvisionedCapacityGb(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -163,6 +177,13 @@ func flattenComputeStoragePoolPoolProvisionedIops(v interface{}, d *schema.Resou
 }
 
 func flattenComputeStoragePoolPoolProvisionedThroughput(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

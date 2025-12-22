@@ -147,9 +147,6 @@ func flattenKMSCryptoKeyVersionExternalProtectionLevelOptions(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["external_key_uri"] =
 		flattenKMSCryptoKeyVersionExternalProtectionLevelOptionsExternalKeyUri(original["externalKeyUri"], d, config)

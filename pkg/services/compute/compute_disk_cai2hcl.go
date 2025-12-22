@@ -176,9 +176,6 @@ func flattenComputeDiskSourceImageEncryptionKey(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["raw_key"] =
 		flattenComputeDiskSourceImageEncryptionKeyRawKey(original["rawKey"], d, config)
@@ -213,9 +210,6 @@ func flattenComputeDiskDiskEncryptionKey(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["raw_key"] =
 		flattenComputeDiskDiskEncryptionKeyRawKey(original["rawKey"], d, config)
@@ -252,9 +246,6 @@ func flattenComputeDiskSourceSnapshotEncryptionKey(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["raw_key"] =
 		flattenComputeDiskSourceSnapshotEncryptionKeyRawKey(original["rawKey"], d, config)
@@ -292,6 +283,13 @@ func flattenComputeDiskLabels(v interface{}, d *schema.ResourceData, config *tra
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenComputeDiskName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -387,9 +385,6 @@ func flattenComputeDiskAsyncPrimaryDisk(v interface{}, d *schema.ResourceData, c
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["disk"] =
 		flattenComputeDiskAsyncPrimaryDiskDisk(original["disk"], d, config)
@@ -400,6 +395,13 @@ func flattenComputeDiskAsyncPrimaryDisk(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenComputeDiskAsyncPrimaryDiskDisk(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -412,9 +414,6 @@ func flattenComputeDiskParams(v interface{}, d *schema.ResourceData, config *tra
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_manager_tags"] =
 		flattenComputeDiskParamsResourceManagerTags(original["resourceManagerTags"], d, config)
@@ -448,6 +447,13 @@ func flattenComputeDiskGuestOsFeatures(v interface{}, d *schema.ResourceData, co
 }
 
 func flattenComputeDiskGuestOsFeaturesType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

@@ -155,9 +155,6 @@ func flattenPrivatecaCaPoolIssuancePolicy(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allowed_key_types"] =
 		flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypes(original["allowedKeyTypes"], d, config)
@@ -202,9 +199,6 @@ func flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypesRsa(v interface{}, d *sc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["min_modulus_size"] =
 		flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypesRsaMinModulusSize(original["minModulusSize"], d, config)
@@ -229,9 +223,6 @@ func flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypesEllipticCurve(v interfac
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["signature_algorithm"] =
 		flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypesEllipticCurveSignatureAlgorithm(original["signatureAlgorithm"], d, config)
@@ -258,9 +249,6 @@ func flattenPrivatecaCaPoolIssuancePolicyAllowedIssuanceModes(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allow_csr_based_issuance"] =
 		flattenPrivatecaCaPoolIssuancePolicyAllowedIssuanceModesAllowCsrBasedIssuance(original["allowCsrBasedIssuance"], d, config)
@@ -291,9 +279,6 @@ func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraints(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["allow_subject_passthrough"] =
 		flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsAllowSubjectPassthrough(original["allowSubjectPassthrough"], d, config)
@@ -326,9 +311,6 @@ func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpression(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["expression"] =
 		flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpressionExpression(original["expression"], d, config)
@@ -345,6 +327,13 @@ func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpression(v inte
 }
 
 func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpressionExpression(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -385,9 +374,6 @@ func flattenPrivatecaCaPoolPublishingOptions(v interface{}, d *schema.ResourceDa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["publish_ca_cert"] =
 		flattenPrivatecaCaPoolPublishingOptionsPublishCaCert(original["publishCaCert"], d, config)
@@ -427,9 +413,6 @@ func flattenPrivatecaCaPoolEncryptionSpec(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cloud_kms_key"] =
 		flattenPrivatecaCaPoolEncryptionSpecCloudKmsKey(original["cloudKmsKey"], d, config)

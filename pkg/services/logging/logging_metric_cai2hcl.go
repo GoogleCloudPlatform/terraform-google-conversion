@@ -146,6 +146,13 @@ func (c *LoggingMetricCai2hclConverter) convertResourceData(asset caiasset.Asset
 }
 
 func flattenLoggingMetricName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -162,6 +169,13 @@ func flattenLoggingMetricDisabled(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenLoggingMetricFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -170,9 +184,6 @@ func flattenLoggingMetricMetricDescriptor(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["unit"] =
 		flattenLoggingMetricMetricDescriptorUnit(original["unit"], d, config)
@@ -224,6 +235,13 @@ func flattenLoggingMetricMetricDescriptorLabels(v interface{}, d *schema.Resourc
 }
 
 func flattenLoggingMetricMetricDescriptorLabelsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -256,9 +274,6 @@ func flattenLoggingMetricBucketOptions(v interface{}, d *schema.ResourceData, co
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["linear_buckets"] =
 		flattenLoggingMetricBucketOptionsLinearBuckets(original["linearBuckets"], d, config)
@@ -277,9 +292,6 @@ func flattenLoggingMetricBucketOptionsLinearBuckets(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["num_finite_buckets"] =
 		flattenLoggingMetricBucketOptionsLinearBucketsNumFiniteBuckets(original["numFiniteBuckets"], d, config)
@@ -326,9 +338,6 @@ func flattenLoggingMetricBucketOptionsExponentialBuckets(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["num_finite_buckets"] =
 		flattenLoggingMetricBucketOptionsExponentialBucketsNumFiniteBuckets(original["numFiniteBuckets"], d, config)
@@ -375,9 +384,6 @@ func flattenLoggingMetricBucketOptionsExplicitBuckets(v interface{}, d *schema.R
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["bounds"] =
 		flattenLoggingMetricBucketOptionsExplicitBucketsBounds(original["bounds"], d, config)

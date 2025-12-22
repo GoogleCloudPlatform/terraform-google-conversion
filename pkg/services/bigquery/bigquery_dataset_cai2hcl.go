@@ -225,9 +225,6 @@ func flattenBigQueryDatasetAccessView(v interface{}, d *schema.ResourceData, con
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["dataset_id"] =
 		flattenBigQueryDatasetAccessViewDatasetId(original["datasetId"], d, config)
@@ -242,14 +239,35 @@ func flattenBigQueryDatasetAccessView(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenBigQueryDatasetAccessViewDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenBigQueryDatasetAccessViewProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenBigQueryDatasetAccessViewTableId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -258,9 +276,6 @@ func flattenBigQueryDatasetAccessDataset(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["dataset"] =
 		flattenBigQueryDatasetAccessDatasetDataset(original["dataset"], d, config)
@@ -277,9 +292,6 @@ func flattenBigQueryDatasetAccessDatasetDataset(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["dataset_id"] =
 		flattenBigQueryDatasetAccessDatasetDatasetDatasetId(original["datasetId"], d, config)
@@ -292,10 +304,24 @@ func flattenBigQueryDatasetAccessDatasetDataset(v interface{}, d *schema.Resourc
 }
 
 func flattenBigQueryDatasetAccessDatasetDatasetDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenBigQueryDatasetAccessDatasetDatasetProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -308,9 +334,6 @@ func flattenBigQueryDatasetAccessRoutine(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["dataset_id"] =
 		flattenBigQueryDatasetAccessRoutineDatasetId(original["datasetId"], d, config)
@@ -325,14 +348,35 @@ func flattenBigQueryDatasetAccessRoutine(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenBigQueryDatasetAccessRoutineDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenBigQueryDatasetAccessRoutineProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenBigQueryDatasetAccessRoutineRoutineId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -341,9 +385,6 @@ func flattenBigQueryDatasetAccessCondition(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["expression"] =
 		flattenBigQueryDatasetAccessConditionExpression(original["expression"], d, config)
@@ -360,6 +401,13 @@ func flattenBigQueryDatasetAccessCondition(v interface{}, d *schema.ResourceData
 }
 
 func flattenBigQueryDatasetAccessConditionExpression(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -380,9 +428,6 @@ func flattenBigQueryDatasetDatasetReference(v interface{}, d *schema.ResourceDat
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["dataset_id"] =
 		flattenBigQueryDatasetDatasetReferenceDatasetId(original["datasetId"], d, config)
@@ -393,6 +438,13 @@ func flattenBigQueryDatasetDatasetReference(v interface{}, d *schema.ResourceDat
 }
 
 func flattenBigQueryDatasetDatasetReferenceDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -439,9 +491,6 @@ func flattenBigQueryDatasetExternalDatasetReference(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["external_source"] =
 		flattenBigQueryDatasetExternalDatasetReferenceExternalSource(original["externalSource"], d, config)
@@ -454,10 +503,24 @@ func flattenBigQueryDatasetExternalDatasetReference(v interface{}, d *schema.Res
 }
 
 func flattenBigQueryDatasetExternalDatasetReferenceExternalSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenBigQueryDatasetExternalDatasetReferenceConnection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -484,9 +547,6 @@ func flattenBigQueryDatasetDefaultEncryptionConfiguration(v interface{}, d *sche
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenBigQueryDatasetDefaultEncryptionConfigurationKmsKeyName(original["kmsKeyName"], d, config)
@@ -497,6 +557,13 @@ func flattenBigQueryDatasetDefaultEncryptionConfiguration(v interface{}, d *sche
 }
 
 func flattenBigQueryDatasetDefaultEncryptionConfigurationKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -521,9 +588,6 @@ func flattenBigQueryDatasetExternalCatalogDatasetOptions(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["parameters"] =
 		flattenBigQueryDatasetExternalCatalogDatasetOptionsParameters(original["parameters"], d, config)

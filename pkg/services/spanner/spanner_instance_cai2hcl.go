@@ -170,6 +170,13 @@ func flattenSpannerInstanceConfig(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenSpannerInstanceDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -215,9 +222,6 @@ func flattenSpannerInstanceAutoscalingConfig(v interface{}, d *schema.ResourceDa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["autoscaling_limits"] =
 		flattenSpannerInstanceAutoscalingConfigAutoscalingLimits(original["autoscalingLimits"], d, config)
@@ -236,9 +240,6 @@ func flattenSpannerInstanceAutoscalingConfigAutoscalingLimits(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["min_processing_units"] =
 		flattenSpannerInstanceAutoscalingConfigAutoscalingLimitsMinProcessingUnits(original["minProcessingUnits"], d, config)
@@ -327,9 +328,6 @@ func flattenSpannerInstanceAutoscalingConfigAutoscalingTargets(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["high_priority_cpu_utilization_percent"] =
 		flattenSpannerInstanceAutoscalingConfigAutoscalingTargetsHighPriorityCpuUtilizationPercent(original["highPriorityCpuUtilizationPercent"], d, config)
@@ -419,9 +417,6 @@ func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaS
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["location"] =
 		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaSelectionLocation(original["location"], d, config)
@@ -432,6 +427,13 @@ func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaS
 }
 
 func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsReplicaSelectionLocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -440,9 +442,6 @@ func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverride
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["autoscaling_limits"] =
 		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimits(original["autoscalingLimits"], d, config)
@@ -457,9 +456,6 @@ func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverride
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["min_nodes"] =
 		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMinNodes(original["minNodes"], d, config)

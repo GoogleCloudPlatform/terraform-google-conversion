@@ -149,6 +149,13 @@ func (c *ArtifactRegistryRepositoryCai2hclConverter) convertResourceData(asset c
 }
 
 func flattenArtifactRegistryRepositoryFormat(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -212,9 +219,6 @@ func flattenArtifactRegistryRepositoryVirtualRepositoryConfig(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["upstream_policies"] =
 		flattenArtifactRegistryRepositoryVirtualRepositoryConfigUpstreamPolicies(original["upstreamPolicies"], d, config)
@@ -297,9 +301,6 @@ func flattenArtifactRegistryRepositoryCleanupPoliciesCondition(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["tag_state"] =
 		flattenArtifactRegistryRepositoryCleanupPoliciesConditionTagState(original["tagState"], d, config)
@@ -348,9 +349,6 @@ func flattenArtifactRegistryRepositoryCleanupPoliciesMostRecentVersions(v interf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["package_name_prefixes"] =
 		flattenArtifactRegistryRepositoryCleanupPoliciesMostRecentVersionsPackageNamePrefixes(original["packageNamePrefixes"], d, config)
@@ -388,9 +386,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["description"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigDescription(original["description"], d, config)
@@ -427,9 +422,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigAptRepository(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["public_repository"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepository(original["publicRepository"], d, config)
@@ -444,9 +436,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicR
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["repository_base"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepositoryRepositoryBase(original["repositoryBase"], d, config)
@@ -463,6 +452,13 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicR
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigAptRepositoryPublicRepositoryRepositoryPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -471,9 +467,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigDockerRepository(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["public_repository"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigDockerRepositoryPublicRepository(original["publicRepository"], d, config)
@@ -494,9 +487,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigDockerRepositoryCust
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["uri"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigDockerRepositoryCustomRepositoryUri(original["uri"], d, config)
@@ -515,9 +505,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigMavenRepository(v in
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["public_repository"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigMavenRepositoryPublicRepository(original["publicRepository"], d, config)
@@ -538,9 +525,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigMavenRepositoryCusto
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["uri"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigMavenRepositoryCustomRepositoryUri(original["uri"], d, config)
@@ -559,9 +543,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigNpmRepository(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["public_repository"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigNpmRepositoryPublicRepository(original["publicRepository"], d, config)
@@ -582,9 +563,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigNpmRepositoryCustomR
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["uri"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigNpmRepositoryCustomRepositoryUri(original["uri"], d, config)
@@ -603,9 +581,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepository(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["public_repository"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepositoryPublicRepository(original["publicRepository"], d, config)
@@ -626,9 +601,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepositoryCust
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["uri"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepositoryCustomRepositoryUri(original["uri"], d, config)
@@ -647,9 +619,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigYumRepository(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["public_repository"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepository(original["publicRepository"], d, config)
@@ -664,9 +633,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicR
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["repository_base"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepositoryRepositoryBase(original["repositoryBase"], d, config)
@@ -683,6 +649,13 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicR
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigYumRepositoryPublicRepositoryRepositoryPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -691,9 +664,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigCommonRepository(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["uri"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigCommonRepositoryUri(original["uri"], d, config)
@@ -704,6 +674,13 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigCommonRepository(v i
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigCommonRepositoryUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -712,9 +689,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentials(
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["username_password_credentials"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentials(original["usernamePasswordCredentials"], d, config)
@@ -729,9 +703,6 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsU
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["username"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentialsUsername(original["username"], d, config)
@@ -764,9 +735,6 @@ func flattenArtifactRegistryRepositoryVulnerabilityScanningConfig(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["enablement_config"] =
 		flattenArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementConfig(original["enablementConfig"], d, config)
