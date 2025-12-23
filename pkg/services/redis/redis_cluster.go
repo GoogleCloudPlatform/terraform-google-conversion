@@ -217,6 +217,15 @@ Default value is true.`,
 				Optional:    true,
 				Description: `The KMS key used to encrypt the at-rest data of the cluster.`,
 			},
+			"labels": {
+				Type:     schema.TypeMap,
+				Optional: true,
+				Description: `Resource labels to represent user provided metadata.
+
+**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.
+Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
+				Elem: &schema.Schema{Type: schema.TypeString},
+			},
 			"maintenance_policy": {
 				Type:        schema.TypeList,
 				Optional:    true,
@@ -528,6 +537,12 @@ projects/{network_project_id}/global/networks/{network_id}.`,
 					},
 				},
 			},
+			"effective_labels": {
+				Type:        schema.TypeMap,
+				Computed:    true,
+				Description: `All of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services.`,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+			},
 			"effective_maintenance_version": {
 				Type:        schema.TypeString,
 				Computed:    true,
@@ -634,6 +649,13 @@ projects/{network_project_id}/global/networks/{network_id}.`,
 						},
 					},
 				},
+			},
+			"terraform_labels": {
+				Type:     schema.TypeMap,
+				Computed: true,
+				Description: `The combination of labels configured directly on the resource
+ and default labels configured on the provider.`,
+				Elem: &schema.Schema{Type: schema.TypeString},
 			},
 			"uid": {
 				Type:        schema.TypeString,

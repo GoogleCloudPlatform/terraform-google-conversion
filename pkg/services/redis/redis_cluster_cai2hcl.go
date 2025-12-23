@@ -132,9 +132,10 @@ func (c *RedisClusterCai2hclConverter) convertResourceData(asset caiasset.Asset)
 		return nil, nil
 	}
 
-	outputFields := map[string]struct{}{"available_maintenance_versions": struct{}{}, "backup_collection": struct{}{}, "create_time": struct{}{}, "discovery_endpoints": struct{}{}, "effective_maintenance_version": struct{}{}, "maintenance_schedule": struct{}{}, "managed_server_ca": struct{}{}, "precise_size_gb": struct{}{}, "psc_connections": struct{}{}, "psc_service_attachments": struct{}{}, "size_gb": struct{}{}, "state": struct{}{}, "state_info": struct{}{}, "uid": struct{}{}}
+	outputFields := map[string]struct{}{"available_maintenance_versions": struct{}{}, "backup_collection": struct{}{}, "create_time": struct{}{}, "discovery_endpoints": struct{}{}, "effective_labels": struct{}{}, "effective_maintenance_version": struct{}{}, "maintenance_schedule": struct{}{}, "managed_server_ca": struct{}{}, "precise_size_gb": struct{}{}, "psc_connections": struct{}{}, "psc_service_attachments": struct{}{}, "size_gb": struct{}{}, "state": struct{}{}, "state_info": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/clusters/{{name}}", outputFields, hclData)
 
+	hclData["labels"] = flattenRedisClusterLabels(res["labels"], d, config)
 	hclData["gcs_source"] = flattenRedisClusterGcsSource(res["gcsSource"], d, config)
 	hclData["managed_backup_source"] = flattenRedisClusterManagedBackupSource(res["managedBackupSource"], d, config)
 	hclData["automated_backup_config"] = flattenRedisClusterAutomatedBackupConfig(res["automatedBackupConfig"], d, config)
@@ -163,6 +164,9 @@ func (c *RedisClusterCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	}, nil
 }
 
+func flattenRedisClusterLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return tgcresource.RemoveTerraformAttributionLabel(v)
+}
 func flattenRedisClusterGcsSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

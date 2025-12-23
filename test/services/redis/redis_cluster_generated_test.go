@@ -27,6 +27,9 @@ func TestAccRedisCluster(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccRedisCluster_redisClusterHaWithLabelsExample",
+		},
+		{
 			Name: "TestAccRedisCluster_redisClusterHaExample",
 		},
 		{
