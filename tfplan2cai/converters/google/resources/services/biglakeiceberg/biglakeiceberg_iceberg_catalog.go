@@ -88,7 +88,7 @@ func ResourceConverterBiglakeIcebergIcebergCatalog() cai.ResourceConverter {
 }
 
 func GetBiglakeIcebergIcebergCatalogCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//biglake.googleapis.com/restcatalog/extensions/projects/{{project}}/catalogs/{{name}}")
+	name, err := cai.AssetName(d, config, "//biglake.googleapis.com/iceberg/v1/restcatalog/extensions/projects/{{project}}/catalogs/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
