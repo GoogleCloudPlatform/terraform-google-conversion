@@ -38,6 +38,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
@@ -130,6 +131,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_kms_key_ring":                                  kms.KMSKeyRingTfplan2caiConverter(),
 	"google_kms_key_ring_import_job":                       kms.KMSKeyRingImportJobTfplan2caiConverter(),
 	"google_logging_metric":                                logging.LoggingMetricTfplan2caiConverter(),
+	"google_memcache_instance":                             memcache.MemcacheInstanceTfplan2caiConverter(),
 	"google_monitoring_alert_policy":                       monitoring.MonitoringAlertPolicyTfplan2caiConverter(),
 	"google_monitoring_notification_channel":               monitoring.MonitoringNotificationChannelTfplan2caiConverter(),
 	"google_monitoring_uptime_check_config":                monitoring.MonitoringUptimeCheckConfigTfplan2caiConverter(),
