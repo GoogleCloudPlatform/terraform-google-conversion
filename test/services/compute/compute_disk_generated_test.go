@@ -35,6 +35,93 @@ func TestAccComputeDisk(t *testing.T) {
 		{
 			Name: "TestAccComputeDisk_diskFeaturesExample",
 		},
+		{
+			Name: "TestAccComputeDisk_imageDiffSuppressPublicVendorsFamilyNames",
+		},
+		{
+			Name: "TestAccComputeDisk_update",
+		},
+		{
+			Name: "TestAccComputeDisk_fromTypeUrl",
+		},
+		{
+			Name: "TestAccComputeDisk_pdHyperDiskProvisionedIopsLifeCycle",
+		},
+		{
+			Name: "TestAccComputeDisk_pdHyperDiskProvisionedThroughputLifeCycle",
+		},
+		{
+			Name: "TestAccComputeDisk_fromSnapshot",
+		},
+		{
+			Name: "TestAccComputeDisk_encryption",
+		},
+		{
+			Name: "TestAccComputeDisk_encryptionKMS",
+		},
+		{
+			Name: "TestAccComputeDisk_pdHyperDiskEnableConfidentialCompute",
+		},
+		{
+			Name: "TestAccComputeDisk_deleteDetach",
+		},
+		{
+			Name: "TestAccComputeDisk_deleteDetachIGM",
+		},
+		{
+			Name: "TestAccComputeDisk_pdExtremeImplicitProvisionedIops",
+		},
+		{
+			Name: "TestAccComputeDisk_resourcePolicies",
+		},
+		{
+			Name: "TestAccComputeDisk_updateResourcePolicies",
+		},
+		{
+			Name: "TestAccComputeDisk_multiWriter",
+		},
+		{
+			Name: "TestAccComputeDisk_cloneDisk",
+		},
+		{
+			Name: "TestAccComputeDisk_architecture",
+		},
+		{
+			Name: "TestAccComputeDisk_sourceStorageObject",
+		},
+		{
+			Name: "TestAccComputeDisk_resourceManagerTags",
+		},
+		{
+			Name: "TestAccComputeDisk_sourceInstantSnapshot",
+		},
+		{
+			Name: "TestAccComputeDisk_featuresUpdated",
+		},
+		{
+			Name: "TestAccComputeDisk_createSnapshotBeforeDestroy",
+		},
+		{
+			Name: "TestAccComputeDisk_encryptionWithRSAEncryptedKey",
+		},
+		{
+			Name: "TestAccComputeDisk_attributionLabelOnCreation",
+		},
+		{
+			Name: "TestAccComputeDisk_attributionLabelOnCreationSkip",
+		},
+		{
+			Name: "TestAccComputeDisk_attributionLabelProactive",
+		},
+		{
+			Name: "TestAccComputeDisk_storagePoolSpecified",
+		},
+		{
+			Name: "TestAccComputeDisk_storagePoolSpecified_nameOnly",
+		},
+		{
+			Name: "TestAccComputeDisk_accessModeSpecified",
+		},
 	}
 
 	for _, tt := range tests {
@@ -55,6 +142,8 @@ func TestAccComputeDisk(t *testing.T) {
 					"create_snapshot_before_destroy",
 					"create_snapshot_before_destroy_prefix",
 					"depends_on",
+					"disk_encryption_key.raw_key",
+					"disk_encryption_key.rsa_encrypted_key",
 					"for_each",
 					"lifecycle",
 					"params",

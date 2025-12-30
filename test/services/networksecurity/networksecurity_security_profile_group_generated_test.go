@@ -29,6 +29,9 @@ func TestAccNetworkSecuritySecurityProfileGroup(t *testing.T) {
 		{
 			Name: "TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGroupBasicExample",
 		},
+		{
+			Name: "TestAccNetworkSecuritySecurityProfileGroups_update",
+		},
 	}
 
 	for _, tt := range tests {

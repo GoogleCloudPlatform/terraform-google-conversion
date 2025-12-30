@@ -35,6 +35,9 @@ func TestAccNetworkSecurityAddressGroup(t *testing.T) {
 		{
 			Name: "TestAccNetworkSecurityAddressGroup_networkSecurityAddressGroupsAdvancedExample",
 		},
+		{
+			Name: "TestAccNetworkSecurityAddressGroups_update",
+		},
 	}
 
 	for _, tt := range tests {

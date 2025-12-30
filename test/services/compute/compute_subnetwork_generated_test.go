@@ -102,6 +102,7 @@ func TestAccComputeSubnetwork(t *testing.T) {
 					"depends_on",
 					"for_each",
 					"ip_collection",
+					"ipv6_access_type",
 					"lifecycle",
 					"params",
 					"params.resource_manager_tags",

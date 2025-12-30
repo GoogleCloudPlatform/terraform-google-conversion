@@ -32,6 +32,39 @@ func TestAccComputeFirewall(t *testing.T) {
 		{
 			Name: "TestAccComputeFirewall_firewallWithTargetTagsExample",
 		},
+		{
+			Name: "TestAccComputeFirewall_update",
+		},
+		{
+			Name: "TestAccComputeFirewall_localRanges",
+		},
+		{
+			Name: "TestAccComputeFirewall_priority",
+		},
+		{
+			Name: "TestAccComputeFirewall_noSource",
+		},
+		{
+			Name: "TestAccComputeFirewall_denied",
+		},
+		{
+			Name: "TestAccComputeFirewall_egress",
+		},
+		{
+			Name: "TestAccComputeFirewall_serviceAccounts",
+		},
+		{
+			Name: "TestAccComputeFirewall_disabled",
+		},
+		{
+			Name: "TestAccComputeFirewall_enableLogging",
+		},
+		{
+			Name: "TestAccComputeFirewall_moduleOutput",
+		},
+		{
+			Name: "TestAccComputeFirewall_resourceManagerTags",
+		},
 	}
 
 	for _, tt := range tests {
