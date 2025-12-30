@@ -66,6 +66,60 @@ func TestAccPubsubSubscription(t *testing.T) {
 		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionTagsExample",
 		},
+		{
+			Name: "TestAccPubsubSubscription_emptyTTL",
+		},
+		{
+			Name: "TestAccPubsubSubscription_emptyRetryPolicy",
+		},
+		{
+			Name: "TestAccPubsubSubscription_basic",
+		},
+		{
+			Name: "TestAccPubsubSubscription_update",
+		},
+		{
+			Name: "TestAccPubsubSubscription_push",
+		},
+		{
+			Name: "TestAccPubsubSubscription_pushNoWrapper",
+		},
+		{
+			Name: "TestAccPubsubSubscription_pushNoWrapperEmpty",
+		},
+		{
+			Name: "TestAccPubsubSubscriptionBigQuery_update",
+		},
+		{
+			Name: "TestAccPubsubSubscriptionBigQuery_serviceAccount",
+		},
+		{
+			Name: "TestAccPubsubSubscriptionCloudStorage_updateText",
+		},
+		{
+			Name: "TestAccPubsubSubscriptionCloudStorage_updateAvro",
+		},
+		{
+			Name: "TestAccPubsubSubscriptionCloudStorage_emptyAvroConfig",
+		},
+		{
+			Name: "TestAccPubsubSubscriptionCloudStorage_serviceAccount",
+		},
+		{
+			Name: "TestAccPubsubSubscription_pollOnCreate",
+		},
+		{
+			Name: "TestAccPubsubSubscription_filter",
+		},
+		{
+			Name: "TestAccPubsubSubscription_javascriptUdfUpdate",
+		},
+		{
+			Name: "TestAccPubsubSubscription_tags",
+		},
+		{
+			Name: "TestAccPubsubSubscription_bigquery_config_update",
+		},
 	}
 
 	for _, tt := range tests {
@@ -84,13 +138,17 @@ func TestAccPubsubSubscription(t *testing.T) {
 					"bigquery_config.service_account_email",
 					"bigquery_config.table",
 					"bigquery_config.use_table_schema",
+					"bigquery_config.write_metadata",
 					"cloud_storage_config",
+					"cloud_storage_config.avro_config.write_metadata",
 					"count",
 					"depends_on",
+					"expiration_policy.ttl",
 					"for_each",
 					"lifecycle",
 					"message_transforms.javascript_udf",
 					"provider",
+					"push_config.no_wrapper.write_metadata",
 					"tags",
 					"timeouts",
 				},

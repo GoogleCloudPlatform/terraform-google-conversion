@@ -69,6 +69,8 @@ func TestAccRedisCluster(t *testing.T) {
 					"lifecycle",
 					"managed_backup_source",
 					"name",
+					"node_type",
+					"persistence_config",
 					"provider",
 					"psc_configs",
 					"region",

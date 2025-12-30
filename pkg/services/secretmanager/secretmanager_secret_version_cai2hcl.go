@@ -164,7 +164,9 @@ func flattenSecretManagerSecretVersionPayload(v interface{}, d *schema.ResourceD
 	if v == nil {
 		// payload is missing in CAI asset, but it is required in Terraform provider.
 		transformed := map[string]interface{}{
-			"secret_data": "hidden",
+			"payload": map[string]interface{}{
+				"secretData": "hidden",
+			},
 		}
 		return []interface{}{transformed}
 	}

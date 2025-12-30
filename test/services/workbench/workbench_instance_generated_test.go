@@ -47,6 +47,42 @@ func TestAccWorkbenchInstance(t *testing.T) {
 		{
 			Name: "TestAccWorkbenchInstance_workbenchInstanceEucExample",
 		},
+		{
+			Name: "TestAccWorkbenchInstance_update",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateGpu",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_removeGpu",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateMetadata",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateMetadataKey",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateState",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_empty_accelerator",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateBootDisk",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateDataDisk",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateBothDisks",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updatelabels",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateCustomContainers",
+		},
 	}
 
 	for _, tt := range tests {

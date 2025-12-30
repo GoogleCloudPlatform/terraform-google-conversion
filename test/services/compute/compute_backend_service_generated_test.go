@@ -59,6 +59,129 @@ func TestAccComputeBackendService(t *testing.T) {
 		{
 			Name: "TestAccComputeBackendService_backendServiceTlsSettingsExample",
 		},
+		{
+			Name: "TestAccComputeBackendService_basic",
+		},
+		{
+			Name: "TestAccComputeBackendService_withBackend",
+		},
+		{
+			Name: "TestAccComputeBackendService_withBackendAndMaxUtilization",
+		},
+		{
+			Name: "TestAccComputeBackendService_withBackendAndIAP",
+		},
+		{
+			Name: "TestAccComputeBackendService_withBackendAndPreferenceInternalManaged",
+		},
+		{
+			Name: "TestAccComputeBackendService_withBackendAndPreferenceInternalSelfManaged",
+		},
+		{
+			Name: "TestAccComputeBackendService_withBackendAndPreferenceExternalManaged",
+		},
+		{
+			Name: "TestAccComputeBackendService_updateIAPEnabled",
+		},
+		{
+			Name: "TestAccComputeBackendService_updatePreservesOptionalParameters",
+		},
+		{
+			Name: "TestAccComputeBackendService_withConnectionDraining",
+		},
+		{
+			Name: "TestAccComputeBackendService_withConnectionDrainingAndUpdate",
+		},
+		{
+			Name: "TestAccComputeBackendService_withHttpsHealthCheck",
+		},
+		{
+			Name: "TestAccComputeBackendService_withCdnPolicy",
+		},
+		{
+			Name: "TestAccComputeBackendService_withSecurityPolicy",
+		},
+		{
+			Name: "TestAccComputeBackendService_withCDNEnabled",
+		},
+		{
+			Name: "TestAccComputeBackendService_withSessionAffinity",
+		},
+		{
+			Name: "TestAccComputeBackendService_withAffinityCookieTtlSec",
+		},
+		{
+			Name: "TestAccComputeBackendService_withMaxConnections",
+		},
+		{
+			Name: "TestAccComputeBackendService_withMaxConnectionsPerInstance",
+		},
+		{
+			Name: "TestAccComputeBackendService_withMaxRatePerEndpoint",
+		},
+		{
+			Name: "TestAccComputeBackendService_withMaxConnectionsPerEndpoint",
+		},
+		{
+			Name: "TestAccComputeBackendService_withCustomHeaders",
+		},
+		{
+			Name: "TestAccComputeBackendService_internalLoadBalancing",
+		},
+		{
+			Name: "TestAccComputeBackendService_withLogConfig",
+		},
+		{
+			Name: "TestAccComputeBackendService_withLogConfigMode",
+		},
+		{
+			Name: "TestAccComputeBackendService_trafficDirectorUpdateBasic",
+		},
+		{
+			Name: "TestAccComputeBackendService_withCompressionMode",
+		},
+		{
+			Name: "TestAccComputeBackendService_trafficDirectorUpdateLbPolicies",
+		},
+		{
+			Name: "TestAccComputeBackendService_trafficDirectorUpdateFull",
+		},
+		{
+			Name: "TestAccComputeBackendService_withMaxInFlightRequests",
+		},
+		{
+			Name: "TestAccComputeBackendService_withMaxInFlightRequestsPerEndpoint",
+		},
+		{
+			Name: "TestAccComputeBackendService_withMaxInFlightRequestsPerInstance",
+		},
+		{
+			Name: "TestAccComputeBackendService_withTrafficDuration",
+		},
+		{
+			Name: "TestAccComputeBackendService_withPrivateOriginAuth",
+		},
+		{
+			Name: "TestAccComputeBackendService_withClientTlsPolicy",
+		},
+		{
+			Name: "TestAccComputeBackendService_regionNegBackend",
+		},
+		{
+			Name: "TestAccComputeBackendService_backendServiceMaxDuration",
+		},
+		{
+			Name: "TestAccComputeBackendService_withNetworkPassThroughLbTrafficPolicy",
+		},
+		{
+			Name: "TestAccComputeBackendService_resourceManagerTags",
+		},
+		{
+			Name: "TestAccComputeBackendService_backendServiceCustomMetrics_update",
+		},
+		{
+			Name: "TestAccComputeBackendService_updateCanaryMigration",
+		},
 	}
 
 	for _, tt := range tests {
@@ -74,6 +197,8 @@ func TestAccComputeBackendService(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
+					"backend.custom_metrics.name",
+					"cdn_policy",
 					"count",
 					"depends_on",
 					"for_each",

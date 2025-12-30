@@ -32,6 +32,12 @@ func TestAccNetworkSecurityGatewaySecurityPolicyRule(t *testing.T) {
 		{
 			Name: "TestAccNetworkSecurityGatewaySecurityPolicyRule_networkSecurityGatewaySecurityPolicyRulesAdvancedExample",
 		},
+		{
+			Name: "TestAccNetworkSecurityGatewaySecurityPolicyRule_update",
+		},
+		{
+			Name: "TestAccNetworkSecurityGatewaySecurityPolicyRule_multiple",
+		},
 	}
 
 	for _, tt := range tests {

@@ -32,6 +32,9 @@ func TestAccFirebaseDataConnectService(t *testing.T) {
 		{
 			Name: "TestAccFirebaseDataConnectService_firebasedataconnectServiceWithForceDeletionExample",
 		},
+		{
+			Name: "TestAccFirebaseDataConnectService_Update",
+		},
 	}
 
 	for _, tt := range tests {
@@ -51,6 +54,7 @@ func TestAccFirebaseDataConnectService(t *testing.T) {
 					"count",
 					"deletion_policy",
 					"depends_on",
+					"display_name",
 					"for_each",
 					"labels",
 					"lifecycle",

@@ -32,6 +32,9 @@ func TestAccVmwareengineNetworkPeering(t *testing.T) {
 		{
 			Name: "TestAccVmwareengineNetworkPeering_vmwareEngineNetworkPeeringStandardExample",
 		},
+		{
+			Name: "TestAccVmwareengineNetworkPeering_update",
+		},
 	}
 
 	for _, tt := range tests {
