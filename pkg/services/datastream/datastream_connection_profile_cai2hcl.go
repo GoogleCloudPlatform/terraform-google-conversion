@@ -407,6 +407,8 @@ func flattenDatastreamConnectionProfilePostgresqlProfile(v interface{}, d *schem
 		flattenDatastreamConnectionProfilePostgresqlProfileSecretManagerStoredPassword(original["secretManagerStoredPassword"], d, config)
 	transformed["database"] =
 		flattenDatastreamConnectionProfilePostgresqlProfileDatabase(original["database"], d, config)
+	transformed["ssl_config"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfig(original["sslConfig"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -461,6 +463,98 @@ func flattenDatastreamConnectionProfilePostgresqlProfileSecretManagerStoredPassw
 }
 
 func flattenDatastreamConnectionProfilePostgresqlProfileDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["server_verification"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerVerification(original["serverVerification"], d, config)
+	transformed["server_and_client_verification"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerification(original["serverAndClientVerification"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerVerification(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ca_certificate"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerVerificationCaCertificate(original["caCertificate"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerVerificationCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerification(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["client_certificate"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationClientCertificate(original["clientCertificate"], d, config)
+	transformed["client_key"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationClientKey(original["clientKey"], d, config)
+	transformed["ca_certificate"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationCaCertificate(original["caCertificate"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationClientCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationClientKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return "unknown"
 	}

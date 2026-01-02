@@ -36,6 +36,9 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfileFullExample",
 		},
 		{
+			Name: "TestAccDatastreamConnectionProfile_datastreamStreamPostgresqlSslconfigServerAndClientVerificationExample",
+		},
+		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecretManagerExample",
 		},
 		{
@@ -81,6 +84,11 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 					"mysql_profile.password",
 					"postgresql_profile.0.password",
 					"postgresql_profile.password",
+					"postgresql_profile.ssl_config.server_and_client_verification",
+					"postgresql_profile.ssl_config.server_and_client_verification.ca_certificate",
+					"postgresql_profile.ssl_config.server_and_client_verification.client_certificate",
+					"postgresql_profile.ssl_config.server_and_client_verification.client_key",
+					"postgresql_profile.ssl_config.server_verification.ca_certificate",
 					"provider",
 					"timeouts",
 				},
