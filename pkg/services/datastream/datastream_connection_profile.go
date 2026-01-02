@@ -473,6 +473,75 @@ If this field is used then the 'client_certificate' and the
 							Optional:    true,
 							Description: `A reference to a Secret Manager resource name storing the user's password.`,
 						},
+						"ssl_config": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `SSL configuration for the PostgreSQL connection.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"server_and_client_verification": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Description: `If this field is set, the communication will be encrypted with TLS encryption
+and both the server identity and the client identity will be authenticated.`,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"ca_certificate": {
+													Type:        schema.TypeString,
+													Required:    true,
+													ForceNew:    true,
+													Description: `PEM-encoded server root CA certificate.`,
+													Sensitive:   true,
+												},
+												"client_certificate": {
+													Type:     schema.TypeString,
+													Required: true,
+													ForceNew: true,
+													Description: `PEM-encoded certificate used by the source database to authenticate the
+client identity (i.e., the Datastream's identity). This certificate is
+signed by either a root certificate trusted by the server or one or more
+intermediate certificates (which is stored with the leaf certificate) to
+link to this certificate to the trusted root certificate.`,
+													Sensitive: true,
+												},
+												"client_key": {
+													Type:     schema.TypeString,
+													Required: true,
+													ForceNew: true,
+													Description: `PEM-encoded private key associated with the client certificate.
+This value will be used during the SSL/TLS handshake, allowing
+the PostgreSQL server to authenticate the client's identity,
+i.e. identity of the stream.`,
+													Sensitive: true,
+												},
+											},
+										},
+										ExactlyOneOf: []string{},
+									},
+									"server_verification": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Description: `If this field is set, the communication will be encrypted with TLS encryption
+and the server identity will be authenticated.`,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"ca_certificate": {
+													Type:        schema.TypeString,
+													Required:    true,
+													ForceNew:    true,
+													Description: `PEM-encoded server root CA certificate.`,
+													Sensitive:   true,
+												},
+											},
+										},
+										ExactlyOneOf: []string{},
+									},
+								},
+							},
+						},
 					},
 				},
 				ExactlyOneOf: []string{"bigquery_profile", "gcs_profile", "mongodb_profile", "mysql_profile", "oracle_profile", "postgresql_profile", "sql_server_profile"},
