@@ -37,6 +37,7 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 		},
 		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamStreamPostgresqlSslconfigServerAndClientVerificationExample",
+			Skip: "fix it after ssl_config is released in v7.16.0",
 		},
 		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecretManagerExample",
