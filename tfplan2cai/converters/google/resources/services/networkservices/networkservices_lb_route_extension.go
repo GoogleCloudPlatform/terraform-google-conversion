@@ -49,6 +49,23 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+func ValidateSupportedEvent(i interface{}, k string) (warnings []string, errors []error) {
+	str, ok := i.(string)
+	if !ok {
+		errors = append(errors, fmt.Errorf("expected type of %s to be string", k))
+		return
+	}
+	validEvents := map[string]bool{
+		"REQUEST_HEADERS":  true,
+		"REQUEST_BODY":     true,
+		"REQUEST_TRAILERS": true,
+	}
+	if !validEvents[str] {
+		errors = append(errors, fmt.Errorf("value %s in %s is invalid, must be one of: REQUEST_HEADERS, REQUEST_BODY, REQUEST_TRAILERS", str, k))
+	}
+	return
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -276,6 +293,34 @@ func expandNetworkServicesLbRouteExtensionExtensionChainsExtensions(v interface{
 			transformed["forwardHeaders"] = transformedForwardHeaders
 		}
 
+		transformedSupportedEvents, err := expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsSupportedEvents(original["supported_events"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSupportedEvents); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["supportedEvents"] = transformedSupportedEvents
+		}
+
+		transformedMetadata, err := expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsMetadata(original["metadata"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["metadata"] = transformedMetadata
+		}
+
+		transformedRequestBodySendMode, err := expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsRequestBodySendMode(original["request_body_send_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestBodySendMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestBodySendMode"] = transformedRequestBodySendMode
+		}
+
+		transformedObservabilityMode, err := expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsObservabilityMode(original["observability_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedObservabilityMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["observabilityMode"] = transformedObservabilityMode
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -302,6 +347,30 @@ func expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsFailOpen(v in
 }
 
 func expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsForwardHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsSupportedEvents(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsRequestBodySendMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsObservabilityMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
