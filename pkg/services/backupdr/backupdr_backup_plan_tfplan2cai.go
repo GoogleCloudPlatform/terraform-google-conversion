@@ -125,6 +125,12 @@ func GetBackupDRBackupPlanCaiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("resource_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(resourceTypeProp)) && (ok || !reflect.DeepEqual(v, resourceTypeProp)) {
 		obj["resourceType"] = resourceTypeProp
 	}
+	maxCustomOnDemandRetentionDaysProp, err := expandBackupDRBackupPlanMaxCustomOnDemandRetentionDays(d.Get("max_custom_on_demand_retention_days"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("max_custom_on_demand_retention_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(maxCustomOnDemandRetentionDaysProp)) && (ok || !reflect.DeepEqual(v, maxCustomOnDemandRetentionDaysProp)) {
+		obj["maxCustomOnDemandRetentionDays"] = maxCustomOnDemandRetentionDaysProp
+	}
 	backupRulesProp, err := expandBackupDRBackupPlanBackupRules(d.Get("backup_rules"), d, config)
 	if err != nil {
 		return nil, err
@@ -150,6 +156,10 @@ func expandBackupDRBackupPlanBackupVault(v interface{}, d tpgresource.TerraformR
 }
 
 func expandBackupDRBackupPlanResourceType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRBackupPlanMaxCustomOnDemandRetentionDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
