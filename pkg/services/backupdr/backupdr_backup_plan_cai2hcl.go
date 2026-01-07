@@ -133,6 +133,7 @@ func (c *BackupDRBackupPlanCai2hclConverter) convertResourceData(asset caiasset.
 	hclData["description"] = flattenBackupDRBackupPlanDescription(res["description"], d, config)
 	hclData["backup_vault"] = flattenBackupDRBackupPlanBackupVault(res["backupVault"], d, config)
 	hclData["resource_type"] = flattenBackupDRBackupPlanResourceType(res["resourceType"], d, config)
+	hclData["max_custom_on_demand_retention_days"] = flattenBackupDRBackupPlanMaxCustomOnDemandRetentionDays(res["maxCustomOnDemandRetentionDays"], d, config)
 	hclData["backup_rules"] = flattenBackupDRBackupPlanBackupRules(res["backupRules"], d, config)
 	hclData["log_retention_days"] = flattenBackupDRBackupPlanLogRetentionDays(res["logRetentionDays"], d, config)
 
@@ -170,6 +171,23 @@ func flattenBackupDRBackupPlanResourceType(v interface{}, d *schema.ResourceData
 		return "unknown"
 	}
 	return v
+}
+
+func flattenBackupDRBackupPlanMaxCustomOnDemandRetentionDays(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
 }
 
 func flattenBackupDRBackupPlanBackupRules(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
