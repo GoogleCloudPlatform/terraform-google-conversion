@@ -83,6 +83,9 @@ func TestAccWorkbenchInstance(t *testing.T) {
 		{
 			Name: "TestAccWorkbenchInstance_updateCustomContainers",
 		},
+		{
+			Name: "TestAccWorkbenchInstance_metadataEUCForceNew",
+		},
 	}
 
 	for _, tt := range tests {
