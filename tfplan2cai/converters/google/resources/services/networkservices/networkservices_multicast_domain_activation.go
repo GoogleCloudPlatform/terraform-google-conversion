@@ -116,6 +116,12 @@ func GetNetworkServicesMulticastDomainActivationApiObject(d tpgresource.Terrafor
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	disablePlacementPolicyProp, err := expandNetworkServicesMulticastDomainActivationDisablePlacementPolicy(d.Get("disable_placement_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disable_placement_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(disablePlacementPolicyProp)) && (ok || !reflect.DeepEqual(v, disablePlacementPolicyProp)) {
+		obj["disablePlacementPolicy"] = disablePlacementPolicyProp
+	}
 	multicastDomainProp, err := expandNetworkServicesMulticastDomainActivationMulticastDomain(d.Get("multicast_domain"), d, config)
 	if err != nil {
 		return nil, err
@@ -139,6 +145,10 @@ func GetNetworkServicesMulticastDomainActivationApiObject(d tpgresource.Terrafor
 }
 
 func expandNetworkServicesMulticastDomainActivationDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesMulticastDomainActivationDisablePlacementPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
