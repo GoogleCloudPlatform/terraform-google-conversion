@@ -44,6 +44,9 @@ func TestAccComputeAddress(t *testing.T) {
 		{
 			Name: "TestAccComputeAddress_computeAddressIpsecInterconnectExample",
 		},
+		{
+			Name: "TestAccComputeAddress_computeAddressEnhancedByoipExample",
+		},
 	}
 
 	for _, tt := range tests {
