@@ -49,6 +49,33 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+// Compare only the relative path from 'regions' of two IP collection links
+func AddressIpCollectionDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
+	oldStripped, err := GetRelativePath(old)
+	if err != nil {
+		return false
+	}
+
+	newStripped, err := GetRelativePath(new)
+	if err != nil {
+		return false
+	}
+
+	if oldStripped == newStripped {
+		return true
+	}
+	return false
+}
+
+func GetRelativePath(resourceLink string) (string, error) {
+	stringParts := strings.SplitAfterN(resourceLink, "regions/", 2)
+	if len(stringParts) != 2 {
+		return "", fmt.Errorf("String is not a valid link: %s", resourceLink)
+	}
+
+	return "regions/" + stringParts[1], nil
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -182,6 +209,12 @@ func GetComputeAddressApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("ipv6_endpoint_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipv6EndpointTypeProp)) && (ok || !reflect.DeepEqual(v, ipv6EndpointTypeProp)) {
 		obj["ipv6EndpointType"] = ipv6EndpointTypeProp
 	}
+	ipCollectionProp, err := expandComputeAddressIpCollection(d.Get("ip_collection"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ip_collection"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipCollectionProp)) && (ok || !reflect.DeepEqual(v, ipCollectionProp)) {
+		obj["ipCollection"] = ipCollectionProp
+	}
 	effectiveLabelsProp, err := expandComputeAddressEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -251,6 +284,10 @@ func expandComputeAddressIpVersion(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandComputeAddressIpv6EndpointType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeAddressIpCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

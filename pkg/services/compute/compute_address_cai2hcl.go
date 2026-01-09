@@ -137,6 +137,7 @@ func (c *ComputeAddressCai2hclConverter) convertResourceData(asset caiasset.Asse
 	hclData["prefix_length"] = flattenComputeAddressPrefixLength(res["prefixLength"], d, config)
 	hclData["ip_version"] = flattenComputeAddressIpVersion(res["ipVersion"], d, config)
 	hclData["ipv6_endpoint_type"] = flattenComputeAddressIpv6EndpointType(res["ipv6EndpointType"], d, config)
+	hclData["ip_collection"] = flattenComputeAddressIpCollection(res["ipCollection"], d, config)
 	hclData["region"] = flattenComputeAddressRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -231,6 +232,10 @@ func flattenComputeAddressIpVersion(v interface{}, d *schema.ResourceData, confi
 }
 
 func flattenComputeAddressIpv6EndpointType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeAddressIpCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

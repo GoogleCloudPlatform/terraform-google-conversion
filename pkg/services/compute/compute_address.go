@@ -37,6 +37,33 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
 
+// Compare only the relative path from 'regions' of two IP collection links
+func AddressIpCollectionDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
+	oldStripped, err := GetRelativePath(old)
+	if err != nil {
+		return false
+	}
+
+	newStripped, err := GetRelativePath(new)
+	if err != nil {
+		return false
+	}
+
+	if oldStripped == newStripped {
+		return true
+	}
+	return false
+}
+
+func GetRelativePath(resourceLink string) (string, error) {
+	stringParts := strings.SplitAfterN(resourceLink, "regions/", 2)
+	if len(stringParts) != 2 {
+		return "", fmt.Errorf("String is not a valid link: %s", resourceLink)
+	}
+
+	return "regions/" + stringParts[1], nil
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -98,6 +125,20 @@ Note: if you set this argument's value as 'INTERNAL' you need to leave the 'netw
 				Optional:    true,
 				ForceNew:    true,
 				Description: `An optional description of this resource.`,
+			},
+			"ip_collection": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				ForceNew:         true,
+				DiffSuppressFunc: AddressIpCollectionDiffSuppress,
+				Description: `Reference to the source of external IPv4 addresses, like a PublicDelegatedPrefix(PDP) for BYOIP.
+The PDP must support enhanced IPv4 allocations.
+Use one of the following formats to specify a PDP when reserving an external IPv4 address using BYOIP.
+Full resource URL, as in:
+  * 'https://www.googleapis.com/compute/v1/projects/{{projectId}}/regions/{{region}}/publicDelegatedPrefixes/{{pdp-name}}'
+Partial URL, as in:
+  * 'projects/{{projectId}}/regions/region/publicDelegatedPrefixes/{{pdp-name}}'
+  * 'regions/{{region}}/publicDelegatedPrefixes/{{pdp-name}}'`,
 			},
 			"ip_version": {
 				Type:             schema.TypeString,
