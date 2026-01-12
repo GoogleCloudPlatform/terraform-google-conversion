@@ -32,6 +32,9 @@ func TestAccNetworkSecurityUrlLists(t *testing.T) {
 		{
 			Name: "TestAccNetworkSecurityUrlLists_networkSecurityUrlListsAdvancedExample",
 		},
+		{
+			Name: "TestAccNetworkSecurityUrlLists_update",
+		},
 	}
 
 	for _, tt := range tests {

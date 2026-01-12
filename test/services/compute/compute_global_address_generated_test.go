@@ -29,6 +29,15 @@ func TestAccComputeGlobalAddress(t *testing.T) {
 		{
 			Name: "TestAccComputeGlobalAddress_globalAddressBasicExample",
 		},
+		{
+			Name: "TestAccComputeGlobalAddress_update",
+		},
+		{
+			Name: "TestAccComputeGlobalAddress_ipv6",
+		},
+		{
+			Name: "TestAccComputeGlobalAddress_internal",
+		},
 	}
 
 	for _, tt := range tests {
@@ -47,6 +56,7 @@ func TestAccComputeGlobalAddress(t *testing.T) {
 					"count",
 					"depends_on",
 					"for_each",
+					"ip_version",
 					"lifecycle",
 					"provider",
 					"timeouts",

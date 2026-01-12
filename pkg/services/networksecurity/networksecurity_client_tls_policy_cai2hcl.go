@@ -157,9 +157,6 @@ func flattenNetworkSecurityClientTlsPolicyClientCertificate(v interface{}, d *sc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["grpc_endpoint"] =
 		flattenNetworkSecurityClientTlsPolicyClientCertificateGrpcEndpoint(original["grpcEndpoint"], d, config)
@@ -176,9 +173,6 @@ func flattenNetworkSecurityClientTlsPolicyClientCertificateGrpcEndpoint(v interf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["target_uri"] =
 		flattenNetworkSecurityClientTlsPolicyClientCertificateGrpcEndpointTargetUri(original["targetUri"], d, config)
@@ -189,6 +183,13 @@ func flattenNetworkSecurityClientTlsPolicyClientCertificateGrpcEndpoint(v interf
 }
 
 func flattenNetworkSecurityClientTlsPolicyClientCertificateGrpcEndpointTargetUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -197,9 +198,6 @@ func flattenNetworkSecurityClientTlsPolicyClientCertificateCertificateProviderIn
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["plugin_instance"] =
 		flattenNetworkSecurityClientTlsPolicyClientCertificateCertificateProviderInstancePluginInstance(original["pluginInstance"], d, config)
@@ -210,6 +208,13 @@ func flattenNetworkSecurityClientTlsPolicyClientCertificateCertificateProviderIn
 }
 
 func flattenNetworkSecurityClientTlsPolicyClientCertificateCertificateProviderInstancePluginInstance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -238,9 +243,6 @@ func flattenNetworkSecurityClientTlsPolicyServerValidationCaGrpcEndpoint(v inter
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["target_uri"] =
 		flattenNetworkSecurityClientTlsPolicyServerValidationCaGrpcEndpointTargetUri(original["targetUri"], d, config)
@@ -251,6 +253,13 @@ func flattenNetworkSecurityClientTlsPolicyServerValidationCaGrpcEndpoint(v inter
 }
 
 func flattenNetworkSecurityClientTlsPolicyServerValidationCaGrpcEndpointTargetUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -259,9 +268,6 @@ func flattenNetworkSecurityClientTlsPolicyServerValidationCaCertificateProviderI
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["plugin_instance"] =
 		flattenNetworkSecurityClientTlsPolicyServerValidationCaCertificateProviderInstancePluginInstance(original["pluginInstance"], d, config)
@@ -272,5 +278,12 @@ func flattenNetworkSecurityClientTlsPolicyServerValidationCaCertificateProviderI
 }
 
 func flattenNetworkSecurityClientTlsPolicyServerValidationCaCertificateProviderInstancePluginInstance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }

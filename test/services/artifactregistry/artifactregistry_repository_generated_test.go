@@ -80,6 +80,30 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryVulnerabilityScanningExample",
 		},
+		{
+			Name: "TestAccArtifactRegistryRepository_update",
+		},
+		{
+			Name: "TestAccArtifactRegistryRepository_createMvnSnapshot",
+		},
+		{
+			Name: "TestAccArtifactRegistryRepository_createMvnRelease",
+		},
+		{
+			Name: "TestAccArtifactRegistryRepository_updateEmptyMvn",
+		},
+		{
+			Name: "TestAccArtifactRegistryRepository_kfp",
+		},
+		{
+			Name: "TestAccArtifactRegistryRepository_cleanup",
+		},
+		{
+			Name: "TestAccArtifactRegistryRepository_virtual",
+		},
+		{
+			Name: "TestAccArtifactRegistryRepository_remote",
+		},
 	}
 
 	for _, tt := range tests {
@@ -101,6 +125,7 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"remote_repository_config.0.disable_upstream_validation",
 					"remote_repository_config.disable_upstream_validation",
 					"remote_repository_config.upstream_credentials",
 					"repository_id",

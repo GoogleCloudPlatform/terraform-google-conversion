@@ -514,22 +514,18 @@ func expandComputeVpnTunnelCipherSuitePhase1(v interface{}, d tpgresource.Terraf
 }
 
 func expandComputeVpnTunnelCipherSuitePhase1Encryption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandComputeVpnTunnelCipherSuitePhase1Integrity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandComputeVpnTunnelCipherSuitePhase1Prf(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandComputeVpnTunnelCipherSuitePhase1Dh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
 	return v, nil
 }
 
@@ -570,17 +566,14 @@ func expandComputeVpnTunnelCipherSuitePhase2(v interface{}, d tpgresource.Terraf
 }
 
 func expandComputeVpnTunnelCipherSuitePhase2Encryption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandComputeVpnTunnelCipherSuitePhase2Integrity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
 	return v, nil
 }
 
 func expandComputeVpnTunnelCipherSuitePhase2Pfs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	v = v.(*schema.Set).List()
 	return v, nil
 }
 

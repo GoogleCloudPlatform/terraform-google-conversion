@@ -216,6 +216,11 @@ Examples include, "compute.googleapis.com/Instance", "compute.googleapis.com/Dis
 				ForceNew:    true,
 				Description: `This is only applicable for CloudSql resource. Days for which logs will be stored. This value should be greater than or equal to minimum enforced log retention duration of the backup vault.`,
 			},
+			"max_custom_on_demand_retention_days": {
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Description: `The maximum number of days for which an on-demand backup taken with custom retention can be retained.`,
+			},
 			"backup_vault_service_account": {
 				Type:        schema.TypeString,
 				Computed:    true,

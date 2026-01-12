@@ -283,17 +283,17 @@ func expandManagedKafkaClusterBrokerCapacityConfig(v interface{}, d tpgresource.
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedDiskSizeGb, err := expandManagedKafkaClusterBrokerCapacityConfigDiskSizeGb(original["disk_size_gb"], d, config)
+	transformedDiskSizeGib, err := expandManagedKafkaClusterBrokerCapacityConfigDiskSizeGib(original["disk_size_gib"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDiskSizeGb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["diskSizeGb"] = transformedDiskSizeGb
+	} else if val := reflect.ValueOf(transformedDiskSizeGib); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["diskSizeGib"] = transformedDiskSizeGib
 	}
 
 	return transformed, nil
 }
 
-func expandManagedKafkaClusterBrokerCapacityConfigDiskSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandManagedKafkaClusterBrokerCapacityConfigDiskSizeGib(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

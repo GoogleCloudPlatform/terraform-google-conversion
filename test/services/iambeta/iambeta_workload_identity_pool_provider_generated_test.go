@@ -56,6 +56,15 @@ func TestAccIAMBetaWorkloadIdentityPoolProvider(t *testing.T) {
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_iamWorkloadIdentityPoolProviderX509FullExample",
 		},
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_aws",
+		},
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_oidc",
+		},
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPoolProvider_x509",
+		},
 	}
 
 	for _, tt := range tests {

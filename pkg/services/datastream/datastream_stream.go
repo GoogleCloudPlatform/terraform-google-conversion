@@ -1726,6 +1726,259 @@ will be encrypted using an internal Stream-specific encryption key provisioned t
 Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
 			},
+			"rule_sets": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: `Rule sets to apply to the stream.`,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"customization_rules": {
+							Type:        schema.TypeList,
+							Required:    true,
+							Description: `List of customization rules to apply.`,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"bigquery_clustering": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `BigQuery clustering rule.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"columns": {
+													Type:        schema.TypeList,
+													Required:    true,
+													Description: `Column names to set as clustering columns.`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
+									"bigquery_partitioning": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `BigQuery partitioning rule.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"ingestion_time_partition": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"partitioning_time_granularity": {
+																Type:         schema.TypeString,
+																Optional:     true,
+																ValidateFunc: verify.ValidateEnum([]string{"PARTITIONING_TIME_GRANULARITY_UNSPECIFIED", "PARTITIONING_TIME_GRANULARITY_HOUR", "PARTITIONING_TIME_GRANULARITY_DAY", "PARTITIONING_TIME_GRANULARITY_MONTH", "PARTITIONING_TIME_GRANULARITY_YEAR", ""}),
+																Description:  `Partition granularity. Possible values: ["PARTITIONING_TIME_GRANULARITY_UNSPECIFIED", "PARTITIONING_TIME_GRANULARITY_HOUR", "PARTITIONING_TIME_GRANULARITY_DAY", "PARTITIONING_TIME_GRANULARITY_MONTH", "PARTITIONING_TIME_GRANULARITY_YEAR"]`,
+															},
+														},
+													},
+												},
+												"integer_range_partition": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"column": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The partitioning column.`,
+															},
+															"end": {
+																Type:        schema.TypeInt,
+																Required:    true,
+																Description: `The ending value for range partitioning (exclusive).`,
+															},
+															"interval": {
+																Type:        schema.TypeInt,
+																Required:    true,
+																Description: `The interval of each range within the partition.`,
+															},
+															"start": {
+																Type:        schema.TypeInt,
+																Required:    true,
+																Description: `The starting value for range partitioning (inclusive).`,
+															},
+														},
+													},
+												},
+												"require_partition_filter": {
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Description: `If true, queries over the table require a partition filter.`,
+												},
+												"time_unit_partition": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"column": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The partitioning column.`,
+															},
+															"partitioning_time_granularity": {
+																Type:         schema.TypeString,
+																Optional:     true,
+																ValidateFunc: verify.ValidateEnum([]string{"PARTITIONING_TIME_GRANULARITY_UNSPECIFIED", "PARTITIONING_TIME_GRANULARITY_HOUR", "PARTITIONING_TIME_GRANULARITY_DAY", "PARTITIONING_TIME_GRANULARITY_MONTH", "PARTITIONING_TIME_GRANULARITY_YEAR", ""}),
+																Description:  `Partition granularity. Possible values: ["PARTITIONING_TIME_GRANULARITY_UNSPECIFIED", "PARTITIONING_TIME_GRANULARITY_HOUR", "PARTITIONING_TIME_GRANULARITY_DAY", "PARTITIONING_TIME_GRANULARITY_MONTH", "PARTITIONING_TIME_GRANULARITY_YEAR"]`,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"object_filter": {
+							Type:        schema.TypeList,
+							Required:    true,
+							Description: `Object filter to apply the customization rules to.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"source_object_identifier": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Specific source object identifier.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"mongodb_identifier": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"collection": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The MongoDB collection name.`,
+															},
+															"database": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The MongoDB database name.`,
+															},
+														},
+													},
+												},
+												"mysql_identifier": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"database": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The database name.`,
+															},
+															"table": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The table name.`,
+															},
+														},
+													},
+												},
+												"oracle_identifier": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"schema": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The schema name.`,
+															},
+															"table": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The table name.`,
+															},
+														},
+													},
+												},
+												"postgresql_identifier": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"schema": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The schema name.`,
+															},
+															"table": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The table name.`,
+															},
+														},
+													},
+												},
+												"salesforce_identifier": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"object_name": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The Salesforce object name.`,
+															},
+														},
+													},
+												},
+												"sql_server_identifier": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"schema": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The schema name.`,
+															},
+															"table": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The table name.`,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"effective_labels": {
 				Type:        schema.TypeMap,
 				Computed:    true,

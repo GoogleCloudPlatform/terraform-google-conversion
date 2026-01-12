@@ -32,11 +32,11 @@ func TestAccComputeRegionHealthCheck(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_grpcWithTls_create",
-			Skip: "Test data has mismatched steps",
+			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_grpcWithTls_update",
-			Skip: "Test data has mismatched steps",
+			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_regionHealthCheckTcpExample",

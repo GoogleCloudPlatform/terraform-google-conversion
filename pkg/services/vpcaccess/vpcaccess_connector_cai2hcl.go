@@ -237,9 +237,6 @@ func flattenVPCAccessConnectorSubnet(v interface{}, d *schema.ResourceData, conf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["name"] =
 		flattenVPCAccessConnectorSubnetName(original["name"], d, config)

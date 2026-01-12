@@ -147,9 +147,6 @@ func flattenWorkbenchInstanceGceSetup(v interface{}, d *schema.ResourceData, con
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["machine_type"] =
 		flattenWorkbenchInstanceGceSetupMachineType(original["machineType"], d, config)
@@ -281,9 +278,6 @@ func flattenWorkbenchInstanceGceSetupContainerImage(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["repository"] =
 		flattenWorkbenchInstanceGceSetupContainerImageRepository(original["repository"], d, config)
@@ -296,6 +290,13 @@ func flattenWorkbenchInstanceGceSetupContainerImage(v interface{}, d *schema.Res
 }
 
 func flattenWorkbenchInstanceGceSetupContainerImageRepository(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -308,9 +309,6 @@ func flattenWorkbenchInstanceGceSetupBootDisk(v interface{}, d *schema.ResourceD
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["disk_size_gb"] =
 		flattenWorkbenchInstanceGceSetupBootDiskDiskSizeGb(original["diskSizeGb"], d, config)
@@ -457,9 +455,6 @@ func flattenWorkbenchInstanceGceSetupConfidentialInstanceConfig(v interface{}, d
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["confidential_instance_type"] =
 		flattenWorkbenchInstanceGceSetupConfidentialInstanceConfigConfidentialInstanceType(original["confidentialInstanceType"], d, config)
@@ -478,9 +473,6 @@ func flattenWorkbenchInstanceGceSetupReservationAffinity(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["consume_reservation_type"] =
 		flattenWorkbenchInstanceGceSetupReservationAffinityConsumeReservationType(original["consumeReservationType"], d, config)

@@ -27,6 +27,14 @@ func TestAccComputeHealthCheck(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeHealthCheck_grpcWithTls_create",
+			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
+		},
+		{
+			Name: "TestAccComputeHealthCheck_grpcWithTls_update",
+			Skip: "grpcTlsHealthCheck is not in CAI asset, but is required in this test.",
+		},
+		{
 			Name: "TestAccComputeHealthCheck_healthCheckTcpExample",
 		},
 		{
@@ -78,6 +86,33 @@ func TestAccComputeHealthCheck(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeHealthCheck_computeHealthCheckTcpSourceRegionsExample",
+		},
+		{
+			Name: "TestAccComputeHealthCheck_tcp_update",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "TestAccComputeHealthCheck_ssl_port_spec",
+		},
+		{
+			Name: "TestAccComputeHealthCheck_http_port_spec",
+		},
+		{
+			Name: "TestAccComputeHealthCheck_https_serving_port",
+		},
+		{
+			Name: "TestAccComputeHealthCheck_typeTransition",
+		},
+		{
+			Name: "TestAccComputeHealthCheck_logConfigDisabled",
+		},
+		{
+			Name: "TestAccComputeHealthCheck_srcRegions_update",
 		},
 	}
 

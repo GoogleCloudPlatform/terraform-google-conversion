@@ -161,9 +161,6 @@ func flattenSecretManagerRegionalRegionalSecretCustomerManagedEncryption(v inter
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenSecretManagerRegionalRegionalSecretCustomerManagedEncryptionKmsKeyName(original["kmsKeyName"], d, config)
@@ -174,6 +171,13 @@ func flattenSecretManagerRegionalRegionalSecretCustomerManagedEncryption(v inter
 }
 
 func flattenSecretManagerRegionalRegionalSecretCustomerManagedEncryptionKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -197,6 +201,13 @@ func flattenSecretManagerRegionalRegionalSecretTopics(v interface{}, d *schema.R
 }
 
 func flattenSecretManagerRegionalRegionalSecretTopicsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -205,9 +216,6 @@ func flattenSecretManagerRegionalRegionalSecretRotation(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["next_rotation_time"] =
 		flattenSecretManagerRegionalRegionalSecretRotationNextRotationTime(original["nextRotationTime"], d, config)

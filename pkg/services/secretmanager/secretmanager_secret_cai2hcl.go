@@ -165,9 +165,6 @@ func flattenSecretManagerSecretReplication(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["auto"] =
 		flattenSecretManagerSecretReplicationAuto(original["automatic"], d, config)
@@ -195,9 +192,6 @@ func flattenSecretManagerSecretReplicationAutoCustomerManagedEncryption(v interf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenSecretManagerSecretReplicationAutoCustomerManagedEncryptionKmsKeyName(original["kmsKeyName"], d, config)
@@ -208,6 +202,13 @@ func flattenSecretManagerSecretReplicationAutoCustomerManagedEncryption(v interf
 }
 
 func flattenSecretManagerSecretReplicationAutoCustomerManagedEncryptionKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -216,9 +217,6 @@ func flattenSecretManagerSecretReplicationUserManaged(v interface{}, d *schema.R
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["replicas"] =
 		flattenSecretManagerSecretReplicationUserManagedReplicas(original["replicas"], d, config)
@@ -249,6 +247,13 @@ func flattenSecretManagerSecretReplicationUserManagedReplicas(v interface{}, d *
 }
 
 func flattenSecretManagerSecretReplicationUserManagedReplicasLocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -257,9 +262,6 @@ func flattenSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncr
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncryptionKmsKeyName(original["kmsKeyName"], d, config)
@@ -270,6 +272,13 @@ func flattenSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncr
 }
 
 func flattenSecretManagerSecretReplicationUserManagedReplicasCustomerManagedEncryptionKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -293,6 +302,13 @@ func flattenSecretManagerSecretTopics(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenSecretManagerSecretTopicsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -309,9 +325,6 @@ func flattenSecretManagerSecretRotation(v interface{}, d *schema.ResourceData, c
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["next_rotation_time"] =
 		flattenSecretManagerSecretRotationNextRotationTime(original["nextRotationTime"], d, config)

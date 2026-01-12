@@ -132,6 +132,7 @@ func (c *DatastreamStreamCai2hclConverter) convertResourceData(asset caiasset.As
 	hclData["backfill_all"] = flattenDatastreamStreamBackfillAll(res["backfillAll"], d, config)
 	hclData["backfill_none"] = flattenDatastreamStreamBackfillNone(res["backfillNone"], d, config)
 	hclData["customer_managed_encryption_key"] = flattenDatastreamStreamCustomerManagedEncryptionKey(res["customerManagedEncryptionKey"], d, config)
+	hclData["rule_sets"] = flattenDatastreamStreamRuleSets(res["ruleSets"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -147,6 +148,13 @@ func flattenDatastreamStreamLabels(v interface{}, d *schema.ResourceData, config
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenDatastreamStreamDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -155,9 +163,6 @@ func flattenDatastreamStreamSourceConfig(v interface{}, d *schema.ResourceData, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["source_connection_profile"] =
 		flattenDatastreamStreamSourceConfigSourceConnectionProfile(original["sourceConnectionProfile"], d, config)
@@ -180,6 +185,13 @@ func flattenDatastreamStreamSourceConfig(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenDatastreamStreamSourceConfigSourceConnectionProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -209,9 +221,6 @@ func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjects(v interf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["mysql_databases"] =
 		flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlDatabases(original["mysqlDatabases"], d, config)
@@ -242,6 +251,13 @@ func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlData
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlDatabasesDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -266,6 +282,13 @@ func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlData
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlDatabasesMysqlTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -335,9 +358,6 @@ func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjects(v interf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["mysql_databases"] =
 		flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlDatabases(original["mysqlDatabases"], d, config)
@@ -368,6 +388,13 @@ func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlData
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlDatabasesDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -392,6 +419,13 @@ func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlData
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlDatabasesMysqlTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -532,9 +566,6 @@ func flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjects(v inter
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["oracle_schemas"] =
 		flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjectsOracleSchemas(original["oracleSchemas"], d, config)
@@ -565,6 +596,13 @@ func flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjectsOracleSc
 }
 
 func flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjectsOracleSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -589,6 +627,13 @@ func flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjectsOracleSc
 }
 
 func flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjectsOracleSchemasOracleTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -625,9 +670,6 @@ func flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjects(v inter
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["oracle_schemas"] =
 		flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjectsOracleSchemas(original["oracleSchemas"], d, config)
@@ -658,6 +700,13 @@ func flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjectsOracleSc
 }
 
 func flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjectsOracleSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -682,6 +731,13 @@ func flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjectsOracleSc
 }
 
 func flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjectsOracleSchemasOracleTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -787,9 +843,6 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjects(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["postgresql_schemas"] =
 		flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjectsPostgresqlSchemas(original["postgresqlSchemas"], d, config)
@@ -820,6 +873,13 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjectsPost
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjectsPostgresqlSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -844,6 +904,13 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjectsPost
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjectsPostgresqlSchemasPostgresqlTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -908,9 +975,6 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjects(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["postgresql_schemas"] =
 		flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPostgresqlSchemas(original["postgresqlSchemas"], d, config)
@@ -941,6 +1005,13 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPost
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPostgresqlSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -965,6 +1036,13 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPost
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPostgresqlSchemasPostgresqlTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1025,10 +1103,24 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPost
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigReplicationSlot(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigPublication(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1075,9 +1167,6 @@ func flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjects(v in
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["schemas"] =
 		flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemas(original["schemas"], d, config)
@@ -1108,6 +1197,13 @@ func flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchem
 }
 
 func flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1132,6 +1228,13 @@ func flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchem
 }
 
 func flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1168,9 +1271,6 @@ func flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjects(v in
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["schemas"] =
 		flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemas(original["schemas"], d, config)
@@ -1201,6 +1301,13 @@ func flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchem
 }
 
 func flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1225,6 +1332,13 @@ func flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchem
 }
 
 func flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1326,9 +1440,6 @@ func flattenDatastreamStreamSourceConfigSalesforceSourceConfigIncludeObjects(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["objects"] =
 		flattenDatastreamStreamSourceConfigSalesforceSourceConfigIncludeObjectsObjects(original["objects"], d, config)
@@ -1390,9 +1501,6 @@ func flattenDatastreamStreamSourceConfigSalesforceSourceConfigExcludeObjects(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["objects"] =
 		flattenDatastreamStreamSourceConfigSalesforceSourceConfigExcludeObjectsObjects(original["objects"], d, config)
@@ -1450,6 +1558,13 @@ func flattenDatastreamStreamSourceConfigSalesforceSourceConfigExcludeObjectsObje
 }
 
 func flattenDatastreamStreamSourceConfigSalesforceSourceConfigPollingInterval(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1473,9 +1588,6 @@ func flattenDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjects(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["databases"] =
 		flattenDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabases(original["databases"], d, config)
@@ -1561,9 +1673,6 @@ func flattenDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjects(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["databases"] =
 		flattenDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabases(original["databases"], d, config)
@@ -1666,9 +1775,6 @@ func flattenDatastreamStreamDestinationConfig(v interface{}, d *schema.ResourceD
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["destination_connection_profile"] =
 		flattenDatastreamStreamDestinationConfigDestinationConnectionProfile(original["destinationConnectionProfile"], d, config)
@@ -1683,6 +1789,13 @@ func flattenDatastreamStreamDestinationConfig(v interface{}, d *schema.ResourceD
 }
 
 func flattenDatastreamStreamDestinationConfigDestinationConnectionProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1691,9 +1804,6 @@ func flattenDatastreamStreamDestinationConfigGcsDestinationConfig(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["path"] =
 		flattenDatastreamStreamDestinationConfigGcsDestinationConfigPath(original["path"], d, config)
@@ -1749,9 +1859,6 @@ func flattenDatastreamStreamDestinationConfigGcsDestinationConfigJsonFileFormat(
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["schema_file_format"] =
 		flattenDatastreamStreamDestinationConfigGcsDestinationConfigJsonFileFormatSchemaFileFormat(original["schemaFileFormat"], d, config)
@@ -1776,9 +1883,6 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfig(v interfa
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["data_freshness"] =
 		flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigDataFreshness(original["dataFreshness"], d, config)
@@ -1807,9 +1911,6 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSingleTarg
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["dataset_id"] =
 		flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSingleTargetDatasetDatasetId(original["datasetId"], d, config)
@@ -1820,6 +1921,13 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSingleTarg
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSingleTargetDatasetDatasetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1828,9 +1936,6 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHier
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["dataset_template"] =
 		flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplate(original["datasetTemplate"], d, config)
@@ -1847,9 +1952,6 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHier
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["location"] =
 		flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplateLocation(original["location"], d, config)
@@ -1864,6 +1966,13 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHier
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplateLocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1884,9 +1993,6 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfig
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["bucket"] =
 		flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigBucket(original["bucket"], d, config)
@@ -1905,18 +2011,46 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfig
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigBucket(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigConnectionName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigFileFormat(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigTableFormat(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -1966,9 +2100,6 @@ func flattenDatastreamStreamBackfillAllMysqlExcludedObjects(v interface{}, d *sc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["mysql_databases"] =
 		flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabases(original["mysqlDatabases"], d, config)
@@ -1999,6 +2130,13 @@ func flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabases(v inte
 }
 
 func flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabasesDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2023,6 +2161,13 @@ func flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabasesMysqlTa
 }
 
 func flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabasesMysqlTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2092,9 +2237,6 @@ func flattenDatastreamStreamBackfillAllPostgresqlExcludedObjects(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["postgresql_schemas"] =
 		flattenDatastreamStreamBackfillAllPostgresqlExcludedObjectsPostgresqlSchemas(original["postgresqlSchemas"], d, config)
@@ -2125,6 +2267,13 @@ func flattenDatastreamStreamBackfillAllPostgresqlExcludedObjectsPostgresqlSchema
 }
 
 func flattenDatastreamStreamBackfillAllPostgresqlExcludedObjectsPostgresqlSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2149,6 +2298,13 @@ func flattenDatastreamStreamBackfillAllPostgresqlExcludedObjectsPostgresqlSchema
 }
 
 func flattenDatastreamStreamBackfillAllPostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2213,9 +2369,6 @@ func flattenDatastreamStreamBackfillAllOracleExcludedObjects(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["oracle_schemas"] =
 		flattenDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemas(original["oracleSchemas"], d, config)
@@ -2246,6 +2399,13 @@ func flattenDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemas(v inte
 }
 
 func flattenDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2270,6 +2430,13 @@ func flattenDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemasOracleT
 }
 
 func flattenDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemasOracleTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2306,9 +2473,6 @@ func flattenDatastreamStreamBackfillAllSqlServerExcludedObjects(v interface{}, d
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["schemas"] =
 		flattenDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemas(original["schemas"], d, config)
@@ -2339,6 +2503,13 @@ func flattenDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemas(v interfa
 }
 
 func flattenDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2363,6 +2534,13 @@ func flattenDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTables(v i
 }
 
 func flattenDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2399,9 +2577,6 @@ func flattenDatastreamStreamBackfillAllSalesforceExcludedObjects(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["objects"] =
 		flattenDatastreamStreamBackfillAllSalesforceExcludedObjectsObjects(original["objects"], d, config)
@@ -2463,9 +2638,6 @@ func flattenDatastreamStreamBackfillAllMongodbExcludedObjects(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["databases"] =
 		flattenDatastreamStreamBackfillAllMongodbExcludedObjectsDatabases(original["databases"], d, config)
@@ -2496,6 +2668,13 @@ func flattenDatastreamStreamBackfillAllMongodbExcludedObjectsDatabases(v interfa
 }
 
 func flattenDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2520,6 +2699,13 @@ func flattenDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollection
 }
 
 func flattenDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollectionsCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -2555,5 +2741,477 @@ func flattenDatastreamStreamBackfillNone(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenDatastreamStreamCustomerManagedEncryptionKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamRuleSets(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"customization_rules": flattenDatastreamStreamRuleSetsCustomizationRules(original["customizationRules"], d, config),
+			"object_filter":       flattenDatastreamStreamRuleSetsObjectFilter(original["objectFilter"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRules(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"bigquery_partitioning": flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioning(original["bigqueryPartitioning"], d, config),
+			"bigquery_clustering":   flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryClustering(original["bigqueryClustering"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioning(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["integer_range_partition"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartition(original["integerRangePartition"], d, config)
+	transformed["time_unit_partition"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartition(original["timeUnitPartition"], d, config)
+	transformed["ingestion_time_partition"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIngestionTimePartition(original["ingestionTimePartition"], d, config)
+	transformed["require_partition_filter"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningRequirePartitionFilter(original["requirePartitionFilter"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["column"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionColumn(original["column"], d, config)
+	transformed["start"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionStart(original["start"], d, config)
+	transformed["end"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionEnd(original["end"], d, config)
+	transformed["interval"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionInterval(original["interval"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionStart(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+	if v == nil {
+		return 0
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionEnd(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+	if v == nil {
+		return 0
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionInterval(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+	if v == nil {
+		return 0
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["column"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartitionColumn(original["column"], d, config)
+	transformed["partitioning_time_granularity"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartitionPartitioningTimeGranularity(original["partitioningTimeGranularity"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartitionColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartitionPartitioningTimeGranularity(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIngestionTimePartition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["partitioning_time_granularity"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIngestionTimePartitionPartitioningTimeGranularity(original["partitioningTimeGranularity"], d, config)
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIngestionTimePartitionPartitioningTimeGranularity(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningRequirePartitionFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryClustering(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["columns"] =
+		flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryClusteringColumns(original["columns"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsCustomizationRulesBigqueryClusteringColumns(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["source_object_identifier"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifier(original["sourceObjectIdentifier"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["oracle_identifier"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifier(original["oracleIdentifier"], d, config)
+	transformed["mysql_identifier"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifier(original["mysqlIdentifier"], d, config)
+	transformed["postgresql_identifier"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifier(original["postgresqlIdentifier"], d, config)
+	transformed["sql_server_identifier"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifier(original["sqlServerIdentifier"], d, config)
+	transformed["salesforce_identifier"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifier(original["salesforceIdentifier"], d, config)
+	transformed["mongodb_identifier"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifier(original["mongodbIdentifier"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["schema"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifierSchema(original["schema"], d, config)
+	transformed["table"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifierTable(original["table"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifierSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifierTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["database"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifierDatabase(original["database"], d, config)
+	transformed["table"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifierTable(original["table"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifierDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifierTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["schema"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifierSchema(original["schema"], d, config)
+	transformed["table"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifierTable(original["table"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifierSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifierTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["schema"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifierSchema(original["schema"], d, config)
+	transformed["table"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifierTable(original["table"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifierSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifierTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["object_name"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifierObjectName(original["objectName"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifierObjectName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["database"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifierDatabase(original["database"], d, config)
+	transformed["collection"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifierCollection(original["collection"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifierDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifierCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }

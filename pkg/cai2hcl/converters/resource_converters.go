@@ -30,6 +30,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
@@ -38,8 +39,11 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
@@ -167,6 +171,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"cloudkms.googleapis.com/KeyRing": {
 		"Default": kms.NewKMSKeyRingCai2hclConverter(provider),
 	},
+	"cloudtasks.googleapis.com/Queue": {
+		"Default": cloudtasks.NewCloudTasksQueueCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/Address": {
 		"Default": compute.NewComputeAddressCai2hclConverter(provider),
 	},
@@ -208,11 +215,32 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/NodeGroup": {
 		"Default": compute.NewComputeNodeGroupCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/NodeTemplate": {
+		"Default": compute.NewComputeNodeTemplateCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/ResourcePolicy": {
+		"Default": compute.NewComputeResourcePolicyCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Route": {
+		"Default": compute.NewComputeRouteCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Router": {
+		"Default": compute.NewComputeRouterCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/SslCertificate": {
+		"Default": compute.NewComputeRegionSslCertificateCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/StoragePool": {
+		"Default": compute.NewComputeStoragePoolCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/Subnetwork": {
 		"Default": compute.NewComputeSubnetworkCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/UrlMap": {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/VpnGateway": {
+		"Default": compute.NewComputeHaVpnGatewayCai2hclConverter(provider),
 	},
 	"dataproc.googleapis.com/Batch": {
 		"Default": dataproc.NewDataprocBatchCai2hclConverter(provider),
@@ -247,11 +275,23 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"logging.googleapis.com/LogMetric": {
 		"Default": logging.NewLoggingMetricCai2hclConverter(provider),
 	},
+	"memcache.googleapis.com/Instance": {
+		"Default": memcache.NewMemcacheInstanceCai2hclConverter(provider),
+	},
+	"monitoring.googleapis.com/AlertPolicy": {
+		"Default": monitoring.NewMonitoringAlertPolicyCai2hclConverter(provider),
+	},
 	"monitoring.googleapis.com/NotificationChannel": {
 		"Default": monitoring.NewMonitoringNotificationChannelCai2hclConverter(provider),
 	},
 	"monitoring.googleapis.com/UptimeCheckConfig": {
 		"Default": monitoring.NewMonitoringUptimeCheckConfigCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/ActiveDirectory": {
+		"Default": netapp.NewNetappActiveDirectoryCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/Backup": {
+		"Default": netapp.NewNetappBackupCai2hclConverter(provider),
 	},
 	"networksecurity.googleapis.com/AddressGroup": {
 		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),
@@ -279,6 +319,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"notebooks.googleapis.com/Instance": {
 		"Default": workbench.NewWorkbenchInstanceCai2hclConverter(provider),
+	},
+	"privateca.googleapis.com/CaPool": {
+		"Default": privateca.NewPrivatecaCaPoolCai2hclConverter(provider),
 	},
 	"pubsub.googleapis.com/Subscription": {
 		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),

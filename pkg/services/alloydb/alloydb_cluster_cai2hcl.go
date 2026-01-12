@@ -122,11 +122,6 @@ func (c *AlloydbClusterCai2hclConverter) convertResourceData(asset caiasset.Asse
 	}
 	hclData := make(map[string]interface{})
 
-	res, hclData, err = resourceAlloydbClusterTgcDecoder(d, config, res, hclData)
-	if err != nil {
-		return nil, err
-	}
-
 	outputFields := map[string]struct{}{"backup_source": struct{}{}, "continuous_backup_info": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "encryption_info": struct{}{}, "migration_source": struct{}{}, "name": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "trial_metadata": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}", outputFields, hclData)
 
@@ -166,9 +161,6 @@ func flattenAlloydbClusterEncryptionConfig(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenAlloydbClusterEncryptionConfigKmsKeyName(original["kmsKeyName"], d, config)
@@ -187,9 +179,6 @@ func flattenAlloydbClusterNetworkConfig(v interface{}, d *schema.ResourceData, c
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["network"] =
 		flattenAlloydbClusterNetworkConfigNetwork(original["network"], d, config)
@@ -229,9 +218,6 @@ func flattenAlloydbClusterPscConfig(v interface{}, d *schema.ResourceData, confi
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["psc_enabled"] =
 		flattenAlloydbClusterPscConfigPscEnabled(original["pscEnabled"], d, config)
@@ -250,9 +236,6 @@ func flattenAlloydbClusterInitialUser(v interface{}, d *schema.ResourceData, con
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["user"] =
 		flattenAlloydbClusterInitialUserUser(original["user"], d, config)
@@ -277,9 +260,6 @@ func flattenAlloydbClusterRestoreBackupSource(v interface{}, d *schema.ResourceD
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["backup_name"] =
 		flattenAlloydbClusterRestoreBackupSourceBackupName(original["backupName"], d, config)
@@ -290,6 +270,13 @@ func flattenAlloydbClusterRestoreBackupSource(v interface{}, d *schema.ResourceD
 }
 
 func flattenAlloydbClusterRestoreBackupSourceBackupName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -298,9 +285,6 @@ func flattenAlloydbClusterRestoreContinuousBackupSource(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["cluster"] =
 		flattenAlloydbClusterRestoreContinuousBackupSourceCluster(original["cluster"], d, config)
@@ -313,10 +297,24 @@ func flattenAlloydbClusterRestoreContinuousBackupSource(v interface{}, d *schema
 }
 
 func flattenAlloydbClusterRestoreContinuousBackupSourceCluster(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenAlloydbClusterRestoreContinuousBackupSourcePointInTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -325,9 +323,6 @@ func flattenAlloydbClusterContinuousBackupConfig(v interface{}, d *schema.Resour
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["enabled"] =
 		flattenAlloydbClusterContinuousBackupConfigEnabled(original["enabled"], d, config)
@@ -367,9 +362,6 @@ func flattenAlloydbClusterContinuousBackupConfigEncryptionConfig(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenAlloydbClusterContinuousBackupConfigEncryptionConfigKmsKeyName(original["kmsKeyName"], d, config)
@@ -388,9 +380,6 @@ func flattenAlloydbClusterAutomatedBackupPolicy(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["backup_window"] =
 		flattenAlloydbClusterAutomatedBackupPolicyBackupWindow(original["backupWindow"], d, config)
@@ -431,9 +420,6 @@ func flattenAlloydbClusterAutomatedBackupPolicyEncryptionConfig(v interface{}, d
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenAlloydbClusterAutomatedBackupPolicyEncryptionConfigKmsKeyName(original["kmsKeyName"], d, config)
@@ -452,9 +438,6 @@ func flattenAlloydbClusterAutomatedBackupPolicyWeeklySchedule(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["days_of_week"] =
 		flattenAlloydbClusterAutomatedBackupPolicyWeeklyScheduleDaysOfWeek(original["daysOfWeek"], d, config)
@@ -565,9 +548,6 @@ func flattenAlloydbClusterAutomatedBackupPolicyTimeBasedRetention(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["retention_period"] =
 		flattenAlloydbClusterAutomatedBackupPolicyTimeBasedRetentionRetentionPeriod(original["retentionPeriod"], d, config)
@@ -586,9 +566,6 @@ func flattenAlloydbClusterAutomatedBackupPolicyQuantityBasedRetention(v interfac
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["count"] =
 		flattenAlloydbClusterAutomatedBackupPolicyQuantityBasedRetentionCount(original["count"], d, config)
@@ -628,9 +605,6 @@ func flattenAlloydbClusterSecondaryConfig(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["primary_cluster_name"] =
 		flattenAlloydbClusterSecondaryConfigPrimaryClusterName(original["primaryClusterName"], d, config)
@@ -641,6 +615,13 @@ func flattenAlloydbClusterSecondaryConfig(v interface{}, d *schema.ResourceData,
 }
 
 func flattenAlloydbClusterSecondaryConfigPrimaryClusterName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -649,9 +630,6 @@ func flattenAlloydbClusterMaintenanceUpdatePolicy(v interface{}, d *schema.Resou
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["maintenance_windows"] =
 		flattenAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindows(original["maintenanceWindows"], d, config)
@@ -690,9 +668,6 @@ func flattenAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTime(v i
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hours"] =
 		flattenAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeHours(original["hours"], d, config)
@@ -781,15 +756,4 @@ func flattenAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeNano
 
 func flattenAlloydbClusterSubscriptionType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func resourceAlloydbClusterTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
-	// password is missing in CAI asset, but password is required in Terraform
-	if res["initialUser"] == nil && res["clusterType"] == "PRIMARY" {
-		res["initialUser"] = map[string]interface{}{
-			"password": "hidden",
-		}
-	}
-
-	return res, hclData, nil
 }

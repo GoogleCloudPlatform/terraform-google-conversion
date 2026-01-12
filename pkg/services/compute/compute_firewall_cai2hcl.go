@@ -173,6 +173,13 @@ func flattenComputeFirewallAllow(v interface{}, d *schema.ResourceData, config *
 }
 
 func flattenComputeFirewallAllowProtocol(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -201,6 +208,13 @@ func flattenComputeFirewallDeny(v interface{}, d *schema.ResourceData, config *t
 }
 
 func flattenComputeFirewallDenyProtocol(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -247,6 +261,13 @@ func flattenComputeFirewallLogConfig(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenComputeFirewallName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -318,9 +339,6 @@ func flattenComputeFirewallParams(v interface{}, d *schema.ResourceData, config 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_manager_tags"] =
 		flattenComputeFirewallParamsResourceManagerTags(original["resourceManagerTags"], d, config)

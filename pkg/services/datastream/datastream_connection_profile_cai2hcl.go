@@ -151,6 +151,13 @@ func flattenDatastreamConnectionProfileLabels(v interface{}, d *schema.ResourceD
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenDatastreamConnectionProfileDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -159,9 +166,6 @@ func flattenDatastreamConnectionProfileOracleProfile(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hostname"] =
 		flattenDatastreamConnectionProfileOracleProfileHostname(original["hostname"], d, config)
@@ -184,6 +188,13 @@ func flattenDatastreamConnectionProfileOracleProfile(v interface{}, d *schema.Re
 }
 
 func flattenDatastreamConnectionProfileOracleProfileHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -205,6 +216,13 @@ func flattenDatastreamConnectionProfileOracleProfilePort(v interface{}, d *schem
 }
 
 func flattenDatastreamConnectionProfileOracleProfileUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -217,6 +235,13 @@ func flattenDatastreamConnectionProfileOracleProfileSecretManagerStoredPassword(
 }
 
 func flattenDatastreamConnectionProfileOracleProfileDatabaseService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -229,9 +254,6 @@ func flattenDatastreamConnectionProfileGcsProfile(v interface{}, d *schema.Resou
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["bucket"] =
 		flattenDatastreamConnectionProfileGcsProfileBucket(original["bucket"], d, config)
@@ -244,6 +266,13 @@ func flattenDatastreamConnectionProfileGcsProfile(v interface{}, d *schema.Resou
 }
 
 func flattenDatastreamConnectionProfileGcsProfileBucket(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -256,9 +285,6 @@ func flattenDatastreamConnectionProfileMysqlProfile(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hostname"] =
 		flattenDatastreamConnectionProfileMysqlProfileHostname(original["hostname"], d, config)
@@ -279,6 +305,13 @@ func flattenDatastreamConnectionProfileMysqlProfile(v interface{}, d *schema.Res
 }
 
 func flattenDatastreamConnectionProfileMysqlProfileHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -300,6 +333,13 @@ func flattenDatastreamConnectionProfileMysqlProfilePort(v interface{}, d *schema
 }
 
 func flattenDatastreamConnectionProfileMysqlProfileUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -316,9 +356,6 @@ func flattenDatastreamConnectionProfileMysqlProfileSslConfig(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["client_key"] =
 		flattenDatastreamConnectionProfileMysqlProfileSslConfigClientKey(original["clientKey"], d, config)
@@ -357,9 +394,6 @@ func flattenDatastreamConnectionProfilePostgresqlProfile(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hostname"] =
 		flattenDatastreamConnectionProfilePostgresqlProfileHostname(original["hostname"], d, config)
@@ -373,6 +407,8 @@ func flattenDatastreamConnectionProfilePostgresqlProfile(v interface{}, d *schem
 		flattenDatastreamConnectionProfilePostgresqlProfileSecretManagerStoredPassword(original["secretManagerStoredPassword"], d, config)
 	transformed["database"] =
 		flattenDatastreamConnectionProfilePostgresqlProfileDatabase(original["database"], d, config)
+	transformed["ssl_config"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfig(original["sslConfig"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -380,6 +416,13 @@ func flattenDatastreamConnectionProfilePostgresqlProfile(v interface{}, d *schem
 }
 
 func flattenDatastreamConnectionProfilePostgresqlProfileHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -401,6 +444,13 @@ func flattenDatastreamConnectionProfilePostgresqlProfilePort(v interface{}, d *s
 }
 
 func flattenDatastreamConnectionProfilePostgresqlProfileUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -413,6 +463,105 @@ func flattenDatastreamConnectionProfilePostgresqlProfileSecretManagerStoredPassw
 }
 
 func flattenDatastreamConnectionProfilePostgresqlProfileDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["server_verification"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerVerification(original["serverVerification"], d, config)
+	transformed["server_and_client_verification"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerification(original["serverAndClientVerification"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerVerification(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ca_certificate"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerVerificationCaCertificate(original["caCertificate"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerVerificationCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerification(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["client_certificate"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationClientCertificate(original["clientCertificate"], d, config)
+	transformed["client_key"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationClientKey(original["clientKey"], d, config)
+	transformed["ca_certificate"] =
+		flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationCaCertificate(original["caCertificate"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationClientCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationClientKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamConnectionProfilePostgresqlProfileSslConfigServerAndClientVerificationCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -421,9 +570,6 @@ func flattenDatastreamConnectionProfileSqlServerProfile(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hostname"] =
 		flattenDatastreamConnectionProfileSqlServerProfileHostname(original["hostname"], d, config)
@@ -444,6 +590,13 @@ func flattenDatastreamConnectionProfileSqlServerProfile(v interface{}, d *schema
 }
 
 func flattenDatastreamConnectionProfileSqlServerProfileHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -465,6 +618,13 @@ func flattenDatastreamConnectionProfileSqlServerProfilePort(v interface{}, d *sc
 }
 
 func flattenDatastreamConnectionProfileSqlServerProfileUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -477,6 +637,13 @@ func flattenDatastreamConnectionProfileSqlServerProfileSecretManagerStoredPasswo
 }
 
 func flattenDatastreamConnectionProfileSqlServerProfileDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -485,9 +652,6 @@ func flattenDatastreamConnectionProfileMongodbProfile(v interface{}, d *schema.R
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["host_addresses"] =
 		flattenDatastreamConnectionProfileMongodbProfileHostAddresses(original["hostAddresses"], d, config)
@@ -532,6 +696,13 @@ func flattenDatastreamConnectionProfileMongodbProfileHostAddresses(v interface{}
 }
 
 func flattenDatastreamConnectionProfileMongodbProfileHostAddressesHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -557,6 +728,13 @@ func flattenDatastreamConnectionProfileMongodbProfileReplicaSet(v interface{}, d
 }
 
 func flattenDatastreamConnectionProfileMongodbProfileUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -573,9 +751,6 @@ func flattenDatastreamConnectionProfileMongodbProfileSslConfig(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["client_key"] =
 		flattenDatastreamConnectionProfileMongodbProfileSslConfigClientKey(original["clientKey"], d, config)
@@ -635,9 +810,6 @@ func flattenDatastreamConnectionProfileForwardSshConnectivity(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hostname"] =
 		flattenDatastreamConnectionProfileForwardSshConnectivityHostname(original["hostname"], d, config)
@@ -656,10 +828,24 @@ func flattenDatastreamConnectionProfileForwardSshConnectivity(v interface{}, d *
 }
 
 func flattenDatastreamConnectionProfileForwardSshConnectivityHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenDatastreamConnectionProfileForwardSshConnectivityUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -693,9 +879,6 @@ func flattenDatastreamConnectionProfilePrivateConnectivity(v interface{}, d *sch
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["private_connection"] =
 		flattenDatastreamConnectionProfilePrivateConnectivityPrivateConnection(original["privateConnection"], d, config)
@@ -706,5 +889,12 @@ func flattenDatastreamConnectionProfilePrivateConnectivity(v interface{}, d *sch
 }
 
 func flattenDatastreamConnectionProfilePrivateConnectivityPrivateConnection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }

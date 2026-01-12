@@ -32,6 +32,9 @@ func TestAccBackupDRBackupVault(t *testing.T) {
 		{
 			Name: "TestAccBackupDRBackupVault_backupDrBackupVaultCmekExample",
 		},
+		{
+			Name: "TestAccBackupDRBackupVault_fullUpdate",
+		},
 	}
 
 	for _, tt := range tests {
@@ -53,6 +56,7 @@ func TestAccBackupDRBackupVault(t *testing.T) {
 					"backup_vault_id",
 					"count",
 					"depends_on",
+					"encryption_config",
 					"encryption_config.kms_key_name",
 					"for_each",
 					"force_delete",

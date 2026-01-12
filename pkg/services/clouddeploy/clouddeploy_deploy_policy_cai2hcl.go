@@ -181,9 +181,6 @@ func flattenClouddeployDeployPolicySelectorsTarget(v interface{}, d *schema.Reso
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["id"] =
 		flattenClouddeployDeployPolicySelectorsTargetId(original["id"], d, config)
@@ -208,9 +205,6 @@ func flattenClouddeployDeployPolicySelectorsDeliveryPipeline(v interface{}, d *s
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["id"] =
 		flattenClouddeployDeployPolicySelectorsDeliveryPipelineId(original["id"], d, config)
@@ -254,9 +248,6 @@ func flattenClouddeployDeployPolicyRulesRolloutRestriction(v interface{}, d *sch
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["id"] =
 		flattenClouddeployDeployPolicyRulesRolloutRestrictionId(original["id"], d, config)
@@ -273,6 +264,13 @@ func flattenClouddeployDeployPolicyRulesRolloutRestriction(v interface{}, d *sch
 }
 
 func flattenClouddeployDeployPolicyRulesRolloutRestrictionId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -289,9 +287,6 @@ func flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindows(v interfac
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["time_zone"] =
 		flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsTimeZone(original["timeZone"], d, config)
@@ -306,6 +301,13 @@ func flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindows(v interfac
 }
 
 func flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsTimeZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -336,9 +338,6 @@ func flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWind
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["year"] =
 		flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsStartDateYear(original["year"], d, config)
@@ -408,9 +407,6 @@ func flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWind
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["year"] =
 		flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsEndDateYear(original["year"], d, config)
@@ -565,9 +561,6 @@ func flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWind
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hours"] =
 		flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsOneTimeWindowsEndTimeHours(original["hours"], d, config)
@@ -766,9 +759,6 @@ func flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindo
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["hours"] =
 		flattenClouddeployDeployPolicyRulesRolloutRestrictionTimeWindowsWeeklyWindowsEndTimeHours(original["hours"], d, config)

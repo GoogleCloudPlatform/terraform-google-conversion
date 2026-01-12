@@ -35,6 +35,54 @@ func TestAccSpannerInstance(t *testing.T) {
 		{
 			Name: "TestAccSpannerInstance_spannerInstanceMultiRegionalExample",
 		},
+		{
+			Name: "TestAccSpannerInstance_basic",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicUpdateWithProviderDefaultLabels",
+		},
+		{
+			Name: "TestAccSpannerInstance_noNodeCountSpecified",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicWithAutogenName",
+		},
+		{
+			Name: "TestAccSpannerInstance_update",
+		},
+		{
+			Name: "TestAccSpannerInstance_virtualUpdate",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingProcessingUnitConfig",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingProcessingUnitConfigUpdate",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingNodeConfig",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingNodeConfigUpdate",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingNodeConfigUpdateDisableAutoscaling",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingPrecessingUnitsConfigUpdateDisableAutoscaling",
+		},
+		{
+			Name: "TestAccSpannerInstance_basicWithAsymmetricAutoscalingConfigsUpdate",
+		},
+		{
+			Name: "TestAccSpannerInstance_spannerInstanceWithAutoscaling",
+		},
+		{
+			Name: "TestAccSpannerInstance_freeInstanceBasicUpdate",
+		},
+		{
+			Name: "TestAccSpannerInstance_autoscalingWithTotalCPUUtilizationPercent",
+		},
 	}
 
 	for _, tt := range tests {
@@ -50,11 +98,14 @@ func TestAccSpannerInstance(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
+					"autoscaling_config.autoscaling_limits",
+					"autoscaling_config.autoscaling_targets.total_cpu_utilization_percent",
 					"count",
 					"depends_on",
 					"for_each",
 					"force_destroy",
 					"lifecycle",
+					"processing_units",
 					"provider",
 					"timeouts",
 				},

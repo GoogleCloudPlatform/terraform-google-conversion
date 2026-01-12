@@ -169,7 +169,7 @@ func expandDataCatalogTagFields(v interface{}, d tpgresource.TerraformResourceDa
 		if err != nil {
 			return nil, err
 		} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["display_name"] = transformedDisplayName
+			transformed["displayName"] = transformedDisplayName
 		}
 
 		transformedOrder, err := expandDataCatalogTagFieldsOrder(original["order"], d, config)

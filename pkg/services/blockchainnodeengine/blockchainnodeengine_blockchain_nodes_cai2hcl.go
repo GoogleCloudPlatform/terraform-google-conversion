@@ -147,9 +147,6 @@ func flattenBlockchainNodeEngineBlockchainNodesEthereumDetails(v interface{}, d 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["validator_config"] =
 		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfig(original["validatorConfig"], d, config)
@@ -178,9 +175,6 @@ func flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfig(v 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["mev_relay_urls"] =
 		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigMevRelayUrls(original["mevRelayUrls"], d, config)
@@ -199,9 +193,6 @@ func flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsGethDetails(v inte
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["garbage_collection_mode"] =
 		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsGethDetailsGarbageCollectionMode(original["garbageCollectionMode"], d, config)
