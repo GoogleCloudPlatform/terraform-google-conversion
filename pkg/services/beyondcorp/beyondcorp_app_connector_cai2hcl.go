@@ -151,9 +151,6 @@ func flattenBeyondcorpAppConnectorPrincipalInfo(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["service_account"] =
 		flattenBeyondcorpAppConnectorPrincipalInfoServiceAccount(original["serviceAccount"], d, config)
@@ -168,9 +165,6 @@ func flattenBeyondcorpAppConnectorPrincipalInfoServiceAccount(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["email"] =
 		flattenBeyondcorpAppConnectorPrincipalInfoServiceAccountEmail(original["email"], d, config)
@@ -181,5 +175,12 @@ func flattenBeyondcorpAppConnectorPrincipalInfoServiceAccount(v interface{}, d *
 }
 
 func flattenBeyondcorpAppConnectorPrincipalInfoServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }

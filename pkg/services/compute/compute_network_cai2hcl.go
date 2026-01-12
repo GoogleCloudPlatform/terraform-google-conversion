@@ -165,6 +165,13 @@ func flattenComputeNetworkDescription(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenComputeNetworkName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -177,9 +184,6 @@ func flattenComputeNetworkRoutingConfig(v interface{}, d *schema.ResourceData, c
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["routing_mode"] =
 		flattenComputeNetworkRoutingConfigRoutingMode(original["routingMode"], d, config)
@@ -255,9 +259,6 @@ func flattenComputeNetworkParams(v interface{}, d *schema.ResourceData, config *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["resource_manager_tags"] =
 		flattenComputeNetworkParamsResourceManagerTags(original["resourceManagerTags"], d, config)

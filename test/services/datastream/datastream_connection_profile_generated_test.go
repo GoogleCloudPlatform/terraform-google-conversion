@@ -36,6 +36,10 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfileFullExample",
 		},
 		{
+			Name: "TestAccDatastreamConnectionProfile_datastreamStreamPostgresqlSslconfigServerAndClientVerificationExample",
+			Skip: "fix it after ssl_config is released in v7.16.0",
+		},
+		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecretManagerExample",
 		},
 		{
@@ -67,6 +71,8 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 					"create_without_validation",
 					"depends_on",
 					"for_each",
+					"forward_ssh_connectivity",
+					"forward_ssh_connectivity.0.password",
 					"forward_ssh_connectivity.password",
 					"forward_ssh_connectivity.private_key",
 					"lifecycle",
@@ -77,7 +83,13 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 					"mongodb_profile.ssl_config.client_key",
 					"mongodb_profile.ssl_config.secret_manager_stored_client_key",
 					"mysql_profile.password",
+					"postgresql_profile.0.password",
 					"postgresql_profile.password",
+					"postgresql_profile.ssl_config.server_and_client_verification",
+					"postgresql_profile.ssl_config.server_and_client_verification.ca_certificate",
+					"postgresql_profile.ssl_config.server_and_client_verification.client_certificate",
+					"postgresql_profile.ssl_config.server_and_client_verification.client_key",
+					"postgresql_profile.ssl_config.server_verification.ca_certificate",
 					"provider",
 					"timeouts",
 				},

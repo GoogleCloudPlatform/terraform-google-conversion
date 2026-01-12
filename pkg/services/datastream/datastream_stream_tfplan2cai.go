@@ -143,6 +143,12 @@ func GetDatastreamStreamCaiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("customer_managed_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(customerManagedEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, customerManagedEncryptionKeyProp)) {
 		obj["customerManagedEncryptionKey"] = customerManagedEncryptionKeyProp
 	}
+	ruleSetsProp, err := expandDatastreamStreamRuleSets(d.Get("rule_sets"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("rule_sets"); !tpgresource.IsEmptyValue(reflect.ValueOf(ruleSetsProp)) && (ok || !reflect.DeepEqual(v, ruleSetsProp)) {
+		obj["ruleSets"] = ruleSetsProp
+	}
 	effectiveLabelsProp, err := expandDatastreamStreamEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -3704,6 +3710,560 @@ func expandDatastreamStreamBackfillNone(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandDatastreamStreamCustomerManagedEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCustomizationRules, err := expandDatastreamStreamRuleSetsCustomizationRules(original["customization_rules"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCustomizationRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["customizationRules"] = transformedCustomizationRules
+		}
+
+		transformedObjectFilter, err := expandDatastreamStreamRuleSetsObjectFilter(original["object_filter"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedObjectFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["objectFilter"] = transformedObjectFilter
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedBigqueryPartitioning, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioning(original["bigquery_partitioning"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBigqueryPartitioning); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["bigqueryPartitioning"] = transformedBigqueryPartitioning
+		}
+
+		transformedBigqueryClustering, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryClustering(original["bigquery_clustering"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBigqueryClustering); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["bigqueryClustering"] = transformedBigqueryClustering
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioning(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIntegerRangePartition, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartition(original["integer_range_partition"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIntegerRangePartition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["integerRangePartition"] = transformedIntegerRangePartition
+	}
+
+	transformedTimeUnitPartition, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartition(original["time_unit_partition"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTimeUnitPartition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["timeUnitPartition"] = transformedTimeUnitPartition
+	}
+
+	transformedIngestionTimePartition, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIngestionTimePartition(original["ingestion_time_partition"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["ingestionTimePartition"] = transformedIngestionTimePartition
+	}
+
+	transformedRequirePartitionFilter, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningRequirePartitionFilter(original["require_partition_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequirePartitionFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requirePartitionFilter"] = transformedRequirePartitionFilter
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedColumn, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionColumn(original["column"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedColumn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["column"] = transformedColumn
+	}
+
+	transformedStart, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionStart(original["start"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStart); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["start"] = transformedStart
+	}
+
+	transformedEnd, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionEnd(original["end"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnd); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["end"] = transformedEnd
+	}
+
+	transformedInterval, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionInterval(original["interval"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInterval); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["interval"] = transformedInterval
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionColumn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionStart(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionEnd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIntegerRangePartitionInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedColumn, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartitionColumn(original["column"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedColumn); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["column"] = transformedColumn
+	}
+
+	transformedPartitioningTimeGranularity, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartitionPartitioningTimeGranularity(original["partitioning_time_granularity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPartitioningTimeGranularity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["partitioningTimeGranularity"] = transformedPartitioningTimeGranularity
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartitionColumn(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningTimeUnitPartitionPartitioningTimeGranularity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIngestionTimePartition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPartitioningTimeGranularity, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIngestionTimePartitionPartitioningTimeGranularity(original["partitioning_time_granularity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPartitioningTimeGranularity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["partitioningTimeGranularity"] = transformedPartitioningTimeGranularity
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningIngestionTimePartitionPartitioningTimeGranularity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryPartitioningRequirePartitionFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryClustering(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedColumns, err := expandDatastreamStreamRuleSetsCustomizationRulesBigqueryClusteringColumns(original["columns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedColumns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["columns"] = transformedColumns
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsCustomizationRulesBigqueryClusteringColumns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSourceObjectIdentifier, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifier(original["source_object_identifier"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceObjectIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceObjectIdentifier"] = transformedSourceObjectIdentifier
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOracleIdentifier, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifier(original["oracle_identifier"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOracleIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oracleIdentifier"] = transformedOracleIdentifier
+	}
+
+	transformedMysqlIdentifier, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifier(original["mysql_identifier"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMysqlIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mysqlIdentifier"] = transformedMysqlIdentifier
+	}
+
+	transformedPostgresqlIdentifier, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifier(original["postgresql_identifier"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPostgresqlIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["postgresqlIdentifier"] = transformedPostgresqlIdentifier
+	}
+
+	transformedSqlServerIdentifier, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifier(original["sql_server_identifier"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSqlServerIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sqlServerIdentifier"] = transformedSqlServerIdentifier
+	}
+
+	transformedSalesforceIdentifier, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifier(original["salesforce_identifier"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSalesforceIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["salesforceIdentifier"] = transformedSalesforceIdentifier
+	}
+
+	transformedMongodbIdentifier, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifier(original["mongodb_identifier"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMongodbIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mongodbIdentifier"] = transformedMongodbIdentifier
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSchema, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifierSchema(original["schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["schema"] = transformedSchema
+	}
+
+	transformedTable, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifierTable(original["table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["table"] = transformedTable
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifierSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierOracleIdentifierTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDatabase, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifierDatabase(original["database"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["database"] = transformedDatabase
+	}
+
+	transformedTable, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifierTable(original["table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["table"] = transformedTable
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifierDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMysqlIdentifierTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSchema, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifierSchema(original["schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["schema"] = transformedSchema
+	}
+
+	transformedTable, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifierTable(original["table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["table"] = transformedTable
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifierSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierPostgresqlIdentifierTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSchema, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifierSchema(original["schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["schema"] = transformedSchema
+	}
+
+	transformedTable, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifierTable(original["table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["table"] = transformedTable
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifierSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifierTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedObjectName, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifierObjectName(original["object_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedObjectName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["objectName"] = transformedObjectName
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifierObjectName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDatabase, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifierDatabase(original["database"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["database"] = transformedDatabase
+	}
+
+	transformedCollection, err := expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifierCollection(original["collection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCollection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["collection"] = transformedCollection
+	}
+
+	return transformed, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifierDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifierCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

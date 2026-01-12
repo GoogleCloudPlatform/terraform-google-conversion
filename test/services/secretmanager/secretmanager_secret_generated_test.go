@@ -38,6 +38,42 @@ func TestAccSecretManagerSecret(t *testing.T) {
 		{
 			Name: "TestAccSecretManagerSecret_secretWithAutomaticCmekExample",
 		},
+		{
+			Name: "TestAccSecretManagerSecret_import",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_cmek",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_annotationsUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_versionAliasesUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_userManagedCmekUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_automaticCmekUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_rotationPeriodUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_ttlUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_versionDestroyTtlUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_updateBetweenTtlAndExpireTime",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_DeletionProtection",
+		},
+		{
+			Name: "TestAccSecretManagerSecret_tags",
+		},
 	}
 
 	for _, tt := range tests {

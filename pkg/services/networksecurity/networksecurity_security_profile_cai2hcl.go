@@ -154,9 +154,6 @@ func flattenNetworkSecuritySecurityProfileThreatPreventionProfile(v interface{},
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["severity_overrides"] =
 		flattenNetworkSecuritySecurityProfileThreatPreventionProfileSeverityOverrides(original["severityOverrides"], d, config)
@@ -223,6 +220,13 @@ func flattenNetworkSecuritySecurityProfileThreatPreventionProfileThreatOverrides
 }
 
 func flattenNetworkSecuritySecurityProfileThreatPreventionProfileThreatOverridesThreatId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -259,9 +263,6 @@ func flattenNetworkSecuritySecurityProfileCustomMirroringProfile(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["mirroring_endpoint_group"] =
 		flattenNetworkSecuritySecurityProfileCustomMirroringProfileMirroringEndpointGroup(original["mirroringEndpointGroup"], d, config)
@@ -272,6 +273,13 @@ func flattenNetworkSecuritySecurityProfileCustomMirroringProfile(v interface{}, 
 }
 
 func flattenNetworkSecuritySecurityProfileCustomMirroringProfileMirroringEndpointGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -280,9 +288,6 @@ func flattenNetworkSecuritySecurityProfileCustomInterceptProfile(v interface{}, 
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["intercept_endpoint_group"] =
 		flattenNetworkSecuritySecurityProfileCustomInterceptProfileInterceptEndpointGroup(original["interceptEndpointGroup"], d, config)
@@ -293,6 +298,13 @@ func flattenNetworkSecuritySecurityProfileCustomInterceptProfile(v interface{}, 
 }
 
 func flattenNetworkSecuritySecurityProfileCustomInterceptProfileInterceptEndpointGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

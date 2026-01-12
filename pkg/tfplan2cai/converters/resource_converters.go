@@ -29,6 +29,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
@@ -37,8 +38,11 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
@@ -84,6 +88,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_clouddeploy_custom_target_type":                clouddeploy.ClouddeployCustomTargetTypeTfplan2caiConverter(),
 	"google_clouddeploy_deploy_policy":                     clouddeploy.ClouddeployDeployPolicyTfplan2caiConverter(),
 	"google_cloudfunctions2_function":                      cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
+	"google_cloud_tasks_queue":                             cloudtasks.CloudTasksQueueTfplan2caiConverter(),
 	"google_compute_address":                               compute.ComputeAddressTfplan2caiConverter(),
 	"google_compute_autoscaler":                            compute.ComputeAutoscalerTfplan2caiConverter(),
 	"google_compute_backend_bucket":                        compute.ComputeBackendBucketTfplan2caiConverter(),
@@ -93,12 +98,19 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_firewall":                              compute.ComputeFirewallTfplan2caiConverter(),
 	"google_compute_firewall_policy":                       compute.ComputeFirewallPolicyTfplan2caiConverter(),
 	"google_compute_global_address":                        compute.ComputeGlobalAddressTfplan2caiConverter(),
+	"google_compute_ha_vpn_gateway":                        compute.ComputeHaVpnGatewayTfplan2caiConverter(),
 	"google_compute_health_check":                          compute.ComputeHealthCheckTfplan2caiConverter(),
 	"google_compute_image":                                 compute.ComputeImageTfplan2caiConverter(),
 	"google_compute_network":                               compute.ComputeNetworkTfplan2caiConverter(),
 	"google_compute_node_group":                            compute.ComputeNodeGroupTfplan2caiConverter(),
+	"google_compute_node_template":                         compute.ComputeNodeTemplateTfplan2caiConverter(),
 	"google_compute_region_autoscaler":                     compute.ComputeRegionAutoscalerTfplan2caiConverter(),
 	"google_compute_region_health_check":                   compute.ComputeRegionHealthCheckTfplan2caiConverter(),
+	"google_compute_region_ssl_certificate":                compute.ComputeRegionSslCertificateTfplan2caiConverter(),
+	"google_compute_resource_policy":                       compute.ComputeResourcePolicyTfplan2caiConverter(),
+	"google_compute_route":                                 compute.ComputeRouteTfplan2caiConverter(),
+	"google_compute_router":                                compute.ComputeRouterTfplan2caiConverter(),
+	"google_compute_storage_pool":                          compute.ComputeStoragePoolTfplan2caiConverter(),
 	"google_compute_subnetwork":                            compute.ComputeSubnetworkTfplan2caiConverter(),
 	"google_compute_url_map":                               compute.ComputeUrlMapTfplan2caiConverter(),
 	"google_dataproc_batch":                                dataproc.DataprocBatchTfplan2caiConverter(),
@@ -119,8 +131,12 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_kms_key_ring":                                  kms.KMSKeyRingTfplan2caiConverter(),
 	"google_kms_key_ring_import_job":                       kms.KMSKeyRingImportJobTfplan2caiConverter(),
 	"google_logging_metric":                                logging.LoggingMetricTfplan2caiConverter(),
+	"google_memcache_instance":                             memcache.MemcacheInstanceTfplan2caiConverter(),
+	"google_monitoring_alert_policy":                       monitoring.MonitoringAlertPolicyTfplan2caiConverter(),
 	"google_monitoring_notification_channel":               monitoring.MonitoringNotificationChannelTfplan2caiConverter(),
 	"google_monitoring_uptime_check_config":                monitoring.MonitoringUptimeCheckConfigTfplan2caiConverter(),
+	"google_netapp_active_directory":                       netapp.NetappActiveDirectoryTfplan2caiConverter(),
+	"google_netapp_backup":                                 netapp.NetappBackupTfplan2caiConverter(),
 	"google_network_security_address_group":                networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),
 	"google_network_security_client_tls_policy":            networksecurity.NetworkSecurityClientTlsPolicyTfplan2caiConverter(),
 	"google_network_security_gateway_security_policy":      networksecurity.NetworkSecurityGatewaySecurityPolicyTfplan2caiConverter(),
@@ -129,6 +145,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_network_security_security_profile_group":       networksecurity.NetworkSecuritySecurityProfileGroupTfplan2caiConverter(),
 	"google_network_security_server_tls_policy":            networksecurity.NetworkSecurityServerTlsPolicyTfplan2caiConverter(),
 	"google_network_security_url_lists":                    networksecurity.NetworkSecurityUrlListsTfplan2caiConverter(),
+	"google_privateca_ca_pool":                             privateca.PrivatecaCaPoolTfplan2caiConverter(),
 	"google_pubsub_subscription":                           pubsub.PubsubSubscriptionTfplan2caiConverter(),
 	"google_pubsub_topic":                                  pubsub.PubsubTopicTfplan2caiConverter(),
 	"google_redis_cluster":                                 redis.RedisClusterTfplan2caiConverter(),

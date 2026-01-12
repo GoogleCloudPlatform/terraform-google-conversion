@@ -27,14 +27,10 @@ func TestAccKMSCryptoKey(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccKmsCryptoKey_rotation",
-			Skip: "Test data has mismatched steps",
-		},
-		{
 			Name: "TestAccKmsCryptoKey_basic",
 		},
 		{
-			Name: "",
+			Name: "TestAccKmsCryptoKey_rotation",
 		},
 		{
 			Name: "TestAccKmsCryptoKey_template",

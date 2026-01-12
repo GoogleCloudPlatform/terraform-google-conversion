@@ -44,6 +44,21 @@ func TestAccMonitoringUptimeCheckConfig(t *testing.T) {
 		{
 			Name: "TestAccMonitoringUptimeCheckConfig_uptimeCheckConfigSyntheticMonitorExample",
 		},
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_update",
+		},
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_update_wo",
+		},
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_noProjectId",
+		},
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_changeNonUpdatableFields",
+		},
+		{
+			Name: "TestAccMonitoringUptimeCheckConfig_jsonPathUpdate",
+		},
 	}
 
 	for _, tt := range tests {
@@ -63,6 +78,7 @@ func TestAccMonitoringUptimeCheckConfig(t *testing.T) {
 					"count",
 					"depends_on",
 					"for_each",
+					"http_check.auth_info.password",
 					"http_check.auth_info.password_wo",
 					"http_check.auth_info.password_wo_version",
 					"http_check.body",

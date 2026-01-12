@@ -122,11 +122,6 @@ func (c *ComputeImageCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	}
 	hclData := make(map[string]interface{})
 
-	res, hclData, err = resourceComputeImageTgcDecoder(d, config, res, hclData)
-	if err != nil {
-		return nil, err
-	}
-
 	outputFields := map[string]struct{}{"archive_size_bytes": struct{}{}, "creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/images/{{name}}", outputFields, hclData)
 
@@ -215,9 +210,6 @@ func flattenComputeImageImageEncryptionKey(v interface{}, d *schema.ResourceData
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_self_link"] =
 		flattenComputeImageImageEncryptionKeyKmsKeySelfLink(original["kmsKeyName"], d, config)
@@ -264,6 +256,13 @@ func flattenComputeImageLicenses(v interface{}, d *schema.ResourceData, config *
 }
 
 func flattenComputeImageName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -272,9 +271,6 @@ func flattenComputeImageRawDisk(v interface{}, d *schema.ResourceData, config *t
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["container_type"] =
 		flattenComputeImageRawDiskContainerType(original["containerType"], d, config)
@@ -297,6 +293,13 @@ func flattenComputeImageRawDiskSha1(v interface{}, d *schema.ResourceData, confi
 }
 
 func flattenComputeImageRawDiskSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -316,9 +319,6 @@ func flattenComputeImageSourceDiskEncryptionKey(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["raw_key"] =
 		flattenComputeImageSourceDiskEncryptionKeyRawKey(original["rawKey"], d, config)
@@ -370,9 +370,6 @@ func flattenComputeImageSourceImageEncryptionKey(v interface{}, d *schema.Resour
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["raw_key"] =
 		flattenComputeImageSourceImageEncryptionKeyRawKey(original["rawKey"], d, config)
@@ -424,9 +421,6 @@ func flattenComputeImageShieldedInstanceInitialState(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["pk"] =
 		flattenComputeImageShieldedInstanceInitialStatePk(original["pk"], d, config)
@@ -447,9 +441,6 @@ func flattenComputeImageShieldedInstanceInitialStatePk(v interface{}, d *schema.
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["content"] =
 		flattenComputeImageShieldedInstanceInitialStatePkContent(original["content"], d, config)
@@ -462,6 +453,13 @@ func flattenComputeImageShieldedInstanceInitialStatePk(v interface{}, d *schema.
 }
 
 func flattenComputeImageShieldedInstanceInitialStatePkContent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -490,6 +488,13 @@ func flattenComputeImageShieldedInstanceInitialStateKeks(v interface{}, d *schem
 }
 
 func flattenComputeImageShieldedInstanceInitialStateKeksContent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -518,6 +523,13 @@ func flattenComputeImageShieldedInstanceInitialStateDbs(v interface{}, d *schema
 }
 
 func flattenComputeImageShieldedInstanceInitialStateDbsContent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -546,6 +558,13 @@ func flattenComputeImageShieldedInstanceInitialStateDbxs(v interface{}, d *schem
 }
 
 func flattenComputeImageShieldedInstanceInitialStateDbxsContent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -558,9 +577,6 @@ func flattenComputeImageSourceSnapshotEncryptionKey(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["raw_key"] =
 		flattenComputeImageSourceSnapshotEncryptionKeyRawKey(original["rawKey"], d, config)
@@ -594,13 +610,4 @@ func flattenComputeImageSourceSnapshotEncryptionKeyKmsKeySelfLink(v interface{},
 
 func flattenComputeImageSourceSnapshotEncryptionKeyKmsKeyServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func resourceComputeImageTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
-	// These fields are missing in CAI assets, but requried in Terraform
-	if rawDisk, ok := res["rawDisk"].(map[string]interface{}); ok {
-		rawDisk["source"] = "unknown"
-	}
-
-	return res, hclData, nil
 }

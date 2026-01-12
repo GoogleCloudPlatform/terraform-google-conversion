@@ -60,6 +60,39 @@ func TestAccPubsubTopic(t *testing.T) {
 		{
 			Name: "TestAccPubsubTopic_pubsubTopicTagsExample",
 		},
+		{
+			Name: "TestAccPubsubTopic_update",
+		},
+		{
+			Name: "TestAccPubsubTopic_cmek",
+		},
+		{
+			Name: "TestAccPubsubTopic_schema",
+		},
+		{
+			Name: "TestAccPubsubTopic_migration",
+		},
+		{
+			Name: "TestAccPubsubTopic_kinesisIngestionUpdate",
+		},
+		{
+			Name: "TestAccPubsubTopic_cloudStorageIngestionUpdate",
+		},
+		{
+			Name: "TestAccPubsubTopic_azureEventHubsIngestionUpdate",
+		},
+		{
+			Name: "TestAccPubsubTopic_awsMskIngestionUpdate",
+		},
+		{
+			Name: "TestAccPubsubTopic_confluentCloudIngestionUpdate",
+		},
+		{
+			Name: "TestAccPubsubTopic_javascriptUdfUpdate",
+		},
+		{
+			Name: "TestAccPubsubTopic_tags",
+		},
 	}
 
 	for _, tt := range tests {

@@ -29,6 +29,9 @@ func TestAccComputeFirewallPolicy(t *testing.T) {
 		{
 			Name: "TestAccComputeFirewallPolicy_firewallPolicyExample",
 		},
+		{
+			Name: "TestAccComputeFirewallPolicy_update",
+		},
 	}
 
 	for _, tt := range tests {

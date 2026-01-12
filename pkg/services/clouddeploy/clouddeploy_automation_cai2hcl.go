@@ -158,6 +158,13 @@ func flattenClouddeployAutomationSuspended(v interface{}, d *schema.ResourceData
 }
 
 func flattenClouddeployAutomationServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -166,9 +173,6 @@ func flattenClouddeployAutomationSelector(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["targets"] =
 		flattenClouddeployAutomationSelectorTargets(original["targets"], d, config)
@@ -233,9 +237,6 @@ func flattenClouddeployAutomationRulesPromoteReleaseRule(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["id"] =
 		flattenClouddeployAutomationRulesPromoteReleaseRuleId(original["id"], d, config)
@@ -252,6 +253,13 @@ func flattenClouddeployAutomationRulesPromoteReleaseRule(v interface{}, d *schem
 }
 
 func flattenClouddeployAutomationRulesPromoteReleaseRuleId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -272,9 +280,6 @@ func flattenClouddeployAutomationRulesAdvanceRolloutRule(v interface{}, d *schem
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["id"] =
 		flattenClouddeployAutomationRulesAdvanceRolloutRuleId(original["id"], d, config)
@@ -289,6 +294,13 @@ func flattenClouddeployAutomationRulesAdvanceRolloutRule(v interface{}, d *schem
 }
 
 func flattenClouddeployAutomationRulesAdvanceRolloutRuleId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -305,9 +317,6 @@ func flattenClouddeployAutomationRulesRepairRolloutRule(v interface{}, d *schema
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["id"] =
 		flattenClouddeployAutomationRulesRepairRolloutRuleId(original["id"], d, config)
@@ -324,6 +333,13 @@ func flattenClouddeployAutomationRulesRepairRolloutRule(v interface{}, d *schema
 }
 
 func flattenClouddeployAutomationRulesRepairRolloutRuleId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -360,9 +376,6 @@ func flattenClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetry(v inter
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["attempts"] =
 		flattenClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryAttempts(original["attempts"], d, config)
@@ -377,6 +390,13 @@ func flattenClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetry(v inter
 }
 
 func flattenClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryAttempts(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -414,9 +434,6 @@ func flattenClouddeployAutomationRulesTimedPromoteReleaseRule(v interface{}, d *
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["id"] =
 		flattenClouddeployAutomationRulesTimedPromoteReleaseRuleId(original["id"], d, config)
@@ -435,6 +452,13 @@ func flattenClouddeployAutomationRulesTimedPromoteReleaseRule(v interface{}, d *
 }
 
 func flattenClouddeployAutomationRulesTimedPromoteReleaseRuleId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -443,10 +467,24 @@ func flattenClouddeployAutomationRulesTimedPromoteReleaseRuleDestinationTargetId
 }
 
 func flattenClouddeployAutomationRulesTimedPromoteReleaseRuleSchedule(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenClouddeployAutomationRulesTimedPromoteReleaseRuleTimeZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

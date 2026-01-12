@@ -268,6 +268,13 @@ func expandDataplexDatascanExecutionSpecTrigger(v interface{}, d tpgresource.Ter
 		transformed["schedule"] = transformedSchedule
 	}
 
+	transformedOneTime, err := expandDataplexDatascanExecutionSpecTriggerOneTime(original["one_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["oneTime"] = transformedOneTime
+	}
+
 	return transformed, nil
 }
 
@@ -312,6 +319,37 @@ func expandDataplexDatascanExecutionSpecTriggerSchedule(v interface{}, d tpgreso
 }
 
 func expandDataplexDatascanExecutionSpecTriggerScheduleCron(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanExecutionSpecTriggerOneTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTtlAfterScanCompletion, err := expandDataplexDatascanExecutionSpecTriggerOneTimeTtlAfterScanCompletion(original["ttl_after_scan_completion"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTtlAfterScanCompletion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ttlAfterScanCompletion"] = transformedTtlAfterScanCompletion
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanExecutionSpecTriggerOneTimeTtlAfterScanCompletion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

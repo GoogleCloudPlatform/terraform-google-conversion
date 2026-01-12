@@ -32,6 +32,12 @@ func TestAccComputeExternalVpnGateway(t *testing.T) {
 		{
 			Name: "TestAccComputeExternalVpnGateway_onlyExternalVpnGatewayFullExample",
 		},
+		{
+			Name: "TestAccComputeExternalVPNGateway_updateLabels",
+		},
+		{
+			Name: "TestAccComputeExternalVPNGateway_insertIpv6Address",
+		},
 	}
 
 	for _, tt := range tests {

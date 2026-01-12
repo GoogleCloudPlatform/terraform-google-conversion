@@ -157,9 +157,6 @@ func flattenNetworkSecurityServerTlsPolicyServerCertificate(v interface{}, d *sc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["grpc_endpoint"] =
 		flattenNetworkSecurityServerTlsPolicyServerCertificateGrpcEndpoint(original["grpcEndpoint"], d, config)
@@ -176,9 +173,6 @@ func flattenNetworkSecurityServerTlsPolicyServerCertificateGrpcEndpoint(v interf
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["target_uri"] =
 		flattenNetworkSecurityServerTlsPolicyServerCertificateGrpcEndpointTargetUri(original["targetUri"], d, config)
@@ -189,6 +183,13 @@ func flattenNetworkSecurityServerTlsPolicyServerCertificateGrpcEndpoint(v interf
 }
 
 func flattenNetworkSecurityServerTlsPolicyServerCertificateGrpcEndpointTargetUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -197,9 +198,6 @@ func flattenNetworkSecurityServerTlsPolicyServerCertificateCertificateProviderIn
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["plugin_instance"] =
 		flattenNetworkSecurityServerTlsPolicyServerCertificateCertificateProviderInstancePluginInstance(original["pluginInstance"], d, config)
@@ -210,6 +208,13 @@ func flattenNetworkSecurityServerTlsPolicyServerCertificateCertificateProviderIn
 }
 
 func flattenNetworkSecurityServerTlsPolicyServerCertificateCertificateProviderInstancePluginInstance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -218,9 +223,6 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicy(v interface{}, d *schema.Re
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["client_validation_mode"] =
 		flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationMode(original["clientValidationMode"], d, config)
@@ -267,9 +269,6 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaGrpcEndpoi
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["target_uri"] =
 		flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaGrpcEndpointTargetUri(original["targetUri"], d, config)
@@ -280,6 +279,13 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaGrpcEndpoi
 }
 
 func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaGrpcEndpointTargetUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -288,9 +294,6 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaCertificat
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["plugin_instance"] =
 		flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaCertificateProviderInstancePluginInstance(original["pluginInstance"], d, config)
@@ -301,5 +304,12 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaCertificat
 }
 
 func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationCaCertificateProviderInstancePluginInstance(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }

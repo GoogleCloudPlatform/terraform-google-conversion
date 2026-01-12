@@ -171,10 +171,24 @@ func flattenKMSEkmConnectionServiceResolvers(v interface{}, d *schema.ResourceDa
 }
 
 func flattenKMSEkmConnectionServiceResolversServiceDirectoryService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
 func flattenKMSEkmConnectionServiceResolversHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -198,6 +212,13 @@ func flattenKMSEkmConnectionServiceResolversServerCertificates(v interface{}, d 
 }
 
 func flattenKMSEkmConnectionServiceResolversServerCertificatesRawDer(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

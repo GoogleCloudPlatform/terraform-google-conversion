@@ -27,6 +27,10 @@ func TestAccAlloydbInstance(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccAlloydbInstance_connectionPoolConfig",
+			Skip: "fix it after the next release, as connection_pool_config will be in the next release",
+		},
+		{
 			Name: "TestAccAlloydbInstance_alloydbInstanceBasicTestExample",
 		},
 		{
@@ -77,6 +81,12 @@ func TestAccAlloydbInstance(t *testing.T) {
 		{
 			Name: "TestAccAlloydbInstance_createPrimaryAndReadPoolInstanceWithAllocatedIpRangeOverride",
 		},
+		{
+			Name: "",
+		},
+		{
+			Name: "TestAccAlloydbInstance_ObservabilityConfig_Update",
+		},
 	}
 
 	for _, tt := range tests {
@@ -100,7 +110,9 @@ func TestAccAlloydbInstance(t *testing.T) {
 					"instance_id",
 					"lifecycle",
 					"provider",
+					"reconciling",
 					"timeouts",
+					"update_time",
 				},
 				"google_alloydb_instance",
 			)

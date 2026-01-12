@@ -29,6 +29,18 @@ func TestAccComputeRegionAutoscaler(t *testing.T) {
 		{
 			Name: "TestAccComputeRegionAutoscaler_regionAutoscalerBasicExample",
 		},
+		{
+			Name: "TestAccComputeRegionAutoscaler_update",
+		},
+		{
+			Name: "TestAccComputeRegionAutoscaler_scaleDownControl",
+		},
+		{
+			Name: "TestAccComputeRegionAutoscaler_scalingSchedule",
+		},
+		{
+			Name: "TestAccComputeRegionAutoscaler_scaleInControl",
+		},
 	}
 
 	for _, tt := range tests {

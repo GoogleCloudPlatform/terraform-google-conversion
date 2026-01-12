@@ -32,6 +32,9 @@ func TestAccNetworkSecurityClientTlsPolicy(t *testing.T) {
 		{
 			Name: "TestAccNetworkSecurityClientTlsPolicy_networkSecurityClientTlsPolicyAdvancedExample",
 		},
+		{
+			Name: "TestAccNetworkSecurityClientTlsPolicy_update",
+		},
 	}
 
 	for _, tt := range tests {

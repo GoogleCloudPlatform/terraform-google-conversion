@@ -44,6 +44,45 @@ func TestAccSecretManagerRegionalRegionalSecret(t *testing.T) {
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecret_regionalSecretWithVersionDestroyTtlExample",
 		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_import",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_labelsUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_annotationsUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_cmekUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_topicsUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_rotationInfoUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_expireTimeUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_ttlUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_updateBetweenTtlAndExpireTime",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_versionDestroyTtlUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_versionAliasesUpdate",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_deletionprotection",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecret_tags",
+		},
 	}
 
 	for _, tt := range tests {

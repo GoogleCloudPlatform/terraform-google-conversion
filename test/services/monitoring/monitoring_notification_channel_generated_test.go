@@ -29,6 +29,21 @@ func TestAccMonitoringNotificationChannel(t *testing.T) {
 		{
 			Name: "TestAccMonitoringNotificationChannel_notificationChannelBasicExample",
 		},
+		{
+			Name: "TestAccMonitoringNotificationChannel_update",
+		},
+		{
+			Name: "TestAccMonitoringNotificationChannel_updateLabels_slack",
+		},
+		{
+			Name: "TestAccMonitoringNotificationChannel_updateLabels",
+		},
+		{
+			Name: "TestAccMonitoringNotificationChannel_updateSensitiveLabels_slack",
+		},
+		{
+			Name: "TestAccMonitoringNotificationChannel_updateSensitiveLabels",
+		},
 	}
 
 	for _, tt := range tests {

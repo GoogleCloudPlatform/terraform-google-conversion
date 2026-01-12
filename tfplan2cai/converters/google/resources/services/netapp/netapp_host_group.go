@@ -110,6 +110,12 @@ func GetNetappHostGroupCaiObject(d tpgresource.TerraformResourceData, config *tr
 
 func GetNetappHostGroupApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	nameProp, err := expandNetappHostGroupName(d.Get("name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+		obj["name"] = nameProp
+	}
 	descriptionProp, err := expandNetappHostGroupDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -142,6 +148,10 @@ func GetNetappHostGroupApiObject(d tpgresource.TerraformResourceData, config *tr
 	}
 
 	return obj, nil
+}
+
+func expandNetappHostGroupName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandNetappHostGroupDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

@@ -88,6 +88,7 @@ func TestAccComputeBackendBucket(t *testing.T) {
 				[]string{
 					"count",
 					"depends_on",
+					"edge_security_policy",
 					"for_each",
 					"lifecycle",
 					"load_balancing_scheme",

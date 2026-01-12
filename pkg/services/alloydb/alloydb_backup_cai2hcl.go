@@ -159,6 +159,13 @@ func flattenAlloydbBackupDescription(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenAlloydbBackupClusterName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -167,9 +174,6 @@ func flattenAlloydbBackupEncryptionConfig(v interface{}, d *schema.ResourceData,
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["kms_key_name"] =
 		flattenAlloydbBackupEncryptionConfigKmsKeyName(original["kmsKeyName"], d, config)

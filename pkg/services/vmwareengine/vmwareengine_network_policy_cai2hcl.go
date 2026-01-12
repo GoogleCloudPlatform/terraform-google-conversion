@@ -142,6 +142,13 @@ func (c *VmwareengineNetworkPolicyCai2hclConverter) convertResourceData(asset ca
 }
 
 func flattenVmwareengineNetworkPolicyEdgeServicesCidr(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -150,6 +157,13 @@ func flattenVmwareengineNetworkPolicyDescription(v interface{}, d *schema.Resour
 }
 
 func flattenVmwareengineNetworkPolicyVmwareEngineNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
@@ -158,9 +172,6 @@ func flattenVmwareengineNetworkPolicyInternetAccess(v interface{}, d *schema.Res
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["enabled"] =
 		flattenVmwareengineNetworkPolicyInternetAccessEnabled(original["enabled"], d, config)
@@ -179,9 +190,6 @@ func flattenVmwareengineNetworkPolicyExternalIp(v interface{}, d *schema.Resourc
 		return nil
 	}
 	original := v.(map[string]interface{})
-	if len(original) == 0 {
-		return nil
-	}
 	transformed := make(map[string]interface{})
 	transformed["enabled"] =
 		flattenVmwareengineNetworkPolicyExternalIpEnabled(original["enabled"], d, config)
