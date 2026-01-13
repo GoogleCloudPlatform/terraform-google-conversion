@@ -151,10 +151,7 @@ func expandNetworkConnectivityMulticloudDataTransferConfigServices(v interface{}
 		return make(map[string]interface{}), nil
 	}
 
-	l, ok := v.([]interface{})
-	if !ok {
-		return nil, fmt.Errorf("expected 'services' to be a list, got %T", v)
-	}
+	l := v.(*schema.Set).List()
 
 	req := make(map[string]interface{})
 	for _, raw := range l {
