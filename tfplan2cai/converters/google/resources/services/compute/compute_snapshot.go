@@ -110,6 +110,18 @@ func GetComputeSnapshotCaiObject(d tpgresource.TerraformResourceData, config *tr
 
 func GetComputeSnapshotApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	sourceDiskProp, err := expandComputeSnapshotSourceDisk(d.Get("source_disk"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_disk"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceDiskProp)) && (ok || !reflect.DeepEqual(v, sourceDiskProp)) {
+		obj["sourceDisk"] = sourceDiskProp
+	}
+	sourceInstantSnapshotProp, err := expandComputeSnapshotSourceInstantSnapshot(d.Get("source_instant_snapshot"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_instant_snapshot"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceInstantSnapshotProp)) && (ok || !reflect.DeepEqual(v, sourceInstantSnapshotProp)) {
+		obj["sourceInstantSnapshot"] = sourceInstantSnapshotProp
+	}
 	chainNameProp, err := expandComputeSnapshotChainName(d.Get("chain_name"), d, config)
 	if err != nil {
 		return nil, err
@@ -158,12 +170,6 @@ func GetComputeSnapshotApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
 		obj["labels"] = effectiveLabelsProp
 	}
-	sourceDiskProp, err := expandComputeSnapshotSourceDisk(d.Get("source_disk"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("source_disk"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceDiskProp)) && (ok || !reflect.DeepEqual(v, sourceDiskProp)) {
-		obj["sourceDisk"] = sourceDiskProp
-	}
 	zoneProp, err := expandComputeSnapshotZone(d.Get("zone"), d, config)
 	if err != nil {
 		return nil, err
@@ -184,6 +190,22 @@ func GetComputeSnapshotApiObject(d tpgresource.TerraformResourceData, config *tr
 	}
 
 	return obj, nil
+}
+
+func expandComputeSnapshotSourceDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseZonalFieldValue("disks", v.(string), "project", "zone", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for source_disk: %s", err)
+	}
+	return f.RelativeLink(), nil
+}
+
+func expandComputeSnapshotSourceInstantSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseZonalFieldValue("instantSnapshots", v.(string), "project", "zone", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for source_instant_snapshot: %s", err)
+	}
+	return f.RelativeLink(), nil
 }
 
 func expandComputeSnapshotChainName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -223,14 +245,6 @@ func expandComputeSnapshotEffectiveLabels(v interface{}, d tpgresource.Terraform
 		m[k] = val.(string)
 	}
 	return m, nil
-}
-
-func expandComputeSnapshotSourceDisk(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	f, err := tpgresource.ParseZonalFieldValue("disks", v.(string), "project", "zone", d, config, true)
-	if err != nil {
-		return nil, fmt.Errorf("Invalid value for source_disk: %s", err)
-	}
-	return f.RelativeLink(), nil
 }
 
 func expandComputeSnapshotZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
