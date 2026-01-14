@@ -249,6 +249,13 @@ func expandDialogflowCXWebhookGenericWebService(v interface{}, d tpgresource.Ter
 		transformed["serviceAgentAuth"] = transformedServiceAgentAuth
 	}
 
+	transformedServiceAccountAuthConfig, err := expandDialogflowCXWebhookGenericWebServiceServiceAccountAuthConfig(original["service_account_auth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountAuthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountAuthConfig"] = transformedServiceAccountAuthConfig
+	}
+
 	transformedUri, err := expandDialogflowCXWebhookGenericWebServiceUri(original["uri"], d, config)
 	if err != nil {
 		return nil, err
@@ -407,6 +414,32 @@ func expandDialogflowCXWebhookGenericWebServiceServiceAgentAuth(v interface{}, d
 	return v, nil
 }
 
+func expandDialogflowCXWebhookGenericWebServiceServiceAccountAuthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceAccount, err := expandDialogflowCXWebhookGenericWebServiceServiceAccountAuthConfigServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXWebhookGenericWebServiceServiceAccountAuthConfigServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDialogflowCXWebhookGenericWebServiceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -521,6 +554,13 @@ func expandDialogflowCXWebhookServiceDirectoryGenericWebService(v interface{}, d
 		return nil, err
 	} else if val := reflect.ValueOf(transformedServiceAgentAuth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["serviceAgentAuth"] = transformedServiceAgentAuth
+	}
+
+	transformedServiceAccountAuthConfig, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceServiceAccountAuthConfig(original["service_account_auth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountAuthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountAuthConfig"] = transformedServiceAccountAuthConfig
 	}
 
 	transformedUri, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceUri(original["uri"], d, config)
@@ -678,6 +718,32 @@ func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceSecretVersionsFor
 }
 
 func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceServiceAgentAuth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceServiceAccountAuthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceAccount, err := expandDialogflowCXWebhookServiceDirectoryGenericWebServiceServiceAccountAuthConfigServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowCXWebhookServiceDirectoryGenericWebServiceServiceAccountAuthConfigServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
