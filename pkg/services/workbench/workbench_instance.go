@@ -37,6 +37,10 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
 
+var metadataDefaults = map[string]string{
+	"enable-jupyterlab4": "true",
+}
+
 var WorkbenchInstanceSettableUnmodifiableDefaultMetadata = []string{
 	"install-monitoring-agent",
 	"serial-port-logging-enable",
@@ -117,7 +121,6 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"enable-guest-attributes",
 	"enable-oslogin",
 	"proxy-registration-url",
-	"enable-jupyterlab4",
 }
 
 func WorkbenchInstanceMetadataDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
@@ -147,6 +150,12 @@ func WorkbenchInstanceMetadataDiffSuppress(k, old, new string, d *schema.Resourc
 
 	for _, metadata := range WorkbenchInstanceSettableUnmodifiableDefaultMetadata {
 		if strings.Contains(k, metadata) && new == "" {
+			return true
+		}
+	}
+
+	if defaultValue, exists := metadataDefaults[key]; exists {
+		if new == "" && old == defaultValue {
 			return true
 		}
 	}

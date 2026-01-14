@@ -86,6 +86,9 @@ func TestAccWorkbenchInstance(t *testing.T) {
 		{
 			Name: "TestAccWorkbenchInstance_metadataEUCForceNew",
 		},
+		{
+			Name: "TestAccWorkbenchInstance_updateJupyterLab",
+		},
 	}
 
 	for _, tt := range tests {
