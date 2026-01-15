@@ -114,7 +114,7 @@ func GetBigqueryConnectionConnectionApiObject(d tpgresource.TerraformResourceDat
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("connection_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(connectionIdProp)) && (ok || !reflect.DeepEqual(v, connectionIdProp)) {
-		obj["connection_id"] = connectionIdProp
+		obj["connectionId"] = connectionIdProp
 	}
 	friendlyNameProp, err := expandBigqueryConnectionConnectionFriendlyName(d.Get("friendly_name"), d, config)
 	if err != nil {
@@ -175,8 +175,8 @@ func GetBigqueryConnectionConnectionApiObject(d tpgresource.TerraformResourceDat
 }
 
 func resourceBigqueryConnectionConnectionEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	// connection_id is needed to qualify the URL but cannot be sent in the body
-	delete(obj, "connection_id")
+	// connectionId is needed to qualify the URL but cannot be sent in the body
+	delete(obj, "connectionId")
 	return obj, nil
 }
 
