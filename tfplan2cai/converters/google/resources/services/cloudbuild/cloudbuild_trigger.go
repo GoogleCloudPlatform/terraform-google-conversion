@@ -1081,7 +1081,7 @@ func expandCloudBuildTriggerPubsubConfig(v interface{}, d tpgresource.TerraformR
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["service_account_email"] = transformedServiceAccountEmail
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
 	}
 
 	transformedState, err := expandCloudBuildTriggerPubsubConfigState(original["state"], d, config)
