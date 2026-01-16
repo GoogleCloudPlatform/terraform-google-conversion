@@ -49,6 +49,7 @@ func TestAccCloudAssetFolderFeed(t *testing.T) {
 					"depends_on",
 					"feed_id",
 					"folder",
+					"folder_id",
 					"for_each",
 					"lifecycle",
 					"provider",
