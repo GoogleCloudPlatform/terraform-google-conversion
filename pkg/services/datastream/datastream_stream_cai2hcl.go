@@ -176,6 +176,8 @@ func flattenDatastreamStreamSourceConfig(v interface{}, d *schema.ResourceData, 
 		flattenDatastreamStreamSourceConfigSqlServerSourceConfig(original["sqlServerSourceConfig"], d, config)
 	transformed["salesforce_source_config"] =
 		flattenDatastreamStreamSourceConfigSalesforceSourceConfig(original["salesforceSourceConfig"], d, config)
+	transformed["spanner_source_config"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfig(original["spannerSourceConfig"], d, config)
 	transformed["mongodb_source_config"] =
 		flattenDatastreamStreamSourceConfigMongodbSourceConfig(original["mongodbSourceConfig"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
@@ -1568,6 +1570,279 @@ func flattenDatastreamStreamSourceConfigSalesforceSourceConfigPollingInterval(v 
 	return v
 }
 
+func flattenDatastreamStreamSourceConfigSpannerSourceConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["change_stream_name"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigChangeStreamName(original["changeStreamName"], d, config)
+	transformed["spanner_rpc_priority"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigSpannerRpcPriority(original["spannerRpcPriority"], d, config)
+	transformed["fgac_role"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigFgacRole(original["fgacRole"], d, config)
+	transformed["max_concurrent_cdc_tasks"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigMaxConcurrentCdcTasks(original["maxConcurrentCdcTasks"], d, config)
+	transformed["max_concurrent_backfill_tasks"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigMaxConcurrentBackfillTasks(original["maxConcurrentBackfillTasks"], d, config)
+	transformed["include_objects"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjects(original["includeObjects"], d, config)
+	transformed["exclude_objects"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjects(original["excludeObjects"], d, config)
+	transformed["backfill_data_boost_enabled"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigBackfillDataBoostEnabled(original["backfillDataBoostEnabled"], d, config)
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigChangeStreamName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigSpannerRpcPriority(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigFgacRole(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigMaxConcurrentCdcTasks(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigMaxConcurrentBackfillTasks(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjects(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["schemas"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemas(original["schemas"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"schema": flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasSchema(original["schema"], d, config),
+			"tables": flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTables(original["tables"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTables(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"table":   flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTablesTable(original["table"], d, config),
+			"columns": flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTablesColumns(original["columns"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTablesColumns(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"column": flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTablesColumnsColumn(original["column"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTablesColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjects(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["schemas"] =
+		flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemas(original["schemas"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"schema": flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasSchema(original["schema"], d, config),
+			"tables": flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTables(original["tables"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTables(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"table":   flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTablesTable(original["table"], d, config),
+			"columns": flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTablesColumns(original["columns"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTablesColumns(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"column": flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTablesColumnsColumn(original["column"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTablesColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamSourceConfigSpannerSourceConfigBackfillDataBoostEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenDatastreamStreamSourceConfigMongodbSourceConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -2090,6 +2365,8 @@ func flattenDatastreamStreamBackfillAll(v interface{}, d *schema.ResourceData, c
 		flattenDatastreamStreamBackfillAllSqlServerExcludedObjects(original["sqlServerExcludedObjects"], d, config)
 	transformed["salesforce_excluded_objects"] =
 		flattenDatastreamStreamBackfillAllSalesforceExcludedObjects(original["salesforceExcludedObjects"], d, config)
+	transformed["spanner_excluded_objects"] =
+		flattenDatastreamStreamBackfillAllSpannerExcludedObjects(original["spannerExcludedObjects"], d, config)
 	transformed["mongodb_excluded_objects"] =
 		flattenDatastreamStreamBackfillAllMongodbExcludedObjects(original["mongodbExcludedObjects"], d, config)
 	return []interface{}{transformed}
@@ -2633,6 +2910,112 @@ func flattenDatastreamStreamBackfillAllSalesforceExcludedObjectsObjectsFieldsNam
 	return v
 }
 
+func flattenDatastreamStreamBackfillAllSpannerExcludedObjects(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["schemas"] =
+		flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemas(original["schemas"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemas(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"schema": flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasSchema(original["schema"], d, config),
+			"tables": flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasTables(original["tables"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasTables(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"table":   flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasTablesTable(original["table"], d, config),
+			"columns": flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasTablesColumns(original["columns"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasTablesTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasTablesColumns(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"column": flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasTablesColumnsColumn(original["column"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatastreamStreamBackfillAllSpannerExcludedObjectsSchemasTablesColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
 func flattenDatastreamStreamBackfillAllMongodbExcludedObjects(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -2993,6 +3376,8 @@ func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifier(v interfa
 		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSqlServerIdentifier(original["sqlServerIdentifier"], d, config)
 	transformed["salesforce_identifier"] =
 		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifier(original["salesforceIdentifier"], d, config)
+	transformed["spanner_identifier"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSpannerIdentifier(original["spannerIdentifier"], d, config)
 	transformed["mongodb_identifier"] =
 		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierMongodbIdentifier(original["mongodbIdentifier"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
@@ -3168,6 +3553,37 @@ func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforce
 }
 
 func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSalesforceIdentifierObjectName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSpannerIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["schema"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSpannerIdentifierSchema(original["schema"], d, config)
+	transformed["table"] =
+		flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSpannerIdentifierTable(original["table"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSpannerIdentifierSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSpannerIdentifierTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return "unknown"
 	}

@@ -477,7 +477,7 @@ should be non-negative and less than or equal to 50. If not set
 									},
 								},
 							},
-							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.sql_server_source_config"},
+							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.spanner_source_config", "source_config.0.sql_server_source_config"},
 						},
 						"mysql_source_config": {
 							Type:        schema.TypeList,
@@ -686,7 +686,7 @@ If not set (or set to 0), the system's default value will be used.`,
 									},
 								},
 							},
-							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.sql_server_source_config"},
+							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.spanner_source_config", "source_config.0.sql_server_source_config"},
 						},
 						"oracle_source_config": {
 							Type:        schema.TypeList,
@@ -853,7 +853,7 @@ If not set (or set to 0), the system's default value will be used.`,
 									},
 								},
 							},
-							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.sql_server_source_config"},
+							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.spanner_source_config", "source_config.0.sql_server_source_config"},
 						},
 						"postgresql_source_config": {
 							Type:        schema.TypeList,
@@ -1036,7 +1036,7 @@ negative. If not set (or set to 0), the system's default value will be used.`,
 									},
 								},
 							},
-							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.sql_server_source_config"},
+							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.spanner_source_config", "source_config.0.sql_server_source_config"},
 						},
 						"salesforce_source_config": {
 							Type:        schema.TypeList,
@@ -1132,7 +1132,163 @@ negative. If not set (or set to 0), the system's default value will be used.`,
 									},
 								},
 							},
-							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.sql_server_source_config"},
+							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.spanner_source_config", "source_config.0.sql_server_source_config"},
+						},
+						"spanner_source_config": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Spanner data source configuration.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"backfill_data_boost_enabled": {
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Description: `Whether to use DataBoost for backfill queries.`,
+									},
+									"change_stream_name": {
+										Type:        schema.TypeString,
+										Optional:    true,
+										Description: `The Spanner change stream name to use.`,
+									},
+									"exclude_objects": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Spanner objects to retrieve from the source.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"schemas": {
+													Type:        schema.TypeList,
+													Required:    true,
+													Description: `Spanner schemas in the database`,
+													MinItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"schema": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `Schema name.`,
+															},
+															"tables": {
+																Type:        schema.TypeList,
+																Optional:    true,
+																Description: `Tables in the schema.`,
+																MinItems:    1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"table": {
+																			Type:        schema.TypeString,
+																			Required:    true,
+																			Description: `Table name.`,
+																		},
+																		"columns": {
+																			Type:        schema.TypeList,
+																			Optional:    true,
+																			Description: `Spanner columns in the table. When unspecified as part of include/exclude objects, includes/excludes everything.`,
+																			MinItems:    1,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+																					"column": {
+																						Type:        schema.TypeString,
+																						Optional:    true,
+																						Description: `Column name.`,
+																					},
+																				},
+																			},
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"fgac_role": {
+										Type:        schema.TypeString,
+										Optional:    true,
+										Description: `The FGAC role to use for Spanner queries.`,
+									},
+									"include_objects": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Spanner objects to retrieve from the source.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"schemas": {
+													Type:        schema.TypeList,
+													Required:    true,
+													Description: `Spanner schemas in the database`,
+													MinItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"schema": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `Schema name.`,
+															},
+															"tables": {
+																Type:        schema.TypeList,
+																Optional:    true,
+																Description: `Tables in the schema.`,
+																MinItems:    1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"table": {
+																			Type:        schema.TypeString,
+																			Required:    true,
+																			Description: `Table name.`,
+																		},
+																		"columns": {
+																			Type:        schema.TypeList,
+																			Optional:    true,
+																			Description: `Spanner columns in the table. When unspecified as part of include/exclude objects, includes/excludes everything.`,
+																			MinItems:    1,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+																					"column": {
+																						Type:        schema.TypeString,
+																						Optional:    true,
+																						Description: `Column name.`,
+																					},
+																				},
+																			},
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"max_concurrent_backfill_tasks": {
+										Type:         schema.TypeInt,
+										Computed:     true,
+										Optional:     true,
+										ValidateFunc: validation.IntAtLeast(0),
+										Description:  `Max concurrent backfill tasks.`,
+									},
+									"max_concurrent_cdc_tasks": {
+										Type:         schema.TypeInt,
+										Computed:     true,
+										Optional:     true,
+										ValidateFunc: validation.IntAtLeast(0),
+										Description:  `Max concurrent CDC tasks.`,
+									},
+									"spanner_rpc_priority": {
+										Type:         schema.TypeString,
+										Optional:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"LOW", "MEDIUM", "HIGH", ""}),
+										Description:  `The RPC priority to use for Spanner queries. Possible values: ["LOW", "MEDIUM", "HIGH"]`,
+									},
+								},
+							},
+							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.spanner_source_config", "source_config.0.sql_server_source_config"},
 						},
 						"sql_server_source_config": {
 							Type:        schema.TypeList,
@@ -1297,7 +1453,7 @@ https://learn.microsoft.com/en-us/sql/t-sql/data-types/data-types-transact-sql?v
 									},
 								},
 							},
-							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.sql_server_source_config"},
+							ExactlyOneOf: []string{"source_config.0.mongodb_source_config", "source_config.0.mysql_source_config", "source_config.0.oracle_source_config", "source_config.0.postgresql_source_config", "source_config.0.salesforce_source_config", "source_config.0.spanner_source_config", "source_config.0.sql_server_source_config"},
 						},
 					},
 				},
@@ -1628,6 +1784,61 @@ https://www.postgresql.org/docs/current/datatype.html`,
 								},
 							},
 						},
+						"spanner_excluded_objects": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Spanner objects to avoid backfilling.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"schemas": {
+										Type:        schema.TypeList,
+										Required:    true,
+										Description: `Spanner schemas in the database`,
+										MinItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"schema": {
+													Type:        schema.TypeString,
+													Required:    true,
+													Description: `Schema name.`,
+												},
+												"tables": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `Tables in the schema.`,
+													MinItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"table": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `Table name.`,
+															},
+															"columns": {
+																Type:        schema.TypeList,
+																Optional:    true,
+																Description: `Spanner columns in the table. When unspecified as part of include/exclude objects, includes/excludes everything.`,
+																MinItems:    1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"column": {
+																			Type:        schema.TypeString,
+																			Required:    true,
+																			Description: `Column name.`,
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
 						"sql_server_excluded_objects": {
 							Type:        schema.TypeList,
 							Optional:    true,
@@ -1946,6 +2157,26 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 																Type:        schema.TypeString,
 																Required:    true,
 																Description: `The Salesforce object name.`,
+															},
+														},
+													},
+												},
+												"spanner_identifier": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A nested object resource.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"table": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The table name.`,
+															},
+															"schema": {
+																Type:        schema.TypeString,
+																Optional:    true,
+																Description: `The schema name.`,
 															},
 														},
 													},
