@@ -218,7 +218,7 @@ func flattenComputeNetworkRoutingConfigBgpInterRegionCost(v interface{}, d *sche
 }
 
 func flattenComputeNetworkRoutingConfigDeleteBgpAlwaysCompareMed(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
+	return d.Get("delete_bgp_always_compare_med")
 }
 
 func flattenComputeNetworkMtu(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
