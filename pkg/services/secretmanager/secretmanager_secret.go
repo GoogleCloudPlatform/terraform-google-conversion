@@ -19,6 +19,7 @@ package secretmanager
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -67,6 +68,7 @@ var (
 	_ = bytes.Clone
 	_ = context.WithCancel
 	_ = fmt.Sprintf
+	_ = json.Unmarshal
 	_ = log.Print
 	_ = reflect.ValueOf
 	_ = regexp.Match
