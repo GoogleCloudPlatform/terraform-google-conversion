@@ -158,6 +158,12 @@ func GetOracleDatabaseAutonomousDatabaseApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("odb_subnet"); !tpgresource.IsEmptyValue(reflect.ValueOf(odbSubnetProp)) && (ok || !reflect.DeepEqual(v, odbSubnetProp)) {
 		obj["odbSubnet"] = odbSubnetProp
 	}
+	sourceConfigProp, err := expandOracleDatabaseAutonomousDatabaseSourceConfig(d.Get("source_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceConfigProp)) && (ok || !reflect.DeepEqual(v, sourceConfigProp)) {
+		obj["sourceConfig"] = sourceConfigProp
+	}
 	effectiveLabelsProp, err := expandOracleDatabaseAutonomousDatabaseEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -1449,6 +1455,43 @@ func expandOracleDatabaseAutonomousDatabaseOdbNetwork(v interface{}, d tpgresour
 }
 
 func expandOracleDatabaseAutonomousDatabaseOdbSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseAutonomousDatabaseSourceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAutonomousDatabase, err := expandOracleDatabaseAutonomousDatabaseSourceConfigAutonomousDatabase(original["autonomous_database"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAutonomousDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["autonomousDatabase"] = transformedAutonomousDatabase
+	}
+
+	transformedAutomaticBackupsReplicationEnabled, err := expandOracleDatabaseAutonomousDatabaseSourceConfigAutomaticBackupsReplicationEnabled(original["automatic_backups_replication_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAutomaticBackupsReplicationEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["automaticBackupsReplicationEnabled"] = transformedAutomaticBackupsReplicationEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandOracleDatabaseAutonomousDatabaseSourceConfigAutonomousDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseAutonomousDatabaseSourceConfigAutomaticBackupsReplicationEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
