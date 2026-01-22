@@ -165,7 +165,7 @@ func flattenSecretManagerRegionalRegionalSecretVersionPayload(v interface{}, d *
 		// payload is missing in CAI asset, but it is required in Terraform provider.
 		transformed := map[string]interface{}{
 			"payload": map[string]interface{}{
-				"secretData": "hidden",
+				"secretData": "unknown",
 			},
 		}
 		return []interface{}{transformed}

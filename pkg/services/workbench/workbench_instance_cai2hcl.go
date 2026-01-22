@@ -420,18 +420,26 @@ func flattenWorkbenchInstanceGceSetupNetworkInterfacesAccessConfigs(v interface{
 	transformed := make([]interface{}, 0, len(l))
 	for _, raw := range l {
 		original := raw.(map[string]interface{})
-		// externalIp is empty string in CAI assets when it is not provided in Terraform config.
-		// In this case, it will not be converted and its parent access_config is not in the converted HCL.
-		// Otherwise, the converted access_config is an empty block. But external_ip is a required field.
-		if len(original) < 1 || original["externalIp"] == "" {
+		if len(original) < 1 {
 			// Do not include empty json objects coming back from the api
 			continue
 		}
 		transformed = append(transformed, map[string]interface{}{
-			"external_ip": original["externalIp"],
+			"external_ip": flattenWorkbenchInstanceGceSetupNetworkInterfacesAccessConfigsExternalIp(original["externalIp"], d, config),
 		})
 	}
 	return transformed
+}
+
+func flattenWorkbenchInstanceGceSetupNetworkInterfacesAccessConfigsExternalIp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
 }
 
 func flattenWorkbenchInstanceGceSetupDisablePublicIp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

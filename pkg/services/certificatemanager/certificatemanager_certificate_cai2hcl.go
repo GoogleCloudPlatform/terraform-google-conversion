@@ -226,7 +226,7 @@ func flattenCertificateManagerCertificateManagedIssuanceConfig(v interface{}, d 
 func resourceCertificateManagerCertificateTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
 	if sm, ok := res["selfManaged"].(map[string]interface{}); ok {
 		sm["pemCertificate"] = res["pemCertificate"]
-		sm["pemPrivateKey"] = "hidden"
+		sm["pemPrivateKey"] = "unknown"
 	}
 	if vStr, ok := res["scope"].(string); ok && vStr == "DEFAULT" {
 		// Omit the default value.
