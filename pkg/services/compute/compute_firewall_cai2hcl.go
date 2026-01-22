@@ -303,7 +303,7 @@ func flattenComputeFirewallSourceRanges(v interface{}, d *schema.ResourceData, c
 	if v == nil {
 		return v
 	}
-	return schema.NewSet(schema.HashString, v.([]interface{}))
+	return schema.NewSet(tpgresource.IpAddrSetHashFunc, v.([]interface{}))
 }
 
 func flattenComputeFirewallSourceServiceAccounts(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
