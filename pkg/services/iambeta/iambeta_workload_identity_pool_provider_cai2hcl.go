@@ -351,7 +351,7 @@ func resourceIAMBetaWorkloadIdentityPoolProviderTgcDecoder(d *schema.ResourceDat
 				// trust_anchors is missing in CAI assets, but requried in Terraform
 				for _, trustAnchorRaw := range trustAnchors {
 					if trustAnchor, ok := trustAnchorRaw.(map[string]interface{}); ok {
-						trustAnchor["pemCertificate"] = "hidden"
+						trustAnchor["pemCertificate"] = "unknown"
 					}
 				}
 			}
