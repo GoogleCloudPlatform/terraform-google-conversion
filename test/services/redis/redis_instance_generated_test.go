@@ -56,6 +56,7 @@ func TestAccRedisInstance(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
+					"auth_string",
 					"count",
 					"deletion_protection",
 					"depends_on",

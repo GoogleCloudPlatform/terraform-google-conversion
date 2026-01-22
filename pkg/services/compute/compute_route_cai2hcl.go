@@ -277,15 +277,6 @@ func flattenComputeRouteParamsResourceManagerTags(v interface{}, d *schema.Resou
 }
 
 func resourceComputeRouteTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
-	if v, ok := res["nextHopInstance"]; ok {
-		val, err := tpgresource.ParseZonalFieldValue("instances", v.(string), "project", "next_hop_instance_zone", d, meta.(*transport_tpg.Config), true)
-		if err != nil {
-			return nil, nil, err
-		}
-		hclData["next_hop_instance_zone"] = val.Zone
-		res["nextHopInstance"] = val.RelativeLink()
-	}
-
 	// next_hop_ip is Computed + Optional and conflict with next_hop_ilb
 	if _, ok := res["nextHopIp"]; ok {
 		if _, ok := res["nextHopIlb"]; ok {

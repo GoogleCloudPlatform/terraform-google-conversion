@@ -60,6 +60,7 @@ func TestAccComputeRoute(t *testing.T) {
 					"depends_on",
 					"for_each",
 					"lifecycle",
+					"next_hop_instance_zone",
 					"params",
 					"params.resource_manager_tags",
 					"provider",
