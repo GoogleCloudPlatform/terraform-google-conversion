@@ -65,6 +65,9 @@ func TestAccComputeFirewall(t *testing.T) {
 		{
 			Name: "TestAccComputeFirewall_resourceManagerTags",
 		},
+		{
+			Name: "TestAccComputeFirewall_sourceRangesIpv6",
+		},
 	}
 
 	for _, tt := range tests {
