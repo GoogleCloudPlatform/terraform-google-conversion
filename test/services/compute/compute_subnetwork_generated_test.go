@@ -100,6 +100,7 @@ func TestAccComputeSubnetwork(t *testing.T) {
 				[]string{
 					"count",
 					"depends_on",
+					"fingerprint",
 					"for_each",
 					"ip_collection",
 					"ipv6_access_type",

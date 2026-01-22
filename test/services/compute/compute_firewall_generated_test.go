@@ -85,6 +85,7 @@ func TestAccComputeFirewall(t *testing.T) {
 				[]string{
 					"count",
 					"depends_on",
+					"enable_logging",
 					"for_each",
 					"lifecycle",
 					"params",
