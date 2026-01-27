@@ -122,6 +122,11 @@ func (c *SecretManagerRegionalRegionalSecretVersionCai2hclConverter) convertReso
 	}
 	hclData := make(map[string]interface{})
 
+	res, hclData, err = resourceSecretManagerRegionalRegionalSecretVersionTgcDecoder(d, config, res, hclData)
+	if err != nil {
+		return nil, err
+	}
+
 	res, err = resourceSecretManagerRegionalRegionalSecretVersionDecoder(d, config, res)
 	if err != nil {
 		return nil, err
@@ -162,18 +167,35 @@ func flattenSecretManagerRegionalRegionalSecretVersionEnabled(v interface{}, d *
 
 func flattenSecretManagerRegionalRegionalSecretVersionPayload(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		// payload is missing in CAI asset, but it is required in Terraform provider.
-		transformed := map[string]interface{}{
-			"payload": map[string]interface{}{
-				"secretData": "unknown",
-			},
-		}
-		return []interface{}{transformed}
+		return nil
 	}
-
-	return []interface{}{v}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["secret_data"] =
+		flattenSecretManagerRegionalRegionalSecretVersionPayloadSecretData(original["data"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
 }
 
+func flattenSecretManagerRegionalRegionalSecretVersionPayloadSecretData(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func resourceSecretManagerRegionalRegionalSecretVersionTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
+	if payload, ok := res["payload"].(map[string]interface{}); !ok || payload["data"] == nil {
+		hclData["secret_data"] = "unknown"
+	}
+	return res, hclData, nil
+}
 func resourceSecretManagerRegionalRegionalSecretVersionDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
 	if v := res["state"]; v == "DESTROYED" {
 		return nil, nil
