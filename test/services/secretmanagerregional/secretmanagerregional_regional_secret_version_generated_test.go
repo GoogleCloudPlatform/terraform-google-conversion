@@ -27,6 +27,14 @@ func TestAccSecretManagerRegionalRegionalSecretVersion(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_update",
+			Skip: "fix later",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_cmekOutputOnly",
+			Skip: "fix later",
+		},
+		{
 			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionBasicExample",
 			Skip: "fix later",
 		},
@@ -45,6 +53,12 @@ func TestAccSecretManagerRegionalRegionalSecretVersion(t *testing.T) {
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionDeletionPolicyDisableExample",
 			Skip: "fix later",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "",
 		},
 	}
 

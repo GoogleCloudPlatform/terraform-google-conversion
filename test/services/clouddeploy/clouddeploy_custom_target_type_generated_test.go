@@ -38,6 +38,9 @@ func TestAccClouddeployCustomTargetType(t *testing.T) {
 		{
 			Name: "TestAccClouddeployCustomTargetType_clouddeployCustomTargetTypeGcbRepoSkaffoldModulesExample",
 		},
+		{
+			Name: "TestAccClouddeployCustomTargetType_update",
+		},
 	}
 
 	for _, tt := range tests {

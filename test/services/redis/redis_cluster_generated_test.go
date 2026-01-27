@@ -47,6 +47,51 @@ func TestAccRedisCluster(t *testing.T) {
 		{
 			Name: "TestAccRedisCluster_redisClusterCmekExample",
 		},
+		{
+			Name: "TestAccRedisCluster_createUpdateClusterWithNodeType",
+		},
+		{
+			Name: "TestAccRedisCluster_createClusterWithZoneDistribution",
+		},
+		{
+			Name: "TestAccRedisCluster_updateReplicaCount",
+		},
+		{
+			Name: "TestAccRedisCluster_updateShardCount",
+		},
+		{
+			Name: "TestAccRedisCluster_updateRedisConfigs",
+		},
+		{
+			Name: "TestAccRedisCluster_createUpdateDeletionProtection",
+		},
+		{
+			Name: "TestAccRedisCluster_automatedBackupConfig",
+		},
+		{
+			Name: "TestAccRedisCluster_managedBackupSource",
+		},
+		{
+			Name: "TestAccRedisCluster_gcsSource",
+		},
+		{
+			Name: "TestAccRedisCluster_persistenceUpdate",
+		},
+		{
+			Name: "TestAccRedisCluster_switchoverAndDetachSecondary",
+		},
+		{
+			Name: "TestAccRedisCluster_updateClusterEndpoints",
+		},
+		{
+			Name: "TestAccRedisCluster_redisClusterTlsEnabled",
+		},
+		{
+			Name: "TestAccRedisCluster_redisClusterMaintenanceVersion",
+		},
+		{
+			Name: "TestAccRedisCluster_redisClusterHaWithLabelsUpdate",
+		},
 	}
 
 	for _, tt := range tests {

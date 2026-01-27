@@ -48,6 +48,39 @@ func TestAccComputeAddress(t *testing.T) {
 			Name: "TestAccComputeAddress_computeAddressEnhancedByoipExample",
 			Skip: "fix later",
 		},
+		{
+			Name: "TestAccComputeAddress_networkTier",
+		},
+		{
+			Name: "TestAccComputeAddress_internal",
+		},
+		{
+			Name: "TestAccComputeAddress_networkTier_withLabels",
+		},
+		{
+			Name: "TestAccComputeAddress_networkTier_withProvider5",
+		},
+		{
+			Name: "TestAccComputeAddress_withProviderDefaultLabels",
+		},
+		{
+			Name: "TestAccComputeAddress_withCreationOnlyAttribution",
+		},
+		{
+			Name: "TestAccComputeAddress_withCreationOnlyAttributionSetOnUpdate",
+		},
+		{
+			Name: "TestAccComputeAddress_withProactiveAttribution",
+		},
+		{
+			Name: "TestAccComputeAddress_withProactiveAttributionSetOnUpdate",
+		},
+		{
+			Name: "TestAccComputeAddress_withAttributionRemoved",
+		},
+		{
+			Name: "TestAccComputeAddress_internalIpv6",
+		},
 	}
 
 	for _, tt := range tests {

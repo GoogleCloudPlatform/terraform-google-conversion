@@ -122,16 +122,6 @@ func (c *RedisInstanceCai2hclConverter) convertResourceData(asset caiasset.Asset
 	}
 	hclData := make(map[string]interface{})
 
-	res, err = resourceRedisInstanceDecoder(d, config, res)
-	if err != nil {
-		return nil, err
-	}
-
-	if res == nil {
-		// Decoding the object has resulted in it being gone. It may be marked deleted.
-		return nil, nil
-	}
-
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "current_location_id": struct{}{}, "effective_labels": struct{}{}, "effective_reserved_ip_range": struct{}{}, "host": struct{}{}, "maintenance_schedule": struct{}{}, "nodes": struct{}{}, "persistence_iam_identity": struct{}{}, "port": struct{}{}, "read_endpoint": struct{}{}, "read_endpoint_port": struct{}{}, "server_ca_certs": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}", outputFields, hclData)
 
@@ -431,57 +421,4 @@ func flattenRedisInstanceSecondaryIpRange(v interface{}, d *schema.ResourceData,
 
 func flattenRedisInstanceCustomerManagedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func resourceRedisInstanceDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
-	config := meta.(*transport_tpg.Config)
-
-	userAgent, err := tpgresource.GenerateUserAgentString(d, config.UserAgent)
-	if err != nil {
-		return nil, err
-	}
-
-	if v, ok := res["authEnabled"].(bool); ok {
-		if v {
-			url, err := tpgresource.ReplaceVars(d, config, "{{RedisBasePath}}projects/{{project}}/locations/{{region}}/instances/{{name}}/authString")
-			if err != nil {
-				return nil, err
-			}
-
-			billingProject := ""
-
-			project, err := tpgresource.GetProject(d, config)
-			if err != nil {
-				return nil, fmt.Errorf("Error fetching project for Instance: %s", err)
-			}
-
-			billingProject = project
-
-			// err == nil indicates that the billing_project value was found
-			if bp, err := tpgresource.GetBillingProject(d, config); err == nil {
-				billingProject = bp
-			}
-
-			res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
-				Config:    config,
-				Method:    "GET",
-				Project:   billingProject,
-				RawURL:    url,
-				UserAgent: userAgent,
-			})
-			if err != nil {
-				return nil, fmt.Errorf("Error reading AuthString: %s", err)
-			}
-
-			if err := d.Set("auth_string", res["authString"]); err != nil {
-				return nil, fmt.Errorf("Error reading Instance: %s", err)
-			}
-		}
-	} else {
-		if err := d.Set("auth_string", ""); err != nil {
-			return nil, fmt.Errorf("Error reading Instance: %s", err)
-		}
-	}
-
-	return res, nil
 }
