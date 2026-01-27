@@ -27,6 +27,14 @@ func TestAccSecretManagerSecretVersion(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccSecretManagerSecretVersion_update",
+			Skip: "fix later",
+		},
+		{
+			Name: "TestAccSecretManagerSecretVersion_byName",
+			Skip: "fix later",
+		},
+		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionBasicExample",
 			Skip: "fix later",
 		},
@@ -49,6 +57,12 @@ func TestAccSecretManagerSecretVersion(t *testing.T) {
 		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataWriteOnlyExample",
 			Skip: "fix later",
+		},
+		{
+			Name: "",
+		},
+		{
+			Name: "",
 		},
 	}
 

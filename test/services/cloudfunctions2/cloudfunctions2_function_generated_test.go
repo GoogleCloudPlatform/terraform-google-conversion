@@ -50,6 +50,24 @@ func TestAccCloudfunctions2function(t *testing.T) {
 		{
 			Name: "TestAccCloudfunctions2function_cloudfunctions2PrivateWorkerpoolExample",
 		},
+		{
+			Name: "TestAccCloudFunctions2Function_update",
+		},
+		{
+			Name: "TestAccCloudFunctions2Function_fullUpdate",
+		},
+		{
+			Name: "TestAccCloudFunctions2Function_updateAbiuFull",
+		},
+		{
+			Name: "TestAccCloudFunctions2Function_generation",
+		},
+		{
+			Name: "TestAccCloudFunctions2Function_binAuthPolicy",
+		},
+		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2DirectvpcExample_update",
+		},
 	}
 
 	for _, tt := range tests {

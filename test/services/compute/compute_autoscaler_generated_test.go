@@ -29,6 +29,24 @@ func TestAccComputeAutoscaler(t *testing.T) {
 		{
 			Name: "TestAccComputeAutoscaler_autoscalerBasicExample",
 		},
+		{
+			Name: "TestAccComputeAutoscaler_update",
+		},
+		{
+			Name: "TestAccComputeAutoscaler_multicondition",
+		},
+		{
+			Name: "TestAccComputeAutoscaler_scaleDownControl",
+		},
+		{
+			Name: "TestAccComputeAutoscaler_scalingSchedule",
+		},
+		{
+			Name: "TestAccComputeAutoscaler_scaleInControl",
+		},
+		{
+			Name: "TestAccComputeAutoscaler_scaleInControlFixed",
+		},
 	}
 
 	for _, tt := range tests {

@@ -41,6 +41,27 @@ func TestAccRedisInstance(t *testing.T) {
 		{
 			Name: "TestAccRedisInstance_redisInstanceMrrExample",
 		},
+		{
+			Name: "TestAccRedisInstance_update",
+		},
+		{
+			Name: "TestAccRedisInstance_updateReadReplicasMode",
+		},
+		{
+			Name: "TestAccRedisInstance_updateReadReplicasModeWithAutoSecondaryIp",
+		},
+		{
+			Name: "TestAccRedisInstance_regionFromLocation",
+		},
+		{
+			Name: "TestAccRedisInstance_redisInstanceAuthEnabled",
+		},
+		{
+			Name: "TestAccRedisInstance_downgradeRedisVersion",
+		},
+		{
+			Name: "TestAccRedisInstance_deletionprotection",
+		},
 	}
 
 	for _, tt := range tests {

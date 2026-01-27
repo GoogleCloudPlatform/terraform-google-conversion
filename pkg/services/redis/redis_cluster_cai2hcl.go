@@ -122,16 +122,6 @@ func (c *RedisClusterCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	}
 	hclData := make(map[string]interface{})
 
-	res, err = resourceRedisClusterDecoder(d, config, res)
-	if err != nil {
-		return nil, err
-	}
-
-	if res == nil {
-		// Decoding the object has resulted in it being gone. It may be marked deleted.
-		return nil, nil
-	}
-
 	outputFields := map[string]struct{}{"available_maintenance_versions": struct{}{}, "backup_collection": struct{}{}, "create_time": struct{}{}, "discovery_endpoints": struct{}{}, "effective_labels": struct{}{}, "effective_maintenance_version": struct{}{}, "maintenance_schedule": struct{}{}, "managed_server_ca": struct{}{}, "precise_size_gb": struct{}{}, "psc_connections": struct{}{}, "psc_service_attachments": struct{}{}, "size_gb": struct{}{}, "state": struct{}{}, "state_info": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/clusters/{{name}}", outputFields, hclData)
 
@@ -646,55 +636,4 @@ func flattenRedisClusterCrossClusterReplicationConfigSecondaryClustersCluster(v 
 
 func flattenRedisClusterKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func resourceRedisClusterDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
-	// Such custom code is necessary as the Cluster's certificate authority has to be retrieved via a dedicated
-	// getCertificateAuthority API.
-	// See https://cloud.google.com/memorystore/docs/cluster/reference/rest/v1/projects.locations.clusters/getCertificateAuthority#http-request
-	// for details about this API.
-	config := meta.(*transport_tpg.Config)
-
-	userAgent, err := tpgresource.GenerateUserAgentString(d, config.UserAgent)
-	if err != nil {
-		return nil, err
-	}
-
-	// Only clusters with TRANSIT_ENCRYPTION_MODE_SERVER_AUTHENTICATION mode have certificate authority set
-	if v, ok := res["transitEncryptionMode"].(string); !ok || v != "TRANSIT_ENCRYPTION_MODE_SERVER_AUTHENTICATION" {
-		return res, nil
-	}
-
-	url, err := tpgresource.ReplaceVars(d, config, "{{RedisBasePath}}projects/{{project}}/locations/{{region}}/clusters/{{name}}/certificateAuthority")
-	if err != nil {
-		return nil, err
-	}
-
-	billingProject := ""
-
-	project, err := tpgresource.GetProject(d, config)
-	if err != nil {
-		return nil, fmt.Errorf("Error fetching project for Cluster: %s", err)
-	}
-
-	billingProject = project
-
-	// err == nil indicates that the billing_project value was found
-	if bp, err := tpgresource.GetBillingProject(d, config); err == nil {
-		billingProject = bp
-	}
-
-	certificateAuthority, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
-		Config:    config,
-		Method:    "GET",
-		Project:   billingProject,
-		RawURL:    url,
-		UserAgent: userAgent,
-	})
-	if err != nil {
-		return nil, fmt.Errorf("Error reading certificateAuthority: %s", err)
-	}
-
-	res["managedServerCa"] = certificateAuthority["managedServerCa"]
-	return res, nil
 }
