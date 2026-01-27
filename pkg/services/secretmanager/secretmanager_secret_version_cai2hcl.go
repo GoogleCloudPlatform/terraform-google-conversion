@@ -122,6 +122,11 @@ func (c *SecretManagerSecretVersionCai2hclConverter) convertResourceData(asset c
 	}
 	hclData := make(map[string]interface{})
 
+	res, hclData, err = resourceSecretManagerSecretVersionTgcDecoder(d, config, res, hclData)
+	if err != nil {
+		return nil, err
+	}
+
 	res, err = resourceSecretManagerSecretVersionDecoder(d, config, res)
 	if err != nil {
 		return nil, err
@@ -162,18 +167,47 @@ func flattenSecretManagerSecretVersionEnabled(v interface{}, d *schema.ResourceD
 
 func flattenSecretManagerSecretVersionPayload(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		// payload is missing in CAI asset, but it is required in Terraform provider.
-		transformed := map[string]interface{}{
-			"payload": map[string]interface{}{
-				"secretData": "unknown",
-			},
-		}
-		return []interface{}{transformed}
+		return nil
 	}
-
-	return []interface{}{v}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["secret_data"] =
+		flattenSecretManagerSecretVersionPayloadSecretData(original["data"], d, config)
+	transformed["secret_data_wo_version"] =
+		flattenSecretManagerSecretVersionPayloadSecretDataWoVersion(original["SecretDataWoVersion"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
 }
 
+func flattenSecretManagerSecretVersionPayloadSecretData(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenSecretManagerSecretVersionPayloadSecretDataWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func resourceSecretManagerSecretVersionTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
+	if payload, ok := res["payload"].(map[string]interface{}); !ok || payload["data"] == nil {
+		hclData["secret_data"] = "unknown"
+	}
+	return res, hclData, nil
+}
 func resourceSecretManagerSecretVersionDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
 	if v := res["state"]; v == "DESTROYED" {
 		return nil, nil

@@ -36,7 +36,6 @@ func TestAccSecretManagerSecretVersion(t *testing.T) {
 		},
 		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionBasicExample",
-			Skip: "fix later",
 		},
 		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionBasicWriteOnlyExample",
@@ -44,19 +43,15 @@ func TestAccSecretManagerSecretVersion(t *testing.T) {
 		},
 		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionDeletionPolicyAbandonExample",
-			Skip: "fix later",
 		},
 		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionDeletionPolicyDisableExample",
-			Skip: "fix later",
 		},
 		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataExample",
-			Skip: "fix later",
 		},
 		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataWriteOnlyExample",
-			Skip: "fix later",
 		},
 		{
 			Name: "",
