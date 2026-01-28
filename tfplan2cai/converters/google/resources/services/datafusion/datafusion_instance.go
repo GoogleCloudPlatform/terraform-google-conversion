@@ -180,6 +180,12 @@ func GetDataFusionInstanceApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("version"); !tpgresource.IsEmptyValue(reflect.ValueOf(versionProp)) && (ok || !reflect.DeepEqual(v, versionProp)) {
 		obj["version"] = versionProp
 	}
+	patchRevisionProp, err := expandDataFusionInstancePatchRevision(d.Get("patch_revision"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("patch_revision"); !tpgresource.IsEmptyValue(reflect.ValueOf(patchRevisionProp)) && (ok || !reflect.DeepEqual(v, patchRevisionProp)) {
+		obj["patchRevision"] = patchRevisionProp
+	}
 	privateInstanceProp, err := expandDataFusionInstancePrivateInstance(d.Get("private_instance"), d, config)
 	if err != nil {
 		return nil, err
@@ -280,6 +286,10 @@ func expandDataFusionInstanceOptions(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandDataFusionInstanceVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataFusionInstancePatchRevision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
