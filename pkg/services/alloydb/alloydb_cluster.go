@@ -438,7 +438,7 @@ It is specified in the form: "projects/{projectNumber}/global/networks/{network_
 				Type:        schema.TypeList,
 				Optional:    true,
 				ForceNew:    true,
-				Description: `The source when restoring from a backup. Conflicts with 'restore_continuous_backup_source', both can't be set together.`,
+				Description: `The source when restoring from a backup. Conflicts with 'restore_continuous_backup_source', 'restore_backupdr_backup_source' and 'restore_backupdr_pitr_source', they can't be set together.`,
 				MaxItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -450,13 +450,55 @@ It is specified in the form: "projects/{projectNumber}/global/networks/{network_
 						},
 					},
 				},
-				ConflictsWith: []string{"restore_continuous_backup_source"},
+				ConflictsWith: []string{"restore_backupdr_backup_source", "restore_backupdr_pitr_source", "restore_continuous_backup_source"},
+			},
+			"restore_backupdr_backup_source": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `The source when restoring from a backup. Conflicts with 'restore_continuous_backup_source',  'restore_backup_source' and 'restore_backupdr_pitr_source', they can't be set together.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"backup": {
+							Type:        schema.TypeString,
+							Required:    true,
+							ForceNew:    true,
+							Description: `The name of the BackupDR backup that this cluster is restored from. It must be of the format "projects/[PROJECT]/locations/[LOCATION]/backupVaults/[VAULT_ID]/dataSources/[DATASOURCE_ID]/backups/[BACKUP_ID]"`,
+						},
+					},
+				},
+				ConflictsWith: []string{"restore_backup_source", "restore_backupdr_pitr_source", "restore_continuous_backup_source"},
+			},
+			"restore_backupdr_pitr_source": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `The BackupDR source used for point in time recovery. Conflicts with 'restore_backupdr_backup_source', 'restore_continuous_backup_source' and 'restore_backupdr_backup_source', they can't be set togeter.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"data_source": {
+							Type:        schema.TypeString,
+							Required:    true,
+							ForceNew:    true,
+							Description: `The name of the BackupDR data source that this cluster is restore from. It must be of the format "projects/[PROJECT]/locations/[LOCATION]/backupVaults/[VAULT_ID]/dataSources/[DATASOURCE_ID]"`,
+						},
+						"point_in_time": {
+							Type:        schema.TypeString,
+							Required:    true,
+							ForceNew:    true,
+							Description: `The point in time that this cluster is restored to, in RFC 3339 format.`,
+						},
+					},
+				},
+				ConflictsWith: []string{"restore_backup_source", "restore_backupdr_backup_source", "restore_continuous_backup_source"},
 			},
 			"restore_continuous_backup_source": {
 				Type:        schema.TypeList,
 				Optional:    true,
 				ForceNew:    true,
-				Description: `The source when restoring via point in time recovery (PITR). Conflicts with 'restore_backup_source', both can't be set together.`,
+				Description: `The source when restoring via point in time recovery (PITR). Conflicts with 'restore_backup_source', 'restore_backupdr_backup_source' and 'restore_backupdr_pitr_source', they can't be set together.`,
 				MaxItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -474,7 +516,7 @@ It is specified in the form: "projects/{projectNumber}/global/networks/{network_
 						},
 					},
 				},
-				ConflictsWith: []string{"restore_backup_source"},
+				ConflictsWith: []string{"restore_backup_source", "restore_backupdr_backup_source", "restore_backupdr_pitr_source"},
 			},
 			"secondary_config": {
 				Type:        schema.TypeList,
@@ -509,6 +551,20 @@ It is specified in the form: "projects/{projectNumber}/global/networks/{network_
 							Type:        schema.TypeString,
 							Optional:    true,
 							Description: `The name of the backup resource.`,
+						},
+					},
+				},
+			},
+			"backupdr_backup_source": {
+				Type:        schema.TypeList,
+				Computed:    true,
+				Description: `Cluster created from a BackupDR backup.`,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"backup": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: `The name of the BackupDR backup resource.`,
 						},
 					},
 				},

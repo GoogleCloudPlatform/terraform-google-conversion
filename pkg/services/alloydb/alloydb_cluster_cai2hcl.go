@@ -122,7 +122,7 @@ func (c *AlloydbClusterCai2hclConverter) convertResourceData(asset caiasset.Asse
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"backup_source": struct{}{}, "continuous_backup_info": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "encryption_info": struct{}{}, "migration_source": struct{}{}, "name": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "trial_metadata": struct{}{}, "uid": struct{}{}}
+	outputFields := map[string]struct{}{"backup_source": struct{}{}, "backupdr_backup_source": struct{}{}, "continuous_backup_info": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "encryption_info": struct{}{}, "migration_source": struct{}{}, "name": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "trial_metadata": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//alloydb.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}", outputFields, hclData)
 
 	hclData["labels"] = flattenAlloydbClusterLabels(res["labels"], d, config)
@@ -136,6 +136,8 @@ func (c *AlloydbClusterCai2hclConverter) convertResourceData(asset caiasset.Asse
 	hclData["initial_user"] = flattenAlloydbClusterInitialUser(res["initialUser"], d, config)
 	hclData["restore_backup_source"] = flattenAlloydbClusterRestoreBackupSource(res["restoreBackupSource"], d, config)
 	hclData["restore_continuous_backup_source"] = flattenAlloydbClusterRestoreContinuousBackupSource(res["restoreContinuousBackupSource"], d, config)
+	hclData["restore_backupdr_backup_source"] = flattenAlloydbClusterRestoreBackupdrBackupSource(res["restoreBackupdrBackupSource"], d, config)
+	hclData["restore_backupdr_pitr_source"] = flattenAlloydbClusterRestoreBackupdrPitrSource(res["restoreBackupdrPitrSource"], d, config)
 	hclData["continuous_backup_config"] = flattenAlloydbClusterContinuousBackupConfig(res["continuousBackupConfig"], d, config)
 	hclData["automated_backup_policy"] = flattenAlloydbClusterAutomatedBackupPolicy(res["automatedBackupPolicy"], d, config)
 	hclData["cluster_type"] = flattenAlloydbClusterClusterType(res["clusterType"], d, config)
@@ -308,6 +310,69 @@ func flattenAlloydbClusterRestoreContinuousBackupSourceCluster(v interface{}, d 
 }
 
 func flattenAlloydbClusterRestoreContinuousBackupSourcePointInTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenAlloydbClusterRestoreBackupdrBackupSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["backup"] =
+		flattenAlloydbClusterRestoreBackupdrBackupSourceBackup(original["backup"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenAlloydbClusterRestoreBackupdrBackupSourceBackup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenAlloydbClusterRestoreBackupdrPitrSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["data_source"] =
+		flattenAlloydbClusterRestoreBackupdrPitrSourceDataSource(original["dataSource"], d, config)
+	transformed["point_in_time"] =
+		flattenAlloydbClusterRestoreBackupdrPitrSourcePointInTime(original["pointInTime"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenAlloydbClusterRestoreBackupdrPitrSourceDataSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenAlloydbClusterRestoreBackupdrPitrSourcePointInTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return "unknown"
 	}
