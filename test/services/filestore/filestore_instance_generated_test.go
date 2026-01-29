@@ -66,6 +66,9 @@ func TestAccFilestoreInstance(t *testing.T) {
 		{
 			Name: "TestAccFilestoreInstance_nfsExportOptionsNetwork_update",
 		},
+		{
+			Name: "TestAccFilestoreInstance_psc_ipv6",
+		},
 	}
 
 	for _, tt := range tests {
