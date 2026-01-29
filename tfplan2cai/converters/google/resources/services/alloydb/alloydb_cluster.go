@@ -164,6 +164,18 @@ func GetAlloydbClusterApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("restore_continuous_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreContinuousBackupSourceProp)) && (ok || !reflect.DeepEqual(v, restoreContinuousBackupSourceProp)) {
 		obj["restoreContinuousBackupSource"] = restoreContinuousBackupSourceProp
 	}
+	restoreBackupdrBackupSourceProp, err := expandAlloydbClusterRestoreBackupdrBackupSource(d.Get("restore_backupdr_backup_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restore_backupdr_backup_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreBackupdrBackupSourceProp)) && (ok || !reflect.DeepEqual(v, restoreBackupdrBackupSourceProp)) {
+		obj["restoreBackupdrBackupSource"] = restoreBackupdrBackupSourceProp
+	}
+	restoreBackupdrPitrSourceProp, err := expandAlloydbClusterRestoreBackupdrPitrSource(d.Get("restore_backupdr_pitr_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restore_backupdr_pitr_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(restoreBackupdrPitrSourceProp)) && (ok || !reflect.DeepEqual(v, restoreBackupdrPitrSourceProp)) {
+		obj["restoreBackupdrPitrSource"] = restoreBackupdrPitrSourceProp
+	}
 	continuousBackupConfigProp, err := expandAlloydbClusterContinuousBackupConfig(d.Get("continuous_backup_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -425,6 +437,69 @@ func expandAlloydbClusterRestoreContinuousBackupSourceCluster(v interface{}, d t
 }
 
 func expandAlloydbClusterRestoreContinuousBackupSourcePointInTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreBackupdrBackupSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBackup, err := expandAlloydbClusterRestoreBackupdrBackupSourceBackup(original["backup"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBackup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["backup"] = transformedBackup
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterRestoreBackupdrBackupSourceBackup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreBackupdrPitrSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDataSource, err := expandAlloydbClusterRestoreBackupdrPitrSourceDataSource(original["data_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataSource"] = transformedDataSource
+	}
+
+	transformedPointInTime, err := expandAlloydbClusterRestoreBackupdrPitrSourcePointInTime(original["point_in_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPointInTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pointInTime"] = transformedPointInTime
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterRestoreBackupdrPitrSourceDataSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterRestoreBackupdrPitrSourcePointInTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
