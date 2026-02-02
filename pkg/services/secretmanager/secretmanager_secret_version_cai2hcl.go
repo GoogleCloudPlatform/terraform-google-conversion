@@ -122,11 +122,6 @@ func (c *SecretManagerSecretVersionCai2hclConverter) convertResourceData(asset c
 	}
 	hclData := make(map[string]interface{})
 
-	res, hclData, err = resourceSecretManagerSecretVersionTgcDecoder(d, config, res, hclData)
-	if err != nil {
-		return nil, err
-	}
-
 	res, err = resourceSecretManagerSecretVersionDecoder(d, config, res)
 	if err != nil {
 		return nil, err
@@ -202,12 +197,6 @@ func flattenSecretManagerSecretVersionPayloadSecretDataWoVersion(v interface{}, 
 	return v // let terraform core handle it otherwise
 }
 
-func resourceSecretManagerSecretVersionTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
-	if payload, ok := res["payload"].(map[string]interface{}); !ok || payload["data"] == nil {
-		hclData["secret_data"] = "unknown"
-	}
-	return res, hclData, nil
-}
 func resourceSecretManagerSecretVersionDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
 	if v := res["state"]; v == "DESTROYED" {
 		return nil, nil
