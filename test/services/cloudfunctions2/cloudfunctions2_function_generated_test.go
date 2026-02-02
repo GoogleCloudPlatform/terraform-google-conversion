@@ -83,8 +83,8 @@ func TestAccCloudfunctions2function(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
-					"build_config.0.source.0.storage_source.0.bucket",
-					"build_config.0.source.0.storage_source.0.object",
+					"build_config.source.storage_source.bucket",
+					"build_config.source.storage_source.object",
 					"count",
 					"depends_on",
 					"for_each",
