@@ -68,7 +68,7 @@ func TestAccDataprocBatch(t *testing.T) {
 					"location",
 					"provider",
 					"pyspark_batch.args",
-					"runtime_config.0.properties",
+					"runtime_config.properties",
 					"spark_batch.args",
 					"spark_r_batch.args",
 					"spark_sql_batch.query_variables",
