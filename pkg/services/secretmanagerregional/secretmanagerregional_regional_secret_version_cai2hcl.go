@@ -122,11 +122,6 @@ func (c *SecretManagerRegionalRegionalSecretVersionCai2hclConverter) convertReso
 	}
 	hclData := make(map[string]interface{})
 
-	res, hclData, err = resourceSecretManagerRegionalRegionalSecretVersionTgcDecoder(d, config, res, hclData)
-	if err != nil {
-		return nil, err
-	}
-
 	res, err = resourceSecretManagerRegionalRegionalSecretVersionDecoder(d, config, res)
 	if err != nil {
 		return nil, err
@@ -166,10 +161,10 @@ func flattenSecretManagerRegionalRegionalSecretVersionEnabled(v interface{}, d *
 }
 
 func flattenSecretManagerRegionalRegionalSecretVersionPayload(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
+	original := make(map[string]interface{}, 0)
+	if v != nil {
+		original = v.(map[string]interface{})
 	}
-	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 	transformed["secret_data"] =
 		flattenSecretManagerRegionalRegionalSecretVersionPayloadSecretData(original["data"], d, config)
@@ -190,12 +185,6 @@ func flattenSecretManagerRegionalRegionalSecretVersionPayloadSecretData(v interf
 	return v
 }
 
-func resourceSecretManagerRegionalRegionalSecretVersionTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
-	if payload, ok := res["payload"].(map[string]interface{}); !ok || payload["data"] == nil {
-		hclData["secret_data"] = "unknown"
-	}
-	return res, hclData, nil
-}
 func resourceSecretManagerRegionalRegionalSecretVersionDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
 	if v := res["state"]; v == "DESTROYED" {
 		return nil, nil

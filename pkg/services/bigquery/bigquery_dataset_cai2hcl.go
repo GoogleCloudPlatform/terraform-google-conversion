@@ -424,10 +424,10 @@ func flattenBigQueryDatasetAccessConditionLocation(v interface{}, d *schema.Reso
 }
 
 func flattenBigQueryDatasetDatasetReference(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
+	original := make(map[string]interface{}, 0)
+	if v != nil {
+		original = v.(map[string]interface{})
 	}
-	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 	transformed["dataset_id"] =
 		flattenBigQueryDatasetDatasetReferenceDatasetId(original["datasetId"], d, config)
