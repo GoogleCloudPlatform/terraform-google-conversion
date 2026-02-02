@@ -32,16 +32,29 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflow"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkebackup"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkeonprem"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iap"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/identityplatform"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/looker"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/managedkafka"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
@@ -49,7 +62,10 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securesourcemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securitycenterv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/storageinsights"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
@@ -123,6 +139,18 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"certificatemanager.googleapis.com/Certificate": {
 		"Default": certificatemanager.NewCertificateManagerCertificateCai2hclConverter(provider),
+	},
+	"certificatemanager.googleapis.com/CertificateIssuanceConfig": {
+		"Default": certificatemanager.NewCertificateManagerCertificateIssuanceConfigCai2hclConverter(provider),
+	},
+	"certificatemanager.googleapis.com/CertificateMap": {
+		"Default": certificatemanager.NewCertificateManagerCertificateMapCai2hclConverter(provider),
+	},
+	"cloudaicompanion.googleapis.com/CodeRepositoryIndex": {
+		"Default": gemini.NewGeminiCodeRepositoryIndexCai2hclConverter(provider),
+	},
+	"cloudaicompanion.googleapis.com/RepositoryGroup": {
+		"Default": gemini.NewGeminiRepositoryGroupCai2hclConverter(provider),
 	},
 	"cloudasset.googleapis.com/Feed": {
 		"CloudAssetFolderFeed":       cloudasset.NewCloudAssetFolderFeedCai2hclConverter(provider),
@@ -242,6 +270,15 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/VpnGateway": {
 		"Default": compute.NewComputeHaVpnGatewayCai2hclConverter(provider),
 	},
+	"datafusion.googleapis.com/Instance": {
+		"Default": datafusion.NewDataFusionInstanceCai2hclConverter(provider),
+	},
+	"datamigration.googleapis.com/MigrationJob": {
+		"Default": databasemigrationservice.NewDatabaseMigrationServiceMigrationJobCai2hclConverter(provider),
+	},
+	"dataproc.googleapis.com/AutoscalingPolicy": {
+		"Default": dataproc.NewDataprocAutoscalingPolicyCai2hclConverter(provider),
+	},
 	"dataproc.googleapis.com/Batch": {
 		"Default": dataproc.NewDataprocBatchCai2hclConverter(provider),
 	},
@@ -253,6 +290,15 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"datastream.googleapis.com/Stream": {
 		"Default": datastream.NewDatastreamStreamCai2hclConverter(provider),
+	},
+	"developerconnect.googleapis.com/Connection": {
+		"Default": developerconnect.NewDeveloperConnectConnectionCai2hclConverter(provider),
+	},
+	"developerconnect.googleapis.com/GitRepositoryLink": {
+		"Default": developerconnect.NewDeveloperConnectGitRepositoryLinkCai2hclConverter(provider),
+	},
+	"dialogflow.googleapis.com/Agent": {
+		"Default": dialogflow.NewDialogflowAgentCai2hclConverter(provider),
 	},
 	"file.googleapis.com/Backup": {
 		"Default": filestore.NewFilestoreBackupCai2hclConverter(provider),
@@ -266,14 +312,56 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"firebasedataconnect.googleapis.com/Service": {
 		"Default": firebasedataconnect.NewFirebaseDataConnectServiceCai2hclConverter(provider),
 	},
+	"gkebackup.googleapis.com/BackupPlan": {
+		"Default": gkebackup.NewGKEBackupBackupPlanCai2hclConverter(provider),
+	},
+	"gkebackup.googleapis.com/RestorePlan": {
+		"Default": gkebackup.NewGKEBackupRestorePlanCai2hclConverter(provider),
+	},
+	"gkehub.googleapis.com/Membership": {
+		"Default": gkehub.NewGKEHubMembershipCai2hclConverter(provider),
+	},
+	"gkeonprem.googleapis.com/BareMetalAdminCluster": {
+		"Default": gkeonprem.NewGkeonpremBareMetalAdminClusterCai2hclConverter(provider),
+	},
+	"gkeonprem.googleapis.com/BareMetalCluster": {
+		"Default": gkeonprem.NewGkeonpremBareMetalClusterCai2hclConverter(provider),
+	},
+	"gkeonprem.googleapis.com/BareMetalNodePool": {
+		"Default": gkeonprem.NewGkeonpremBareMetalNodePoolCai2hclConverter(provider),
+	},
+	"gkeonprem.googleapis.com/VmwareCluster": {
+		"Default": gkeonprem.NewGkeonpremVmwareClusterCai2hclConverter(provider),
+	},
+	"gkeonprem.googleapis.com/VmwareNodePool": {
+		"Default": gkeonprem.NewGkeonpremVmwareNodePoolCai2hclConverter(provider),
+	},
 	"iam.googleapis.com/WorkloadIdentityPool": {
 		"Default": iambeta.NewIAMBetaWorkloadIdentityPoolCai2hclConverter(provider),
 	},
 	"iam.googleapis.com/WorkloadIdentityPoolProvider": {
 		"Default": iambeta.NewIAMBetaWorkloadIdentityPoolProviderCai2hclConverter(provider),
 	},
+	"iap.googleapis.com/TunnelDestGroup": {
+		"Default": iap.NewIapTunnelDestGroupCai2hclConverter(provider),
+	},
+	"identitytoolkit.googleapis.com/DefaultSupportedIdpConfig": {
+		"Default": identityplatform.NewIdentityPlatformDefaultSupportedIdpConfigCai2hclConverter(provider),
+	},
+	"identitytoolkit.googleapis.com/InboundSamlConfig": {
+		"Default": identityplatform.NewIdentityPlatformInboundSamlConfigCai2hclConverter(provider),
+	},
+	"identitytoolkit.googleapis.com/Tenant": {
+		"Default": identityplatform.NewIdentityPlatformTenantCai2hclConverter(provider),
+	},
 	"logging.googleapis.com/LogMetric": {
 		"Default": logging.NewLoggingMetricCai2hclConverter(provider),
+	},
+	"looker.googleapis.com/Instance": {
+		"Default": looker.NewLookerInstanceCai2hclConverter(provider),
+	},
+	"managedkafka.googleapis.com/Cluster": {
+		"Default": managedkafka.NewManagedKafkaClusterCai2hclConverter(provider),
 	},
 	"memcache.googleapis.com/Instance": {
 		"Default": memcache.NewMemcacheInstanceCai2hclConverter(provider),
@@ -293,11 +381,26 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"netapp.googleapis.com/Backup": {
 		"Default": netapp.NewNetappBackupCai2hclConverter(provider),
 	},
+	"networkconnectivity.googleapis.com/Group": {
+		"Default": networkconnectivity.NewNetworkConnectivityGroupCai2hclConverter(provider),
+	},
+	"networkconnectivity.googleapis.com/PolicyBasedRoute": {
+		"Default": networkconnectivity.NewNetworkConnectivityPolicyBasedRouteCai2hclConverter(provider),
+	},
 	"networksecurity.googleapis.com/AddressGroup": {
 		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),
 	},
+	"networksecurity.googleapis.com/AuthzPolicy": {
+		"Default": networksecurity.NewNetworkSecurityAuthzPolicyCai2hclConverter(provider),
+	},
 	"networksecurity.googleapis.com/ClientTlsPolicy": {
 		"Default": networksecurity.NewNetworkSecurityClientTlsPolicyCai2hclConverter(provider),
+	},
+	"networksecurity.googleapis.com/FirewallEndpoint": {
+		"Default": networksecurity.NewNetworkSecurityFirewallEndpointCai2hclConverter(provider),
+	},
+	"networksecurity.googleapis.com/FirewallEndpointAssociation": {
+		"Default": networksecurity.NewNetworkSecurityFirewallEndpointAssociationCai2hclConverter(provider),
 	},
 	"networksecurity.googleapis.com/GatewaySecurityPolicy": {
 		"Default": networksecurity.NewNetworkSecurityGatewaySecurityPolicyCai2hclConverter(provider),
@@ -314,6 +417,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"networksecurity.googleapis.com/ServerTlsPolicy": {
 		"Default": networksecurity.NewNetworkSecurityServerTlsPolicyCai2hclConverter(provider),
 	},
+	"networksecurity.googleapis.com/TlsInspectionPolicy": {
+		"Default": networksecurity.NewNetworkSecurityTlsInspectionPolicyCai2hclConverter(provider),
+	},
 	"networksecurity.googleapis.com/UrlList": {
 		"Default": networksecurity.NewNetworkSecurityUrlListsCai2hclConverter(provider),
 	},
@@ -322,6 +428,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"privateca.googleapis.com/CaPool": {
 		"Default": privateca.NewPrivatecaCaPoolCai2hclConverter(provider),
+	},
+	"privateca.googleapis.com/Certificate": {
+		"Default": privateca.NewPrivatecaCertificateCai2hclConverter(provider),
 	},
 	"pubsub.googleapis.com/Subscription": {
 		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),
@@ -343,11 +452,21 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"SecretManagerRegionalRegionalSecretVersion": secretmanagerregional.NewSecretManagerRegionalRegionalSecretVersionCai2hclConverter(provider),
 		"SecretManagerSecretVersion":                 secretmanager.NewSecretManagerSecretVersionCai2hclConverter(provider),
 	},
+	"securesourcemanager.googleapis.com/Instance": {
+		"Default": securesourcemanager.NewSecureSourceManagerInstanceCai2hclConverter(provider),
+	},
+	"securitycenter.googleapis.com/MuteConfig": {
+		"SecurityCenterV2FolderMuteConfig":       securitycenterv2.NewSecurityCenterV2FolderMuteConfigCai2hclConverter(provider),
+		"SecurityCenterV2OrganizationMuteConfig": securitycenterv2.NewSecurityCenterV2OrganizationMuteConfigCai2hclConverter(provider),
+	},
 	"spanner.googleapis.com/Database": {
 		"Default": spanner.NewSpannerDatabaseCai2hclConverter(provider),
 	},
 	"spanner.googleapis.com/Instance": {
 		"Default": spanner.NewSpannerInstanceCai2hclConverter(provider),
+	},
+	"storageinsights.googleapis.com/ReportConfig": {
+		"Default": storageinsights.NewStorageInsightsReportConfigCai2hclConverter(provider),
 	},
 	"vmwareengine.googleapis.com/NetworkPeering": {
 		"Default": vmwareengine.NewVmwareengineNetworkPeeringCai2hclConverter(provider),
