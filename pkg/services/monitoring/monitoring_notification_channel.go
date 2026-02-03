@@ -39,13 +39,16 @@ import (
 )
 
 var sensitiveLabels = []string{"auth_token", "service_key", "password"}
+var writeOnlySensitiveLabels = []string{"auth_token_wo_version", "service_key_wo_version", "password_wo_version"}
 
 func sensitiveLabelCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
-	for _, sl := range sensitiveLabels {
-		mapLabel := diff.Get("labels." + sl).(string)
-		authLabel := diff.Get("sensitive_labels.0." + sl).(string)
-		if mapLabel != "" && authLabel != "" {
-			return fmt.Errorf("Sensitive label [%s] cannot be set in both `labels` and the `sensitive_labels` block.", sl)
+	for _, sl := range append(sensitiveLabels, writeOnlySensitiveLabels...) {
+		l := strings.TrimSuffix(sl, "_wo")
+		l = strings.TrimSuffix(l, "_wo_version")
+		val := diff.Get("labels." + l).(string)
+		sensitiveVal := diff.Get("sensitive_labels.0." + sl).(string)
+		if val != "" && sensitiveVal != "" {
+			return fmt.Errorf("Sensitive label %q cannot be set at the same time as label %q.", sl, l)
 		}
 	}
 	return nil
@@ -129,21 +132,63 @@ to a different credential configuration in the config will require an apply to u
 							Optional:     true,
 							Description:  `An authorization token for a notification channel. Channel types that support this field include: slack`,
 							Sensitive:    true,
-							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key"},
+							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key", "sensitive_labels.0.auth_token_wo", "sensitive_labels.0.password_wo", "sensitive_labels.0.service_key_wo"},
+						},
+						"auth_token_wo": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							Description:  `An authorization token for a notification channel. Channel types that support this field include: slack`,
+							WriteOnly:    true,
+							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key", "sensitive_labels.0.auth_token_wo", "sensitive_labels.0.password_wo", "sensitive_labels.0.service_key_wo"},
+							RequiredWith: []string{"sensitive_labels.0.auth_token_wo_version"},
+						},
+						"auth_token_wo_version": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							Description:  `Triggers update of 'auth_token_wo' write-only. Increment this value when an update to 'auth_token_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)`,
+							RequiredWith: []string{"sensitive_labels.0.auth_token_wo"},
 						},
 						"password": {
 							Type:         schema.TypeString,
 							Optional:     true,
 							Description:  `An password for a notification channel. Channel types that support this field include: webhook_basicauth`,
 							Sensitive:    true,
-							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key"},
+							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key", "sensitive_labels.0.auth_token_wo", "sensitive_labels.0.password_wo", "sensitive_labels.0.service_key_wo"},
+						},
+						"password_wo": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							Description:  `An password for a notification channel. Channel types that support this field include: webhook_basicauth`,
+							WriteOnly:    true,
+							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key", "sensitive_labels.0.auth_token_wo", "sensitive_labels.0.password_wo", "sensitive_labels.0.service_key_wo"},
+							RequiredWith: []string{"sensitive_labels.0.password_wo_version"},
+						},
+						"password_wo_version": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							Description:  `Triggers update of 'password_wo' write-only. Increment this value when an update to 'password_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)`,
+							RequiredWith: []string{"sensitive_labels.0.password_wo"},
 						},
 						"service_key": {
 							Type:         schema.TypeString,
 							Optional:     true,
 							Description:  `An servicekey token for a notification channel. Channel types that support this field include: pagerduty`,
 							Sensitive:    true,
-							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key"},
+							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key", "sensitive_labels.0.auth_token_wo", "sensitive_labels.0.password_wo", "sensitive_labels.0.service_key_wo"},
+						},
+						"service_key_wo": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							Description:  `An servicekey token for a notification channel. Channel types that support this field include: pagerduty`,
+							WriteOnly:    true,
+							ExactlyOneOf: []string{"sensitive_labels.0.auth_token", "sensitive_labels.0.password", "sensitive_labels.0.service_key", "sensitive_labels.0.auth_token_wo", "sensitive_labels.0.password_wo", "sensitive_labels.0.service_key_wo"},
+							RequiredWith: []string{"sensitive_labels.0.service_key_wo_version"},
+						},
+						"service_key_wo_version": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							Description:  `Triggers update of 'service_key_wo' write-only. Increment this value when an update to 'service_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)`,
+							RequiredWith: []string{"sensitive_labels.0.service_key_wo"},
 						},
 					},
 				},

@@ -44,6 +44,12 @@ func TestAccMonitoringNotificationChannel(t *testing.T) {
 		{
 			Name: "TestAccMonitoringNotificationChannel_updateSensitiveLabels",
 		},
+		{
+			Name: "TestAccMonitoringNotificationChannel_updateSensitiveLabelsWo",
+		},
+		{
+			Name: "TestAccMonitoringNotificationChannel_updateSensitiveLabelsWo_slack",
+		},
 	}
 
 	for _, tt := range tests {
@@ -67,6 +73,12 @@ func TestAccMonitoringNotificationChannel(t *testing.T) {
 					"lifecycle",
 					"provider",
 					"sensitive_labels",
+					"sensitive_labels.auth_token_wo",
+					"sensitive_labels.auth_token_wo_version",
+					"sensitive_labels.password_wo",
+					"sensitive_labels.password_wo_version",
+					"sensitive_labels.service_key_wo",
+					"sensitive_labels.service_key_wo_version",
 					"timeouts",
 				},
 				"google_monitoring_notification_channel",
