@@ -58,9 +58,6 @@ func TestAccFilestoreInstance(t *testing.T) {
 			Name: "TestAccFilestoreInstance_replication",
 		},
 		{
-			Name: "",
-		},
-		{
 			Name: "TestAccFilestoreInstance_psc",
 		},
 		{

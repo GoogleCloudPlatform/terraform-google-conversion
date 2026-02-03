@@ -70,15 +70,6 @@ func TestAccDataFusionInstance(t *testing.T) {
 			Name: "TestAccDataFusionInstance_dataFusionInstancePatchRevisionExample",
 			Skip: "fix it after patch_revision is released in v7.18.0",
 		},
-		{
-			Name: "",
-		},
-		{
-			Name: "",
-		},
-		{
-			Name: "",
-		},
 	}
 
 	for _, tt := range tests {

@@ -51,9 +51,6 @@ func TestAccDatastreamStream(t *testing.T) {
 		{
 			Name: "TestAccDatastreamStream_update",
 		},
-		{
-			Name: "",
-		},
 	}
 
 	for _, tt := range tests {
