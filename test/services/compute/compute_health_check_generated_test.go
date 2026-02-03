@@ -91,12 +91,6 @@ func TestAccComputeHealthCheck(t *testing.T) {
 			Name: "TestAccComputeHealthCheck_tcp_update",
 		},
 		{
-			Name: "",
-		},
-		{
-			Name: "",
-		},
-		{
 			Name: "TestAccComputeHealthCheck_ssl_port_spec",
 		},
 		{

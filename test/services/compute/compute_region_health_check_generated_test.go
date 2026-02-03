@@ -86,12 +86,6 @@ func TestAccComputeRegionHealthCheck(t *testing.T) {
 			Name: "TestAccComputeRegionHealthCheck_tcp_update",
 		},
 		{
-			Name: "",
-		},
-		{
-			Name: "",
-		},
-		{
 			Name: "TestAccComputeRegionHealthCheck_ssl_port_spec",
 		},
 		{
@@ -99,9 +93,6 @@ func TestAccComputeRegionHealthCheck(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_https_serving_port",
-		},
-		{
-			Name: "",
 		},
 		{
 			Name: "TestAccComputeRegionHealthCheck_logConfigDisabled",
