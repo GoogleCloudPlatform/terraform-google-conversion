@@ -136,6 +136,7 @@ func (c *MonitoringNotificationChannelCai2hclConverter) convertResourceData(asse
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//monitoring.googleapis.com/{{name}}", outputFields, hclData)
 
 	hclData["labels"] = flattenMonitoringNotificationChannelLabels(res["labels"], d, config)
+	hclData["sensitive_labels"] = flattenMonitoringNotificationChannelSensitiveLabels(res["sensitiveLabels"], d, config)
 	hclData["type"] = flattenMonitoringNotificationChannelType(res["type"], d, config)
 	hclData["user_labels"] = flattenMonitoringNotificationChannelUserLabels(res["userLabels"], d, config)
 	hclData["description"] = flattenMonitoringNotificationChannelDescription(res["description"], d, config)
@@ -154,6 +155,54 @@ func (c *MonitoringNotificationChannelCai2hclConverter) convertResourceData(asse
 
 func flattenMonitoringNotificationChannelLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenMonitoringNotificationChannelSensitiveLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["auth_token"] =
+		flattenMonitoringNotificationChannelSensitiveLabelsAuthToken(original["auth_token"], d, config)
+	transformed["password"] =
+		flattenMonitoringNotificationChannelSensitiveLabelsPassword(original["password"], d, config)
+	transformed["service_key"] =
+		flattenMonitoringNotificationChannelSensitiveLabelsServiceKey(original["service_key"], d, config)
+	transformed["auth_token_wo_version"] =
+		flattenMonitoringNotificationChannelSensitiveLabelsAuthTokenWoVersion(original["authTokenWoVersion"], d, config)
+	transformed["password_wo_version"] =
+		flattenMonitoringNotificationChannelSensitiveLabelsPasswordWoVersion(original["passwordWoVersion"], d, config)
+	transformed["service_key_wo_version"] =
+		flattenMonitoringNotificationChannelSensitiveLabelsServiceKeyWoVersion(original["serviceKeyWoVersion"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenMonitoringNotificationChannelSensitiveLabelsAuthToken(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenMonitoringNotificationChannelSensitiveLabelsPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenMonitoringNotificationChannelSensitiveLabelsServiceKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenMonitoringNotificationChannelSensitiveLabelsAuthTokenWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return d.Get("sensitive_labels.0.auth_token_wo_version")
+}
+
+func flattenMonitoringNotificationChannelSensitiveLabelsPasswordWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return d.Get("sensitive_labels.0.password_wo_version")
+}
+
+func flattenMonitoringNotificationChannelSensitiveLabelsServiceKeyWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return d.Get("sensitive_labels.0.service_key_wo_version")
 }
 
 func flattenMonitoringNotificationChannelType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -184,15 +233,34 @@ func flattenMonitoringNotificationChannelEnabled(v interface{}, d *schema.Resour
 }
 
 func resourceMonitoringNotificationChannelDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
-	if labelmap, ok := res["labels"]; ok {
-		labels := labelmap.(map[string]interface{})
-		for _, sl := range sensitiveLabels {
-			if _, apiOk := labels[sl]; apiOk {
-				if _, exists := d.GetOkExists("sensitive_labels.0." + sl); exists {
-					delete(labels, sl)
-				} else {
-					labels[sl] = d.Get("labels." + sl)
+	labels, ok := res["labels"].(map[string]interface{})
+	if !ok {
+		return res, nil
+	}
+
+	sensitiveLabelsRaw := d.Get("sensitive_labels")
+	if sensitiveLabelsRaw != nil {
+		if sensitiveLabelsArr, ok := sensitiveLabelsRaw.([]interface{}); ok && len(sensitiveLabelsArr) > 0 {
+			if configuredSensitiveLabels, ok := sensitiveLabelsArr[0].(map[string]interface{}); ok && len(configuredSensitiveLabels) > 0 {
+				sensitiveLabels := make(map[string]interface{})
+
+				for configKey, configVal := range configuredSensitiveLabels {
+					apiField := strings.TrimSuffix(configKey, "_wo")
+					delete(labels, apiField)
+					sensitiveLabels[configKey] = configVal
 				}
+
+				return res, nil
+			}
+		}
+	}
+
+	// Replace obfuscated API values with configured values to prevent a diff
+	// Scenario where end-user uses "sensitive" labels directly in "labels" block
+	if configuredLabels, ok := d.Get("labels").(map[string]interface{}); ok {
+		for _, field := range []string{"auth_token", "password", "service_key"} {
+			if configVal, exists := configuredLabels[field]; exists && configVal != nil && configVal != "" {
+				labels[field] = configVal
 			}
 		}
 	}

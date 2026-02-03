@@ -50,13 +50,16 @@ import (
 )
 
 var sensitiveLabels = []string{"auth_token", "service_key", "password"}
+var writeOnlySensitiveLabels = []string{"auth_token_wo_version", "service_key_wo_version", "password_wo_version"}
 
 func sensitiveLabelCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
-	for _, sl := range sensitiveLabels {
-		mapLabel := diff.Get("labels." + sl).(string)
-		authLabel := diff.Get("sensitive_labels.0." + sl).(string)
-		if mapLabel != "" && authLabel != "" {
-			return fmt.Errorf("Sensitive label [%s] cannot be set in both `labels` and the `sensitive_labels` block.", sl)
+	for _, sl := range append(sensitiveLabels, writeOnlySensitiveLabels...) {
+		l := strings.TrimSuffix(sl, "_wo")
+		l = strings.TrimSuffix(l, "_wo_version")
+		val := diff.Get("labels." + l).(string)
+		sensitiveVal := diff.Get("sensitive_labels.0." + sl).(string)
+		if val != "" && sensitiveVal != "" {
+			return fmt.Errorf("Sensitive label %q cannot be set at the same time as label %q.", sl, l)
 		}
 	}
 	return nil
@@ -129,6 +132,12 @@ func GetMonitoringNotificationChannelApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelsProp)) && (ok || !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
+	sensitiveLabelsProp, err := expandMonitoringNotificationChannelSensitiveLabels(d.Get("sensitive_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("sensitive_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(sensitiveLabelsProp)) && (ok || !reflect.DeepEqual(v, sensitiveLabelsProp)) {
+		obj["sensitiveLabels"] = sensitiveLabelsProp
+	}
 	typeProp, err := expandMonitoringNotificationChannelType(d.Get("type"), d, config)
 	if err != nil {
 		return nil, err
@@ -174,11 +183,13 @@ func resourceMonitoringNotificationChannelEncoder(d tpgresource.TerraformResourc
 
 	for _, sl := range sensitiveLabels {
 		if auth, _ := d.GetOkExists("sensitive_labels.0." + sl); auth != "" {
+
 			labels[sl] = auth.(string)
 		}
 	}
 
 	obj["labels"] = labels
+	delete(obj, "sensitiveLabels")
 
 	return obj, nil
 }
@@ -192,6 +203,99 @@ func expandMonitoringNotificationChannelLabels(v interface{}, d tpgresource.Terr
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAuthToken, err := expandMonitoringNotificationChannelSensitiveLabelsAuthToken(original["auth_token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["auth_token"] = transformedAuthToken
+	}
+
+	transformedPassword, err := expandMonitoringNotificationChannelSensitiveLabelsPassword(original["password"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPassword); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["password"] = transformedPassword
+	}
+
+	transformedServiceKey, err := expandMonitoringNotificationChannelSensitiveLabelsServiceKey(original["service_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service_key"] = transformedServiceKey
+	}
+
+	transformedAuthTokenWo, err := expandMonitoringNotificationChannelSensitiveLabelsAuthTokenWo(tpgresource.GetRawConfigAttributeAsString(d.(*schema.ResourceData), "sensitive_labels.0.auth_token_wo"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthTokenWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["auth_token"] = transformedAuthTokenWo
+	}
+
+	transformedPasswordWo, err := expandMonitoringNotificationChannelSensitiveLabelsPasswordWo(tpgresource.GetRawConfigAttributeAsString(d.(*schema.ResourceData), "sensitive_labels.0.password_wo"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPasswordWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["password"] = transformedPasswordWo
+	}
+
+	transformedServiceKeyWo, err := expandMonitoringNotificationChannelSensitiveLabelsServiceKeyWo(tpgresource.GetRawConfigAttributeAsString(d.(*schema.ResourceData), "sensitive_labels.0.service_key_wo"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceKeyWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service_key"] = transformedServiceKeyWo
+	}
+
+	return transformed, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsAuthToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsServiceKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsAuthTokenWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsAuthTokenWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsPasswordWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsPasswordWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsServiceKeyWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMonitoringNotificationChannelSensitiveLabelsServiceKeyWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandMonitoringNotificationChannelType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
