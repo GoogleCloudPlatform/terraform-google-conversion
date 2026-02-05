@@ -58,7 +58,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
 )
 
-var handwrittenTfplan2caiResources = map[string]*schema.Resource{
+var handwrittenResources = map[string]*schema.Resource{
 	// ####### START handwritten resources ###########
 	"google_compute_instance": compute.ResourceComputeInstance(),
 	"google_project":          resourcemanager.ResourceGoogleProject(),
