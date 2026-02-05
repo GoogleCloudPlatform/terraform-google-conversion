@@ -134,6 +134,24 @@ func GetFirestoreDatabaseApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("database_edition"); !tpgresource.IsEmptyValue(reflect.ValueOf(databaseEditionProp)) && (ok || !reflect.DeepEqual(v, databaseEditionProp)) {
 		obj["databaseEdition"] = databaseEditionProp
 	}
+	firestoreDataAccessModeProp, err := expandFirestoreDatabaseFirestoreDataAccessMode(d.Get("firestore_data_access_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("firestore_data_access_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(firestoreDataAccessModeProp)) && (ok || !reflect.DeepEqual(v, firestoreDataAccessModeProp)) {
+		obj["firestoreDataAccessMode"] = firestoreDataAccessModeProp
+	}
+	mongodbCompatibleDataAccessModeProp, err := expandFirestoreDatabaseMongodbCompatibleDataAccessMode(d.Get("mongodb_compatible_data_access_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mongodb_compatible_data_access_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(mongodbCompatibleDataAccessModeProp)) && (ok || !reflect.DeepEqual(v, mongodbCompatibleDataAccessModeProp)) {
+		obj["mongodbCompatibleDataAccessMode"] = mongodbCompatibleDataAccessModeProp
+	}
+	realtimeUpdatesModeProp, err := expandFirestoreDatabaseRealtimeUpdatesMode(d.Get("realtime_updates_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("realtime_updates_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(realtimeUpdatesModeProp)) && (ok || !reflect.DeepEqual(v, realtimeUpdatesModeProp)) {
+		obj["realtimeUpdatesMode"] = realtimeUpdatesModeProp
+	}
 	concurrencyModeProp, err := expandFirestoreDatabaseConcurrencyMode(d.Get("concurrency_mode"), d, config)
 	if err != nil {
 		return nil, err
@@ -193,6 +211,18 @@ func expandFirestoreDatabaseType(v interface{}, d tpgresource.TerraformResourceD
 }
 
 func expandFirestoreDatabaseDatabaseEdition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreDatabaseFirestoreDataAccessMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreDatabaseMongodbCompatibleDataAccessMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreDatabaseRealtimeUpdatesMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
