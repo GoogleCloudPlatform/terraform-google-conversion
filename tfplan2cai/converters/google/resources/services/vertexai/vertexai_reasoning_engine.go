@@ -616,6 +616,13 @@ func expandVertexAIReasoningEngineSpecSourceCodeSpec(v interface{}, d tpgresourc
 		transformed["pythonSpec"] = transformedPythonSpec
 	}
 
+	transformedDeveloperConnectSource, err := expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSource(original["developer_connect_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDeveloperConnectSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["developerConnectSource"] = transformedDeveloperConnectSource
+	}
+
 	return transformed, nil
 }
 
@@ -701,6 +708,76 @@ func expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecRequirementsFile(v
 }
 
 func expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpecVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConfig, err := expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSourceConfig(original["config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["config"] = transformedConfig
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSourceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGitRepositoryLink, err := expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSourceConfigGitRepositoryLink(original["git_repository_link"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGitRepositoryLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gitRepositoryLink"] = transformedGitRepositoryLink
+	}
+
+	transformedDir, err := expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSourceConfigDir(original["dir"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDir); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dir"] = transformedDir
+	}
+
+	transformedRevision, err := expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSourceConfigRevision(original["revision"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRevision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["revision"] = transformedRevision
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSourceConfigGitRepositoryLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSourceConfigDir(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecDeveloperConnectSourceConfigRevision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
