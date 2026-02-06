@@ -366,6 +366,13 @@ func expandAlloydbClusterInitialUser(v interface{}, d tpgresource.TerraformResou
 		transformed["password"] = transformedPassword
 	}
 
+	transformedPasswordWo, err := expandAlloydbClusterInitialUserPasswordWo(tpgresource.GetRawConfigAttributeAsString(d.(*schema.ResourceData), "initial_user.0.password_wo"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPasswordWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["password"] = transformedPasswordWo
+	}
+
 	return transformed, nil
 }
 
@@ -374,6 +381,14 @@ func expandAlloydbClusterInitialUserUser(v interface{}, d tpgresource.TerraformR
 }
 
 func expandAlloydbClusterInitialUserPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterInitialUserPasswordWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterInitialUserPasswordWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
