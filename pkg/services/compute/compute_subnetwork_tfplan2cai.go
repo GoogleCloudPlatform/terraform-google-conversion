@@ -209,6 +209,12 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("ip_collection"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipCollectionProp)) && (ok || !reflect.DeepEqual(v, ipCollectionProp)) {
 		obj["ipCollection"] = ipCollectionProp
 	}
+	allowSubnetCidrRoutesOverlapProp, err := expandComputeSubnetworkAllowSubnetCidrRoutesOverlap(d.Get("allow_subnet_cidr_routes_overlap"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_subnet_cidr_routes_overlap"); ok || !reflect.DeepEqual(v, allowSubnetCidrRoutesOverlapProp) {
+		obj["allowSubnetCidrRoutesOverlap"] = allowSubnetCidrRoutesOverlapProp
+	}
 	paramsProp, err := expandComputeSubnetworkParams(d.Get("params"), d, config)
 	if err != nil {
 		return nil, err
@@ -369,6 +375,10 @@ func expandComputeSubnetworkExternalIpv6Prefix(v interface{}, d tpgresource.Terr
 }
 
 func expandComputeSubnetworkIpCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkAllowSubnetCidrRoutesOverlap(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

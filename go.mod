@@ -12,13 +12,13 @@ require (
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/hashicorp/terraform-json v0.27.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260205231414-379bdfe29cee
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260206114358-5baba522246f
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.11.1
 	github.com/zclconf/go-cty v1.17.0
 	go.uber.org/zap v1.27.0
-	google.golang.org/api v0.264.0
+	google.golang.org/api v0.265.0
 )
 
 require (
@@ -35,7 +35,7 @@ require (
 	github.com/spf13/cobra v1.8.1
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56
 	golang.org/x/oauth2 v0.34.0
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260122232226-8e98ce8d340d
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260128011058-8636f8732409
 	google.golang.org/grpc v1.78.0
 )
 
