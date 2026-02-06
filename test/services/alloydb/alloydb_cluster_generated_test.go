@@ -122,9 +122,6 @@ func TestAccAlloydbCluster(t *testing.T) {
 		{
 			Name: "TestAccAlloydbCluster_randomPassword",
 		},
-		{
-			Name: "TestAccAlloydbCluster_withPasswordWo",
-		},
 	}
 
 	for _, tt := range tests {
@@ -151,8 +148,6 @@ func TestAccAlloydbCluster(t *testing.T) {
 					"for_each",
 					"initial_user",
 					"initial_user.password",
-					"initial_user.password_wo",
-					"initial_user.password_wo_version",
 					"initial_user.user",
 					"lifecycle",
 					"location",

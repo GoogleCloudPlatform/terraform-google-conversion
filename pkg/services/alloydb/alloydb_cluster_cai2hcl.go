@@ -243,8 +243,6 @@ func flattenAlloydbClusterInitialUser(v interface{}, d *schema.ResourceData, con
 		flattenAlloydbClusterInitialUserUser(original["user"], d, config)
 	transformed["password"] =
 		flattenAlloydbClusterInitialUserPassword(original["password"], d, config)
-	transformed["password_wo_version"] =
-		flattenAlloydbClusterInitialUserPasswordWoVersion(original["passwordWoVersion"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -257,10 +255,6 @@ func flattenAlloydbClusterInitialUserUser(v interface{}, d *schema.ResourceData,
 
 func flattenAlloydbClusterInitialUserPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func flattenAlloydbClusterInitialUserPasswordWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("initial_user.0.password_wo_version")
 }
 
 func flattenAlloydbClusterRestoreBackupSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
