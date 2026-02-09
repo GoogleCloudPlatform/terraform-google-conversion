@@ -110,6 +110,12 @@ func GetPrivilegedAccessManagerSettingsCaiObject(d tpgresource.TerraformResource
 
 func GetPrivilegedAccessManagerSettingsApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	etagProp, err := expandPrivilegedAccessManagerSettingsEtag(d.Get("etag"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
+		obj["etag"] = etagProp
+	}
 	serviceAccountApproverSettingsProp, err := expandPrivilegedAccessManagerSettingsServiceAccountApproverSettings(d.Get("service_account_approver_settings"), d, config)
 	if err != nil {
 		return nil, err
@@ -124,6 +130,10 @@ func GetPrivilegedAccessManagerSettingsApiObject(d tpgresource.TerraformResource
 	}
 
 	return obj, nil
+}
+
+func expandPrivilegedAccessManagerSettingsEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandPrivilegedAccessManagerSettingsServiceAccountApproverSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
