@@ -309,12 +309,6 @@ func GetComputeVpnTunnelApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("cipher_suite"); !tpgresource.IsEmptyValue(reflect.ValueOf(cipherSuiteProp)) && (ok || !reflect.DeepEqual(v, cipherSuiteProp)) {
 		obj["cipherSuite"] = cipherSuiteProp
 	}
-	sharedSecretWoProp, err := expandComputeVpnTunnelSharedSecretWo(d.Get("shared_secret_wo"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("shared_secret_wo"); !tpgresource.IsEmptyValue(reflect.ValueOf(sharedSecretWoProp)) && (ok || !reflect.DeepEqual(v, sharedSecretWoProp)) {
-		obj["sharedSecret"] = sharedSecretWoProp
-	}
 	effectiveLabelsProp, err := expandComputeVpnTunnelEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -574,10 +568,6 @@ func expandComputeVpnTunnelCipherSuitePhase2Integrity(v interface{}, d tpgresour
 }
 
 func expandComputeVpnTunnelCipherSuitePhase2Pfs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeVpnTunnelSharedSecretWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
