@@ -169,12 +169,6 @@ func flattenMonitoringNotificationChannelSensitiveLabels(v interface{}, d *schem
 		flattenMonitoringNotificationChannelSensitiveLabelsPassword(original["password"], d, config)
 	transformed["service_key"] =
 		flattenMonitoringNotificationChannelSensitiveLabelsServiceKey(original["service_key"], d, config)
-	transformed["auth_token_wo_version"] =
-		flattenMonitoringNotificationChannelSensitiveLabelsAuthTokenWoVersion(original["authTokenWoVersion"], d, config)
-	transformed["password_wo_version"] =
-		flattenMonitoringNotificationChannelSensitiveLabelsPasswordWoVersion(original["passwordWoVersion"], d, config)
-	transformed["service_key_wo_version"] =
-		flattenMonitoringNotificationChannelSensitiveLabelsServiceKeyWoVersion(original["serviceKeyWoVersion"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -191,18 +185,6 @@ func flattenMonitoringNotificationChannelSensitiveLabelsPassword(v interface{}, 
 
 func flattenMonitoringNotificationChannelSensitiveLabelsServiceKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
-}
-
-func flattenMonitoringNotificationChannelSensitiveLabelsAuthTokenWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("sensitive_labels.0.auth_token_wo_version")
-}
-
-func flattenMonitoringNotificationChannelSensitiveLabelsPasswordWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("sensitive_labels.0.password_wo_version")
-}
-
-func flattenMonitoringNotificationChannelSensitiveLabelsServiceKeyWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("sensitive_labels.0.service_key_wo_version")
 }
 
 func flattenMonitoringNotificationChannelType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

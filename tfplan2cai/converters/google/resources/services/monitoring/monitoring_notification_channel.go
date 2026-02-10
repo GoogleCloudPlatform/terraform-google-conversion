@@ -238,27 +238,6 @@ func expandMonitoringNotificationChannelSensitiveLabels(v interface{}, d tpgreso
 		transformed["service_key"] = transformedServiceKey
 	}
 
-	transformedAuthTokenWo, err := expandMonitoringNotificationChannelSensitiveLabelsAuthTokenWo(tpgresource.GetRawConfigAttributeAsString(d.(*schema.ResourceData), "sensitive_labels.0.auth_token_wo"), d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedAuthTokenWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["auth_token"] = transformedAuthTokenWo
-	}
-
-	transformedPasswordWo, err := expandMonitoringNotificationChannelSensitiveLabelsPasswordWo(tpgresource.GetRawConfigAttributeAsString(d.(*schema.ResourceData), "sensitive_labels.0.password_wo"), d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedPasswordWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["password"] = transformedPasswordWo
-	}
-
-	transformedServiceKeyWo, err := expandMonitoringNotificationChannelSensitiveLabelsServiceKeyWo(tpgresource.GetRawConfigAttributeAsString(d.(*schema.ResourceData), "sensitive_labels.0.service_key_wo"), d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedServiceKeyWo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["service_key"] = transformedServiceKeyWo
-	}
-
 	return transformed, nil
 }
 
@@ -271,30 +250,6 @@ func expandMonitoringNotificationChannelSensitiveLabelsPassword(v interface{}, d
 }
 
 func expandMonitoringNotificationChannelSensitiveLabelsServiceKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandMonitoringNotificationChannelSensitiveLabelsAuthTokenWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandMonitoringNotificationChannelSensitiveLabelsAuthTokenWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandMonitoringNotificationChannelSensitiveLabelsPasswordWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandMonitoringNotificationChannelSensitiveLabelsPasswordWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandMonitoringNotificationChannelSensitiveLabelsServiceKeyWo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandMonitoringNotificationChannelSensitiveLabelsServiceKeyWoVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
