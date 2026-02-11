@@ -134,6 +134,12 @@ func GetNetworkServicesMulticastDomainApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("multicast_domain_group"); !tpgresource.IsEmptyValue(reflect.ValueOf(multicastDomainGroupProp)) && (ok || !reflect.DeepEqual(v, multicastDomainGroupProp)) {
 		obj["multicastDomainGroup"] = multicastDomainGroupProp
 	}
+	ullMulticastDomainProp, err := expandNetworkServicesMulticastDomainUllMulticastDomain(d.Get("ull_multicast_domain"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ull_multicast_domain"); !tpgresource.IsEmptyValue(reflect.ValueOf(ullMulticastDomainProp)) && (ok || !reflect.DeepEqual(v, ullMulticastDomainProp)) {
+		obj["ullMulticastDomain"] = ullMulticastDomainProp
+	}
 	effectiveLabelsProp, err := expandNetworkServicesMulticastDomainEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -190,6 +196,32 @@ func expandNetworkServicesMulticastDomainDescription(v interface{}, d tpgresourc
 }
 
 func expandNetworkServicesMulticastDomainMulticastDomainGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesMulticastDomainUllMulticastDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPreconfiguredUllDomain, err := expandNetworkServicesMulticastDomainUllMulticastDomainPreconfiguredUllDomain(original["preconfigured_ull_domain"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPreconfiguredUllDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["preconfiguredUllDomain"] = transformedPreconfiguredUllDomain
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkServicesMulticastDomainUllMulticastDomainPreconfiguredUllDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
