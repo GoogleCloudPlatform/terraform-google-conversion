@@ -30,6 +30,9 @@ func TestAccComputeRegionSslCertificate(t *testing.T) {
 			Name: "TestAccComputeRegionSslCertificate_regionSslCertificateBasicExample",
 		},
 		{
+			Name: "TestAccComputeRegionSslCertificate_regionSslCertificateBasicWriteonlyExample",
+		},
+		{
 			Name: "TestAccComputeRegionSslCertificate_regionSslCertificateRandomProviderExample",
 		},
 		{
