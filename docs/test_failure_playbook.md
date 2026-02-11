@@ -1,6 +1,6 @@
-# Terraform Google Conversion (TGC) Test Failure Playbook
+# Terraform Google Conversion (TGC) Integration Test Failure Playbook
 
-This playbook helps diagnose and fix common issues encountered when running TGC tests. These tests often involve converting between CAI (Cloud Asset Inventory) JSON and HCL (Terraform).
+This playbook helps diagnose and fix common issues encountered when running TGC integration tests. These tests often involve converting between CAI (Cloud Asset Inventory) JSON and HCL (Terraform).
 
 ---
 
@@ -25,11 +25,11 @@ These tests check the accuracy of the conversions between Cloud Asset Inventory 
 
 ### 2. Missing Sensitive Fields
 *   **Symptom:** Error message like `At least 1 'trust_anchors' blocks are required`.
-*   **Cause:** Fields like `pemCertificate` don't exist in CAI assets as they are sensitive info, but are required in HCL.
+*   **Cause:** Fields like `trustAnchors.pemCertificate` don't exist in CAI assets as they are sensitive info, but are required in HCL.
 *   **Solution:** Use a `tgc_decoder` to set missing sensitive fields to a placeholder like `"unknown"`.
-*   **Example:** `TestAccIAMBetaWorkloadIdentityPoolProvider_x509` failed because `pemCertificate` was missing.
+*   **Example:** `TestAccIAMBetaWorkloadIdentityPoolProvider_x509` failed because `pemCertificate` was missing in the required field `trustAnchors`.
 
-### 3. One-of Fields Not Set
+### 3. At-Least-One-of or Exactly-One-Of Field Not Set
 *   **Symptom:** Error message: `'self_managed': one of managed, self_managed must be specified`.
 *   **Cause:** Similar to conflicting fields, but where at least one must be present and the conversion failed to pick one.
 *   **Solution:** Use a `tgc_decoder` to ensure the correct block is initialized.
@@ -38,7 +38,7 @@ These tests check the accuracy of the conversions between Cloud Asset Inventory 
 *   **Symptom:** Error 404: `The resource ... was not found, 'notFound'`.
 *   **Cause:** The HCL to CAI conversion (`custom_tgc_expand`) attempts to call the GCP API (to resolve instance names to IDs, etc.), but the resource doesn't exist in the test project yet.
 *   **Solution:** Override the default expansion logic for the field causing the API call.
-*   **Action:** Add a `custom_tgc_expand` entry in the YAML pointing to a template that skips API validation.
+*   **Action:** Add a `custom_tgc_expand` entry in the YAML pointing to a template that skips API calls.
 
 ### 5. Argument Required, But No Definition Found (Encoder Issue)
 *   **Symptom:** `The argument 'name' is required, but no definition was found`.
