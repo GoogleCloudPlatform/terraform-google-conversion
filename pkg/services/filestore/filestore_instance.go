@@ -485,6 +485,13 @@ simultaneous updates from overwriting each other.`,
  and default labels configured on the provider.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
 			},
+			"desired_replica_state": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"PAUSED", "READY", ""}),
+				Description:  `The desired_replica_state field controls the state of a replica. Terraform will attempt to make the actual state of the replica match the desired state. Default value: "READY" Possible values: ["PAUSED", "READY"]`,
+				Default:      "READY",
+			},
 			"project": {
 				Type:     schema.TypeString,
 				Optional: true,

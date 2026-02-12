@@ -83,6 +83,7 @@ func TestAccFilestoreInstance(t *testing.T) {
 				[]string{
 					"count",
 					"depends_on",
+					"desired_replica_state",
 					"for_each",
 					"initial_replication",
 					"lifecycle",
