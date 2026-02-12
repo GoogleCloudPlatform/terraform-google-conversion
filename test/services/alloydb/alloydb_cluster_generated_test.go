@@ -122,6 +122,9 @@ func TestAccAlloydbCluster(t *testing.T) {
 		{
 			Name: "TestAccAlloydbCluster_randomPassword",
 		},
+		{
+			Name: "TestAccAlloydbCluster_withPasswordWo",
+		},
 	}
 
 	for _, tt := range tests {
