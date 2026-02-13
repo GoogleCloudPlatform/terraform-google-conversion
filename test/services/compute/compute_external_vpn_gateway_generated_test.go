@@ -38,6 +38,9 @@ func TestAccComputeExternalVpnGateway(t *testing.T) {
 		{
 			Name: "TestAccComputeExternalVPNGateway_insertIpv6Address",
 		},
+		{
+			Name: "TestAccComputeExternalVPNGateway_resourceManagerTags",
+		},
 	}
 
 	for _, tt := range tests {
