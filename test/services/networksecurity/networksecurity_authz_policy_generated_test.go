@@ -27,7 +27,16 @@ func TestAccNetworkSecurityAuthzPolicy(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccNetworkSecurityAuthzPolicy_networkServicesAuthzPolicyAdvancedExample",
+			Name: "TestAccNetworkSecurityAuthzPolicy_networkSecurityAuthzPolicyAdvancedExample",
+		},
+		{
+			Name: "TestAccNetworkSecurityAuthzPolicy_networkSecurityAuthzPolicyMcpExample",
+		},
+		{
+			Name: "TestAccNetworkSecurityAuthzPolicy_networkServicesAuthzPolicyHttpRules",
+		},
+		{
+			Name: "TestAccNetworkSecurityAuthzPolicy_networkSecurityAuthzPolicyMcpUpdate",
 		},
 	}
 
