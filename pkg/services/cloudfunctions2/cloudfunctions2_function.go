@@ -362,40 +362,6 @@ supplied the value is interpreted as bytes.`,
 							Optional:    true,
 							Description: `The binary authorization policy to be checked when deploying the Cloud Run service.`,
 						},
-						"direct_vpc_egress": {
-							Type:         schema.TypeString,
-							Computed:     true,
-							Optional:     true,
-							ValidateFunc: verify.ValidateEnum([]string{"VPC_EGRESS_ALL_TRAFFIC", "VPC_EGRESS_PRIVATE_RANGES_ONLY", ""}),
-							Description:  `Egress settings for direct VPC. If not provided, it defaults to VPC_EGRESS_PRIVATE_RANGES_ONLY. Possible values: ["VPC_EGRESS_ALL_TRAFFIC", "VPC_EGRESS_PRIVATE_RANGES_ONLY"]`,
-						},
-						"direct_vpc_network_interface": {
-							Type:        schema.TypeList,
-							Optional:    true,
-							Description: `The Direct VPC network interface for the Cloud Function. Currently only a single Direct VPC is supported.`,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"network": {
-										Type:        schema.TypeString,
-										Optional:    true,
-										Description: `The name of the VPC network to which the function will be connected. Specify either a VPC network or a subnet, or both. If you specify only a network, the subnet uses the same name as the network.`,
-									},
-									"subnetwork": {
-										Type:        schema.TypeString,
-										Optional:    true,
-										Description: `The name of the VPC subnetwork that the Cloud Function resource will get IPs from. Specify either a VPC network or a subnet, or both. If both network and subnetwork are specified, the given VPC subnetwork must belong to the given VPC network. If subnetwork is not specified, the subnetwork with the same name with the network will be used.`,
-									},
-									"tags": {
-										Type:        schema.TypeList,
-										Optional:    true,
-										Description: `Network tags applied to this Cloud Function resource.`,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-								},
-							},
-						},
 						"environment_variables": {
 							Type:             schema.TypeMap,
 							Computed:         true,

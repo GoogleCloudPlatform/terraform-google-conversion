@@ -397,10 +397,6 @@ func flattenCloudfunctions2functionServiceConfig(v interface{}, d *schema.Resour
 		flattenCloudfunctions2functionServiceConfigVpcConnector(original["vpcConnector"], d, config)
 	transformed["vpc_connector_egress_settings"] =
 		flattenCloudfunctions2functionServiceConfigVpcConnectorEgressSettings(original["vpcConnectorEgressSettings"], d, config)
-	transformed["direct_vpc_network_interface"] =
-		flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterface(original["directVpcNetworkInterface"], d, config)
-	transformed["direct_vpc_egress"] =
-		flattenCloudfunctions2functionServiceConfigDirectVpcEgress(original["directVpcEgress"], d, config)
 	transformed["ingress_settings"] =
 		flattenCloudfunctions2functionServiceConfigIngressSettings(original["ingressSettings"], d, config)
 	transformed["service_account_email"] =
@@ -504,43 +500,6 @@ func flattenCloudfunctions2functionServiceConfigVpcConnector(v interface{}, d *s
 }
 
 func flattenCloudfunctions2functionServiceConfigVpcConnectorEgressSettings(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterface(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return v
-	}
-	l := v.([]interface{})
-	transformed := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		original := raw.(map[string]interface{})
-		if len(original) < 1 {
-			// Do not include empty json objects coming back from the api
-			continue
-		}
-		transformed = append(transformed, map[string]interface{}{
-			"network":    flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceNetwork(original["network"], d, config),
-			"subnetwork": flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceSubnetwork(original["subnetwork"], d, config),
-			"tags":       flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceTags(original["tags"], d, config),
-		})
-	}
-	return transformed
-}
-
-func flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceSubnetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
-func flattenCloudfunctions2functionServiceConfigDirectVpcEgress(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
