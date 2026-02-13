@@ -49,6 +49,13 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+func ResourceVersionDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	if strings.TrimPrefix(strings.TrimPrefix(new, "v1/"), "beta/") == strings.TrimPrefix(strings.TrimPrefix(old, "v1/"), "beta/") {
+		return true
+	}
+	return false
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
