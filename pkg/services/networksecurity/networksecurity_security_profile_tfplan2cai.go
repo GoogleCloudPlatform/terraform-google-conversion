@@ -329,10 +329,21 @@ func expandNetworkSecuritySecurityProfileCustomMirroringProfile(v interface{}, d
 		transformed["mirroringEndpointGroup"] = transformedMirroringEndpointGroup
 	}
 
+	transformedMirroringDeploymentGroups, err := expandNetworkSecuritySecurityProfileCustomMirroringProfileMirroringDeploymentGroups(original["mirroring_deployment_groups"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMirroringDeploymentGroups); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mirroringDeploymentGroups"] = transformedMirroringDeploymentGroups
+	}
+
 	return transformed, nil
 }
 
 func expandNetworkSecuritySecurityProfileCustomMirroringProfileMirroringEndpointGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileCustomMirroringProfileMirroringDeploymentGroups(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

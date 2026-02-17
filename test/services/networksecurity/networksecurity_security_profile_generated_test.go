@@ -33,16 +33,22 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileOverridesExample",
 		},
 		{
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileMirroringExample",
+		},
+		{
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileBrokerExample",
+		},
+		{
 			Name: "TestAccNetworkSecuritySecurityProfiles_update",
 		},
 		{
 			Name: "TestAccNetworkSecuritySecurityProfiles_antivirusOverrides",
 		},
 		{
-			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileUrlFilteringUpdate",
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileMirroringBrokerUpdate",
 		},
 		{
-			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileMirroringBrokerUpdate",
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileUrlFilteringUpdate",
 		},
 	}
 

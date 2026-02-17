@@ -112,6 +112,17 @@ When a mirroring rule with this security profile attached matches a packet,
 a replica will be mirrored to the location-local target in this group.
 Format: projects/{project_id}/locations/global/mirroringEndpointGroups/{endpoint_group_id}`,
 						},
+						"mirroring_deployment_groups": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Description: `The target downstream Mirroring Deployment Groups.
+This field is used for Packet Broker mirroring endpoint groups to specify
+the deployment groups that the packet should be mirrored to by the broker.
+Format: projects/{project_id}/locations/global/mirroringDeploymentGroups/{deployment_group_id}`,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 					},
 				},
 				ConflictsWith: []string{"custom_intercept_profile", "threat_prevention_profile"},
