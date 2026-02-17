@@ -51,6 +51,9 @@ func TestAccCloudfunctions2function(t *testing.T) {
 			Name: "TestAccCloudfunctions2function_cloudfunctions2PrivateWorkerpoolExample",
 		},
 		{
+			Name: "TestAccCloudfunctions2function_cloudfunctions2DirectvpcExample",
+		},
+		{
 			Name: "TestAccCloudFunctions2Function_update",
 		},
 		{
