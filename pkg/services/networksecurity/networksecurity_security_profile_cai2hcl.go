@@ -266,6 +266,8 @@ func flattenNetworkSecuritySecurityProfileCustomMirroringProfile(v interface{}, 
 	transformed := make(map[string]interface{})
 	transformed["mirroring_endpoint_group"] =
 		flattenNetworkSecuritySecurityProfileCustomMirroringProfileMirroringEndpointGroup(original["mirroringEndpointGroup"], d, config)
+	transformed["mirroring_deployment_groups"] =
+		flattenNetworkSecuritySecurityProfileCustomMirroringProfileMirroringDeploymentGroups(original["mirroringDeploymentGroups"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -280,6 +282,10 @@ func flattenNetworkSecuritySecurityProfileCustomMirroringProfileMirroringEndpoin
 	if transformed == "" {
 		return "unknown"
 	}
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileCustomMirroringProfileMirroringDeploymentGroups(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
