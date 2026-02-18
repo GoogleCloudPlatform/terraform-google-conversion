@@ -147,6 +147,12 @@ func GetBeyondcorpSecurityGatewayApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("service_discovery"); ok || !reflect.DeepEqual(v, serviceDiscoveryProp) {
 		obj["serviceDiscovery"] = serviceDiscoveryProp
 	}
+	loggingProp, err := expandBeyondcorpSecurityGatewayLogging(d.Get("logging"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("logging"); ok || !reflect.DeepEqual(v, loggingProp) {
+		obj["logging"] = loggingProp
+	}
 
 	return obj, nil
 }
@@ -477,4 +483,22 @@ func expandBeyondcorpSecurityGatewayServiceDiscoveryApiGatewayResourceOverride(v
 
 func expandBeyondcorpSecurityGatewayServiceDiscoveryApiGatewayResourceOverridePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandBeyondcorpSecurityGatewayLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
