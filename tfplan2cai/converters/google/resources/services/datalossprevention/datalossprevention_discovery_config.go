@@ -1797,6 +1797,13 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterColle
 		transformed["includeRegexes"] = transformedIncludeRegexes
 	}
 
+	transformedIncludeTags, err := expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeTags(original["include_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIncludeTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["includeTags"] = transformedIncludeTags
+	}
+
 	return transformed, nil
 }
 
@@ -1881,6 +1888,68 @@ func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterColle
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeRegexesPatternsCloudStorageRegexBucketNameRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTagFilters, err := expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeTagsTagFilters(original["tag_filters"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTagFilters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tagFilters"] = transformedTagFilters
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeTagsTagFilters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedNamespacedTagValue, err := expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeTagsTagFiltersNamespacedTagValue(original["namespaced_tag_value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNamespacedTagValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["namespacedTagValue"] = transformedNamespacedTagValue
+		}
+
+		transformedNamespacedTagKey, err := expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeTagsTagFiltersNamespacedTagKey(original["namespaced_tag_key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNamespacedTagKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["namespacedTagKey"] = transformedNamespacedTagKey
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeTagsTagFiltersNamespacedTagValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsCloudStorageTargetFilterCollectionIncludeTagsTagFiltersNamespacedTagKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
