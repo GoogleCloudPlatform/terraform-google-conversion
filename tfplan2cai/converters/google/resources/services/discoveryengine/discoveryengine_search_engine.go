@@ -146,6 +146,12 @@ func GetDiscoveryEngineSearchEngineApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("app_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(appTypeProp)) && (ok || !reflect.DeepEqual(v, appTypeProp)) {
 		obj["appType"] = appTypeProp
 	}
+	disableAnalyticsProp, err := expandDiscoveryEngineSearchEngineDisableAnalytics(d.Get("disable_analytics"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disable_analytics"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableAnalyticsProp)) && (ok || !reflect.DeepEqual(v, disableAnalyticsProp)) {
+		obj["disableAnalytics"] = disableAnalyticsProp
+	}
 	featuresProp, err := expandDiscoveryEngineSearchEngineFeatures(d.Get("features"), d, config)
 	if err != nil {
 		return nil, err
@@ -250,6 +256,10 @@ func expandDiscoveryEngineSearchEngineCommonConfigCompanyName(v interface{}, d t
 }
 
 func expandDiscoveryEngineSearchEngineAppType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineDisableAnalytics(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
