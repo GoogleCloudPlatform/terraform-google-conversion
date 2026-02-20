@@ -110,6 +110,12 @@ func GetStorageControlOrganizationIntelligenceConfigCaiObject(d tpgresource.Terr
 
 func GetStorageControlOrganizationIntelligenceConfigApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	nameProp, err := expandStorageControlOrganizationIntelligenceConfigName(d.Get("name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+		obj["name"] = nameProp
+	}
 	editionConfigProp, err := expandStorageControlOrganizationIntelligenceConfigEditionConfig(d.Get("edition_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -124,6 +130,10 @@ func GetStorageControlOrganizationIntelligenceConfigApiObject(d tpgresource.Terr
 	}
 
 	return obj, nil
+}
+
+func expandStorageControlOrganizationIntelligenceConfigName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandStorageControlOrganizationIntelligenceConfigEditionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
