@@ -164,7 +164,15 @@ func flattenComputeSubnetworkDescription(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+// flattenComputeSubnetworkIpCidrRange handles empty strings for IpCidrRange which occur in IPV6_ONLY subnets.
+// Terraform validation fails on empty string, so we convert it to nil.
 func flattenComputeSubnetworkIpCidrRange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if s, ok := v.(string); ok && s == "" {
+		return nil
+	}
 	return v
 }
 
