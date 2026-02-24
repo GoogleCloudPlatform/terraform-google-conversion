@@ -233,6 +233,13 @@ func expandComputeFirewallPolicyRuleMatch(v interface{}, d tpgresource.Terraform
 		transformed["srcNetworkScope"] = transformedSrcNetworkScope
 	}
 
+	transformedSrcNetworkContext, err := expandComputeFirewallPolicyRuleMatchSrcNetworkContext(original["src_network_context"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSrcNetworkContext); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["srcNetworkContext"] = transformedSrcNetworkContext
+	}
+
 	transformedSrcNetworks, err := expandComputeFirewallPolicyRuleMatchSrcNetworks(original["src_networks"], d, config)
 	if err != nil {
 		return nil, err
@@ -245,6 +252,13 @@ func expandComputeFirewallPolicyRuleMatch(v interface{}, d tpgresource.Terraform
 		return nil, err
 	} else if val := reflect.ValueOf(transformedDestNetworkScope); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["destNetworkScope"] = transformedDestNetworkScope
+	}
+
+	transformedDestNetworkContext, err := expandComputeFirewallPolicyRuleMatchDestNetworkContext(original["dest_network_context"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDestNetworkContext); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["destNetworkContext"] = transformedDestNetworkContext
 	}
 
 	transformedLayer4Configs, err := expandComputeFirewallPolicyRuleMatchLayer4Configs(original["layer4_configs"], d, config)
@@ -332,11 +346,19 @@ func expandComputeFirewallPolicyRuleMatchSrcNetworkScope(v interface{}, d tpgres
 	return v, nil
 }
 
+func expandComputeFirewallPolicyRuleMatchSrcNetworkContext(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeFirewallPolicyRuleMatchSrcNetworks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
 func expandComputeFirewallPolicyRuleMatchDestNetworkScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeFirewallPolicyRuleMatchDestNetworkContext(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
