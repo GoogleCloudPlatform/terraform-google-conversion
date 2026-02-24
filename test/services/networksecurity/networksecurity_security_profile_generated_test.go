@@ -66,6 +66,7 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"custom_mirroring_profile.mirroring_deployment_groups",
 					"depends_on",
 					"for_each",
 					"lifecycle",
