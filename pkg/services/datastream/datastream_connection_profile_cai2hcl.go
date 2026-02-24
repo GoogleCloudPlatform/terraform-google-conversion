@@ -227,7 +227,7 @@ func flattenDatastreamConnectionProfileOracleProfileUsername(v interface{}, d *s
 }
 
 func flattenDatastreamConnectionProfileOracleProfilePassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("oracle_profile.0.password")
+	return v
 }
 
 func flattenDatastreamConnectionProfileOracleProfileSecretManagerStoredPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -344,7 +344,7 @@ func flattenDatastreamConnectionProfileMysqlProfileUsername(v interface{}, d *sc
 }
 
 func flattenDatastreamConnectionProfileMysqlProfilePassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("mysql_profile.0.password")
+	return v
 }
 
 func flattenDatastreamConnectionProfileMysqlProfileSecretManagerStoredPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -370,15 +370,15 @@ func flattenDatastreamConnectionProfileMysqlProfileSslConfig(v interface{}, d *s
 }
 
 func flattenDatastreamConnectionProfileMysqlProfileSslConfigClientKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("mysql_profile.0.ssl_config.0.client_key")
+	return v
 }
 
 func flattenDatastreamConnectionProfileMysqlProfileSslConfigClientCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("mysql_profile.0.ssl_config.0.client_certificate")
+	return v
 }
 
 func flattenDatastreamConnectionProfileMysqlProfileSslConfigCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("mysql_profile.0.ssl_config.0.ca_certificate")
+	return v
 }
 
 func flattenDatastreamConnectionProfileBigqueryProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -455,7 +455,7 @@ func flattenDatastreamConnectionProfilePostgresqlProfileUsername(v interface{}, 
 }
 
 func flattenDatastreamConnectionProfilePostgresqlProfilePassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("postgresql_profile.0.password")
+	return v
 }
 
 func flattenDatastreamConnectionProfilePostgresqlProfileSecretManagerStoredPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -629,7 +629,7 @@ func flattenDatastreamConnectionProfileSqlServerProfileUsername(v interface{}, d
 }
 
 func flattenDatastreamConnectionProfileSqlServerProfilePassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("sql_server_profile.0.password")
+	return v
 }
 
 func flattenDatastreamConnectionProfileSqlServerProfileSecretManagerStoredPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -867,11 +867,11 @@ func flattenDatastreamConnectionProfileForwardSshConnectivityPort(v interface{},
 }
 
 func flattenDatastreamConnectionProfileForwardSshConnectivityPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("forward_ssh_connectivity.0.password")
+	return v
 }
 
 func flattenDatastreamConnectionProfileForwardSshConnectivityPrivateKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return d.Get("forward_ssh_connectivity.0.private_key")
+	return v
 }
 
 func flattenDatastreamConnectionProfilePrivateConnectivity(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
