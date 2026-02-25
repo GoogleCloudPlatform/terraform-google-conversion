@@ -12,7 +12,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/hashicorp/terraform-json v0.27.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260225194843-34e218fc571b
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260225225425-8769ba517007
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.11.1
@@ -47,7 +47,7 @@ require (
 	cloud.google.com/go/iam v1.5.3 // indirect
 	cloud.google.com/go/longrunning v0.7.0 // indirect
 	cloud.google.com/go/monitoring v1.24.3 // indirect
-	github.com/GoogleCloudPlatform/declarative-resource-client-library v1.83.0 // indirect
+	github.com/GoogleCloudPlatform/declarative-resource-client-library v1.84.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.30.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.53.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.53.0 // indirect
