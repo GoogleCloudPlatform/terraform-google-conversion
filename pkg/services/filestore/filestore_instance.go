@@ -149,6 +149,14 @@ for not allowing root access. The default is NO_ROOT_SQUASH. Default value: "NO_
 projects/{projectId}/locations/{locationId}/backups/{backupId},
 that this file share has been restored from.`,
 						},
+						"source_backupdr_backup": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Description: `The resource name of the BackupDR backup, in the format
+'projects/{project_id}/locations/{location_id}/backupVaults/{backupvault_id}/dataSources/{datasource_id}/backups/{backup_id}',
+that this file share has been restored from.`,
+						},
 					},
 				},
 			},
