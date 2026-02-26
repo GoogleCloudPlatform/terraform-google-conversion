@@ -30,6 +30,9 @@ func TestAccNetworkSecuritySecurityProfileGroup(t *testing.T) {
 			Name: "TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGroupBasicExample",
 		},
 		{
+			Name: "TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGroupUrlFilteringExample",
+		},
+		{
 			Name: "TestAccNetworkSecuritySecurityProfileGroups_update",
 		},
 	}
@@ -56,6 +59,7 @@ func TestAccNetworkSecuritySecurityProfileGroup(t *testing.T) {
 					"parent",
 					"provider",
 					"timeouts",
+					"url_filtering_profile",
 				},
 				"google_network_security_security_profile_group",
 			)
