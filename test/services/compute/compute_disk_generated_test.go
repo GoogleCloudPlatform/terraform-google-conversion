@@ -102,6 +102,12 @@ func TestAccComputeDisk(t *testing.T) {
 			Name: "TestAccComputeDisk_createSnapshotBeforeDestroy",
 		},
 		{
+			Name: "TestAccComputeDisk_VSSWindowsDefault",
+		},
+		{
+			Name: "TestAccComputeDisk_VSSWindows",
+		},
+		{
 			Name: "TestAccComputeDisk_encryptionWithRSAEncryptedKey",
 		},
 		{
