@@ -172,6 +172,13 @@ func expandGKEHub2FeatureSpec(v interface{}, d tpgresource.TerraformResourceData
 		transformed["rbacrolebindingactuation"] = transformedRbacrolebindingactuation
 	}
 
+	transformedWorkloadidentity, err := expandGKEHub2FeatureSpecWorkloadidentity(original["workloadidentity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWorkloadidentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["workloadidentity"] = transformedWorkloadidentity
+	}
+
 	return transformed, nil
 }
 
@@ -488,6 +495,32 @@ func expandGKEHub2FeatureSpecRbacrolebindingactuation(v interface{}, d tpgresour
 }
 
 func expandGKEHub2FeatureSpecRbacrolebindingactuationAllowedCustomRoles(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2FeatureSpecWorkloadidentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedScopeTenancyPool, err := expandGKEHub2FeatureSpecWorkloadidentityScopeTenancyPool(original["scope_tenancy_pool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScopeTenancyPool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scopeTenancyPool"] = transformedScopeTenancyPool
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2FeatureSpecWorkloadidentityScopeTenancyPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
