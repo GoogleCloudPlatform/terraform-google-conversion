@@ -122,7 +122,7 @@ func (c *GKEBackupBackupPlanCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "etag": struct{}{}, "protected_pod_count": struct{}{}, "state": struct{}{}, "state_reason": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}}
+	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "etag": struct{}{}, "protected_namespace_count": struct{}{}, "protected_pod_count": struct{}{}, "state": struct{}{}, "state_reason": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//gkebackup.googleapis.com/projects/{{project}}/locations/{{location}}/backupPlans/{{name}}", outputFields, hclData)
 
 	hclData["name"] = flattenGKEBackupBackupPlanName(res["name"], d, config)

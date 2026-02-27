@@ -458,6 +458,11 @@ in order to avoid race conditions: An etag is returned in the response to backup
 and systems are expected to put that etag in the request to backupPlans.patch or
 backupPlans.delete to ensure that their change will be applied to the same version of the resource.`,
 			},
+			"protected_namespace_count": {
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: `The number of Kubernetes Namespaces backed up in the last successful Backup created via this BackupPlan.`,
+			},
 			"protected_pod_count": {
 				Type:        schema.TypeInt,
 				Computed:    true,
