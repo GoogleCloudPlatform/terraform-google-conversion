@@ -340,6 +340,20 @@ func expandDataLossPreventionDiscoveryConfigActions(v interface{}, d tpgresource
 			transformed["publishToDataplexCatalog"] = transformedPublishToDataplexCatalog
 		}
 
+		transformedPublishToChronicle, err := expandDataLossPreventionDiscoveryConfigActionsPublishToChronicle(original["publish_to_chronicle"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["publishToChronicle"] = transformedPublishToChronicle
+		}
+
+		transformedPublishToScc, err := expandDataLossPreventionDiscoveryConfigActionsPublishToScc(original["publish_to_scc"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["publishToScc"] = transformedPublishToScc
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -362,6 +376,13 @@ func expandDataLossPreventionDiscoveryConfigActionsExportData(v interface{}, d t
 		return nil, err
 	} else if val := reflect.ValueOf(transformedProfileTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["profileTable"] = transformedProfileTable
+	}
+
+	transformedSampleFindingsTable, err := expandDataLossPreventionDiscoveryConfigActionsExportDataSampleFindingsTable(original["sample_findings_table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSampleFindingsTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sampleFindingsTable"] = transformedSampleFindingsTable
 	}
 
 	return transformed, nil
@@ -412,6 +433,54 @@ func expandDataLossPreventionDiscoveryConfigActionsExportDataProfileTableDataset
 }
 
 func expandDataLossPreventionDiscoveryConfigActionsExportDataProfileTableTableId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsExportDataSampleFindingsTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedProjectId, err := expandDataLossPreventionDiscoveryConfigActionsExportDataSampleFindingsTableProjectId(original["project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectId"] = transformedProjectId
+	}
+
+	transformedDatasetId, err := expandDataLossPreventionDiscoveryConfigActionsExportDataSampleFindingsTableDatasetId(original["dataset_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatasetId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["datasetId"] = transformedDatasetId
+	}
+
+	transformedTableId, err := expandDataLossPreventionDiscoveryConfigActionsExportDataSampleFindingsTableTableId(original["table_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTableId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tableId"] = transformedTableId
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsExportDataSampleFindingsTableProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsExportDataSampleFindingsTableDatasetId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsExportDataSampleFindingsTableTableId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -711,6 +780,42 @@ func expandDataLossPreventionDiscoveryConfigActionsPublishToDataplexCatalog(v in
 	return transformed, nil
 }
 
+func expandDataLossPreventionDiscoveryConfigActionsPublishToChronicle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigActionsPublishToScc(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
 func expandDataLossPreventionDiscoveryConfigTargets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -968,6 +1073,13 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableRefe
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedProjectId, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReferenceProjectId(original["project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectId"] = transformedProjectId
+	}
+
 	transformedDatasetId, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReferenceDatasetId(original["dataset_id"], d, config)
 	if err != nil {
 		return nil, err
@@ -983,6 +1095,10 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableRefe
 	}
 
 	return transformed, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReferenceProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetFilterTableReferenceDatasetId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
