@@ -312,6 +312,13 @@ func expandOSConfigPatchDeploymentPatchConfig(v interface{}, d tpgresource.Terra
 		transformed["migInstancesAllowed"] = transformedMigInstancesAllowed
 	}
 
+	transformedSkipUnpatchableVms, err := expandOSConfigPatchDeploymentPatchConfigSkipUnpatchableVms(original["skip_unpatchable_vms"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSkipUnpatchableVms); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["skipUnpatchableVms"] = transformedSkipUnpatchableVms
+	}
+
 	transformedRebootConfig, err := expandOSConfigPatchDeploymentPatchConfigRebootConfig(original["reboot_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -372,6 +379,10 @@ func expandOSConfigPatchDeploymentPatchConfig(v interface{}, d tpgresource.Terra
 }
 
 func expandOSConfigPatchDeploymentPatchConfigMigInstancesAllowed(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOSConfigPatchDeploymentPatchConfigSkipUnpatchableVms(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
