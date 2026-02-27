@@ -120,6 +120,12 @@ func GetDiscoveryEngineDataConnectorApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("data_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataSourceProp)) && (ok || !reflect.DeepEqual(v, dataSourceProp)) {
 		obj["dataSource"] = dataSourceProp
 	}
+	dataSourceVersionProp, err := expandDiscoveryEngineDataConnectorDataSourceVersion(d.Get("data_source_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("data_source_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataSourceVersionProp)) && (ok || !reflect.DeepEqual(v, dataSourceVersionProp)) {
+		obj["dataSourceVersion"] = dataSourceVersionProp
+	}
 	paramsProp, err := expandDiscoveryEngineDataConnectorParams(d.Get("params"), d, config)
 	if err != nil {
 		return nil, err
@@ -150,11 +156,29 @@ func GetDiscoveryEngineDataConnectorApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("kms_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyNameProp)) && (ok || !reflect.DeepEqual(v, kmsKeyNameProp)) {
 		obj["kmsKeyName"] = kmsKeyNameProp
 	}
+	actionConfigProp, err := expandDiscoveryEngineDataConnectorActionConfig(d.Get("action_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("action_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(actionConfigProp)) && (ok || !reflect.DeepEqual(v, actionConfigProp)) {
+		obj["actionConfig"] = actionConfigProp
+	}
+	bapConfigProp, err := expandDiscoveryEngineDataConnectorBapConfig(d.Get("bap_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("bap_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(bapConfigProp)) && (ok || !reflect.DeepEqual(v, bapConfigProp)) {
+		obj["bapConfig"] = bapConfigProp
+	}
 	staticIpEnabledProp, err := expandDiscoveryEngineDataConnectorStaticIpEnabled(d.Get("static_ip_enabled"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("static_ip_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(staticIpEnabledProp)) && (ok || !reflect.DeepEqual(v, staticIpEnabledProp)) {
 		obj["staticIpEnabled"] = staticIpEnabledProp
+	}
+	destinationConfigsProp, err := expandDiscoveryEngineDataConnectorDestinationConfigs(d.Get("destination_configs"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("destination_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(destinationConfigsProp)) && (ok || !reflect.DeepEqual(v, destinationConfigsProp)) {
+		obj["destinationConfigs"] = destinationConfigsProp
 	}
 	connectorModesProp, err := expandDiscoveryEngineDataConnectorConnectorModes(d.Get("connector_modes"), d, config)
 	if err != nil {
@@ -191,6 +215,10 @@ func GetDiscoveryEngineDataConnectorApiObject(d tpgresource.TerraformResourceDat
 }
 
 func expandDiscoveryEngineDataConnectorDataSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorDataSourceVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -294,7 +322,164 @@ func expandDiscoveryEngineDataConnectorKmsKeyName(v interface{}, d tpgresource.T
 	return v, nil
 }
 
+func expandDiscoveryEngineDataConnectorActionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedActionParams, err := expandDiscoveryEngineDataConnectorActionConfigActionParams(original["action_params"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedActionParams); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["actionParams"] = transformedActionParams
+	}
+
+	transformedIsActionConfigured, err := expandDiscoveryEngineDataConnectorActionConfigIsActionConfigured(original["is_action_configured"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIsActionConfigured); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["isActionConfigured"] = transformedIsActionConfigured
+	}
+
+	transformedCreateBapConnection, err := expandDiscoveryEngineDataConnectorActionConfigCreateBapConnection(original["create_bap_connection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCreateBapConnection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["createBapConnection"] = transformedCreateBapConnection
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataConnectorActionConfigActionParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandDiscoveryEngineDataConnectorActionConfigIsActionConfigured(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorActionConfigCreateBapConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorBapConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabledActions, err := expandDiscoveryEngineDataConnectorBapConfigEnabledActions(original["enabled_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabledActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabledActions"] = transformedEnabledActions
+	}
+
+	transformedSupportedConnectorModes, err := expandDiscoveryEngineDataConnectorBapConfigSupportedConnectorModes(original["supported_connector_modes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSupportedConnectorModes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["supportedConnectorModes"] = transformedSupportedConnectorModes
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataConnectorBapConfigEnabledActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorBapConfigSupportedConnectorModes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDiscoveryEngineDataConnectorStaticIpEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorDestinationConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedKey, err := expandDiscoveryEngineDataConnectorDestinationConfigsKey(original["key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["key"] = transformedKey
+		}
+
+		transformedDestinations, err := expandDiscoveryEngineDataConnectorDestinationConfigsDestinations(original["destinations"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDestinations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["destinations"] = transformedDestinations
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDiscoveryEngineDataConnectorDestinationConfigsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorDestinationConfigsDestinations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHost, err := expandDiscoveryEngineDataConnectorDestinationConfigsDestinationsHost(original["host"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHost); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["host"] = transformedHost
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDiscoveryEngineDataConnectorDestinationConfigsDestinationsHost(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
