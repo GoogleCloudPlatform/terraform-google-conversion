@@ -388,6 +388,18 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"netapp.googleapis.com/Backup": {
 		"Default": netapp.NewNetappBackupCai2hclConverter(provider),
 	},
+	"netapp.googleapis.com/BackupPolicy": {
+		"Default": netapp.NewNetappBackupPolicyCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/BackupVault": {
+		"Default": netapp.NewNetappBackupVaultCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/Snapshot": {
+		"Default": netapp.NewNetappVolumeSnapshotCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/StoragePool": {
+		"Default": netapp.NewNetappStoragePoolCai2hclConverter(provider),
+	},
 	"networkconnectivity.googleapis.com/Group": {
 		"Default": networkconnectivity.NewNetworkConnectivityGroupCai2hclConverter(provider),
 	},
