@@ -19,6 +19,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
@@ -65,7 +66,7 @@ var handwrittenResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 136
+// Generated resources: 138
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -98,6 +99,8 @@ var generatedResources = map[string]*schema.Resource{
 	"google_clouddeploy_deploy_policy":                       clouddeploy.ResourceClouddeployDeployPolicy(),
 	"google_cloudfunctions2_function":                        cloudfunctions2.ResourceCloudfunctions2function(),
 	"google_cloud_tasks_queue":                               cloudtasks.ResourceCloudTasksQueue(),
+	"google_colab_runtime":                                   colab.ResourceColabRuntime(),
+	"google_colab_runtime_template":                          colab.ResourceColabRuntimeTemplate(),
 	"google_compute_address":                                 compute.ResourceComputeAddress(),
 	"google_compute_autoscaler":                              compute.ResourceComputeAutoscaler(),
 	"google_compute_backend_bucket":                          compute.ResourceComputeBackendBucket(),
