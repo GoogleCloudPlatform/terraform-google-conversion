@@ -31,6 +31,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
@@ -86,6 +87,12 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"Default": compute.NewComputeInstanceCai2hclConverter(provider),
 	},
 	// ####### END handwritten resources ###########
+	"aiplatform.googleapis.com/NotebookRuntime": {
+		"Default": colab.NewColabRuntimeCai2hclConverter(provider),
+	},
+	"aiplatform.googleapis.com/NotebookRuntimeTemplate": {
+		"Default": colab.NewColabRuntimeTemplateCai2hclConverter(provider),
+	},
 	"alloydb.googleapis.com/Backup": {
 		"Default": alloydb.NewAlloydbBackupCai2hclConverter(provider),
 	},
