@@ -59,6 +59,9 @@ func TestAccNetappStoragePool(t *testing.T) {
 		{
 			Name: "TestAccNetappStoragePool_ScaleTierEnterprise",
 		},
+		{
+			Name: "TestAccNetappStoragePool_ontapMode",
+		},
 	}
 
 	for _, tt := range tests {
