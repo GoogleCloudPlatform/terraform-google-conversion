@@ -241,11 +241,23 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"ComputeHealthCheck":       compute.NewComputeHealthCheckCai2hclConverter(provider),
 		"ComputeRegionHealthCheck": compute.NewComputeRegionHealthCheckCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/HttpHealthCheck": {
+		"Default": compute.NewComputeHttpHealthCheckCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/HttpsHealthCheck": {
+		"Default": compute.NewComputeHttpsHealthCheckCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/Image": {
 		"Default": compute.NewComputeImageCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/InstantSnapshot": {
+		"Default": compute.NewComputeInstantSnapshotCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/Network": {
 		"Default": compute.NewComputeNetworkCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/NetworkEndpointGroup": {
+		"Default": compute.NewComputeGlobalNetworkEndpointGroupCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/NodeGroup": {
 		"Default": compute.NewComputeNodeGroupCai2hclConverter(provider),
