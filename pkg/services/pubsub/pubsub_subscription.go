@@ -264,6 +264,16 @@ A duration in seconds with up to nine fractional digits, ending with 's'. Exampl
 [service agent](https://cloud.google.com/iam/docs/service-agents),
 service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.`,
 						},
+						"text_config": {
+							Type:        schema.TypeList,
+							Computed:    true,
+							Optional:    true,
+							Description: `If set, message data will be written to Cloud Storage in text format.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{},
+							},
+						},
 					},
 				},
 				ConflictsWith: []string{"bigquery_config", "push_config"},
