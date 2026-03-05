@@ -586,6 +586,12 @@ func GetComputeDiskApiObject(d tpgresource.TerraformResourceData, config *transp
 	} else if v, ok := d.GetOkExists("access_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessModeProp)) && (ok || !reflect.DeepEqual(v, accessModeProp)) {
 		obj["accessMode"] = accessModeProp
 	}
+	eraseWindowsVssSignatureProp, err := expandComputeDiskEraseWindowsVssSignature(d.Get("erase_windows_vss_signature"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("erase_windows_vss_signature"); !tpgresource.IsEmptyValue(reflect.ValueOf(eraseWindowsVssSignatureProp)) && (ok || !reflect.DeepEqual(v, eraseWindowsVssSignatureProp)) {
+		obj["eraseWindowsVssSignature"] = eraseWindowsVssSignatureProp
+	}
 	effectiveLabelsProp, err := expandComputeDiskEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -1027,6 +1033,10 @@ func expandComputeDiskStoragePool(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandComputeDiskAccessMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeDiskEraseWindowsVssSignature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

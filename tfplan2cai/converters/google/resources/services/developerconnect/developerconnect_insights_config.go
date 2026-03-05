@@ -116,6 +116,12 @@ func GetDeveloperConnectInsightsConfigApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("app_hub_application"); !tpgresource.IsEmptyValue(reflect.ValueOf(appHubApplicationProp)) && (ok || !reflect.DeepEqual(v, appHubApplicationProp)) {
 		obj["appHubApplication"] = appHubApplicationProp
 	}
+	targetProjectsProp, err := expandDeveloperConnectInsightsConfigTargetProjects(d.Get("target_projects"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("target_projects"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetProjectsProp)) && (ok || !reflect.DeepEqual(v, targetProjectsProp)) {
+		obj["projects"] = targetProjectsProp
+	}
 	artifactConfigsProp, err := expandDeveloperConnectInsightsConfigArtifactConfigs(d.Get("artifact_configs"), d, config)
 	if err != nil {
 		return nil, err
@@ -139,6 +145,32 @@ func GetDeveloperConnectInsightsConfigApiObject(d tpgresource.TerraformResourceD
 }
 
 func expandDeveloperConnectInsightsConfigAppHubApplication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectInsightsConfigTargetProjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedProjectIds, err := expandDeveloperConnectInsightsConfigTargetProjectsProjectIds(original["project_ids"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectIds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectIds"] = transformedProjectIds
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectInsightsConfigTargetProjectsProjectIds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

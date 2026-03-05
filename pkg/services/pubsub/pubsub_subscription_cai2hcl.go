@@ -251,6 +251,8 @@ func flattenPubsubSubscriptionCloudStorageConfig(v interface{}, d *schema.Resour
 		flattenPubsubSubscriptionCloudStorageConfigMaxMessages(original["maxMessages"], d, config)
 	transformed["avro_config"] =
 		flattenPubsubSubscriptionCloudStorageConfigAvroConfig(original["avroConfig"], d, config)
+	transformed["text_config"] =
+		flattenPubsubSubscriptionCloudStorageConfigTextConfig(original["textConfig"], d, config)
 	transformed["service_account_email"] =
 		flattenPubsubSubscriptionCloudStorageConfigServiceAccountEmail(original["serviceAccountEmail"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
@@ -339,6 +341,14 @@ func flattenPubsubSubscriptionCloudStorageConfigAvroConfigWriteMetadata(v interf
 
 func flattenPubsubSubscriptionCloudStorageConfigAvroConfigUseTopicSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenPubsubSubscriptionCloudStorageConfigTextConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	return []interface{}{transformed}
 }
 
 func flattenPubsubSubscriptionCloudStorageConfigServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

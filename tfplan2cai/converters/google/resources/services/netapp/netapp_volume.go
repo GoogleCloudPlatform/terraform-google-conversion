@@ -285,6 +285,12 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("block_devices"); !tpgresource.IsEmptyValue(reflect.ValueOf(blockDevicesProp)) && (ok || !reflect.DeepEqual(v, blockDevicesProp)) {
 		obj["blockDevices"] = blockDevicesProp
 	}
+	largeCapacityConfigProp, err := expandNetappVolumeLargeCapacityConfig(d.Get("large_capacity_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("large_capacity_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(largeCapacityConfigProp)) && (ok || !reflect.DeepEqual(v, largeCapacityConfigProp)) {
+		obj["largeCapacityConfig"] = largeCapacityConfigProp
+	}
 	effectiveLabelsProp, err := expandNetappVolumeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -1295,6 +1301,32 @@ func expandNetappVolumeBlockDevicesSizeGib(v interface{}, d tpgresource.Terrafor
 }
 
 func expandNetappVolumeBlockDevicesOsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeLargeCapacityConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConstituentCount, err := expandNetappVolumeLargeCapacityConfigConstituentCount(original["constituent_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConstituentCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["constituentCount"] = transformedConstituentCount
+	}
+
+	return transformed, nil
+}
+
+func expandNetappVolumeLargeCapacityConfigConstituentCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

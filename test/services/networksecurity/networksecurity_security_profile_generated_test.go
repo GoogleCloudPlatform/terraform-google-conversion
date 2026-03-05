@@ -33,16 +33,26 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileOverridesExample",
 		},
 		{
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileMirroringExample",
+		},
+		{
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileUrlFilteringExample",
+			Skip: "The ENUM value URL_FILTERING in type field is transformed to UNKNOWN_ENUM_VALUE_ProfileType_5 in CAI asset. The reason could be that URL_FILTERING is not supported in CAI yet. Will check if the value in CAI assets will be correct later.",
+		},
+		{
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileBrokerExample",
+		},
+		{
 			Name: "TestAccNetworkSecuritySecurityProfiles_update",
 		},
 		{
 			Name: "TestAccNetworkSecuritySecurityProfiles_antivirusOverrides",
 		},
 		{
-			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileUrlFilteringUpdate",
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileMirroringBrokerUpdate",
 		},
 		{
-			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileMirroringBrokerUpdate",
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileUrlFilteringUpdate",
 		},
 	}
 
@@ -60,6 +70,7 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"custom_mirroring_profile.mirroring_deployment_groups",
 					"depends_on",
 					"for_each",
 					"lifecycle",
@@ -68,6 +79,7 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 					"parent",
 					"provider",
 					"timeouts",
+					"url_filtering_profile",
 				},
 				"google_network_security_security_profile",
 			)

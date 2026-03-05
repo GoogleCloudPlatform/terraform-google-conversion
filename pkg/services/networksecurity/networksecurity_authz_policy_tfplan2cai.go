@@ -113,6 +113,12 @@ func GetNetworkSecurityAuthzPolicyCaiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	policyProfileProp, err := expandNetworkSecurityAuthzPolicyPolicyProfile(d.Get("policy_profile"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("policy_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(policyProfileProp)) && (ok || !reflect.DeepEqual(v, policyProfileProp)) {
+		obj["policyProfile"] = policyProfileProp
+	}
 	targetProp, err := expandNetworkSecurityAuthzPolicyTarget(d.Get("target"), d, config)
 	if err != nil {
 		return nil, err
@@ -154,6 +160,10 @@ func GetNetworkSecurityAuthzPolicyCaiObject(d tpgresource.TerraformResourceData,
 }
 
 func expandNetworkSecurityAuthzPolicyDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyPolicyProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1068,6 +1078,13 @@ func expandNetworkSecurityAuthzPolicyHttpRulesToOperations(v interface{}, d tpgr
 			transformed["methods"] = transformedMethods
 		}
 
+		transformedMcp, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcp(original["mcp"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMcp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["mcp"] = transformedMcp
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1348,6 +1365,148 @@ func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsPathsContains(v interf
 }
 
 func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMethods(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcp(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBaseProtocolMethodsOption, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpBaseProtocolMethodsOption(original["base_protocol_methods_option"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBaseProtocolMethodsOption); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["baseProtocolMethodsOption"] = transformedBaseProtocolMethodsOption
+	}
+
+	transformedMethods, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethods(original["methods"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMethods); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["methods"] = transformedMethods
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpBaseProtocolMethodsOption(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethods(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedParams, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParams(original["params"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParams); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["params"] = transformedParams
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedExact, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsExact(original["exact"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["exact"] = transformedExact
+		}
+
+		transformedPrefix, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsPrefix(original["prefix"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrefix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["prefix"] = transformedPrefix
+		}
+
+		transformedSuffix, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsSuffix(original["suffix"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSuffix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["suffix"] = transformedSuffix
+		}
+
+		transformedContains, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsContains(original["contains"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedContains); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["contains"] = transformedContains
+		}
+
+		transformedIgnoreCase, err := expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsIgnoreCase(original["ignore_case"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIgnoreCase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ignoreCase"] = transformedIgnoreCase
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsExact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsPrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsSuffix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsContains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsIgnoreCase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

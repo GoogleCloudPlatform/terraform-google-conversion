@@ -135,6 +135,7 @@ func (c *DeveloperConnectConnectionCai2hclConverter) convertResourceData(asset c
 	hclData["disabled"] = flattenDeveloperConnectConnectionDisabled(res["disabled"], d, config)
 	hclData["annotations"] = flattenDeveloperConnectConnectionAnnotations(res["annotations"], d, config)
 	hclData["gitlab_config"] = flattenDeveloperConnectConnectionGitlabConfig(res["gitlabConfig"], d, config)
+	hclData["http_config"] = flattenDeveloperConnectConnectionHttpConfig(res["httpConfig"], d, config)
 	hclData["crypto_key_config"] = flattenDeveloperConnectConnectionCryptoKeyConfig(res["cryptoKeyConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -719,6 +720,117 @@ func flattenDeveloperConnectConnectionGitlabConfigAuthorizerCredentialUserTokenS
 	if transformed == "" {
 		return "unknown"
 	}
+	return v
+}
+
+func flattenDeveloperConnectConnectionHttpConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["basic_authentication"] =
+		flattenDeveloperConnectConnectionHttpConfigBasicAuthentication(original["basicAuthentication"], d, config)
+	transformed["bearer_token_authentication"] =
+		flattenDeveloperConnectConnectionHttpConfigBearerTokenAuthentication(original["bearerTokenAuthentication"], d, config)
+	transformed["host_uri"] =
+		flattenDeveloperConnectConnectionHttpConfigHostUri(original["hostUri"], d, config)
+	transformed["service_directory_config"] =
+		flattenDeveloperConnectConnectionHttpConfigServiceDirectoryConfig(original["serviceDirectoryConfig"], d, config)
+	transformed["ssl_ca_certificate"] =
+		flattenDeveloperConnectConnectionHttpConfigSslCaCertificate(original["sslCaCertificate"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDeveloperConnectConnectionHttpConfigBasicAuthentication(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["password_secret_version"] =
+		flattenDeveloperConnectConnectionHttpConfigBasicAuthenticationPasswordSecretVersion(original["passwordSecretVersion"], d, config)
+	transformed["username"] =
+		flattenDeveloperConnectConnectionHttpConfigBasicAuthenticationUsername(original["username"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDeveloperConnectConnectionHttpConfigBasicAuthenticationPasswordSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDeveloperConnectConnectionHttpConfigBasicAuthenticationUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDeveloperConnectConnectionHttpConfigBearerTokenAuthentication(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["token_secret_version"] =
+		flattenDeveloperConnectConnectionHttpConfigBearerTokenAuthenticationTokenSecretVersion(original["tokenSecretVersion"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDeveloperConnectConnectionHttpConfigBearerTokenAuthenticationTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDeveloperConnectConnectionHttpConfigHostUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDeveloperConnectConnectionHttpConfigServiceDirectoryConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["service"] =
+		flattenDeveloperConnectConnectionHttpConfigServiceDirectoryConfigService(original["service"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDeveloperConnectConnectionHttpConfigServiceDirectoryConfigService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDeveloperConnectConnectionHttpConfigSslCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

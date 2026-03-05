@@ -144,6 +144,7 @@ func (c *AlloydbClusterCai2hclConverter) convertResourceData(asset caiasset.Asse
 	hclData["secondary_config"] = flattenAlloydbClusterSecondaryConfig(res["secondaryConfig"], d, config)
 	hclData["maintenance_update_policy"] = flattenAlloydbClusterMaintenanceUpdatePolicy(res["maintenanceUpdatePolicy"], d, config)
 	hclData["subscription_type"] = flattenAlloydbClusterSubscriptionType(res["subscriptionType"], d, config)
+	hclData["dataplex_config"] = flattenAlloydbClusterDataplexConfig(res["dataplexConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -821,4 +822,37 @@ func flattenAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeNano
 
 func flattenAlloydbClusterSubscriptionType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenAlloydbClusterDataplexConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		// The API omits the block when the underlying boolean is its zero-value (false).
+		return []interface{}{
+			map[string]interface{}{
+				"enabled": false,
+			},
+		}
+	}
+
+	original, ok := v.(map[string]interface{})
+	if !ok {
+		// If the API returns an unexpected type, fallback to the zero-value (false)
+		// to remain consistent with the nil handling.
+		return []interface{}{
+			map[string]interface{}{
+				"enabled": false,
+			},
+		}
+	}
+
+	transformed := make(map[string]interface{})
+
+	if val, ok := original["enabled"]; ok {
+		transformed["enabled"] = val
+	} else {
+		// If the block exists but the field is missing, it is also the zero-value (false).
+		transformed["enabled"] = false
+	}
+
+	return []interface{}{transformed}
 }

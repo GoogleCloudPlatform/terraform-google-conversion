@@ -126,6 +126,7 @@ func (c *NetworkSecurityAuthzPolicyCai2hclConverter) convertResourceData(asset c
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//networksecurity.googleapis.com/projects/{{project}}/locations/{{location}}/authzPolicies/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenNetworkSecurityAuthzPolicyDescription(res["description"], d, config)
+	hclData["policy_profile"] = flattenNetworkSecurityAuthzPolicyPolicyProfile(res["policyProfile"], d, config)
 	hclData["labels"] = flattenNetworkSecurityAuthzPolicyLabels(res["labels"], d, config)
 	hclData["target"] = flattenNetworkSecurityAuthzPolicyTarget(res["target"], d, config)
 	hclData["http_rules"] = flattenNetworkSecurityAuthzPolicyHttpRules(res["httpRules"], d, config)
@@ -144,6 +145,10 @@ func (c *NetworkSecurityAuthzPolicyCai2hclConverter) convertResourceData(asset c
 }
 
 func flattenNetworkSecurityAuthzPolicyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyPolicyProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -171,7 +176,20 @@ func flattenNetworkSecurityAuthzPolicyTargetLoadBalancingScheme(v interface{}, d
 }
 
 func flattenNetworkSecurityAuthzPolicyTargetResources(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
+	new := []string{}
+	vArr := v.([]interface{})
+
+	// For GCE resources we send and get back self links, although with project ids -> #s
+	// For new targets the API expects a relative resource name like projects/my-project/locations/us-west1/agentGateways/gateway
+	// but returns an FRN like //networkservices.googleapis.com/projects/0123456789/locations/us-west1/agentGateways/gateway
+	// Project # conversion is handled by a diffsuppressfunc, but to keep input/output consistent strip known FRN prefixes
+	for _, v := range vArr {
+		origRef := v.(string)
+		rel := strings.TrimPrefix(origRef, "//networkservices.googleapis.com/")
+		new = append(new, rel)
+	}
+
+	return new
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRules(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -730,6 +748,7 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToOperations(v interface{}, d *sc
 			"hosts":      flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHosts(original["hosts"], d, config),
 			"paths":      flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsPaths(original["paths"], d, config),
 			"methods":    flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMethods(original["methods"], d, config),
+			"mcp":        flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcp(original["mcp"], d, config),
 		})
 	}
 	return transformed
@@ -902,6 +921,100 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsPathsContains(v inter
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMethods(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["base_protocol_methods_option"] =
+		flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpBaseProtocolMethodsOption(original["baseProtocolMethodsOption"], d, config)
+	transformed["methods"] =
+		flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethods(original["methods"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpBaseProtocolMethodsOption(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethods(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"name":   flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsName(original["name"], d, config),
+			"params": flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParams(original["params"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"exact":       flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsExact(original["exact"], d, config),
+			"prefix":      flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsPrefix(original["prefix"], d, config),
+			"suffix":      flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsSuffix(original["suffix"], d, config),
+			"contains":    flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsContains(original["contains"], d, config),
+			"ignore_case": flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsIgnoreCase(original["ignoreCase"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsIgnoreCase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

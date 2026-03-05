@@ -158,6 +158,12 @@ func GetComputePacketMirroringApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("mirrored_resources"); !tpgresource.IsEmptyValue(reflect.ValueOf(mirroredResourcesProp)) && (ok || !reflect.DeepEqual(v, mirroredResourcesProp)) {
 		obj["mirroredResources"] = mirroredResourcesProp
 	}
+	enableProp, err := expandComputePacketMirroringEnable(d.Get("enable"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableProp)) && (ok || !reflect.DeepEqual(v, enableProp)) {
+		obj["enable"] = enableProp
+	}
 
 	return obj, nil
 }
@@ -391,5 +397,9 @@ func expandComputePacketMirroringMirroredResourcesInstancesUrl(v interface{}, d 
 }
 
 func expandComputePacketMirroringMirroredResourcesTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputePacketMirroringEnable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

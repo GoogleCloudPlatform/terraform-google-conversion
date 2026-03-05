@@ -39,6 +39,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 			Name: "TestAccComputeSubnetwork_subnetworkInternalIpv6Example",
 		},
 		{
+			Name: "TestAccComputeSubnetwork_subnetworkCidrOverlapExample",
+		},
+		{
 			Name: "TestAccComputeSubnetwork_subnetworkIpv6OnlyInternalExample",
 		},
 		{
@@ -98,6 +101,7 @@ func TestAccComputeSubnetwork(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
+					"allow_subnet_cidr_routes_overlap",
 					"count",
 					"depends_on",
 					"fingerprint",

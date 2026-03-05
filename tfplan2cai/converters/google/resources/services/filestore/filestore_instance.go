@@ -238,6 +238,13 @@ func expandFilestoreInstanceFileShares(v interface{}, d tpgresource.TerraformRes
 			transformed["sourceBackup"] = transformedSourceBackup
 		}
 
+		transformedSourceBackupdrBackup, err := expandFilestoreInstanceFileSharesSourceBackupdrBackup(original["source_backupdr_backup"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSourceBackupdrBackup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sourceBackupdrBackup"] = transformedSourceBackupdrBackup
+		}
+
 		transformedNfsExportOptions, err := expandFilestoreInstanceFileSharesNfsExportOptions(original["nfs_export_options"], d, config)
 		if err != nil {
 			return nil, err
@@ -259,6 +266,10 @@ func expandFilestoreInstanceFileSharesCapacityGb(v interface{}, d tpgresource.Te
 }
 
 func expandFilestoreInstanceFileSharesSourceBackup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFilestoreInstanceFileSharesSourceBackupdrBackup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

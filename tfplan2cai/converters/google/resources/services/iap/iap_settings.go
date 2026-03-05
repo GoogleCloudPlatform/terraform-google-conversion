@@ -282,6 +282,27 @@ func expandIapSettingsAccessSettingsOauthSettings(v interface{}, d tpgresource.T
 		transformed["loginHint"] = transformedLoginHint
 	}
 
+	transformedClientId, err := expandIapSettingsAccessSettingsOauthSettingsClientId(original["client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientId"] = transformedClientId
+	}
+
+	transformedClientSecret, err := expandIapSettingsAccessSettingsOauthSettingsClientSecret(original["client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecret"] = transformedClientSecret
+	}
+
+	transformedClientSecretSha256, err := expandIapSettingsAccessSettingsOauthSettingsClientSecretSha256(original["client_secret_sha256"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecretSha256); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecretSha256"] = transformedClientSecretSha256
+	}
+
 	transformedProgrammaticClients, err := expandIapSettingsAccessSettingsOauthSettingsProgrammaticClients(original["programmatic_clients"], d, config)
 	if err != nil {
 		return nil, err
@@ -293,6 +314,18 @@ func expandIapSettingsAccessSettingsOauthSettings(v interface{}, d tpgresource.T
 }
 
 func expandIapSettingsAccessSettingsOauthSettingsLoginHint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIapSettingsAccessSettingsOauthSettingsClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIapSettingsAccessSettingsOauthSettingsClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIapSettingsAccessSettingsOauthSettingsClientSecretSha256(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -146,6 +146,12 @@ func GetDiscoveryEngineSearchEngineApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("app_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(appTypeProp)) && (ok || !reflect.DeepEqual(v, appTypeProp)) {
 		obj["appType"] = appTypeProp
 	}
+	disableAnalyticsProp, err := expandDiscoveryEngineSearchEngineDisableAnalytics(d.Get("disable_analytics"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disable_analytics"); !tpgresource.IsEmptyValue(reflect.ValueOf(disableAnalyticsProp)) && (ok || !reflect.DeepEqual(v, disableAnalyticsProp)) {
+		obj["disableAnalytics"] = disableAnalyticsProp
+	}
 	featuresProp, err := expandDiscoveryEngineSearchEngineFeatures(d.Get("features"), d, config)
 	if err != nil {
 		return nil, err
@@ -157,6 +163,12 @@ func GetDiscoveryEngineSearchEngineApiObject(d tpgresource.TerraformResourceData
 		return nil, err
 	} else if v, ok := d.GetOkExists("kms_key_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyNameProp)) && (ok || !reflect.DeepEqual(v, kmsKeyNameProp)) {
 		obj["kmsKeyName"] = kmsKeyNameProp
+	}
+	knowledgeGraphConfigProp, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfig(d.Get("knowledge_graph_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("knowledge_graph_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(knowledgeGraphConfigProp)) && (ok || !reflect.DeepEqual(v, knowledgeGraphConfigProp)) {
+		obj["knowledgeGraphConfig"] = knowledgeGraphConfigProp
 	}
 
 	return resourceDiscoveryEngineSearchEngineEncoder(d, config, obj)
@@ -247,6 +259,10 @@ func expandDiscoveryEngineSearchEngineAppType(v interface{}, d tpgresource.Terra
 	return v, nil
 }
 
+func expandDiscoveryEngineSearchEngineDisableAnalytics(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDiscoveryEngineSearchEngineFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
 		return map[string]string{}, nil
@@ -259,5 +275,119 @@ func expandDiscoveryEngineSearchEngineFeatures(v interface{}, d tpgresource.Terr
 }
 
 func expandDiscoveryEngineSearchEngineKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableCloudKnowledgeGraph, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfigEnableCloudKnowledgeGraph(original["enable_cloud_knowledge_graph"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableCloudKnowledgeGraph); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableCloudKnowledgeGraph"] = transformedEnableCloudKnowledgeGraph
+	}
+
+	transformedCloudKnowledgeGraphTypes, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfigCloudKnowledgeGraphTypes(original["cloud_knowledge_graph_types"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudKnowledgeGraphTypes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cloudKnowledgeGraphTypes"] = transformedCloudKnowledgeGraphTypes
+	}
+
+	transformedEnablePrivateKnowledgeGraph, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfigEnablePrivateKnowledgeGraph(original["enable_private_knowledge_graph"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnablePrivateKnowledgeGraph); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enablePrivateKnowledgeGraph"] = transformedEnablePrivateKnowledgeGraph
+	}
+
+	transformedFeatureConfig, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfig(original["feature_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFeatureConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["featureConfig"] = transformedFeatureConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigEnableCloudKnowledgeGraph(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigCloudKnowledgeGraphTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigEnablePrivateKnowledgeGraph(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDisablePrivateKgQueryUnderstanding, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgQueryUnderstanding(original["disable_private_kg_query_understanding"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisablePrivateKgQueryUnderstanding); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disablePrivateKgQueryUnderstanding"] = transformedDisablePrivateKgQueryUnderstanding
+	}
+
+	transformedDisablePrivateKgEnrichment, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgEnrichment(original["disable_private_kg_enrichment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisablePrivateKgEnrichment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disablePrivateKgEnrichment"] = transformedDisablePrivateKgEnrichment
+	}
+
+	transformedDisablePrivateKgAutoComplete, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgAutoComplete(original["disable_private_kg_auto_complete"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisablePrivateKgAutoComplete); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disablePrivateKgAutoComplete"] = transformedDisablePrivateKgAutoComplete
+	}
+
+	transformedDisablePrivateKgQueryUiChips, err := expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgQueryUiChips(original["disable_private_kg_query_ui_chips"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisablePrivateKgQueryUiChips); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disablePrivateKgQueryUiChips"] = transformedDisablePrivateKgQueryUiChips
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgQueryUnderstanding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgEnrichment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgAutoComplete(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgQueryUiChips(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

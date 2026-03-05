@@ -158,6 +158,12 @@ func GetDeveloperConnectConnectionApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("gitlab_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(gitlabConfigProp)) && (ok || !reflect.DeepEqual(v, gitlabConfigProp)) {
 		obj["gitlabConfig"] = gitlabConfigProp
 	}
+	httpConfigProp, err := expandDeveloperConnectConnectionHttpConfig(d.Get("http_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("http_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(httpConfigProp)) && (ok || !reflect.DeepEqual(v, httpConfigProp)) {
+		obj["httpConfig"] = httpConfigProp
+	}
 	cryptoKeyConfigProp, err := expandDeveloperConnectConnectionCryptoKeyConfig(d.Get("crypto_key_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -1023,6 +1029,153 @@ func expandDeveloperConnectConnectionGitlabConfigAuthorizerCredentialUserTokenSe
 }
 
 func expandDeveloperConnectConnectionGitlabConfigAuthorizerCredentialUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBasicAuthentication, err := expandDeveloperConnectConnectionHttpConfigBasicAuthentication(original["basic_authentication"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBasicAuthentication); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["basicAuthentication"] = transformedBasicAuthentication
+	}
+
+	transformedBearerTokenAuthentication, err := expandDeveloperConnectConnectionHttpConfigBearerTokenAuthentication(original["bearer_token_authentication"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBearerTokenAuthentication); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bearerTokenAuthentication"] = transformedBearerTokenAuthentication
+	}
+
+	transformedHostUri, err := expandDeveloperConnectConnectionHttpConfigHostUri(original["host_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hostUri"] = transformedHostUri
+	}
+
+	transformedServiceDirectoryConfig, err := expandDeveloperConnectConnectionHttpConfigServiceDirectoryConfig(original["service_directory_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceDirectoryConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceDirectoryConfig"] = transformedServiceDirectoryConfig
+	}
+
+	transformedSslCaCertificate, err := expandDeveloperConnectConnectionHttpConfigSslCaCertificate(original["ssl_ca_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSslCaCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sslCaCertificate"] = transformedSslCaCertificate
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigBasicAuthentication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPasswordSecretVersion, err := expandDeveloperConnectConnectionHttpConfigBasicAuthenticationPasswordSecretVersion(original["password_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPasswordSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["passwordSecretVersion"] = transformedPasswordSecretVersion
+	}
+
+	transformedUsername, err := expandDeveloperConnectConnectionHttpConfigBasicAuthenticationUsername(original["username"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUsername); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["username"] = transformedUsername
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigBasicAuthenticationPasswordSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigBasicAuthenticationUsername(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigBearerTokenAuthentication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTokenSecretVersion, err := expandDeveloperConnectConnectionHttpConfigBearerTokenAuthenticationTokenSecretVersion(original["token_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTokenSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tokenSecretVersion"] = transformedTokenSecretVersion
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigBearerTokenAuthenticationTokenSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigHostUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedService, err := expandDeveloperConnectConnectionHttpConfigServiceDirectoryConfigService(original["service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service"] = transformedService
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigServiceDirectoryConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectConnectionHttpConfigSslCaCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

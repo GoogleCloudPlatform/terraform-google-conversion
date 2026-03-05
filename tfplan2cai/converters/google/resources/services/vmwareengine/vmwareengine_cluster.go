@@ -49,6 +49,61 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+// Mount and unmount on the clusters are performed
+// on the basis of a new datastore is being added or removed
+// This function doesn't account any change in the datastore mount config fields
+// Diff is calculated based on different Datastore full reosurce name
+func CalculateDatastoreMountsDiff(exsitingDatastoreMountCfg, requestedDatastoreMountCfg []interface{}) []interface{} {
+	existingCfgMap := make(map[string]map[string]interface{})
+	for _, item := range exsitingDatastoreMountCfg {
+		m := item.(map[string]interface{})
+		if datastore, ok := m["datastore"].(string); ok && datastore != "" {
+			existingCfgMap[datastore] = m
+		}
+	}
+
+	var diff []interface{}
+	for _, item := range requestedDatastoreMountCfg {
+		m := item.(map[string]interface{})
+		if datastore, ok := m["datastore"].(string); ok && datastore != "" {
+			if _, exists := existingCfgMap[datastore]; !exists {
+				diff = append(diff, item)
+			}
+		}
+	}
+	return diff
+}
+
+// For mount and unmount operation, update_mask is not used.
+func RemoveDatastoreMountConfigFieldFromUpdateMask(url string) string {
+
+	fieldToRemove := "datastoreMountConfig"
+	encodedComma := "%2C"
+
+	// Matches ",field" to remove the field and the preceding comma.
+	// e.g., foo%2CdatastoreMountConfig -> foo
+	reCommaField := regexp.MustCompile(encodedComma + fieldToRemove)
+
+	// Matches "field," to remove the field and the succeeding comma.
+	// e.g., datastoreMountConfig%2Cbar -> bar
+	reFieldComma := regexp.MustCompile(fieldToRemove + encodedComma)
+
+	// Matches the field only if it's the entire string.
+	// e.g., datastoreMountConfig -> ""
+	reFieldOnly := regexp.MustCompile(fieldToRemove + `(?:%20|\+)*$`)
+
+	// Remove instances like "...%2CdatastoreMountConfig"
+	url = reCommaField.ReplaceAllString(url, "")
+
+	// Remove instances like "datastoreMountConfig%2C..."
+	url = reFieldComma.ReplaceAllString(url, "")
+
+	// Remove instance where the mask only contains "datastoreMountConfig"
+	url = reFieldOnly.ReplaceAllString(url, "")
+
+	return url
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -122,7 +177,20 @@ func GetVmwareengineClusterApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("autoscaling_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(autoscalingSettingsProp)) && (ok || !reflect.DeepEqual(v, autoscalingSettingsProp)) {
 		obj["autoscalingSettings"] = autoscalingSettingsProp
 	}
+	datastoreMountConfigProp, err := expandVmwareengineClusterDatastoreMountConfig(d.Get("datastore_mount_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("datastore_mount_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(datastoreMountConfigProp)) && (ok || !reflect.DeepEqual(v, datastoreMountConfigProp)) {
+		obj["datastoreMountConfig"] = datastoreMountConfigProp
+	}
 
+	return resourceVmwareengineClusterEncoder(d, config, obj)
+}
+
+func resourceVmwareengineClusterEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// datastoreMountConfig is sent as post_create and post_update but not sent during create and update methods.
+	delete(obj, "datastoreMountConfig")
+	log.Printf("[DEBUG] After removal of datastoreMountConfig Cluster request %q: %#v", d.Id(), obj)
 	return obj, nil
 }
 
@@ -390,5 +458,155 @@ func expandVmwareengineClusterAutoscalingSettingsMaxClusterNodeCount(v interface
 }
 
 func expandVmwareengineClusterAutoscalingSettingsCoolDownPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDatastore, err := expandVmwareengineClusterDatastoreMountConfigDatastore(original["datastore"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDatastore); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["datastore"] = transformedDatastore
+		}
+
+		transformedDatastoreNetwork, err := expandVmwareengineClusterDatastoreMountConfigDatastoreNetwork(original["datastore_network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDatastoreNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["datastoreNetwork"] = transformedDatastoreNetwork
+		}
+
+		transformedFileShare, err := expandVmwareengineClusterDatastoreMountConfigFileShare(original["file_share"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFileShare); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["fileShare"] = transformedFileShare
+		}
+
+		transformedNfsVersion, err := expandVmwareengineClusterDatastoreMountConfigNfsVersion(original["nfs_version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNfsVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["nfsVersion"] = transformedNfsVersion
+		}
+
+		transformedAccessMode, err := expandVmwareengineClusterDatastoreMountConfigAccessMode(original["access_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAccessMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["accessMode"] = transformedAccessMode
+		}
+
+		transformedServers, err := expandVmwareengineClusterDatastoreMountConfigServers(original["servers"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServers); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["servers"] = transformedServers
+		}
+
+		transformedIgnoreColocation, err := expandVmwareengineClusterDatastoreMountConfigIgnoreColocation(original["ignore_colocation"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIgnoreColocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ignoreColocation"] = transformedIgnoreColocation
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigDatastore(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigDatastoreNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConnectionCount, err := expandVmwareengineClusterDatastoreMountConfigDatastoreNetworkConnectionCount(original["connection_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectionCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectionCount"] = transformedConnectionCount
+	}
+
+	transformedMtu, err := expandVmwareengineClusterDatastoreMountConfigDatastoreNetworkMtu(original["mtu"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMtu); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mtu"] = transformedMtu
+	}
+
+	transformedNetworkPeering, err := expandVmwareengineClusterDatastoreMountConfigDatastoreNetworkNetworkPeering(original["network_peering"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkPeering); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkPeering"] = transformedNetworkPeering
+	}
+
+	transformedSubnet, err := expandVmwareengineClusterDatastoreMountConfigDatastoreNetworkSubnet(original["subnet"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubnet); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subnet"] = transformedSubnet
+	}
+
+	return transformed, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigDatastoreNetworkConnectionCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigDatastoreNetworkMtu(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigDatastoreNetworkNetworkPeering(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigDatastoreNetworkSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigFileShare(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigNfsVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigAccessMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigServers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVmwareengineClusterDatastoreMountConfigIgnoreColocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

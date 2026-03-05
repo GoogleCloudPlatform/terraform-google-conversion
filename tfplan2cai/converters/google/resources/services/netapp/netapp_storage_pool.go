@@ -212,6 +212,18 @@ func GetNetappStoragePoolApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
+	scaleTierProp, err := expandNetappStoragePoolScaleTier(d.Get("scale_tier"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scale_tier"); !tpgresource.IsEmptyValue(reflect.ValueOf(scaleTierProp)) && (ok || !reflect.DeepEqual(v, scaleTierProp)) {
+		obj["scaleTier"] = scaleTierProp
+	}
+	modeProp, err := expandNetappStoragePoolMode(d.Get("mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(modeProp)) && (ok || !reflect.DeepEqual(v, modeProp)) {
+		obj["mode"] = modeProp
+	}
 	effectiveLabelsProp, err := expandNetappStoragePoolEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -287,6 +299,14 @@ func expandNetappStoragePoolQosType(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandNetappStoragePoolType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolScaleTier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
