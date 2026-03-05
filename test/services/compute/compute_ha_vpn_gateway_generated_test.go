@@ -35,6 +35,9 @@ func TestAccComputeHaVpnGateway(t *testing.T) {
 		{
 			Name: "TestAccComputeHaVpnGateway_updateLabels",
 		},
+		{
+			Name: "TestAccComputeHaVpnGateway_resourceManagerTags",
+		},
 	}
 
 	for _, tt := range tests {

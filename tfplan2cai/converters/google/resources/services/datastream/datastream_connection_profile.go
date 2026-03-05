@@ -836,7 +836,7 @@ func expandDatastreamConnectionProfileSalesforceProfileOauth2ClientCredentials(v
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["client_id"] = transformedClientId
+		transformed["clientId"] = transformedClientId
 	}
 
 	transformedClientSecret, err := expandDatastreamConnectionProfileSalesforceProfileOauth2ClientCredentialsClientSecret(original["client_secret"], d, config)

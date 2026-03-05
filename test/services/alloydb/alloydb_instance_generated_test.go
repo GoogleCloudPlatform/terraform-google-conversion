@@ -82,9 +82,6 @@ func TestAccAlloydbInstance(t *testing.T) {
 			Name: "TestAccAlloydbInstance_createPrimaryAndReadPoolInstanceWithAllocatedIpRangeOverride",
 		},
 		{
-			Name: "",
-		},
-		{
 			Name: "TestAccAlloydbInstance_ObservabilityConfig_Update",
 		},
 	}

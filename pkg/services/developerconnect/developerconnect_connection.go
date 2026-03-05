@@ -504,6 +504,80 @@ Enterprise instance.`,
 					},
 				},
 			},
+			"http_config": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: `Configuration for connections to an HTTP service provider.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"host_uri": {
+							Type:        schema.TypeString,
+							Required:    true,
+							ForceNew:    true,
+							Description: `The service provider's https endpoint.`,
+						},
+						"basic_authentication": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Basic authentication with username and password.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"username": {
+										Type:        schema.TypeString,
+										Required:    true,
+										Description: `The username to authenticate as.`,
+									},
+									"password_secret_version": {
+										Type:        schema.TypeString,
+										Optional:    true,
+										Description: `The password SecretManager secret version to authenticate as.`,
+									},
+								},
+							},
+						},
+						"bearer_token_authentication": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Bearer token authentication with a token.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"token_secret_version": {
+										Type:        schema.TypeString,
+										Optional:    true,
+										Description: `The token SecretManager secret version to authenticate as.`,
+									},
+								},
+							},
+						},
+						"service_directory_config": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Description: `ServiceDirectoryConfig represents Service Directory configuration for a
+connection.`,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"service": {
+										Type:     schema.TypeString,
+										Required: true,
+										Description: `The Service Directory service name.
+Format:
+projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}.`,
+									},
+								},
+							},
+						},
+						"ssl_ca_certificate": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: `The SSL certificate to use for requests to the HTTP service provider.`,
+						},
+					},
+				},
+			},
 			"labels": {
 				Type:     schema.TypeMap,
 				Optional: true,

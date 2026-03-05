@@ -388,6 +388,13 @@ func expandPubsubSubscriptionCloudStorageConfig(v interface{}, d tpgresource.Ter
 		transformed["avroConfig"] = transformedAvroConfig
 	}
 
+	transformedTextConfig, err := expandPubsubSubscriptionCloudStorageConfigTextConfig(original["text_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTextConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["textConfig"] = transformedTextConfig
+	}
+
 	transformedServiceAccountEmail, err := expandPubsubSubscriptionCloudStorageConfigServiceAccountEmail(original["service_account_email"], d, config)
 	if err != nil {
 		return nil, err
@@ -453,7 +460,7 @@ func expandPubsubSubscriptionCloudStorageConfigAvroConfig(v interface{}, d tpgre
 	transformedUseTopicSchema, err := expandPubsubSubscriptionCloudStorageConfigAvroConfigUseTopicSchema(original["use_topic_schema"], d, config)
 	if err != nil {
 		return nil, err
-	} else {
+	} else if val := reflect.ValueOf(transformedUseTopicSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["useTopicSchema"] = transformedUseTopicSchema
 	}
 
@@ -466,6 +473,24 @@ func expandPubsubSubscriptionCloudStorageConfigAvroConfigWriteMetadata(v interfa
 
 func expandPubsubSubscriptionCloudStorageConfigAvroConfigUseTopicSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandPubsubSubscriptionCloudStorageConfigTextConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandPubsubSubscriptionCloudStorageConfigServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

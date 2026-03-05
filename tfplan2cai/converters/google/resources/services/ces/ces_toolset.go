@@ -134,6 +134,12 @@ func GetCESToolsetApiObject(d tpgresource.TerraformResourceData, config *transpo
 	} else if v, ok := d.GetOkExists("open_api_toolset"); !tpgresource.IsEmptyValue(reflect.ValueOf(openApiToolsetProp)) && (ok || !reflect.DeepEqual(v, openApiToolsetProp)) {
 		obj["openApiToolset"] = openApiToolsetProp
 	}
+	mcpToolsetProp, err := expandCESToolsetMcpToolset(d.Get("mcp_toolset"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mcp_toolset"); !tpgresource.IsEmptyValue(reflect.ValueOf(mcpToolsetProp)) && (ok || !reflect.DeepEqual(v, mcpToolsetProp)) {
+		obj["mcpToolset"] = mcpToolsetProp
+	}
 
 	return obj, nil
 }
@@ -542,5 +548,378 @@ func expandCESToolsetOpenApiToolsetTlsConfigCaCertsDisplayName(v interface{}, d 
 }
 
 func expandCESToolsetOpenApiToolsetUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServerAddress, err := expandCESToolsetMcpToolsetServerAddress(original["server_address"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServerAddress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serverAddress"] = transformedServerAddress
+	}
+
+	transformedApiAuthentication, err := expandCESToolsetMcpToolsetApiAuthentication(original["api_authentication"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApiAuthentication); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["apiAuthentication"] = transformedApiAuthentication
+	}
+
+	transformedServiceDirectoryConfig, err := expandCESToolsetMcpToolsetServiceDirectoryConfig(original["service_directory_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceDirectoryConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceDirectoryConfig"] = transformedServiceDirectoryConfig
+	}
+
+	transformedTlsConfig, err := expandCESToolsetMcpToolsetTlsConfig(original["tls_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTlsConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tlsConfig"] = transformedTlsConfig
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetServerAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthentication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedApiKeyConfig, err := expandCESToolsetMcpToolsetApiAuthenticationApiKeyConfig(original["api_key_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApiKeyConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["apiKeyConfig"] = transformedApiKeyConfig
+	}
+
+	transformedOauthConfig, err := expandCESToolsetMcpToolsetApiAuthenticationOauthConfig(original["oauth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauthConfig"] = transformedOauthConfig
+	}
+
+	transformedServiceAccountAuthConfig, err := expandCESToolsetMcpToolsetApiAuthenticationServiceAccountAuthConfig(original["service_account_auth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountAuthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountAuthConfig"] = transformedServiceAccountAuthConfig
+	}
+
+	transformedServiceAgentIdTokenAuthConfig, err := expandCESToolsetMcpToolsetApiAuthenticationServiceAgentIdTokenAuthConfig(original["service_agent_id_token_auth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["serviceAgentIdTokenAuthConfig"] = transformedServiceAgentIdTokenAuthConfig
+	}
+
+	transformedBearerTokenConfig, err := expandCESToolsetMcpToolsetApiAuthenticationBearerTokenConfig(original["bearer_token_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBearerTokenConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bearerTokenConfig"] = transformedBearerTokenConfig
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationApiKeyConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedApiKeySecretVersion, err := expandCESToolsetMcpToolsetApiAuthenticationApiKeyConfigApiKeySecretVersion(original["api_key_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApiKeySecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["apiKeySecretVersion"] = transformedApiKeySecretVersion
+	}
+
+	transformedKeyName, err := expandCESToolsetMcpToolsetApiAuthenticationApiKeyConfigKeyName(original["key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["keyName"] = transformedKeyName
+	}
+
+	transformedRequestLocation, err := expandCESToolsetMcpToolsetApiAuthenticationApiKeyConfigRequestLocation(original["request_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestLocation"] = transformedRequestLocation
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationApiKeyConfigApiKeySecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationApiKeyConfigKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationApiKeyConfigRequestLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationOauthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedClientId, err := expandCESToolsetMcpToolsetApiAuthenticationOauthConfigClientId(original["client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientId"] = transformedClientId
+	}
+
+	transformedClientSecretVersion, err := expandCESToolsetMcpToolsetApiAuthenticationOauthConfigClientSecretVersion(original["client_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecretVersion"] = transformedClientSecretVersion
+	}
+
+	transformedOauthGrantType, err := expandCESToolsetMcpToolsetApiAuthenticationOauthConfigOauthGrantType(original["oauth_grant_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauthGrantType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauthGrantType"] = transformedOauthGrantType
+	}
+
+	transformedScopes, err := expandCESToolsetMcpToolsetApiAuthenticationOauthConfigScopes(original["scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scopes"] = transformedScopes
+	}
+
+	transformedTokenEndpoint, err := expandCESToolsetMcpToolsetApiAuthenticationOauthConfigTokenEndpoint(original["token_endpoint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTokenEndpoint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tokenEndpoint"] = transformedTokenEndpoint
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationOauthConfigClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationOauthConfigClientSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationOauthConfigOauthGrantType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationOauthConfigScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationOauthConfigTokenEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationServiceAccountAuthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceAccount, err := expandCESToolsetMcpToolsetApiAuthenticationServiceAccountAuthConfigServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationServiceAccountAuthConfigServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationServiceAgentIdTokenAuthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationBearerTokenConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToken, err := expandCESToolsetMcpToolsetApiAuthenticationBearerTokenConfigToken(original["token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["token"] = transformedToken
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetApiAuthenticationBearerTokenConfigToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedService, err := expandCESToolsetMcpToolsetServiceDirectoryConfigService(original["service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service"] = transformedService
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetServiceDirectoryConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetTlsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCaCerts, err := expandCESToolsetMcpToolsetTlsConfigCaCerts(original["ca_certs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCaCerts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["caCerts"] = transformedCaCerts
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetMcpToolsetTlsConfigCaCerts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedCert, err := expandCESToolsetMcpToolsetTlsConfigCaCertsCert(original["cert"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCert); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["cert"] = transformedCert
+		}
+
+		transformedDisplayName, err := expandCESToolsetMcpToolsetTlsConfigCaCertsDisplayName(original["display_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["displayName"] = transformedDisplayName
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESToolsetMcpToolsetTlsConfigCaCertsCert(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetTlsConfigCaCertsDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

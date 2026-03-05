@@ -110,6 +110,12 @@ func GetStorageControlFolderIntelligenceConfigCaiObject(d tpgresource.TerraformR
 
 func GetStorageControlFolderIntelligenceConfigApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	nameProp, err := expandStorageControlFolderIntelligenceConfigName(d.Get("name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+		obj["name"] = nameProp
+	}
 	editionConfigProp, err := expandStorageControlFolderIntelligenceConfigEditionConfig(d.Get("edition_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -124,6 +130,10 @@ func GetStorageControlFolderIntelligenceConfigApiObject(d tpgresource.TerraformR
 	}
 
 	return obj, nil
+}
+
+func expandStorageControlFolderIntelligenceConfigName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandStorageControlFolderIntelligenceConfigEditionConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

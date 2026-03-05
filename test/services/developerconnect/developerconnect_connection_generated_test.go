@@ -48,6 +48,12 @@ func TestAccDeveloperConnectConnection(t *testing.T) {
 			Name: "TestAccDeveloperConnectConnection_developerConnectConnectionBbdcExample",
 		},
 		{
+			Name: "TestAccDeveloperConnectConnection_developerConnectConnectionHttpConnBasicExample",
+		},
+		{
+			Name: "TestAccDeveloperConnectConnection_developerConnectConnectionHttpConnBearerExample",
+		},
+		{
 			Name: "TestAccDeveloperConnectConnection_developerConnectConnectionGithubUpdate",
 		},
 		{
@@ -73,6 +79,15 @@ func TestAccDeveloperConnectConnection(t *testing.T) {
 		},
 		{
 			Name: "TestAccDeveloperConnectConnection_BbdcPrivConnection",
+		},
+		{
+			Name: "TestAccDeveloperConnectConnection_developerConnectConnectionHttpBasicConfigUpdate",
+		},
+		{
+			Name: "TestAccDeveloperConnectConnection_developerConnectConnectionHttpBearerConfigUpdate",
+		},
+		{
+			Name: "TestAccDeveloperConnectConnection_HttpConfigPrivConnection",
 		},
 	}
 

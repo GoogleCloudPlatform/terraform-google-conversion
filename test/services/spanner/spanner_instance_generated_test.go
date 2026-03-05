@@ -27,6 +27,10 @@ func TestAccSpannerInstance(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingNodeConfigUpdateDisableAutoscaling",
+			Skip: "sometimes the CAI asset data for step3 is unavailable",
+		},
+		{
 			Name: "TestAccSpannerInstance_spannerInstanceBasicExample",
 		},
 		{
@@ -64,9 +68,6 @@ func TestAccSpannerInstance(t *testing.T) {
 		},
 		{
 			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingNodeConfigUpdate",
-		},
-		{
-			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingNodeConfigUpdateDisableAutoscaling",
 		},
 		{
 			Name: "TestAccSpannerInstance_basicWithAutoscalingUsingPrecessingUnitsConfigUpdateDisableAutoscaling",

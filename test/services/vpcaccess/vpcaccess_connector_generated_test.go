@@ -51,9 +51,6 @@ func TestAccVPCAccessConnector(t *testing.T) {
 		{
 			Name: "TestAccVPCAccessConnector_vpcAccessConnectorThroughput_combiningThroughputAndInstancesFields_conflict",
 		},
-		{
-			Name: "",
-		},
 	}
 
 	for _, tt := range tests {
