@@ -50,8 +50,16 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 		case "compute.googleapis.com/NetworkEndpointGroup":
 			if strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeGlobalNetworkEndpointGroup"]
+			} else if strings.Contains(asset.Name, "zones") {
+				converter = ConverterMap[asset.Type]["ComputeNetworkEndpointGroup"]
 			} else if strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionNetworkEndpointGroup"]
+			}
+		case "compute.googleapis.com/SslCertificate":
+			if strings.Contains(asset.Name, "global") {
+				converter = ConverterMap[asset.Type]["ComputeManagedSslCertificate"]
+			} else if strings.Contains(asset.Name, "regions") {
+				converter = ConverterMap[asset.Type]["ComputeRegionSslCertificate"]
 			}
 		case "secretmanager.googleapis.com/Secret":
 			if strings.Contains(asset.Name, "locations") {
