@@ -56,6 +56,8 @@ func TestAccColabRuntimeTemplate(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"software_config.env",
+					"software_config.post_startup_script_config",
 					"timeouts",
 				},
 				"google_colab_runtime_template",
