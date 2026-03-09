@@ -591,6 +591,8 @@ func flattenComputeResourcePolicyWorkloadPolicy(v interface{}, d *schema.Resourc
 		flattenComputeResourcePolicyWorkloadPolicyMaxTopologyDistance(original["maxTopologyDistance"], d, config)
 	transformed["accelerator_topology"] =
 		flattenComputeResourcePolicyWorkloadPolicyAcceleratorTopology(original["acceleratorTopology"], d, config)
+	transformed["accelerator_topology_mode"] =
+		flattenComputeResourcePolicyWorkloadPolicyAcceleratorTopologyMode(original["acceleratorTopologyMode"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -606,6 +608,10 @@ func flattenComputeResourcePolicyWorkloadPolicyMaxTopologyDistance(v interface{}
 }
 
 func flattenComputeResourcePolicyWorkloadPolicyAcceleratorTopology(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeResourcePolicyWorkloadPolicyAcceleratorTopologyMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

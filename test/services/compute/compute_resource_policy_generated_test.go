@@ -54,6 +54,9 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyAcceleratorTopologyExample",
 		},
 		{
+			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyAcceleratorTopologyModeExample",
+		},
+		{
 			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyMaxTopologyDistanceExample",
 		},
 		{
@@ -64,6 +67,9 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeResourcePolicy_guestFlushEmptyValue",
+		},
+		{
+			Name: "TestAccComputeResourcePolicy_withTopologyMode",
 		},
 	}
 
