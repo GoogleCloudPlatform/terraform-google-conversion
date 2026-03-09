@@ -285,12 +285,16 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Router": {
 		"Default": compute.NewComputeRouterCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/ServiceAttachment": {
+		"Default": compute.NewComputeServiceAttachmentCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/SslCertificate": {
 		"ComputeManagedSslCertificate": compute.NewComputeManagedSslCertificateCai2hclConverter(provider),
 		"ComputeRegionSslCertificate":  compute.NewComputeRegionSslCertificateCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/SslPolicy": {
-		"Default": compute.NewComputeRegionSslPolicyCai2hclConverter(provider),
+		"ComputeRegionSslPolicy": compute.NewComputeRegionSslPolicyCai2hclConverter(provider),
+		"ComputeSslPolicy":       compute.NewComputeSslPolicyCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/StoragePool": {
 		"Default": compute.NewComputeStoragePoolCai2hclConverter(provider),
@@ -298,14 +302,26 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Subnetwork": {
 		"Default": compute.NewComputeSubnetworkCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/TargetGrpcProxy": {
+		"Default": compute.NewComputeTargetGrpcProxyCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/TargetHttpProxy": {
-		"Default": compute.NewComputeRegionTargetHttpProxyCai2hclConverter(provider),
+		"ComputeRegionTargetHttpProxy": compute.NewComputeRegionTargetHttpProxyCai2hclConverter(provider),
+		"ComputeTargetHttpProxy":       compute.NewComputeTargetHttpProxyCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/TargetHttpsProxy": {
-		"Default": compute.NewComputeRegionTargetHttpsProxyCai2hclConverter(provider),
+		"ComputeRegionTargetHttpsProxy": compute.NewComputeRegionTargetHttpsProxyCai2hclConverter(provider),
+		"ComputeTargetHttpsProxy":       compute.NewComputeTargetHttpsProxyCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/TargetInstance": {
+		"Default": compute.NewComputeTargetInstanceCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/TargetSslProxy": {
+		"Default": compute.NewComputeTargetSslProxyCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/TargetTcpProxy": {
-		"Default": compute.NewComputeRegionTargetTcpProxyCai2hclConverter(provider),
+		"ComputeRegionTargetTcpProxy": compute.NewComputeRegionTargetTcpProxyCai2hclConverter(provider),
+		"ComputeTargetTcpProxy":       compute.NewComputeTargetTcpProxyCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/UrlMap": {
 		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),

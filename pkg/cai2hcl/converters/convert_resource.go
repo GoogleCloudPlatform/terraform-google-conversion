@@ -55,6 +55,30 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 			} else if strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionSslCertificate"]
 			}
+		case "compute.googleapis.com/SslPolicy":
+			if strings.Contains(asset.Name, "regions") {
+				converter = ConverterMap[asset.Type]["ComputeRegionSslPolicy"]
+			} else if strings.Contains(asset.Name, "global") {
+				converter = ConverterMap[asset.Type]["ComputeSslPolicy"]
+			}
+		case "compute.googleapis.com/TargetHttpProxy":
+			if strings.Contains(asset.Name, "regions") {
+				converter = ConverterMap[asset.Type]["ComputeRegionTargetHttpProxy"]
+			} else if strings.Contains(asset.Name, "global") {
+				converter = ConverterMap[asset.Type]["ComputeTargetHttpProxy"]
+			}
+		case "compute.googleapis.com/TargetHttpsProxy":
+			if strings.Contains(asset.Name, "regions") {
+				converter = ConverterMap[asset.Type]["ComputeRegionTargetHttpsProxy"]
+			} else if strings.Contains(asset.Name, "global") {
+				converter = ConverterMap[asset.Type]["ComputeTargetHttpsProxy"]
+			}
+		case "compute.googleapis.com/TargetTcpProxy":
+			if strings.Contains(asset.Name, "regions") {
+				converter = ConverterMap[asset.Type]["ComputeRegionTargetTcpProxy"]
+			} else if strings.Contains(asset.Name, "global") {
+				converter = ConverterMap[asset.Type]["ComputeTargetTcpProxy"]
+			}
 		case "secretmanager.googleapis.com/Secret":
 			if strings.Contains(asset.Name, "locations") {
 				converter = ConverterMap[asset.Type]["SecretManagerRegionalRegionalSecret"]

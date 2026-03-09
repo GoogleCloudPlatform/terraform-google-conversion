@@ -66,7 +66,7 @@ var handwrittenResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 156
+// Generated resources: 164
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -136,8 +136,16 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_resource_policy":                         compute.ResourceComputeResourcePolicy(),
 	"google_compute_route":                                   compute.ResourceComputeRoute(),
 	"google_compute_router":                                  compute.ResourceComputeRouter(),
+	"google_compute_service_attachment":                      compute.ResourceComputeServiceAttachment(),
+	"google_compute_ssl_policy":                              compute.ResourceComputeSslPolicy(),
 	"google_compute_storage_pool":                            compute.ResourceComputeStoragePool(),
 	"google_compute_subnetwork":                              compute.ResourceComputeSubnetwork(),
+	"google_compute_target_grpc_proxy":                       compute.ResourceComputeTargetGrpcProxy(),
+	"google_compute_target_http_proxy":                       compute.ResourceComputeTargetHttpProxy(),
+	"google_compute_target_https_proxy":                      compute.ResourceComputeTargetHttpsProxy(),
+	"google_compute_target_instance":                         compute.ResourceComputeTargetInstance(),
+	"google_compute_target_ssl_proxy":                        compute.ResourceComputeTargetSslProxy(),
+	"google_compute_target_tcp_proxy":                        compute.ResourceComputeTargetTcpProxy(),
 	"google_compute_url_map":                                 compute.ResourceComputeUrlMap(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.ResourceDatabaseMigrationServiceMigrationJob(),
 	"google_data_fusion_instance":                            datafusion.ResourceDataFusionInstance(),
