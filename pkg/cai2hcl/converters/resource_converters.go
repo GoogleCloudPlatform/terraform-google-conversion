@@ -232,7 +232,8 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"Default": compute.NewComputeFirewallCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/FirewallPolicy": {
-		"Default": compute.NewComputeFirewallPolicyCai2hclConverter(provider),
+		"ComputeFirewallPolicy":              compute.NewComputeFirewallPolicyCai2hclConverter(provider),
+		"ComputeRegionNetworkFirewallPolicy": compute.NewComputeRegionNetworkFirewallPolicyCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/GlobalAddress": {
 		"Default": compute.NewComputeGlobalAddressCai2hclConverter(provider),
@@ -261,6 +262,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"compute.googleapis.com/Network": {
 		"Default": compute.NewComputeNetworkCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/NetworkAttachment": {
+		"Default": compute.NewComputeNetworkAttachmentCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/NetworkEndpointGroup": {
 		"ComputeGlobalNetworkEndpointGroup": compute.NewComputeGlobalNetworkEndpointGroupCai2hclConverter(provider),
