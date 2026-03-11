@@ -39,6 +39,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/looker"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/lustre"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/managedkafka"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
@@ -66,7 +67,7 @@ var handwrittenResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 166
+// Generated resources: 170
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -188,6 +189,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_kms_key_ring_import_job":                         kms.ResourceKMSKeyRingImportJob(),
 	"google_logging_metric":                                  logging.ResourceLoggingMetric(),
 	"google_looker_instance":                                 looker.ResourceLookerInstance(),
+	"google_lustre_instance":                                 lustre.ResourceLustreInstance(),
 	"google_managed_kafka_cluster":                           managedkafka.ResourceManagedKafkaCluster(),
 	"google_memcache_instance":                               memcache.ResourceMemcacheInstance(),
 	"google_monitoring_alert_policy":                         monitoring.ResourceMonitoringAlertPolicy(),
@@ -198,7 +200,10 @@ var generatedResources = map[string]*schema.Resource{
 	"google_netapp_backup_policy":                            netapp.ResourceNetappBackupPolicy(),
 	"google_netapp_backup_vault":                             netapp.ResourceNetappBackupVault(),
 	"google_netapp_storage_pool":                             netapp.ResourceNetappStoragePool(),
+	"google_netapp_volume":                                   netapp.ResourceNetappVolume(),
+	"google_netapp_volume_replication":                       netapp.ResourceNetappVolumeReplication(),
 	"google_netapp_volume_snapshot":                          netapp.ResourceNetappVolumeSnapshot(),
+	"google_netapp_kmsconfig":                                netapp.ResourceNetappkmsconfig(),
 	"google_network_connectivity_group":                      networkconnectivity.ResourceNetworkConnectivityGroup(),
 	"google_network_connectivity_policy_based_route":         networkconnectivity.ResourceNetworkConnectivityPolicyBasedRoute(),
 	"google_network_security_address_group":                  networksecurity.ResourceNetworkSecurityAddressGroup(),
