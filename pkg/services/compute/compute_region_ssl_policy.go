@@ -27,6 +27,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -66,6 +67,7 @@ var (
 	_ = sort.IntSlice{}
 	_ = strconv.Atoi
 	_ = strings.Trim
+	_ = time.Now
 	_ = schema.Noop
 	_ = structure.NormalizeJsonString
 	_ = validation.All

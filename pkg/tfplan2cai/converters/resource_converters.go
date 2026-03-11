@@ -50,6 +50,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/looker"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/lustre"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/managedkafka"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
@@ -197,6 +198,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_kms_key_ring_import_job":                         kms.KMSKeyRingImportJobTfplan2caiConverter(),
 	"google_logging_metric":                                  logging.LoggingMetricTfplan2caiConverter(),
 	"google_looker_instance":                                 looker.LookerInstanceTfplan2caiConverter(),
+	"google_lustre_instance":                                 lustre.LustreInstanceTfplan2caiConverter(),
 	"google_managed_kafka_cluster":                           managedkafka.ManagedKafkaClusterTfplan2caiConverter(),
 	"google_memcache_instance":                               memcache.MemcacheInstanceTfplan2caiConverter(),
 	"google_monitoring_alert_policy":                         monitoring.MonitoringAlertPolicyTfplan2caiConverter(),
@@ -207,7 +209,10 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_netapp_backup_policy":                            netapp.NetappBackupPolicyTfplan2caiConverter(),
 	"google_netapp_backup_vault":                             netapp.NetappBackupVaultTfplan2caiConverter(),
 	"google_netapp_storage_pool":                             netapp.NetappStoragePoolTfplan2caiConverter(),
+	"google_netapp_volume":                                   netapp.NetappVolumeTfplan2caiConverter(),
+	"google_netapp_volume_replication":                       netapp.NetappVolumeReplicationTfplan2caiConverter(),
 	"google_netapp_volume_snapshot":                          netapp.NetappVolumeSnapshotTfplan2caiConverter(),
+	"google_netapp_kmsconfig":                                netapp.NetappkmsconfigTfplan2caiConverter(),
 	"google_network_connectivity_group":                      networkconnectivity.NetworkConnectivityGroupTfplan2caiConverter(),
 	"google_network_connectivity_policy_based_route":         networkconnectivity.NetworkConnectivityPolicyBasedRouteTfplan2caiConverter(),
 	"google_network_security_address_group":                  networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),

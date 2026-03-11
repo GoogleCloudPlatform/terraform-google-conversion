@@ -51,6 +51,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/looker"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/lustre"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/managedkafka"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
@@ -423,6 +424,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"looker.googleapis.com/Instance": {
 		"Default": looker.NewLookerInstanceCai2hclConverter(provider),
 	},
+	"lustre.googleapis.com/Instance": {
+		"Default": lustre.NewLustreInstanceCai2hclConverter(provider),
+	},
 	"managedkafka.googleapis.com/Cluster": {
 		"Default": managedkafka.NewManagedKafkaClusterCai2hclConverter(provider),
 	},
@@ -450,11 +454,20 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"netapp.googleapis.com/BackupVault": {
 		"Default": netapp.NewNetappBackupVaultCai2hclConverter(provider),
 	},
+	"netapp.googleapis.com/KmsConfig": {
+		"Default": netapp.NewNetappkmsconfigCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/Replication": {
+		"Default": netapp.NewNetappVolumeReplicationCai2hclConverter(provider),
+	},
 	"netapp.googleapis.com/Snapshot": {
 		"Default": netapp.NewNetappVolumeSnapshotCai2hclConverter(provider),
 	},
 	"netapp.googleapis.com/StoragePool": {
 		"Default": netapp.NewNetappStoragePoolCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/Volume": {
+		"Default": netapp.NewNetappVolumeCai2hclConverter(provider),
 	},
 	"networkconnectivity.googleapis.com/Group": {
 		"Default": networkconnectivity.NewNetworkConnectivityGroupCai2hclConverter(provider),
