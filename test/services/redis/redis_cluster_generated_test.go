@@ -48,6 +48,9 @@ func TestAccRedisCluster(t *testing.T) {
 			Name: "TestAccRedisCluster_redisClusterCmekExample",
 		},
 		{
+			Name: "TestAccRedisCluster_redisClusterFlexibleCaExample",
+		},
+		{
 			Name: "TestAccRedisCluster_createUpdateClusterWithNodeType",
 		},
 		{
@@ -91,6 +94,9 @@ func TestAccRedisCluster(t *testing.T) {
 		},
 		{
 			Name: "TestAccRedisCluster_redisClusterHaWithLabelsUpdate",
+		},
+		{
+			Name: "TestAccRedisCluster_customerManagedCas",
 		},
 	}
 
