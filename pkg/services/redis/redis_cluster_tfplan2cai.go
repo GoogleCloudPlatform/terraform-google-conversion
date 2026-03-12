@@ -209,6 +209,18 @@ func GetRedisClusterCaiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
 		obj["kmsKey"] = kmsKeyProp
 	}
+	serverCaModeProp, err := expandRedisClusterServerCaMode(d.Get("server_ca_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("server_ca_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(serverCaModeProp)) && (ok || !reflect.DeepEqual(v, serverCaModeProp)) {
+		obj["serverCaMode"] = serverCaModeProp
+	}
+	serverCaPoolProp, err := expandRedisClusterServerCaPool(d.Get("server_ca_pool"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("server_ca_pool"); !tpgresource.IsEmptyValue(reflect.ValueOf(serverCaPoolProp)) && (ok || !reflect.DeepEqual(v, serverCaPoolProp)) {
+		obj["serverCaPool"] = serverCaPoolProp
+	}
 	effectiveLabelsProp, err := expandRedisClusterEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -796,6 +808,14 @@ func expandRedisClusterCrossClusterReplicationConfigSecondaryClustersCluster(v i
 }
 
 func expandRedisClusterKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterServerCaMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterServerCaPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
