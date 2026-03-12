@@ -54,9 +54,6 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyAcceleratorTopologyExample",
 		},
 		{
-			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyAcceleratorTopologyModeExample",
-		},
-		{
 			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyMaxTopologyDistanceExample",
 		},
 		{
@@ -93,7 +90,6 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 					"provider",
 					"region",
 					"timeouts",
-					"workload_policy.accelerator_topology_mode",
 				},
 				"google_compute_resource_policy",
 			)

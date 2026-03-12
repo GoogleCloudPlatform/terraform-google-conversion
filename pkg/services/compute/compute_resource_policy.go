@@ -391,20 +391,6 @@ with RFC1035.`,
 and cannot be set if max topology distance is set.`,
 							ConflictsWith: []string{"workload_policy.0.max_topology_distance"},
 						},
-						"accelerator_topology_mode": {
-							Type:         schema.TypeString,
-							Optional:     true,
-							ForceNew:     true,
-							ValidateFunc: verify.ValidateEnum([]string{"AUTO_CONNECT", "PROVISION_ONLY", ""}),
-							Description: `Specifies the connection mode for the accelerator topology.
-Supported values are:
-  * 'AUTO_CONNECT': The interconnected chips are pre-configured at the time of VM creation.
-  * 'PROVISION_ONLY': The interconnected chips are connected on demand. At the time of VM creation, the chips are not connected.
-
-If not specified, the default is AUTO_CONNECT.
-This field can be set only when the workload policy type is HIGH_THROUGHPUT and cannot be set if max topology distance is set. Possible values: ["AUTO_CONNECT", "PROVISION_ONLY"]`,
-							ConflictsWith: []string{"workload_policy.0.max_topology_distance"},
-						},
 						"max_topology_distance": {
 							Type:         schema.TypeString,
 							Optional:     true,
@@ -412,7 +398,7 @@ This field can be set only when the workload policy type is HIGH_THROUGHPUT and 
 							ValidateFunc: verify.ValidateEnum([]string{"BLOCK", "CLUSTER", "SUBBLOCK", ""}),
 							Description: `The maximum topology distance. This field can be set only when the workload policy type is HIGH_THROUGHPUT
 and cannot be set if accelerator topology or accelerator topology mode is set. Possible values: ["BLOCK", "CLUSTER", "SUBBLOCK"]`,
-							ConflictsWith: []string{"workload_policy.0.accelerator_topology", "workload_policy.0.accelerator_topology_mode"},
+							ConflictsWith: []string{"workload_policy.0.accelerator_topology"},
 						},
 					},
 				},
