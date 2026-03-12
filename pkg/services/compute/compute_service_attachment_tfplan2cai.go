@@ -289,6 +289,13 @@ func expandComputeServiceAttachmentConsumerAcceptLists(v interface{}, d tpgresou
 			transformed["networkUrl"] = transformedNetworkUrl
 		}
 
+		transformedEndpointUrl, err := expandComputeServiceAttachmentConsumerAcceptListsEndpointUrl(original["endpoint_url"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEndpointUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["endpointUrl"] = transformedEndpointUrl
+		}
+
 		transformedConnectionLimit, err := expandComputeServiceAttachmentConsumerAcceptListsConnectionLimit(original["connection_limit"], d, config)
 		if err != nil {
 			return nil, err
@@ -306,6 +313,10 @@ func expandComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(v interface
 }
 
 func expandComputeServiceAttachmentConsumerAcceptListsNetworkUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeServiceAttachmentConsumerAcceptListsEndpointUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
