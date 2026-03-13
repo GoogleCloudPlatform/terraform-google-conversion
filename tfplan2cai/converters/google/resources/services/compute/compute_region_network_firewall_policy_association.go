@@ -122,12 +122,6 @@ func GetComputeRegionNetworkFirewallPolicyAssociationApiObject(d tpgresource.Ter
 	} else if v, ok := d.GetOkExists("attachment_target"); !tpgresource.IsEmptyValue(reflect.ValueOf(attachmentTargetProp)) && (ok || !reflect.DeepEqual(v, attachmentTargetProp)) {
 		obj["attachmentTarget"] = attachmentTargetProp
 	}
-	priorityProp, err := expandComputeRegionNetworkFirewallPolicyAssociationPriority(d.Get("priority"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("priority"); !tpgresource.IsEmptyValue(reflect.ValueOf(priorityProp)) && (ok || !reflect.DeepEqual(v, priorityProp)) {
-		obj["priority"] = priorityProp
-	}
 
 	return obj, nil
 }
@@ -137,9 +131,5 @@ func expandComputeRegionNetworkFirewallPolicyAssociationName(v interface{}, d tp
 }
 
 func expandComputeRegionNetworkFirewallPolicyAssociationAttachmentTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeRegionNetworkFirewallPolicyAssociationPriority(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
