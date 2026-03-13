@@ -67,7 +67,7 @@ var handwrittenResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 170
+// Generated resources: 173
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -89,6 +89,9 @@ var generatedResources = map[string]*schema.Resource{
 	"google_certificate_manager_certificate":                 certificatemanager.ResourceCertificateManagerCertificate(),
 	"google_certificate_manager_certificate_issuance_config": certificatemanager.ResourceCertificateManagerCertificateIssuanceConfig(),
 	"google_certificate_manager_certificate_map":             certificatemanager.ResourceCertificateManagerCertificateMap(),
+	"google_certificate_manager_certificate_map_entry":       certificatemanager.ResourceCertificateManagerCertificateMapEntry(),
+	"google_certificate_manager_dns_authorization":           certificatemanager.ResourceCertificateManagerDnsAuthorization(),
+	"google_certificate_manager_trust_config":                certificatemanager.ResourceCertificateManagerTrustConfig(),
 	"google_cloud_asset_folder_feed":                         cloudasset.ResourceCloudAssetFolderFeed(),
 	"google_cloud_asset_organization_feed":                   cloudasset.ResourceCloudAssetOrganizationFeed(),
 	"google_cloud_asset_project_feed":                        cloudasset.ResourceCloudAssetProjectFeed(),
