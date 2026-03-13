@@ -581,24 +581,12 @@ func expandPubsubSubscriptionPushConfigPushEndpoint(v interface{}, d tpgresource
 	return v, nil
 }
 
-func expandPubsubSubscriptionPushConfigAttributes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	m := make(map[string]string)
+func expandPubsubSubscriptionPushConfigAttributes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
 	if v == nil {
-		return m, nil
+		return map[string]string{}, nil
 	}
-
-	vMap, ok := v.(map[string]interface{})
-	if !ok {
-		return m, fmt.Errorf("non-map v: %v (%T)", v, v)
-	}
-
-	// The default value is present in CAI asset
-	if len(vMap) == 0 {
-		m["x-goog-version"] = "v1"
-		return m, nil
-	}
-
-	for k, val := range vMap {
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
 		m[k] = val.(string)
 	}
 	return m, nil

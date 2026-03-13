@@ -977,18 +977,13 @@ func expandComputeBackendServiceCdnPolicyCacheKeyPolicyIncludeQueryString(v inte
 }
 
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicyQueryStringBlacklist(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	vSet := v.(*schema.Set)
-	if vSet.Len() == 0 {
-		return nil, nil
-	}
-	return vSet.List(), nil
+	v = v.(*schema.Set).List()
+	return v, nil
 }
+
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicyQueryStringWhitelist(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	vSet := v.(*schema.Set)
-	if vSet.Len() == 0 {
-		return nil, nil
-	}
-	return vSet.List(), nil
+	v = v.(*schema.Set).List()
+	return v, nil
 }
 
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicyIncludeHttpHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
