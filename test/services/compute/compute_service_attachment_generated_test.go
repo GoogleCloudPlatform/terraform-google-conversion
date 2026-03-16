@@ -71,6 +71,9 @@ func TestAccComputeServiceAttachment(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
+					"consumer_accept_lists.connection_limit",
+					"consumer_accept_lists.endpoint_url",
+					"consumer_accept_lists.project_id_or_num",
 					"count",
 					"depends_on",
 					"for_each",
