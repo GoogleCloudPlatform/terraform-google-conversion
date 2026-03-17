@@ -39,6 +39,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflow"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/eventarc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
@@ -373,6 +374,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"dialogflow.googleapis.com/Agent": {
 		"Default": dialogflow.NewDialogflowAgentCai2hclConverter(provider),
 	},
+	"eventarc.googleapis.com/Pipeline": {
+		"Default": eventarc.NewEventarcPipelineCai2hclConverter(provider),
+	},
 	"file.googleapis.com/Backup": {
 		"Default": filestore.NewFilestoreBackupCai2hclConverter(provider),
 	},
@@ -528,6 +532,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"privateca.googleapis.com/Certificate": {
 		"Default": privateca.NewPrivatecaCertificateCai2hclConverter(provider),
+	},
+	"privateca.googleapis.com/CertificateTemplate": {
+		"Default": privateca.NewPrivatecaCertificateTemplateCai2hclConverter(provider),
 	},
 	"pubsub.googleapis.com/Subscription": {
 		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),
