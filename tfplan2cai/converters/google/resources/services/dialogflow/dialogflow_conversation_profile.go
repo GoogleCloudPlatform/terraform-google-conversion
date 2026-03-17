@@ -97,8 +97,8 @@ func GetDialogflowConversationProfileCaiObject(d tpgresource.TerraformResourceDa
 			Name: name,
 			Type: DialogflowConversationProfileAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v2/rest",
+				Version:              "v2beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v2beta1/rest",
 				DiscoveryName:        "ConversationProfile",
 				Data:                 obj,
 			},
@@ -115,6 +115,12 @@ func GetDialogflowConversationProfileApiObject(d tpgresource.TerraformResourceDa
 		return nil, err
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
+	}
+	useBidiStreamingProp, err := expandDialogflowConversationProfileUseBidiStreaming(d.Get("use_bidi_streaming"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("use_bidi_streaming"); !tpgresource.IsEmptyValue(reflect.ValueOf(useBidiStreamingProp)) && (ok || !reflect.DeepEqual(v, useBidiStreamingProp)) {
+		obj["useBidiStreaming"] = useBidiStreamingProp
 	}
 	automatedAgentConfigProp, err := expandDialogflowConversationProfileAutomatedAgentConfig(d.Get("automated_agent_config"), d, config)
 	if err != nil {
@@ -193,6 +199,10 @@ func GetDialogflowConversationProfileApiObject(d tpgresource.TerraformResourceDa
 }
 
 func expandDialogflowConversationProfileDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileUseBidiStreaming(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
