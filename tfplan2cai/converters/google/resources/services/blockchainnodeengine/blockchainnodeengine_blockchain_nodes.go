@@ -229,10 +229,21 @@ func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfig(v i
 		transformed["mevRelayUrls"] = transformedMevRelayUrls
 	}
 
+	transformedBeaconFeeRecipient, err := expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigBeaconFeeRecipient(original["beacon_fee_recipient"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBeaconFeeRecipient); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["beaconFeeRecipient"] = transformedBeaconFeeRecipient
+	}
+
 	return transformed, nil
 }
 
 func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigMevRelayUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigBeaconFeeRecipient(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

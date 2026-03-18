@@ -32,6 +32,9 @@ func TestAccBlockchainNodeEngineBlockchainNodes(t *testing.T) {
 		{
 			Name: "TestAccBlockchainNodeEngineBlockchainNodes_blockchainNodesGethDetailsExample",
 		},
+		{
+			Name: "TestAccBlockchainNodeEngineBlockchainNodes_blockchainNodesBeaconFeeRecipientExample",
+		},
 	}
 
 	for _, tt := range tests {
