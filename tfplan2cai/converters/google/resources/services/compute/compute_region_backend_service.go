@@ -408,7 +408,7 @@ func GetComputeRegionBackendServiceApiObject(d tpgresource.TerraformResourceData
 }
 
 func resourceComputeRegionBackendServiceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
-	if d.Get("load_balancing_scheme").(string) == "EXTERNAL_MANAGED" || d.Get("load_balancing_scheme").(string) == "INTERNAL_MANAGED" {
+	if d.Get("load_balancing_scheme").(string) == "EXTERNAL_MANAGED" || d.Get("load_balancing_scheme").(string) == "INTERNAL_MANAGED" || d.Get("load_balancing_scheme").(string) == "INTERNAL_SELF_MANAGED" {
 		return obj, nil
 	}
 
@@ -1286,7 +1286,7 @@ func expandComputeRegionBackendServiceIap(v interface{}, d tpgresource.Terraform
 	transformedOauth2ClientId, err := expandComputeRegionBackendServiceIapOauth2ClientId(original["oauth2_client_id"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedOauth2ClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["oauth2ClientId"] = transformedOauth2ClientId
 	}
 
@@ -1923,6 +1923,13 @@ func expandComputeRegionBackendServiceDynamicForwarding(v interface{}, d tpgreso
 		transformed["ipPortSelection"] = transformedIpPortSelection
 	}
 
+	transformedForwardProxy, err := expandComputeRegionBackendServiceDynamicForwardingForwardProxy(original["forward_proxy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedForwardProxy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["forwardProxy"] = transformedForwardProxy
+	}
+
 	return transformed, nil
 }
 
@@ -1949,6 +1956,43 @@ func expandComputeRegionBackendServiceDynamicForwardingIpPortSelection(v interfa
 }
 
 func expandComputeRegionBackendServiceDynamicForwardingIpPortSelectionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceDynamicForwardingForwardProxy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandComputeRegionBackendServiceDynamicForwardingForwardProxyEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedProxyMode, err := expandComputeRegionBackendServiceDynamicForwardingForwardProxyProxyMode(original["proxy_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProxyMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["proxyMode"] = transformedProxyMode
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceDynamicForwardingForwardProxyEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceDynamicForwardingForwardProxyProxyMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

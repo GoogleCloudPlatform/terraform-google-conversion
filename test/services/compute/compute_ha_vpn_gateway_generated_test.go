@@ -57,6 +57,8 @@ func TestAccComputeHaVpnGateway(t *testing.T) {
 					"depends_on",
 					"for_each",
 					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
 					"provider",
 					"timeouts",
 				},

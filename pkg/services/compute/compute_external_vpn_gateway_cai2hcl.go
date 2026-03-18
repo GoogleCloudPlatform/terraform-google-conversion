@@ -130,6 +130,7 @@ func (c *ComputeExternalVpnGatewayCai2hclConverter) convertResourceData(asset ca
 	hclData["name"] = flattenComputeExternalVpnGatewayName(res["name"], d, config)
 	hclData["redundancy_type"] = flattenComputeExternalVpnGatewayRedundancyType(res["redundancyType"], d, config)
 	hclData["interface"] = flattenComputeExternalVpnGatewayInterface(res["interfaces"], d, config)
+	hclData["params"] = flattenComputeExternalVpnGatewayParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -206,5 +207,23 @@ func flattenComputeExternalVpnGatewayInterfaceIpAddress(v interface{}, d *schema
 }
 
 func flattenComputeExternalVpnGatewayInterfaceIpv6Address(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeExternalVpnGatewayParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeExternalVpnGatewayParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeExternalVpnGatewayParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
