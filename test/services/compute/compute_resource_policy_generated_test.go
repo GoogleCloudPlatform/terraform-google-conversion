@@ -27,6 +27,10 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeResourcePolicy_withTopologyMode",
+			Skip: "The test should not in GA provider",
+		},
+		{
 			Name: "TestAccComputeResourcePolicy_resourcePolicyBasicExample",
 		},
 		{

@@ -27,6 +27,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -94,6 +95,7 @@ var (
 	_ = sort.IntSlice{}
 	_ = strconv.Atoi
 	_ = strings.Trim
+	_ = time.Now
 	_ = schema.Noop
 	_ = structure.NormalizeJsonString
 	_ = validation.All
@@ -291,7 +293,8 @@ See https://cloud.google.com/bigquery/docs/customer-managed-encryption for more 
 										Computed: true,
 										Optional: true,
 										Description: `The maximum duration for which new events are added before a file is closed and a new file is created.
-A duration in seconds with up to nine fractional digits, terminated by 's'. Example: "3.5s". Defaults to 900s.`,
+Values within the range of 15-60 seconds are allowed.
+A duration in seconds with up to nine fractional digits, terminated by 's'. Example: "3.5s".`,
 									},
 									"file_rotation_mb": {
 										Type:        schema.TypeInt,
@@ -490,6 +493,7 @@ should be non-negative and less than or equal to 50. If not set
 								Schema: map[string]*schema.Schema{
 									"binary_log_position": {
 										Type:        schema.TypeList,
+										Computed:    true,
 										Optional:    true,
 										Description: `CDC reader reads from binary logs replication cdc method.`,
 										MaxItems:    1,

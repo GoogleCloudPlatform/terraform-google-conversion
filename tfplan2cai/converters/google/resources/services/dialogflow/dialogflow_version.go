@@ -97,8 +97,8 @@ func GetDialogflowVersionCaiObject(d tpgresource.TerraformResourceData, config *
 			Name: name,
 			Type: DialogflowVersionAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v2",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v2/rest",
+				Version:              "v2beta1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/dialogflow/v2beta1/rest",
 				DiscoveryName:        "Version",
 				Data:                 obj,
 			},

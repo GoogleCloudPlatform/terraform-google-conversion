@@ -27,6 +27,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -60,6 +61,7 @@ var (
 	_ = sort.IntSlice{}
 	_ = strconv.Atoi
 	_ = strings.Trim
+	_ = time.Now
 	_ = schema.Noop
 	_ = structure.NormalizeJsonString
 	_ = validation.All
@@ -68,8 +70,6 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
-
-const ComputeSslCertificateAssetType string = "compute.googleapis.com/SslCertificate"
 
 const ComputeRegionSslCertificateSchemaName string = "google_compute_region_ssl_certificate"
 

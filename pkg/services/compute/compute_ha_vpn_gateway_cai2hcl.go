@@ -132,6 +132,7 @@ func (c *ComputeHaVpnGatewayCai2hclConverter) convertResourceData(asset caiasset
 	hclData["gateway_ip_version"] = flattenComputeHaVpnGatewayGatewayIpVersion(res["gatewayIpVersion"], d, config)
 	hclData["vpn_interfaces"] = flattenComputeHaVpnGatewayVpnInterfaces(res["vpnInterfaces"], d, config)
 	hclData["labels"] = flattenComputeHaVpnGatewayLabels(res["labels"], d, config)
+	hclData["params"] = flattenComputeHaVpnGatewayParams(res["params"], d, config)
 	hclData["region"] = flattenComputeHaVpnGatewayRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -237,6 +238,24 @@ func flattenComputeHaVpnGatewayVpnInterfacesInterconnectAttachment(v interface{}
 func flattenComputeHaVpnGatewayLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+func flattenComputeHaVpnGatewayParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeHaVpnGatewayParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeHaVpnGatewayParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeHaVpnGatewayRegion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v

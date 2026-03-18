@@ -57,6 +57,7 @@ func TestAccColabRuntime(t *testing.T) {
 					"count",
 					"depends_on",
 					"desired_state",
+					"expiration_time",
 					"for_each",
 					"lifecycle",
 					"location",

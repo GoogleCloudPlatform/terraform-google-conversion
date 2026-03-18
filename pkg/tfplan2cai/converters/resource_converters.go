@@ -38,6 +38,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflow"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/eventarc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
@@ -50,6 +51,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/looker"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/lustre"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/managedkafka"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
@@ -97,6 +99,9 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_certificate_manager_certificate":                 certificatemanager.CertificateManagerCertificateTfplan2caiConverter(),
 	"google_certificate_manager_certificate_issuance_config": certificatemanager.CertificateManagerCertificateIssuanceConfigTfplan2caiConverter(),
 	"google_certificate_manager_certificate_map":             certificatemanager.CertificateManagerCertificateMapTfplan2caiConverter(),
+	"google_certificate_manager_certificate_map_entry":       certificatemanager.CertificateManagerCertificateMapEntryTfplan2caiConverter(),
+	"google_certificate_manager_dns_authorization":           certificatemanager.CertificateManagerDnsAuthorizationTfplan2caiConverter(),
+	"google_certificate_manager_trust_config":                certificatemanager.CertificateManagerTrustConfigTfplan2caiConverter(),
 	"google_cloud_asset_folder_feed":                         cloudasset.CloudAssetFolderFeedTfplan2caiConverter(),
 	"google_cloud_asset_organization_feed":                   cloudasset.CloudAssetOrganizationFeedTfplan2caiConverter(),
 	"google_cloud_asset_project_feed":                        cloudasset.CloudAssetProjectFeedTfplan2caiConverter(),
@@ -119,20 +124,44 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_firewall":                                compute.ComputeFirewallTfplan2caiConverter(),
 	"google_compute_firewall_policy":                         compute.ComputeFirewallPolicyTfplan2caiConverter(),
 	"google_compute_global_address":                          compute.ComputeGlobalAddressTfplan2caiConverter(),
+	"google_compute_global_network_endpoint_group":           compute.ComputeGlobalNetworkEndpointGroupTfplan2caiConverter(),
 	"google_compute_ha_vpn_gateway":                          compute.ComputeHaVpnGatewayTfplan2caiConverter(),
 	"google_compute_health_check":                            compute.ComputeHealthCheckTfplan2caiConverter(),
+	"google_compute_http_health_check":                       compute.ComputeHttpHealthCheckTfplan2caiConverter(),
+	"google_compute_https_health_check":                      compute.ComputeHttpsHealthCheckTfplan2caiConverter(),
 	"google_compute_image":                                   compute.ComputeImageTfplan2caiConverter(),
+	"google_compute_instant_snapshot":                        compute.ComputeInstantSnapshotTfplan2caiConverter(),
+	"google_compute_interconnect":                            compute.ComputeInterconnectTfplan2caiConverter(),
+	"google_compute_interconnect_attachment":                 compute.ComputeInterconnectAttachmentTfplan2caiConverter(),
+	"google_compute_managed_ssl_certificate":                 compute.ComputeManagedSslCertificateTfplan2caiConverter(),
 	"google_compute_network":                                 compute.ComputeNetworkTfplan2caiConverter(),
+	"google_compute_network_attachment":                      compute.ComputeNetworkAttachmentTfplan2caiConverter(),
+	"google_compute_network_endpoint_group":                  compute.ComputeNetworkEndpointGroupTfplan2caiConverter(),
 	"google_compute_node_group":                              compute.ComputeNodeGroupTfplan2caiConverter(),
 	"google_compute_node_template":                           compute.ComputeNodeTemplateTfplan2caiConverter(),
+	"google_compute_packet_mirroring":                        compute.ComputePacketMirroringTfplan2caiConverter(),
 	"google_compute_region_autoscaler":                       compute.ComputeRegionAutoscalerTfplan2caiConverter(),
 	"google_compute_region_health_check":                     compute.ComputeRegionHealthCheckTfplan2caiConverter(),
+	"google_compute_region_network_endpoint_group":           compute.ComputeRegionNetworkEndpointGroupTfplan2caiConverter(),
+	"google_compute_region_network_firewall_policy":          compute.ComputeRegionNetworkFirewallPolicyTfplan2caiConverter(),
 	"google_compute_region_ssl_certificate":                  compute.ComputeRegionSslCertificateTfplan2caiConverter(),
+	"google_compute_region_ssl_policy":                       compute.ComputeRegionSslPolicyTfplan2caiConverter(),
+	"google_compute_region_target_http_proxy":                compute.ComputeRegionTargetHttpProxyTfplan2caiConverter(),
+	"google_compute_region_target_https_proxy":               compute.ComputeRegionTargetHttpsProxyTfplan2caiConverter(),
+	"google_compute_region_target_tcp_proxy":                 compute.ComputeRegionTargetTcpProxyTfplan2caiConverter(),
 	"google_compute_resource_policy":                         compute.ComputeResourcePolicyTfplan2caiConverter(),
 	"google_compute_route":                                   compute.ComputeRouteTfplan2caiConverter(),
 	"google_compute_router":                                  compute.ComputeRouterTfplan2caiConverter(),
+	"google_compute_service_attachment":                      compute.ComputeServiceAttachmentTfplan2caiConverter(),
+	"google_compute_ssl_policy":                              compute.ComputeSslPolicyTfplan2caiConverter(),
 	"google_compute_storage_pool":                            compute.ComputeStoragePoolTfplan2caiConverter(),
 	"google_compute_subnetwork":                              compute.ComputeSubnetworkTfplan2caiConverter(),
+	"google_compute_target_grpc_proxy":                       compute.ComputeTargetGrpcProxyTfplan2caiConverter(),
+	"google_compute_target_http_proxy":                       compute.ComputeTargetHttpProxyTfplan2caiConverter(),
+	"google_compute_target_https_proxy":                      compute.ComputeTargetHttpsProxyTfplan2caiConverter(),
+	"google_compute_target_instance":                         compute.ComputeTargetInstanceTfplan2caiConverter(),
+	"google_compute_target_ssl_proxy":                        compute.ComputeTargetSslProxyTfplan2caiConverter(),
+	"google_compute_target_tcp_proxy":                        compute.ComputeTargetTcpProxyTfplan2caiConverter(),
 	"google_compute_url_map":                                 compute.ComputeUrlMapTfplan2caiConverter(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.DatabaseMigrationServiceMigrationJobTfplan2caiConverter(),
 	"google_data_fusion_instance":                            datafusion.DataFusionInstanceTfplan2caiConverter(),
@@ -144,6 +173,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_developer_connect_connection":                    developerconnect.DeveloperConnectConnectionTfplan2caiConverter(),
 	"google_developer_connect_git_repository_link":           developerconnect.DeveloperConnectGitRepositoryLinkTfplan2caiConverter(),
 	"google_dialogflow_agent":                                dialogflow.DialogflowAgentTfplan2caiConverter(),
+	"google_eventarc_pipeline":                               eventarc.EventarcPipelineTfplan2caiConverter(),
 	"google_filestore_backup":                                filestore.FilestoreBackupTfplan2caiConverter(),
 	"google_filestore_instance":                              filestore.FilestoreInstanceTfplan2caiConverter(),
 	"google_filestore_snapshot":                              filestore.FilestoreSnapshotTfplan2caiConverter(),
@@ -173,6 +203,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_kms_key_ring_import_job":                         kms.KMSKeyRingImportJobTfplan2caiConverter(),
 	"google_logging_metric":                                  logging.LoggingMetricTfplan2caiConverter(),
 	"google_looker_instance":                                 looker.LookerInstanceTfplan2caiConverter(),
+	"google_lustre_instance":                                 lustre.LustreInstanceTfplan2caiConverter(),
 	"google_managed_kafka_cluster":                           managedkafka.ManagedKafkaClusterTfplan2caiConverter(),
 	"google_memcache_instance":                               memcache.MemcacheInstanceTfplan2caiConverter(),
 	"google_monitoring_alert_policy":                         monitoring.MonitoringAlertPolicyTfplan2caiConverter(),
@@ -183,7 +214,10 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_netapp_backup_policy":                            netapp.NetappBackupPolicyTfplan2caiConverter(),
 	"google_netapp_backup_vault":                             netapp.NetappBackupVaultTfplan2caiConverter(),
 	"google_netapp_storage_pool":                             netapp.NetappStoragePoolTfplan2caiConverter(),
+	"google_netapp_volume":                                   netapp.NetappVolumeTfplan2caiConverter(),
+	"google_netapp_volume_replication":                       netapp.NetappVolumeReplicationTfplan2caiConverter(),
 	"google_netapp_volume_snapshot":                          netapp.NetappVolumeSnapshotTfplan2caiConverter(),
+	"google_netapp_kmsconfig":                                netapp.NetappkmsconfigTfplan2caiConverter(),
 	"google_network_connectivity_group":                      networkconnectivity.NetworkConnectivityGroupTfplan2caiConverter(),
 	"google_network_connectivity_policy_based_route":         networkconnectivity.NetworkConnectivityPolicyBasedRouteTfplan2caiConverter(),
 	"google_network_security_address_group":                  networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),
@@ -200,6 +234,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_network_security_url_lists":                      networksecurity.NetworkSecurityUrlListsTfplan2caiConverter(),
 	"google_privateca_ca_pool":                               privateca.PrivatecaCaPoolTfplan2caiConverter(),
 	"google_privateca_certificate":                           privateca.PrivatecaCertificateTfplan2caiConverter(),
+	"google_privateca_certificate_template":                  privateca.PrivatecaCertificateTemplateTfplan2caiConverter(),
 	"google_pubsub_subscription":                             pubsub.PubsubSubscriptionTfplan2caiConverter(),
 	"google_pubsub_topic":                                    pubsub.PubsubTopicTfplan2caiConverter(),
 	"google_redis_cluster":                                   redis.RedisClusterTfplan2caiConverter(),
