@@ -39,6 +39,9 @@ func TestAccSecureSourceManagerInstance(t *testing.T) {
 			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivateExample",
 		},
 		{
+			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivateCustomHostExample",
+		},
+		{
 			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivatePscBackendExample",
 		},
 		{
