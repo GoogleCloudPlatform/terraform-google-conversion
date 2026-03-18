@@ -30,6 +30,9 @@ func TestAccBackupDRBackupPlan(t *testing.T) {
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanSimpleExample",
 		},
 		{
+			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanForDiskResourceExample",
+		},
+		{
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanForCsqlResourceExample",
 		},
 		{
