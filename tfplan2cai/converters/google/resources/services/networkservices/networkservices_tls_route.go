@@ -88,7 +88,7 @@ func ResourceConverterNetworkServicesTlsRoute() cai.ResourceConverter {
 }
 
 func GetNetworkServicesTlsRouteCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/global/tlsRoutes/{{name}}")
+	name, err := cai.AssetName(d, config, "//networkservices.googleapis.com/projects/{{project}}/locations/{{location}}/tlsRoutes/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
