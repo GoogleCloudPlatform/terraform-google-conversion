@@ -199,6 +199,167 @@ GKE clients are not supported.`,
 Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
 			},
+			"maintenance_policy": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `The maintenance policy for the instance to determine when to allow or exclude the instance from maintenance updates.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"maintenance_exclusion_window": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `The exclusion windows for the instance. Currently limited to 1 window.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"end_date": {
+										Type:        schema.TypeList,
+										Required:    true,
+										Description: `End date of the exclusion period in UTC.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"day": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Day of a month. Must be from 1 to 31 and valid for the year and month.`,
+												},
+												"month": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Month of a year. Must be from 1 to 12.`,
+												},
+												"year": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Year of the date. Must be from 1 to 9999, or 0 for recurring.`,
+												},
+											},
+										},
+									},
+									"start_date": {
+										Type:        schema.TypeList,
+										Required:    true,
+										Description: `Start date of the exclusion period in UTC.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"day": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Day of a month. Must be from 1 to 31 and valid for the year and month.`,
+												},
+												"month": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Month of a year. Must be from 1 to 12.`,
+												},
+												"year": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Year of the date. Must be from 1 to 9999, or 0 for recurring.`,
+												},
+											},
+										},
+									},
+									"time": {
+										Type:        schema.TypeList,
+										Required:    true,
+										Description: `Time in UTC for the exclusion window.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"hours": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Hours of day in 24 hour format. Should be from 0 to 23.`,
+												},
+												"minutes": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Minutes of hour of day. Must be from 0 to 59.`,
+												},
+												"nanos": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.`,
+												},
+												"seconds": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Seconds of minutes of the time. Must be from 0 to 59.`,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"weekly_maintenance_windows": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `The weekly maintenance windows for the instance. Currently limited to 1 window.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"day_of_week": {
+										Type:         schema.TypeString,
+										Required:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"}),
+										Description:  `Day of the week for the maintenance window. Possible values: ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]`,
+									},
+									"start_time": {
+										Type:        schema.TypeList,
+										Required:    true,
+										Description: `Start time of the maintenance window in UTC.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"hours": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Hours of day in 24 hour format. Should be from 0 to 23.`,
+												},
+												"minutes": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Minutes of hour of day. Must be from 0 to 59.`,
+												},
+												"nanos": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.`,
+												},
+												"seconds": {
+													Type:        schema.TypeInt,
+													Computed:    true,
+													Optional:    true,
+													Description: `Seconds of minutes of the time. Must be from 0 to 59.`,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"placement_policy": {
 				Type:     schema.TypeString,
 				Optional: true,

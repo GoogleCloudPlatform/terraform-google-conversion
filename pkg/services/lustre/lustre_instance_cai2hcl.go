@@ -135,6 +135,7 @@ func (c *LustreInstanceCai2hclConverter) convertResourceData(asset caiasset.Asse
 	hclData["placement_policy"] = flattenLustreInstancePlacementPolicy(res["placementPolicy"], d, config)
 	hclData["kms_key"] = flattenLustreInstanceKmsKey(res["kmsKey"], d, config)
 	hclData["access_rules_options"] = flattenLustreInstanceAccessRulesOptions(res["accessRulesOptions"], d, config)
+	hclData["maintenance_policy"] = flattenLustreInstanceMaintenancePolicy(res["maintenancePolicy"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -305,4 +306,379 @@ func flattenLustreInstanceAccessRulesOptionsAccessRulesIpAddressRanges(v interfa
 
 func flattenLustreInstanceAccessRulesOptionsAccessRulesSquashMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenLustreInstanceMaintenancePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["weekly_maintenance_windows"] =
+		flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindows(original["weeklyMaintenanceWindows"], d, config)
+	transformed["maintenance_exclusion_window"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindow(original["maintenanceExclusionWindow"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindows(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"day_of_week": flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsDayOfWeek(original["dayOfWeek"], d, config),
+			"start_time":  flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTime(original["startTime"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsDayOfWeek(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["hours"] =
+		flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeHours(original["hours"], d, config)
+	transformed["minutes"] =
+		flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeMinutes(original["minutes"], d, config)
+	transformed["seconds"] =
+		flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeHours(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeMinutes(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindow(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"start_date": flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDate(original["startDate"], d, config),
+			"end_date":   flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDate(original["endDate"], d, config),
+			"time":       flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTime(original["time"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["year"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateYear(original["year"], d, config)
+	transformed["month"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateMonth(original["month"], d, config)
+	transformed["day"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateDay(original["day"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateYear(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateMonth(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateDay(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["year"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateYear(original["year"], d, config)
+	transformed["month"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateMonth(original["month"], d, config)
+	transformed["day"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateDay(original["day"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateYear(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateMonth(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateDay(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["hours"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeHours(original["hours"], d, config)
+	transformed["minutes"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeMinutes(original["minutes"], d, config)
+	transformed["seconds"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeHours(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeMinutes(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
 }
