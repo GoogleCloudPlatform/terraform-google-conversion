@@ -128,6 +128,12 @@ func GetNetworkServicesTlsRouteApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("gateways"); ok || !reflect.DeepEqual(v, gatewaysProp) {
 		obj["gateways"] = gatewaysProp
 	}
+	targetProxiesProp, err := expandNetworkServicesTlsRouteTargetProxies(d.Get("target_proxies"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("target_proxies"); ok || !reflect.DeepEqual(v, targetProxiesProp) {
+		obj["targetProxies"] = targetProxiesProp
+	}
 	rulesProp, err := expandNetworkServicesTlsRouteRules(d.Get("rules"), d, config)
 	if err != nil {
 		return nil, err
@@ -147,6 +153,10 @@ func expandNetworkServicesTlsRouteMeshes(v interface{}, d tpgresource.TerraformR
 }
 
 func expandNetworkServicesTlsRouteGateways(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesTlsRouteTargetProxies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
