@@ -30,6 +30,9 @@ func TestAccLustreInstance(t *testing.T) {
 			Name: "TestAccLustreInstance_lustreInstanceBasicExample",
 		},
 		{
+			Name: "TestAccLustreInstance_withMaintenancePolicy",
+		},
+		{
 			Name: "TestAccLustreInstance_update",
 		},
 		{
