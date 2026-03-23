@@ -35,6 +35,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataplex"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
@@ -167,6 +168,8 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_container_node_pool":                             container.ContainerNodePoolTfplan2caiConverter(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.DatabaseMigrationServiceMigrationJobTfplan2caiConverter(),
 	"google_data_fusion_instance":                            datafusion.DataFusionInstanceTfplan2caiConverter(),
+	"google_dataplex_glossary":                               dataplex.DataplexGlossaryTfplan2caiConverter(),
+	"google_dataplex_task":                                   dataplex.DataplexTaskTfplan2caiConverter(),
 	"google_dataproc_autoscaling_policy":                     dataproc.DataprocAutoscalingPolicyTfplan2caiConverter(),
 	"google_dataproc_batch":                                  dataproc.DataprocBatchTfplan2caiConverter(),
 	"google_datastream_connection_profile":                   datastream.DatastreamConnectionProfileTfplan2caiConverter(),

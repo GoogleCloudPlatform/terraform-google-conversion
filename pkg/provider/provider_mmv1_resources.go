@@ -24,6 +24,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataplex"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
@@ -69,7 +70,7 @@ var handwrittenResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 176
+// Generated resources: 178
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -158,6 +159,8 @@ var generatedResources = map[string]*schema.Resource{
 	"google_container_node_pool":                             container.ResourceContainerNodePool(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.ResourceDatabaseMigrationServiceMigrationJob(),
 	"google_data_fusion_instance":                            datafusion.ResourceDataFusionInstance(),
+	"google_dataplex_glossary":                               dataplex.ResourceDataplexGlossary(),
+	"google_dataplex_task":                                   dataplex.ResourceDataplexTask(),
 	"google_dataproc_autoscaling_policy":                     dataproc.ResourceDataprocAutoscalingPolicy(),
 	"google_dataproc_batch":                                  dataproc.ResourceDataprocBatch(),
 	"google_datastream_connection_profile":                   datastream.ResourceDatastreamConnectionProfile(),
