@@ -73,6 +73,7 @@ func TestAccSpannerDatabase(t *testing.T) {
 					"default_time_zone",
 					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"enable_drop_protection",
 					"for_each",
 					"lifecycle",

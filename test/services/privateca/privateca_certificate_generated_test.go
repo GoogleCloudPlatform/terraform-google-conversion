@@ -61,7 +61,9 @@ func TestAccPrivatecaCertificate(t *testing.T) {
 				[]string{
 					"certificate_authority",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"location",

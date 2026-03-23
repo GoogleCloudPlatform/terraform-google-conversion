@@ -67,7 +67,9 @@ func TestAccMonitoringNotificationChannel(t *testing.T) {
 				[]string{
 					"ASSETNAME",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"force_delete",
 					"lifecycle",

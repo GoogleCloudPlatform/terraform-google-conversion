@@ -118,7 +118,9 @@ func TestAccComputeUrlMap(t *testing.T) {
 				[]string{
 					"count",
 					"default_custom_error_response_policy.error_response_rule",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"metadata",

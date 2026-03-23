@@ -73,7 +73,9 @@ func TestAccLookerInstance(t *testing.T) {
 				[]string{
 					"count",
 					"deletion_policy",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"name",

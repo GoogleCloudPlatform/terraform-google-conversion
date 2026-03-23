@@ -46,7 +46,9 @@ func TestAccCloudAssetFolderFeed(t *testing.T) {
 				[]string{
 					"billing_project",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"feed_id",
 					"folder",
 					"folder_id",

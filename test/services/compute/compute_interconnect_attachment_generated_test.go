@@ -55,7 +55,9 @@ func TestAccComputeInterconnectAttachment(t *testing.T) {
 				[]string{
 					"candidate_subnets",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"params",
