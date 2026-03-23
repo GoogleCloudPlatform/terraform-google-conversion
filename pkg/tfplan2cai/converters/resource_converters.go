@@ -32,6 +32,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
@@ -163,6 +164,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_target_ssl_proxy":                        compute.ComputeTargetSslProxyTfplan2caiConverter(),
 	"google_compute_target_tcp_proxy":                        compute.ComputeTargetTcpProxyTfplan2caiConverter(),
 	"google_compute_url_map":                                 compute.ComputeUrlMapTfplan2caiConverter(),
+	"google_container_node_pool":                             container.ContainerNodePoolTfplan2caiConverter(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.DatabaseMigrationServiceMigrationJobTfplan2caiConverter(),
 	"google_data_fusion_instance":                            datafusion.DataFusionInstanceTfplan2caiConverter(),
 	"google_dataproc_autoscaling_policy":                     dataproc.DataprocAutoscalingPolicyTfplan2caiConverter(),
