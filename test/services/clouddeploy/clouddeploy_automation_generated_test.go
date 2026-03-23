@@ -51,8 +51,10 @@ func TestAccClouddeployAutomation(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"delivery_pipeline",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"labels",
 					"lifecycle",

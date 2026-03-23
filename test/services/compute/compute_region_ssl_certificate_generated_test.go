@@ -55,7 +55,9 @@ func TestAccComputeRegionSslCertificate(t *testing.T) {
 				[]string{
 					"certificate",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"name_prefix",

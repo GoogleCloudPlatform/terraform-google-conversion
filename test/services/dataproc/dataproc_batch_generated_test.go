@@ -61,7 +61,9 @@ func TestAccDataprocBatch(t *testing.T) {
 				[]string{
 					"batch_id",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"environment_config.execution_config.ttl",
 					"for_each",
 					"lifecycle",

@@ -114,7 +114,9 @@ func TestAccRedisCluster(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"gcs_source",
 					"lifecycle",

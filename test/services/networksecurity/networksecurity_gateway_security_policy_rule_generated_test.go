@@ -54,7 +54,9 @@ func TestAccNetworkSecurityGatewaySecurityPolicyRule(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"gateway_security_policy",
 					"lifecycle",

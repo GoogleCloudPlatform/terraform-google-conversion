@@ -113,7 +113,9 @@ func TestAccComputeRegionHealthCheck(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"grpc_tls_health_check",
 					"lifecycle",

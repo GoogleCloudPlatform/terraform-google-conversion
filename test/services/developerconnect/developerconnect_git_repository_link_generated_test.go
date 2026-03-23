@@ -45,7 +45,9 @@ func TestAccDeveloperConnectGitRepositoryLink(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"git_repository_link_id",
 					"lifecycle",

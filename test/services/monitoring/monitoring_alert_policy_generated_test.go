@@ -67,7 +67,9 @@ func TestAccMonitoringAlertPolicy(t *testing.T) {
 				[]string{
 					"ASSETNAME",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"provider",

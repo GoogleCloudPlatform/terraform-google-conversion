@@ -76,7 +76,9 @@ func TestAccComputeRouter(t *testing.T) {
 				[]string{
 					"advertisedIpRanges",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"md5_authentication_keys",

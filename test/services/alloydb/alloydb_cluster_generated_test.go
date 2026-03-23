@@ -154,6 +154,7 @@ func TestAccAlloydbCluster(t *testing.T) {
 					"deletion_policy",
 					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"initial_user",
 					"initial_user.password",

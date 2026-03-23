@@ -105,8 +105,10 @@ func TestAccWorkbenchInstance(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
 					"desired_state",
+					"dynamic",
 					"for_each",
 					"gce_setup.boot_disk.disk_type",
 					"gce_setup.data_disks.disk_type",

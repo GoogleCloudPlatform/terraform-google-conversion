@@ -103,7 +103,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 				[]string{
 					"allow_subnet_cidr_routes_overlap",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"fingerprint",
 					"for_each",
 					"ip_collection",

@@ -49,8 +49,10 @@ func TestAccNetappVolumeReplication(t *testing.T) {
 				[]string{
 					"count",
 					"delete_destination_volume",
+					"deletion_protection",
 					"depends_on",
 					"destination_volume_parameters",
+					"dynamic",
 					"for_each",
 					"force_stopping",
 					"lifecycle",

@@ -52,7 +52,9 @@ func TestAccApphubWorkload(t *testing.T) {
 				[]string{
 					"application_id",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"location",

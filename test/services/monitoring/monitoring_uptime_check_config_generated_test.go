@@ -76,7 +76,9 @@ func TestAccMonitoringUptimeCheckConfig(t *testing.T) {
 				[]string{
 					"ASSETNAME",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"http_check.auth_info.password",
 					"http_check.auth_info.password_wo",
