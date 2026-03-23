@@ -39,6 +39,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 			Name: "TestAccComputeSubnetwork_subnetworkInternalIpv6Example",
 		},
 		{
+			Name: "TestAccComputeSubnetwork_subnetworkResolveSubnetMaskExample",
+		},
+		{
 			Name: "TestAccComputeSubnetwork_subnetworkCidrOverlapExample",
 		},
 		{
