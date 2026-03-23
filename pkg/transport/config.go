@@ -397,6 +397,7 @@ type Config struct {
 	VPCAccessBasePath                string
 	WorkbenchBasePath                string
 	WorkflowsBasePath                string
+	WorkstationsBasePath             string
 
 	CloudBillingBasePath      string
 	ContainerBasePath         string
@@ -576,6 +577,7 @@ const VmwareengineBasePathKey = "Vmwareengine"
 const VPCAccessBasePathKey = "VPCAccess"
 const WorkbenchBasePathKey = "Workbench"
 const WorkflowsBasePathKey = "Workflows"
+const WorkstationsBasePathKey = "Workstations"
 const CloudBillingBasePathKey = "CloudBilling"
 const ContainerBasePathKey = "Container"
 const DataflowBasePathKey = "Dataflow"
@@ -744,6 +746,7 @@ var DefaultBasePaths = map[string]string{
 	VPCAccessBasePathKey:                "https://vpcaccess.googleapis.com/v1/",
 	WorkbenchBasePathKey:                "https://notebooks.googleapis.com/v2/",
 	WorkflowsBasePathKey:                "https://workflows.googleapis.com/v1/",
+	WorkstationsBasePathKey:             "https://workstations.googleapis.com/v1/",
 	CloudBillingBasePathKey:             "https://cloudbilling.googleapis.com/v1/",
 	ContainerBasePathKey:                "https://container.googleapis.com/v1/",
 	DataflowBasePathKey:                 "https://dataflow.googleapis.com/v1b3/",
@@ -1608,6 +1611,11 @@ func SetEndpointDefaults(d *schema.ResourceData) error {
 		d.Set("workflows_custom_endpoint", MultiEnvDefault([]string{
 			"GOOGLE_WORKFLOWS_CUSTOM_ENDPOINT",
 		}, DefaultBasePaths[WorkflowsBasePathKey]))
+	}
+	if d.Get("workstations_custom_endpoint") == "" {
+		d.Set("workstations_custom_endpoint", MultiEnvDefault([]string{
+			"GOOGLE_WORKSTATIONS_CUSTOM_ENDPOINT",
+		}, DefaultBasePaths[WorkstationsBasePathKey]))
 	}
 
 	if d.Get(CloudBillingCustomEndpointEntryKey) == "" {
@@ -2841,6 +2849,7 @@ func ConfigureBasePaths(c *Config) {
 	c.VPCAccessBasePath = DefaultBasePaths[VPCAccessBasePathKey]
 	c.WorkbenchBasePath = DefaultBasePaths[WorkbenchBasePathKey]
 	c.WorkflowsBasePath = DefaultBasePaths[WorkflowsBasePathKey]
+	c.WorkstationsBasePath = DefaultBasePaths[WorkstationsBasePathKey]
 
 	// Handwritten Products / Versioned / Atypical Entries
 	c.CloudBillingBasePath = DefaultBasePaths[CloudBillingBasePathKey]
