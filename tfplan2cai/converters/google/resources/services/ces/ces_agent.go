@@ -638,6 +638,13 @@ func expandCESAgentRemoteDialogflowAgent(v interface{}, d tpgresource.TerraformR
 		transformed["outputVariableMapping"] = transformedOutputVariableMapping
 	}
 
+	transformedRespectResponseInterruptionSettings, err := expandCESAgentRemoteDialogflowAgentRespectResponseInterruptionSettings(original["respect_response_interruption_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRespectResponseInterruptionSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["respectResponseInterruptionSettings"] = transformedRespectResponseInterruptionSettings
+	}
+
 	return transformed, nil
 }
 
@@ -673,6 +680,10 @@ func expandCESAgentRemoteDialogflowAgentOutputVariableMapping(v interface{}, d t
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandCESAgentRemoteDialogflowAgentRespectResponseInterruptionSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESAgentTools(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
