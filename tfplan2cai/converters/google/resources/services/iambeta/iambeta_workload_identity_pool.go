@@ -218,6 +218,13 @@ func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfig(v interfac
 		transformed["caPools"] = transformedCaPools
 	}
 
+	transformedUseDefaultSharedCa, err := expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigUseDefaultSharedCa(original["use_default_shared_ca"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseDefaultSharedCa); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useDefaultSharedCa"] = transformedUseDefaultSharedCa
+	}
+
 	transformedLifetime, err := expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigLifetime(original["lifetime"], d, config)
 	if err != nil {
 		return nil, err
@@ -251,6 +258,10 @@ func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigCaPools(v i
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigUseDefaultSharedCa(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigLifetime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
