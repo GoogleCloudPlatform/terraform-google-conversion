@@ -35,6 +35,9 @@ func TestAccColabRuntimeTemplate(t *testing.T) {
 		{
 			Name: "TestAccColabRuntimeTemplate_colabRuntimeTemplateFullExample",
 		},
+		{
+			Name: "TestAccColabRuntimeTemplate_update",
+		},
 	}
 
 	for _, tt := range tests {
