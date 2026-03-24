@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
@@ -21,7 +22,6 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataplex"
@@ -65,12 +65,13 @@ import (
 
 var handwrittenResources = map[string]*schema.Resource{
 	// ####### START handwritten resources ###########
-	"google_compute_instance": compute.ResourceComputeInstance(),
-	"google_project":          resourcemanager.ResourceGoogleProject(),
+	"google_compute_instance":    compute.ResourceComputeInstance(),
+	"google_container_node_pool": container.ResourceContainerNodePool(),
+	"google_project":             resourcemanager.ResourceGoogleProject(),
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 178
+// Generated resources: 177
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -156,7 +157,6 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_target_ssl_proxy":                        compute.ResourceComputeTargetSslProxy(),
 	"google_compute_target_tcp_proxy":                        compute.ResourceComputeTargetTcpProxy(),
 	"google_compute_url_map":                                 compute.ResourceComputeUrlMap(),
-	"google_container_node_pool":                             container.ResourceContainerNodePool(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.ResourceDatabaseMigrationServiceMigrationJob(),
 	"google_data_fusion_instance":                            datafusion.ResourceDataFusionInstance(),
 	"google_dataplex_glossary":                               dataplex.ResourceDataplexGlossary(),
