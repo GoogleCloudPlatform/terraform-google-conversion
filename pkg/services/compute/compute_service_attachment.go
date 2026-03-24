@@ -27,6 +27,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -85,6 +86,7 @@ var (
 	_ = sort.IntSlice{}
 	_ = strconv.Atoi
 	_ = strings.Trim
+	_ = time.Now
 	_ = schema.Noop
 	_ = structure.NormalizeJsonString
 	_ = validation.All
@@ -265,6 +267,13 @@ func computeServiceAttachmentConsumerAcceptListsSchema() *schema.Resource {
 				Required: true,
 				Description: `The number of consumer forwarding rules the consumer project can
 create.`,
+			},
+			"endpoint_url": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: tpgresource.CompareSelfLinkRelativePaths,
+				Description: `The endpoint that is allowed to connect to this service attachment.
+Only one of project_id_or_num, network_url and endpoint_url may be set.`,
 			},
 			"network_url": {
 				Type:             schema.TypeString,

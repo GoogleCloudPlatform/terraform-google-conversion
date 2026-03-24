@@ -54,7 +54,9 @@ func TestAccComputeSslPolicy(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"provider",

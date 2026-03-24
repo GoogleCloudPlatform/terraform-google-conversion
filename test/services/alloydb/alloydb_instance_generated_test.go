@@ -101,8 +101,10 @@ func TestAccAlloydbInstance(t *testing.T) {
 				[]string{
 					"cluster",
 					"count",
+					"deletion_protection",
 					"depends_on",
 					"display_name",
+					"dynamic",
 					"for_each",
 					"instance_id",
 					"lifecycle",

@@ -1,0 +1,86 @@
+[
+  {
+    "type": "google_compute_network",
+    "name": "default",
+    "attributes": {
+      "auto_create_subnetworks": false,
+      "name": "tf-test-mxc84acit3-network"
+    }
+  },
+  {
+    "type": "google_compute_subnetwork",
+    "name": "default",
+    "attributes": {
+      "ip_cidr_range": "10.0.0.0/16",
+      "name": "tf-test-mxc84acit3-subnet",
+      "network": "google_compute_network.default.id",
+      "region": "us-central1"
+    }
+  },
+  {
+    "type": "google_compute_subnetwork",
+    "name": "proxy",
+    "attributes": {
+      "ip_cidr_range": "10.1.0.0/24",
+      "name": "tf-test-mxc84acit3-proxy-subnet",
+      "network": "google_compute_network.default.id",
+      "purpose": "REGIONAL_MANAGED_PROXY",
+      "region": "us-central1",
+      "role": "ACTIVE"
+    }
+  },
+  {
+    "type": "google_compute_health_check",
+    "name": "default",
+    "attributes": {
+      "check_interval_sec": 1,
+      "http_health_check.port": "80",
+      "name": "tf-test-mxc84acit3-hc",
+      "timeout_sec": 1
+    }
+  },
+  {
+    "type": "google_compute_region_backend_service",
+    "name": "default",
+    "attributes": {
+      "health_checks": "google_compute_health_check.default.id",
+      "load_balancing_scheme": "INTERNAL_MANAGED",
+      "name": "tf-test-mxc84acit3-backend",
+      "protocol": "HTTP",
+      "region": "us-central1"
+    }
+  },
+  {
+    "type": "google_compute_region_url_map",
+    "name": "default",
+    "attributes": {
+      "default_service": "google_compute_region_backend_service.default.id",
+      "name": "tf-test-mxc84acit3-url-map",
+      "region": "us-central1"
+    }
+  },
+  {
+    "type": "google_compute_region_target_http_proxy",
+    "name": "default",
+    "attributes": {
+      "name": "tf-test-mxc84acit3-http-proxy",
+      "region": "us-central1",
+      "url_map": "google_compute_region_url_map.default.id"
+    }
+  },
+  {
+    "type": "google_compute_forwarding_rule",
+    "name": "foobar",
+    "attributes": {
+      "allow_global_access": false,
+      "depends_on": "google_compute_subnetwork.proxy",
+      "load_balancing_scheme": "INTERNAL_MANAGED",
+      "name": "tf-test-mxc84acit3",
+      "network": "google_compute_network.default.id",
+      "port_range": "80",
+      "region": "us-central1",
+      "subnetwork": "google_compute_subnetwork.default.id",
+      "target": "google_compute_region_target_http_proxy.default.id"
+    }
+  }
+]

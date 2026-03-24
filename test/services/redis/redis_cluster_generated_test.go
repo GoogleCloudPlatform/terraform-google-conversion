@@ -48,6 +48,9 @@ func TestAccRedisCluster(t *testing.T) {
 			Name: "TestAccRedisCluster_redisClusterCmekExample",
 		},
 		{
+			Name: "TestAccRedisCluster_redisClusterFlexibleCaExample",
+		},
+		{
 			Name: "TestAccRedisCluster_createUpdateClusterWithNodeType",
 		},
 		{
@@ -92,6 +95,9 @@ func TestAccRedisCluster(t *testing.T) {
 		{
 			Name: "TestAccRedisCluster_redisClusterHaWithLabelsUpdate",
 		},
+		{
+			Name: "TestAccRedisCluster_customerManagedCas",
+		},
 	}
 
 	for _, tt := range tests {
@@ -108,7 +114,9 @@ func TestAccRedisCluster(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"gcs_source",
 					"lifecycle",

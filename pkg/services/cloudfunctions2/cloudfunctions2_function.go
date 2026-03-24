@@ -27,6 +27,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -64,6 +65,7 @@ var (
 	_ = sort.IntSlice{}
 	_ = strconv.Atoi
 	_ = strings.Trim
+	_ = time.Now
 	_ = schema.Noop
 	_ = structure.NormalizeJsonString
 	_ = validation.All
@@ -395,6 +397,7 @@ supplied the value is interpreted as bytes.`,
 									},
 								},
 							},
+							ConflictsWith: []string{"service_config.0.vpc_connector"},
 						},
 						"environment_variables": {
 							Type:             schema.TypeMap,
@@ -518,9 +521,10 @@ can be terminated if the function is not completed at the end of the
 timeout period. Defaults to 60 seconds.`,
 						},
 						"vpc_connector": {
-							Type:        schema.TypeString,
-							Optional:    true,
-							Description: `The Serverless VPC Access connector that this cloud function can connect to.`,
+							Type:          schema.TypeString,
+							Optional:      true,
+							Description:   `The Serverless VPC Access connector that this cloud function can connect to.`,
+							ConflictsWith: []string{"service_config.0.direct_vpc_network_interface"},
 						},
 						"vpc_connector_egress_settings": {
 							Type:         schema.TypeString,

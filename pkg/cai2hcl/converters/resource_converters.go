@@ -33,12 +33,15 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataplex"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflow"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/eventarc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
@@ -51,6 +54,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/looker"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/lustre"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/managedkafka"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
@@ -85,6 +89,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"compute.googleapis.com/Instance": {
 		"Default": compute.NewComputeInstanceCai2hclConverter(provider),
+	},
+	"container.googleapis.com/NodePool": {
+		"Default": container.NewContainerNodePoolCai2hclConverter(provider),
 	},
 	// ####### END handwritten resources ###########
 	"aiplatform.googleapis.com/NotebookRuntime": {
@@ -152,6 +159,15 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"certificatemanager.googleapis.com/CertificateMap": {
 		"Default": certificatemanager.NewCertificateManagerCertificateMapCai2hclConverter(provider),
+	},
+	"certificatemanager.googleapis.com/CertificateMapEntry": {
+		"Default": certificatemanager.NewCertificateManagerCertificateMapEntryCai2hclConverter(provider),
+	},
+	"certificatemanager.googleapis.com/DnsAuthorization": {
+		"Default": certificatemanager.NewCertificateManagerDnsAuthorizationCai2hclConverter(provider),
+	},
+	"certificatemanager.googleapis.com/TrustConfig": {
+		"Default": certificatemanager.NewCertificateManagerTrustConfigCai2hclConverter(provider),
 	},
 	"cloudaicompanion.googleapis.com/CodeRepositoryIndex": {
 		"Default": gemini.NewGeminiCodeRepositoryIndexCai2hclConverter(provider),
@@ -232,10 +248,18 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"Default": compute.NewComputeFirewallCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/FirewallPolicy": {
-		"Default": compute.NewComputeFirewallPolicyCai2hclConverter(provider),
+		"ComputeFirewallPolicy":              compute.NewComputeFirewallPolicyCai2hclConverter(provider),
+		"ComputeNetworkFirewallPolicy":       compute.NewComputeNetworkFirewallPolicyCai2hclConverter(provider),
+		"ComputeRegionNetworkFirewallPolicy": compute.NewComputeRegionNetworkFirewallPolicyCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/ForwardingRule": {
+		"Default": compute.NewComputeForwardingRuleCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/GlobalAddress": {
 		"Default": compute.NewComputeGlobalAddressCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/GlobalForwardingRule": {
+		"Default": compute.NewComputeGlobalForwardingRuleCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/HealthCheck": {
 		"ComputeHealthCheck":       compute.NewComputeHealthCheckCai2hclConverter(provider),
@@ -262,6 +286,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Network": {
 		"Default": compute.NewComputeNetworkCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/NetworkAttachment": {
+		"Default": compute.NewComputeNetworkAttachmentCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/NetworkEndpointGroup": {
 		"ComputeGlobalNetworkEndpointGroup": compute.NewComputeGlobalNetworkEndpointGroupCai2hclConverter(provider),
 		"ComputeNetworkEndpointGroup":       compute.NewComputeNetworkEndpointGroupCai2hclConverter(provider),
@@ -276,6 +303,15 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/PacketMirroring": {
 		"Default": compute.NewComputePacketMirroringCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/RegionBackendService": {
+		"Default": compute.NewComputeRegionBackendServiceCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/RegionDisk": {
+		"Default": compute.NewComputeRegionDiskCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Reservation": {
+		"Default": compute.NewComputeReservationCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/ResourcePolicy": {
 		"Default": compute.NewComputeResourcePolicyCai2hclConverter(provider),
 	},
@@ -285,12 +321,19 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Router": {
 		"Default": compute.NewComputeRouterCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/SecurityPolicy": {
+		"Default": compute.NewComputeRegionSecurityPolicyCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/ServiceAttachment": {
 		"Default": compute.NewComputeServiceAttachmentCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Snapshot": {
+		"Default": compute.NewComputeSnapshotCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/SslCertificate": {
 		"ComputeManagedSslCertificate": compute.NewComputeManagedSslCertificateCai2hclConverter(provider),
 		"ComputeRegionSslCertificate":  compute.NewComputeRegionSslCertificateCai2hclConverter(provider),
+		"ComputeSslCertificate":        compute.NewComputeSslCertificateCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/SslPolicy": {
 		"ComputeRegionSslPolicy": compute.NewComputeRegionSslPolicyCai2hclConverter(provider),
@@ -329,11 +372,20 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/VpnGateway": {
 		"Default": compute.NewComputeHaVpnGatewayCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/VpnTunnel": {
+		"Default": compute.NewComputeVpnTunnelCai2hclConverter(provider),
+	},
 	"datafusion.googleapis.com/Instance": {
 		"Default": datafusion.NewDataFusionInstanceCai2hclConverter(provider),
 	},
 	"datamigration.googleapis.com/MigrationJob": {
 		"Default": databasemigrationservice.NewDatabaseMigrationServiceMigrationJobCai2hclConverter(provider),
+	},
+	"dataplex.googleapis.com/Glossary": {
+		"Default": dataplex.NewDataplexGlossaryCai2hclConverter(provider),
+	},
+	"dataplex.googleapis.com/Task": {
+		"Default": dataplex.NewDataplexTaskCai2hclConverter(provider),
 	},
 	"dataproc.googleapis.com/AutoscalingPolicy": {
 		"Default": dataproc.NewDataprocAutoscalingPolicyCai2hclConverter(provider),
@@ -358,6 +410,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"dialogflow.googleapis.com/Agent": {
 		"Default": dialogflow.NewDialogflowAgentCai2hclConverter(provider),
+	},
+	"eventarc.googleapis.com/Pipeline": {
+		"Default": eventarc.NewEventarcPipelineCai2hclConverter(provider),
 	},
 	"file.googleapis.com/Backup": {
 		"Default": filestore.NewFilestoreBackupCai2hclConverter(provider),
@@ -419,6 +474,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"looker.googleapis.com/Instance": {
 		"Default": looker.NewLookerInstanceCai2hclConverter(provider),
 	},
+	"lustre.googleapis.com/Instance": {
+		"Default": lustre.NewLustreInstanceCai2hclConverter(provider),
+	},
 	"managedkafka.googleapis.com/Cluster": {
 		"Default": managedkafka.NewManagedKafkaClusterCai2hclConverter(provider),
 	},
@@ -446,11 +504,20 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"netapp.googleapis.com/BackupVault": {
 		"Default": netapp.NewNetappBackupVaultCai2hclConverter(provider),
 	},
+	"netapp.googleapis.com/KmsConfig": {
+		"Default": netapp.NewNetappkmsconfigCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/Replication": {
+		"Default": netapp.NewNetappVolumeReplicationCai2hclConverter(provider),
+	},
 	"netapp.googleapis.com/Snapshot": {
 		"Default": netapp.NewNetappVolumeSnapshotCai2hclConverter(provider),
 	},
 	"netapp.googleapis.com/StoragePool": {
 		"Default": netapp.NewNetappStoragePoolCai2hclConverter(provider),
+	},
+	"netapp.googleapis.com/Volume": {
+		"Default": netapp.NewNetappVolumeCai2hclConverter(provider),
 	},
 	"networkconnectivity.googleapis.com/Group": {
 		"Default": networkconnectivity.NewNetworkConnectivityGroupCai2hclConverter(provider),
@@ -502,6 +569,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"privateca.googleapis.com/Certificate": {
 		"Default": privateca.NewPrivatecaCertificateCai2hclConverter(provider),
+	},
+	"privateca.googleapis.com/CertificateTemplate": {
+		"Default": privateca.NewPrivatecaCertificateTemplateCai2hclConverter(provider),
 	},
 	"pubsub.googleapis.com/Subscription": {
 		"Default": pubsub.NewPubsubSubscriptionCai2hclConverter(provider),

@@ -106,7 +106,9 @@ func TestAccDeveloperConnectConnection(t *testing.T) {
 				[]string{
 					"connection_id",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"location",

@@ -244,9 +244,6 @@ func flattenMonitoringAlertPolicyConditionsConditionAbsentAggregationsAlignmentP
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionAbsentAggregationsCrossSeriesReducer(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil || v == "" {
-		return "REDUCE_NONE"
-	}
 	return v
 }
 
@@ -460,9 +457,6 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregat
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsCrossSeriesReducer(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil || v == "" {
-		return "REDUCE_NONE"
-	}
 	return v
 }
 
@@ -578,9 +572,6 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdAggregationsAlignme
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionThresholdAggregationsCrossSeriesReducer(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil || v == "" {
-		return "REDUCE_NONE"
-	}
 	return v
 }
 

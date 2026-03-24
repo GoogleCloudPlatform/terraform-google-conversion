@@ -1,0 +1,35 @@
+[
+  {
+    "name": "//compute.googleapis.com/projects/ci-test-project-nightly-ga/regions/us-central1/forwardingRules/tf-test-mxc84acit3",
+    "asset_type": "compute.googleapis.com/ForwardingRule",
+    "resource": {
+      "version": "v1",
+      "discovery_document_uri": "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
+      "discovery_name": "ForwardingRule",
+      "parent": "//cloudresourcemanager.googleapis.com/projects/594424405950",
+      "data": {
+        "IPAddress": "10.0.0.2",
+        "IPProtocol": "TCP",
+        "allowGlobalAccess": false,
+        "allowPscGlobalAccess": false,
+        "loadBalancingScheme": "INTERNAL_MANAGED",
+        "name": "tf-test-mxc84acit3",
+        "network": "https://www.googleapis.com/compute/v1/projects/ci-test-project-nightly-ga/global/networks/tf-test-mxc84acit3-network",
+        "networkTier": "PREMIUM",
+        "noAutomateDnsZone": false,
+        "portRange": "80-80",
+        "region": "https://www.googleapis.com/compute/v1/projects/ci-test-project-nightly-ga/global/regions/us-central1",
+        "subnetwork": "https://www.googleapis.com/compute/v1/projects/ci-test-project-nightly-ga/regions/us-central1/subnetworks/tf-test-mxc84acit3-subnet",
+        "target": "https://www.googleapis.com/compute/v1/projects/ci-test-project-nightly-ga/regions/us-central1/targetHttpProxies/tf-test-mxc84acit3-http-proxy"
+      },
+      "location": "us-central1"
+    },
+    "ancestors": [
+      "projects/594424405950",
+      "organizations/529579013760"
+    ],
+    "tfplan_address": [
+      "google_compute_forwarding_rule.tf-test-mxc84acit3"
+    ]
+  }
+]

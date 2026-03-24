@@ -27,6 +27,10 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeResourcePolicy_withTopologyMode",
+			Skip: "The test should not in GA provider",
+		},
+		{
 			Name: "TestAccComputeResourcePolicy_resourcePolicyBasicExample",
 		},
 		{
@@ -54,9 +58,6 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyAcceleratorTopologyExample",
 		},
 		{
-			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyAcceleratorTopologyModeExample",
-		},
-		{
 			Name: "TestAccComputeResourcePolicy_resourcePolicyWorkloadPolicyMaxTopologyDistanceExample",
 		},
 		{
@@ -67,9 +68,6 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeResourcePolicy_guestFlushEmptyValue",
-		},
-		{
-			Name: "TestAccComputeResourcePolicy_withTopologyMode",
 		},
 	}
 
@@ -87,7 +85,9 @@ func TestAccComputeResourcePolicy(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"provider",

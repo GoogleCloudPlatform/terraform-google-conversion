@@ -49,7 +49,9 @@ func TestAccDatastreamPrivateConnection(t *testing.T) {
 				[]string{
 					"count",
 					"create_without_validation",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"location",
