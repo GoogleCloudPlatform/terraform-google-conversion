@@ -78,8 +78,9 @@ import (
 
 var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	// ####### START handwritten resources ###########
-	"google_project":          resourcemanager.ProjectTfplan2caiConverter(),
-	"google_compute_instance": compute.ComputeInstanceTfplan2caiConverter(),
+	"google_project":             resourcemanager.ProjectTfplan2caiConverter(),
+	"google_compute_instance":    compute.ComputeInstanceTfplan2caiConverter(),
+	"google_container_node_pool": container.ContainerNodePoolTfplan2caiConverter(),
 	// ####### END handwritten resources ###########
 	"google_alloydb_backup":                                  alloydb.AlloydbBackupTfplan2caiConverter(),
 	"google_alloydb_cluster":                                 alloydb.AlloydbClusterTfplan2caiConverter(),
@@ -165,7 +166,6 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_target_ssl_proxy":                        compute.ComputeTargetSslProxyTfplan2caiConverter(),
 	"google_compute_target_tcp_proxy":                        compute.ComputeTargetTcpProxyTfplan2caiConverter(),
 	"google_compute_url_map":                                 compute.ComputeUrlMapTfplan2caiConverter(),
-	"google_container_node_pool":                             container.ContainerNodePoolTfplan2caiConverter(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.DatabaseMigrationServiceMigrationJobTfplan2caiConverter(),
 	"google_data_fusion_instance":                            datafusion.DataFusionInstanceTfplan2caiConverter(),
 	"google_dataplex_glossary":                               dataplex.DataplexGlossaryTfplan2caiConverter(),

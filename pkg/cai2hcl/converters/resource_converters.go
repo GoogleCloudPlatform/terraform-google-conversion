@@ -90,6 +90,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Instance": {
 		"Default": compute.NewComputeInstanceCai2hclConverter(provider),
 	},
+	"container.googleapis.com/NodePool": {
+		"Default": container.NewContainerNodePoolCai2hclConverter(provider),
+	},
 	// ####### END handwritten resources ###########
 	"aiplatform.googleapis.com/NotebookRuntime": {
 		"Default": colab.NewColabRuntimeCai2hclConverter(provider),
@@ -345,9 +348,6 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"compute.googleapis.com/VpnGateway": {
 		"Default": compute.NewComputeHaVpnGatewayCai2hclConverter(provider),
-	},
-	"container.googleapis.com/NodePool": {
-		"Default": container.NewContainerNodePoolCai2hclConverter(provider),
 	},
 	"datafusion.googleapis.com/Instance": {
 		"Default": datafusion.NewDataFusionInstanceCai2hclConverter(provider),
