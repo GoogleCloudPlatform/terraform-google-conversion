@@ -138,6 +138,9 @@ func (c *IAMBetaWorkloadIdentityPoolCai2hclConverter) convertResourceData(asset 
 	hclData["display_name"] = flattenIAMBetaWorkloadIdentityPoolDisplayName(res["displayName"], d, config)
 	hclData["description"] = flattenIAMBetaWorkloadIdentityPoolDescription(res["description"], d, config)
 	hclData["disabled"] = flattenIAMBetaWorkloadIdentityPoolDisabled(res["disabled"], d, config)
+	hclData["mode"] = flattenIAMBetaWorkloadIdentityPoolMode(res["mode"], d, config)
+	hclData["inline_certificate_issuance_config"] = flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfig(res["inlineCertificateIssuanceConfig"], d, config)
+	hclData["inline_trust_config"] = flattenIAMBetaWorkloadIdentityPoolInlineTrustConfig(res["inlineTrustConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -158,6 +161,125 @@ func flattenIAMBetaWorkloadIdentityPoolDescription(v interface{}, d *schema.Reso
 }
 
 func flattenIAMBetaWorkloadIdentityPoolDisabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenIAMBetaWorkloadIdentityPoolMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ca_pools"] =
+		flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigCaPools(original["caPools"], d, config)
+	transformed["use_default_shared_ca"] =
+		flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigUseDefaultSharedCa(original["useDefaultSharedCa"], d, config)
+	transformed["lifetime"] =
+		flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigLifetime(original["lifetime"], d, config)
+	transformed["rotation_window_percentage"] =
+		flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigRotationWindowPercentage(original["rotationWindowPercentage"], d, config)
+	transformed["key_algorithm"] =
+		flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigKeyAlgorithm(original["keyAlgorithm"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigCaPools(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigUseDefaultSharedCa(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigLifetime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigRotationWindowPercentage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfigKeyAlgorithm(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["additional_trust_bundles"] =
+		flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundles(original["additionalTrustBundles"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundles(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.(map[string]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for k, raw := range l {
+		original := raw.(map[string]interface{})
+		transformed = append(transformed, map[string]interface{}{
+			"trust_domain":  k,
+			"trust_anchors": flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchors(original["trustAnchors"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchors(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"pem_certificate": flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchorsPemCertificate(original["pemCertificate"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchorsPemCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
