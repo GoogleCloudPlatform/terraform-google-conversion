@@ -249,10 +249,17 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"compute.googleapis.com/FirewallPolicy": {
 		"ComputeFirewallPolicy":              compute.NewComputeFirewallPolicyCai2hclConverter(provider),
+		"ComputeNetworkFirewallPolicy":       compute.NewComputeNetworkFirewallPolicyCai2hclConverter(provider),
 		"ComputeRegionNetworkFirewallPolicy": compute.NewComputeRegionNetworkFirewallPolicyCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/ForwardingRule": {
+		"Default": compute.NewComputeForwardingRuleCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/GlobalAddress": {
 		"Default": compute.NewComputeGlobalAddressCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/GlobalForwardingRule": {
+		"Default": compute.NewComputeGlobalForwardingRuleCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/HealthCheck": {
 		"ComputeHealthCheck":       compute.NewComputeHealthCheckCai2hclConverter(provider),
@@ -296,6 +303,15 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/PacketMirroring": {
 		"Default": compute.NewComputePacketMirroringCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/RegionBackendService": {
+		"Default": compute.NewComputeRegionBackendServiceCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/RegionDisk": {
+		"Default": compute.NewComputeRegionDiskCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Reservation": {
+		"Default": compute.NewComputeReservationCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/ResourcePolicy": {
 		"Default": compute.NewComputeResourcePolicyCai2hclConverter(provider),
 	},
@@ -305,12 +321,19 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Router": {
 		"Default": compute.NewComputeRouterCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/SecurityPolicy": {
+		"Default": compute.NewComputeRegionSecurityPolicyCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/ServiceAttachment": {
 		"Default": compute.NewComputeServiceAttachmentCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Snapshot": {
+		"Default": compute.NewComputeSnapshotCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/SslCertificate": {
 		"ComputeManagedSslCertificate": compute.NewComputeManagedSslCertificateCai2hclConverter(provider),
 		"ComputeRegionSslCertificate":  compute.NewComputeRegionSslCertificateCai2hclConverter(provider),
+		"ComputeSslCertificate":        compute.NewComputeSslCertificateCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/SslPolicy": {
 		"ComputeRegionSslPolicy": compute.NewComputeRegionSslPolicyCai2hclConverter(provider),
@@ -348,6 +371,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"compute.googleapis.com/VpnGateway": {
 		"Default": compute.NewComputeHaVpnGatewayCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/VpnTunnel": {
+		"Default": compute.NewComputeVpnTunnelCai2hclConverter(provider),
 	},
 	"datafusion.googleapis.com/Instance": {
 		"Default": datafusion.NewDataFusionInstanceCai2hclConverter(provider),

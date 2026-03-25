@@ -38,6 +38,8 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 		case "compute.googleapis.com/FirewallPolicy":
 			if true && strings.Contains(asset.Name, "locations") && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeFirewallPolicy"]
+			} else if true && strings.Contains(asset.Name, "projects") && strings.Contains(asset.Name, "global") {
+				converter = ConverterMap[asset.Type]["ComputeNetworkFirewallPolicy"]
 			} else if true && strings.Contains(asset.Name, "projects") && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionNetworkFirewallPolicy"]
 			}
@@ -56,10 +58,12 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 				converter = ConverterMap[asset.Type]["ComputeRegionNetworkEndpointGroup"]
 			}
 		case "compute.googleapis.com/SslCertificate":
-			if true && strings.Contains(asset.Name, "global") {
-				converter = ConverterMap[asset.Type]["ComputeManagedSslCertificate"]
-			} else if true && strings.Contains(asset.Name, "regions") {
+			if strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionSslCertificate"]
+			} else if typeVal, ok := asset.Resource.Data["type"]; ok && typeVal == "MANAGED" {
+				converter = ConverterMap[asset.Type]["ComputeManagedSslCertificate"]
+			} else {
+				converter = ConverterMap[asset.Type]["ComputeSslCertificate"]
 			}
 		case "compute.googleapis.com/SslPolicy":
 			if true && strings.Contains(asset.Name, "regions") {
