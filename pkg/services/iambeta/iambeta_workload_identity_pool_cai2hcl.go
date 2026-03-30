@@ -122,6 +122,11 @@ func (c *IAMBetaWorkloadIdentityPoolCai2hclConverter) convertResourceData(asset 
 	}
 	hclData := make(map[string]interface{})
 
+	res, hclData, err = resourceIAMBetaWorkloadIdentityPoolTgcDecoder(d, config, res, hclData)
+	if err != nil {
+		return nil, err
+	}
+
 	res, err = resourceIAMBetaWorkloadIdentityPoolDecoder(d, config, res)
 	if err != nil {
 		return nil, err
@@ -283,6 +288,30 @@ func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTr
 	return v
 }
 
+func resourceIAMBetaWorkloadIdentityPoolTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
+	// Root Cause: The `pemCertificate` field inside `trustAnchors` is sensitive and omitted from CAI assets.
+	// When it is omitted, `trustAnchors` becomes an empty list/map, causing cai2hcl to generate an empty `additional_trust_bundles {}` block without `trust_anchors`,
+	// which fails Terraform validation: `At least 1 "trust_anchors" blocks are required.`
+	// Solution: We inject `"pemCertificate" = "unknown"` exactly like the Provider decoder to satisfy validation rules during `cai2hcl` conversion.
+	if inlineTrustConfig, ok := res["inlineTrustConfig"].(map[string]interface{}); ok {
+		if additionalTrustBundlesMap, ok := inlineTrustConfig["additionalTrustBundles"].(map[string]interface{}); ok {
+			for _, bundleIf := range additionalTrustBundlesMap {
+				if bundle, ok := bundleIf.(map[string]interface{}); ok {
+					if trustAnchors, ok := bundle["trustAnchors"].([]interface{}); ok {
+						// trust_anchors is missing pemCertificate in CAI assets, but required in Terraform
+						for _, trustAnchorRaw := range trustAnchors {
+							if trustAnchor, ok := trustAnchorRaw.(map[string]interface{}); ok {
+								trustAnchor["pemCertificate"] = "unknown"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return res, hclData, nil
+}
 func resourceIAMBetaWorkloadIdentityPoolDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
 	if v := res["state"]; v == "DELETED" {
 		return nil, nil
