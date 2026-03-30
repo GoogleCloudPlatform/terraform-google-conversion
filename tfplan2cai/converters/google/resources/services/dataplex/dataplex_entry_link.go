@@ -50,6 +50,159 @@ import (
 )
 
 var (
+	entryLinkProjectNumberRegex = regexp.MustCompile(`^projects\/[1-9]\d*\/.+$`)
+)
+
+// EntryLinkProjectNumberValidation checks if the input string conforms to the pattern:
+// "projects/<project-number>/<anything>"
+func EntryLinkProjectNumberValidation(i interface{}, k string) (warnings []string, errors []error) {
+	v, ok := i.(string)
+
+	if !ok {
+		errors = append(errors, fmt.Errorf("expected type of field %q to be string, but got %T", k, i))
+		return warnings, errors
+	}
+
+	if !entryLinkProjectNumberRegex.MatchString(v) {
+		errors = append(errors, fmt.Errorf(
+			"field %q has an invalid format: %q. Expected format: 'projects/<project-number>/<anything>'. Please note that project IDs are not supported.",
+			k, v,
+		))
+	}
+
+	return warnings, errors
+}
+
+// FilterEntryLinkAspects filters the aspects in res based on aspectKeySet.
+// It returns an error if type assertions fail.
+func FilterEntryLinkAspects(aspectKeySet map[string]struct{}, res map[string]interface{}) error {
+	aspectsRaw, ok := res["aspects"]
+	if !ok || aspectsRaw == nil {
+		return nil
+	}
+
+	aspectsMap, ok := aspectsRaw.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("FilterEntryLinkAspects: 'aspects' field is not a map[string]interface{}, got %T", aspectsRaw)
+	}
+
+	for key := range aspectsMap {
+		if _, keep := aspectKeySet[key]; !keep {
+			delete(aspectsMap, key)
+		}
+	}
+	return nil
+}
+
+// AddEntryLinkAspectsToSet adds aspect keys from the aspects interface to the aspectKeySet.
+// It returns an error if type assertions fail or expected keys are missing.
+func AddEntryLinkAspectsToSet(aspectKeySet map[string]struct{}, aspects interface{}) error {
+	if aspects == nil {
+		return nil
+	}
+	aspectsSlice, ok := aspects.([]interface{})
+	if !ok {
+		return fmt.Errorf("AddEntryLinkAspectsToSet: input 'aspects' is not a []interface{}, got %T", aspects)
+	}
+
+	for i, aspectItemRaw := range aspectsSlice {
+		aspectMap, ok := aspectItemRaw.(map[string]interface{})
+		if !ok {
+			return fmt.Errorf("AddEntryLinkAspectsToSet: item at index %d is not a map[string]interface{}, got %T", i, aspectItemRaw)
+		}
+
+		keyRaw, keyExists := aspectMap["aspect_key"]
+		if !keyExists {
+			return fmt.Errorf("AddEntryLinkAspectsToSet: 'aspect_key' not found in aspect item at index %d", i)
+		}
+
+		keyString, ok := keyRaw.(string)
+		if !ok {
+			return fmt.Errorf("AddEntryLinkAspectsToSet: 'aspect_key' in item at index %d is not a string, got %T", i, keyRaw)
+		}
+		aspectKeySet[keyString] = struct{}{}
+	}
+	return nil
+}
+
+// InverseTransformEntryLinkAspects converts the "aspects" map back to a slice of maps,
+// re-inserting the "aspectKey". Modifies obj in-place.
+// It returns an error if type assertions fail.
+func InverseTransformEntryLinkAspects(res map[string]interface{}) error {
+	aspectsRaw, ok := res["aspects"]
+	if !ok || aspectsRaw == nil {
+		return nil
+	}
+
+	originalMap, ok := aspectsRaw.(map[string]interface{})
+	if !ok {
+		return fmt.Errorf("InverseTransformEntryLinkAspects: 'aspects' field is not a map[string]interface{}, got %T", aspectsRaw)
+	}
+
+	newSlice := make([]interface{}, 0, len(originalMap))
+
+	for key, value := range originalMap {
+		innerMap, ok := value.(map[string]interface{})
+		if !ok {
+			return fmt.Errorf("InverseTransformEntryLinkAspects: value for key '%s' is not a map[string]interface{}, got %T", key, value)
+		}
+		box := make(map[string]interface{}, 2)
+		box["aspectKey"] = key
+		box["aspect"] = innerMap
+		newSlice = append(newSlice, box)
+	}
+	res["aspects"] = newSlice
+	return nil
+}
+
+// TransformEntryLinkAspects concisely transforms the "aspects" slice within obj into a map.
+// Modifies obj in-place.
+// It returns an error if type assertions fail or expected keys are missing.
+func TransformEntryLinkAspects(obj map[string]interface{}) error {
+	aspectsRaw, ok := obj["aspects"]
+	if !ok || aspectsRaw == nil {
+		return nil
+	}
+
+	originalSlice, ok := aspectsRaw.([]interface{})
+	if !ok {
+		return fmt.Errorf("TransformEntryLinkAspects: 'aspects' field is not a []interface{}, got %T", aspectsRaw)
+	}
+
+	newMap := make(map[string]interface{}, len(originalSlice))
+	for i, item := range originalSlice {
+		aspectMap, ok := item.(map[string]interface{})
+		if !ok {
+			return fmt.Errorf("TransformEntryLinkAspects: item in 'aspects' slice at index %d is not a map[string]interface{}, got %T", i, item)
+		}
+
+		keyRaw, keyExists := aspectMap["aspectKey"]
+		if !keyExists {
+			return fmt.Errorf("TransformEntryLinkAspects: 'aspectKey' not found in aspect item at index %d", i)
+		}
+		key, ok := keyRaw.(string)
+		if !ok {
+			return fmt.Errorf("TransformEntryLinkAspects: 'aspectKey' in item at index %d is not a string, got %T", i, keyRaw)
+		}
+
+		valueRaw, valueExists := aspectMap["aspect"]
+		if !valueExists {
+			newMap[key] = map[string]interface{}{"data": map[string]interface{}{}}
+			continue
+		}
+
+		value, ok := valueRaw.(map[string]interface{})
+		if ok {
+			newMap[key] = value
+		} else {
+			newMap[key] = map[string]interface{}{"data": map[string]interface{}{}}
+		}
+	}
+	obj["aspects"] = newMap
+	return nil
+}
+
+var (
 	_ = bytes.Clone
 	_ = context.WithCancel
 	_ = base64.StdEncoding
@@ -122,6 +275,20 @@ func GetDataplexEntryLinkApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("entry_references"); !tpgresource.IsEmptyValue(reflect.ValueOf(entryReferencesProp)) && (ok || !reflect.DeepEqual(v, entryReferencesProp)) {
 		obj["entryReferences"] = entryReferencesProp
 	}
+	aspectsProp, err := expandDataplexEntryLinkAspects(d.Get("aspects"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("aspects"); !tpgresource.IsEmptyValue(reflect.ValueOf(aspectsProp)) && (ok || !reflect.DeepEqual(v, aspectsProp)) {
+		obj["aspects"] = aspectsProp
+	}
+
+	return resourceDataplexEntryLinkEncoder(d, config, obj)
+}
+
+func resourceDataplexEntryLinkEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	if err := TransformEntryLinkAspects(obj); err != nil {
+		return nil, err
+	}
 
 	return obj, nil
 }
@@ -179,4 +346,118 @@ func expandDataplexEntryLinkEntryReferencesPath(v interface{}, d tpgresource.Ter
 
 func expandDataplexEntryLinkEntryReferencesType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataplexEntryLinkAspects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAspectKey, err := expandDataplexEntryLinkAspectsAspectKey(original["aspect_key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAspectKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["aspectKey"] = transformedAspectKey
+		}
+
+		transformedAspect, err := expandDataplexEntryLinkAspectsAspect(original["aspect"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAspect); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["aspect"] = transformedAspect
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDataplexEntryLinkAspectsAspectKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexEntryLinkAspectsAspect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAspectType, err := expandDataplexEntryLinkAspectsAspectAspectType(original["aspect_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAspectType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["aspectType"] = transformedAspectType
+	}
+
+	transformedPath, err := expandDataplexEntryLinkAspectsAspectPath(original["path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["path"] = transformedPath
+	}
+
+	transformedCreateTime, err := expandDataplexEntryLinkAspectsAspectCreateTime(original["create_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCreateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["createTime"] = transformedCreateTime
+	}
+
+	transformedUpdateTime, err := expandDataplexEntryLinkAspectsAspectUpdateTime(original["update_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUpdateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["updateTime"] = transformedUpdateTime
+	}
+
+	transformedData, err := expandDataplexEntryLinkAspectsAspectData(original["data"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedData); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["data"] = transformedData
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexEntryLinkAspectsAspectAspectType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexEntryLinkAspectsAspectPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexEntryLinkAspectsAspectCreateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexEntryLinkAspectsAspectUpdateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexEntryLinkAspectsAspectData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
