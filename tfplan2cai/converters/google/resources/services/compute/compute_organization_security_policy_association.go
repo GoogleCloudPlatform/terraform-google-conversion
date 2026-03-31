@@ -122,6 +122,18 @@ func GetComputeOrganizationSecurityPolicyAssociationApiObject(d tpgresource.Terr
 	} else if v, ok := d.GetOkExists("attachment_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(attachmentIdProp)) && (ok || !reflect.DeepEqual(v, attachmentIdProp)) {
 		obj["attachmentId"] = attachmentIdProp
 	}
+	excludedProjectsProp, err := expandComputeOrganizationSecurityPolicyAssociationExcludedProjects(d.Get("excluded_projects"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("excluded_projects"); !tpgresource.IsEmptyValue(reflect.ValueOf(excludedProjectsProp)) && (ok || !reflect.DeepEqual(v, excludedProjectsProp)) {
+		obj["excludedProjects"] = excludedProjectsProp
+	}
+	excludedFoldersProp, err := expandComputeOrganizationSecurityPolicyAssociationExcludedFolders(d.Get("excluded_folders"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("excluded_folders"); !tpgresource.IsEmptyValue(reflect.ValueOf(excludedFoldersProp)) && (ok || !reflect.DeepEqual(v, excludedFoldersProp)) {
+		obj["excludedFolders"] = excludedFoldersProp
+	}
 
 	return obj, nil
 }
@@ -131,5 +143,13 @@ func expandComputeOrganizationSecurityPolicyAssociationName(v interface{}, d tpg
 }
 
 func expandComputeOrganizationSecurityPolicyAssociationAttachmentId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAssociationExcludedProjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAssociationExcludedFolders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
