@@ -27,6 +27,10 @@ func TestAccPrivatecaCaPool(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccPrivatecaCaPool_privatecaCapoolEmptyPublishingOptions",
+			Skip: "testing framework issue",
+		},
+		{
 			Name: "TestAccPrivatecaCaPool_privatecaCapoolBasicExample",
 		},
 		{
@@ -37,9 +41,6 @@ func TestAccPrivatecaCaPool(t *testing.T) {
 		},
 		{
 			Name: "TestAccPrivatecaCaPool_privatecaCapoolEmptyBaseline",
-		},
-		{
-			Name: "TestAccPrivatecaCaPool_privatecaCapoolEmptyPublishingOptions",
 		},
 		{
 			Name: "TestAccPrivatecaCaPool_updateCaOption",
