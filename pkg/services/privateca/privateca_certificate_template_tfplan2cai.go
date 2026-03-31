@@ -87,6 +87,12 @@ func GetPrivatecaCertificateTemplateCaiAssets(d tpgresource.TerraformResourceDat
 		if location == "" {
 			location = "global"
 		}
+		// Store the ID now
+		id, err := tpgresource.ReplaceVarsForId(d, config, "projects/{{project}}/locations/{{location}}/certificateTemplates/{{name}}")
+		if err != nil {
+			return nil, fmt.Errorf("Error constructing id: %s", err)
+		}
+		d.SetId(id)
 		return []caiasset.Asset{
 			{
 				Name: name,
