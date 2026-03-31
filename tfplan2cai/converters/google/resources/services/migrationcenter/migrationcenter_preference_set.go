@@ -268,6 +268,13 @@ func expandMigrationCenterPreferenceSetVirtualMachinePreferencesComputeEnginePre
 		transformed["licenseType"] = transformedLicenseType
 	}
 
+	transformedPersistentDiskType, err := expandMigrationCenterPreferenceSetVirtualMachinePreferencesComputeEnginePreferencesPersistentDiskType(original["persistent_disk_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPersistentDiskType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["persistentDiskType"] = transformedPersistentDiskType
+	}
+
 	return transformed, nil
 }
 
@@ -323,6 +330,10 @@ func expandMigrationCenterPreferenceSetVirtualMachinePreferencesComputeEnginePre
 }
 
 func expandMigrationCenterPreferenceSetVirtualMachinePreferencesComputeEnginePreferencesLicenseType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMigrationCenterPreferenceSetVirtualMachinePreferencesComputeEnginePreferencesPersistentDiskType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
