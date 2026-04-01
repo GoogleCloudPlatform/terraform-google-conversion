@@ -109,6 +109,15 @@ func ResourceIAMBetaWorkloadIdentityPool() *schema.Resource {
 value should be 4-32 characters, and may contain the characters [a-z0-9-]. The prefix
 'gcp-' is reserved for use by Google, and may not be specified.`,
 			},
+			"attestation_rules": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Description: `Defines which workloads can receive an identity within a pool. When an AttestationRule is
+defined under a managed identity, matching workloads may receive that identity. A maximum of
+50 AttestationRules can be set.`,
+				Elem: iambetaWorkloadIdentityPoolAttestationRulesSchema(),
+				// Default schema.HashSchema is used.
+			},
 			"description": {
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -307,5 +316,18 @@ can be created within 'SYSTEM_TRUST_DOMAIN' mode pools. All identities within a
 			},
 		},
 		UseJSONNumber: true,
+	}
+}
+
+func iambetaWorkloadIdentityPoolAttestationRulesSchema() *schema.Resource {
+	return &schema.Resource{
+		Schema: map[string]*schema.Schema{
+			"google_cloud_resource": {
+				Type:     schema.TypeString,
+				Required: true,
+				Description: `A single workload operating on Google Cloud. For example:
+'//run.googleapis.com/projects/123/type/Service/*'.`,
+			},
+		},
 	}
 }

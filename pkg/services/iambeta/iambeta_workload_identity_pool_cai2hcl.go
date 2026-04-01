@@ -146,6 +146,7 @@ func (c *IAMBetaWorkloadIdentityPoolCai2hclConverter) convertResourceData(asset 
 	hclData["mode"] = flattenIAMBetaWorkloadIdentityPoolMode(res["mode"], d, config)
 	hclData["inline_certificate_issuance_config"] = flattenIAMBetaWorkloadIdentityPoolInlineCertificateIssuanceConfig(res["inlineCertificateIssuanceConfig"], d, config)
 	hclData["inline_trust_config"] = flattenIAMBetaWorkloadIdentityPoolInlineTrustConfig(res["inlineTrustConfig"], d, config)
+	hclData["attestation_rules"] = flattenIAMBetaWorkloadIdentityPoolAttestationRules(res["attestationRules"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -278,6 +279,36 @@ func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTr
 }
 
 func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchorsPemCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenIAMBetaWorkloadIdentityPoolAttestationRules(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := schema.NewSet(schema.HashResource(iambetaWorkloadIdentityPoolAttestationRulesSchema()), []interface{}{})
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed.Add(map[string]interface{}{
+			"google_cloud_resource": flattenIAMBetaWorkloadIdentityPoolAttestationRulesGoogleCloudResource(original["googleCloudResource"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenIAMBetaWorkloadIdentityPoolAttestationRulesGoogleCloudResource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return "unknown"
 	}

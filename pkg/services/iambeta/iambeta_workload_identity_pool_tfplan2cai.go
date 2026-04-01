@@ -149,6 +149,12 @@ func GetIAMBetaWorkloadIdentityPoolCaiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("inline_trust_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(inlineTrustConfigProp)) && (ok || !reflect.DeepEqual(v, inlineTrustConfigProp)) {
 		obj["inlineTrustConfig"] = inlineTrustConfigProp
 	}
+	attestationRulesProp, err := expandIAMBetaWorkloadIdentityPoolAttestationRules(d.Get("attestation_rules"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("attestation_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(attestationRulesProp)) && (ok || !reflect.DeepEqual(v, attestationRulesProp)) {
+		obj["attestationRules"] = attestationRulesProp
+	}
 
 	return obj, nil
 }
@@ -319,5 +325,35 @@ func expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTru
 }
 
 func expandIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchorsPemCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolAttestationRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedGoogleCloudResource, err := expandIAMBetaWorkloadIdentityPoolAttestationRulesGoogleCloudResource(original["google_cloud_resource"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedGoogleCloudResource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["googleCloudResource"] = transformedGoogleCloudResource
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolAttestationRulesGoogleCloudResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
