@@ -44,6 +44,9 @@ func TestAccLustreInstance(t *testing.T) {
 		{
 			Name: "TestAccLustreInstance_withPlacementPolicy",
 		},
+		{
+			Name: "TestAccLustreInstance_dynamicTier",
+		},
 	}
 
 	for _, tt := range tests {
