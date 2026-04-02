@@ -771,6 +771,13 @@ func expandPubsubSubscriptionMessageTransforms(v interface{}, d tpgresource.Terr
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
+		transformedAiInference, err := expandPubsubSubscriptionMessageTransformsAiInference(original["ai_inference"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAiInference); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["aiInference"] = transformedAiInference
+		}
+
 		transformedJavascriptUdf, err := expandPubsubSubscriptionMessageTransformsJavascriptUdf(original["javascript_udf"], d, config)
 		if err != nil {
 			return nil, err
@@ -788,6 +795,83 @@ func expandPubsubSubscriptionMessageTransforms(v interface{}, d tpgresource.Terr
 		req = append(req, transformed)
 	}
 	return req, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsAiInference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEndpoint, err := expandPubsubSubscriptionMessageTransformsAiInferenceEndpoint(original["endpoint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndpoint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endpoint"] = transformedEndpoint
+	}
+
+	transformedUnstructuredInference, err := expandPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInference(original["unstructured_inference"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUnstructuredInference); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["unstructuredInference"] = transformedUnstructuredInference
+	}
+
+	transformedServiceAccountEmail, err := expandPubsubSubscriptionMessageTransformsAiInferenceServiceAccountEmail(original["service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsAiInferenceEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedParameters, err := expandPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInferenceParameters(original["parameters"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParameters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parameters"] = transformedParameters
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInferenceParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsAiInferenceServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandPubsubSubscriptionMessageTransformsJavascriptUdf(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

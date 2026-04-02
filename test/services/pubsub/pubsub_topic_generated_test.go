@@ -61,6 +61,9 @@ func TestAccPubsubTopic(t *testing.T) {
 			Name: "TestAccPubsubTopic_pubsubTopicTagsExample",
 		},
 		{
+			Name: "TestAccPubsubTopic_pubsubTopicAiInferenceExample",
+		},
+		{
 			Name: "TestAccPubsubTopic_update",
 		},
 		{
