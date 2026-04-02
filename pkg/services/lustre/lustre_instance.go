@@ -71,7 +71,10 @@ func ResourceLustreInstance() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				Description: `The storage capacity of the instance in gibibytes (GiB). Allowed values
-are from '18000' to '954000', in increments of 9000.`,
+are from '9000' to '7632000', depending on the 'perUnitStorageThroughput'.
+See [Performance tiers and maximum storage
+capacities](https://cloud.google.com/managed-lustre/docs/create-instance#performance-tiers)
+for specific minimums, maximums, and step sizes for each performance tier.`,
 			},
 			"filesystem": {
 				Type:     schema.TypeString,
@@ -106,54 +109,52 @@ less and can only contain letters and numbers.`,
 Must be in the format
 'projects/{project_id}/global/networks/{network_name}'.`,
 			},
-			"per_unit_storage_throughput": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
-				Description: `The throughput of the instance in MB/s/TiB.
-Valid values are 125, 250, 500, 1000.`,
-			},
 			"access_rules_options": {
 				Type:     schema.TypeList,
 				Optional: true,
-				Description: `Access control rules for the Lustre instance. Configures default root
-squashing behavior and specific access rules based on IP addresses.`,
+				Description: `IP-based access rules for the Managed Lustre instance. These options
+define the root user squash configuration.`,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"default_squash_mode": {
-							Type:         schema.TypeString,
-							Required:     true,
-							ValidateFunc: verify.ValidateEnum([]string{"ROOT_SQUASH", "NO_SQUASH"}),
-							Description: `Set to "ROOT_SQUASH" to enable root squashing by default.
-Other values include "NO_SQUASH". Possible values: ["ROOT_SQUASH", "NO_SQUASH"]`,
+							Type:     schema.TypeString,
+							Required: true,
+							Description: `The squash mode for the default access rule.
+Possible values:
+NO_SQUASH
+ROOT_SQUASH`,
 						},
 						"access_rules": {
-							Type:     schema.TypeList,
-							Optional: true,
-							Description: `An array of access rule exceptions. Each rule defines IP address ranges
-that should have different squash behavior than the default.`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `The access rules for the instance.`,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"ip_address_ranges": {
-										Type:        schema.TypeList,
-										Required:    true,
-										Description: `An array of IP address strings or CIDR ranges that this rule applies to.`,
+										Type:     schema.TypeList,
+										Required: true,
+										Description: `The IP address ranges to which to apply this access rule. Accepts
+non-overlapping CIDR ranges (e.g., '192.168.1.0/24') and IP addresses
+(e.g., '192.168.1.0').`,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"name": {
-										Type:        schema.TypeString,
-										Required:    true,
-										Description: `A unique identifier for the access rule.`,
+										Type:     schema.TypeString,
+										Required: true,
+										Description: `The name of the access rule policy group.
+Must be 16 characters or less and include only alphanumeric characters
+or '_'.`,
 									},
 									"squash_mode": {
-										Type:         schema.TypeString,
-										Required:     true,
-										ValidateFunc: verify.ValidateEnum([]string{"NO_SQUASH"}),
-										Description: `The squash mode for this specific rule. Currently, only "NO_SQUASH"
-is supported for exceptions. Possible values: ["NO_SQUASH"]`,
+										Type:     schema.TypeString,
+										Required: true,
+										Description: `Squash mode for the access rule.
+Possible values:
+NO_SQUASH
+ROOT_SQUASH`,
 									},
 								},
 							},
@@ -161,14 +162,18 @@ is supported for exceptions. Possible values: ["NO_SQUASH"]`,
 						"default_squash_gid": {
 							Type:     schema.TypeInt,
 							Optional: true,
-							Description: `The GID to map the root user to when root squashing is enabled
-(e.g., 65534 for nobody).`,
+							Description: `The user squash GID for the default access rule.
+This user squash GID applies to all root users connecting from clients
+that are not matched by any of the access rules. If not set, the default
+is 0 (no GID squash).`,
 						},
 						"default_squash_uid": {
 							Type:     schema.TypeInt,
 							Optional: true,
-							Description: `The UID to map the root user to when root squashing is enabled
-(e.g., 65534 for nobody).`,
+							Description: `The user squash UID for the default access rule.
+This user squash UID applies to all root users connecting from clients
+that are not matched by any of the access rules. If not set, the default
+is 0 (no UID squash).`,
 						},
 					},
 				},
@@ -178,6 +183,26 @@ is supported for exceptions. Possible values: ["NO_SQUASH"]`,
 				Optional:    true,
 				Description: `A user-readable description of the instance.`,
 			},
+			"dynamic_tier_options": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `Dynamic tier options for a Managed Lustre instance.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"mode": {
+							Type:     schema.TypeString,
+							Required: true,
+							ForceNew: true,
+							Description: `The dynamic tier mode of the instance.
+Possible values:
+DISABLED
+DEFAULT_CACHE`,
+						},
+					},
+				},
+			},
 			"gke_support_enabled": {
 				Type:     schema.TypeBool,
 				Optional: true,
@@ -185,10 +210,15 @@ is supported for exceptions. Possible values: ["NO_SQUASH"]`,
 GKE clients are not supported.`,
 			},
 			"kms_key": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				ForceNew:    true,
-				Description: `The KMS key id to use for encryption of the Lustre instance.`,
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+				Description: `The Cloud KMS key name to use for data encryption.
+If not set, the instance will use Google-managed encryption keys.
+If set, the instance will use customer-managed encryption keys.
+The key must be in the same region as the instance.
+The key format is:
+projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{key}`,
 			},
 			"labels": {
 				Type:     schema.TypeMap,
@@ -202,11 +232,75 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 			"maintenance_policy": {
 				Type:        schema.TypeList,
 				Optional:    true,
-				ForceNew:    true,
-				Description: `The maintenance policy for the instance to determine when to allow or exclude the instance from maintenance updates.`,
+				Description: `Defines a maintenance policy for a resource.`,
 				MaxItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"weekly_maintenance_windows": {
+							Type:     schema.TypeList,
+							Required: true,
+							Description: `The weekly maintenance windows for the instance. Currently limited to 1
+window.`,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"day_of_week": {
+										Type:     schema.TypeString,
+										Required: true,
+										Description: `Possible values:
+MONDAY
+TUESDAY
+WEDNESDAY
+THURSDAY
+FRIDAY
+SATURDAY
+SUNDAY`,
+									},
+									"start_time": {
+										Type:     schema.TypeList,
+										Required: true,
+										Description: `Represents a time of day. The date and time zone are either not significant
+or are specified elsewhere. An API may choose to allow leap seconds. Related
+types are google.type.Date and 'google.protobuf.Timestamp'.`,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"hours": {
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Hours of a day in 24 hour format. Must be greater than or equal to 0 and
+typically must be less than or equal to 23. An API may choose to allow the
+value "24:00:00" for scenarios like business closing time.`,
+												},
+												"minutes": {
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Minutes of an hour. Must be greater than or equal to 0 and less than or
+equal to 59.`,
+												},
+												"nanos": {
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Fractions of seconds, in nanoseconds. Must be greater than or equal to 0
+and less than or equal to 999,999,999.`,
+												},
+												"seconds": {
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Seconds of a minute. Must be greater than or equal to 0 and typically must
+be less than or equal to 59. An API may allow the value 60 if it allows
+leap-seconds.`,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
 						"maintenance_exclusion_window": {
 							Type:        schema.TypeList,
 							Optional:    true,
@@ -215,141 +309,137 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"end_date": {
-										Type:        schema.TypeList,
-										Required:    true,
-										Description: `End date of the exclusion period in UTC.`,
-										MaxItems:    1,
+										Type:     schema.TypeList,
+										Required: true,
+										Description: `Represents a whole or partial calendar date, such as a birthday. The time of
+day and time zone are either specified elsewhere or are insignificant. The
+date is relative to the Gregorian Calendar. This can represent one of the
+following:
+
+* A full date, with non-zero year, month, and day values.
+* A month and day, with a zero year (for example, an anniversary).
+* A year on its own, with a zero month and a zero day.
+* A year and month, with a zero day (for example, a credit card expiration
+date).
+
+Related types:
+
+* google.type.TimeOfDay
+* google.type.DateTime
+* google.protobuf.Timestamp`,
+										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"day": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Day of a month. Must be from 1 to 31 and valid for the year and month.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+to specify a year by itself or a year and month where the day isn't
+significant.`,
 												},
 												"month": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Month of a year. Must be from 1 to 12.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+month and day.`,
 												},
 												"year": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Year of the date. Must be from 1 to 9999, or 0 for recurring.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+a year.`,
 												},
 											},
 										},
 									},
 									"start_date": {
-										Type:        schema.TypeList,
-										Required:    true,
-										Description: `Start date of the exclusion period in UTC.`,
-										MaxItems:    1,
+										Type:     schema.TypeList,
+										Required: true,
+										Description: `Represents a whole or partial calendar date, such as a birthday. The time of
+day and time zone are either specified elsewhere or are insignificant. The
+date is relative to the Gregorian Calendar. This can represent one of the
+following:
+
+* A full date, with non-zero year, month, and day values.
+* A month and day, with a zero year (for example, an anniversary).
+* A year on its own, with a zero month and a zero day.
+* A year and month, with a zero day (for example, a credit card expiration
+date).
+
+Related types:
+
+* google.type.TimeOfDay
+* google.type.DateTime
+* google.protobuf.Timestamp`,
+										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"day": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Day of a month. Must be from 1 to 31 and valid for the year and month.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+to specify a year by itself or a year and month where the day isn't
+significant.`,
 												},
 												"month": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Month of a year. Must be from 1 to 12.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+month and day.`,
 												},
 												"year": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Year of the date. Must be from 1 to 9999, or 0 for recurring.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+a year.`,
 												},
 											},
 										},
 									},
 									"time": {
-										Type:        schema.TypeList,
-										Required:    true,
-										Description: `Time in UTC for the exclusion window.`,
-										MaxItems:    1,
+										Type:     schema.TypeList,
+										Required: true,
+										Description: `Represents a time of day. The date and time zone are either not significant
+or are specified elsewhere. An API may choose to allow leap seconds. Related
+types are google.type.Date and 'google.protobuf.Timestamp'.`,
+										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"hours": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Hours of day in 24 hour format. Should be from 0 to 23.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Hours of a day in 24 hour format. Must be greater than or equal to 0 and
+typically must be less than or equal to 23. An API may choose to allow the
+value "24:00:00" for scenarios like business closing time.`,
 												},
 												"minutes": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Minutes of hour of day. Must be from 0 to 59.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Minutes of an hour. Must be greater than or equal to 0 and less than or
+equal to 59.`,
 												},
 												"nanos": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Fractions of seconds, in nanoseconds. Must be greater than or equal to 0
+and less than or equal to 999,999,999.`,
 												},
 												"seconds": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Seconds of minutes of the time. Must be from 0 to 59.`,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-						"weekly_maintenance_windows": {
-							Type:        schema.TypeList,
-							Optional:    true,
-							Description: `The weekly maintenance windows for the instance. Currently limited to 1 window.`,
-							MaxItems:    1,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-									"day_of_week": {
-										Type:         schema.TypeString,
-										Required:     true,
-										ValidateFunc: verify.ValidateEnum([]string{"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"}),
-										Description:  `Day of the week for the maintenance window. Possible values: ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]`,
-									},
-									"start_time": {
-										Type:        schema.TypeList,
-										Required:    true,
-										Description: `Start time of the maintenance window in UTC.`,
-										MaxItems:    1,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-												"hours": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Hours of day in 24 hour format. Should be from 0 to 23.`,
-												},
-												"minutes": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Minutes of hour of day. Must be from 0 to 59.`,
-												},
-												"nanos": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.`,
-												},
-												"seconds": {
-													Type:        schema.TypeInt,
-													Computed:    true,
-													Optional:    true,
-													Description: `Seconds of minutes of the time. Must be from 0 to 59.`,
+													Type:     schema.TypeInt,
+													Computed: true,
+													Optional: true,
+													Description: `Seconds of a minute. Must be greater than or equal to 0 and typically must
+be less than or equal to 59. An API may allow the value 60 if it allows
+leap-seconds.`,
 												},
 											},
 										},
@@ -359,6 +449,19 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 						},
 					},
 				},
+			},
+			"per_unit_storage_throughput": {
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+				Description: `The throughput of the instance in MBps per TiB. Valid values are 125, 250,
+500, 1000.
+See [Performance tiers and maximum storage
+capacities](https://cloud.google.com/managed-lustre/docs/create-instance#performance-tiers)
+for more information.
+
+If the instance is using the Dynamic tier, this field must not be set or
+must be set to zero.`,
 			},
 			"placement_policy": {
 				Type:     schema.TypeString,
@@ -391,12 +494,20 @@ projects/{project}/locations/{location}/resourcePolicies/{resource_policy}`,
 				Type:     schema.TypeString,
 				Computed: true,
 				Description: `The state of the instance.
-Please see https://cloud.google.com/managed-lustre/docs/reference/rest/v1/projects.locations.instances#state for values`,
+Possible values:
+ACTIVE
+CREATING
+DELETING
+UPGRADING
+REPAIRING
+STOPPED
+UPDATING
+SUSPENDED`,
 			},
 			"state_reason": {
 				Type:        schema.TypeString,
 				Computed:    true,
-				Description: `The reason why the instance is in a certain state.`,
+				Description: `The reason why the instance is in a certain state (e.g. SUSPENDED).`,
 			},
 			"terraform_labels": {
 				Type:     schema.TypeMap,
@@ -404,6 +515,21 @@ Please see https://cloud.google.com/managed-lustre/docs/reference/rest/v1/projec
 				Description: `The combination of labels configured directly on the resource
  and default labels configured on the provider.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
+			},
+			"uid": {
+				Type:     schema.TypeString,
+				Computed: true,
+				Description: `Unique ID of the resource.
+This is unrelated to the access rules which allow specifying the root
+squash uid.`,
+			},
+			"upcoming_maintenance_schedule": {
+				Type:        schema.TypeList,
+				Computed:    true,
+				Description: `Represents a scheduled maintenance event.`,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{},
+				},
 			},
 			"update_time": {
 				Type:        schema.TypeString,

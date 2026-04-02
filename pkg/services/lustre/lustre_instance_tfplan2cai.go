@@ -113,17 +113,29 @@ func GetLustreInstanceCaiAssets(d tpgresource.TerraformResourceData, config *tra
 
 func GetLustreInstanceCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	accessRulesOptionsProp, err := expandLustreInstanceAccessRulesOptions(d.Get("access_rules_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("access_rules_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessRulesOptionsProp)) && (ok || !reflect.DeepEqual(v, accessRulesOptionsProp)) {
+		obj["accessRulesOptions"] = accessRulesOptionsProp
+	}
 	capacityGibProp, err := expandLustreInstanceCapacityGib(d.Get("capacity_gib"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("capacity_gib"); !tpgresource.IsEmptyValue(reflect.ValueOf(capacityGibProp)) && (ok || !reflect.DeepEqual(v, capacityGibProp)) {
 		obj["capacityGib"] = capacityGibProp
 	}
-	gkeSupportEnabledProp, err := expandLustreInstanceGkeSupportEnabled(d.Get("gke_support_enabled"), d, config)
+	descriptionProp, err := expandLustreInstanceDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("gke_support_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(gkeSupportEnabledProp)) && (ok || !reflect.DeepEqual(v, gkeSupportEnabledProp)) {
-		obj["gkeSupportEnabled"] = gkeSupportEnabledProp
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+		obj["description"] = descriptionProp
+	}
+	dynamicTierOptionsProp, err := expandLustreInstanceDynamicTierOptions(d.Get("dynamic_tier_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dynamic_tier_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(dynamicTierOptionsProp)) && (ok || !reflect.DeepEqual(v, dynamicTierOptionsProp)) {
+		obj["dynamicTierOptions"] = dynamicTierOptionsProp
 	}
 	filesystemProp, err := expandLustreInstanceFilesystem(d.Get("filesystem"), d, config)
 	if err != nil {
@@ -131,17 +143,29 @@ func GetLustreInstanceCaiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("filesystem"); !tpgresource.IsEmptyValue(reflect.ValueOf(filesystemProp)) && (ok || !reflect.DeepEqual(v, filesystemProp)) {
 		obj["filesystem"] = filesystemProp
 	}
+	gkeSupportEnabledProp, err := expandLustreInstanceGkeSupportEnabled(d.Get("gke_support_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gke_support_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(gkeSupportEnabledProp)) && (ok || !reflect.DeepEqual(v, gkeSupportEnabledProp)) {
+		obj["gkeSupportEnabled"] = gkeSupportEnabledProp
+	}
+	kmsKeyProp, err := expandLustreInstanceKmsKey(d.Get("kms_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
+		obj["kmsKey"] = kmsKeyProp
+	}
+	maintenancePolicyProp, err := expandLustreInstanceMaintenancePolicy(d.Get("maintenance_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("maintenance_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(maintenancePolicyProp)) && (ok || !reflect.DeepEqual(v, maintenancePolicyProp)) {
+		obj["maintenancePolicy"] = maintenancePolicyProp
+	}
 	networkProp, err := expandLustreInstanceNetwork(d.Get("network"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
-	}
-	descriptionProp, err := expandLustreInstanceDescription(d.Get("description"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
-		obj["description"] = descriptionProp
 	}
 	perUnitStorageThroughputProp, err := expandLustreInstancePerUnitStorageThroughput(d.Get("per_unit_storage_throughput"), d, config)
 	if err != nil {
@@ -155,24 +179,6 @@ func GetLustreInstanceCaiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("placement_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(placementPolicyProp)) && (ok || !reflect.DeepEqual(v, placementPolicyProp)) {
 		obj["placementPolicy"] = placementPolicyProp
 	}
-	kmsKeyProp, err := expandLustreInstanceKmsKey(d.Get("kms_key"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("kms_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsKeyProp)) && (ok || !reflect.DeepEqual(v, kmsKeyProp)) {
-		obj["kmsKey"] = kmsKeyProp
-	}
-	accessRulesOptionsProp, err := expandLustreInstanceAccessRulesOptions(d.Get("access_rules_options"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("access_rules_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessRulesOptionsProp)) && (ok || !reflect.DeepEqual(v, accessRulesOptionsProp)) {
-		obj["accessRulesOptions"] = accessRulesOptionsProp
-	}
-	maintenancePolicyProp, err := expandLustreInstanceMaintenancePolicy(d.Get("maintenance_policy"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("maintenance_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(maintenancePolicyProp)) && (ok || !reflect.DeepEqual(v, maintenancePolicyProp)) {
-		obj["maintenancePolicy"] = maintenancePolicyProp
-	}
 	effectiveLabelsProp, err := expandLustreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -181,38 +187,6 @@ func GetLustreInstanceCaiObject(d tpgresource.TerraformResourceData, config *tra
 	}
 
 	return obj, nil
-}
-
-func expandLustreInstanceCapacityGib(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceGkeSupportEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceFilesystem(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstancePerUnitStorageThroughput(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstancePlacementPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandLustreInstanceAccessRulesOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -226,6 +200,20 @@ func expandLustreInstanceAccessRulesOptions(v interface{}, d tpgresource.Terrafo
 	raw := l[0]
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
+
+	transformedAccessRules, err := expandLustreInstanceAccessRulesOptionsAccessRules(original["access_rules"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAccessRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["accessRules"] = transformedAccessRules
+	}
+
+	transformedDefaultSquashGid, err := expandLustreInstanceAccessRulesOptionsDefaultSquashGid(original["default_squash_gid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultSquashGid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultSquashGid"] = transformedDefaultSquashGid
+	}
 
 	transformedDefaultSquashMode, err := expandLustreInstanceAccessRulesOptionsDefaultSquashMode(original["default_squash_mode"], d, config)
 	if err != nil {
@@ -241,33 +229,7 @@ func expandLustreInstanceAccessRulesOptions(v interface{}, d tpgresource.Terrafo
 		transformed["defaultSquashUid"] = transformedDefaultSquashUid
 	}
 
-	transformedDefaultSquashGid, err := expandLustreInstanceAccessRulesOptionsDefaultSquashGid(original["default_squash_gid"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDefaultSquashGid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["defaultSquashGid"] = transformedDefaultSquashGid
-	}
-
-	transformedAccessRules, err := expandLustreInstanceAccessRulesOptionsAccessRules(original["access_rules"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedAccessRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["accessRules"] = transformedAccessRules
-	}
-
 	return transformed, nil
-}
-
-func expandLustreInstanceAccessRulesOptionsDefaultSquashMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceAccessRulesOptionsDefaultSquashUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceAccessRulesOptionsDefaultSquashGid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandLustreInstanceAccessRulesOptionsAccessRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -283,18 +245,18 @@ func expandLustreInstanceAccessRulesOptionsAccessRules(v interface{}, d tpgresou
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
-		transformedName, err := expandLustreInstanceAccessRulesOptionsAccessRulesName(original["name"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["name"] = transformedName
-		}
-
 		transformedIpAddressRanges, err := expandLustreInstanceAccessRulesOptionsAccessRulesIpAddressRanges(original["ip_address_ranges"], d, config)
 		if err != nil {
 			return nil, err
 		} else if val := reflect.ValueOf(transformedIpAddressRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["ipAddressRanges"] = transformedIpAddressRanges
+		}
+
+		transformedName, err := expandLustreInstanceAccessRulesOptionsAccessRulesName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
 		}
 
 		transformedSquashMode, err := expandLustreInstanceAccessRulesOptionsAccessRulesSquashMode(original["squash_mode"], d, config)
@@ -309,15 +271,73 @@ func expandLustreInstanceAccessRulesOptionsAccessRules(v interface{}, d tpgresou
 	return req, nil
 }
 
-func expandLustreInstanceAccessRulesOptionsAccessRulesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandLustreInstanceAccessRulesOptionsAccessRulesIpAddressRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
+func expandLustreInstanceAccessRulesOptionsAccessRulesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandLustreInstanceAccessRulesOptionsAccessRulesSquashMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsDefaultSquashGid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsDefaultSquashMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceAccessRulesOptionsDefaultSquashUid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceCapacityGib(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceDynamicTierOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMode, err := expandLustreInstanceDynamicTierOptionsMode(original["mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mode"] = transformedMode
+	}
+
+	return transformed, nil
+}
+
+func expandLustreInstanceDynamicTierOptionsMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceFilesystem(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceGkeSupportEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -333,13 +353,6 @@ func expandLustreInstanceMaintenancePolicy(v interface{}, d tpgresource.Terrafor
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedWeeklyMaintenanceWindows, err := expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindows(original["weekly_maintenance_windows"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedWeeklyMaintenanceWindows); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["weeklyMaintenanceWindows"] = transformedWeeklyMaintenanceWindows
-	}
-
 	transformedMaintenanceExclusionWindow, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindow(original["maintenance_exclusion_window"], d, config)
 	if err != nil {
 		return nil, err
@@ -347,7 +360,208 @@ func expandLustreInstanceMaintenancePolicy(v interface{}, d tpgresource.Terrafor
 		transformed["maintenanceExclusionWindow"] = transformedMaintenanceExclusionWindow
 	}
 
+	transformedWeeklyMaintenanceWindows, err := expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindows(original["weekly_maintenance_windows"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWeeklyMaintenanceWindows); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["weeklyMaintenanceWindows"] = transformedWeeklyMaintenanceWindows
+	}
+
 	return transformed, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedEndDate, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDate(original["end_date"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEndDate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["endDate"] = transformedEndDate
+		}
+
+		transformedStartDate, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDate(original["start_date"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedStartDate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["startDate"] = transformedStartDate
+		}
+
+		transformedTime, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTime(original["time"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["time"] = transformedTime
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDay, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateDay(original["day"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDay); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["day"] = transformedDay
+	}
+
+	transformedMonth, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateMonth(original["month"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMonth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["month"] = transformedMonth
+	}
+
+	transformedYear, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateYear(original["year"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedYear); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["year"] = transformedYear
+	}
+
+	return transformed, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateDay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateMonth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateYear(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDay, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateDay(original["day"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDay); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["day"] = transformedDay
+	}
+
+	transformedMonth, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateMonth(original["month"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMonth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["month"] = transformedMonth
+	}
+
+	transformedYear, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateYear(original["year"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedYear); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["year"] = transformedYear
+	}
+
+	return transformed, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateDay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateMonth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateYear(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHours, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeHours(original["hours"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHours); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hours"] = transformedHours
+	}
+
+	transformedMinutes, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeMinutes(original["minutes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinutes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minutes"] = transformedMinutes
+	}
+
+	transformedNanos, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeNanos(original["nanos"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nanos"] = transformedNanos
+	}
+
+	transformedSeconds, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
+	}
+
+	return transformed, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeHours(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeMinutes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindows(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -412,18 +626,18 @@ func expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTime(v in
 		transformed["minutes"] = transformedMinutes
 	}
 
-	transformedSeconds, err := expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeSeconds(original["seconds"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["seconds"] = transformedSeconds
-	}
-
 	transformedNanos, err := expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeNanos(original["nanos"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["nanos"] = transformedNanos
+	}
+
+	transformedSeconds, err := expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeSeconds(original["seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["seconds"] = transformedSeconds
 	}
 
 	return transformed, nil
@@ -437,205 +651,23 @@ func expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeMinut
 	return v, nil
 }
 
-func expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
 func expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	req := make([]interface{}, 0, len(l))
-	for _, raw := range l {
-		if raw == nil {
-			continue
-		}
-		original := raw.(map[string]interface{})
-		transformed := make(map[string]interface{})
-
-		transformedStartDate, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDate(original["start_date"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedStartDate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["startDate"] = transformedStartDate
-		}
-
-		transformedEndDate, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDate(original["end_date"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedEndDate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["endDate"] = transformedEndDate
-		}
-
-		transformedTime, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTime(original["time"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["time"] = transformedTime
-		}
-
-		req = append(req, transformed)
-	}
-	return req, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedYear, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateYear(original["year"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedYear); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["year"] = transformedYear
-	}
-
-	transformedMonth, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateMonth(original["month"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMonth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["month"] = transformedMonth
-	}
-
-	transformedDay, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateDay(original["day"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDay); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["day"] = transformedDay
-	}
-
-	return transformed, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateYear(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLustreInstanceMaintenancePolicyWeeklyMaintenanceWindowsStartTimeSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateMonth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLustreInstanceNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowStartDateDay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLustreInstancePerUnitStorageThroughput(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedYear, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateYear(original["year"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedYear); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["year"] = transformedYear
-	}
-
-	transformedMonth, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateMonth(original["month"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMonth); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["month"] = transformedMonth
-	}
-
-	transformedDay, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateDay(original["day"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedDay); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["day"] = transformedDay
-	}
-
-	return transformed, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateYear(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateMonth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowEndDateDay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedHours, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeHours(original["hours"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedHours); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["hours"] = transformedHours
-	}
-
-	transformedMinutes, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeMinutes(original["minutes"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedMinutes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["minutes"] = transformedMinutes
-	}
-
-	transformedSeconds, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeSeconds(original["seconds"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["seconds"] = transformedSeconds
-	}
-
-	transformedNanos, err := expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeNanos(original["nanos"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["nanos"] = transformedNanos
-	}
-
-	return transformed, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeHours(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeMinutes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandLustreInstanceMaintenancePolicyMaintenanceExclusionWindowTimeNanos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandLustreInstancePlacementPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
