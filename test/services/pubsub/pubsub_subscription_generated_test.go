@@ -70,6 +70,9 @@ func TestAccPubsubSubscription(t *testing.T) {
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionTagsExample",
 		},
 		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionAiInferenceExample",
+		},
+		{
 			Name: "TestAccPubsubSubscription_emptyTTL",
 		},
 		{
