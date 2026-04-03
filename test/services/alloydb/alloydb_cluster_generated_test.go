@@ -66,12 +66,6 @@ func TestAccAlloydbCluster(t *testing.T) {
 			Name: "TestAccAlloydbCluster_missingWeeklySchedule",
 		},
 		{
-			Name: "TestAccAlloydbCluster_mandatoryFields",
-		},
-		{
-			Name: "TestAccAlloydbCluster_maximumFields",
-		},
-		{
 			Name: "TestAccAlloydbCluster_deleteTimeBasedRetentionPolicy",
 		},
 		{
@@ -154,6 +148,7 @@ func TestAccAlloydbCluster(t *testing.T) {
 					"deletion_policy",
 					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"initial_user",
 					"initial_user.password",

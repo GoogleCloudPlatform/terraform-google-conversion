@@ -55,8 +55,10 @@ func TestAccColabRuntime(t *testing.T) {
 				[]string{
 					"auto_upgrade",
 					"count",
+					"deletion_protection",
 					"depends_on",
 					"desired_state",
+					"dynamic",
 					"expiration_time",
 					"for_each",
 					"lifecycle",

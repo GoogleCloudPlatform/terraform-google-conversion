@@ -39,6 +39,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 			Name: "TestAccComputeSubnetwork_subnetworkInternalIpv6Example",
 		},
 		{
+			Name: "TestAccComputeSubnetwork_subnetworkResolveSubnetMaskExample",
+		},
+		{
 			Name: "TestAccComputeSubnetwork_subnetworkCidrOverlapExample",
 		},
 		{
@@ -103,7 +106,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 				[]string{
 					"allow_subnet_cidr_routes_overlap",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"fingerprint",
 					"for_each",
 					"ip_collection",

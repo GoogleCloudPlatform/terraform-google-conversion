@@ -70,6 +70,9 @@ func TestAccPubsubSubscription(t *testing.T) {
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionTagsExample",
 		},
 		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionAiInferenceExample",
+		},
+		{
 			Name: "TestAccPubsubSubscription_emptyTTL",
 		},
 		{
@@ -145,7 +148,9 @@ func TestAccPubsubSubscription(t *testing.T) {
 					"cloud_storage_config",
 					"cloud_storage_config.avro_config.write_metadata",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"expiration_policy.ttl",
 					"for_each",
 					"lifecycle",

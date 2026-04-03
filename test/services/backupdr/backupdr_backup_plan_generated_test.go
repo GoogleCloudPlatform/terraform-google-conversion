@@ -30,6 +30,9 @@ func TestAccBackupDRBackupPlan(t *testing.T) {
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanSimpleExample",
 		},
 		{
+			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanForDiskResourceExample",
+		},
+		{
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanForCsqlResourceExample",
 		},
 		{
@@ -55,7 +58,9 @@ func TestAccBackupDRBackupPlan(t *testing.T) {
 				[]string{
 					"backup_plan_id",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"location",

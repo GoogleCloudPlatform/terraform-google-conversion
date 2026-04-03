@@ -87,6 +87,12 @@ func GetApphubApplicationCaiAssets(d tpgresource.TerraformResourceData, config *
 		if location == "" {
 			location = "global"
 		}
+		// Store the ID now
+		id, err := tpgresource.ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/applications/{{application_id}}")
+		if err != nil {
+			return nil, fmt.Errorf("Error constructing id: %s", err)
+		}
+		d.SetId(id)
 		return []caiasset.Asset{
 			{
 				Name: name,

@@ -158,6 +158,12 @@ func GetBigqueryReservationReservationApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("max_slots"); !tpgresource.IsEmptyValue(reflect.ValueOf(maxSlotsProp)) && (ok || !reflect.DeepEqual(v, maxSlotsProp)) {
 		obj["maxSlots"] = maxSlotsProp
 	}
+	reservationGroupProp, err := expandBigqueryReservationReservationReservationGroup(d.Get("reservation_group"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("reservation_group"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservationGroupProp)) && (ok || !reflect.DeepEqual(v, reservationGroupProp)) {
+		obj["reservationGroup"] = reservationGroupProp
+	}
 
 	return obj, nil
 }
@@ -224,5 +230,9 @@ func expandBigqueryReservationReservationScalingMode(v interface{}, d tpgresourc
 }
 
 func expandBigqueryReservationReservationMaxSlots(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationReservationGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

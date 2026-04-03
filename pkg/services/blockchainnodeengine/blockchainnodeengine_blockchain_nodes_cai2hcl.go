@@ -178,6 +178,8 @@ func flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfig(v 
 	transformed := make(map[string]interface{})
 	transformed["mev_relay_urls"] =
 		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigMevRelayUrls(original["mevRelayUrls"], d, config)
+	transformed["beacon_fee_recipient"] =
+		flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigBeaconFeeRecipient(original["beaconFeeRecipient"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -185,6 +187,10 @@ func flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfig(v 
 }
 
 func flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigMevRelayUrls(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigBeaconFeeRecipient(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

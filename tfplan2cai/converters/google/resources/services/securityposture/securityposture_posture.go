@@ -415,7 +415,7 @@ func expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraint
 		transformedEnforce, err := expandSecurityposturePosturePolicySetsPoliciesConstraintOrgPolicyConstraintPolicyRulesEnforce(original["enforce"], d, config)
 		if err != nil {
 			return nil, err
-		} else if val := reflect.ValueOf(transformedEnforce); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		} else {
 			transformed["enforce"] = transformedEnforce
 		}
 

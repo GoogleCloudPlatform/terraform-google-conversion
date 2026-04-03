@@ -57,7 +57,9 @@ func TestAccComputeRoute(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"next_hop_instance_zone",

@@ -33,8 +33,10 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataplex"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
@@ -87,6 +89,12 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"compute.googleapis.com/Instance": {
 		"Default": compute.NewComputeInstanceCai2hclConverter(provider),
+	},
+	"container.googleapis.com/NodePool": {
+		"Default": container.NewContainerNodePoolCai2hclConverter(provider),
+	},
+	"container.googleapis.com/Cluster": {
+		"Default": container.NewContainerClusterCai2hclConverter(provider),
 	},
 	// ####### END handwritten resources ###########
 	"aiplatform.googleapis.com/NotebookRuntime": {
@@ -244,10 +252,17 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"compute.googleapis.com/FirewallPolicy": {
 		"ComputeFirewallPolicy":              compute.NewComputeFirewallPolicyCai2hclConverter(provider),
+		"ComputeNetworkFirewallPolicy":       compute.NewComputeNetworkFirewallPolicyCai2hclConverter(provider),
 		"ComputeRegionNetworkFirewallPolicy": compute.NewComputeRegionNetworkFirewallPolicyCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/ForwardingRule": {
+		"Default": compute.NewComputeForwardingRuleCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/GlobalAddress": {
 		"Default": compute.NewComputeGlobalAddressCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/GlobalForwardingRule": {
+		"Default": compute.NewComputeGlobalForwardingRuleCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/HealthCheck": {
 		"ComputeHealthCheck":       compute.NewComputeHealthCheckCai2hclConverter(provider),
@@ -291,6 +306,15 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/PacketMirroring": {
 		"Default": compute.NewComputePacketMirroringCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/RegionBackendService": {
+		"Default": compute.NewComputeRegionBackendServiceCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/RegionDisk": {
+		"Default": compute.NewComputeRegionDiskCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Reservation": {
+		"Default": compute.NewComputeReservationCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/ResourcePolicy": {
 		"Default": compute.NewComputeResourcePolicyCai2hclConverter(provider),
 	},
@@ -300,12 +324,19 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/Router": {
 		"Default": compute.NewComputeRouterCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/SecurityPolicy": {
+		"Default": compute.NewComputeRegionSecurityPolicyCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/ServiceAttachment": {
 		"Default": compute.NewComputeServiceAttachmentCai2hclConverter(provider),
+	},
+	"compute.googleapis.com/Snapshot": {
+		"Default": compute.NewComputeSnapshotCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/SslCertificate": {
 		"ComputeManagedSslCertificate": compute.NewComputeManagedSslCertificateCai2hclConverter(provider),
 		"ComputeRegionSslCertificate":  compute.NewComputeRegionSslCertificateCai2hclConverter(provider),
+		"ComputeSslCertificate":        compute.NewComputeSslCertificateCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/SslPolicy": {
 		"ComputeRegionSslPolicy": compute.NewComputeRegionSslPolicyCai2hclConverter(provider),
@@ -344,11 +375,20 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/VpnGateway": {
 		"Default": compute.NewComputeHaVpnGatewayCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/VpnTunnel": {
+		"Default": compute.NewComputeVpnTunnelCai2hclConverter(provider),
+	},
 	"datafusion.googleapis.com/Instance": {
 		"Default": datafusion.NewDataFusionInstanceCai2hclConverter(provider),
 	},
 	"datamigration.googleapis.com/MigrationJob": {
 		"Default": databasemigrationservice.NewDatabaseMigrationServiceMigrationJobCai2hclConverter(provider),
+	},
+	"dataplex.googleapis.com/Glossary": {
+		"Default": dataplex.NewDataplexGlossaryCai2hclConverter(provider),
+	},
+	"dataplex.googleapis.com/Task": {
+		"Default": dataplex.NewDataplexTaskCai2hclConverter(provider),
 	},
 	"dataproc.googleapis.com/AutoscalingPolicy": {
 		"Default": dataproc.NewDataprocAutoscalingPolicyCai2hclConverter(provider),

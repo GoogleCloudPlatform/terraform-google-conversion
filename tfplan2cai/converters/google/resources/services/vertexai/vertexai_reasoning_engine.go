@@ -134,6 +134,12 @@ func GetVertexAIReasoningEngineApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(specProp)) && (ok || !reflect.DeepEqual(v, specProp)) {
 		obj["spec"] = specProp
 	}
+	contextSpecProp, err := expandVertexAIReasoningEngineContextSpec(d.Get("context_spec"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("context_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(contextSpecProp)) && (ok || !reflect.DeepEqual(v, contextSpecProp)) {
+		obj["contextSpec"] = contextSpecProp
+	}
 
 	return obj, nil
 }
@@ -804,5 +810,218 @@ func expandVertexAIReasoningEngineSpecIdentityType(v interface{}, d tpgresource.
 }
 
 func expandVertexAIReasoningEngineSpecEffectiveIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMemoryBankConfig, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfig(original["memory_bank_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMemoryBankConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["memoryBankConfig"] = transformedMemoryBankConfig
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGenerationConfig, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfig(original["generation_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGenerationConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["generationConfig"] = transformedGenerationConfig
+	}
+
+	transformedSimilaritySearchConfig, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigSimilaritySearchConfig(original["similarity_search_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSimilaritySearchConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["similaritySearchConfig"] = transformedSimilaritySearchConfig
+	}
+
+	transformedTtlConfig, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfig(original["ttl_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTtlConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ttlConfig"] = transformedTtlConfig
+	}
+
+	transformedDisableMemoryRevisions, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigDisableMemoryRevisions(original["disable_memory_revisions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableMemoryRevisions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableMemoryRevisions"] = transformedDisableMemoryRevisions
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedModel, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigModel(original["model"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedModel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["model"] = transformedModel
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigModel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigSimilaritySearchConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEmbeddingModel, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigSimilaritySearchConfigEmbeddingModel(original["embedding_model"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEmbeddingModel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["embeddingModel"] = transformedEmbeddingModel
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigSimilaritySearchConfigEmbeddingModel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDefaultTtl, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigDefaultTtl(original["default_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefaultTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defaultTtl"] = transformedDefaultTtl
+	}
+
+	transformedGranularTtlConfig, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigGranularTtlConfig(original["granular_ttl_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGranularTtlConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["granularTtlConfig"] = transformedGranularTtlConfig
+	}
+
+	transformedMemoryRevisionDefaultTtl, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigMemoryRevisionDefaultTtl(original["memory_revision_default_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMemoryRevisionDefaultTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["memoryRevisionDefaultTtl"] = transformedMemoryRevisionDefaultTtl
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigDefaultTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigGranularTtlConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCreateTtl, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigGranularTtlConfigCreateTtl(original["create_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCreateTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["createTtl"] = transformedCreateTtl
+	}
+
+	transformedGenerateCreatedTtl, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigGranularTtlConfigGenerateCreatedTtl(original["generate_created_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGenerateCreatedTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["generateCreatedTtl"] = transformedGenerateCreatedTtl
+	}
+
+	transformedGenerateUpdatedTtl, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigGranularTtlConfigGenerateUpdatedTtl(original["generate_updated_ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGenerateUpdatedTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["generateUpdatedTtl"] = transformedGenerateUpdatedTtl
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigGranularTtlConfigCreateTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigGranularTtlConfigGenerateCreatedTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigGranularTtlConfigGenerateUpdatedTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigMemoryRevisionDefaultTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigDisableMemoryRevisions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
