@@ -149,6 +149,7 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["ip_collection"] = flattenComputeSubnetworkIpCollection(res["ipCollection"], d, config)
 	hclData["allow_subnet_cidr_routes_overlap"] = flattenComputeSubnetworkAllowSubnetCidrRoutesOverlap(res["allowSubnetCidrRoutesOverlap"], d, config)
 	hclData["params"] = flattenComputeSubnetworkParams(res["params"], d, config)
+	hclData["resolve_subnet_mask"] = flattenComputeSubnetworkResolveSubnetMask(res["resolveSubnetMask"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -351,6 +352,10 @@ func flattenComputeSubnetworkParams(v interface{}, d *schema.ResourceData, confi
 }
 
 func flattenComputeSubnetworkParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeSubnetworkResolveSubnetMask(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

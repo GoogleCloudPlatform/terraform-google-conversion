@@ -49,7 +49,9 @@ func TestAccGeminiCodeRepositoryIndex(t *testing.T) {
 				[]string{
 					"code_repository_index_id",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"force_destroy",
 					"lifecycle",

@@ -605,11 +605,63 @@ func flattenPubsubTopicMessageTransforms(v interface{}, d *schema.ResourceData, 
 			continue
 		}
 		transformed = append(transformed, map[string]interface{}{
+			"ai_inference":   flattenPubsubTopicMessageTransformsAiInference(original["aiInference"], d, config),
 			"javascript_udf": flattenPubsubTopicMessageTransformsJavascriptUdf(original["javascriptUdf"], d, config),
 			"disabled":       flattenPubsubTopicMessageTransformsDisabled(original["disabled"], d, config),
 		})
 	}
 	return transformed
+}
+
+func flattenPubsubTopicMessageTransformsAiInference(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["endpoint"] =
+		flattenPubsubTopicMessageTransformsAiInferenceEndpoint(original["endpoint"], d, config)
+	transformed["unstructured_inference"] =
+		flattenPubsubTopicMessageTransformsAiInferenceUnstructuredInference(original["unstructuredInference"], d, config)
+	transformed["service_account_email"] =
+		flattenPubsubTopicMessageTransformsAiInferenceServiceAccountEmail(original["serviceAccountEmail"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenPubsubTopicMessageTransformsAiInferenceEndpoint(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenPubsubTopicMessageTransformsAiInferenceUnstructuredInference(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["parameters"] =
+		flattenPubsubTopicMessageTransformsAiInferenceUnstructuredInferenceParameters(original["parameters"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenPubsubTopicMessageTransformsAiInferenceUnstructuredInferenceParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenPubsubTopicMessageTransformsAiInferenceServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenPubsubTopicMessageTransformsJavascriptUdf(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

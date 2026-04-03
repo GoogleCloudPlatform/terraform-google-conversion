@@ -161,6 +161,13 @@ func expandSecureSourceManagerInstancePrivateConfig(v interface{}, d tpgresource
 		transformed["isPrivate"] = transformedIsPrivate
 	}
 
+	transformedCustomHostConfig, err := expandSecureSourceManagerInstancePrivateConfigCustomHostConfig(original["custom_host_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCustomHostConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["customHostConfig"] = transformedCustomHostConfig
+	}
+
 	transformedCaPool, err := expandSecureSourceManagerInstancePrivateConfigCaPool(original["ca_pool"], d, config)
 	if err != nil {
 		return nil, err
@@ -186,6 +193,65 @@ func expandSecureSourceManagerInstancePrivateConfig(v interface{}, d tpgresource
 }
 
 func expandSecureSourceManagerInstancePrivateConfigIsPrivate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigCustomHostConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedHtml, err := expandSecureSourceManagerInstancePrivateConfigCustomHostConfigHtml(original["html"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHtml); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["html"] = transformedHtml
+	}
+
+	transformedApi, err := expandSecureSourceManagerInstancePrivateConfigCustomHostConfigApi(original["api"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApi); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["api"] = transformedApi
+	}
+
+	transformedGitHttp, err := expandSecureSourceManagerInstancePrivateConfigCustomHostConfigGitHttp(original["git_http"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGitHttp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gitHttp"] = transformedGitHttp
+	}
+
+	transformedGitSsh, err := expandSecureSourceManagerInstancePrivateConfigCustomHostConfigGitSsh(original["git_ssh"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGitSsh); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gitSsh"] = transformedGitSsh
+	}
+
+	return transformed, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigCustomHostConfigHtml(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigCustomHostConfigApi(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigCustomHostConfigGitHttp(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigCustomHostConfigGitSsh(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

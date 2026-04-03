@@ -86,7 +86,9 @@ func TestAccDataFusionInstance(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"network_config.private_service_connect_config.unreachable_cidr_block",

@@ -87,6 +87,12 @@ func GetComputeSubnetworkCaiAssets(d tpgresource.TerraformResourceData, config *
 		if location == "" {
 			location = "global"
 		}
+		// Store the ID now
+		id, err := tpgresource.ReplaceVars(d, config, "projects/{{project}}/regions/{{region}}/subnetworks/{{name}}")
+		if err != nil {
+			return nil, fmt.Errorf("Error constructing id: %s", err)
+		}
+		d.SetId(id)
 		return []caiasset.Asset{
 			{
 				Name: name,
@@ -220,6 +226,12 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 		return nil, err
 	} else if v, ok := d.GetOkExists("params"); !tpgresource.IsEmptyValue(reflect.ValueOf(paramsProp)) && (ok || !reflect.DeepEqual(v, paramsProp)) {
 		obj["params"] = paramsProp
+	}
+	resolveSubnetMaskProp, err := expandComputeSubnetworkResolveSubnetMask(d.Get("resolve_subnet_mask"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("resolve_subnet_mask"); !tpgresource.IsEmptyValue(reflect.ValueOf(resolveSubnetMaskProp)) && (ok || !reflect.DeepEqual(v, resolveSubnetMaskProp)) {
+		obj["resolveSubnetMask"] = resolveSubnetMaskProp
 	}
 
 	return obj, nil
@@ -413,4 +425,8 @@ func expandComputeSubnetworkParamsResourceManagerTags(v interface{}, d tpgresour
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandComputeSubnetworkResolveSubnetMask(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }

@@ -27,6 +27,10 @@ func TestAccComputeBackendService(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeBackendService_backendServiceCustomMetrics_update",
+			Skip: "Test framework problem with single vs multiple block parsing of custom_metrics",
+		},
+		{
 			Name: "TestAccComputeBackendService_backendServiceBasicExample",
 		},
 		{
@@ -177,9 +181,6 @@ func TestAccComputeBackendService(t *testing.T) {
 			Name: "TestAccComputeBackendService_resourceManagerTags",
 		},
 		{
-			Name: "TestAccComputeBackendService_backendServiceCustomMetrics_update",
-		},
-		{
 			Name: "TestAccComputeBackendService_updateCanaryMigration",
 		},
 	}
@@ -200,7 +201,9 @@ func TestAccComputeBackendService(t *testing.T) {
 					"backend.custom_metrics.name",
 					"cdn_policy",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"iap.oauth2_client_secret",
 					"lifecycle",

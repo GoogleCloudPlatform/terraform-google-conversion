@@ -30,13 +30,22 @@ func TestAccIAMBetaWorkloadIdentityPool(t *testing.T) {
 			Name: "TestAccIAMBetaWorkloadIdentityPool_iamWorkloadIdentityPoolBasicExample",
 		},
 		{
+			Name: "TestAccIAMBetaWorkloadIdentityPool_iamWorkloadIdentityPoolFullFederationOnlyModeExample",
+		},
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPool_iamWorkloadIdentityPoolFullTrustDomainModeExample",
+		},
+		{
+			Name: "TestAccIAMBetaWorkloadIdentityPool_iamWorkloadIdentityPoolFullTrustDomainModeWithDefaultSharedCaExample",
+		},
+		{
 			Name: "TestAccIAMBetaWorkloadIdentityPool_full",
 		},
 		{
 			Name: "TestAccIAMBetaWorkloadIdentityPool_minimal",
 		},
 		{
-			Name: "TestAccIAMBetaWorkloadIdentityPool_beta_update",
+			Name: "TestAccIAMBetaWorkloadIdentityPool_update",
 		},
 	}
 
@@ -54,7 +63,9 @@ func TestAccIAMBetaWorkloadIdentityPool(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"provider",

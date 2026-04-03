@@ -49,7 +49,9 @@ func TestAccCloudBuildBitbucketServerConfig(t *testing.T) {
 				[]string{
 					"config_id",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"location",

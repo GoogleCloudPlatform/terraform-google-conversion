@@ -101,6 +101,7 @@ func TestAccSecretManagerRegionalRegionalSecret(t *testing.T) {
 					"count",
 					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"location",

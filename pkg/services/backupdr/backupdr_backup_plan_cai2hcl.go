@@ -136,6 +136,7 @@ func (c *BackupDRBackupPlanCai2hclConverter) convertResourceData(asset caiasset.
 	hclData["max_custom_on_demand_retention_days"] = flattenBackupDRBackupPlanMaxCustomOnDemandRetentionDays(res["maxCustomOnDemandRetentionDays"], d, config)
 	hclData["backup_rules"] = flattenBackupDRBackupPlanBackupRules(res["backupRules"], d, config)
 	hclData["log_retention_days"] = flattenBackupDRBackupPlanLogRetentionDays(res["logRetentionDays"], d, config)
+	hclData["disk_backup_plan_properties"] = flattenBackupDRBackupPlanDiskBackupPlanProperties(res["diskBackupPlanProperties"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -406,6 +407,27 @@ func flattenBackupDRBackupPlanLogRetentionDays(v interface{}, d *schema.Resource
 	}
 
 	return v // let terraform core handle it otherwise
+}
+
+func flattenBackupDRBackupPlanDiskBackupPlanProperties(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["guest_flush"] =
+		flattenBackupDRBackupPlanDiskBackupPlanPropertiesGuestFlush(original["guestFlush"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenBackupDRBackupPlanDiskBackupPlanPropertiesGuestFlush(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return false
+	}
+	return v
 }
 
 func resourceBackupDRBackupPlanTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {

@@ -78,7 +78,9 @@ func TestAccNetappStoragePool(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"enable_hot_tier_auto_resize",
 					"for_each",
 					"lifecycle",

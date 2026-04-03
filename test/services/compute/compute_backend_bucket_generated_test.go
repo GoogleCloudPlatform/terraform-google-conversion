@@ -87,7 +87,9 @@ func TestAccComputeBackendBucket(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"edge_security_policy",
 					"for_each",
 					"lifecycle",

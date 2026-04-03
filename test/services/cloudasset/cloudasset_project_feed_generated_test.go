@@ -46,7 +46,9 @@ func TestAccCloudAssetProjectFeed(t *testing.T) {
 				[]string{
 					"billing_project",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"feed_id",
 					"for_each",
 					"lifecycle",

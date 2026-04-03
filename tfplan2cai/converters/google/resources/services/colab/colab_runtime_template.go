@@ -471,6 +471,13 @@ func expandColabRuntimeTemplateSoftwareConfig(v interface{}, d tpgresource.Terra
 		transformed["postStartupScriptConfig"] = transformedPostStartupScriptConfig
 	}
 
+	transformedColabImage, err := expandColabRuntimeTemplateSoftwareConfigColabImage(original["colab_image"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedColabImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["colabImage"] = transformedColabImage
+	}
+
 	return transformed, nil
 }
 
@@ -559,6 +566,32 @@ func expandColabRuntimeTemplateSoftwareConfigPostStartupScriptConfigPostStartupS
 }
 
 func expandColabRuntimeTemplateSoftwareConfigPostStartupScriptConfigPostStartupScriptBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabRuntimeTemplateSoftwareConfigColabImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedReleaseName, err := expandColabRuntimeTemplateSoftwareConfigColabImageReleaseName(original["release_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReleaseName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["releaseName"] = transformedReleaseName
+	}
+
+	return transformed, nil
+}
+
+func expandColabRuntimeTemplateSoftwareConfigColabImageReleaseName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

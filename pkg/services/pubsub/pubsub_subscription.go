@@ -417,6 +417,50 @@ by 's'. Example: '"600.5s"'.`,
 order specified.`,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"ai_inference": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Description: `AI Inference. Specifies the Vertex AI endpoint that inference
+requests built from the Pub/Sub message data and provided parameters will
+be sent to.`,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"endpoint": {
+										Type:     schema.TypeString,
+										Required: true,
+										Description: `The endpoint to a Vertex AI model of the form
+'projects/{project}/locations/{location}/endpoints/{endpoint}' or
+'projects/{project}/locations/{location}/publishers/{publisher}/models/{model}'.
+Vertex AI API requests will be sent to this endpoint.`,
+									},
+									"service_account_email": {
+										Type:     schema.TypeString,
+										Optional: true,
+										Description: `The service account to use to make prediction requests against
+endpoints.`,
+									},
+									"unstructured_inference": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Configuration for making inferences using arbitrary JSON payloads.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"parameters": {
+													Type:     schema.TypeMap,
+													Optional: true,
+													Description: `A parameters object to be included in each inference request.
+The parameters object is combined with the data field of the Pub/Sub
+message to form the inference request.`,
+													Elem: &schema.Schema{Type: schema.TypeString},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
 						"disabled": {
 							Type:     schema.TypeBool,
 							Optional: true,

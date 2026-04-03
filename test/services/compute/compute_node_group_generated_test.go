@@ -57,7 +57,9 @@ func TestAccComputeNodeGroup(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"initial_size",
 					"lifecycle",
