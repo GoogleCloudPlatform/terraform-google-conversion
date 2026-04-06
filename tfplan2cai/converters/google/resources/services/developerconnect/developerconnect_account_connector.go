@@ -110,11 +110,29 @@ func GetDeveloperConnectAccountConnectorCaiObject(d tpgresource.TerraformResourc
 
 func GetDeveloperConnectAccountConnectorApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	customOauthConfigProp, err := expandDeveloperConnectAccountConnectorCustomOauthConfig(d.Get("custom_oauth_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("custom_oauth_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(customOauthConfigProp)) && (ok || !reflect.DeepEqual(v, customOauthConfigProp)) {
+		obj["customOauthConfig"] = customOauthConfigProp
+	}
+	etagProp, err := expandDeveloperConnectAccountConnectorEtag(d.Get("etag"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
+		obj["etag"] = etagProp
+	}
 	providerOauthConfigProp, err := expandDeveloperConnectAccountConnectorProviderOauthConfig(d.Get("provider_oauth_config"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("provider_oauth_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(providerOauthConfigProp)) && (ok || !reflect.DeepEqual(v, providerOauthConfigProp)) {
 		obj["providerOauthConfig"] = providerOauthConfigProp
+	}
+	proxyConfigProp, err := expandDeveloperConnectAccountConnectorProxyConfig(d.Get("proxy_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("proxy_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(proxyConfigProp)) && (ok || !reflect.DeepEqual(v, proxyConfigProp)) {
+		obj["proxyConfig"] = proxyConfigProp
 	}
 	effectiveAnnotationsProp, err := expandDeveloperConnectAccountConnectorEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
@@ -132,6 +150,168 @@ func GetDeveloperConnectAccountConnectorApiObject(d tpgresource.TerraformResourc
 	return obj, nil
 }
 
+func expandDeveloperConnectAccountConnectorCustomOauthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAuthUri, err := expandDeveloperConnectAccountConnectorCustomOauthConfigAuthUri(original["auth_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authUri"] = transformedAuthUri
+	}
+
+	transformedClientId, err := expandDeveloperConnectAccountConnectorCustomOauthConfigClientId(original["client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientId"] = transformedClientId
+	}
+
+	transformedClientSecret, err := expandDeveloperConnectAccountConnectorCustomOauthConfigClientSecret(original["client_secret"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecret); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecret"] = transformedClientSecret
+	}
+
+	transformedHostUri, err := expandDeveloperConnectAccountConnectorCustomOauthConfigHostUri(original["host_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedHostUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["hostUri"] = transformedHostUri
+	}
+
+	transformedPkceDisabled, err := expandDeveloperConnectAccountConnectorCustomOauthConfigPkceDisabled(original["pkce_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPkceDisabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pkceDisabled"] = transformedPkceDisabled
+	}
+
+	transformedScmProvider, err := expandDeveloperConnectAccountConnectorCustomOauthConfigScmProvider(original["scm_provider"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScmProvider); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scmProvider"] = transformedScmProvider
+	}
+
+	transformedScopes, err := expandDeveloperConnectAccountConnectorCustomOauthConfigScopes(original["scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scopes"] = transformedScopes
+	}
+
+	transformedServerVersion, err := expandDeveloperConnectAccountConnectorCustomOauthConfigServerVersion(original["server_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServerVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serverVersion"] = transformedServerVersion
+	}
+
+	transformedServiceDirectoryConfig, err := expandDeveloperConnectAccountConnectorCustomOauthConfigServiceDirectoryConfig(original["service_directory_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceDirectoryConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceDirectoryConfig"] = transformedServiceDirectoryConfig
+	}
+
+	transformedSslCaCertificate, err := expandDeveloperConnectAccountConnectorCustomOauthConfigSslCaCertificate(original["ssl_ca_certificate"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSslCaCertificate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sslCaCertificate"] = transformedSslCaCertificate
+	}
+
+	transformedTokenUri, err := expandDeveloperConnectAccountConnectorCustomOauthConfigTokenUri(original["token_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTokenUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tokenUri"] = transformedTokenUri
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigAuthUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigHostUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigPkceDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigScmProvider(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigServerVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedService, err := expandDeveloperConnectAccountConnectorCustomOauthConfigServiceDirectoryConfigService(original["service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service"] = transformedService
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigServiceDirectoryConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigSslCaCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorCustomOauthConfigTokenUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDeveloperConnectAccountConnectorEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDeveloperConnectAccountConnectorProviderOauthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -144,13 +324,6 @@ func expandDeveloperConnectAccountConnectorProviderOauthConfig(v interface{}, d 
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
-	transformedSystemProviderId, err := expandDeveloperConnectAccountConnectorProviderOauthConfigSystemProviderId(original["system_provider_id"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedSystemProviderId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["systemProviderId"] = transformedSystemProviderId
-	}
-
 	transformedScopes, err := expandDeveloperConnectAccountConnectorProviderOauthConfigScopes(original["scopes"], d, config)
 	if err != nil {
 		return nil, err
@@ -158,14 +331,47 @@ func expandDeveloperConnectAccountConnectorProviderOauthConfig(v interface{}, d 
 		transformed["scopes"] = transformedScopes
 	}
 
+	transformedSystemProviderId, err := expandDeveloperConnectAccountConnectorProviderOauthConfigSystemProviderId(original["system_provider_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSystemProviderId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["systemProviderId"] = transformedSystemProviderId
+	}
+
 	return transformed, nil
+}
+
+func expandDeveloperConnectAccountConnectorProviderOauthConfigScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDeveloperConnectAccountConnectorProviderOauthConfigSystemProviderId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
-func expandDeveloperConnectAccountConnectorProviderOauthConfigScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+func expandDeveloperConnectAccountConnectorProxyConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandDeveloperConnectAccountConnectorProxyConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandDeveloperConnectAccountConnectorProxyConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -371,6 +371,13 @@ If unspecified, the purpose defaults to 'PRIVATE'.`,
 				Description: `The ID of the reserved internal range. Must be prefixed with 'networkconnectivity.googleapis.com'
 E.g. 'networkconnectivity.googleapis.com/projects/{project}/locations/global/internalRanges/{rangeId}'`,
 			},
+			"resolve_subnet_mask": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				ForceNew:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"ARP_ALL_RANGES", "ARP_PRIMARY_RANGE", ""}),
+				Description:  `'Configures subnet mask resolution for this subnetwork.' Possible values: ["ARP_ALL_RANGES", "ARP_PRIMARY_RANGE"]`,
+			},
 			"role": {
 				Type:         schema.TypeString,
 				Optional:     true,

@@ -85,6 +85,9 @@ func TestAccSpannerInstance(t *testing.T) {
 		{
 			Name: "TestAccSpannerInstance_autoscalingWithTotalCPUUtilizationPercent",
 		},
+		{
+			Name: "TestAccSpannerInstance_asymmetricAutoscalingWithAllOverrideFields",
+		},
 	}
 
 	for _, tt := range tests {
@@ -103,7 +106,9 @@ func TestAccSpannerInstance(t *testing.T) {
 					"autoscaling_config.autoscaling_limits",
 					"autoscaling_config.autoscaling_targets.total_cpu_utilization_percent",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"force_destroy",
 					"lifecycle",

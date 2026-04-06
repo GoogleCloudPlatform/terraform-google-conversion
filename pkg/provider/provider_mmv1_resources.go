@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
@@ -23,10 +24,12 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataplex"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflow"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/eventarc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
@@ -62,12 +65,14 @@ import (
 
 var handwrittenResources = map[string]*schema.Resource{
 	// ####### START handwritten resources ###########
-	"google_compute_instance": compute.ResourceComputeInstance(),
-	"google_project":          resourcemanager.ResourceGoogleProject(),
+	"google_compute_instance":    compute.ResourceComputeInstance(),
+	"google_container_cluster":   container.ResourceContainerCluster(),
+	"google_container_node_pool": container.ResourceContainerNodePool(),
+	"google_project":             resourcemanager.ResourceGoogleProject(),
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 170
+// Generated resources: 187
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -89,6 +94,9 @@ var generatedResources = map[string]*schema.Resource{
 	"google_certificate_manager_certificate":                 certificatemanager.ResourceCertificateManagerCertificate(),
 	"google_certificate_manager_certificate_issuance_config": certificatemanager.ResourceCertificateManagerCertificateIssuanceConfig(),
 	"google_certificate_manager_certificate_map":             certificatemanager.ResourceCertificateManagerCertificateMap(),
+	"google_certificate_manager_certificate_map_entry":       certificatemanager.ResourceCertificateManagerCertificateMapEntry(),
+	"google_certificate_manager_dns_authorization":           certificatemanager.ResourceCertificateManagerDnsAuthorization(),
+	"google_certificate_manager_trust_config":                certificatemanager.ResourceCertificateManagerTrustConfig(),
 	"google_cloud_asset_folder_feed":                         cloudasset.ResourceCloudAssetFolderFeed(),
 	"google_cloud_asset_organization_feed":                   cloudasset.ResourceCloudAssetOrganizationFeed(),
 	"google_cloud_asset_project_feed":                        cloudasset.ResourceCloudAssetProjectFeed(),
@@ -110,7 +118,9 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_external_vpn_gateway":                    compute.ResourceComputeExternalVpnGateway(),
 	"google_compute_firewall":                                compute.ResourceComputeFirewall(),
 	"google_compute_firewall_policy":                         compute.ResourceComputeFirewallPolicy(),
+	"google_compute_forwarding_rule":                         compute.ResourceComputeForwardingRule(),
 	"google_compute_global_address":                          compute.ResourceComputeGlobalAddress(),
+	"google_compute_global_forwarding_rule":                  compute.ResourceComputeGlobalForwardingRule(),
 	"google_compute_global_network_endpoint_group":           compute.ResourceComputeGlobalNetworkEndpointGroup(),
 	"google_compute_ha_vpn_gateway":                          compute.ResourceComputeHaVpnGateway(),
 	"google_compute_health_check":                            compute.ResourceComputeHealthCheck(),
@@ -124,22 +134,29 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_network":                                 compute.ResourceComputeNetwork(),
 	"google_compute_network_attachment":                      compute.ResourceComputeNetworkAttachment(),
 	"google_compute_network_endpoint_group":                  compute.ResourceComputeNetworkEndpointGroup(),
+	"google_compute_network_firewall_policy":                 compute.ResourceComputeNetworkFirewallPolicy(),
 	"google_compute_node_group":                              compute.ResourceComputeNodeGroup(),
 	"google_compute_node_template":                           compute.ResourceComputeNodeTemplate(),
 	"google_compute_packet_mirroring":                        compute.ResourceComputePacketMirroring(),
 	"google_compute_region_autoscaler":                       compute.ResourceComputeRegionAutoscaler(),
+	"google_compute_region_backend_service":                  compute.ResourceComputeRegionBackendService(),
+	"google_compute_region_disk":                             compute.ResourceComputeRegionDisk(),
 	"google_compute_region_health_check":                     compute.ResourceComputeRegionHealthCheck(),
 	"google_compute_region_network_endpoint_group":           compute.ResourceComputeRegionNetworkEndpointGroup(),
 	"google_compute_region_network_firewall_policy":          compute.ResourceComputeRegionNetworkFirewallPolicy(),
+	"google_compute_region_security_policy":                  compute.ResourceComputeRegionSecurityPolicy(),
 	"google_compute_region_ssl_certificate":                  compute.ResourceComputeRegionSslCertificate(),
 	"google_compute_region_ssl_policy":                       compute.ResourceComputeRegionSslPolicy(),
 	"google_compute_region_target_http_proxy":                compute.ResourceComputeRegionTargetHttpProxy(),
 	"google_compute_region_target_https_proxy":               compute.ResourceComputeRegionTargetHttpsProxy(),
 	"google_compute_region_target_tcp_proxy":                 compute.ResourceComputeRegionTargetTcpProxy(),
+	"google_compute_reservation":                             compute.ResourceComputeReservation(),
 	"google_compute_resource_policy":                         compute.ResourceComputeResourcePolicy(),
 	"google_compute_route":                                   compute.ResourceComputeRoute(),
 	"google_compute_router":                                  compute.ResourceComputeRouter(),
 	"google_compute_service_attachment":                      compute.ResourceComputeServiceAttachment(),
+	"google_compute_snapshot":                                compute.ResourceComputeSnapshot(),
+	"google_compute_ssl_certificate":                         compute.ResourceComputeSslCertificate(),
 	"google_compute_ssl_policy":                              compute.ResourceComputeSslPolicy(),
 	"google_compute_storage_pool":                            compute.ResourceComputeStoragePool(),
 	"google_compute_subnetwork":                              compute.ResourceComputeSubnetwork(),
@@ -150,8 +167,11 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_target_ssl_proxy":                        compute.ResourceComputeTargetSslProxy(),
 	"google_compute_target_tcp_proxy":                        compute.ResourceComputeTargetTcpProxy(),
 	"google_compute_url_map":                                 compute.ResourceComputeUrlMap(),
+	"google_compute_vpn_tunnel":                              compute.ResourceComputeVpnTunnel(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.ResourceDatabaseMigrationServiceMigrationJob(),
 	"google_data_fusion_instance":                            datafusion.ResourceDataFusionInstance(),
+	"google_dataplex_glossary":                               dataplex.ResourceDataplexGlossary(),
+	"google_dataplex_task":                                   dataplex.ResourceDataplexTask(),
 	"google_dataproc_autoscaling_policy":                     dataproc.ResourceDataprocAutoscalingPolicy(),
 	"google_dataproc_batch":                                  dataproc.ResourceDataprocBatch(),
 	"google_datastream_connection_profile":                   datastream.ResourceDatastreamConnectionProfile(),
@@ -160,6 +180,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_developer_connect_connection":                    developerconnect.ResourceDeveloperConnectConnection(),
 	"google_developer_connect_git_repository_link":           developerconnect.ResourceDeveloperConnectGitRepositoryLink(),
 	"google_dialogflow_agent":                                dialogflow.ResourceDialogflowAgent(),
+	"google_eventarc_pipeline":                               eventarc.ResourceEventarcPipeline(),
 	"google_filestore_backup":                                filestore.ResourceFilestoreBackup(),
 	"google_filestore_instance":                              filestore.ResourceFilestoreInstance(),
 	"google_filestore_snapshot":                              filestore.ResourceFilestoreSnapshot(),
@@ -220,6 +241,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_network_security_url_lists":                      networksecurity.ResourceNetworkSecurityUrlLists(),
 	"google_privateca_ca_pool":                               privateca.ResourcePrivatecaCaPool(),
 	"google_privateca_certificate":                           privateca.ResourcePrivatecaCertificate(),
+	"google_privateca_certificate_template":                  privateca.ResourcePrivatecaCertificateTemplate(),
 	"google_pubsub_subscription":                             pubsub.ResourcePubsubSubscription(),
 	"google_pubsub_topic":                                    pubsub.ResourcePubsubTopic(),
 	"google_redis_cluster":                                   redis.ResourceRedisCluster(),

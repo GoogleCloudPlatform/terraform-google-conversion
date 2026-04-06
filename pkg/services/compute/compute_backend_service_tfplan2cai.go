@@ -87,6 +87,12 @@ func GetComputeBackendServiceCaiAssets(d tpgresource.TerraformResourceData, conf
 		if location == "" {
 			location = "global"
 		}
+		// Store the ID now
+		id, err := tpgresource.ReplaceVars(d, config, "projects/{{project}}/global/backendServices/{{name}}")
+		if err != nil {
+			return nil, fmt.Errorf("Error constructing id: %s", err)
+		}
+		d.SetId(id)
 		return []caiasset.Asset{
 			{
 				Name: name,
@@ -977,18 +983,13 @@ func expandComputeBackendServiceCdnPolicyCacheKeyPolicyIncludeQueryString(v inte
 }
 
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicyQueryStringBlacklist(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	vSet := v.(*schema.Set)
-	if vSet.Len() == 0 {
-		return nil, nil
-	}
-	return vSet.List(), nil
+	v = v.(*schema.Set).List()
+	return v, nil
 }
+
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicyQueryStringWhitelist(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	vSet := v.(*schema.Set)
-	if vSet.Len() == 0 {
-		return nil, nil
-	}
-	return vSet.List(), nil
+	v = v.(*schema.Set).List()
+	return v, nil
 }
 
 func expandComputeBackendServiceCdnPolicyCacheKeyPolicyIncludeHttpHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

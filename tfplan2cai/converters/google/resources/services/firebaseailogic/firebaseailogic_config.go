@@ -122,6 +122,12 @@ func GetFirebaseAILogicConfigApiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("telemetry_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(telemetryConfigProp)) && (ok || !reflect.DeepEqual(v, telemetryConfigProp)) {
 		obj["telemetryConfig"] = telemetryConfigProp
 	}
+	trafficFilterProp, err := expandFirebaseAILogicConfigTrafficFilter(d.Get("traffic_filter"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("traffic_filter"); !tpgresource.IsEmptyValue(reflect.ValueOf(trafficFilterProp)) && (ok || !reflect.DeepEqual(v, trafficFilterProp)) {
+		obj["trafficFilter"] = trafficFilterProp
+	}
 
 	return obj, nil
 }
@@ -186,5 +192,31 @@ func expandFirebaseAILogicConfigTelemetryConfigMode(v interface{}, d tpgresource
 }
 
 func expandFirebaseAILogicConfigTelemetryConfigSamplingRate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAILogicConfigTrafficFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTemplateOnly, err := expandFirebaseAILogicConfigTrafficFilterTemplateOnly(original["template_only"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTemplateOnly); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["templateOnly"] = transformedTemplateOnly
+	}
+
+	return transformed, nil
+}
+
+func expandFirebaseAILogicConfigTrafficFilterTemplateOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

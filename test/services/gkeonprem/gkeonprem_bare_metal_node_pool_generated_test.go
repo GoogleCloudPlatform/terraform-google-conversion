@@ -52,7 +52,9 @@ func TestAccGkeonpremBareMetalNodePool(t *testing.T) {
 				[]string{
 					"bare_metal_cluster",
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"location",

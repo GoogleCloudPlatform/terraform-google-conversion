@@ -87,6 +87,12 @@ func GetComputeResourcePolicyCaiAssets(d tpgresource.TerraformResourceData, conf
 		if location == "" {
 			location = "global"
 		}
+		// Store the ID now
+		id, err := tpgresource.ReplaceVars(d, config, "projects/{{project}}/regions/{{region}}/resourcePolicies/{{name}}")
+		if err != nil {
+			return nil, fmt.Errorf("Error constructing id: %s", err)
+		}
+		d.SetId(id)
 		return []caiasset.Asset{
 			{
 				Name: name,
@@ -703,13 +709,6 @@ func expandComputeResourcePolicyWorkloadPolicy(v interface{}, d tpgresource.Terr
 		transformed["acceleratorTopology"] = transformedAcceleratorTopology
 	}
 
-	transformedAcceleratorTopologyMode, err := expandComputeResourcePolicyWorkloadPolicyAcceleratorTopologyMode(original["accelerator_topology_mode"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedAcceleratorTopologyMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["acceleratorTopologyMode"] = transformedAcceleratorTopologyMode
-	}
-
 	return transformed, nil
 }
 
@@ -722,10 +721,6 @@ func expandComputeResourcePolicyWorkloadPolicyMaxTopologyDistance(v interface{},
 }
 
 func expandComputeResourcePolicyWorkloadPolicyAcceleratorTopology(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandComputeResourcePolicyWorkloadPolicyAcceleratorTopologyMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

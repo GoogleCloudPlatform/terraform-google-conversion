@@ -508,6 +508,34 @@ func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverrides
 		transformed["autoscalingLimits"] = transformedAutoscalingLimits
 	}
 
+	transformedAutoscalingTargetHighPriorityCpuUtilizationPercent, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingTargetHighPriorityCpuUtilizationPercent(original["autoscaling_target_high_priority_cpu_utilization_percent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAutoscalingTargetHighPriorityCpuUtilizationPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["autoscalingTargetHighPriorityCpuUtilizationPercent"] = transformedAutoscalingTargetHighPriorityCpuUtilizationPercent
+	}
+
+	transformedAutoscalingTargetTotalCpuUtilizationPercent, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingTargetTotalCpuUtilizationPercent(original["autoscaling_target_total_cpu_utilization_percent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAutoscalingTargetTotalCpuUtilizationPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["autoscalingTargetTotalCpuUtilizationPercent"] = transformedAutoscalingTargetTotalCpuUtilizationPercent
+	}
+
+	transformedDisableHighPriorityCpuAutoscaling, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesDisableHighPriorityCpuAutoscaling(original["disable_high_priority_cpu_autoscaling"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableHighPriorityCpuAutoscaling); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableHighPriorityCpuAutoscaling"] = transformedDisableHighPriorityCpuAutoscaling
+	}
+
+	transformedDisableTotalCpuAutoscaling, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesDisableTotalCpuAutoscaling(original["disable_total_cpu_autoscaling"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisableTotalCpuAutoscaling); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["disableTotalCpuAutoscaling"] = transformedDisableTotalCpuAutoscaling
+	}
+
 	return transformed, nil
 }
 
@@ -537,6 +565,20 @@ func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverrides
 		transformed["maxNodes"] = transformedMaxNodes
 	}
 
+	transformedMinProcessingUnits, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMinProcessingUnits(original["min_processing_units"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinProcessingUnits); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minProcessingUnits"] = transformedMinProcessingUnits
+	}
+
+	transformedMaxProcessingUnits, err := expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMaxProcessingUnits(original["max_processing_units"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxProcessingUnits); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxProcessingUnits"] = transformedMaxProcessingUnits
+	}
+
 	return transformed, nil
 }
 
@@ -545,6 +587,30 @@ func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverrides
 }
 
 func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMaxNodes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMinProcessingUnits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMaxProcessingUnits(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingTargetHighPriorityCpuUtilizationPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingTargetTotalCpuUtilizationPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesDisableHighPriorityCpuAutoscaling(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesDisableTotalCpuAutoscaling(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -22,85 +22,89 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 		// Handle the edge case that multiple Terraform resources share the same CAI asset type
 		switch asset.Type {
 		case "cloudasset.googleapis.com/Feed":
-			if strings.Contains(asset.Name, "folders") {
+			if true && strings.Contains(asset.Name, "folders") {
 				converter = ConverterMap[asset.Type]["CloudAssetFolderFeed"]
-			} else if strings.Contains(asset.Name, "organizations") {
+			} else if true && strings.Contains(asset.Name, "organizations") {
 				converter = ConverterMap[asset.Type]["CloudAssetOrganizationFeed"]
-			} else if strings.Contains(asset.Name, "projects") {
+			} else if true && strings.Contains(asset.Name, "projects") {
 				converter = ConverterMap[asset.Type]["CloudAssetProjectFeed"]
 			}
 		case "compute.googleapis.com/Autoscaler":
-			if strings.Contains(asset.Name, "zones") {
+			if true && strings.Contains(asset.Name, "zones") {
 				converter = ConverterMap[asset.Type]["ComputeAutoscaler"]
-			} else if strings.Contains(asset.Name, "regions") {
+			} else if true && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionAutoscaler"]
 			}
 		case "compute.googleapis.com/FirewallPolicy":
-			if strings.Contains(asset.Name, "locations") {
+			if true && strings.Contains(asset.Name, "locations") && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeFirewallPolicy"]
-			} else if strings.Contains(asset.Name, "projects") {
+			} else if true && strings.Contains(asset.Name, "projects") && strings.Contains(asset.Name, "global") {
+				converter = ConverterMap[asset.Type]["ComputeNetworkFirewallPolicy"]
+			} else if true && strings.Contains(asset.Name, "projects") && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionNetworkFirewallPolicy"]
 			}
 		case "compute.googleapis.com/HealthCheck":
-			if strings.Contains(asset.Name, "global") {
+			if true && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeHealthCheck"]
-			} else if strings.Contains(asset.Name, "regions") {
+			} else if true && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionHealthCheck"]
 			}
 		case "compute.googleapis.com/NetworkEndpointGroup":
-			if strings.Contains(asset.Name, "global") {
+			if true && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeGlobalNetworkEndpointGroup"]
-			} else if strings.Contains(asset.Name, "zones") {
+			} else if true && strings.Contains(asset.Name, "zones") {
 				converter = ConverterMap[asset.Type]["ComputeNetworkEndpointGroup"]
-			} else if strings.Contains(asset.Name, "regions") {
+			} else if true && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionNetworkEndpointGroup"]
 			}
 		case "compute.googleapis.com/SslCertificate":
-			if strings.Contains(asset.Name, "global") {
-				converter = ConverterMap[asset.Type]["ComputeManagedSslCertificate"]
-			} else if strings.Contains(asset.Name, "regions") {
+			if strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionSslCertificate"]
+			} else if typeVal, ok := asset.Resource.Data["type"]; ok && typeVal == "MANAGED" {
+				converter = ConverterMap[asset.Type]["ComputeManagedSslCertificate"]
+			} else {
+				converter = ConverterMap[asset.Type]["ComputeSslCertificate"]
 			}
 		case "compute.googleapis.com/SslPolicy":
-			if strings.Contains(asset.Name, "regions") {
+			if true && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionSslPolicy"]
-			} else if strings.Contains(asset.Name, "global") {
+			} else if true && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeSslPolicy"]
 			}
 		case "compute.googleapis.com/TargetHttpProxy":
-			if strings.Contains(asset.Name, "regions") {
+			if true && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionTargetHttpProxy"]
-			} else if strings.Contains(asset.Name, "global") {
+			} else if true && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeTargetHttpProxy"]
 			}
 		case "compute.googleapis.com/TargetHttpsProxy":
-			if strings.Contains(asset.Name, "regions") {
+			if true && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionTargetHttpsProxy"]
-			} else if strings.Contains(asset.Name, "global") {
+			} else if true && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeTargetHttpsProxy"]
 			}
 		case "compute.googleapis.com/TargetTcpProxy":
-			if strings.Contains(asset.Name, "regions") {
+			if true && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionTargetTcpProxy"]
-			} else if strings.Contains(asset.Name, "global") {
+			} else if true && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeTargetTcpProxy"]
 			}
 		case "secretmanager.googleapis.com/Secret":
-			if strings.Contains(asset.Name, "locations") {
+			if true && strings.Contains(asset.Name, "locations") {
 				converter = ConverterMap[asset.Type]["SecretManagerRegionalRegionalSecret"]
-			} else {
+			} else if true {
 				converter = ConverterMap[asset.Type]["SecretManagerSecret"]
 			}
 		case "secretmanager.googleapis.com/SecretVersion":
-			if strings.Contains(asset.Name, "locations") {
+			if true && strings.Contains(asset.Name, "locations") {
 				converter = ConverterMap[asset.Type]["SecretManagerRegionalRegionalSecretVersion"]
-			} else {
+			} else if true {
 				converter = ConverterMap[asset.Type]["SecretManagerSecretVersion"]
 			}
 		case "securitycenter.googleapis.com/MuteConfig":
-			if strings.Contains(asset.Name, "folders") {
+			if true && strings.Contains(asset.Name, "folders") {
 				converter = ConverterMap[asset.Type]["SecurityCenterV2FolderMuteConfig"]
-			} else if strings.Contains(asset.Name, "organizations") {
+			} else if true && strings.Contains(asset.Name, "organizations") {
 				converter = ConverterMap[asset.Type]["SecurityCenterV2OrganizationMuteConfig"]
 			}
 		}

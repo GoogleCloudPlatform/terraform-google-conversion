@@ -143,6 +143,7 @@ func (c *NetappStoragePoolCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["enable_hot_tier_auto_resize"] = flattenNetappStoragePoolEnableHotTierAutoResize(res["enableHotTierAutoResize"], d, config)
 	hclData["qos_type"] = flattenNetappStoragePoolQosType(res["qosType"], d, config)
 	hclData["type"] = flattenNetappStoragePoolType(res["type"], d, config)
+	hclData["mode"] = flattenNetappStoragePoolMode(res["mode"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -236,5 +237,9 @@ func flattenNetappStoragePoolQosType(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenNetappStoragePoolType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetappStoragePoolMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

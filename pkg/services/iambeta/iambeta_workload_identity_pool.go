@@ -109,6 +109,15 @@ func ResourceIAMBetaWorkloadIdentityPool() *schema.Resource {
 value should be 4-32 characters, and may contain the characters [a-z0-9-]. The prefix
 'gcp-' is reserved for use by Google, and may not be specified.`,
 			},
+			"attestation_rules": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Description: `Defines which workloads can receive an identity within a pool. When an AttestationRule is
+defined under a managed identity, matching workloads may receive that identity. A maximum of
+50 AttestationRules can be set.`,
+				Elem: iambetaWorkloadIdentityPoolAttestationRulesSchema(),
+				// Default schema.HashSchema is used.
+			},
 			"description": {
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -125,6 +134,160 @@ access again.`,
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: `A display name for the pool. Cannot exceed 32 characters.`,
+			},
+			"inline_certificate_issuance_config": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `Represents configuration for generating mutual TLS (mTLS) certificates for the identities
+within this pool. Defines the Certificate Authority (CA) pool resources and configurations
+required for issuance and rotation of mTLS workload certificates.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"ca_pools": {
+							Type:     schema.TypeMap,
+							Optional: true,
+							Description: `A required mapping of a cloud region to the CA pool resource located in that region used
+for certificate issuance, adhering to these constraints:
+
+* **Key format:** A supported cloud region name equivalent to the location identifier in
+the corresponding map entry's value.
+* **Value format:** A valid CA pool resource path format like:
+'projects/{project}/locations/{location}/caPools/{ca_pool}'
+* **Region Matching:** Workloads are ONLY issued certificates from CA pools within the
+same region. Also the CA pool region (in value) must match the workload's region (key).`,
+							Elem:         &schema.Schema{Type: schema.TypeString},
+							ExactlyOneOf: []string{"inline_certificate_issuance_config.0.ca_pools", "inline_certificate_issuance_config.0.use_default_shared_ca"},
+						},
+						"key_algorithm": {
+							Type:         schema.TypeString,
+							Computed:     true,
+							Optional:     true,
+							ValidateFunc: verify.ValidateEnum([]string{"RSA_2048", "RSA_3072", "RSA_4096", "ECDSA_P256", "ECDSA_P384", ""}),
+							Description: `Key algorithm to use when generating the key pair. This key pair will be used to create
+the certificate. If unspecified, this will default to 'ECDSA_P256'.
+
+* 'RSA_2048': Specifies RSA with a 2048-bit modulus.
+* 'RSA_3072': Specifies RSA with a 3072-bit modulus.
+* 'RSA_4096': Specifies RSA with a 4096-bit modulus.
+* 'ECDSA_P256': Specifies ECDSA with curve P256.
+* 'ECDSA_P384': Specifies ECDSA with curve P384. Possible values: ["RSA_2048", "RSA_3072", "RSA_4096", "ECDSA_P256", "ECDSA_P384"]`,
+						},
+						"lifetime": {
+							Type:     schema.TypeString,
+							Computed: true,
+							Optional: true,
+							Description: `Lifetime of the workload certificates issued by the CA pool in seconds. Must be between
+'86400s' (24 hours) to '2592000s' (30 days), ends in the suffix "'s'" (indicating seconds)
+and is preceded by the number of seconds. If unspecified, this will be defaulted to
+'86400s' (24 hours).`,
+						},
+						"rotation_window_percentage": {
+							Type:     schema.TypeInt,
+							Computed: true,
+							Optional: true,
+							Description: `Rotation window percentage indicating when certificate rotation should be initiated based
+on remaining lifetime. Must be between '50' - '80'. If unspecified, this will be defaulted
+to '50'.`,
+						},
+						"use_default_shared_ca": {
+							Type:     schema.TypeBool,
+							Optional: true,
+							Description: `If set to true, the trust domain will utilize the GCP-provisioned default CA. A default
+CA in the same region as the workload will be selected to issue the certificate. Enabling
+this will clear any existing 'ca_pools' configuration to provision the certificates.
+
+
+~> **Note** This field is mutually exclusive with 'ca_pools'. If this flag is enabled,
+certificates will be automatically provisioned from the default shared CAs. This flag should
+not be set if you want to use your own CA pools to provision the certificates.`,
+							ExactlyOneOf: []string{"inline_certificate_issuance_config.0.ca_pools", "inline_certificate_issuance_config.0.use_default_shared_ca"},
+						},
+					},
+				},
+			},
+			"inline_trust_config": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `Represents config to add additional trusted trust domains. Defines configuration for extending
+trust to additional trust domains. By establishing trust with another domain, the current
+domain will recognize and accept certificates issued by entities within the trusted domains.
+Note that a trust domain automatically trusts itself, eliminating the need for explicit
+configuration.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"additional_trust_bundles": {
+							Type:     schema.TypeSet,
+							Optional: true,
+							Description: `Maps specific trust domains (e.g., "example.com") to their corresponding 'TrustStore'
+objects, which contain the trusted root certificates for that domain. There can be a
+maximum of '10' trust domain entries in this map.
+
+Note that a trust domain automatically trusts itself and don't need to be specified here.
+If however, this 'WorkloadIdentityPool''s trust domain contains any trust anchors in the
+'additional_trust_bundles' map, those trust anchors will be *appended to* the Trust Bundle
+automatically derived from your 'InlineCertificateIssuanceConfig''s 'ca_pools'.`,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"trust_domain": {
+										Type:     schema.TypeString,
+										Required: true,
+									},
+									"trust_anchors": {
+										Type:     schema.TypeList,
+										Required: true,
+										Description: `List of Trust Anchors to be used while performing validation against a given
+'TrustStore'. The incoming end entity's certificate must be chained up to one of the
+trust anchors here.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"pem_certificate": {
+													Type:     schema.TypeString,
+													Required: true,
+													Description: `PEM certificate of the PKI used for validation. Must only contain one ca
+certificate(either root or intermediate cert).`,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"mode": {
+				Type:         schema.TypeString,
+				Computed:     true,
+				Optional:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"FEDERATION_ONLY", "TRUST_DOMAIN", "SYSTEM_TRUST_DOMAIN", ""}),
+				Description: `The mode for the pool is operating in. Pools with an unspecified mode will operate as if they
+are in 'FEDERATION_ONLY' mode.
+
+
+~> **Note** This field cannot be changed after the Workload Identity Pool is created. While
+'terraform plan' may show an update if you change this field's value, 'terraform apply'
+**will fail with an API error** (such as 'Error 400: Attempted to update an immutable field.').
+To specify a different 'mode', please create a new Workload Identity Pool resource.
+
+* 'FEDERATION_ONLY': Pools can only be used for federating external workload identities into
+Google Cloud. Unless otherwise noted, no structure or format constraints are applied to
+workload identities in a 'FEDERATION_ONLY' mode pool, and you may not create any resources
+within the pool besides providers.
+* 'TRUST_DOMAIN': Pools can be used to assign identities to Google Cloud workloads. All
+identities within a 'TRUST_DOMAIN' mode pool must consist of a single namespace and individual
+workload identifier. The subject identifier for all identities must conform to the following
+format: 'ns/<namespace>/sa/<workload_identifier>'.
+'google_iam_workload_identity_pool_provider's cannot be created within 'TRUST_DOMAIN'
+mode pools.
+* 'SYSTEM_TRUST_DOMAIN': Pools are managed by Google Cloud services. Neither
+'google_iam_workload_identity_pool_namespace's nor 'google_iam_workload_identity_pool_provider's
+can be created within 'SYSTEM_TRUST_DOMAIN' mode pools. All identities within a
+'SYSTEM_TRUST_DOMAIN' mode pool are in one of the following formats:
+
+    * 'spiffe://<trust-domain>/ns/<kubernetes-namespace>/sa/<kubernetes-service-account>'
+    * 'spiffe://<trust-domain>/resources/<resource-scope>/<resource-name>' Possible values: ["FEDERATION_ONLY", "TRUST_DOMAIN", "SYSTEM_TRUST_DOMAIN"]`,
 			},
 			"name": {
 				Type:     schema.TypeString,
@@ -153,5 +316,18 @@ access again.`,
 			},
 		},
 		UseJSONNumber: true,
+	}
+}
+
+func iambetaWorkloadIdentityPoolAttestationRulesSchema() *schema.Resource {
+	return &schema.Resource{
+		Schema: map[string]*schema.Schema{
+			"google_cloud_resource": {
+				Type:     schema.TypeString,
+				Required: true,
+				Description: `A single workload operating on Google Cloud. For example:
+'//run.googleapis.com/projects/123/type/Service/*'.`,
+			},
+		},
 	}
 }

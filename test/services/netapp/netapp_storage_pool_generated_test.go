@@ -57,10 +57,10 @@ func TestAccNetappStoragePool(t *testing.T) {
 			Name: "TestAccNetappStoragePool_unifiedStoragePoolCreate",
 		},
 		{
-			Name: "TestAccNetappStoragePool_ScaleTierEnterprise",
+			Name: "TestAccNetappStoragePool_ontapMode",
 		},
 		{
-			Name: "TestAccNetappStoragePool_ontapMode",
+			Name: "TestAccNetappStoragePool_ScaleTierEnterprise",
 		},
 	}
 
@@ -78,7 +78,9 @@ func TestAccNetappStoragePool(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"enable_hot_tier_auto_resize",
 					"for_each",
 					"lifecycle",

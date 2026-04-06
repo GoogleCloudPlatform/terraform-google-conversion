@@ -602,6 +602,13 @@ func expandCESToolsetMcpToolset(v interface{}, d tpgresource.TerraformResourceDa
 		transformed["tlsConfig"] = transformedTlsConfig
 	}
 
+	transformedCustomHeaders, err := expandCESToolsetMcpToolsetCustomHeaders(original["custom_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCustomHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["customHeaders"] = transformedCustomHeaders
+	}
+
 	return transformed, nil
 }
 
@@ -944,4 +951,15 @@ func expandCESToolsetMcpToolsetTlsConfigCaCertsCert(v interface{}, d tpgresource
 
 func expandCESToolsetMcpToolsetTlsConfigCaCertsDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCESToolsetMcpToolsetCustomHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

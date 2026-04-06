@@ -222,6 +222,7 @@ func flattenComputeServiceAttachmentConsumerAcceptLists(v interface{}, d *schema
 		transformed.Add(map[string]interface{}{
 			"project_id_or_num": flattenComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(original["projectIdOrNum"], d, config),
 			"network_url":       flattenComputeServiceAttachmentConsumerAcceptListsNetworkUrl(original["networkUrl"], d, config),
+			"endpoint_url":      flattenComputeServiceAttachmentConsumerAcceptListsEndpointUrl(original["endpointUrl"], d, config),
 			"connection_limit":  flattenComputeServiceAttachmentConsumerAcceptListsConnectionLimit(original["connectionLimit"], d, config),
 		})
 	}
@@ -233,6 +234,10 @@ func flattenComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(v interfac
 }
 
 func flattenComputeServiceAttachmentConsumerAcceptListsNetworkUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeServiceAttachmentConsumerAcceptListsEndpointUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

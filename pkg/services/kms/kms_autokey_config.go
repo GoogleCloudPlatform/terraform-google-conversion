@@ -86,6 +86,12 @@ func ResourceKMSAutokeyConfig() *schema.Resource {
 CryptoKey for any new KeyHandle the Developer creates. Should have the form
 'projects/<project_id_or_number>'.`,
 			},
+			"key_project_resolution_mode": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"DEDICATED_KEY_PROJECT", "RESOURCE_PROJECT", "DISABLED", ""}),
+				Description:  `How Autokey determines which project to use when provisioning CMEK keys. Possible values: ["DEDICATED_KEY_PROJECT", "RESOURCE_PROJECT", "DISABLED"]`,
+			},
 			"etag": {
 				Type:        schema.TypeString,
 				Computed:    true,
