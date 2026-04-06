@@ -51,6 +51,9 @@ func TestAccPubsubSubscription(t *testing.T) {
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageExample",
 		},
 		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageTextExample",
+		},
+		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageAvroExample",
 		},
 		{

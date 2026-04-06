@@ -27,6 +27,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -83,6 +84,7 @@ var (
 	_ = sort.IntSlice{}
 	_ = strconv.Atoi
 	_ = strings.Trim
+	_ = time.Now
 	_ = schema.Noop
 	_ = structure.NormalizeJsonString
 	_ = validation.All
@@ -263,6 +265,16 @@ A duration in seconds with up to nine fractional digits, ending with 's'. Exampl
 							Description: `The service account to use to write to Cloud Storage. If not specified, the Pub/Sub
 [service agent](https://cloud.google.com/iam/docs/service-agents),
 service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.`,
+						},
+						"text_config": {
+							Type:        schema.TypeList,
+							Computed:    true,
+							Optional:    true,
+							Description: `If set, message data will be written to Cloud Storage in text format.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{},
+							},
 						},
 					},
 				},

@@ -125,6 +125,12 @@ func TestAccAlloydbCluster(t *testing.T) {
 		{
 			Name: "TestAccAlloydbCluster_withPasswordWo",
 		},
+		{
+			Name: "TestAccAlloydbCluster_withDefaultDataplexConfig",
+		},
+		{
+			Name: "TestAccAlloydbCluster_withDataplexConfigDisabled",
+		},
 	}
 
 	for _, tt := range tests {

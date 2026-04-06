@@ -31,6 +31,10 @@ func TestAccSpannerInstance(t *testing.T) {
 			Skip: "sometimes the CAI asset data for step3 is unavailable",
 		},
 		{
+			Name: "TestAccSpannerInstance_freeInstanceBasicUpdate",
+			Skip: "sometimes the CAI asset data for step3 is unavailable",
+		},
+		{
 			Name: "TestAccSpannerInstance_spannerInstanceBasicExample",
 		},
 		{
@@ -77,9 +81,6 @@ func TestAccSpannerInstance(t *testing.T) {
 		},
 		{
 			Name: "TestAccSpannerInstance_spannerInstanceWithAutoscaling",
-		},
-		{
-			Name: "TestAccSpannerInstance_freeInstanceBasicUpdate",
 		},
 		{
 			Name: "TestAccSpannerInstance_autoscalingWithTotalCPUUtilizationPercent",
