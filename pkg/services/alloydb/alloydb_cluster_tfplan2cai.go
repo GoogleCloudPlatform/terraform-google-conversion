@@ -209,6 +209,12 @@ func GetAlloydbClusterCaiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("subscription_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(subscriptionTypeProp)) && (ok || !reflect.DeepEqual(v, subscriptionTypeProp)) {
 		obj["subscriptionType"] = subscriptionTypeProp
 	}
+	dataplexConfigProp, err := expandAlloydbClusterDataplexConfig(d.Get("dataplex_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dataplex_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataplexConfigProp)) && (ok || !reflect.DeepEqual(v, dataplexConfigProp)) {
+		obj["dataplexConfig"] = dataplexConfigProp
+	}
 	effectiveLabelsProp, err := expandAlloydbClusterEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -974,6 +980,32 @@ func expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeNanos
 }
 
 func expandAlloydbClusterSubscriptionType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbClusterDataplexConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandAlloydbClusterDataplexConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandAlloydbClusterDataplexConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -27,6 +27,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -49,6 +50,7 @@ var (
 	_ = sort.IntSlice{}
 	_ = strconv.Atoi
 	_ = strings.Trim
+	_ = time.Now
 	_ = schema.Noop
 	_ = structure.NormalizeJsonString
 	_ = validation.All
@@ -280,6 +282,22 @@ If not set, defaults to 14 days.`,
 				Optional: true,
 				Description: `The database engine major version. This is an optional field and it's populated at the Cluster creation time.
 Note: Changing this field to a higer version results in upgrading the AlloyDB cluster which is an irreversible change.`,
+			},
+			"dataplex_config": {
+				Type:        schema.TypeList,
+				Computed:    true,
+				Optional:    true,
+				Description: `Configuration for Dataplex integration. This is an optional field. If not set, Dataplex integration will be enabled by default.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"enabled": {
+							Type:        schema.TypeBool,
+							Required:    true,
+							Description: `Indicates whether Dataplex integration is enabled for the cluster.`,
+						},
+					},
+				},
 			},
 			"display_name": {
 				Type:        schema.TypeString,

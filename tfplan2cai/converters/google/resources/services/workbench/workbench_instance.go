@@ -55,6 +55,7 @@ var metadataDefaults = map[string]string{
 
 var WorkbenchInstanceSettableUnmodifiableDefaultMetadata = []string{
 	"install-monitoring-agent",
+	"install-nvidia-driver",
 	"serial-port-logging-enable",
 	"report-notebook-metrics",
 }
@@ -102,7 +103,6 @@ var WorkbenchInstanceProvidedMetadata = []string{
 	"generate-diagnostics-options",
 	"google-logging-enabled",
 	"image-url",
-	"install-nvidia-driver",
 	"installed-extensions",
 	"instance-region",
 	"last_updated_diagnostics",
@@ -227,11 +227,12 @@ func modifyWorkbenchInstanceState(config *transport_tpg.Config, d *schema.Resour
 	}
 
 	res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
-		Config:    config,
-		Method:    "POST",
-		Project:   billingProject,
-		RawURL:    url,
-		UserAgent: userAgent,
+		Config:               config,
+		Method:               "POST",
+		Project:              billingProject,
+		RawURL:               url,
+		UserAgent:            userAgent,
+		ErrorRetryPredicates: []transport_tpg.RetryErrorPredicateFunc{transport_tpg.IsWorkbenchQueueError},
 	})
 	if err != nil {
 		return nil, fmt.Errorf("Unable to %q google_workbench_instance %q: %s", state, d.Id(), err)

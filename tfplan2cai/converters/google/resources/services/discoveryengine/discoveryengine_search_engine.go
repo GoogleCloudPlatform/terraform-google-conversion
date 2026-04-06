@@ -211,6 +211,13 @@ func expandDiscoveryEngineSearchEngineSearchEngineConfig(v interface{}, d tpgres
 		transformed["searchTier"] = transformedSearchTier
 	}
 
+	transformedRequiredSubscriptionTier, err := expandDiscoveryEngineSearchEngineSearchEngineConfigRequiredSubscriptionTier(original["required_subscription_tier"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequiredSubscriptionTier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requiredSubscriptionTier"] = transformedRequiredSubscriptionTier
+	}
+
 	transformedSearchAddOns, err := expandDiscoveryEngineSearchEngineSearchEngineConfigSearchAddOns(original["search_add_ons"], d, config)
 	if err != nil {
 		return nil, err
@@ -222,6 +229,10 @@ func expandDiscoveryEngineSearchEngineSearchEngineConfig(v interface{}, d tpgres
 }
 
 func expandDiscoveryEngineSearchEngineSearchEngineConfigSearchTier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineSearchEngineConfigRequiredSubscriptionTier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
