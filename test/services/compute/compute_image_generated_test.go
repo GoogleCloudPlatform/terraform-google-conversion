@@ -87,7 +87,9 @@ func TestAccComputeImage(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"image_encryption_key.raw_key",
 					"image_encryption_key.rsa_encrypted_key",

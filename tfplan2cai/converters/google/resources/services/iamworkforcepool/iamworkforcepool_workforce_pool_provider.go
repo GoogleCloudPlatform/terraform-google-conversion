@@ -189,6 +189,12 @@ func GetIAMWorkforcePoolWorkforcePoolProviderApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("scim_usage"); !tpgresource.IsEmptyValue(reflect.ValueOf(scimUsageProp)) && (ok || !reflect.DeepEqual(v, scimUsageProp)) {
 		obj["scimUsage"] = scimUsageProp
 	}
+	detailedAuditLoggingProp, err := expandIAMWorkforcePoolWorkforcePoolProviderDetailedAuditLogging(d.Get("detailed_audit_logging"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("detailed_audit_logging"); !tpgresource.IsEmptyValue(reflect.ValueOf(detailedAuditLoggingProp)) && (ok || !reflect.DeepEqual(v, detailedAuditLoggingProp)) {
+		obj["detailedAuditLogging"] = detailedAuditLoggingProp
+	}
 
 	return obj, nil
 }
@@ -710,5 +716,9 @@ func expandIAMWorkforcePoolWorkforcePoolProviderExtendedAttributesOauth2ClientQu
 }
 
 func expandIAMWorkforcePoolWorkforcePoolProviderScimUsage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderDetailedAuditLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

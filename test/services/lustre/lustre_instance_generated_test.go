@@ -30,6 +30,9 @@ func TestAccLustreInstance(t *testing.T) {
 			Name: "TestAccLustreInstance_lustreInstanceBasicExample",
 		},
 		{
+			Name: "TestAccLustreInstance_withMaintenancePolicy",
+		},
+		{
 			Name: "TestAccLustreInstance_update",
 		},
 		{
@@ -40,6 +43,9 @@ func TestAccLustreInstance(t *testing.T) {
 		},
 		{
 			Name: "TestAccLustreInstance_withPlacementPolicy",
+		},
+		{
+			Name: "TestAccLustreInstance_dynamicTier",
 		},
 	}
 
@@ -57,7 +63,9 @@ func TestAccLustreInstance(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"instance_id",
 					"lifecycle",

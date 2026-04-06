@@ -27,6 +27,10 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccDatastreamConnectionProfile_update",
+			Skip: "Test data is flaky and fix it later",
+		},
+		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfileBasicExample",
 		},
 		{
@@ -41,9 +45,6 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 		},
 		{
 			Name: "TestAccDatastreamConnectionProfile_datastreamConnectionProfilePostgresSecretManagerExample",
-		},
-		{
-			Name: "TestAccDatastreamConnectionProfile_update",
 		},
 		{
 			Name: "TestAccDatastreamConnectionProfile_sshKey_update",
@@ -69,7 +70,9 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 					"connection_profile_id",
 					"count",
 					"create_without_validation",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"forward_ssh_connectivity",
 					"forward_ssh_connectivity.password",

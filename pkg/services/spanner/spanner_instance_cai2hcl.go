@@ -445,6 +445,14 @@ func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverride
 	transformed := make(map[string]interface{})
 	transformed["autoscaling_limits"] =
 		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimits(original["autoscalingLimits"], d, config)
+	transformed["autoscaling_target_high_priority_cpu_utilization_percent"] =
+		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingTargetHighPriorityCpuUtilizationPercent(original["autoscalingTargetHighPriorityCpuUtilizationPercent"], d, config)
+	transformed["autoscaling_target_total_cpu_utilization_percent"] =
+		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingTargetTotalCpuUtilizationPercent(original["autoscalingTargetTotalCpuUtilizationPercent"], d, config)
+	transformed["disable_high_priority_cpu_autoscaling"] =
+		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesDisableHighPriorityCpuAutoscaling(original["disableHighPriorityCpuAutoscaling"], d, config)
+	transformed["disable_total_cpu_autoscaling"] =
+		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesDisableTotalCpuAutoscaling(original["disableTotalCpuAutoscaling"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -461,6 +469,10 @@ func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverride
 		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMinNodes(original["minNodes"], d, config)
 	transformed["max_nodes"] =
 		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMaxNodes(original["maxNodes"], d, config)
+	transformed["min_processing_units"] =
+		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMinProcessingUnits(original["minProcessingUnits"], d, config)
+	transformed["max_processing_units"] =
+		flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMaxProcessingUnits(original["maxProcessingUnits"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -480,9 +492,6 @@ func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverride
 		intVal := int(floatVal)
 		return intVal
 	}
-	if v == nil {
-		return 0
-	}
 
 	return v // let terraform core handle it otherwise
 }
@@ -500,11 +509,84 @@ func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverride
 		intVal := int(floatVal)
 		return intVal
 	}
-	if v == nil {
-		return 0
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMinProcessingUnits(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
 	}
 
 	return v // let terraform core handle it otherwise
+}
+
+func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingLimitsMaxProcessingUnits(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingTargetHighPriorityCpuUtilizationPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesAutoscalingTargetTotalCpuUtilizationPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesDisableHighPriorityCpuAutoscaling(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenSpannerInstanceAutoscalingConfigAsymmetricAutoscalingOptionsOverridesDisableTotalCpuAutoscaling(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenSpannerInstanceEdition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

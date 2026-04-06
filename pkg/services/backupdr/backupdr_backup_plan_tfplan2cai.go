@@ -87,6 +87,12 @@ func GetBackupDRBackupPlanCaiAssets(d tpgresource.TerraformResourceData, config 
 		if location == "" {
 			location = "global"
 		}
+		// Store the ID now
+		id, err := tpgresource.ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/backupPlans/{{backup_plan_id}}")
+		if err != nil {
+			return nil, fmt.Errorf("Error constructing id: %s", err)
+		}
+		d.SetId(id)
 		return []caiasset.Asset{
 			{
 				Name: name,
@@ -142,6 +148,12 @@ func GetBackupDRBackupPlanCaiObject(d tpgresource.TerraformResourceData, config 
 		return nil, err
 	} else if v, ok := d.GetOkExists("log_retention_days"); !tpgresource.IsEmptyValue(reflect.ValueOf(logRetentionDaysProp)) && (ok || !reflect.DeepEqual(v, logRetentionDaysProp)) {
 		obj["logRetentionDays"] = logRetentionDaysProp
+	}
+	diskBackupPlanPropertiesProp, err := expandBackupDRBackupPlanDiskBackupPlanProperties(d.Get("disk_backup_plan_properties"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disk_backup_plan_properties"); !tpgresource.IsEmptyValue(reflect.ValueOf(diskBackupPlanPropertiesProp)) && (ok || !reflect.DeepEqual(v, diskBackupPlanPropertiesProp)) {
+		obj["diskBackupPlanProperties"] = diskBackupPlanPropertiesProp
 	}
 
 	return obj, nil
@@ -380,5 +392,31 @@ func expandBackupDRBackupPlanBackupRulesStandardScheduleBackupWindowEndHourOfDay
 }
 
 func expandBackupDRBackupPlanLogRetentionDays(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRBackupPlanDiskBackupPlanProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGuestFlush, err := expandBackupDRBackupPlanDiskBackupPlanPropertiesGuestFlush(original["guest_flush"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["guestFlush"] = transformedGuestFlush
+	}
+
+	return transformed, nil
+}
+
+func expandBackupDRBackupPlanDiskBackupPlanPropertiesGuestFlush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

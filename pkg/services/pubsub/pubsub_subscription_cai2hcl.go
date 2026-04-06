@@ -568,11 +568,63 @@ func flattenPubsubSubscriptionMessageTransforms(v interface{}, d *schema.Resourc
 			continue
 		}
 		transformed = append(transformed, map[string]interface{}{
+			"ai_inference":   flattenPubsubSubscriptionMessageTransformsAiInference(original["aiInference"], d, config),
 			"javascript_udf": flattenPubsubSubscriptionMessageTransformsJavascriptUdf(original["javascriptUdf"], d, config),
 			"disabled":       flattenPubsubSubscriptionMessageTransformsDisabled(original["disabled"], d, config),
 		})
 	}
 	return transformed
+}
+
+func flattenPubsubSubscriptionMessageTransformsAiInference(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["endpoint"] =
+		flattenPubsubSubscriptionMessageTransformsAiInferenceEndpoint(original["endpoint"], d, config)
+	transformed["unstructured_inference"] =
+		flattenPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInference(original["unstructuredInference"], d, config)
+	transformed["service_account_email"] =
+		flattenPubsubSubscriptionMessageTransformsAiInferenceServiceAccountEmail(original["serviceAccountEmail"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenPubsubSubscriptionMessageTransformsAiInferenceEndpoint(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInference(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["parameters"] =
+		flattenPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInferenceParameters(original["parameters"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInferenceParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenPubsubSubscriptionMessageTransformsAiInferenceServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenPubsubSubscriptionMessageTransformsJavascriptUdf(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

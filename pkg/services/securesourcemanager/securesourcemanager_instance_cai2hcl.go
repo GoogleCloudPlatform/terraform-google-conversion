@@ -155,6 +155,8 @@ func flattenSecureSourceManagerInstancePrivateConfig(v interface{}, d *schema.Re
 	transformed := make(map[string]interface{})
 	transformed["is_private"] =
 		flattenSecureSourceManagerInstancePrivateConfigIsPrivate(original["isPrivate"], d, config)
+	transformed["custom_host_config"] =
+		flattenSecureSourceManagerInstancePrivateConfigCustomHostConfig(original["customHostConfig"], d, config)
 	transformed["ca_pool"] =
 		flattenSecureSourceManagerInstancePrivateConfigCaPool(original["caPool"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
@@ -166,6 +168,70 @@ func flattenSecureSourceManagerInstancePrivateConfig(v interface{}, d *schema.Re
 func flattenSecureSourceManagerInstancePrivateConfigIsPrivate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return false
+	}
+	return v
+}
+
+func flattenSecureSourceManagerInstancePrivateConfigCustomHostConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["html"] =
+		flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigHtml(original["html"], d, config)
+	transformed["api"] =
+		flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigApi(original["api"], d, config)
+	transformed["git_http"] =
+		flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigGitHttp(original["gitHttp"], d, config)
+	transformed["git_ssh"] =
+		flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigGitSsh(original["gitSsh"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigHtml(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigApi(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigGitHttp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigGitSsh(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
 	}
 	return v
 }

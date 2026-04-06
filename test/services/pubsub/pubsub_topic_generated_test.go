@@ -61,6 +61,9 @@ func TestAccPubsubTopic(t *testing.T) {
 			Name: "TestAccPubsubTopic_pubsubTopicTagsExample",
 		},
 		{
+			Name: "TestAccPubsubTopic_pubsubTopicAiInferenceExample",
+		},
+		{
 			Name: "TestAccPubsubTopic_update",
 		},
 		{
@@ -109,7 +112,9 @@ func TestAccPubsubTopic(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"lifecycle",
 					"message_retention_duration",

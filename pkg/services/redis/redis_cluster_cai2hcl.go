@@ -143,6 +143,8 @@ func (c *RedisClusterCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	hclData["maintenance_version"] = flattenRedisClusterMaintenanceVersion(res["maintenanceVersion"], d, config)
 	hclData["cross_cluster_replication_config"] = flattenRedisClusterCrossClusterReplicationConfig(res["crossClusterReplicationConfig"], d, config)
 	hclData["kms_key"] = flattenRedisClusterKmsKey(res["kmsKey"], d, config)
+	hclData["server_ca_mode"] = flattenRedisClusterServerCaMode(res["serverCaMode"], d, config)
+	hclData["server_ca_pool"] = flattenRedisClusterServerCaPool(res["serverCaPool"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -635,5 +637,13 @@ func flattenRedisClusterCrossClusterReplicationConfigSecondaryClustersCluster(v 
 }
 
 func flattenRedisClusterKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenRedisClusterServerCaMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenRedisClusterServerCaPool(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

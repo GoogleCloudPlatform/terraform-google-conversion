@@ -39,6 +39,9 @@ func TestAccSecureSourceManagerInstance(t *testing.T) {
 			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivateExample",
 		},
 		{
+			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivateCustomHostExample",
+		},
+		{
 			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivatePscBackendExample",
 		},
 		{
@@ -64,7 +67,9 @@ func TestAccSecureSourceManagerInstance(t *testing.T) {
 				[]string{
 					"count",
 					"deletion_policy",
+					"deletion_protection",
 					"depends_on",
+					"dynamic",
 					"for_each",
 					"instance_id",
 					"lifecycle",

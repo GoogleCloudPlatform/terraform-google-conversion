@@ -87,6 +87,12 @@ func GetBlockchainNodeEngineBlockchainNodesCaiAssets(d tpgresource.TerraformReso
 		if location == "" {
 			location = "global"
 		}
+		// Store the ID now
+		id, err := tpgresource.ReplaceVars(d, config, "projects/{{project}}/locations/{{location}}/blockchainNodes/{{blockchain_node_id}}")
+		if err != nil {
+			return nil, fmt.Errorf("Error constructing id: %s", err)
+		}
+		d.SetId(id)
 		return []caiasset.Asset{
 			{
 				Name: name,
@@ -219,10 +225,21 @@ func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfig(v i
 		transformed["mevRelayUrls"] = transformedMevRelayUrls
 	}
 
+	transformedBeaconFeeRecipient, err := expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigBeaconFeeRecipient(original["beacon_fee_recipient"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBeaconFeeRecipient); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["beaconFeeRecipient"] = transformedBeaconFeeRecipient
+	}
+
 	return transformed, nil
 }
 
 func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigMevRelayUrls(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBlockchainNodeEngineBlockchainNodesEthereumDetailsValidatorConfigBeaconFeeRecipient(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

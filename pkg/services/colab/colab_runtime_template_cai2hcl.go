@@ -357,6 +357,8 @@ func flattenColabRuntimeTemplateSoftwareConfig(v interface{}, d *schema.Resource
 		flattenColabRuntimeTemplateSoftwareConfigEnv(original["env"], d, config)
 	transformed["post_startup_script_config"] =
 		flattenColabRuntimeTemplateSoftwareConfigPostStartupScriptConfig(original["postStartupScriptConfig"], d, config)
+	transformed["colab_image"] =
+		flattenColabRuntimeTemplateSoftwareConfigColabImage(original["colabImage"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -418,5 +420,23 @@ func flattenColabRuntimeTemplateSoftwareConfigPostStartupScriptConfigPostStartup
 }
 
 func flattenColabRuntimeTemplateSoftwareConfigPostStartupScriptConfigPostStartupScriptBehavior(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenColabRuntimeTemplateSoftwareConfigColabImage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["release_name"] =
+		flattenColabRuntimeTemplateSoftwareConfigColabImageReleaseName(original["releaseName"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenColabRuntimeTemplateSoftwareConfigColabImageReleaseName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

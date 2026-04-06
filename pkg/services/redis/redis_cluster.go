@@ -447,6 +447,21 @@ https://cloud.google.com/memorystore/docs/cluster/supported-instance-configurati
 				Optional:    true,
 				Description: `Optional. The number of replica nodes per shard.`,
 			},
+			"server_ca_mode": {
+				Type:         schema.TypeString,
+				Computed:     true,
+				Optional:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"SERVER_CA_MODE_GOOGLE_MANAGED_PER_INSTANCE_CA", "SERVER_CA_MODE_GOOGLE_MANAGED_SHARED_CA", "SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA", "SERVER_CA_MODE_UNSPECIFIED", ""}),
+				Description: `The serverCaMode for the TLS enabled Redis cluster.
+If not provided, SERVER_CA_MODE_GOOGLE_MANAGED_PER_INSTANCE_CA will be used as default Possible values: ["SERVER_CA_MODE_GOOGLE_MANAGED_PER_INSTANCE_CA", "SERVER_CA_MODE_GOOGLE_MANAGED_SHARED_CA", "SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA", "SERVER_CA_MODE_UNSPECIFIED"]`,
+			},
+			"server_ca_pool": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Description: `The resource name of the server CA pool for an instance with SERVER_CA_MODE_CUSTOMER_MANAGED_CAS_CA
+as the server_ca_mode.
+Format: projects/{project}/locations/{region}/caPools/{caPoolId}`,
+			},
 			"transit_encryption_mode": {
 				Type:         schema.TypeString,
 				Optional:     true,

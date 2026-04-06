@@ -169,23 +169,70 @@ the instance.`,
 											Schema: map[string]*schema.Schema{
 												"autoscaling_limits": {
 													Type:        schema.TypeList,
-													Required:    true,
+													Optional:    true,
 													Description: `A nested object resource.`,
 													MaxItems:    1,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 															"max_nodes": {
-																Type:        schema.TypeInt,
-																Required:    true,
-																Description: `The maximum number of nodes for this specific replica.`,
+																Type:         schema.TypeInt,
+																Optional:     true,
+																Description:  `The maximum number of nodes for this specific replica.`,
+																ExactlyOneOf: []string{},
+																RequiredWith: []string{},
+															},
+															"max_processing_units": {
+																Type:     schema.TypeInt,
+																Optional: true,
+																Description: `The maximum number of processing units for this specific replica.
+If set, this number should be multiples of 1000 and be greater than or equal to
+min_processing_units.`,
+																ExactlyOneOf: []string{},
+																RequiredWith: []string{},
 															},
 															"min_nodes": {
-																Type:        schema.TypeInt,
-																Required:    true,
-																Description: `The minimum number of nodes for this specific replica.`,
+																Type:         schema.TypeInt,
+																Optional:     true,
+																Description:  `The minimum number of nodes for this specific replica.`,
+																ExactlyOneOf: []string{},
+																RequiredWith: []string{},
+															},
+															"min_processing_units": {
+																Type:     schema.TypeInt,
+																Optional: true,
+																Description: `The minimum number of processing units for this specific replica.
+If set, this number should be multiples of 1000.`,
+																ExactlyOneOf: []string{},
+																RequiredWith: []string{},
 															},
 														},
 													},
+												},
+												"autoscaling_target_high_priority_cpu_utilization_percent": {
+													Type:     schema.TypeInt,
+													Optional: true,
+													Description: `The target high priority cpu utilization percentage that the autoscaler
+should be trying to achieve for this replica.
+This number is on a scale from 0 (no utilization) to 100 (full utilization).`,
+												},
+												"autoscaling_target_total_cpu_utilization_percent": {
+													Type:     schema.TypeInt,
+													Optional: true,
+													Description: `The target total cpu utilization percentage that the autoscaler
+should be trying to achieve for this replica.
+This number is on a scale from 0 (no utilization) to 100 (full utilization).`,
+												},
+												"disable_high_priority_cpu_autoscaling": {
+													Type:     schema.TypeBool,
+													Optional: true,
+													Description: `If true, disables high priority CPU autoscaling for this replica and ignores
+high_priority_cpu_utilization_percent in the top-level autoscaling configuration.`,
+												},
+												"disable_total_cpu_autoscaling": {
+													Type:     schema.TypeBool,
+													Optional: true,
+													Description: `If true, disables total CPU autoscaling for this replica and ignores
+total_cpu_utilization_percent in the top-level autoscaling configuration.`,
 												},
 											},
 										},
