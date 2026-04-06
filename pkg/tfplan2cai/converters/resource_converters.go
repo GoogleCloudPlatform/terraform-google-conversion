@@ -141,7 +141,6 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_interconnect_attachment":                 compute.ComputeInterconnectAttachmentTfplan2caiConverter(),
 	"google_compute_managed_ssl_certificate":                 compute.ComputeManagedSslCertificateTfplan2caiConverter(),
 	"google_compute_network":                                 compute.ComputeNetworkTfplan2caiConverter(),
-	"google_compute_network_attachment":                      compute.ComputeNetworkAttachmentTfplan2caiConverter(),
 	"google_compute_network_endpoint_group":                  compute.ComputeNetworkEndpointGroupTfplan2caiConverter(),
 	"google_compute_network_firewall_policy":                 compute.ComputeNetworkFirewallPolicyTfplan2caiConverter(),
 	"google_compute_node_group":                              compute.ComputeNodeGroupTfplan2caiConverter(),
