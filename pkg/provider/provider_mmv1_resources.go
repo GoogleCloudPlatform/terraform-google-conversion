@@ -19,6 +19,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudquotas"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
@@ -49,6 +50,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkservices"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
@@ -61,6 +63,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workflows"
 )
 
 var handwrittenResources = map[string]*schema.Resource{
@@ -72,7 +75,7 @@ var handwrittenResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 187
+// Generated resources: 195
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -107,6 +110,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_clouddeploy_custom_target_type":                  clouddeploy.ResourceClouddeployCustomTargetType(),
 	"google_clouddeploy_deploy_policy":                       clouddeploy.ResourceClouddeployDeployPolicy(),
 	"google_cloudfunctions2_function":                        cloudfunctions2.ResourceCloudfunctions2function(),
+	"google_cloud_quotas_quota_preference":                   cloudquotas.ResourceCloudQuotasQuotaPreference(),
 	"google_cloud_tasks_queue":                               cloudtasks.ResourceCloudTasksQueue(),
 	"google_colab_runtime":                                   colab.ResourceColabRuntime(),
 	"google_colab_runtime_template":                          colab.ResourceColabRuntimeTemplate(),
@@ -168,6 +172,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_target_tcp_proxy":                        compute.ResourceComputeTargetTcpProxy(),
 	"google_compute_url_map":                                 compute.ResourceComputeUrlMap(),
 	"google_compute_vpn_tunnel":                              compute.ResourceComputeVpnTunnel(),
+	"google_database_migration_service_connection_profile":   databasemigrationservice.ResourceDatabaseMigrationServiceConnectionProfile(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.ResourceDatabaseMigrationServiceMigrationJob(),
 	"google_data_fusion_instance":                            datafusion.ResourceDataFusionInstance(),
 	"google_dataplex_glossary":                               dataplex.ResourceDataplexGlossary(),
@@ -180,6 +185,10 @@ var generatedResources = map[string]*schema.Resource{
 	"google_developer_connect_connection":                    developerconnect.ResourceDeveloperConnectConnection(),
 	"google_developer_connect_git_repository_link":           developerconnect.ResourceDeveloperConnectGitRepositoryLink(),
 	"google_dialogflow_agent":                                dialogflow.ResourceDialogflowAgent(),
+	"google_eventarc_enrollment":                             eventarc.ResourceEventarcEnrollment(),
+	"google_eventarc_google_api_source":                      eventarc.ResourceEventarcGoogleApiSource(),
+	"google_eventarc_google_channel_config":                  eventarc.ResourceEventarcGoogleChannelConfig(),
+	"google_eventarc_message_bus":                            eventarc.ResourceEventarcMessageBus(),
 	"google_eventarc_pipeline":                               eventarc.ResourceEventarcPipeline(),
 	"google_filestore_backup":                                filestore.ResourceFilestoreBackup(),
 	"google_filestore_instance":                              filestore.ResourceFilestoreInstance(),
@@ -239,6 +248,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_network_security_server_tls_policy":              networksecurity.ResourceNetworkSecurityServerTlsPolicy(),
 	"google_network_security_tls_inspection_policy":          networksecurity.ResourceNetworkSecurityTlsInspectionPolicy(),
 	"google_network_security_url_lists":                      networksecurity.ResourceNetworkSecurityUrlLists(),
+	"google_network_services_authz_extension":                networkservices.ResourceNetworkServicesAuthzExtension(),
 	"google_privateca_ca_pool":                               privateca.ResourcePrivatecaCaPool(),
 	"google_privateca_certificate":                           privateca.ResourcePrivatecaCertificate(),
 	"google_privateca_certificate_template":                  privateca.ResourcePrivatecaCertificateTemplate(),
@@ -261,4 +271,5 @@ var generatedResources = map[string]*schema.Resource{
 	"google_vmwareengine_network_policy":                     vmwareengine.ResourceVmwareengineNetworkPolicy(),
 	"google_vpc_access_connector":                            vpcaccess.ResourceVPCAccessConnector(),
 	"google_workbench_instance":                              workbench.ResourceWorkbenchInstance(),
+	"google_workflows_workflow":                              workflows.ResourceWorkflowsWorkflow(),
 }

@@ -29,6 +29,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudquotas"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
@@ -60,6 +61,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkservices"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
@@ -73,6 +75,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workflows"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tfplan2cai/converters/cai"
 )
 
@@ -116,6 +119,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_clouddeploy_custom_target_type":                  clouddeploy.ClouddeployCustomTargetTypeTfplan2caiConverter(),
 	"google_clouddeploy_deploy_policy":                       clouddeploy.ClouddeployDeployPolicyTfplan2caiConverter(),
 	"google_cloudfunctions2_function":                        cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
+	"google_cloud_quotas_quota_preference":                   cloudquotas.CloudQuotasQuotaPreferenceTfplan2caiConverter(),
 	"google_cloud_tasks_queue":                               cloudtasks.CloudTasksQueueTfplan2caiConverter(),
 	"google_colab_runtime":                                   colab.ColabRuntimeTfplan2caiConverter(),
 	"google_colab_runtime_template":                          colab.ColabRuntimeTemplateTfplan2caiConverter(),
@@ -177,6 +181,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_target_tcp_proxy":                        compute.ComputeTargetTcpProxyTfplan2caiConverter(),
 	"google_compute_url_map":                                 compute.ComputeUrlMapTfplan2caiConverter(),
 	"google_compute_vpn_tunnel":                              compute.ComputeVpnTunnelTfplan2caiConverter(),
+	"google_database_migration_service_connection_profile":   databasemigrationservice.DatabaseMigrationServiceConnectionProfileTfplan2caiConverter(),
 	"google_database_migration_service_migration_job":        databasemigrationservice.DatabaseMigrationServiceMigrationJobTfplan2caiConverter(),
 	"google_data_fusion_instance":                            datafusion.DataFusionInstanceTfplan2caiConverter(),
 	"google_dataplex_glossary":                               dataplex.DataplexGlossaryTfplan2caiConverter(),
@@ -189,6 +194,10 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_developer_connect_connection":                    developerconnect.DeveloperConnectConnectionTfplan2caiConverter(),
 	"google_developer_connect_git_repository_link":           developerconnect.DeveloperConnectGitRepositoryLinkTfplan2caiConverter(),
 	"google_dialogflow_agent":                                dialogflow.DialogflowAgentTfplan2caiConverter(),
+	"google_eventarc_enrollment":                             eventarc.EventarcEnrollmentTfplan2caiConverter(),
+	"google_eventarc_google_api_source":                      eventarc.EventarcGoogleApiSourceTfplan2caiConverter(),
+	"google_eventarc_google_channel_config":                  eventarc.EventarcGoogleChannelConfigTfplan2caiConverter(),
+	"google_eventarc_message_bus":                            eventarc.EventarcMessageBusTfplan2caiConverter(),
 	"google_eventarc_pipeline":                               eventarc.EventarcPipelineTfplan2caiConverter(),
 	"google_filestore_backup":                                filestore.FilestoreBackupTfplan2caiConverter(),
 	"google_filestore_instance":                              filestore.FilestoreInstanceTfplan2caiConverter(),
@@ -248,6 +257,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_network_security_server_tls_policy":              networksecurity.NetworkSecurityServerTlsPolicyTfplan2caiConverter(),
 	"google_network_security_tls_inspection_policy":          networksecurity.NetworkSecurityTlsInspectionPolicyTfplan2caiConverter(),
 	"google_network_security_url_lists":                      networksecurity.NetworkSecurityUrlListsTfplan2caiConverter(),
+	"google_network_services_authz_extension":                networkservices.NetworkServicesAuthzExtensionTfplan2caiConverter(),
 	"google_privateca_ca_pool":                               privateca.PrivatecaCaPoolTfplan2caiConverter(),
 	"google_privateca_certificate":                           privateca.PrivatecaCertificateTfplan2caiConverter(),
 	"google_privateca_certificate_template":                  privateca.PrivatecaCertificateTemplateTfplan2caiConverter(),
@@ -270,4 +280,5 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_vmwareengine_network_policy":                     vmwareengine.VmwareengineNetworkPolicyTfplan2caiConverter(),
 	"google_vpc_access_connector":                            vpcaccess.VPCAccessConnectorTfplan2caiConverter(),
 	"google_workbench_instance":                              workbench.WorkbenchInstanceTfplan2caiConverter(),
+	"google_workflows_workflow":                              workflows.WorkflowsWorkflowTfplan2caiConverter(),
 }
