@@ -30,6 +30,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudquotas"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
@@ -61,6 +62,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkservices"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
@@ -74,6 +76,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workflows"
 
 	tpg_provider "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -224,6 +227,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"cloudkms.googleapis.com/KeyRing": {
 		"Default": kms.NewKMSKeyRingCai2hclConverter(provider),
+	},
+	"cloudquotas.googleapis.com/QuotaPreference": {
+		"Default": cloudquotas.NewCloudQuotasQuotaPreferenceCai2hclConverter(provider),
 	},
 	"cloudtasks.googleapis.com/Queue": {
 		"Default": cloudtasks.NewCloudTasksQueueCai2hclConverter(provider),
@@ -379,6 +385,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"datafusion.googleapis.com/Instance": {
 		"Default": datafusion.NewDataFusionInstanceCai2hclConverter(provider),
 	},
+	"datamigration.googleapis.com/ConnectionProfile": {
+		"Default": databasemigrationservice.NewDatabaseMigrationServiceConnectionProfileCai2hclConverter(provider),
+	},
 	"datamigration.googleapis.com/MigrationJob": {
 		"Default": databasemigrationservice.NewDatabaseMigrationServiceMigrationJobCai2hclConverter(provider),
 	},
@@ -411,6 +420,18 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"dialogflow.googleapis.com/Agent": {
 		"Default": dialogflow.NewDialogflowAgentCai2hclConverter(provider),
+	},
+	"eventarc.googleapis.com/Enrollment": {
+		"Default": eventarc.NewEventarcEnrollmentCai2hclConverter(provider),
+	},
+	"eventarc.googleapis.com/GoogleApiSource": {
+		"Default": eventarc.NewEventarcGoogleApiSourceCai2hclConverter(provider),
+	},
+	"eventarc.googleapis.com/GoogleChannelConfig": {
+		"Default": eventarc.NewEventarcGoogleChannelConfigCai2hclConverter(provider),
+	},
+	"eventarc.googleapis.com/MessageBus": {
+		"Default": eventarc.NewEventarcMessageBusCai2hclConverter(provider),
 	},
 	"eventarc.googleapis.com/Pipeline": {
 		"Default": eventarc.NewEventarcPipelineCai2hclConverter(provider),
@@ -562,6 +583,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"networksecurity.googleapis.com/UrlList": {
 		"Default": networksecurity.NewNetworkSecurityUrlListsCai2hclConverter(provider),
 	},
+	"networkservices.googleapis.com/AuthzExtension": {
+		"Default": networkservices.NewNetworkServicesAuthzExtensionCai2hclConverter(provider),
+	},
 	"notebooks.googleapis.com/Instance": {
 		"Default": workbench.NewWorkbenchInstanceCai2hclConverter(provider),
 	},
@@ -621,5 +645,8 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"vpcaccess.googleapis.com/Connector": {
 		"Default": vpcaccess.NewVPCAccessConnectorCai2hclConverter(provider),
+	},
+	"workflows.googleapis.com/Workflow": {
+		"Default": workflows.NewWorkflowsWorkflowCai2hclConverter(provider),
 	},
 }
