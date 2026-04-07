@@ -72,7 +72,7 @@ var handwrittenResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 186
+// Generated resources: 187
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -149,6 +149,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_compute_region_target_http_proxy":                compute.ResourceComputeRegionTargetHttpProxy(),
 	"google_compute_region_target_https_proxy":               compute.ResourceComputeRegionTargetHttpsProxy(),
 	"google_compute_region_target_tcp_proxy":                 compute.ResourceComputeRegionTargetTcpProxy(),
+	"google_compute_region_url_map":                          compute.ResourceComputeRegionUrlMap(),
 	"google_compute_reservation":                             compute.ResourceComputeReservation(),
 	"google_compute_resource_policy":                         compute.ResourceComputeResourcePolicy(),
 	"google_compute_route":                                   compute.ResourceComputeRoute(),

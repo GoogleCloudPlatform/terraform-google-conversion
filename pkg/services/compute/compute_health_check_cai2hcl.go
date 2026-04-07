@@ -265,6 +265,12 @@ func flattenComputeHealthCheckHttpHealthCheck(v interface{}, d *schema.ResourceD
 }
 
 func flattenComputeHealthCheckHttpHealthCheckHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -273,6 +279,12 @@ func flattenComputeHealthCheckHttpHealthCheckRequestPath(v interface{}, d *schem
 }
 
 func flattenComputeHealthCheckHttpHealthCheckResponse(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -294,6 +306,12 @@ func flattenComputeHealthCheckHttpHealthCheckPort(v interface{}, d *schema.Resou
 }
 
 func flattenComputeHealthCheckHttpHealthCheckPortName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -332,6 +350,12 @@ func flattenComputeHealthCheckHttpsHealthCheck(v interface{}, d *schema.Resource
 }
 
 func flattenComputeHealthCheckHttpsHealthCheckHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -340,6 +364,12 @@ func flattenComputeHealthCheckHttpsHealthCheckRequestPath(v interface{}, d *sche
 }
 
 func flattenComputeHealthCheckHttpsHealthCheckResponse(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -361,6 +391,12 @@ func flattenComputeHealthCheckHttpsHealthCheckPort(v interface{}, d *schema.Reso
 }
 
 func flattenComputeHealthCheckHttpsHealthCheckPortName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -397,10 +433,22 @@ func flattenComputeHealthCheckTcpHealthCheck(v interface{}, d *schema.ResourceDa
 }
 
 func flattenComputeHealthCheckTcpHealthCheckRequest(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeHealthCheckTcpHealthCheckResponse(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -422,6 +470,12 @@ func flattenComputeHealthCheckTcpHealthCheckPort(v interface{}, d *schema.Resour
 }
 
 func flattenComputeHealthCheckTcpHealthCheckPortName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -458,10 +512,22 @@ func flattenComputeHealthCheckSslHealthCheck(v interface{}, d *schema.ResourceDa
 }
 
 func flattenComputeHealthCheckSslHealthCheckRequest(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeHealthCheckSslHealthCheckResponse(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -483,6 +549,12 @@ func flattenComputeHealthCheckSslHealthCheckPort(v interface{}, d *schema.Resour
 }
 
 func flattenComputeHealthCheckSslHealthCheckPortName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -521,6 +593,12 @@ func flattenComputeHealthCheckHttp2HealthCheck(v interface{}, d *schema.Resource
 }
 
 func flattenComputeHealthCheckHttp2HealthCheckHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -529,6 +607,12 @@ func flattenComputeHealthCheckHttp2HealthCheckRequestPath(v interface{}, d *sche
 }
 
 func flattenComputeHealthCheckHttp2HealthCheckResponse(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -550,6 +634,12 @@ func flattenComputeHealthCheckHttp2HealthCheckPort(v interface{}, d *schema.Reso
 }
 
 func flattenComputeHealthCheckHttp2HealthCheckPortName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -599,6 +689,12 @@ func flattenComputeHealthCheckGrpcHealthCheckPort(v interface{}, d *schema.Resou
 }
 
 func flattenComputeHealthCheckGrpcHealthCheckPortName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -607,6 +703,12 @@ func flattenComputeHealthCheckGrpcHealthCheckPortSpecification(v interface{}, d 
 }
 
 func flattenComputeHealthCheckGrpcHealthCheckGrpcServiceName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -650,6 +752,12 @@ func flattenComputeHealthCheckGrpcTlsHealthCheckPortSpecification(v interface{},
 }
 
 func flattenComputeHealthCheckGrpcTlsHealthCheckGrpcServiceName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -154,6 +154,12 @@ func (c *ComputeImageCai2hclConverter) convertResourceData(asset caiasset.Asset)
 }
 
 func flattenComputeImageDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -179,6 +185,12 @@ func flattenComputeImageDiskSizeGb(v interface{}, d *schema.ResourceData, config
 }
 
 func flattenComputeImageFamily(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -234,14 +246,32 @@ func flattenComputeImageImageEncryptionKeyKmsKeySelfLink(v interface{}, d *schem
 }
 
 func flattenComputeImageImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeImageImageEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeImageImageEncryptionKeyRsaEncryptedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -289,6 +319,12 @@ func flattenComputeImageRawDiskContainerType(v interface{}, d *schema.ResourceDa
 }
 
 func flattenComputeImageRawDiskSha1(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -335,10 +371,22 @@ func flattenComputeImageSourceDiskEncryptionKey(v interface{}, d *schema.Resourc
 }
 
 func flattenComputeImageSourceDiskEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeImageSourceDiskEncryptionKeyRsaEncryptedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -351,6 +399,12 @@ func flattenComputeImageSourceDiskEncryptionKeyKmsKeySelfLink(v interface{}, d *
 }
 
 func flattenComputeImageSourceDiskEncryptionKeyKmsKeyServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -386,10 +440,22 @@ func flattenComputeImageSourceImageEncryptionKey(v interface{}, d *schema.Resour
 }
 
 func flattenComputeImageSourceImageEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeImageSourceImageEncryptionKeyRsaEncryptedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -402,6 +468,12 @@ func flattenComputeImageSourceImageEncryptionKeyKmsKeySelfLink(v interface{}, d 
 }
 
 func flattenComputeImageSourceImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -464,6 +536,12 @@ func flattenComputeImageShieldedInstanceInitialStatePkContent(v interface{}, d *
 }
 
 func flattenComputeImageShieldedInstanceInitialStatePkFileType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -499,6 +577,12 @@ func flattenComputeImageShieldedInstanceInitialStateKeksContent(v interface{}, d
 }
 
 func flattenComputeImageShieldedInstanceInitialStateKeksFileType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -534,6 +618,12 @@ func flattenComputeImageShieldedInstanceInitialStateDbsContent(v interface{}, d 
 }
 
 func flattenComputeImageShieldedInstanceInitialStateDbsFileType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -569,6 +659,12 @@ func flattenComputeImageShieldedInstanceInitialStateDbxsContent(v interface{}, d
 }
 
 func flattenComputeImageShieldedInstanceInitialStateDbxsFileType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -593,10 +689,22 @@ func flattenComputeImageSourceSnapshotEncryptionKey(v interface{}, d *schema.Res
 }
 
 func flattenComputeImageSourceSnapshotEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeImageSourceSnapshotEncryptionKeyRsaEncryptedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -609,5 +717,11 @@ func flattenComputeImageSourceSnapshotEncryptionKeyKmsKeySelfLink(v interface{},
 }
 
 func flattenComputeImageSourceSnapshotEncryptionKeyKmsKeyServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

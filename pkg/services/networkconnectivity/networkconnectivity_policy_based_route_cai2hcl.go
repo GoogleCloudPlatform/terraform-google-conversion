@@ -146,6 +146,12 @@ func (c *NetworkConnectivityPolicyBasedRouteCai2hclConverter) convertResourceDat
 }
 
 func flattenNetworkConnectivityPolicyBasedRouteDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -204,6 +210,12 @@ func flattenNetworkConnectivityPolicyBasedRouteNextHopOtherRoutes(v interface{},
 }
 
 func flattenNetworkConnectivityPolicyBasedRouteNextHopIlbIp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

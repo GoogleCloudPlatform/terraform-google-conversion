@@ -145,6 +145,12 @@ func flattenNetworkSecurityServerTlsPolicyLabels(v interface{}, d *schema.Resour
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenNetworkSecurityServerTlsPolicyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -241,6 +247,12 @@ func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationMode(v inter
 }
 
 func flattenNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationTrustConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

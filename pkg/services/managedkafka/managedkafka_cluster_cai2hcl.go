@@ -203,6 +203,12 @@ func flattenManagedKafkaClusterGcpConfigAccessConfigNetworkConfigsSubnet(v inter
 }
 
 func flattenManagedKafkaClusterGcpConfigKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -262,6 +268,12 @@ func flattenManagedKafkaClusterBrokerCapacityConfig(v interface{}, d *schema.Res
 }
 
 func flattenManagedKafkaClusterBrokerCapacityConfigDiskSizeGib(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -280,6 +292,12 @@ func flattenManagedKafkaClusterRebalanceConfig(v interface{}, d *schema.Resource
 }
 
 func flattenManagedKafkaClusterRebalanceConfigMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -341,5 +359,11 @@ func flattenManagedKafkaClusterTlsConfigTrustConfigCasConfigsCaPool(v interface{
 }
 
 func flattenManagedKafkaClusterTlsConfigSslPrincipalMappingRules(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

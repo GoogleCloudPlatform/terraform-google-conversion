@@ -175,6 +175,12 @@ func flattenComputeRouteDestRange(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenComputeRouteDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -225,6 +231,12 @@ func flattenComputeRouteTags(v interface{}, d *schema.ResourceData, config *tran
 }
 
 func flattenComputeRouteNextHopGateway(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -255,6 +267,12 @@ func flattenComputeRouteNextHopVpnTunnel(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenComputeRouteNextHopIlb(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -153,6 +153,12 @@ func flattenPubsubTopicName(v interface{}, d *schema.ResourceData, config *trans
 }
 
 func flattenPubsubTopicKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -218,6 +224,12 @@ func flattenPubsubTopicSchemaSettingsEncoding(v interface{}, d *schema.ResourceD
 }
 
 func flattenPubsubTopicMessageRetentionDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -379,10 +391,22 @@ func flattenPubsubTopicIngestionDataSourceSettingsCloudStoragePubsubAvroFormat(v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsCloudStorageMinimumObjectCreateTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsCloudStorageMatchGlob(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -431,30 +455,72 @@ func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubs(v interface{}, 
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsResourceGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsNamespace(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsEventHub(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsClientId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsTenantId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsSubscriptionId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsAzureEventHubsGcpServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -556,6 +622,12 @@ func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudBootstrapServer(
 }
 
 func flattenPubsubTopicIngestionDataSourceSettingsConfluentCloudClusterId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -661,6 +733,12 @@ func flattenPubsubTopicMessageTransformsAiInferenceUnstructuredInferenceParamete
 }
 
 func flattenPubsubTopicMessageTransformsAiInferenceServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

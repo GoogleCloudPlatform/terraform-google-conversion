@@ -171,6 +171,12 @@ func flattenNetworkSecurityGatewaySecurityPolicyRulePriority(v interface{}, d *s
 }
 
 func flattenNetworkSecurityGatewaySecurityPolicyRuleDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -186,6 +192,12 @@ func flattenNetworkSecurityGatewaySecurityPolicyRuleSessionMatcher(v interface{}
 }
 
 func flattenNetworkSecurityGatewaySecurityPolicyRuleApplicationMatcher(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

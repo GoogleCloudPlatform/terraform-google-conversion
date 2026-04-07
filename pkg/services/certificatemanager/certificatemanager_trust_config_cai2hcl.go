@@ -144,6 +144,12 @@ func flattenCertificateManagerTrustConfigLabels(v interface{}, d *schema.Resourc
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenCertificateManagerTrustConfigDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -187,6 +193,12 @@ func flattenCertificateManagerTrustConfigTrustStoresTrustAnchors(v interface{}, 
 }
 
 func flattenCertificateManagerTrustConfigTrustStoresTrustAnchorsPemCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -210,6 +222,12 @@ func flattenCertificateManagerTrustConfigTrustStoresIntermediateCas(v interface{
 }
 
 func flattenCertificateManagerTrustConfigTrustStoresIntermediateCasPemCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

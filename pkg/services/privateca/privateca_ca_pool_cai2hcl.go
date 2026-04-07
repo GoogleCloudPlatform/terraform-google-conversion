@@ -211,10 +211,22 @@ func flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypesRsa(v interface{}, d *sc
 }
 
 func flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypesRsaMinModulusSize(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypesRsaMaxModulusSize(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -237,10 +249,22 @@ func flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypesEllipticCurveSignatureAl
 }
 
 func flattenPrivatecaCaPoolIssuancePolicyBackdateDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPrivatecaCaPoolIssuancePolicyMaximumLifetime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -338,14 +362,32 @@ func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpressionExpress
 }
 
 func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpressionTitle(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpressionDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpressionLocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -423,6 +465,12 @@ func flattenPrivatecaCaPoolEncryptionSpec(v interface{}, d *schema.ResourceData,
 }
 
 func flattenPrivatecaCaPoolEncryptionSpecCloudKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

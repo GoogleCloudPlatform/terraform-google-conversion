@@ -141,6 +141,12 @@ func (c *ClouddeployCustomTargetTypeCai2hclConverter) convertResourceData(asset 
 }
 
 func flattenClouddeployCustomTargetTypeDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -169,6 +175,12 @@ func flattenClouddeployCustomTargetTypeCustomActions(v interface{}, d *schema.Re
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsRenderAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -239,10 +251,22 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGitRep
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGitPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGitRef(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -274,6 +298,12 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogle
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudStoragePath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -307,9 +337,21 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogle
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoRef(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

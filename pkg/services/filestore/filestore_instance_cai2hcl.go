@@ -150,6 +150,12 @@ func (c *FilestoreInstanceCai2hclConverter) convertResourceData(asset caiasset.A
 }
 
 func flattenFilestoreInstanceDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -230,10 +236,22 @@ func flattenFilestoreInstanceFileSharesCapacityGb(v interface{}, d *schema.Resou
 }
 
 func flattenFilestoreInstanceFileSharesSourceBackup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenFilestoreInstanceFileSharesSourceBackupdrBackup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -308,6 +326,12 @@ func flattenFilestoreInstanceFileSharesNfsExportOptionsAnonGid(v interface{}, d 
 }
 
 func flattenFilestoreInstanceFileSharesNfsExportOptionsNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -376,10 +400,22 @@ func flattenFilestoreInstanceNetworksPscConfig(v interface{}, d *schema.Resource
 }
 
 func flattenFilestoreInstanceNetworksPscConfigEndpointProject(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenFilestoreInstanceKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -388,6 +424,12 @@ func flattenFilestoreInstanceDeletionProtectionEnabled(v interface{}, d *schema.
 }
 
 func flattenFilestoreInstanceDeletionProtectionReason(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -573,9 +615,21 @@ func flattenFilestoreInstanceDirectoryServicesLdapServers(v interface{}, d *sche
 }
 
 func flattenFilestoreInstanceDirectoryServicesLdapUsersOu(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenFilestoreInstanceDirectoryServicesLdapGroupsOu(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

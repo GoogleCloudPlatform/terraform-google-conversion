@@ -149,6 +149,12 @@ func flattenBeyondcorpAppGatewayHostType(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenBeyondcorpAppGatewayDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -147,6 +147,12 @@ func (c *ComputeNodeTemplateCai2hclConverter) convertResourceData(asset caiasset
 }
 
 func flattenComputeNodeTemplateDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -166,6 +172,12 @@ func flattenComputeNodeTemplateNodeAffinityLabels(v interface{}, d *schema.Resou
 }
 
 func flattenComputeNodeTemplateNodeType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -186,10 +198,22 @@ func flattenComputeNodeTemplateNodeTypeFlexibility(v interface{}, d *schema.Reso
 }
 
 func flattenComputeNodeTemplateNodeTypeFlexibilityCpus(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeNodeTemplateNodeTypeFlexibilityMemory(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -249,6 +273,12 @@ func flattenComputeNodeTemplateAcceleratorsAcceleratorCount(v interface{}, d *sc
 }
 
 func flattenComputeNodeTemplateAcceleratorsAcceleratorType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -295,6 +325,12 @@ func flattenComputeNodeTemplateDisksDiskCount(v interface{}, d *schema.ResourceD
 }
 
 func flattenComputeNodeTemplateDisksDiskType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

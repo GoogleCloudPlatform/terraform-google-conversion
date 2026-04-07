@@ -228,10 +228,22 @@ func flattenSecretManagerRegionalRegionalSecretRotation(v interface{}, d *schema
 }
 
 func flattenSecretManagerRegionalRegionalSecretRotationNextRotationTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenSecretManagerRegionalRegionalSecretRotationRotationPeriod(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -240,10 +252,22 @@ func flattenSecretManagerRegionalRegionalSecretExpireTime(v interface{}, d *sche
 }
 
 func flattenSecretManagerRegionalRegionalSecretTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenSecretManagerRegionalRegionalSecretVersionDestroyTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

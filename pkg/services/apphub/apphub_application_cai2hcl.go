@@ -141,10 +141,22 @@ func (c *ApphubApplicationCai2hclConverter) convertResourceData(asset caiasset.A
 }
 
 func flattenApphubApplicationDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenApphubApplicationDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -227,6 +239,12 @@ func flattenApphubApplicationAttributesDeveloperOwners(v interface{}, d *schema.
 }
 
 func flattenApphubApplicationAttributesDeveloperOwnersDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -262,6 +280,12 @@ func flattenApphubApplicationAttributesOperatorOwners(v interface{}, d *schema.R
 }
 
 func flattenApphubApplicationAttributesOperatorOwnersDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -297,6 +321,12 @@ func flattenApphubApplicationAttributesBusinessOwners(v interface{}, d *schema.R
 }
 
 func flattenApphubApplicationAttributesBusinessOwnersDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
