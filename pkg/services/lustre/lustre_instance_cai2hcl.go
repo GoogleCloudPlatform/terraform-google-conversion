@@ -272,6 +272,12 @@ func flattenLustreInstanceCapacityGib(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenLustreInstanceDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -316,6 +322,12 @@ func flattenLustreInstanceGkeSupportEnabled(v interface{}, d *schema.ResourceDat
 }
 
 func flattenLustreInstanceKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -716,9 +728,21 @@ func flattenLustreInstanceNetwork(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenLustreInstancePerUnitStorageThroughput(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenLustreInstancePlacementPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

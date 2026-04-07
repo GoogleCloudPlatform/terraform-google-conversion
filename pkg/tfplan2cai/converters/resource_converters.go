@@ -158,6 +158,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_region_target_http_proxy":                compute.ComputeRegionTargetHttpProxyTfplan2caiConverter(),
 	"google_compute_region_target_https_proxy":               compute.ComputeRegionTargetHttpsProxyTfplan2caiConverter(),
 	"google_compute_region_target_tcp_proxy":                 compute.ComputeRegionTargetTcpProxyTfplan2caiConverter(),
+	"google_compute_region_url_map":                          compute.ComputeRegionUrlMapTfplan2caiConverter(),
 	"google_compute_reservation":                             compute.ComputeReservationTfplan2caiConverter(),
 	"google_compute_resource_policy":                         compute.ComputeResourcePolicyTfplan2caiConverter(),
 	"google_compute_route":                                   compute.ComputeRouteTfplan2caiConverter(),

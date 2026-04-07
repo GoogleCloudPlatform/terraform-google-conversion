@@ -152,10 +152,22 @@ func flattenComputeTargetGrpcProxyName(v interface{}, d *schema.ResourceData, co
 }
 
 func flattenComputeTargetGrpcProxyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeTargetGrpcProxyUrlMap(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

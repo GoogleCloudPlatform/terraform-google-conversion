@@ -21,52 +21,61 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeRegionDisk(t *testing.T) {
+func TestAccComputeRegionUrlMap(t *testing.T) {
 	if os.Getenv("WRITE_FILES") != "" {
 		t.Parallel()
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccComputeRegionDisk_regionDiskBasicExample",
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapBasicExample",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_regionDiskAsyncExample",
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapDefaultRouteActionExample",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_regionDiskFeaturesExample",
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapL7IlbPathExample",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_regionDiskHyperdiskBalancedHaWriteManyExample",
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapL7IlbPathPartialExample",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_basic",
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapL7IlbRouteExample",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_hyperdisk",
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapL7IlbRoutePartialExample",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_basicUpdate",
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapPathTemplateMatchExample",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_encryption",
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapPathMatcherDefaultRouteActionExample",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_deleteDetach",
+			Name: "TestAccComputeRegionUrlMap_headerAction",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_cloneDisk",
+			Name: "TestAccComputeRegionUrlMap_update_path_matcher",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_featuresUpdated",
+			Name: "TestAccComputeRegionUrlMap_advanced",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_createSnapshotBeforeDestroy",
+			Name: "TestAccComputeRegionUrlMap_noPathRulesWithUpdate",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_VSSWindowsDefault",
+			Name: "TestAccComputeRegionUrlMap_ilbPathUpdate",
 		},
 		{
-			Name: "TestAccComputeRegionDisk_VSSWindows",
+			Name: "TestAccComputeRegionUrlMap_ilbRouteUpdate",
+		},
+		{
+			Name: "TestAccComputeRegionUrlMap_defaultUrlRedirect",
+		},
+		{
+			Name: "TestAccComputeRegionUrlMap_defaultUrlRedirectWithinPathMatcher",
+		},
+		{
+			Name: "TestAccComputeRegionUrlMap_defaultRouteAction_full_update",
 		},
 	}
 
@@ -84,19 +93,17 @@ func TestAccComputeRegionDisk(t *testing.T) {
 				t,
 				[]string{
 					"count",
-					"create_snapshot_before_destroy",
-					"create_snapshot_before_destroy_prefix",
 					"deletion_protection",
 					"depends_on",
-					"disk_encryption_key.raw_key",
-					"disk_encryption_key.rsa_encrypted_key",
 					"dynamic",
 					"for_each",
+					"ip_address",
 					"lifecycle",
 					"provider",
+					"target",
 					"timeouts",
 				},
-				"google_compute_region_disk",
+				"google_compute_region_url_map",
 			)
 		})
 	}

@@ -145,6 +145,12 @@ func (c *NetworkSecurityAuthzPolicyCai2hclConverter) convertResourceData(asset c
 }
 
 func flattenNetworkSecurityAuthzPolicyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -357,18 +363,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsPrincipalIgn
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsPrincipalExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsPrincipalPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsPrincipalSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsPrincipalContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -377,18 +407,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsIgnoreCase(v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesPrincipalsContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -457,18 +511,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesResourcesIamServiceAcc
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesResourcesIamServiceAccountExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesResourcesIamServiceAccountPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesResourcesIamServiceAccountSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromSourcesResourcesIamServiceAccountContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -600,18 +678,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsPrincipal
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsPrincipalExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsPrincipalPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsPrincipalSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsPrincipalContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -620,18 +722,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsIgnoreCas
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesPrincipalsContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -700,18 +826,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesResourcesIamService
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesResourcesIamServiceAccountExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesResourcesIamServiceAccountPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesResourcesIamServiceAccountSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesFromNotSourcesResourcesIamServiceAccountContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -789,6 +939,12 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHeaderSetHeaders(v in
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHeaderSetHeadersName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -819,18 +975,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHeaderSetHeadersValue
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHeaderSetHeadersValueExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHeaderSetHeadersValuePrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHeaderSetHeadersValueSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHeaderSetHeadersValueContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -862,18 +1042,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHostsIgnoreCase(v int
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHostsExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHostsPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHostsSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsHostsContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -905,18 +1109,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsPathsIgnoreCase(v int
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsPathsExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsPathsPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsPathsSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsPathsContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -999,18 +1227,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParams(v in
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToOperationsMcpMethodsParamsContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1075,6 +1327,12 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeaders(v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1105,18 +1363,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersVa
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValuePrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHeaderSetHeadersValueContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1148,18 +1430,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsIgnoreCase(v 
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsHostsContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1191,18 +1497,42 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsIgnoreCase(v 
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsPathsContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1211,6 +1541,12 @@ func flattenNetworkSecurityAuthzPolicyHttpRulesToNotOperationsMethods(v interfac
 }
 
 func flattenNetworkSecurityAuthzPolicyHttpRulesWhen(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

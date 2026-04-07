@@ -158,6 +158,12 @@ func flattenComputeUrlMapDefaultService(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenComputeUrlMapDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -311,6 +317,12 @@ func flattenComputeUrlMapHostRule(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenComputeUrlMapHostRuleDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -382,6 +394,12 @@ func flattenComputeUrlMapPathMatcherDefaultService(v interface{}, d *schema.Reso
 }
 
 func flattenComputeUrlMapPathMatcherDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -427,6 +445,12 @@ func flattenComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicyErrorRespons
 }
 
 func flattenComputeUrlMapPathMatcherDefaultCustomErrorResponsePolicyErrorResponseRulePath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -680,6 +704,12 @@ func flattenComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicyErrorRespon
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleCustomErrorResponsePolicyErrorResponseRulePath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1148,10 +1178,22 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewrite(v interface{},
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewriteHostRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewritePathPrefixRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1360,6 +1402,12 @@ func flattenComputeUrlMapPathMatcherPathRuleUrlRedirect(v interface{}, d *schema
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleUrlRedirectHostRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1368,10 +1416,22 @@ func flattenComputeUrlMapPathMatcherPathRuleUrlRedirectHttpsRedirect(v interface
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleUrlRedirectPathRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleUrlRedirectPrefixRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1597,6 +1657,12 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRules(v interface{}, d *schem
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesFullPathMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1627,6 +1693,12 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatches(v interfac
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesExactMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1646,6 +1718,12 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesInvertMatch
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesPrefixMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1710,10 +1788,22 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRangeMatchR
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesRegexMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesHeaderMatchesSuffixMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1788,6 +1878,12 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesMetadataFiltersFilterMat
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesPrefixMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1814,6 +1910,12 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatches(v 
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatchesExactMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1833,14 +1935,32 @@ func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatchesPre
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesQueryParameterMatchesRegexMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesRegexMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesMatchRulesPathTemplateMatch(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2280,14 +2400,32 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(v interface{
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewriteHostRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathPrefixRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewritePathTemplateRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2496,6 +2634,12 @@ func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirect(v interface{}, d *sche
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirectHostRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2504,10 +2648,22 @@ func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirectHttpsRedirect(v interfa
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirectPathRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirectPrefixRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2561,6 +2717,12 @@ func flattenComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicyErrorResp
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesCustomErrorResponsePolicyErrorResponseRulePath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2617,6 +2779,12 @@ func flattenComputeUrlMapPathMatcherDefaultUrlRedirect(v interface{}, d *schema.
 }
 
 func flattenComputeUrlMapPathMatcherDefaultUrlRedirectHostRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2625,10 +2793,22 @@ func flattenComputeUrlMapPathMatcherDefaultUrlRedirectHttpsRedirect(v interface{
 }
 
 func flattenComputeUrlMapPathMatcherDefaultUrlRedirectPathRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherDefaultUrlRedirectPrefixRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2766,10 +2946,22 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHea
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2803,10 +2995,22 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHea
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2831,10 +3035,22 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionUrlRewrite(v interface{}, 
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionUrlRewritePathPrefixRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionUrlRewriteHostRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2855,6 +3071,12 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionTimeout(v interface{}, d *
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2975,6 +3197,12 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeout(v
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionRetryPolicyPerTryTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3142,6 +3370,12 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayF
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3245,6 +3479,12 @@ func flattenComputeUrlMapDefaultCustomErrorResponsePolicyErrorResponseRuleMatchR
 }
 
 func flattenComputeUrlMapDefaultCustomErrorResponsePolicyErrorResponseRulePath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3302,6 +3542,12 @@ func flattenComputeUrlMapTest(v interface{}, d *schema.ResourceData, config *tra
 }
 
 func flattenComputeUrlMapTestDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3381,6 +3627,12 @@ func flattenComputeUrlMapTestService(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenComputeUrlMapTestExpectedOutputUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3426,6 +3678,12 @@ func flattenComputeUrlMapDefaultUrlRedirect(v interface{}, d *schema.ResourceDat
 }
 
 func flattenComputeUrlMapDefaultUrlRedirectHostRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3434,10 +3692,22 @@ func flattenComputeUrlMapDefaultUrlRedirectHttpsRedirect(v interface{}, d *schem
 }
 
 func flattenComputeUrlMapDefaultUrlRedirectPathRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapDefaultUrlRedirectPrefixRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3575,10 +3845,22 @@ func flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionRe
 }
 
 func flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionRequestHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3612,10 +3894,22 @@ func flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionRe
 }
 
 func flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapDefaultRouteActionWeightedBackendServicesHeaderActionResponseHeadersToAddHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3640,10 +3934,22 @@ func flattenComputeUrlMapDefaultRouteActionUrlRewrite(v interface{}, d *schema.R
 }
 
 func flattenComputeUrlMapDefaultRouteActionUrlRewritePathPrefixRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeUrlMapDefaultRouteActionUrlRewriteHostRewrite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3664,6 +3970,12 @@ func flattenComputeUrlMapDefaultRouteActionTimeout(v interface{}, d *schema.Reso
 }
 
 func flattenComputeUrlMapDefaultRouteActionTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3784,6 +4096,12 @@ func flattenComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeout(v interface{
 }
 
 func flattenComputeUrlMapDefaultRouteActionRetryPolicyPerTryTimeoutSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3951,6 +4269,12 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelay(v
 }
 
 func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyDelayFixedDelaySeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

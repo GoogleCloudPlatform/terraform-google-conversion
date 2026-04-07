@@ -160,6 +160,12 @@ func flattenComputeServiceAttachmentName(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenComputeServiceAttachmentDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -230,14 +236,32 @@ func flattenComputeServiceAttachmentConsumerAcceptLists(v interface{}, d *schema
 }
 
 func flattenComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeServiceAttachmentConsumerAcceptListsNetworkUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeServiceAttachmentConsumerAcceptListsEndpointUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

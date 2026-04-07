@@ -150,6 +150,12 @@ func flattenGKEBackupRestorePlanName(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenGKEBackupRestorePlanDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -367,10 +373,22 @@ func flattenGKEBackupRestorePlanRestoreConfigClusterResourceRestoreScopeExcluded
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigClusterResourceRestoreScopeExcludedGroupKindsResourceGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigClusterResourceRestoreScopeExcludedGroupKindsResourceKind(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -395,10 +413,22 @@ func flattenGKEBackupRestorePlanRestoreConfigClusterResourceRestoreScopeSelected
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigClusterResourceRestoreScopeSelectedGroupKindsResourceGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigClusterResourceRestoreScopeSelectedGroupKindsResourceKind(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -432,6 +462,12 @@ func flattenGKEBackupRestorePlanRestoreConfigTransformationRules(v interface{}, 
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -478,14 +514,32 @@ func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesResourceFilterGr
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesResourceFilterGroupKindsResourceGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesResourceFilterGroupKindsResourceKind(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesResourceFilterJsonPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -516,14 +570,32 @@ func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesFieldActionsOp(v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesFieldActionsFromPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesFieldActionsPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigTransformationRulesFieldActionsValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -606,10 +678,22 @@ func flattenGKEBackupRestorePlanRestoreConfigRestoreOrderGroupKindDependenciesSa
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigRestoreOrderGroupKindDependenciesSatisfyingResourceGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigRestoreOrderGroupKindDependenciesSatisfyingResourceKind(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -630,9 +714,21 @@ func flattenGKEBackupRestorePlanRestoreConfigRestoreOrderGroupKindDependenciesRe
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigRestoreOrderGroupKindDependenciesRequiringResourceGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGKEBackupRestorePlanRestoreConfigRestoreOrderGroupKindDependenciesRequiringResourceKind(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

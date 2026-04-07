@@ -163,6 +163,12 @@ func flattenComputeAddressAddressType(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenComputeAddressDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -236,6 +242,12 @@ func flattenComputeAddressIpv6EndpointType(v interface{}, d *schema.ResourceData
 }
 
 func flattenComputeAddressIpCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

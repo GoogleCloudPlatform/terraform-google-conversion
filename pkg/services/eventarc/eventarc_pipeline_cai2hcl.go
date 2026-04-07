@@ -149,10 +149,22 @@ func flattenEventarcPipelineAnnotations(v interface{}, d *schema.ResourceData, c
 	return v
 }
 func flattenEventarcPipelineDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenEventarcPipelineCryptoKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -189,6 +201,12 @@ func flattenEventarcPipelineInputPayloadFormatProtobuf(v interface{}, d *schema.
 }
 
 func flattenEventarcPipelineInputPayloadFormatProtobufSchemaDefinition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -207,6 +225,12 @@ func flattenEventarcPipelineInputPayloadFormatAvro(v interface{}, d *schema.Reso
 }
 
 func flattenEventarcPipelineInputPayloadFormatAvroSchemaDefinition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -333,6 +357,12 @@ func flattenEventarcPipelineDestinationsAuthenticationConfigGoogleOidcServiceAcc
 }
 
 func flattenEventarcPipelineDestinationsAuthenticationConfigGoogleOidcAudience(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -364,6 +394,12 @@ func flattenEventarcPipelineDestinationsAuthenticationConfigOauthTokenServiceAcc
 }
 
 func flattenEventarcPipelineDestinationsAuthenticationConfigOauthTokenScope(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -400,6 +436,12 @@ func flattenEventarcPipelineDestinationsOutputPayloadFormatProtobuf(v interface{
 }
 
 func flattenEventarcPipelineDestinationsOutputPayloadFormatProtobufSchemaDefinition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -418,6 +460,12 @@ func flattenEventarcPipelineDestinationsOutputPayloadFormatAvro(v interface{}, d
 }
 
 func flattenEventarcPipelineDestinationsOutputPayloadFormatAvroSchemaDefinition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -444,6 +492,12 @@ func flattenEventarcPipelineDestinationsNetworkConfig(v interface{}, d *schema.R
 }
 
 func flattenEventarcPipelineDestinationsNetworkConfigNetworkAttachment(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -475,18 +529,42 @@ func flattenEventarcPipelineDestinationsHttpEndpointUri(v interface{}, d *schema
 }
 
 func flattenEventarcPipelineDestinationsHttpEndpointMessageBindingTemplate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenEventarcPipelineDestinationsWorkflow(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenEventarcPipelineDestinationsMessageBus(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenEventarcPipelineDestinationsTopic(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -524,6 +602,12 @@ func flattenEventarcPipelineMediationsTransformation(v interface{}, d *schema.Re
 }
 
 func flattenEventarcPipelineMediationsTransformationTransformationTemplate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -143,6 +143,12 @@ func (c *NetworkSecuritySecurityProfileGroupCai2hclConverter) convertResourceDat
 }
 
 func flattenNetworkSecuritySecurityProfileGroupDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -150,17 +156,41 @@ func flattenNetworkSecuritySecurityProfileGroupLabels(v interface{}, d *schema.R
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenNetworkSecuritySecurityProfileGroupThreatPreventionProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecuritySecurityProfileGroupUrlFilteringProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecuritySecurityProfileGroupCustomMirroringProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetworkSecuritySecurityProfileGroupCustomInterceptProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

@@ -158,10 +158,22 @@ func flattenAlloydbInstanceAnnotations(v interface{}, d *schema.ResourceData, co
 	return v
 }
 func flattenAlloydbInstanceDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenAlloydbInstanceGceZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -391,6 +403,12 @@ func flattenAlloydbInstancePscInstanceConfigPscInterfaceConfigs(v interface{}, d
 }
 
 func flattenAlloydbInstancePscInstanceConfigPscInterfaceConfigsNetworkAttachmentResource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -415,10 +433,22 @@ func flattenAlloydbInstancePscInstanceConfigPscAutoConnections(v interface{}, d 
 }
 
 func flattenAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerProject(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -462,6 +492,12 @@ func flattenAlloydbInstanceNetworkConfigAuthorizedExternalNetworks(v interface{}
 }
 
 func flattenAlloydbInstanceNetworkConfigAuthorizedExternalNetworksCidrRange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -474,6 +510,12 @@ func flattenAlloydbInstanceNetworkConfigEnableOutboundPublicIp(v interface{}, d 
 }
 
 func flattenAlloydbInstanceNetworkConfigAllocatedIpRangeOverride(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

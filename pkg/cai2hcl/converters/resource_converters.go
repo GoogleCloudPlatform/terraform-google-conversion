@@ -367,7 +367,8 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"ComputeTargetTcpProxy":       compute.NewComputeTargetTcpProxyCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/UrlMap": {
-		"Default": compute.NewComputeUrlMapCai2hclConverter(provider),
+		"ComputeRegionUrlMap": compute.NewComputeRegionUrlMapCai2hclConverter(provider),
+		"ComputeUrlMap":       compute.NewComputeUrlMapCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/VpnGateway": {
 		"Default": compute.NewComputeHaVpnGatewayCai2hclConverter(provider),

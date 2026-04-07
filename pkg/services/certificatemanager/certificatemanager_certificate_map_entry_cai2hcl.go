@@ -143,6 +143,12 @@ func (c *CertificateManagerCertificateMapEntryCai2hclConverter) convertResourceD
 }
 
 func flattenCertificateManagerCertificateMapEntryDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -154,10 +160,22 @@ func flattenCertificateManagerCertificateMapEntryCertificates(v interface{}, d *
 }
 
 func flattenCertificateManagerCertificateMapEntryHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCertificateManagerCertificateMapEntryMatcher(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

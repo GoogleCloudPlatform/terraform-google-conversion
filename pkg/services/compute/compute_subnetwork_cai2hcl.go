@@ -162,6 +162,12 @@ func (c *ComputeSubnetworkCai2hclConverter) convertResourceData(asset caiasset.A
 }
 
 func flattenComputeSubnetworkDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -330,6 +336,12 @@ func flattenComputeSubnetworkExternalIpv6Prefix(v interface{}, d *schema.Resourc
 }
 
 func flattenComputeSubnetworkIpCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

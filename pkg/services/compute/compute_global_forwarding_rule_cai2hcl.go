@@ -155,6 +155,12 @@ func (c *ComputeGlobalForwardingRuleCai2hclConverter) convertResourceData(asset 
 }
 
 func flattenComputeGlobalForwardingRuleDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -266,6 +272,12 @@ func flattenComputeGlobalForwardingRuleNetwork(v interface{}, d *schema.Resource
 }
 
 func flattenComputeGlobalForwardingRulePortRange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -337,6 +349,12 @@ func flattenComputeGlobalForwardingRuleServiceDirectoryRegistrationsNamespace(v 
 }
 
 func flattenComputeGlobalForwardingRuleServiceDirectoryRegistrationsServiceDirectoryRegion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

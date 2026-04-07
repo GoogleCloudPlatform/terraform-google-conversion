@@ -151,6 +151,12 @@ func (c *ComputeReservationCai2hclConverter) convertResourceData(asset caiasset.
 }
 
 func flattenComputeReservationDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -206,6 +212,12 @@ func flattenComputeReservationShareSettingsProjectMap(v interface{}, d *schema.R
 }
 
 func flattenComputeReservationShareSettingsProjectMapProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -378,6 +390,12 @@ func flattenComputeReservationSpecificReservationInstancePropertiesLocalSsdsDisk
 }
 
 func flattenComputeReservationSpecificReservationSourceInstanceTemplate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -402,6 +420,12 @@ func flattenComputeReservationDeleteAfterDuration(v interface{}, d *schema.Resou
 }
 
 func flattenComputeReservationDeleteAfterDurationSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

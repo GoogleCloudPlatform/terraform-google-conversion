@@ -174,6 +174,12 @@ func flattenLookerInstanceAdminSettingsAllowedEmailDomains(v interface{}, d *sch
 }
 
 func flattenLookerInstanceConsumerNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -464,6 +470,12 @@ func flattenLookerInstanceEncryptionConfig(v interface{}, d *schema.ResourceData
 }
 
 func flattenLookerInstanceEncryptionConfigKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -798,10 +810,22 @@ func flattenLookerInstancePscConfigServiceAttachments(v interface{}, d *schema.R
 }
 
 func flattenLookerInstancePscConfigServiceAttachmentsLocalFqdn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenLookerInstancePscConfigServiceAttachmentsTargetServiceAttachmentUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -814,6 +838,12 @@ func flattenLookerInstancePublicIpEnabled(v interface{}, d *schema.ResourceData,
 }
 
 func flattenLookerInstanceReservedRange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -901,5 +931,11 @@ func flattenLookerInstanceCustomDomain(v interface{}, d *schema.ResourceData, co
 }
 
 func flattenLookerInstanceCustomDomainDomain(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

@@ -144,6 +144,12 @@ func (c *NetworkSecurityTlsInspectionPolicyCai2hclConverter) convertResourceData
 }
 
 func flattenNetworkSecurityTlsInspectionPolicyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -159,6 +165,12 @@ func flattenNetworkSecurityTlsInspectionPolicyCaPool(v interface{}, d *schema.Re
 }
 
 func flattenNetworkSecurityTlsInspectionPolicyTrustConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
