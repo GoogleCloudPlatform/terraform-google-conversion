@@ -42,6 +42,9 @@ func TestAccComputeDisk(t *testing.T) {
 			Name: "TestAccComputeDisk_update",
 		},
 		{
+			Name: "TestAccComputeDisk_hyperdiskPerformanceAtomicUpdate",
+		},
+		{
 			Name: "TestAccComputeDisk_fromTypeUrl",
 		},
 		{
