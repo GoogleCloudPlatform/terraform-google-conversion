@@ -251,6 +251,12 @@ func GetNetworkServicesGatewayApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("addresses"); !tpgresource.IsEmptyValue(reflect.ValueOf(addressesProp)) && (ok || !reflect.DeepEqual(v, addressesProp)) {
 		obj["addresses"] = addressesProp
 	}
+	allPortsProp, err := expandNetworkServicesGatewayAllPorts(d.Get("all_ports"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("all_ports"); !tpgresource.IsEmptyValue(reflect.ValueOf(allPortsProp)) && (ok || !reflect.DeepEqual(v, allPortsProp)) {
+		obj["allPorts"] = allPortsProp
+	}
 	portsProp, err := expandNetworkServicesGatewayPorts(d.Get("ports"), d, config)
 	if err != nil {
 		return nil, err
@@ -330,6 +336,10 @@ func expandNetworkServicesGatewayType(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandNetworkServicesGatewayAddresses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesGatewayAllPorts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
