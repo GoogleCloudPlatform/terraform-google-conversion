@@ -150,6 +150,12 @@ func flattenComputeGlobalAddressAddress(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenComputeGlobalAddressDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -193,6 +199,12 @@ func flattenComputeGlobalAddressAddressType(v interface{}, d *schema.ResourceDat
 }
 
 func flattenComputeGlobalAddressPurpose(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

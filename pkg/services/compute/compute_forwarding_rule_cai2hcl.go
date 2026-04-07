@@ -165,6 +165,12 @@ func flattenComputeForwardingRuleIsMirroringCollector(v interface{}, d *schema.R
 }
 
 func flattenComputeForwardingRuleDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -236,6 +242,12 @@ func flattenComputeForwardingRuleSubnetwork(v interface{}, d *schema.ResourceDat
 }
 
 func flattenComputeForwardingRuleTarget(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -279,10 +291,22 @@ func flattenComputeForwardingRuleServiceDirectoryRegistrationsNamespace(v interf
 }
 
 func flattenComputeForwardingRuleServiceDirectoryRegistrationsService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeForwardingRuleServiceLabel(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -303,6 +327,12 @@ func flattenComputeForwardingRuleIpVersion(v interface{}, d *schema.ResourceData
 }
 
 func flattenComputeForwardingRuleIpCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

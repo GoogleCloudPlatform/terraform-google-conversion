@@ -151,6 +151,12 @@ func flattenCloudfunctions2functionName(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenCloudfunctions2functionDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -185,10 +191,22 @@ func flattenCloudfunctions2functionBuildConfig(v interface{}, d *schema.Resource
 }
 
 func flattenCloudfunctions2functionBuildConfigRuntime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionBuildConfigEntryPoint(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -314,26 +332,62 @@ func flattenCloudfunctions2functionBuildConfigSourceRepoSource(v interface{}, d 
 }
 
 func flattenCloudfunctions2functionBuildConfigSourceRepoSourceProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionBuildConfigSourceRepoSourceRepoName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionBuildConfigSourceRepoSourceBranchName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionBuildConfigSourceRepoSourceTagName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionBuildConfigSourceRepoSourceCommitSha(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionBuildConfigSourceRepoSourceDir(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -342,6 +396,12 @@ func flattenCloudfunctions2functionBuildConfigSourceRepoSourceInvertRegex(v inte
 }
 
 func flattenCloudfunctions2functionBuildConfigWorkerPool(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -500,6 +560,12 @@ func flattenCloudfunctions2functionServiceConfigMinInstanceCount(v interface{}, 
 }
 
 func flattenCloudfunctions2functionServiceConfigVpcConnector(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -529,10 +595,22 @@ func flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterface(v inte
 }
 
 func flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudfunctions2functionServiceConfigDirectVpcNetworkInterfaceSubnetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -720,6 +798,12 @@ func flattenCloudfunctions2functionServiceConfigSecretVolumesVersionsPath(v inte
 }
 
 func flattenCloudfunctions2functionServiceConfigBinaryAuthorizationPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -806,6 +890,12 @@ func flattenCloudfunctions2functionEventTriggerEventFiltersValue(v interface{}, 
 }
 
 func flattenCloudfunctions2functionEventTriggerEventFiltersOperator(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -825,5 +915,11 @@ func flattenCloudfunctions2functionLabels(v interface{}, d *schema.ResourceData,
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenCloudfunctions2functionKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

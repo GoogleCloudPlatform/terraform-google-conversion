@@ -142,6 +142,12 @@ func (c *NetappBackupVaultCai2hclConverter) convertResourceData(asset caiasset.A
 }
 
 func flattenNetappBackupVaultDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -153,6 +159,12 @@ func flattenNetappBackupVaultBackupVaultType(v interface{}, d *schema.ResourceDa
 }
 
 func flattenNetappBackupVaultBackupRegion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

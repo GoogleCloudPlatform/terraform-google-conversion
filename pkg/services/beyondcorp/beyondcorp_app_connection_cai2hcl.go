@@ -143,6 +143,12 @@ func (c *BeyondcorpAppConnectionCai2hclConverter) convertResourceData(asset caia
 }
 
 func flattenBeyondcorpAppConnectionDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -150,6 +156,12 @@ func flattenBeyondcorpAppConnectionLabels(v interface{}, d *schema.ResourceData,
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenBeyondcorpAppConnectionType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -232,5 +244,11 @@ func flattenBeyondcorpAppConnectionGatewayAppGateway(v interface{}, d *schema.Re
 }
 
 func flattenBeyondcorpAppConnectionGatewayType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

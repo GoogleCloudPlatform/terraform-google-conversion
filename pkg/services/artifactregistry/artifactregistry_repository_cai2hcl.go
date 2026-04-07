@@ -160,6 +160,12 @@ func flattenArtifactRegistryRepositoryFormat(v interface{}, d *schema.ResourceDa
 }
 
 func flattenArtifactRegistryRepositoryDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -167,6 +173,12 @@ func flattenArtifactRegistryRepositoryLabels(v interface{}, d *schema.ResourceDa
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenArtifactRegistryRepositoryKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -250,10 +262,22 @@ func flattenArtifactRegistryRepositoryVirtualRepositoryConfigUpstreamPolicies(v 
 }
 
 func flattenArtifactRegistryRepositoryVirtualRepositoryConfigUpstreamPoliciesId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenArtifactRegistryRepositoryVirtualRepositoryConfigUpstreamPoliciesRepository(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -337,10 +361,22 @@ func flattenArtifactRegistryRepositoryCleanupPoliciesConditionPackageNamePrefixe
 }
 
 func flattenArtifactRegistryRepositoryCleanupPoliciesConditionOlderThan(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenArtifactRegistryRepositoryCleanupPoliciesConditionNewerThan(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -414,6 +450,12 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d *s
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -497,6 +539,12 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigDockerRepositoryCust
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigDockerRepositoryCustomRepositoryUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -535,6 +583,12 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigMavenRepositoryCusto
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigMavenRepositoryCustomRepositoryUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -573,6 +627,12 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigNpmRepositoryCustomR
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigNpmRepositoryCustomRepositoryUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -611,6 +671,12 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepositoryCust
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigPythonRepositoryCustomRepositoryUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -715,10 +781,22 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsU
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentialsUsername(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUsernamePasswordCredentialsPasswordSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -157,6 +157,12 @@ func flattenVPCAccessConnectorNetwork(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenVPCAccessConnectorIpCidrRange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -249,6 +255,12 @@ func flattenVPCAccessConnectorSubnet(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenVPCAccessConnectorSubnetName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

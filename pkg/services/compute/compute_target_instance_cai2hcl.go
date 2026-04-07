@@ -153,6 +153,12 @@ func flattenComputeTargetInstanceName(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenComputeTargetInstanceDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

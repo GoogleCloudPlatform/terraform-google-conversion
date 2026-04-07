@@ -386,6 +386,12 @@ func flattenComputeBackendBucketCdnPolicyBypassCacheOnRequestHeaders(v interface
 }
 
 func flattenComputeBackendBucketCdnPolicyBypassCacheOnRequestHeadersHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -394,6 +400,12 @@ func flattenComputeBackendBucketCompressionMode(v interface{}, d *schema.Resourc
 }
 
 func flattenComputeBackendBucketEdgeSecurityPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -402,6 +414,12 @@ func flattenComputeBackendBucketCustomResponseHeaders(v interface{}, d *schema.R
 }
 
 func flattenComputeBackendBucketDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
