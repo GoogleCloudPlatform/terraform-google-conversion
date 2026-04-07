@@ -164,10 +164,22 @@ func flattenComputeInterconnectAttachmentAdminEnabled(v interface{}, d *schema.R
 }
 
 func flattenComputeInterconnectAttachmentInterconnect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeInterconnectAttachmentDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -292,18 +304,42 @@ func flattenComputeInterconnectAttachmentLabels(v interface{}, d *schema.Resourc
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenComputeInterconnectAttachmentCandidateCloudRouterIpAddress(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeInterconnectAttachmentCandidateCustomerRouterIpAddress(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeInterconnectAttachmentCandidateCloudRouterIpv6Address(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeInterconnectAttachmentCandidateCustomerRouterIpv6Address(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -341,10 +377,22 @@ func flattenComputeInterconnectAttachmentL2ForwardingNetwork(v interface{}, d *s
 }
 
 func flattenComputeInterconnectAttachmentL2ForwardingTunnelEndpointIpAddress(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeInterconnectAttachmentL2ForwardingDefaultApplianceIpAddress(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

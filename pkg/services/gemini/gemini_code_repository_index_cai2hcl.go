@@ -142,5 +142,11 @@ func flattenGeminiCodeRepositoryIndexLabels(v interface{}, d *schema.ResourceDat
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenGeminiCodeRepositoryIndexKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

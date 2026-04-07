@@ -141,10 +141,22 @@ func (c *NetappBackupCai2hclConverter) convertResourceData(asset caiasset.Asset)
 }
 
 func flattenNetappBackupDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappBackupSourceVolume(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -152,5 +164,11 @@ func flattenNetappBackupLabels(v interface{}, d *schema.ResourceData, config *tr
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenNetappBackupSourceSnapshot(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

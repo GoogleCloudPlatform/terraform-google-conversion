@@ -251,6 +251,12 @@ func flattenComputeBackendServiceBackendPreference(v interface{}, d *schema.Reso
 }
 
 func flattenComputeBackendServiceBackendDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -585,14 +591,32 @@ func flattenComputeBackendServiceConsistentHashHttpCookieTtlNanos(v interface{},
 }
 
 func flattenComputeBackendServiceConsistentHashHttpCookieName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeBackendServiceConsistentHashHttpCookiePath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeBackendServiceConsistentHashHttpHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -938,6 +962,12 @@ func flattenComputeBackendServiceCustomResponseHeaders(v interface{}, d *schema.
 }
 
 func flattenComputeBackendServiceDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1071,6 +1101,12 @@ func flattenComputeBackendServiceLocalityLbPoliciesCustomPolicyName(v interface{
 }
 
 func flattenComputeBackendServiceLocalityLbPoliciesCustomPolicyData(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1425,10 +1461,22 @@ func flattenComputeBackendServiceProtocol(v interface{}, d *schema.ResourceData,
 }
 
 func flattenComputeBackendServiceSecurityPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeBackendServiceEdgeSecurityPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1486,6 +1534,12 @@ func flattenComputeBackendServiceSecuritySettingsAwsV4Authentication(v interface
 }
 
 func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1494,10 +1548,22 @@ func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKey(v 
 }
 
 func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationAccessKeyVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeBackendServiceSecuritySettingsAwsV4AuthenticationOriginRegion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1577,10 +1643,22 @@ func flattenComputeBackendServiceStrongSessionAffinityCookieTtlNanos(v interface
 }
 
 func flattenComputeBackendServiceStrongSessionAffinityCookieName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeBackendServiceStrongSessionAffinityCookiePath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1638,6 +1716,12 @@ func flattenComputeBackendServiceLogConfigOptionalFields(v interface{}, d *schem
 }
 
 func flattenComputeBackendServiceServiceLbPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1660,6 +1744,12 @@ func flattenComputeBackendServiceTlsSettings(v interface{}, d *schema.ResourceDa
 }
 
 func flattenComputeBackendServiceTlsSettingsSni(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1684,14 +1774,32 @@ func flattenComputeBackendServiceTlsSettingsSubjectAltNames(v interface{}, d *sc
 }
 
 func flattenComputeBackendServiceTlsSettingsSubjectAltNamesDnsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeBackendServiceTlsSettingsSubjectAltNamesUniformResourceIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeBackendServiceTlsSettingsAuthenticationConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

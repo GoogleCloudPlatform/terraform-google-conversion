@@ -157,10 +157,22 @@ func flattenLoggingMetricName(v interface{}, d *schema.ResourceData, config *tra
 }
 
 func flattenLoggingMetricDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenLoggingMetricBucketName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -246,6 +258,12 @@ func flattenLoggingMetricMetricDescriptorLabelsKey(v interface{}, d *schema.Reso
 }
 
 func flattenLoggingMetricMetricDescriptorLabelsDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -258,6 +276,12 @@ func flattenLoggingMetricMetricDescriptorLabelsValueType(v interface{}, d *schem
 }
 
 func flattenLoggingMetricMetricDescriptorDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -266,6 +290,12 @@ func flattenLoggingMetricLabelExtractors(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenLoggingMetricValueExtractor(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

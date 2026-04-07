@@ -152,6 +152,12 @@ func (c *ComputeInterconnectCai2hclConverter) convertResourceData(asset caiasset
 }
 
 func flattenComputeInterconnectDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -228,10 +234,22 @@ func flattenComputeInterconnectParamsResourceManagerTags(v interface{}, d *schem
 }
 
 func flattenComputeInterconnectNocContactEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeInterconnectCustomerName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -287,6 +305,12 @@ func flattenComputeInterconnectMacsecPreSharedKeysName(v interface{}, d *schema.
 }
 
 func flattenComputeInterconnectMacsecPreSharedKeysStartTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -303,6 +327,12 @@ func flattenComputeInterconnectMacsecEnabled(v interface{}, d *schema.ResourceDa
 }
 
 func flattenComputeInterconnectRemoteLocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

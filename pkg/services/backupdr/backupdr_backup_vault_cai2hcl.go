@@ -145,6 +145,12 @@ func (c *BackupDRBackupVaultCai2hclConverter) convertResourceData(asset caiasset
 }
 
 func flattenBackupDRBackupVaultDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -163,6 +169,12 @@ func flattenBackupDRBackupVaultBackupMinimumEnforcedRetentionDuration(v interfac
 }
 
 func flattenBackupDRBackupVaultEffectiveTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -192,5 +204,11 @@ func flattenBackupDRBackupVaultEncryptionConfig(v interface{}, d *schema.Resourc
 }
 
 func flattenBackupDRBackupVaultEncryptionConfigKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

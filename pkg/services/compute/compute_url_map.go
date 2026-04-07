@@ -60,8 +60,6 @@ var (
 	_ = verify.ProjectRegex
 )
 
-const ComputeUrlMapAssetType string = "compute.googleapis.com/UrlMap"
-
 const ComputeUrlMapSchemaName string = "google_compute_url_map"
 
 func ResourceComputeUrlMap() *schema.Resource {

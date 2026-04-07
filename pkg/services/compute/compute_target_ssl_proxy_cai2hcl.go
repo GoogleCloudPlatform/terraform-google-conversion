@@ -144,6 +144,12 @@ func (c *ComputeTargetSslProxyCai2hclConverter) convertResourceData(asset caiass
 }
 
 func flattenComputeTargetSslProxyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -181,6 +187,12 @@ func flattenComputeTargetSslProxySslCertificates(v interface{}, d *schema.Resour
 }
 
 func flattenComputeTargetSslProxyCertificateMap(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -346,10 +346,22 @@ func flattenStorageInsightsReportConfigCsvOptions(v interface{}, d *schema.Resou
 }
 
 func flattenStorageInsightsReportConfigCsvOptionsRecordSeparator(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenStorageInsightsReportConfigCsvOptionsDelimiter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -394,6 +406,12 @@ func flattenStorageInsightsReportConfigObjectMetadataReportOptionsStorageFilters
 }
 
 func flattenStorageInsightsReportConfigObjectMetadataReportOptionsStorageFiltersBucket(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -425,9 +443,21 @@ func flattenStorageInsightsReportConfigObjectMetadataReportOptionsStorageDestina
 }
 
 func flattenStorageInsightsReportConfigObjectMetadataReportOptionsStorageDestinationOptionsDestinationPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenStorageInsightsReportConfigDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

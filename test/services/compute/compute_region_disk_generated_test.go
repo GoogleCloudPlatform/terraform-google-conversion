@@ -88,6 +88,8 @@ func TestAccComputeRegionDisk(t *testing.T) {
 					"create_snapshot_before_destroy_prefix",
 					"deletion_protection",
 					"depends_on",
+					"disk_encryption_key.raw_key",
+					"disk_encryption_key.rsa_encrypted_key",
 					"dynamic",
 					"for_each",
 					"lifecycle",

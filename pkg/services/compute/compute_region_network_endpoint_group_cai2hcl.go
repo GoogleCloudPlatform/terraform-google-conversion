@@ -159,6 +159,12 @@ func flattenComputeRegionNetworkEndpointGroupName(v interface{}, d *schema.Resou
 }
 
 func flattenComputeRegionNetworkEndpointGroupDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -167,6 +173,12 @@ func flattenComputeRegionNetworkEndpointGroupNetworkEndpointType(v interface{}, 
 }
 
 func flattenComputeRegionNetworkEndpointGroupPscTargetService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -207,6 +219,12 @@ func flattenComputeRegionNetworkEndpointGroupPscData(v interface{}, d *schema.Re
 }
 
 func flattenComputeRegionNetworkEndpointGroupPscDataProducerPort(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -229,14 +247,32 @@ func flattenComputeRegionNetworkEndpointGroupCloudRun(v interface{}, d *schema.R
 }
 
 func flattenComputeRegionNetworkEndpointGroupCloudRunService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeRegionNetworkEndpointGroupCloudRunTag(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeRegionNetworkEndpointGroupCloudRunUrlMask(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -256,14 +292,32 @@ func flattenComputeRegionNetworkEndpointGroupAppEngine(v interface{}, d *schema.
 }
 
 func flattenComputeRegionNetworkEndpointGroupAppEngineService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeRegionNetworkEndpointGroupAppEngineVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeRegionNetworkEndpointGroupAppEngineUrlMask(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -284,10 +338,22 @@ func flattenComputeRegionNetworkEndpointGroupCloudFunction(v interface{}, d *sch
 }
 
 func flattenComputeRegionNetworkEndpointGroupCloudFunctionFunction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeRegionNetworkEndpointGroupCloudFunctionUrlMask(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

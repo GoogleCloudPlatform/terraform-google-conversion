@@ -153,6 +153,12 @@ func flattenComputeAutoscalerName(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenComputeAutoscalerDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -507,6 +513,12 @@ func flattenComputeAutoscalerAutoscalingPolicyScalingSchedulesDisabled(v interfa
 }
 
 func flattenComputeAutoscalerAutoscalingPolicyScalingSchedulesDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -144,6 +144,12 @@ func (c *AlloydbBackupCai2hclConverter) convertResourceData(asset caiasset.Asset
 }
 
 func flattenAlloydbBackupDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -155,6 +161,12 @@ func flattenAlloydbBackupType(v interface{}, d *schema.ResourceData, config *tra
 }
 
 func flattenAlloydbBackupDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -184,6 +196,12 @@ func flattenAlloydbBackupEncryptionConfig(v interface{}, d *schema.ResourceData,
 }
 
 func flattenAlloydbBackupEncryptionConfigKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

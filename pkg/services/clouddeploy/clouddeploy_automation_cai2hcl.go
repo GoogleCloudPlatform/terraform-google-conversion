@@ -144,6 +144,12 @@ func (c *ClouddeployAutomationCai2hclConverter) convertResourceData(asset caiass
 }
 
 func flattenClouddeployAutomationDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -203,6 +209,12 @@ func flattenClouddeployAutomationSelectorTargets(v interface{}, d *schema.Resour
 }
 
 func flattenClouddeployAutomationSelectorTargetsId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -264,14 +276,32 @@ func flattenClouddeployAutomationRulesPromoteReleaseRuleId(v interface{}, d *sch
 }
 
 func flattenClouddeployAutomationRulesPromoteReleaseRuleWait(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenClouddeployAutomationRulesPromoteReleaseRuleDestinationTargetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenClouddeployAutomationRulesPromoteReleaseRuleDestinationPhase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -305,6 +335,12 @@ func flattenClouddeployAutomationRulesAdvanceRolloutRuleId(v interface{}, d *sch
 }
 
 func flattenClouddeployAutomationRulesAdvanceRolloutRuleWait(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -401,6 +437,12 @@ func flattenClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryAttempts
 }
 
 func flattenClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRetryWait(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -422,6 +464,12 @@ func flattenClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollback(v in
 }
 
 func flattenClouddeployAutomationRulesRepairRolloutRuleRepairPhasesRollbackDestinationPhase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -463,6 +511,12 @@ func flattenClouddeployAutomationRulesTimedPromoteReleaseRuleId(v interface{}, d
 }
 
 func flattenClouddeployAutomationRulesTimedPromoteReleaseRuleDestinationTargetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -489,5 +543,11 @@ func flattenClouddeployAutomationRulesTimedPromoteReleaseRuleTimeZone(v interfac
 }
 
 func flattenClouddeployAutomationRulesTimedPromoteReleaseRuleDestinationPhase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

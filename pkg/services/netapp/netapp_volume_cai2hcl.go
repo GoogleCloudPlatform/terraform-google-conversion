@@ -160,6 +160,12 @@ func (c *NetappVolumeCai2hclConverter) convertResourceData(asset caiasset.Asset)
 }
 
 func flattenNetappVolumeShareName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -231,6 +237,12 @@ func flattenNetappVolumeExportPolicyRules(v interface{}, d *schema.ResourceData,
 }
 
 func flattenNetappVolumeExportPolicyRulesAllowedClients(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -311,6 +323,12 @@ func flattenNetappVolumeLabels(v interface{}, d *schema.ResourceData, config *tr
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenNetappVolumeDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -343,10 +361,22 @@ func flattenNetappVolumeRestoreParameters(v interface{}, d *schema.ResourceData,
 }
 
 func flattenNetappVolumeRestoreParametersSourceSnapshot(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeRestoreParametersSourceBackup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -684,6 +714,12 @@ func flattenNetappVolumeBackupConfigBackupPolicies(v interface{}, d *schema.Reso
 }
 
 func flattenNetappVolumeBackupConfigBackupVault(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -777,18 +813,42 @@ func flattenNetappVolumeHybridReplicationParameters(v interface{}, d *schema.Res
 }
 
 func flattenNetappVolumeHybridReplicationParametersReplication(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeHybridReplicationParametersPeerVolumeName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeHybridReplicationParametersPeerClusterName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeHybridReplicationParametersPeerSvmName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -797,10 +857,22 @@ func flattenNetappVolumeHybridReplicationParametersPeerIpAddresses(v interface{}
 }
 
 func flattenNetappVolumeHybridReplicationParametersClusterLocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeHybridReplicationParametersDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -864,14 +936,32 @@ func flattenNetappVolumeCacheParameters(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenNetappVolumeCacheParametersPeerVolumeName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeCacheParametersPeerClusterName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeCacheParametersPeerSvmName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
