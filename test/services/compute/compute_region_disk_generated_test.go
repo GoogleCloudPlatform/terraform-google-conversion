@@ -48,6 +48,9 @@ func TestAccComputeRegionDisk(t *testing.T) {
 			Name: "TestAccComputeRegionDisk_basicUpdate",
 		},
 		{
+			Name: "TestAccComputeRegionDisk_hyperdiskPerformanceAtomicUpdate",
+		},
+		{
 			Name: "TestAccComputeRegionDisk_encryption",
 		},
 		{
