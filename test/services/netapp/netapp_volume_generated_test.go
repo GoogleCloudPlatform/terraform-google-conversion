@@ -48,7 +48,10 @@ func TestAccNetappVolume(t *testing.T) {
 			Name: "TestAccNetappVolume_NetappVolumeNfsv4Example_update",
 		},
 		{
-			Name: "TestAccNetappVolume_LargeCapacityConfig",
+			Name: "TestAccNetappVolume_LargeCapacityScaleTypeConfig",
+		},
+		{
+			Name: "TestAccNetappVolume_LargeCapacityScaleTierConfig",
 		},
 	}
 

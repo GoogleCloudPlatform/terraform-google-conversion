@@ -60,7 +60,10 @@ func TestAccNetappStoragePool(t *testing.T) {
 			Name: "TestAccNetappStoragePool_ontapMode",
 		},
 		{
-			Name: "TestAccNetappStoragePool_ScaleTierEnterprise",
+			Name: "TestAccNetappStoragePool_ScaleType",
+		},
+		{
+			Name: "TestAccNetappStoragePool_ScaleTier",
 		},
 	}
 
