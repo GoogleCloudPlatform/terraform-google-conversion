@@ -335,6 +335,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withAutopilotDefaultComputeClassEnabled",
 		},
 		{
+			Name: "TestAccContainerCluster_withAutopilotClusterPolicy",
+		},
+		{
 			Name: "TestAccContainerCluster_withShieldedNodes",
 		},
 		{
