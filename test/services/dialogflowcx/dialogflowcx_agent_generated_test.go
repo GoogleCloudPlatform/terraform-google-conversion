@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------------
 
-package dialogflow_test
+package dialogflowcx_test
 
 import (
 	"os"
@@ -21,16 +21,16 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccDialogflowAgent(t *testing.T) {
+func TestAccDialogflowCXAgent(t *testing.T) {
 	if os.Getenv("WRITE_FILES") != "" {
 		t.Parallel()
 	}
 	tests := []test.TestCase{
 		{
-			Name: "TestAccDialogflowAgent_dialogflowAgentFullExample",
+			Name: "TestAccDialogflowCXAgent_dialogflowcxAgentFullExample",
 		},
 		{
-			Name: "TestAccDialogflowAgent_update",
+			Name: "TestAccDialogflowCXAgent_update",
 		},
 	}
 
@@ -47,18 +47,23 @@ func TestAccDialogflowAgent(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
-					"avatar_uri",
+					"advanced_settings.logging_settings",
+					"answer_feedback_settings",
 					"count",
+					"delete_chat_engine_on_destroy",
 					"deletion_protection",
 					"depends_on",
 					"dynamic",
+					"enable_stackdriver_logging",
 					"for_each",
+					"git_integration_settings.github_settings.access_token",
 					"lifecycle",
+					"location",
 					"provider",
-					"tier",
+					"start_playbook",
 					"timeouts",
 				},
-				"google_dialogflow_agent",
+				"google_dialogflow_cx_agent",
 			)
 		})
 	}
