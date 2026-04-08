@@ -88,7 +88,7 @@ func ResourceConverterDiscoveryEngineSitemap() cai.ResourceConverter {
 }
 
 func GetDiscoveryEngineSitemapCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-discoveryengine.googleapis.com/{{name}}")
+	name, err := cai.AssetName(d, config, "//discoveryengine.googleapis.com/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

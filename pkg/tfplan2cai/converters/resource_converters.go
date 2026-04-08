@@ -40,7 +40,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflow"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflowcx"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/eventarc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
@@ -193,7 +193,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_datastream_stream":                               datastream.DatastreamStreamTfplan2caiConverter(),
 	"google_developer_connect_connection":                    developerconnect.DeveloperConnectConnectionTfplan2caiConverter(),
 	"google_developer_connect_git_repository_link":           developerconnect.DeveloperConnectGitRepositoryLinkTfplan2caiConverter(),
-	"google_dialogflow_agent":                                dialogflow.DialogflowAgentTfplan2caiConverter(),
+	"google_dialogflow_cx_agent":                             dialogflowcx.DialogflowCXAgentTfplan2caiConverter(),
 	"google_eventarc_enrollment":                             eventarc.EventarcEnrollmentTfplan2caiConverter(),
 	"google_eventarc_google_api_source":                      eventarc.EventarcGoogleApiSourceTfplan2caiConverter(),
 	"google_eventarc_google_channel_config":                  eventarc.EventarcGoogleChannelConfigTfplan2caiConverter(),

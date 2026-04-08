@@ -99,7 +99,7 @@ func ResourceConverterContainerAttachedCluster() cai.ResourceConverter {
 }
 
 func GetContainerAttachedClusterCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-gkemulticloud.googleapis.com/projects/{{project}}/locations/{{location}}/attachedClusters/{{name}}")
+	name, err := cai.AssetName(d, config, "//gkemulticloud.googleapis.com/projects/{{project}}/locations/{{location}}/attachedClusters/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

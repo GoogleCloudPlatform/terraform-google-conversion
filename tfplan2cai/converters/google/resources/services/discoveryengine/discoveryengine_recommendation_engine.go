@@ -88,7 +88,7 @@ func ResourceConverterDiscoveryEngineRecommendationEngine() cai.ResourceConverte
 }
 
 func GetDiscoveryEngineRecommendationEngineCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-discoveryengine.googleapis.com/projects/{{project}}/locations/{{location}}/collections/default_collection/engines/{{engine_id}}")
+	name, err := cai.AssetName(d, config, "//discoveryengine.googleapis.com/projects/{{project}}/locations/{{location}}/collections/default_collection/engines/{{engine_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

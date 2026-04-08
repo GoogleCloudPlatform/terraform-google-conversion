@@ -88,7 +88,7 @@ func ResourceConverterDialogflowCXPlaybook() cai.ResourceConverter {
 }
 
 func GetDialogflowCXPlaybookCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/playbooks/{{name}}")
+	name, err := cai.AssetName(d, config, "//dialogflow.googleapis.com/{{parent}}/playbooks/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

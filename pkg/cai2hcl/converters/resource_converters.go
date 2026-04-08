@@ -41,7 +41,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflow"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflowcx"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/eventarc"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
@@ -419,7 +419,7 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"Default": developerconnect.NewDeveloperConnectGitRepositoryLinkCai2hclConverter(provider),
 	},
 	"dialogflow.googleapis.com/Agent": {
-		"Default": dialogflow.NewDialogflowAgentCai2hclConverter(provider),
+		"Default": dialogflowcx.NewDialogflowCXAgentCai2hclConverter(provider),
 	},
 	"eventarc.googleapis.com/Enrollment": {
 		"Default": eventarc.NewEventarcEnrollmentCai2hclConverter(provider),
