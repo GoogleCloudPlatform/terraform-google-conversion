@@ -75,7 +75,7 @@ var handwrittenResources = map[string]*schema.Resource{
 	// ####### END handwritten resources ###########
 }
 
-// Generated resources: 195
+// Generated resources: 196
 var generatedResources = map[string]*schema.Resource{
 	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
 	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
@@ -249,6 +249,7 @@ var generatedResources = map[string]*schema.Resource{
 	"google_network_security_tls_inspection_policy":          networksecurity.ResourceNetworkSecurityTlsInspectionPolicy(),
 	"google_network_security_url_lists":                      networksecurity.ResourceNetworkSecurityUrlLists(),
 	"google_network_services_authz_extension":                networkservices.ResourceNetworkServicesAuthzExtension(),
+	"google_network_services_gateway":                        networkservices.ResourceNetworkServicesGateway(),
 	"google_privateca_ca_pool":                               privateca.ResourcePrivatecaCaPool(),
 	"google_privateca_certificate":                           privateca.ResourcePrivatecaCertificate(),
 	"google_privateca_certificate_template":                  privateca.ResourcePrivatecaCertificateTemplate(),

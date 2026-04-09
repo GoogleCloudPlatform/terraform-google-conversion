@@ -258,6 +258,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_network_security_tls_inspection_policy":          networksecurity.NetworkSecurityTlsInspectionPolicyTfplan2caiConverter(),
 	"google_network_security_url_lists":                      networksecurity.NetworkSecurityUrlListsTfplan2caiConverter(),
 	"google_network_services_authz_extension":                networkservices.NetworkServicesAuthzExtensionTfplan2caiConverter(),
+	"google_network_services_gateway":                        networkservices.NetworkServicesGatewayTfplan2caiConverter(),
 	"google_privateca_ca_pool":                               privateca.PrivatecaCaPoolTfplan2caiConverter(),
 	"google_privateca_certificate":                           privateca.PrivatecaCertificateTfplan2caiConverter(),
 	"google_privateca_certificate_template":                  privateca.PrivatecaCertificateTemplateTfplan2caiConverter(),

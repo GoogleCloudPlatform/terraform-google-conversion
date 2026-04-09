@@ -586,6 +586,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"networkservices.googleapis.com/AuthzExtension": {
 		"Default": networkservices.NewNetworkServicesAuthzExtensionCai2hclConverter(provider),
 	},
+	"networkservices.googleapis.com/Gateway": {
+		"Default": networkservices.NewNetworkServicesGatewayCai2hclConverter(provider),
+	},
 	"notebooks.googleapis.com/Instance": {
 		"Default": workbench.NewWorkbenchInstanceCai2hclConverter(provider),
 	},
