@@ -128,6 +128,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withManagedOpenTelemetryConfig",
 		},
 		{
+			Name: "TestAccContainerCluster_withManagedMLDiagnosticsConfig",
+		},
+		{
 			Name: "TestAccContainerCluster_withMasterAuthorizedNetworksConfig",
 		},
 		{
