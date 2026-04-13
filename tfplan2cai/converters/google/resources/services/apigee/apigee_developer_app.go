@@ -158,18 +158,6 @@ func GetApigeeDeveloperAppApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("attributes"); !tpgresource.IsEmptyValue(reflect.ValueOf(attributesProp)) && (ok || !reflect.DeepEqual(v, attributesProp)) {
 		obj["attributes"] = attributesProp
 	}
-	consumerKeyProp, err := expandApigeeDeveloperAppConsumerKey(d.Get("consumer_key"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("consumer_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(consumerKeyProp)) && (ok || !reflect.DeepEqual(v, consumerKeyProp)) {
-		obj["consumerKey"] = consumerKeyProp
-	}
-	consumerSecretProp, err := expandApigeeDeveloperAppConsumerSecret(d.Get("consumer_secret"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("consumer_secret"); !tpgresource.IsEmptyValue(reflect.ValueOf(consumerSecretProp)) && (ok || !reflect.DeepEqual(v, consumerSecretProp)) {
-		obj["consumerSecret"] = consumerSecretProp
-	}
 
 	return obj, nil
 }
@@ -241,13 +229,5 @@ func expandApigeeDeveloperAppAttributesName(v interface{}, d tpgresource.Terrafo
 }
 
 func expandApigeeDeveloperAppAttributesValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandApigeeDeveloperAppConsumerKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandApigeeDeveloperAppConsumerSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
