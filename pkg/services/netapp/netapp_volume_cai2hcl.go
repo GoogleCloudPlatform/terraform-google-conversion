@@ -150,6 +150,7 @@ func (c *NetappVolumeCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	hclData["throughput_mibps"] = flattenNetappVolumeThroughputMibps(res["throughputMibps"], d, config)
 	hclData["cache_parameters"] = flattenNetappVolumeCacheParameters(res["cacheParameters"], d, config)
 	hclData["block_devices"] = flattenNetappVolumeBlockDevices(res["blockDevices"], d, config)
+	hclData["large_capacity_config"] = flattenNetappVolumeLargeCapacityConfig(res["largeCapacityConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -1028,4 +1029,35 @@ func flattenNetappVolumeBlockDevicesHostGroups(v interface{}, d *schema.Resource
 
 func flattenNetappVolumeBlockDevicesOsType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenNetappVolumeLargeCapacityConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["constituent_count"] =
+		flattenNetappVolumeLargeCapacityConfigConstituentCount(original["constituentCount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetappVolumeLargeCapacityConfigConstituentCount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
 }

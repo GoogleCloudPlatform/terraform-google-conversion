@@ -470,6 +470,24 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 				ForceNew:    true,
 				Description: `Optional. Flag indicating if the volume will be a large capacity volume or a regular volume.`,
 			},
+			"large_capacity_config": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `Configuration for a Large Capacity Volume. A Large Capacity Volume
+supports sizes ranging from 12 TiB to 20 PiB, it is composed of multiple
+internal constituents, and must be created in a large capacity pool.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"constituent_count": {
+							Type:     schema.TypeInt,
+							Optional: true,
+							Description: `The number of internal constituents (e.g., FlexVols) for this large volume.
+The minimum number of constituents is 2.`,
+						},
+					},
+				},
+			},
 			"multiple_endpoints": {
 				Type:     schema.TypeBool,
 				Optional: true,
