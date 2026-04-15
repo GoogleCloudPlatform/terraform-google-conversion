@@ -127,6 +127,12 @@ func GetClouddeployCustomTargetTypeCaiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("custom_actions"); !tpgresource.IsEmptyValue(reflect.ValueOf(customActionsProp)) && (ok || !reflect.DeepEqual(v, customActionsProp)) {
 		obj["customActions"] = customActionsProp
 	}
+	tasksProp, err := expandClouddeployCustomTargetTypeTasks(d.Get("tasks"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tasks"); !tpgresource.IsEmptyValue(reflect.ValueOf(tasksProp)) && (ok || !reflect.DeepEqual(v, tasksProp)) {
+		obj["tasks"] = tasksProp
+	}
 	effectiveAnnotationsProp, err := expandClouddeployCustomTargetTypeEffectiveAnnotations(d.Get("effective_annotations"), d, config)
 	if err != nil {
 		return nil, err
@@ -372,6 +378,211 @@ func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleC
 
 func expandClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogleCloudBuildRepoRef(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeTasks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRender, err := expandClouddeployCustomTargetTypeTasksRender(original["render"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRender); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["render"] = transformedRender
+	}
+
+	transformedDeploy, err := expandClouddeployCustomTargetTypeTasksDeploy(original["deploy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDeploy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["deploy"] = transformedDeploy
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksRender(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedContainer, err := expandClouddeployCustomTargetTypeTasksRenderContainer(original["container"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContainer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["container"] = transformedContainer
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksRenderContainer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedImage, err := expandClouddeployCustomTargetTypeTasksRenderContainerImage(original["image"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["image"] = transformedImage
+	}
+
+	transformedCommand, err := expandClouddeployCustomTargetTypeTasksRenderContainerCommand(original["command"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCommand); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["command"] = transformedCommand
+	}
+
+	transformedArgs, err := expandClouddeployCustomTargetTypeTasksRenderContainerArgs(original["args"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedArgs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["args"] = transformedArgs
+	}
+
+	transformedEnv, err := expandClouddeployCustomTargetTypeTasksRenderContainerEnv(original["env"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnv); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["env"] = transformedEnv
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksRenderContainerImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksRenderContainerCommand(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksRenderContainerArgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksRenderContainerEnv(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksDeploy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedContainer, err := expandClouddeployCustomTargetTypeTasksDeployContainer(original["container"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContainer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["container"] = transformedContainer
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksDeployContainer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedImage, err := expandClouddeployCustomTargetTypeTasksDeployContainerImage(original["image"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["image"] = transformedImage
+	}
+
+	transformedCommand, err := expandClouddeployCustomTargetTypeTasksDeployContainerCommand(original["command"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCommand); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["command"] = transformedCommand
+	}
+
+	transformedArgs, err := expandClouddeployCustomTargetTypeTasksDeployContainerArgs(original["args"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedArgs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["args"] = transformedArgs
+	}
+
+	transformedEnv, err := expandClouddeployCustomTargetTypeTasksDeployContainerEnv(original["env"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnv); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["env"] = transformedEnv
+	}
+
+	return transformed, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksDeployContainerImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksDeployContainerCommand(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksDeployContainerArgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandClouddeployCustomTargetTypeTasksDeployContainerEnv(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandClouddeployCustomTargetTypeEffectiveAnnotations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {

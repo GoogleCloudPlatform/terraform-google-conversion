@@ -131,6 +131,7 @@ func (c *ClouddeployCustomTargetTypeCai2hclConverter) convertResourceData(asset 
 	hclData["annotations"] = flattenClouddeployCustomTargetTypeAnnotations(res["annotations"], d, config)
 	hclData["labels"] = flattenClouddeployCustomTargetTypeLabels(res["labels"], d, config)
 	hclData["custom_actions"] = flattenClouddeployCustomTargetTypeCustomActions(res["customActions"], d, config)
+	hclData["tasks"] = flattenClouddeployCustomTargetTypeTasks(res["tasks"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -355,5 +356,135 @@ func flattenClouddeployCustomTargetTypeCustomActionsIncludeSkaffoldModulesGoogle
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenClouddeployCustomTargetTypeTasks(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["render"] =
+		flattenClouddeployCustomTargetTypeTasksRender(original["render"], d, config)
+	transformed["deploy"] =
+		flattenClouddeployCustomTargetTypeTasksDeploy(original["deploy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenClouddeployCustomTargetTypeTasksRender(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["container"] =
+		flattenClouddeployCustomTargetTypeTasksRenderContainer(original["container"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenClouddeployCustomTargetTypeTasksRenderContainer(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["image"] =
+		flattenClouddeployCustomTargetTypeTasksRenderContainerImage(original["image"], d, config)
+	transformed["command"] =
+		flattenClouddeployCustomTargetTypeTasksRenderContainerCommand(original["command"], d, config)
+	transformed["args"] =
+		flattenClouddeployCustomTargetTypeTasksRenderContainerArgs(original["args"], d, config)
+	transformed["env"] =
+		flattenClouddeployCustomTargetTypeTasksRenderContainerEnv(original["env"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenClouddeployCustomTargetTypeTasksRenderContainerImage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenClouddeployCustomTargetTypeTasksRenderContainerCommand(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenClouddeployCustomTargetTypeTasksRenderContainerArgs(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenClouddeployCustomTargetTypeTasksRenderContainerEnv(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenClouddeployCustomTargetTypeTasksDeploy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["container"] =
+		flattenClouddeployCustomTargetTypeTasksDeployContainer(original["container"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenClouddeployCustomTargetTypeTasksDeployContainer(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["image"] =
+		flattenClouddeployCustomTargetTypeTasksDeployContainerImage(original["image"], d, config)
+	transformed["command"] =
+		flattenClouddeployCustomTargetTypeTasksDeployContainerCommand(original["command"], d, config)
+	transformed["args"] =
+		flattenClouddeployCustomTargetTypeTasksDeployContainerArgs(original["args"], d, config)
+	transformed["env"] =
+		flattenClouddeployCustomTargetTypeTasksDeployContainerEnv(original["env"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenClouddeployCustomTargetTypeTasksDeployContainerImage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenClouddeployCustomTargetTypeTasksDeployContainerCommand(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenClouddeployCustomTargetTypeTasksDeployContainerArgs(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenClouddeployCustomTargetTypeTasksDeployContainerEnv(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
