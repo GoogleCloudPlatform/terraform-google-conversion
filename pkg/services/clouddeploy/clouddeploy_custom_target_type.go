@@ -197,6 +197,7 @@ Please refer to the field 'effective_annotations' for all of the annotations pre
 						},
 					},
 				},
+				ConflictsWith: []string{"tasks"},
 			},
 			"description": {
 				Type:        schema.TypeString,
@@ -211,6 +212,111 @@ Please refer to the field 'effective_annotations' for all of the annotations pre
 **Note**: This field is non-authoritative, and will only manage the labels present in your configuration.
 Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
+			},
+			"tasks": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: `Configures render and deploy for the 'CustomTargetType' using tasks.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"deploy": {
+							Type:        schema.TypeList,
+							Required:    true,
+							Description: `The task responsible for deploy operations.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"container": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `This task is represented by a container that is executed in the Cloud Build execution environment.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"image": {
+													Type:        schema.TypeString,
+													Required:    true,
+													Description: `Image is the container image to use.`,
+												},
+												"args": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `Args is the container arguments to use. This overrides the default arguments defined in the container image.`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"command": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `Command is the container entrypoint to use. This overrides the default entrypoint defined in the container image.`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"env": {
+													Type:        schema.TypeMap,
+													Optional:    true,
+													Description: `Environment variables that are set in the container.`,
+													Elem:        &schema.Schema{Type: schema.TypeString},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"render": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `The task responsible for render operations. If not provided then Cloud Deploy will perform its default rendering operation.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"container": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `This task is represented by a container that is executed in the Cloud Build execution environment.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"image": {
+													Type:        schema.TypeString,
+													Required:    true,
+													Description: `Image is the container image to use.`,
+												},
+												"args": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `Args is the container arguments to use. This overrides the default arguments defined in the container image.`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"command": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `Command is the container entrypoint to use. This overrides the default entrypoint defined in the container image.`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"env": {
+													Type:        schema.TypeMap,
+													Optional:    true,
+													Description: `Environment variables that are set in the container.`,
+													Elem:        &schema.Schema{Type: schema.TypeString},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				ConflictsWith: []string{"custom_actions"},
 			},
 			"create_time": {
 				Type:        schema.TypeString,
