@@ -251,6 +251,16 @@ certificate(either root or intermediate cert).`,
 											},
 										},
 									},
+									"trust_default_shared_ca": {
+										Type:     schema.TypeBool,
+										Optional: true,
+										Description: `If set to True, the trust bundle will include the private ca managed identity regional root
+public certificates.
+
+
+~> **Note** 'trust_default_shared_ca' is only supported for managed identity trust domain
+resource.`,
+									},
 								},
 							},
 						},
