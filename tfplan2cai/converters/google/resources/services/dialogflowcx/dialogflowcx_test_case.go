@@ -49,6 +49,29 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+func dialogflowcxTestCaseSessionParametersDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	// Treat empty string and empty JSON object as equivalent
+	if (old == "" || old == "{}") && (new == "" || new == "{}") {
+		return true
+	}
+
+	if old == "" || new == "" {
+		return old == new
+	}
+
+	var oldJson, newJson interface{}
+
+	if err := json.Unmarshal([]byte(old), &oldJson); err != nil {
+		return false
+	}
+
+	if err := json.Unmarshal([]byte(new), &newJson); err != nil {
+		return false
+	}
+
+	return reflect.DeepEqual(oldJson, newJson)
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
