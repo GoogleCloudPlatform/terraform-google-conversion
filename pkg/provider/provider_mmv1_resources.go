@@ -1,276 +1,277 @@
 package provider
 
 import (
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/binaryauthorization"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/blockchainnodeengine"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/certificatemanager"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudasset"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuild"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudquotas"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataplex"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflowcx"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/eventarc"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkebackup"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkeonprem"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iap"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/identityplatform"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/looker"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/lustre"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/managedkafka"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkservices"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securesourcemanager"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securitycenterv2"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/storageinsights"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workflows"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/binaryauthorization"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/blockchainnodeengine"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/certificatemanager"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudasset"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuild"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudquotas"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/compute"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/databasemigrationservice"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datafusion"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataplex"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dataproc"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/datastream"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/developerconnect"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/dialogflowcx"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/eventarc"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/filestore"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/firebasedataconnect"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkebackup"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkeonprem"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iap"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/identityplatform"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/kms"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/logging"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/looker"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/lustre"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/managedkafka"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/memcache"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkservices"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/pubsub"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/redis"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanager"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/secretmanagerregional"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securesourcemanager"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securitycenterv2"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/storageinsights"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workflows"
 )
 
 var handwrittenResources = map[string]*schema.Resource{
 	// ####### START handwritten resources ###########
-	"google_compute_instance":    compute.ResourceComputeInstance(),
-	"google_container_cluster":   container.ResourceContainerCluster(),
-	"google_container_node_pool": container.ResourceContainerNodePool(),
-	"google_project":             resourcemanager.ResourceGoogleProject(),
+	"google_compute_instance":    registry.Resource("google_compute_instance"),
+	"google_container_cluster":   registry.Resource("google_container_cluster"),
+	"google_container_node_pool": registry.Resource("google_container_node_pool"),
+	"google_project":             registry.Resource("google_project"),
 	// ####### END handwritten resources ###########
 }
 
 // Generated resources: 196
 var generatedResources = map[string]*schema.Resource{
-	"google_alloydb_backup":                                  alloydb.ResourceAlloydbBackup(),
-	"google_alloydb_cluster":                                 alloydb.ResourceAlloydbCluster(),
-	"google_alloydb_instance":                                alloydb.ResourceAlloydbInstance(),
-	"google_apigee_instance":                                 apigee.ResourceApigeeInstance(),
-	"google_apphub_application":                              apphub.ResourceApphubApplication(),
-	"google_apphub_service":                                  apphub.ResourceApphubService(),
-	"google_apphub_service_project_attachment":               apphub.ResourceApphubServiceProjectAttachment(),
-	"google_apphub_workload":                                 apphub.ResourceApphubWorkload(),
-	"google_artifact_registry_repository":                    artifactregistry.ResourceArtifactRegistryRepository(),
-	"google_backup_dr_backup_plan":                           backupdr.ResourceBackupDRBackupPlan(),
-	"google_backup_dr_backup_vault":                          backupdr.ResourceBackupDRBackupVault(),
-	"google_beyondcorp_app_connection":                       beyondcorp.ResourceBeyondcorpAppConnection(),
-	"google_beyondcorp_app_connector":                        beyondcorp.ResourceBeyondcorpAppConnector(),
-	"google_beyondcorp_app_gateway":                          beyondcorp.ResourceBeyondcorpAppGateway(),
-	"google_bigquery_dataset":                                bigquery.ResourceBigQueryDataset(),
-	"google_binary_authorization_attestor":                   binaryauthorization.ResourceBinaryAuthorizationAttestor(),
-	"google_blockchain_node_engine_blockchain_nodes":         blockchainnodeengine.ResourceBlockchainNodeEngineBlockchainNodes(),
-	"google_certificate_manager_certificate":                 certificatemanager.ResourceCertificateManagerCertificate(),
-	"google_certificate_manager_certificate_issuance_config": certificatemanager.ResourceCertificateManagerCertificateIssuanceConfig(),
-	"google_certificate_manager_certificate_map":             certificatemanager.ResourceCertificateManagerCertificateMap(),
-	"google_certificate_manager_certificate_map_entry":       certificatemanager.ResourceCertificateManagerCertificateMapEntry(),
-	"google_certificate_manager_dns_authorization":           certificatemanager.ResourceCertificateManagerDnsAuthorization(),
-	"google_certificate_manager_trust_config":                certificatemanager.ResourceCertificateManagerTrustConfig(),
-	"google_cloud_asset_folder_feed":                         cloudasset.ResourceCloudAssetFolderFeed(),
-	"google_cloud_asset_organization_feed":                   cloudasset.ResourceCloudAssetOrganizationFeed(),
-	"google_cloud_asset_project_feed":                        cloudasset.ResourceCloudAssetProjectFeed(),
-	"google_cloudbuild_bitbucket_server_config":              cloudbuild.ResourceCloudBuildBitbucketServerConfig(),
-	"google_cloudbuildv2_connection":                         cloudbuildv2.ResourceCloudbuildv2Connection(),
-	"google_cloudbuildv2_repository":                         cloudbuildv2.ResourceCloudbuildv2Repository(),
-	"google_clouddeploy_automation":                          clouddeploy.ResourceClouddeployAutomation(),
-	"google_clouddeploy_custom_target_type":                  clouddeploy.ResourceClouddeployCustomTargetType(),
-	"google_clouddeploy_deploy_policy":                       clouddeploy.ResourceClouddeployDeployPolicy(),
-	"google_cloudfunctions2_function":                        cloudfunctions2.ResourceCloudfunctions2function(),
-	"google_cloud_quotas_quota_preference":                   cloudquotas.ResourceCloudQuotasQuotaPreference(),
-	"google_cloud_tasks_queue":                               cloudtasks.ResourceCloudTasksQueue(),
-	"google_colab_runtime":                                   colab.ResourceColabRuntime(),
-	"google_colab_runtime_template":                          colab.ResourceColabRuntimeTemplate(),
-	"google_compute_address":                                 compute.ResourceComputeAddress(),
-	"google_compute_autoscaler":                              compute.ResourceComputeAutoscaler(),
-	"google_compute_backend_bucket":                          compute.ResourceComputeBackendBucket(),
-	"google_compute_backend_service":                         compute.ResourceComputeBackendService(),
-	"google_compute_disk":                                    compute.ResourceComputeDisk(),
-	"google_compute_external_vpn_gateway":                    compute.ResourceComputeExternalVpnGateway(),
-	"google_compute_firewall":                                compute.ResourceComputeFirewall(),
-	"google_compute_firewall_policy":                         compute.ResourceComputeFirewallPolicy(),
-	"google_compute_forwarding_rule":                         compute.ResourceComputeForwardingRule(),
-	"google_compute_global_address":                          compute.ResourceComputeGlobalAddress(),
-	"google_compute_global_forwarding_rule":                  compute.ResourceComputeGlobalForwardingRule(),
-	"google_compute_global_network_endpoint_group":           compute.ResourceComputeGlobalNetworkEndpointGroup(),
-	"google_compute_ha_vpn_gateway":                          compute.ResourceComputeHaVpnGateway(),
-	"google_compute_health_check":                            compute.ResourceComputeHealthCheck(),
-	"google_compute_http_health_check":                       compute.ResourceComputeHttpHealthCheck(),
-	"google_compute_https_health_check":                      compute.ResourceComputeHttpsHealthCheck(),
-	"google_compute_image":                                   compute.ResourceComputeImage(),
-	"google_compute_instant_snapshot":                        compute.ResourceComputeInstantSnapshot(),
-	"google_compute_interconnect":                            compute.ResourceComputeInterconnect(),
-	"google_compute_interconnect_attachment":                 compute.ResourceComputeInterconnectAttachment(),
-	"google_compute_managed_ssl_certificate":                 compute.ResourceComputeManagedSslCertificate(),
-	"google_compute_network":                                 compute.ResourceComputeNetwork(),
-	"google_compute_network_endpoint_group":                  compute.ResourceComputeNetworkEndpointGroup(),
-	"google_compute_network_firewall_policy":                 compute.ResourceComputeNetworkFirewallPolicy(),
-	"google_compute_node_group":                              compute.ResourceComputeNodeGroup(),
-	"google_compute_node_template":                           compute.ResourceComputeNodeTemplate(),
-	"google_compute_packet_mirroring":                        compute.ResourceComputePacketMirroring(),
-	"google_compute_region_autoscaler":                       compute.ResourceComputeRegionAutoscaler(),
-	"google_compute_region_backend_service":                  compute.ResourceComputeRegionBackendService(),
-	"google_compute_region_disk":                             compute.ResourceComputeRegionDisk(),
-	"google_compute_region_health_check":                     compute.ResourceComputeRegionHealthCheck(),
-	"google_compute_region_network_endpoint_group":           compute.ResourceComputeRegionNetworkEndpointGroup(),
-	"google_compute_region_network_firewall_policy":          compute.ResourceComputeRegionNetworkFirewallPolicy(),
-	"google_compute_region_security_policy":                  compute.ResourceComputeRegionSecurityPolicy(),
-	"google_compute_region_ssl_certificate":                  compute.ResourceComputeRegionSslCertificate(),
-	"google_compute_region_ssl_policy":                       compute.ResourceComputeRegionSslPolicy(),
-	"google_compute_region_target_http_proxy":                compute.ResourceComputeRegionTargetHttpProxy(),
-	"google_compute_region_target_https_proxy":               compute.ResourceComputeRegionTargetHttpsProxy(),
-	"google_compute_region_target_tcp_proxy":                 compute.ResourceComputeRegionTargetTcpProxy(),
-	"google_compute_region_url_map":                          compute.ResourceComputeRegionUrlMap(),
-	"google_compute_reservation":                             compute.ResourceComputeReservation(),
-	"google_compute_resource_policy":                         compute.ResourceComputeResourcePolicy(),
-	"google_compute_route":                                   compute.ResourceComputeRoute(),
-	"google_compute_router":                                  compute.ResourceComputeRouter(),
-	"google_compute_service_attachment":                      compute.ResourceComputeServiceAttachment(),
-	"google_compute_snapshot":                                compute.ResourceComputeSnapshot(),
-	"google_compute_ssl_certificate":                         compute.ResourceComputeSslCertificate(),
-	"google_compute_ssl_policy":                              compute.ResourceComputeSslPolicy(),
-	"google_compute_storage_pool":                            compute.ResourceComputeStoragePool(),
-	"google_compute_subnetwork":                              compute.ResourceComputeSubnetwork(),
-	"google_compute_target_grpc_proxy":                       compute.ResourceComputeTargetGrpcProxy(),
-	"google_compute_target_http_proxy":                       compute.ResourceComputeTargetHttpProxy(),
-	"google_compute_target_https_proxy":                      compute.ResourceComputeTargetHttpsProxy(),
-	"google_compute_target_instance":                         compute.ResourceComputeTargetInstance(),
-	"google_compute_target_ssl_proxy":                        compute.ResourceComputeTargetSslProxy(),
-	"google_compute_target_tcp_proxy":                        compute.ResourceComputeTargetTcpProxy(),
-	"google_compute_url_map":                                 compute.ResourceComputeUrlMap(),
-	"google_compute_vpn_tunnel":                              compute.ResourceComputeVpnTunnel(),
-	"google_database_migration_service_connection_profile":   databasemigrationservice.ResourceDatabaseMigrationServiceConnectionProfile(),
-	"google_database_migration_service_migration_job":        databasemigrationservice.ResourceDatabaseMigrationServiceMigrationJob(),
-	"google_data_fusion_instance":                            datafusion.ResourceDataFusionInstance(),
-	"google_dataplex_glossary":                               dataplex.ResourceDataplexGlossary(),
-	"google_dataplex_task":                                   dataplex.ResourceDataplexTask(),
-	"google_dataproc_autoscaling_policy":                     dataproc.ResourceDataprocAutoscalingPolicy(),
-	"google_dataproc_batch":                                  dataproc.ResourceDataprocBatch(),
-	"google_datastream_connection_profile":                   datastream.ResourceDatastreamConnectionProfile(),
-	"google_datastream_private_connection":                   datastream.ResourceDatastreamPrivateConnection(),
-	"google_datastream_stream":                               datastream.ResourceDatastreamStream(),
-	"google_developer_connect_connection":                    developerconnect.ResourceDeveloperConnectConnection(),
-	"google_developer_connect_git_repository_link":           developerconnect.ResourceDeveloperConnectGitRepositoryLink(),
-	"google_dialogflow_cx_agent":                             dialogflowcx.ResourceDialogflowCXAgent(),
-	"google_eventarc_enrollment":                             eventarc.ResourceEventarcEnrollment(),
-	"google_eventarc_google_api_source":                      eventarc.ResourceEventarcGoogleApiSource(),
-	"google_eventarc_google_channel_config":                  eventarc.ResourceEventarcGoogleChannelConfig(),
-	"google_eventarc_message_bus":                            eventarc.ResourceEventarcMessageBus(),
-	"google_eventarc_pipeline":                               eventarc.ResourceEventarcPipeline(),
-	"google_filestore_backup":                                filestore.ResourceFilestoreBackup(),
-	"google_filestore_instance":                              filestore.ResourceFilestoreInstance(),
-	"google_filestore_snapshot":                              filestore.ResourceFilestoreSnapshot(),
-	"google_firebase_data_connect_service":                   firebasedataconnect.ResourceFirebaseDataConnectService(),
-	"google_gemini_code_repository_index":                    gemini.ResourceGeminiCodeRepositoryIndex(),
-	"google_gemini_repository_group":                         gemini.ResourceGeminiRepositoryGroup(),
-	"google_gke_backup_backup_plan":                          gkebackup.ResourceGKEBackupBackupPlan(),
-	"google_gke_backup_restore_plan":                         gkebackup.ResourceGKEBackupRestorePlan(),
-	"google_gke_hub_membership":                              gkehub.ResourceGKEHubMembership(),
-	"google_gkeonprem_bare_metal_admin_cluster":              gkeonprem.ResourceGkeonpremBareMetalAdminCluster(),
-	"google_gkeonprem_bare_metal_cluster":                    gkeonprem.ResourceGkeonpremBareMetalCluster(),
-	"google_gkeonprem_bare_metal_node_pool":                  gkeonprem.ResourceGkeonpremBareMetalNodePool(),
-	"google_gkeonprem_vmware_cluster":                        gkeonprem.ResourceGkeonpremVmwareCluster(),
-	"google_gkeonprem_vmware_node_pool":                      gkeonprem.ResourceGkeonpremVmwareNodePool(),
-	"google_iam_workload_identity_pool":                      iambeta.ResourceIAMBetaWorkloadIdentityPool(),
-	"google_iam_workload_identity_pool_provider":             iambeta.ResourceIAMBetaWorkloadIdentityPoolProvider(),
-	"google_iap_tunnel_dest_group":                           iap.ResourceIapTunnelDestGroup(),
-	"google_identity_platform_default_supported_idp_config":  identityplatform.ResourceIdentityPlatformDefaultSupportedIdpConfig(),
-	"google_identity_platform_inbound_saml_config":           identityplatform.ResourceIdentityPlatformInboundSamlConfig(),
-	"google_identity_platform_tenant":                        identityplatform.ResourceIdentityPlatformTenant(),
-	"google_kms_autokey_config":                              kms.ResourceKMSAutokeyConfig(),
-	"google_kms_crypto_key":                                  kms.ResourceKMSCryptoKey(),
-	"google_kms_crypto_key_version":                          kms.ResourceKMSCryptoKeyVersion(),
-	"google_kms_ekm_connection":                              kms.ResourceKMSEkmConnection(),
-	"google_kms_key_handle":                                  kms.ResourceKMSKeyHandle(),
-	"google_kms_key_ring":                                    kms.ResourceKMSKeyRing(),
-	"google_kms_key_ring_import_job":                         kms.ResourceKMSKeyRingImportJob(),
-	"google_logging_metric":                                  logging.ResourceLoggingMetric(),
-	"google_looker_instance":                                 looker.ResourceLookerInstance(),
-	"google_lustre_instance":                                 lustre.ResourceLustreInstance(),
-	"google_managed_kafka_cluster":                           managedkafka.ResourceManagedKafkaCluster(),
-	"google_memcache_instance":                               memcache.ResourceMemcacheInstance(),
-	"google_monitoring_alert_policy":                         monitoring.ResourceMonitoringAlertPolicy(),
-	"google_monitoring_notification_channel":                 monitoring.ResourceMonitoringNotificationChannel(),
-	"google_monitoring_uptime_check_config":                  monitoring.ResourceMonitoringUptimeCheckConfig(),
-	"google_netapp_active_directory":                         netapp.ResourceNetappActiveDirectory(),
-	"google_netapp_backup":                                   netapp.ResourceNetappBackup(),
-	"google_netapp_backup_policy":                            netapp.ResourceNetappBackupPolicy(),
-	"google_netapp_backup_vault":                             netapp.ResourceNetappBackupVault(),
-	"google_netapp_storage_pool":                             netapp.ResourceNetappStoragePool(),
-	"google_netapp_volume":                                   netapp.ResourceNetappVolume(),
-	"google_netapp_volume_replication":                       netapp.ResourceNetappVolumeReplication(),
-	"google_netapp_volume_snapshot":                          netapp.ResourceNetappVolumeSnapshot(),
-	"google_netapp_kmsconfig":                                netapp.ResourceNetappkmsconfig(),
-	"google_network_connectivity_group":                      networkconnectivity.ResourceNetworkConnectivityGroup(),
-	"google_network_connectivity_policy_based_route":         networkconnectivity.ResourceNetworkConnectivityPolicyBasedRoute(),
-	"google_network_security_address_group":                  networksecurity.ResourceNetworkSecurityAddressGroup(),
-	"google_network_security_authz_policy":                   networksecurity.ResourceNetworkSecurityAuthzPolicy(),
-	"google_network_security_client_tls_policy":              networksecurity.ResourceNetworkSecurityClientTlsPolicy(),
-	"google_network_security_firewall_endpoint":              networksecurity.ResourceNetworkSecurityFirewallEndpoint(),
-	"google_network_security_firewall_endpoint_association":  networksecurity.ResourceNetworkSecurityFirewallEndpointAssociation(),
-	"google_network_security_gateway_security_policy":        networksecurity.ResourceNetworkSecurityGatewaySecurityPolicy(),
-	"google_network_security_gateway_security_policy_rule":   networksecurity.ResourceNetworkSecurityGatewaySecurityPolicyRule(),
-	"google_network_security_security_profile":               networksecurity.ResourceNetworkSecuritySecurityProfile(),
-	"google_network_security_security_profile_group":         networksecurity.ResourceNetworkSecuritySecurityProfileGroup(),
-	"google_network_security_server_tls_policy":              networksecurity.ResourceNetworkSecurityServerTlsPolicy(),
-	"google_network_security_tls_inspection_policy":          networksecurity.ResourceNetworkSecurityTlsInspectionPolicy(),
-	"google_network_security_url_lists":                      networksecurity.ResourceNetworkSecurityUrlLists(),
-	"google_network_services_authz_extension":                networkservices.ResourceNetworkServicesAuthzExtension(),
-	"google_network_services_gateway":                        networkservices.ResourceNetworkServicesGateway(),
-	"google_privateca_ca_pool":                               privateca.ResourcePrivatecaCaPool(),
-	"google_privateca_certificate":                           privateca.ResourcePrivatecaCertificate(),
-	"google_privateca_certificate_template":                  privateca.ResourcePrivatecaCertificateTemplate(),
-	"google_pubsub_subscription":                             pubsub.ResourcePubsubSubscription(),
-	"google_pubsub_topic":                                    pubsub.ResourcePubsubTopic(),
-	"google_redis_cluster":                                   redis.ResourceRedisCluster(),
-	"google_redis_instance":                                  redis.ResourceRedisInstance(),
-	"google_secret_manager_secret":                           secretmanager.ResourceSecretManagerSecret(),
-	"google_secret_manager_secret_version":                   secretmanager.ResourceSecretManagerSecretVersion(),
-	"google_secret_manager_regional_secret":                  secretmanagerregional.ResourceSecretManagerRegionalRegionalSecret(),
-	"google_secret_manager_regional_secret_version":          secretmanagerregional.ResourceSecretManagerRegionalRegionalSecretVersion(),
-	"google_secure_source_manager_instance":                  securesourcemanager.ResourceSecureSourceManagerInstance(),
-	"google_scc_v2_folder_mute_config":                       securitycenterv2.ResourceSecurityCenterV2FolderMuteConfig(),
-	"google_scc_v2_organization_mute_config":                 securitycenterv2.ResourceSecurityCenterV2OrganizationMuteConfig(),
-	"google_spanner_database":                                spanner.ResourceSpannerDatabase(),
-	"google_spanner_instance":                                spanner.ResourceSpannerInstance(),
-	"google_storage_insights_report_config":                  storageinsights.ResourceStorageInsightsReportConfig(),
-	"google_vmwareengine_network":                            vmwareengine.ResourceVmwareengineNetwork(),
-	"google_vmwareengine_network_peering":                    vmwareengine.ResourceVmwareengineNetworkPeering(),
-	"google_vmwareengine_network_policy":                     vmwareengine.ResourceVmwareengineNetworkPolicy(),
-	"google_vpc_access_connector":                            vpcaccess.ResourceVPCAccessConnector(),
-	"google_workbench_instance":                              workbench.ResourceWorkbenchInstance(),
-	"google_workflows_workflow":                              workflows.ResourceWorkflowsWorkflow(),
+	"google_alloydb_backup":                                  registry.Resource("google_alloydb_backup"),
+	"google_alloydb_cluster":                                 registry.Resource("google_alloydb_cluster"),
+	"google_alloydb_instance":                                registry.Resource("google_alloydb_instance"),
+	"google_apigee_instance":                                 registry.Resource("google_apigee_instance"),
+	"google_apphub_application":                              registry.Resource("google_apphub_application"),
+	"google_apphub_service":                                  registry.Resource("google_apphub_service"),
+	"google_apphub_service_project_attachment":               registry.Resource("google_apphub_service_project_attachment"),
+	"google_apphub_workload":                                 registry.Resource("google_apphub_workload"),
+	"google_artifact_registry_repository":                    registry.Resource("google_artifact_registry_repository"),
+	"google_backup_dr_backup_plan":                           registry.Resource("google_backup_dr_backup_plan"),
+	"google_backup_dr_backup_vault":                          registry.Resource("google_backup_dr_backup_vault"),
+	"google_beyondcorp_app_connection":                       registry.Resource("google_beyondcorp_app_connection"),
+	"google_beyondcorp_app_connector":                        registry.Resource("google_beyondcorp_app_connector"),
+	"google_beyondcorp_app_gateway":                          registry.Resource("google_beyondcorp_app_gateway"),
+	"google_bigquery_dataset":                                registry.Resource("google_bigquery_dataset"),
+	"google_binary_authorization_attestor":                   registry.Resource("google_binary_authorization_attestor"),
+	"google_blockchain_node_engine_blockchain_nodes":         registry.Resource("google_blockchain_node_engine_blockchain_nodes"),
+	"google_certificate_manager_certificate":                 registry.Resource("google_certificate_manager_certificate"),
+	"google_certificate_manager_certificate_issuance_config": registry.Resource("google_certificate_manager_certificate_issuance_config"),
+	"google_certificate_manager_certificate_map":             registry.Resource("google_certificate_manager_certificate_map"),
+	"google_certificate_manager_certificate_map_entry":       registry.Resource("google_certificate_manager_certificate_map_entry"),
+	"google_certificate_manager_dns_authorization":           registry.Resource("google_certificate_manager_dns_authorization"),
+	"google_certificate_manager_trust_config":                registry.Resource("google_certificate_manager_trust_config"),
+	"google_cloud_asset_folder_feed":                         registry.Resource("google_cloud_asset_folder_feed"),
+	"google_cloud_asset_organization_feed":                   registry.Resource("google_cloud_asset_organization_feed"),
+	"google_cloud_asset_project_feed":                        registry.Resource("google_cloud_asset_project_feed"),
+	"google_cloudbuild_bitbucket_server_config":              registry.Resource("google_cloudbuild_bitbucket_server_config"),
+	"google_cloudbuildv2_connection":                         registry.Resource("google_cloudbuildv2_connection"),
+	"google_cloudbuildv2_repository":                         registry.Resource("google_cloudbuildv2_repository"),
+	"google_clouddeploy_automation":                          registry.Resource("google_clouddeploy_automation"),
+	"google_clouddeploy_custom_target_type":                  registry.Resource("google_clouddeploy_custom_target_type"),
+	"google_clouddeploy_deploy_policy":                       registry.Resource("google_clouddeploy_deploy_policy"),
+	"google_cloudfunctions2_function":                        registry.Resource("google_cloudfunctions2_function"),
+	"google_cloud_quotas_quota_preference":                   registry.Resource("google_cloud_quotas_quota_preference"),
+	"google_cloud_tasks_queue":                               registry.Resource("google_cloud_tasks_queue"),
+	"google_colab_runtime":                                   registry.Resource("google_colab_runtime"),
+	"google_colab_runtime_template":                          registry.Resource("google_colab_runtime_template"),
+	"google_compute_address":                                 registry.Resource("google_compute_address"),
+	"google_compute_autoscaler":                              registry.Resource("google_compute_autoscaler"),
+	"google_compute_backend_bucket":                          registry.Resource("google_compute_backend_bucket"),
+	"google_compute_backend_service":                         registry.Resource("google_compute_backend_service"),
+	"google_compute_disk":                                    registry.Resource("google_compute_disk"),
+	"google_compute_external_vpn_gateway":                    registry.Resource("google_compute_external_vpn_gateway"),
+	"google_compute_firewall":                                registry.Resource("google_compute_firewall"),
+	"google_compute_firewall_policy":                         registry.Resource("google_compute_firewall_policy"),
+	"google_compute_forwarding_rule":                         registry.Resource("google_compute_forwarding_rule"),
+	"google_compute_global_address":                          registry.Resource("google_compute_global_address"),
+	"google_compute_global_forwarding_rule":                  registry.Resource("google_compute_global_forwarding_rule"),
+	"google_compute_global_network_endpoint_group":           registry.Resource("google_compute_global_network_endpoint_group"),
+	"google_compute_ha_vpn_gateway":                          registry.Resource("google_compute_ha_vpn_gateway"),
+	"google_compute_health_check":                            registry.Resource("google_compute_health_check"),
+	"google_compute_http_health_check":                       registry.Resource("google_compute_http_health_check"),
+	"google_compute_https_health_check":                      registry.Resource("google_compute_https_health_check"),
+	"google_compute_image":                                   registry.Resource("google_compute_image"),
+	"google_compute_instant_snapshot":                        registry.Resource("google_compute_instant_snapshot"),
+	"google_compute_interconnect":                            registry.Resource("google_compute_interconnect"),
+	"google_compute_interconnect_attachment":                 registry.Resource("google_compute_interconnect_attachment"),
+	"google_compute_managed_ssl_certificate":                 registry.Resource("google_compute_managed_ssl_certificate"),
+	"google_compute_network":                                 registry.Resource("google_compute_network"),
+	"google_compute_network_endpoint_group":                  registry.Resource("google_compute_network_endpoint_group"),
+	"google_compute_network_firewall_policy":                 registry.Resource("google_compute_network_firewall_policy"),
+	"google_compute_node_group":                              registry.Resource("google_compute_node_group"),
+	"google_compute_node_template":                           registry.Resource("google_compute_node_template"),
+	"google_compute_packet_mirroring":                        registry.Resource("google_compute_packet_mirroring"),
+	"google_compute_region_autoscaler":                       registry.Resource("google_compute_region_autoscaler"),
+	"google_compute_region_backend_service":                  registry.Resource("google_compute_region_backend_service"),
+	"google_compute_region_disk":                             registry.Resource("google_compute_region_disk"),
+	"google_compute_region_health_check":                     registry.Resource("google_compute_region_health_check"),
+	"google_compute_region_network_endpoint_group":           registry.Resource("google_compute_region_network_endpoint_group"),
+	"google_compute_region_network_firewall_policy":          registry.Resource("google_compute_region_network_firewall_policy"),
+	"google_compute_region_security_policy":                  registry.Resource("google_compute_region_security_policy"),
+	"google_compute_region_ssl_certificate":                  registry.Resource("google_compute_region_ssl_certificate"),
+	"google_compute_region_ssl_policy":                       registry.Resource("google_compute_region_ssl_policy"),
+	"google_compute_region_target_http_proxy":                registry.Resource("google_compute_region_target_http_proxy"),
+	"google_compute_region_target_https_proxy":               registry.Resource("google_compute_region_target_https_proxy"),
+	"google_compute_region_target_tcp_proxy":                 registry.Resource("google_compute_region_target_tcp_proxy"),
+	"google_compute_region_url_map":                          registry.Resource("google_compute_region_url_map"),
+	"google_compute_reservation":                             registry.Resource("google_compute_reservation"),
+	"google_compute_resource_policy":                         registry.Resource("google_compute_resource_policy"),
+	"google_compute_route":                                   registry.Resource("google_compute_route"),
+	"google_compute_router":                                  registry.Resource("google_compute_router"),
+	"google_compute_service_attachment":                      registry.Resource("google_compute_service_attachment"),
+	"google_compute_snapshot":                                registry.Resource("google_compute_snapshot"),
+	"google_compute_ssl_certificate":                         registry.Resource("google_compute_ssl_certificate"),
+	"google_compute_ssl_policy":                              registry.Resource("google_compute_ssl_policy"),
+	"google_compute_storage_pool":                            registry.Resource("google_compute_storage_pool"),
+	"google_compute_subnetwork":                              registry.Resource("google_compute_subnetwork"),
+	"google_compute_target_grpc_proxy":                       registry.Resource("google_compute_target_grpc_proxy"),
+	"google_compute_target_http_proxy":                       registry.Resource("google_compute_target_http_proxy"),
+	"google_compute_target_https_proxy":                      registry.Resource("google_compute_target_https_proxy"),
+	"google_compute_target_instance":                         registry.Resource("google_compute_target_instance"),
+	"google_compute_target_ssl_proxy":                        registry.Resource("google_compute_target_ssl_proxy"),
+	"google_compute_target_tcp_proxy":                        registry.Resource("google_compute_target_tcp_proxy"),
+	"google_compute_url_map":                                 registry.Resource("google_compute_url_map"),
+	"google_compute_vpn_tunnel":                              registry.Resource("google_compute_vpn_tunnel"),
+	"google_database_migration_service_connection_profile":   registry.Resource("google_database_migration_service_connection_profile"),
+	"google_database_migration_service_migration_job":        registry.Resource("google_database_migration_service_migration_job"),
+	"google_data_fusion_instance":                            registry.Resource("google_data_fusion_instance"),
+	"google_dataplex_glossary":                               registry.Resource("google_dataplex_glossary"),
+	"google_dataplex_task":                                   registry.Resource("google_dataplex_task"),
+	"google_dataproc_autoscaling_policy":                     registry.Resource("google_dataproc_autoscaling_policy"),
+	"google_dataproc_batch":                                  registry.Resource("google_dataproc_batch"),
+	"google_datastream_connection_profile":                   registry.Resource("google_datastream_connection_profile"),
+	"google_datastream_private_connection":                   registry.Resource("google_datastream_private_connection"),
+	"google_datastream_stream":                               registry.Resource("google_datastream_stream"),
+	"google_developer_connect_connection":                    registry.Resource("google_developer_connect_connection"),
+	"google_developer_connect_git_repository_link":           registry.Resource("google_developer_connect_git_repository_link"),
+	"google_dialogflow_cx_agent":                             registry.Resource("google_dialogflow_cx_agent"),
+	"google_eventarc_enrollment":                             registry.Resource("google_eventarc_enrollment"),
+	"google_eventarc_google_api_source":                      registry.Resource("google_eventarc_google_api_source"),
+	"google_eventarc_google_channel_config":                  registry.Resource("google_eventarc_google_channel_config"),
+	"google_eventarc_message_bus":                            registry.Resource("google_eventarc_message_bus"),
+	"google_eventarc_pipeline":                               registry.Resource("google_eventarc_pipeline"),
+	"google_filestore_backup":                                registry.Resource("google_filestore_backup"),
+	"google_filestore_instance":                              registry.Resource("google_filestore_instance"),
+	"google_filestore_snapshot":                              registry.Resource("google_filestore_snapshot"),
+	"google_firebase_data_connect_service":                   registry.Resource("google_firebase_data_connect_service"),
+	"google_gemini_code_repository_index":                    registry.Resource("google_gemini_code_repository_index"),
+	"google_gemini_repository_group":                         registry.Resource("google_gemini_repository_group"),
+	"google_gke_backup_backup_plan":                          registry.Resource("google_gke_backup_backup_plan"),
+	"google_gke_backup_restore_plan":                         registry.Resource("google_gke_backup_restore_plan"),
+	"google_gke_hub_membership":                              registry.Resource("google_gke_hub_membership"),
+	"google_gkeonprem_bare_metal_admin_cluster":              registry.Resource("google_gkeonprem_bare_metal_admin_cluster"),
+	"google_gkeonprem_bare_metal_cluster":                    registry.Resource("google_gkeonprem_bare_metal_cluster"),
+	"google_gkeonprem_bare_metal_node_pool":                  registry.Resource("google_gkeonprem_bare_metal_node_pool"),
+	"google_gkeonprem_vmware_cluster":                        registry.Resource("google_gkeonprem_vmware_cluster"),
+	"google_gkeonprem_vmware_node_pool":                      registry.Resource("google_gkeonprem_vmware_node_pool"),
+	"google_iam_workload_identity_pool":                      registry.Resource("google_iam_workload_identity_pool"),
+	"google_iam_workload_identity_pool_provider":             registry.Resource("google_iam_workload_identity_pool_provider"),
+	"google_iap_tunnel_dest_group":                           registry.Resource("google_iap_tunnel_dest_group"),
+	"google_identity_platform_default_supported_idp_config":  registry.Resource("google_identity_platform_default_supported_idp_config"),
+	"google_identity_platform_inbound_saml_config":           registry.Resource("google_identity_platform_inbound_saml_config"),
+	"google_identity_platform_tenant":                        registry.Resource("google_identity_platform_tenant"),
+	"google_kms_autokey_config":                              registry.Resource("google_kms_autokey_config"),
+	"google_kms_crypto_key":                                  registry.Resource("google_kms_crypto_key"),
+	"google_kms_crypto_key_version":                          registry.Resource("google_kms_crypto_key_version"),
+	"google_kms_ekm_connection":                              registry.Resource("google_kms_ekm_connection"),
+	"google_kms_key_handle":                                  registry.Resource("google_kms_key_handle"),
+	"google_kms_key_ring":                                    registry.Resource("google_kms_key_ring"),
+	"google_kms_key_ring_import_job":                         registry.Resource("google_kms_key_ring_import_job"),
+	"google_logging_metric":                                  registry.Resource("google_logging_metric"),
+	"google_looker_instance":                                 registry.Resource("google_looker_instance"),
+	"google_lustre_instance":                                 registry.Resource("google_lustre_instance"),
+	"google_managed_kafka_cluster":                           registry.Resource("google_managed_kafka_cluster"),
+	"google_memcache_instance":                               registry.Resource("google_memcache_instance"),
+	"google_monitoring_alert_policy":                         registry.Resource("google_monitoring_alert_policy"),
+	"google_monitoring_notification_channel":                 registry.Resource("google_monitoring_notification_channel"),
+	"google_monitoring_uptime_check_config":                  registry.Resource("google_monitoring_uptime_check_config"),
+	"google_netapp_active_directory":                         registry.Resource("google_netapp_active_directory"),
+	"google_netapp_backup":                                   registry.Resource("google_netapp_backup"),
+	"google_netapp_backup_policy":                            registry.Resource("google_netapp_backup_policy"),
+	"google_netapp_backup_vault":                             registry.Resource("google_netapp_backup_vault"),
+	"google_netapp_storage_pool":                             registry.Resource("google_netapp_storage_pool"),
+	"google_netapp_volume":                                   registry.Resource("google_netapp_volume"),
+	"google_netapp_volume_replication":                       registry.Resource("google_netapp_volume_replication"),
+	"google_netapp_volume_snapshot":                          registry.Resource("google_netapp_volume_snapshot"),
+	"google_netapp_kmsconfig":                                registry.Resource("google_netapp_kmsconfig"),
+	"google_network_connectivity_group":                      registry.Resource("google_network_connectivity_group"),
+	"google_network_connectivity_policy_based_route":         registry.Resource("google_network_connectivity_policy_based_route"),
+	"google_network_security_address_group":                  registry.Resource("google_network_security_address_group"),
+	"google_network_security_authz_policy":                   registry.Resource("google_network_security_authz_policy"),
+	"google_network_security_client_tls_policy":              registry.Resource("google_network_security_client_tls_policy"),
+	"google_network_security_firewall_endpoint":              registry.Resource("google_network_security_firewall_endpoint"),
+	"google_network_security_firewall_endpoint_association":  registry.Resource("google_network_security_firewall_endpoint_association"),
+	"google_network_security_gateway_security_policy":        registry.Resource("google_network_security_gateway_security_policy"),
+	"google_network_security_gateway_security_policy_rule":   registry.Resource("google_network_security_gateway_security_policy_rule"),
+	"google_network_security_security_profile":               registry.Resource("google_network_security_security_profile"),
+	"google_network_security_security_profile_group":         registry.Resource("google_network_security_security_profile_group"),
+	"google_network_security_server_tls_policy":              registry.Resource("google_network_security_server_tls_policy"),
+	"google_network_security_tls_inspection_policy":          registry.Resource("google_network_security_tls_inspection_policy"),
+	"google_network_security_url_lists":                      registry.Resource("google_network_security_url_lists"),
+	"google_network_services_authz_extension":                registry.Resource("google_network_services_authz_extension"),
+	"google_network_services_gateway":                        registry.Resource("google_network_services_gateway"),
+	"google_privateca_ca_pool":                               registry.Resource("google_privateca_ca_pool"),
+	"google_privateca_certificate":                           registry.Resource("google_privateca_certificate"),
+	"google_privateca_certificate_template":                  registry.Resource("google_privateca_certificate_template"),
+	"google_pubsub_subscription":                             registry.Resource("google_pubsub_subscription"),
+	"google_pubsub_topic":                                    registry.Resource("google_pubsub_topic"),
+	"google_redis_cluster":                                   registry.Resource("google_redis_cluster"),
+	"google_redis_instance":                                  registry.Resource("google_redis_instance"),
+	"google_secret_manager_secret":                           registry.Resource("google_secret_manager_secret"),
+	"google_secret_manager_secret_version":                   registry.Resource("google_secret_manager_secret_version"),
+	"google_secret_manager_regional_secret":                  registry.Resource("google_secret_manager_regional_secret"),
+	"google_secret_manager_regional_secret_version":          registry.Resource("google_secret_manager_regional_secret_version"),
+	"google_secure_source_manager_instance":                  registry.Resource("google_secure_source_manager_instance"),
+	"google_scc_v2_folder_mute_config":                       registry.Resource("google_scc_v2_folder_mute_config"),
+	"google_scc_v2_organization_mute_config":                 registry.Resource("google_scc_v2_organization_mute_config"),
+	"google_spanner_database":                                registry.Resource("google_spanner_database"),
+	"google_spanner_instance":                                registry.Resource("google_spanner_instance"),
+	"google_storage_insights_report_config":                  registry.Resource("google_storage_insights_report_config"),
+	"google_vmwareengine_network":                            registry.Resource("google_vmwareengine_network"),
+	"google_vmwareengine_network_peering":                    registry.Resource("google_vmwareengine_network_peering"),
+	"google_vmwareengine_network_policy":                     registry.Resource("google_vmwareengine_network_policy"),
+	"google_vpc_access_connector":                            registry.Resource("google_vpc_access_connector"),
+	"google_workbench_instance":                              registry.Resource("google_workbench_instance"),
+	"google_workflows_workflow":                              registry.Resource("google_workflows_workflow"),
 }
