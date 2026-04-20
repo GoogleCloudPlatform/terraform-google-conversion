@@ -1008,6 +1008,16 @@ func Provider() *schema.Provider {
 	return provider
 }
 
+// Compatibility shim for diff-processor.
+func ResourceMap() map[string]*schema.Resource {
+	return registry.ResourceMap()
+}
+
+// Compatibility shim for diff-processor.
+func DatasourceMap() map[string]*schema.Resource {
+	return registry.DatasourceMap()
+}
+
 func ProviderConfigure(ctx context.Context, d *schema.ResourceData, p *schema.Provider) (interface{}, diag.Diagnostics) {
 	err := transport_tpg.HandleSDKDefaults(d)
 	if err != nil {
@@ -1343,26 +1353,4 @@ func ProviderConfigure(ctx context.Context, d *schema.ResourceData, p *schema.Pr
 	}
 
 	return &config, nil
-}
-
-func mergeResourceMaps(ms ...map[string]*schema.Resource) (map[string]*schema.Resource, error) {
-	merged := make(map[string]*schema.Resource)
-	duplicates := []string{}
-
-	for _, m := range ms {
-		for k, v := range m {
-			if _, ok := merged[k]; ok {
-				duplicates = append(duplicates, k)
-			}
-
-			merged[k] = v
-		}
-	}
-
-	var err error
-	if len(duplicates) > 0 {
-		err = fmt.Errorf("saw duplicates in mergeResourceMaps: %v", duplicates)
-	}
-
-	return merged, err
 }
