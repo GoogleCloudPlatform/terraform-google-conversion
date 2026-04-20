@@ -765,6 +765,8 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteAction(v interface{}, d *schema
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionUrlRewrite(original["urlRewrite"], d, config)
 	transformed["weighted_backend_services"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServices(original["weightedBackendServices"], d, config)
+	transformed["cache_policy"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicy(original["cachePolicy"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1379,6 +1381,365 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServicesWe
 	return v // let terraform core handle it otherwise
 }
 
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["cache_mode"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheMode(original["cacheMode"], d, config)
+	transformed["default_ttl"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyDefaultTtl(original["defaultTtl"], d, config)
+	transformed["max_ttl"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyMaxTtl(original["maxTtl"], d, config)
+	transformed["client_ttl"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyClientTtl(original["clientTtl"], d, config)
+	transformed["request_coalescing"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyRequestCoalescing(original["requestCoalescing"], d, config)
+	transformed["negative_caching"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCaching(original["negativeCaching"], d, config)
+	transformed["negative_caching_policy"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicy(original["negativeCachingPolicy"], d, config)
+	transformed["cache_bypass_request_header_names"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheBypassRequestHeaderNames(original["cacheBypassRequestHeaderNames"], d, config)
+	transformed["serve_while_stale"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyServeWhileStale(original["serveWhileStale"], d, config)
+	transformed["cache_key_policy"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicy(original["cacheKeyPolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyDefaultTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyDefaultTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyDefaultTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyDefaultTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyDefaultTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyMaxTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyMaxTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyMaxTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyMaxTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyMaxTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyClientTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyClientTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyClientTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyClientTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyClientTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyRequestCoalescing(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCaching(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"code": flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicyCode(original["code"], d, config),
+			"ttl":  flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicyTtl(original["ttl"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicyCode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicyTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicyTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicyTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicyTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyNegativeCachingPolicyTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheBypassRequestHeaderNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyServeWhileStale(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyServeWhileStaleSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyServeWhileStaleNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyServeWhileStaleSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyServeWhileStaleNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["include_protocol"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludeProtocol(original["includeProtocol"], d, config)
+	transformed["include_host"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludeHost(original["includeHost"], d, config)
+	transformed["include_query_string"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludeQueryString(original["includeQueryString"], d, config)
+	transformed["included_query_parameters"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludedQueryParameters(original["includedQueryParameters"], d, config)
+	transformed["excluded_query_parameters"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyExcludedQueryParameters(original["excludedQueryParameters"], d, config)
+	transformed["included_header_names"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludedHeaderNames(original["includedHeaderNames"], d, config)
+	transformed["included_cookie_names"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(original["includedCookieNames"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludeProtocol(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludeHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludeQueryString(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludedQueryParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyExcludedQueryParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludedHeaderNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeUrlMapPathMatcherPathRuleUrlRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -1988,6 +2349,8 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteAction(v interface{}, d *sche
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionUrlRewrite(original["urlRewrite"], d, config)
 	transformed["weighted_backend_services"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices(original["weightedBackendServices"], d, config)
+	transformed["cache_policy"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicy(original["cachePolicy"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -2611,6 +2974,365 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices
 	return v // let terraform core handle it otherwise
 }
 
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["cache_mode"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheMode(original["cacheMode"], d, config)
+	transformed["default_ttl"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyDefaultTtl(original["defaultTtl"], d, config)
+	transformed["max_ttl"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyMaxTtl(original["maxTtl"], d, config)
+	transformed["client_ttl"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyClientTtl(original["clientTtl"], d, config)
+	transformed["request_coalescing"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyRequestCoalescing(original["requestCoalescing"], d, config)
+	transformed["negative_caching"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCaching(original["negativeCaching"], d, config)
+	transformed["negative_caching_policy"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicy(original["negativeCachingPolicy"], d, config)
+	transformed["cache_bypass_request_header_names"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheBypassRequestHeaderNames(original["cacheBypassRequestHeaderNames"], d, config)
+	transformed["serve_while_stale"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyServeWhileStale(original["serveWhileStale"], d, config)
+	transformed["cache_key_policy"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicy(original["cacheKeyPolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyDefaultTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyDefaultTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyDefaultTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyDefaultTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyDefaultTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyMaxTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyMaxTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyMaxTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyMaxTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyMaxTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyClientTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyClientTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyClientTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyClientTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyClientTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyRequestCoalescing(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCaching(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"code": flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicyCode(original["code"], d, config),
+			"ttl":  flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicyTtl(original["ttl"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicyCode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicyTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicyTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicyTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicyTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyNegativeCachingPolicyTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheBypassRequestHeaderNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyServeWhileStale(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyServeWhileStaleSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyServeWhileStaleNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyServeWhileStaleSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyServeWhileStaleNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["include_protocol"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludeProtocol(original["includeProtocol"], d, config)
+	transformed["include_host"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludeHost(original["includeHost"], d, config)
+	transformed["include_query_string"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludeQueryString(original["includeQueryString"], d, config)
+	transformed["included_query_parameters"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludedQueryParameters(original["includedQueryParameters"], d, config)
+	transformed["excluded_query_parameters"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyExcludedQueryParameters(original["excludedQueryParameters"], d, config)
+	transformed["included_header_names"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludedHeaderNames(original["includedHeaderNames"], d, config)
+	transformed["included_cookie_names"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(original["includedCookieNames"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludeProtocol(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludeHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludeQueryString(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludedQueryParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyExcludedQueryParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludedHeaderNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -2847,6 +3569,8 @@ func flattenComputeUrlMapPathMatcherDefaultRouteAction(v interface{}, d *schema.
 		flattenComputeUrlMapPathMatcherDefaultRouteActionCorsPolicy(original["corsPolicy"], d, config)
 	transformed["fault_injection_policy"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicy(original["faultInjectionPolicy"], d, config)
+	transformed["cache_policy"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicy(original["cachePolicy"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -3439,6 +4163,365 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicyAbortP
 	return v
 }
 
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["cache_mode"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheMode(original["cacheMode"], d, config)
+	transformed["default_ttl"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyDefaultTtl(original["defaultTtl"], d, config)
+	transformed["max_ttl"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyMaxTtl(original["maxTtl"], d, config)
+	transformed["client_ttl"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyClientTtl(original["clientTtl"], d, config)
+	transformed["request_coalescing"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyRequestCoalescing(original["requestCoalescing"], d, config)
+	transformed["negative_caching"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCaching(original["negativeCaching"], d, config)
+	transformed["negative_caching_policy"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicy(original["negativeCachingPolicy"], d, config)
+	transformed["cache_bypass_request_header_names"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheBypassRequestHeaderNames(original["cacheBypassRequestHeaderNames"], d, config)
+	transformed["serve_while_stale"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyServeWhileStale(original["serveWhileStale"], d, config)
+	transformed["cache_key_policy"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicy(original["cacheKeyPolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyDefaultTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyDefaultTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyDefaultTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyDefaultTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyDefaultTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyMaxTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyMaxTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyMaxTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyMaxTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyMaxTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyClientTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyClientTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyClientTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyClientTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyClientTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyRequestCoalescing(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCaching(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"code": flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicyCode(original["code"], d, config),
+			"ttl":  flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicyTtl(original["ttl"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicyCode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicyTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicyTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicyTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicyTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyNegativeCachingPolicyTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheBypassRequestHeaderNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyServeWhileStale(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyServeWhileStaleSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyServeWhileStaleNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyServeWhileStaleSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyServeWhileStaleNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["include_protocol"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludeProtocol(original["includeProtocol"], d, config)
+	transformed["include_host"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludeHost(original["includeHost"], d, config)
+	transformed["include_query_string"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludeQueryString(original["includeQueryString"], d, config)
+	transformed["included_query_parameters"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludedQueryParameters(original["includedQueryParameters"], d, config)
+	transformed["excluded_query_parameters"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyExcludedQueryParameters(original["excludedQueryParameters"], d, config)
+	transformed["included_header_names"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludedHeaderNames(original["includedHeaderNames"], d, config)
+	transformed["included_cookie_names"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(original["includedCookieNames"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludeProtocol(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludeHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludeQueryString(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludedQueryParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyExcludedQueryParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludedHeaderNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeUrlMapDefaultCustomErrorResponsePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -3746,6 +4829,8 @@ func flattenComputeUrlMapDefaultRouteAction(v interface{}, d *schema.ResourceDat
 		flattenComputeUrlMapDefaultRouteActionCorsPolicy(original["corsPolicy"], d, config)
 	transformed["fault_injection_policy"] =
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicy(original["faultInjectionPolicy"], d, config)
+	transformed["cache_policy"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicy(original["cachePolicy"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -4335,5 +5420,364 @@ func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbortHttpStatus(v
 }
 
 func flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicyAbortPercentage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["cache_mode"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheMode(original["cacheMode"], d, config)
+	transformed["default_ttl"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyDefaultTtl(original["defaultTtl"], d, config)
+	transformed["max_ttl"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyMaxTtl(original["maxTtl"], d, config)
+	transformed["client_ttl"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyClientTtl(original["clientTtl"], d, config)
+	transformed["request_coalescing"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyRequestCoalescing(original["requestCoalescing"], d, config)
+	transformed["negative_caching"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCaching(original["negativeCaching"], d, config)
+	transformed["negative_caching_policy"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicy(original["negativeCachingPolicy"], d, config)
+	transformed["cache_bypass_request_header_names"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheBypassRequestHeaderNames(original["cacheBypassRequestHeaderNames"], d, config)
+	transformed["serve_while_stale"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyServeWhileStale(original["serveWhileStale"], d, config)
+	transformed["cache_key_policy"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicy(original["cacheKeyPolicy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyDefaultTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyDefaultTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyDefaultTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyDefaultTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyDefaultTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyMaxTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyMaxTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyMaxTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyMaxTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyMaxTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyClientTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyClientTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyClientTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyClientTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyClientTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyRequestCoalescing(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCaching(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"code": flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicyCode(original["code"], d, config),
+			"ttl":  flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicyTtl(original["ttl"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicyCode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicyTtl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicyTtlSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicyTtlNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicyTtlSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyNegativeCachingPolicyTtlNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheBypassRequestHeaderNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyServeWhileStale(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["seconds"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyServeWhileStaleSeconds(original["seconds"], d, config)
+	transformed["nanos"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyServeWhileStaleNanos(original["nanos"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyServeWhileStaleSeconds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyServeWhileStaleNanos(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["include_protocol"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludeProtocol(original["includeProtocol"], d, config)
+	transformed["include_host"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludeHost(original["includeHost"], d, config)
+	transformed["include_query_string"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludeQueryString(original["includeQueryString"], d, config)
+	transformed["included_query_parameters"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedQueryParameters(original["includedQueryParameters"], d, config)
+	transformed["excluded_query_parameters"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyExcludedQueryParameters(original["excludedQueryParameters"], d, config)
+	transformed["included_header_names"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedHeaderNames(original["includedHeaderNames"], d, config)
+	transformed["included_cookie_names"] =
+		flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(original["includedCookieNames"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludeProtocol(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludeHost(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludeQueryString(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedQueryParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyExcludedQueryParameters(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedHeaderNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
