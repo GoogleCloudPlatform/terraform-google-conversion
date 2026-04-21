@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "networkconnectivity"
+var Product = registry.Product{
+	Name:                 "networkconnectivity",
+	BaseUrl:              "https://networkconnectivity.googleapis.com/v1/",
+	CustomEndpointField:  "network_connectivity_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_NETWORK_CONNECTIVITY_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "networkconnectivity",
-		BaseUrl: "https://networkconnectivity.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

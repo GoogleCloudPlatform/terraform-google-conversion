@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "deploymentmanager"
+var Product = registry.Product{
+	Name:                 "deploymentmanager",
+	BaseUrl:              "https://www.googleapis.com/deploymentmanager/v2/",
+	CustomEndpointField:  "deployment_manager_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_DEPLOYMENT_MANAGER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "deploymentmanager",
-		BaseUrl: "https://www.googleapis.com/deploymentmanager/v2/",
-	}.Register()
+	Product.Register()
 }

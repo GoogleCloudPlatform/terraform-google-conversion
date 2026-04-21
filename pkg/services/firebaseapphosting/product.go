@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "firebaseapphosting"
+var Product = registry.Product{
+	Name:                 "firebaseapphosting",
+	BaseUrl:              "https://firebaseapphosting.googleapis.com/v1/",
+	CustomEndpointField:  "firebase_app_hosting_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_FIREBASE_APP_HOSTING_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "firebaseapphosting",
-		BaseUrl: "https://firebaseapphosting.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

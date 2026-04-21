@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "siteverification"
+var Product = registry.Product{
+	Name:                 "siteverification",
+	BaseUrl:              "https://www.googleapis.com/siteVerification/v1/",
+	CustomEndpointField:  "site_verification_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_SITE_VERIFICATION_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "siteverification",
-		BaseUrl: "https://www.googleapis.com/siteVerification/v1/",
-	}.Register()
+	Product.Register()
 }

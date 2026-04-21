@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "filestore"
+var Product = registry.Product{
+	Name:                 "filestore",
+	BaseUrl:              "https://file.googleapis.com/v1/",
+	CustomEndpointField:  "filestore_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_FILESTORE_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "filestore",
-		BaseUrl: "https://file.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "parametermanager"
+var Product = registry.Product{
+	Name:                 "parametermanager",
+	BaseUrl:              "https://parametermanager.googleapis.com/v1/",
+	CustomEndpointField:  "parameter_manager_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_PARAMETER_MANAGER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "parametermanager",
-		BaseUrl: "https://parametermanager.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

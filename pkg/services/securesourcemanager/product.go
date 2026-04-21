@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "securesourcemanager"
+var Product = registry.Product{
+	Name:                 "securesourcemanager",
+	BaseUrl:              "https://securesourcemanager.googleapis.com/v1/",
+	CustomEndpointField:  "secure_source_manager_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_SECURE_SOURCE_MANAGER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "securesourcemanager",
-		BaseUrl: "https://securesourcemanager.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

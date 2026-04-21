@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "composer"
+var Product = registry.Product{
+	Name:                 "composer",
+	BaseUrl:              "https://composer.googleapis.com/v1/",
+	CustomEndpointField:  "composer_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_COMPOSER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "composer",
-		BaseUrl: "https://composer.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

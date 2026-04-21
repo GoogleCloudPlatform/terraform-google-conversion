@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "hypercomputecluster"
+var Product = registry.Product{
+	Name:                 "hypercomputecluster",
+	BaseUrl:              "https://hypercomputecluster.googleapis.com/v1/",
+	CustomEndpointField:  "hypercomputecluster_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_HYPERCOMPUTECLUSTER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "hypercomputecluster",
-		BaseUrl: "https://hypercomputecluster.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

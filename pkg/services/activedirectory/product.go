@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "activedirectory"
+var Product = registry.Product{
+	Name:                 "activedirectory",
+	BaseUrl:              "https://managedidentities.googleapis.com/v1/",
+	CustomEndpointField:  "active_directory_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_ACTIVE_DIRECTORY_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "activedirectory",
-		BaseUrl: "https://managedidentities.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

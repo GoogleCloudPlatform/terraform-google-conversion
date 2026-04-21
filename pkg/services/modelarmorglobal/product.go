@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "modelarmorglobal"
+var Product = registry.Product{
+	Name:                 "modelarmorglobal",
+	BaseUrl:              "https://modelarmor.googleapis.com/v1/",
+	CustomEndpointField:  "model_armor_global_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_MODEL_ARMOR_GLOBAL_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "modelarmorglobal",
-		BaseUrl: "https://modelarmor.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

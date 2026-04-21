@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "bigquerydatatransfer"
+var Product = registry.Product{
+	Name:                 "bigquerydatatransfer",
+	BaseUrl:              "https://bigquerydatatransfer.googleapis.com/v1/",
+	CustomEndpointField:  "bigquery_data_transfer_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_BIGQUERY_DATA_TRANSFER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "bigquerydatatransfer",
-		BaseUrl: "https://bigquerydatatransfer.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

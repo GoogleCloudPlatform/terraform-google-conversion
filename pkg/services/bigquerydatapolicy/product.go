@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "bigquerydatapolicy"
+var Product = registry.Product{
+	Name:                 "bigquerydatapolicy",
+	BaseUrl:              "https://bigquerydatapolicy.googleapis.com/v1/",
+	CustomEndpointField:  "bigquery_datapolicy_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_BIGQUERY_DATAPOLICY_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "bigquerydatapolicy",
-		BaseUrl: "https://bigquerydatapolicy.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

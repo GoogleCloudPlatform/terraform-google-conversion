@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "corebilling"
+var Product = registry.Product{
+	Name:                 "corebilling",
+	BaseUrl:              "https://cloudbilling.googleapis.com/v1/",
+	CustomEndpointField:  "core_billing_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_CORE_BILLING_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "corebilling",
-		BaseUrl: "https://cloudbilling.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "storagebatchoperations"
+var Product = registry.Product{
+	Name:                 "storagebatchoperations",
+	BaseUrl:              "https://storagebatchoperations.googleapis.com/v1/",
+	CustomEndpointField:  "storage_batch_operations_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_STORAGE_BATCH_OPERATIONS_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "storagebatchoperations",
-		BaseUrl: "https://storagebatchoperations.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

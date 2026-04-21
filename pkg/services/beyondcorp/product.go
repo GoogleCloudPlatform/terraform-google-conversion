@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "beyondcorp"
+var Product = registry.Product{
+	Name:                 "beyondcorp",
+	BaseUrl:              "https://beyondcorp.googleapis.com/v1/",
+	CustomEndpointField:  "beyondcorp_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_BEYONDCORP_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "beyondcorp",
-		BaseUrl: "https://beyondcorp.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

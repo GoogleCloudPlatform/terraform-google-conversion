@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "oracledatabase"
+var Product = registry.Product{
+	Name:                 "oracledatabase",
+	BaseUrl:              "https://oracledatabase.googleapis.com/v1/",
+	CustomEndpointField:  "oracle_database_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_ORACLE_DATABASE_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "oracledatabase",
-		BaseUrl: "https://oracledatabase.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }
