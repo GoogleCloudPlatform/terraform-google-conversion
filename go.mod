@@ -12,7 +12,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/hashicorp/terraform-json v0.27.2
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260420210812-7d5b95df982b
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260421150606-2868f0d857db
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.11.1
@@ -24,7 +24,7 @@ require (
 require (
 	cloud.google.com/go/auth v0.20.0
 	cloud.google.com/go/auth/oauth2adapt v0.2.8
-	cloud.google.com/go/bigtable v1.42.0
+	cloud.google.com/go/bigtable v1.46.0
 	github.com/gammazero/workerpool v1.1.3
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
@@ -44,24 +44,24 @@ require (
 	cel.dev/expr v0.25.1 // indirect
 	cloud.google.com/go v0.123.0 // indirect
 	cloud.google.com/go/compute/metadata v0.9.0 // indirect
-	cloud.google.com/go/iam v1.5.3 // indirect
-	cloud.google.com/go/longrunning v0.8.0 // indirect
-	cloud.google.com/go/monitoring v1.24.3 // indirect
+	cloud.google.com/go/iam v1.7.0 // indirect
+	cloud.google.com/go/longrunning v0.9.0 // indirect
+	cloud.google.com/go/monitoring v1.25.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.31.0 // indirect
-	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.54.0 // indirect
-	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.54.0 // indirect
+	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.55.0 // indirect
+	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.55.0 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cncf/xds/go v0.0.0-20251210132809-ee656c7534f5 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
-	github.com/envoyproxy/go-control-plane/envoy v1.36.0 // indirect
+	github.com/envoyproxy/go-control-plane/envoy v1.37.0 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.3.0 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/gammazero/deque v0.2.1 // indirect
-	github.com/go-jose/go-jose/v4 v4.1.3 // indirect
+	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/glog v1.2.5 // indirect
@@ -117,7 +117,7 @@ require (
 	golang.org/x/tools v0.42.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20260319201613-d00831a3d3e7 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260319201613-d00831a3d3e7 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260401024825-9d38bb4040a9 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
