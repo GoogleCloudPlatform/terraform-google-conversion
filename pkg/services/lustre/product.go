@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "lustre"
+var Product = registry.Product{
+	Name:                 "lustre",
+	BaseUrl:              "https://lustre.googleapis.com/v1/",
+	CustomEndpointField:  "lustre_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_LUSTRE_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "lustre",
-		BaseUrl: "https://lustre.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

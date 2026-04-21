@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "cloudids"
+var Product = registry.Product{
+	Name:                 "cloudids",
+	BaseUrl:              "https://ids.googleapis.com/v1/",
+	CustomEndpointField:  "cloud_ids_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_CLOUD_IDS_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "cloudids",
-		BaseUrl: "https://ids.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

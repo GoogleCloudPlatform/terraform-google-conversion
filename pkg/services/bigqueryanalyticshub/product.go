@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "bigqueryanalyticshub"
+var Product = registry.Product{
+	Name:                 "bigqueryanalyticshub",
+	BaseUrl:              "https://analyticshub.googleapis.com/v1/",
+	CustomEndpointField:  "bigquery_analytics_hub_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_BIGQUERY_ANALYTICS_HUB_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "bigqueryanalyticshub",
-		BaseUrl: "https://analyticshub.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

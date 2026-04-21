@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "dataprocgdc"
+var Product = registry.Product{
+	Name:                 "dataprocgdc",
+	BaseUrl:              "https://dataprocgdc.googleapis.com/v1/",
+	CustomEndpointField:  "dataproc_gdc_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_DATAPROC_GDC_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "dataprocgdc",
-		BaseUrl: "https://dataprocgdc.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

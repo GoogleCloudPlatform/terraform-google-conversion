@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "resourcemanager"
+var Product = registry.Product{
+	Name:                 "resourcemanager",
+	BaseUrl:              "https://cloudresourcemanager.googleapis.com/v1/",
+	CustomEndpointField:  "resource_manager_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_RESOURCE_MANAGER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "resourcemanager",
-		BaseUrl: "https://cloudresourcemanager.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "iap"
+var Product = registry.Product{
+	Name:                 "iap",
+	BaseUrl:              "https://iap.googleapis.com/v1/",
+	CustomEndpointField:  "iap_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_IAP_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "iap",
-		BaseUrl: "https://iap.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

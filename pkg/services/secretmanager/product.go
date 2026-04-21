@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "secretmanager"
+var Product = registry.Product{
+	Name:                 "secretmanager",
+	BaseUrl:              "https://secretmanager.googleapis.com/v1/",
+	CustomEndpointField:  "secret_manager_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_SECRET_MANAGER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "secretmanager",
-		BaseUrl: "https://secretmanager.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

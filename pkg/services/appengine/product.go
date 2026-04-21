@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "appengine"
+var Product = registry.Product{
+	Name:                 "appengine",
+	BaseUrl:              "https://appengine.googleapis.com/v1/",
+	CustomEndpointField:  "app_engine_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_APP_ENGINE_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "appengine",
-		BaseUrl: "https://appengine.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

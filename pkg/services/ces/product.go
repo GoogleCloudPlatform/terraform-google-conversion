@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "ces"
+var Product = registry.Product{
+	Name:                 "ces",
+	BaseUrl:              "https://ces.googleapis.com/v1/",
+	CustomEndpointField:  "ces_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_CES_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "ces",
-		BaseUrl: "https://ces.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

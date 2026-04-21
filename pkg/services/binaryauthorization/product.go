@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "binaryauthorization"
+var Product = registry.Product{
+	Name:                 "binaryauthorization",
+	BaseUrl:              "https://binaryauthorization.googleapis.com/v1/",
+	CustomEndpointField:  "binary_authorization_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_BINARY_AUTHORIZATION_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "binaryauthorization",
-		BaseUrl: "https://binaryauthorization.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

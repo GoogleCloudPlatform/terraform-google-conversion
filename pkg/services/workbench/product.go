@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "workbench"
+var Product = registry.Product{
+	Name:                 "workbench",
+	BaseUrl:              "https://notebooks.googleapis.com/v2/",
+	CustomEndpointField:  "workbench_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_WORKBENCH_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "workbench",
-		BaseUrl: "https://notebooks.googleapis.com/v2/",
-	}.Register()
+	Product.Register()
 }

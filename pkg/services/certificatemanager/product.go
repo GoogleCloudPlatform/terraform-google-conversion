@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "certificatemanager"
+var Product = registry.Product{
+	Name:                 "certificatemanager",
+	BaseUrl:              "https://certificatemanager.googleapis.com/v1/",
+	CustomEndpointField:  "certificate_manager_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_CERTIFICATE_MANAGER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "certificatemanager",
-		BaseUrl: "https://certificatemanager.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

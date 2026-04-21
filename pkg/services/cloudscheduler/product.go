@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "cloudscheduler"
+var Product = registry.Product{
+	Name:                 "cloudscheduler",
+	BaseUrl:              "https://cloudscheduler.googleapis.com/v1/",
+	CustomEndpointField:  "cloud_scheduler_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_CLOUD_SCHEDULER_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "cloudscheduler",
-		BaseUrl: "https://cloudscheduler.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

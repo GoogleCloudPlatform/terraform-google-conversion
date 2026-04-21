@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "vpcaccess"
+var Product = registry.Product{
+	Name:                 "vpcaccess",
+	BaseUrl:              "https://vpcaccess.googleapis.com/v1/",
+	CustomEndpointField:  "vpc_access_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_VPC_ACCESS_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "vpcaccess",
-		BaseUrl: "https://vpcaccess.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

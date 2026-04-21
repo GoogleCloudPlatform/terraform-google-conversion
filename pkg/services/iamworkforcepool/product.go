@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "iamworkforcepool"
+var Product = registry.Product{
+	Name:                 "iamworkforcepool",
+	BaseUrl:              "https://iam.googleapis.com/v1/",
+	CustomEndpointField:  "iam_workforce_pool_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_IAM_WORKFORCE_POOL_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "iamworkforcepool",
-		BaseUrl: "https://iam.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "cloudfunctions"
+var Product = registry.Product{
+	Name:                 "cloudfunctions",
+	BaseUrl:              "https://cloudfunctions.googleapis.com/v1/",
+	CustomEndpointField:  "cloud_functions_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_CLOUD_FUNCTIONS_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "cloudfunctions",
-		BaseUrl: "https://cloudfunctions.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

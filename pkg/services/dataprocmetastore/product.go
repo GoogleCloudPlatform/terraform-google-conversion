@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "dataprocmetastore"
+var Product = registry.Product{
+	Name:                 "dataprocmetastore",
+	BaseUrl:              "https://metastore.googleapis.com/v1/",
+	CustomEndpointField:  "dataproc_metastore_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_DATAPROC_METASTORE_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "dataprocmetastore",
-		BaseUrl: "https://metastore.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }

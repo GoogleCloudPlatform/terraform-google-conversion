@@ -19,11 +19,13 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
-const ProductName = "vmwareengine"
+var Product = registry.Product{
+	Name:                 "vmwareengine",
+	BaseUrl:              "https://vmwareengine.googleapis.com/v1/",
+	CustomEndpointField:  "vmwareengine_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_VMWAREENGINE_CUSTOM_ENDPOINT",
+}
 
 func init() {
-	registry.Product{
-		Name:    "vmwareengine",
-		BaseUrl: "https://vmwareengine.googleapis.com/v1/",
-	}.Register()
+	Product.Register()
 }
