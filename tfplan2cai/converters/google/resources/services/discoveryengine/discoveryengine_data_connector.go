@@ -49,7 +49,7 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
-func DataConnectorEntitiesFieldsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+func DataConnectorJsonStructFieldsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	return (old == "" && new == "{}") || (old == "{}" && new == "")
 }
 
@@ -445,6 +445,13 @@ func expandDiscoveryEngineDataConnectorDestinationConfigs(v interface{}, d tpgre
 			transformed["destinations"] = transformedDestinations
 		}
 
+		transformedParams, err := expandDiscoveryEngineDataConnectorDestinationConfigsParams(original["params"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedParams); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["params"] = transformedParams
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -474,6 +481,13 @@ func expandDiscoveryEngineDataConnectorDestinationConfigsDestinations(v interfac
 			transformed["host"] = transformedHost
 		}
 
+		transformedPort, err := expandDiscoveryEngineDataConnectorDestinationConfigsDestinationsPort(original["port"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["port"] = transformedPort
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -481,6 +495,22 @@ func expandDiscoveryEngineDataConnectorDestinationConfigsDestinations(v interfac
 
 func expandDiscoveryEngineDataConnectorDestinationConfigsDestinationsHost(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorDestinationConfigsDestinationsPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorDestinationConfigsParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func expandDiscoveryEngineDataConnectorConnectorModes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
