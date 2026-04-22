@@ -218,19 +218,6 @@ If unset, defaults to the Google OIDC IdP.`,
 				Computed:    true,
 				Description: `Time the Instance was updated in UTC.`,
 			},
-			"deletion_policy": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Description: `The deletion policy for the instance. Setting 'ABANDON' allows the resource
-to be abandoned, rather than deleted. Setting 'DELETE' deletes the resource
-and all its contents. Setting 'PREVENT' prevents the resource from accidental
-deletion by erroring out during plan.
-Default is 'PREVENT'.  Possible values are:
-  * DELETE
-  * PREVENT
-  * ABANDON`,
-				Default: "PREVENT",
-			},
 			"project": {
 				Type:     schema.TypeString,
 				Optional: true,
