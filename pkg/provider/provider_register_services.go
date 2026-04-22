@@ -35,6 +35,7 @@ import (
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkebackup"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub2"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkeonprem"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iap"
