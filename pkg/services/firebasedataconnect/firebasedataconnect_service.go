@@ -170,8 +170,14 @@ service.`,
 Service to be deleted even if a Schema or Connector is present. By default,
 the Service deletion will only succeed when no Schema or Connectors are
 present.
-Possible values: DEFAULT, FORCE`,
-				Default: "DEFAULT",
+
+When a 'terraform destroy' or 'terraform apply' would delete the resource,
+the command will fail if this field is set to "PREVENT" in Terraform state.
+When set to "ABANDON", the command will remove the resource from Terraform
+management without updating or deleting the resource in the API.
+When set to "DELETE", the command will behave as if set to "DEFAULT".
+
+Possible values: DEFAULT, FORCE, PREVENT, ABANDON, DELETE`,
 			},
 			"project": {
 				Type:     schema.TypeString,
