@@ -47,6 +47,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkebackup"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkeonprem"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iap"
@@ -208,6 +209,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_gke_backup_backup_plan":                          gkebackup.GKEBackupBackupPlanTfplan2caiConverter(),
 	"google_gke_backup_restore_plan":                         gkebackup.GKEBackupRestorePlanTfplan2caiConverter(),
 	"google_gke_hub_membership":                              gkehub.GKEHubMembershipTfplan2caiConverter(),
+	"google_gke_hub_feature":                                 gkehub2.GKEHub2FeatureTfplan2caiConverter(),
 	"google_gkeonprem_bare_metal_admin_cluster":              gkeonprem.GkeonpremBareMetalAdminClusterTfplan2caiConverter(),
 	"google_gkeonprem_bare_metal_cluster":                    gkeonprem.GkeonpremBareMetalClusterTfplan2caiConverter(),
 	"google_gkeonprem_bare_metal_node_pool":                  gkeonprem.GkeonpremBareMetalNodePoolTfplan2caiConverter(),

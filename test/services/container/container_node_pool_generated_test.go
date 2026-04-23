@@ -105,6 +105,15 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withLinuxNodeConfig",
 		},
 		{
+			Name: "TestAccContainerNodePool_withSwapConfig_bootDisk",
+		},
+		{
+			Name: "TestAccContainerNodePool_withSwapConfig_ephemeralLocalSsd",
+		},
+		{
+			Name: "TestAccContainerNodePool_withSwapConfig_dedicatedLocalSsd",
+		},
+		{
 			Name: "TestAccContainerNodePool_withWindowsNodeConfig",
 		},
 		{
