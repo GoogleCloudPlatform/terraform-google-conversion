@@ -130,6 +130,7 @@ func (c *ComputeInstantSnapshotCai2hclConverter) convertResourceData(asset caias
 	hclData["name"] = flattenComputeInstantSnapshotName(res["name"], d, config)
 	hclData["description"] = flattenComputeInstantSnapshotDescription(res["description"], d, config)
 	hclData["labels"] = flattenComputeInstantSnapshotLabels(res["labels"], d, config)
+	hclData["params"] = flattenComputeInstantSnapshotParams(res["params"], d, config)
 	hclData["source_disk"] = flattenComputeInstantSnapshotSourceDisk(res["sourceDisk"], d, config)
 	hclData["zone"] = flattenComputeInstantSnapshotZone(res["zone"], d, config)
 
@@ -167,6 +168,24 @@ func flattenComputeInstantSnapshotDescription(v interface{}, d *schema.ResourceD
 func flattenComputeInstantSnapshotLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+func flattenComputeInstantSnapshotParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeInstantSnapshotParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeInstantSnapshotParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeInstantSnapshotSourceDisk(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v

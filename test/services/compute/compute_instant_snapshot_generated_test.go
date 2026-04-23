@@ -35,6 +35,9 @@ func TestAccComputeInstantSnapshot(t *testing.T) {
 		{
 			Name: "TestAccComputeInstantSnapshot_labelsUpdate",
 		},
+		{
+			Name: "TestAccComputeInstantSnapshot_resourceManagerTags",
+		},
 	}
 
 	for _, tt := range tests {
@@ -56,6 +59,8 @@ func TestAccComputeInstantSnapshot(t *testing.T) {
 					"dynamic",
 					"for_each",
 					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
 					"provider",
 					"timeouts",
 				},
