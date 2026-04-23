@@ -1217,7 +1217,7 @@ func expandCESAppVariableDeclarationsSchema(v interface{}, d tpgresource.Terrafo
 	transformedDefault, err := expandCESAppVariableDeclarationsSchemaDefault(original["default"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedDefault); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["default"] = transformedDefault
 	}
 
@@ -1304,7 +1304,15 @@ func expandCESAppVariableDeclarationsSchemaDefs(v interface{}, d tpgresource.Ter
 }
 
 func expandCESAppVariableDeclarationsSchemaDefault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandCESAppVariableDeclarationsSchemaAdditionalProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
