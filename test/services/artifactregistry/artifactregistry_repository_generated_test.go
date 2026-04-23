@@ -99,6 +99,9 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 			Name: "TestAccArtifactRegistryRepository_cleanup",
 		},
 		{
+			Name: "TestAccArtifactRegistryRepository_preferRegionalEndpoints",
+		},
+		{
 			Name: "TestAccArtifactRegistryRepository_virtual",
 		},
 		{

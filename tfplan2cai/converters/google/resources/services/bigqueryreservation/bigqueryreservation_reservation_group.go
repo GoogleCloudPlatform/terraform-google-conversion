@@ -110,6 +110,16 @@ func GetBigqueryReservationReservationGroupCaiObject(d tpgresource.TerraformReso
 
 func GetBigqueryReservationReservationGroupApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	nameProp, err := expandBigqueryReservationReservationGroupName(d.Get("name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+		obj["name"] = nameProp
+	}
 
 	return obj, nil
+}
+
+func expandBigqueryReservationReservationGroupName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }

@@ -183,6 +183,9 @@ func TestAccComputeBackendService(t *testing.T) {
 		{
 			Name: "TestAccComputeBackendService_updateCanaryMigration",
 		},
+		{
+			Name: "TestAccComputeBackendService_iapOauthClientIdPermadiff",
+		},
 	}
 
 	for _, tt := range tests {
