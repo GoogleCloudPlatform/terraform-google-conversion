@@ -128,12 +128,6 @@ func GetVectorSearchCollectionApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
-	encryptionSpecProp, err := expandVectorSearchCollectionEncryptionSpec(d.Get("encryption_spec"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("encryption_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionSpecProp)) && (ok || !reflect.DeepEqual(v, encryptionSpecProp)) {
-		obj["encryptionSpec"] = encryptionSpecProp
-	}
 	vectorSchemaProp, err := expandVectorSearchCollectionVectorSchema(d.Get("vector_schema"), d, config)
 	if err != nil {
 		return nil, err
@@ -167,32 +161,6 @@ func expandVectorSearchCollectionDescription(v interface{}, d tpgresource.Terraf
 }
 
 func expandVectorSearchCollectionDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandVectorSearchCollectionEncryptionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
-		return nil, nil
-	}
-	raw := l[0]
-	original := raw.(map[string]interface{})
-	transformed := make(map[string]interface{})
-
-	transformedCryptoKeyName, err := expandVectorSearchCollectionEncryptionSpecCryptoKeyName(original["crypto_key_name"], d, config)
-	if err != nil {
-		return nil, err
-	} else if val := reflect.ValueOf(transformedCryptoKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["cryptoKeyName"] = transformedCryptoKeyName
-	}
-
-	return transformed, nil
-}
-
-func expandVectorSearchCollectionEncryptionSpecCryptoKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

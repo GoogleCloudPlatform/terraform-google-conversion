@@ -33,7 +33,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
@@ -207,15 +206,6 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
-
-func init() {
-	registry.Schema{
-		Name:        "google_compute_backend_service",
-		ProductName: "compute",
-		Type:        registry.SchemaTypeResource,
-		Schema:      ResourceComputeBackendService(),
-	}.Register()
-}
 
 const ComputeBackendServiceAssetType string = "compute.googleapis.com/BackendService"
 
@@ -727,10 +717,9 @@ If OAuth client is not set, the Google-managed OAuth client is used.`,
 							Description: `Whether the serving infrastructure will authenticate and authorize all incoming requests.`,
 						},
 						"oauth2_client_id": {
-							Type:             schema.TypeString,
-							Optional:         true,
-							DiffSuppressFunc: tpgresource.EmptyOrDefaultStringSuppress(" "),
-							Description:      `OAuth2 Client ID for IAP`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: `OAuth2 Client ID for IAP`,
 						},
 						"oauth2_client_secret": {
 							Type:        schema.TypeString,

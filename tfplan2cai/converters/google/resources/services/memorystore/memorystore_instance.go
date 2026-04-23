@@ -127,7 +127,7 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	automatedBackupConfigProp, err := expandMemorystoreInstanceAutomatedBackupConfig(d.Get("automated_backup_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("automated_backup_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(automatedBackupConfigProp)) && (ok || !reflect.DeepEqual(v, automatedBackupConfigProp)) {
+	} else if v, ok := d.GetOkExists("automated_backup_config"); ok || !reflect.DeepEqual(v, automatedBackupConfigProp) {
 		obj["automatedBackupConfig"] = automatedBackupConfigProp
 	}
 	replicaCountProp, err := expandMemorystoreInstanceReplicaCount(d.Get("replica_count"), d, config)
