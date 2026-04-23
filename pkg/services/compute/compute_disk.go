@@ -33,7 +33,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
@@ -350,6 +349,10 @@ func ExpandStoragePoolUrl(v interface{}, d tpgresource.TerraformResourceData, co
 	if err != nil {
 		return "", err
 	}
+	zone, err := tpgresource.GetZone(d, config)
+	if err != nil {
+		return "", err
+	}
 
 	formattedStr := v.(string)
 	if strings.HasPrefix(v.(string), "/") {
@@ -367,12 +370,6 @@ func ExpandStoragePoolUrl(v interface{}, d tpgresource.TerraformResourceData, co
 		// For regional or zonal resources which include their region or zone, just put the project in front.
 		replacedStr = config.ComputeBasePath + "projects/" + project + "/" + formattedStr
 	} else {
-		// Resources like instance template do not have a zone argument.
-		// In this case, run GetZone when it is strictly necessary.
-		zone, err := tpgresource.GetZone(d, config)
-		if err != nil {
-			return "", err
-		}
 		// Anything else is assumed to be a zonal resource, with a partial link that begins with the resource name.
 		replacedStr = config.ComputeBasePath + "projects/" + project + "/zones/" + zone + "/storagePools/" + formattedStr
 	}
@@ -399,15 +396,6 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
-
-func init() {
-	registry.Schema{
-		Name:        "google_compute_disk",
-		ProductName: "compute",
-		Type:        registry.SchemaTypeResource,
-		Schema:      ResourceComputeDisk(),
-	}.Register()
-}
 
 const ComputeDiskAssetType string = "compute.googleapis.com/Disk"
 

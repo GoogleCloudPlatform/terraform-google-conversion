@@ -30,9 +30,6 @@ func TestAccDatastreamPrivateConnection(t *testing.T) {
 			Name: "TestAccDatastreamPrivateConnection_datastreamPrivateConnectionFullExample",
 		},
 		{
-			Name: "TestAccDatastreamPrivateConnection_datastreamPrivateConnectionForceDeleteExample",
-		},
-		{
 			Name: "TestAccDatastreamPrivateConnection_datastreamPrivateConnectionPscInterfaceExample",
 		},
 	}
@@ -52,7 +49,6 @@ func TestAccDatastreamPrivateConnection(t *testing.T) {
 				[]string{
 					"count",
 					"create_without_validation",
-					"deletion_policy",
 					"deletion_protection",
 					"depends_on",
 					"dynamic",

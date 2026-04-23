@@ -136,7 +136,6 @@ func (c *ComputeStoragePoolCai2hclConverter) convertResourceData(asset caiasset.
 	hclData["capacity_provisioning_type"] = flattenComputeStoragePoolCapacityProvisioningType(res["capacityProvisioningType"], d, config)
 	hclData["performance_provisioning_type"] = flattenComputeStoragePoolPerformanceProvisioningType(res["performanceProvisioningType"], d, config)
 	hclData["labels"] = flattenComputeStoragePoolLabels(res["labels"], d, config)
-	hclData["params"] = flattenComputeStoragePoolParams(res["params"], d, config)
 	hclData["zone"] = flattenComputeStoragePoolZone(res["zone"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -224,24 +223,6 @@ func flattenComputeStoragePoolPerformanceProvisioningType(v interface{}, d *sche
 func flattenComputeStoragePoolLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
-func flattenComputeStoragePoolParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	original := v.(map[string]interface{})
-	transformed := make(map[string]interface{})
-	transformed["resource_manager_tags"] =
-		flattenComputeStoragePoolParamsResourceManagerTags(original["resourceManagerTags"], d, config)
-	if tgcresource.AllValuesAreNil(transformed) {
-		return nil
-	}
-	return []interface{}{transformed}
-}
-
-func flattenComputeStoragePoolParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
-}
-
 func flattenComputeStoragePoolZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v

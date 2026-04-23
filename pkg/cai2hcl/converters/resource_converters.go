@@ -48,7 +48,6 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gemini"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkebackup"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkehub2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/gkeonprem"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iambeta"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/iap"
@@ -454,9 +453,6 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"gkebackup.googleapis.com/RestorePlan": {
 		"Default": gkebackup.NewGKEBackupRestorePlanCai2hclConverter(provider),
-	},
-	"gkehub.googleapis.com/Feature": {
-		"Default": gkehub2.NewGKEHub2FeatureCai2hclConverter(provider),
 	},
 	"gkehub.googleapis.com/Membership": {
 		"Default": gkehub.NewGKEHubMembershipCai2hclConverter(provider),
