@@ -12,18 +12,18 @@
 //
 // ----------------------------------------------------------------------------
 
-// Package resourcemanager3 contains resources, datasources, etc. for the resource manager service.
-package resourcemanager3
+// Package resourcemanagerv3 contains resources, datasources, etc. for the resource manager service.
+package resourcemanagerv3
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 )
 
 var Product = registry.Product{
-	Name:                 "resourcemanager3",
+	Name:                 "resourcemanagerv3",
 	BaseUrl:              "https://cloudresourcemanager.googleapis.com/v3/",
-	CustomEndpointField:  "resource_manager3_custom_endpoint",
-	CustomEndpointEnvVar: "GOOGLE_RESOURCE_MANAGER3_CUSTOM_ENDPOINT",
+	CustomEndpointField:  "resource_manager_v3_custom_endpoint",
+	CustomEndpointEnvVar: "GOOGLE_RESOURCE_MANAGER_V3_CUSTOM_ENDPOINT",
 }
 
 func init() {
