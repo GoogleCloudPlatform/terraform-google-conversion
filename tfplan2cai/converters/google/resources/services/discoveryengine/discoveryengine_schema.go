@@ -88,7 +88,7 @@ func ResourceConverterDiscoveryEngineSchema() cai.ResourceConverter {
 }
 
 func GetDiscoveryEngineSchemaCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-discoveryengine.googleapis.com/projects/{{project}}/locations/{{location}}/collections/default_collection/dataStores/{{data_store_id}}/schemas/{{schema_id}}")
+	name, err := cai.AssetName(d, config, "//discoveryengine.googleapis.com/projects/{{project}}/locations/{{location}}/collections/default_collection/dataStores/{{data_store_id}}/schemas/{{schema_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

@@ -88,7 +88,7 @@ func ResourceConverterChronicleDataAccessScope() cai.ResourceConverter {
 }
 
 func GetChronicleDataAccessScopeCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/dataAccessScopes/{{data_access_scope_id}}")
+	name, err := cai.AssetName(d, config, "//chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/dataAccessScopes/{{data_access_scope_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

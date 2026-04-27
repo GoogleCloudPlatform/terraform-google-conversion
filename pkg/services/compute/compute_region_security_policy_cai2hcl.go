@@ -19,6 +19,7 @@ package compute
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type ComputeRegionSecurityPolicyCai2hclConverter struct {
@@ -156,6 +158,12 @@ func flattenComputeRegionSecurityPolicyName(v interface{}, d *schema.ResourceDat
 }
 
 func flattenComputeRegionSecurityPolicyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -261,6 +269,12 @@ func flattenComputeRegionSecurityPolicyUserDefinedFields(v interface{}, d *schem
 }
 
 func flattenComputeRegionSecurityPolicyUserDefinedFieldsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -303,6 +317,12 @@ func flattenComputeRegionSecurityPolicyUserDefinedFieldsSize(v interface{}, d *s
 }
 
 func flattenComputeRegionSecurityPolicyUserDefinedFieldsMask(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -333,6 +353,12 @@ func flattenComputeRegionSecurityPolicyRules(v interface{}, d *schema.ResourceDa
 }
 
 func flattenComputeRegionSecurityPolicyRulesDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -499,6 +525,12 @@ func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionReque
 }
 
 func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestHeaderValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -527,6 +559,12 @@ func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionReque
 }
 
 func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestCookieValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -555,6 +593,12 @@ func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionReque
 }
 
 func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUriValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -583,6 +627,12 @@ func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionReque
 }
 
 func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestQueryParamValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -676,10 +726,22 @@ func flattenComputeRegionSecurityPolicyRulesRateLimitOptionsRateLimitThresholdIn
 }
 
 func flattenComputeRegionSecurityPolicyRulesRateLimitOptionsConformAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeRegionSecurityPolicyRulesRateLimitOptionsExceedAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -688,6 +750,12 @@ func flattenComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKey(v inter
 }
 
 func flattenComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -716,6 +784,12 @@ func flattenComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyConfigsE
 }
 
 func flattenComputeRegionSecurityPolicyRulesRateLimitOptionsEnforceOnKeyConfigsEnforceOnKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -839,6 +913,12 @@ func flattenComputeRegionSecurityPolicyRulesNetworkMatchUserDefinedFields(v inte
 }
 
 func flattenComputeRegionSecurityPolicyRulesNetworkMatchUserDefinedFieldsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

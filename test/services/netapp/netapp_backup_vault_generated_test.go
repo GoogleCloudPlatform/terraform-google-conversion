@@ -29,6 +29,9 @@ func TestAccNetappBackupVault(t *testing.T) {
 		{
 			Name: "TestAccNetappBackupVault_NetappBackupVaultExample_update",
 		},
+		{
+			Name: "TestAccNetappBackupVault_withKmsConfig",
+		},
 	}
 
 	for _, tt := range tests {

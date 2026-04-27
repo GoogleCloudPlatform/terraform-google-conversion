@@ -134,6 +134,12 @@ func GetDataplexDatascanApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("execution_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(executionSpecProp)) && (ok || !reflect.DeepEqual(v, executionSpecProp)) {
 		obj["executionSpec"] = executionSpecProp
 	}
+	executionIdentityProp, err := expandDataplexDatascanExecutionIdentity(d.Get("execution_identity"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("execution_identity"); !tpgresource.IsEmptyValue(reflect.ValueOf(executionIdentityProp)) && (ok || !reflect.DeepEqual(v, executionIdentityProp)) {
+		obj["executionIdentity"] = executionIdentityProp
+	}
 	dataQualitySpecProp, err := expandDataplexDatascanDataQualitySpec(d.Get("data_quality_spec"), d, config)
 	if err != nil {
 		return nil, err
@@ -354,6 +360,104 @@ func expandDataplexDatascanExecutionSpecTriggerOneTimeTtlAfterScanCompletion(v i
 }
 
 func expandDataplexDatascanExecutionSpecField(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanExecutionIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDataplexServiceAgent, err := expandDataplexDatascanExecutionIdentityDataplexServiceAgent(original["dataplex_service_agent"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["dataplexServiceAgent"] = transformedDataplexServiceAgent
+	}
+
+	transformedUserCredential, err := expandDataplexDatascanExecutionIdentityUserCredential(original["user_credential"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["userCredential"] = transformedUserCredential
+	}
+
+	transformedServiceAccount, err := expandDataplexDatascanExecutionIdentityServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanExecutionIdentityDataplexServiceAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanExecutionIdentityUserCredential(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanExecutionIdentityServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEmail, err := expandDataplexDatascanExecutionIdentityServiceAccountEmail(original["email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["email"] = transformedEmail
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanExecutionIdentityServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

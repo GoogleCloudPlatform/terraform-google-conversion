@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
@@ -59,6 +60,15 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
+
+func init() {
+	registry.Schema{
+		Name:        "google_netapp_storage_pool",
+		ProductName: "netapp",
+		Type:        registry.SchemaTypeResource,
+		Schema:      ResourceNetappStoragePool(),
+	}.Register()
+}
 
 const NetappStoragePoolAssetType string = "netapp.googleapis.com/StoragePool"
 
@@ -158,6 +168,17 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 				Description: `When enabled, the volumes uses Active Directory as LDAP name service for UID/GID lookups. Required to enable extended group support for NFSv3,
 using security identifiers for NFSv4.1 or principal names for kerberized NFSv4.1.`,
 			},
+			"mode": {
+				Type:         schema.TypeString,
+				Computed:     true,
+				Optional:     true,
+				ForceNew:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"MODE_UNSPECIFIED", "DEFAULT", "ONTAP", ""}),
+				Description: `Mode of the storage pool.
+The operational mode of the storage pool. ONTAP mode enables operations
+via ONTAP Mode APIs, while DEFAULT mode enables operations via NetApp Volumes APIs.
+If not specified during creation, the mode defaults to DEFAULT. Possible values: ["MODE_UNSPECIFIED", "DEFAULT", "ONTAP"]`,
+			},
 			"qos_type": {
 				Type:         schema.TypeString,
 				Computed:     true,
@@ -171,6 +192,14 @@ Possible values are: AUTO, MANUAL. Possible values: ["QOS_TYPE_UNSPECIFIED", "AU
 				Optional: true,
 				Description: `Specifies the replica zone for regional Flex pools. 'zone' and 'replica_zone' values can be swapped to initiate a
 [zone switch](https://cloud.google.com/netapp/volumes/docs/configure-and-use/storage-pools/edit-or-delete-storage-pool#switch_active_and_replica_zones).`,
+			},
+			"scale_type": {
+				Type:         schema.TypeString,
+				Computed:     true,
+				Optional:     true,
+				ForceNew:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"SCALE_TYPE_UNSPECIFIED", "SCALE_TYPE_DEFAULT", "SCALE_TYPE_SCALEOUT", ""}),
+				Description:  `The scale type of the storage pool. Defaults to 'SCALE_TYPE_DEFAULT' if not specified. Possible values: ["SCALE_TYPE_UNSPECIFIED", "SCALE_TYPE_DEFAULT", "SCALE_TYPE_SCALEOUT"]`,
 			},
 			"total_iops": {
 				Type:        schema.TypeString,

@@ -116,6 +116,12 @@ func GetGKEHub2RolloutSequenceApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
+	ignoredClustersSelectorProp, err := expandGKEHub2RolloutSequenceIgnoredClustersSelector(d.Get("ignored_clusters_selector"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ignored_clusters_selector"); !tpgresource.IsEmptyValue(reflect.ValueOf(ignoredClustersSelectorProp)) && (ok || !reflect.DeepEqual(v, ignoredClustersSelectorProp)) {
+		obj["ignoredClustersSelector"] = ignoredClustersSelectorProp
+	}
 	stagesProp, err := expandGKEHub2RolloutSequenceStages(d.Get("stages"), d, config)
 	if err != nil {
 		return nil, err
@@ -133,6 +139,32 @@ func GetGKEHub2RolloutSequenceApiObject(d tpgresource.TerraformResourceData, con
 }
 
 func expandGKEHub2RolloutSequenceDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGKEHub2RolloutSequenceIgnoredClustersSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLabelSelector, err := expandGKEHub2RolloutSequenceIgnoredClustersSelectorLabelSelector(original["label_selector"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLabelSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labelSelector"] = transformedLabelSelector
+	}
+
+	return transformed, nil
+}
+
+func expandGKEHub2RolloutSequenceIgnoredClustersSelectorLabelSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

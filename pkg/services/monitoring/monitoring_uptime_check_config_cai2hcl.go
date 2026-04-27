@@ -19,6 +19,7 @@ package monitoring
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type MonitoringUptimeCheckConfigCai2hclConverter struct {
@@ -307,6 +309,12 @@ func flattenMonitoringUptimeCheckConfigHttpCheckContentType(v interface{}, d *sc
 }
 
 func flattenMonitoringUptimeCheckConfigHttpCheckCustomContentType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -333,6 +341,12 @@ func flattenMonitoringUptimeCheckConfigHttpCheckAuthInfoPassword(v interface{}, 
 }
 
 func flattenMonitoringUptimeCheckConfigHttpCheckAuthInfoPasswordWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -403,6 +417,12 @@ func flattenMonitoringUptimeCheckConfigHttpCheckMaskHeaders(v interface{}, d *sc
 }
 
 func flattenMonitoringUptimeCheckConfigHttpCheckBody(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

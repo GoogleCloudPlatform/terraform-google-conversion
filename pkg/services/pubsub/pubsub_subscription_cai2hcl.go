@@ -19,6 +19,7 @@ package pubsub
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type PubsubSubscriptionCai2hclConverter struct {
@@ -226,6 +228,12 @@ func flattenPubsubSubscriptionBigqueryConfigDropUnknownFields(v interface{}, d *
 }
 
 func flattenPubsubSubscriptionBigqueryConfigServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -273,14 +281,32 @@ func flattenPubsubSubscriptionCloudStorageConfigBucket(v interface{}, d *schema.
 }
 
 func flattenPubsubSubscriptionCloudStorageConfigFilenamePrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubSubscriptionCloudStorageConfigFilenameSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenPubsubSubscriptionCloudStorageConfigFilenameDatetimeFormat(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -352,6 +378,12 @@ func flattenPubsubSubscriptionCloudStorageConfigTextConfig(v interface{}, d *sch
 }
 
 func flattenPubsubSubscriptionCloudStorageConfigServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -403,6 +435,12 @@ func flattenPubsubSubscriptionPushConfigOidcTokenServiceAccountEmail(v interface
 }
 
 func flattenPubsubSubscriptionPushConfigOidcTokenAudience(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -486,6 +524,12 @@ func flattenPubsubSubscriptionExpirationPolicyTtl(v interface{}, d *schema.Resou
 }
 
 func flattenPubsubSubscriptionFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -506,6 +550,12 @@ func flattenPubsubSubscriptionDeadLetterPolicy(v interface{}, d *schema.Resource
 }
 
 func flattenPubsubSubscriptionDeadLetterPolicyDeadLetterTopic(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -624,6 +674,12 @@ func flattenPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInferenceP
 }
 
 func flattenPubsubSubscriptionMessageTransformsAiInferenceServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

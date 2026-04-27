@@ -18,6 +18,7 @@ package alloydb
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -69,6 +70,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 func AlloydbClusterTfplan2caiConverter() cai.Tfplan2caiConverter {
@@ -941,28 +943,28 @@ func expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTime(v in
 	transformedHours, err := expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeHours(original["hours"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedHours); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["hours"] = transformedHours
 	}
 
 	transformedMinutes, err := expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeMinutes(original["minutes"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMinutes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["minutes"] = transformedMinutes
 	}
 
 	transformedSeconds, err := expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeSeconds(original["seconds"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["seconds"] = transformedSeconds
 	}
 
 	transformedNanos, err := expandAlloydbClusterMaintenanceUpdatePolicyMaintenanceWindowsStartTimeNanos(original["nanos"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedNanos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["nanos"] = transformedNanos
 	}
 

@@ -88,7 +88,7 @@ func ResourceConverterDialogflowCXGenerativeSettings() cai.ResourceConverter {
 }
 
 func GetDialogflowCXGenerativeSettingsCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-dialogflow.googleapis.com/{{parent}}/generativeSettings?languageCode={{language_code}}")
+	name, err := cai.AssetName(d, config, "//dialogflow.googleapis.com/{{parent}}/generativeSettings?languageCode={{language_code}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

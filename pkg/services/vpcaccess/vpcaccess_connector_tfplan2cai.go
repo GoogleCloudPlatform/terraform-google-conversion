@@ -18,6 +18,7 @@ package vpcaccess
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -69,6 +70,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 func VPCAccessConnectorTfplan2caiConverter() cai.Tfplan2caiConverter {

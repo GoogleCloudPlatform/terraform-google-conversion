@@ -19,6 +19,7 @@ package redis
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type RedisInstanceCai2hclConverter struct {
@@ -174,6 +176,12 @@ func flattenRedisInstanceConnectMode(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenRedisInstanceDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -242,6 +250,12 @@ func flattenRedisInstanceMaintenancePolicy(v interface{}, d *schema.ResourceData
 }
 
 func flattenRedisInstanceMaintenancePolicyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -420,5 +434,11 @@ func flattenRedisInstanceSecondaryIpRange(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRedisInstanceCustomerManagedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

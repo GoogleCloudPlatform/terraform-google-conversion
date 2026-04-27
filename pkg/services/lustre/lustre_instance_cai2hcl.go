@@ -19,6 +19,7 @@ package lustre
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type LustreInstanceCai2hclConverter struct {
@@ -272,6 +274,12 @@ func flattenLustreInstanceCapacityGib(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenLustreInstanceDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -316,6 +324,12 @@ func flattenLustreInstanceGkeSupportEnabled(v interface{}, d *schema.ResourceDat
 }
 
 func flattenLustreInstanceKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -716,9 +730,21 @@ func flattenLustreInstanceNetwork(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenLustreInstancePerUnitStorageThroughput(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenLustreInstancePlacementPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

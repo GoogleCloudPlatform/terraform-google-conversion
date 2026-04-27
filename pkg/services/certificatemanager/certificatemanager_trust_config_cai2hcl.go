@@ -19,6 +19,7 @@ package certificatemanager
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type CertificateManagerTrustConfigCai2hclConverter struct {
@@ -144,6 +146,12 @@ func flattenCertificateManagerTrustConfigLabels(v interface{}, d *schema.Resourc
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenCertificateManagerTrustConfigDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -187,6 +195,12 @@ func flattenCertificateManagerTrustConfigTrustStoresTrustAnchors(v interface{}, 
 }
 
 func flattenCertificateManagerTrustConfigTrustStoresTrustAnchorsPemCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -210,6 +224,12 @@ func flattenCertificateManagerTrustConfigTrustStoresIntermediateCas(v interface{
 }
 
 func flattenCertificateManagerTrustConfigTrustStoresIntermediateCasPemCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

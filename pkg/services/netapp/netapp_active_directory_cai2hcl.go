@@ -19,6 +19,7 @@ package netapp
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type NetappActiveDirectoryCai2hclConverter struct {
@@ -166,6 +168,12 @@ func flattenNetappActiveDirectoryDomain(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenNetappActiveDirectorySite(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -234,10 +242,22 @@ func flattenNetappActiveDirectorySecurityOperators(v interface{}, d *schema.Reso
 }
 
 func flattenNetappActiveDirectoryKdcHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappActiveDirectoryKdcIp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -246,6 +266,12 @@ func flattenNetappActiveDirectoryNfsUsersWithLdap(v interface{}, d *schema.Resou
 }
 
 func flattenNetappActiveDirectoryDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

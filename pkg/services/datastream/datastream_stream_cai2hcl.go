@@ -19,6 +19,7 @@ package datastream
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type DatastreamStreamCai2hclConverter struct {
@@ -319,14 +321,32 @@ func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlData
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigIncludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsCollation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -456,14 +476,32 @@ func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlData
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigMysqlSourceConfigExcludeObjectsMysqlDatabasesMysqlTablesMysqlColumnsCollation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -660,10 +698,22 @@ func flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjectsOracleSc
 }
 
 func flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjectsOracleSchemasOracleTablesOracleColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigOracleSourceConfigIncludeObjectsOracleSchemasOracleTablesOracleColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -764,10 +814,22 @@ func flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjectsOracleSc
 }
 
 func flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjectsOracleSchemasOracleTablesOracleColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigOracleSourceConfigExcludeObjectsOracleSchemasOracleTablesOracleColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -940,10 +1002,22 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjectsPost
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigIncludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1072,10 +1146,22 @@ func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPost
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigPostgresqlSourceConfigExcludeObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1261,10 +1347,22 @@ func flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchem
 }
 
 func flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigSqlServerSourceConfigIncludeObjectsSchemasTablesColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1365,10 +1463,22 @@ func flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchem
 }
 
 func flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamSourceConfigSqlServerSourceConfigExcludeObjectsSchemasTablesColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1472,6 +1582,12 @@ func flattenDatastreamStreamSourceConfigSalesforceSourceConfigIncludeObjectsObje
 }
 
 func flattenDatastreamStreamSourceConfigSalesforceSourceConfigIncludeObjectsObjectsObjectName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1495,6 +1611,12 @@ func flattenDatastreamStreamSourceConfigSalesforceSourceConfigIncludeObjectsObje
 }
 
 func flattenDatastreamStreamSourceConfigSalesforceSourceConfigIncludeObjectsObjectsFieldsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1533,6 +1655,12 @@ func flattenDatastreamStreamSourceConfigSalesforceSourceConfigExcludeObjectsObje
 }
 
 func flattenDatastreamStreamSourceConfigSalesforceSourceConfigExcludeObjectsObjectsObjectName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1556,6 +1684,12 @@ func flattenDatastreamStreamSourceConfigSalesforceSourceConfigExcludeObjectsObje
 }
 
 func flattenDatastreamStreamSourceConfigSalesforceSourceConfigExcludeObjectsObjectsFieldsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1596,6 +1730,12 @@ func flattenDatastreamStreamSourceConfigSpannerSourceConfig(v interface{}, d *sc
 }
 
 func flattenDatastreamStreamSourceConfigSpannerSourceConfigChangeStreamName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1604,6 +1744,12 @@ func flattenDatastreamStreamSourceConfigSpannerSourceConfigSpannerRpcPriority(v 
 }
 
 func flattenDatastreamStreamSourceConfigSpannerSourceConfigFgacRole(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1737,6 +1883,12 @@ func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemas
 }
 
 func flattenDatastreamStreamSourceConfigSpannerSourceConfigIncludeObjectsSchemasTablesColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1836,6 +1988,12 @@ func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemas
 }
 
 func flattenDatastreamStreamSourceConfigSpannerSourceConfigExcludeObjectsSchemasTablesColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1893,6 +2051,12 @@ func flattenDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabas
 }
 
 func flattenDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1917,6 +2081,12 @@ func flattenDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabas
 }
 
 func flattenDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollectionsCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1940,6 +2110,12 @@ func flattenDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabas
 }
 
 func flattenDatastreamStreamSourceConfigMongodbSourceConfigIncludeObjectsDatabasesCollectionsFieldsField(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1978,6 +2154,12 @@ func flattenDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabas
 }
 
 func flattenDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2002,6 +2184,12 @@ func flattenDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabas
 }
 
 func flattenDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollectionsCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2025,6 +2213,12 @@ func flattenDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabas
 }
 
 func flattenDatastreamStreamSourceConfigMongodbSourceConfigExcludeObjectsDatabasesCollectionsFieldsField(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2097,6 +2291,12 @@ func flattenDatastreamStreamDestinationConfigGcsDestinationConfig(v interface{},
 }
 
 func flattenDatastreamStreamDestinationConfigGcsDestinationConfigPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2178,6 +2378,12 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfig(v interfa
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigDataFreshness(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2252,14 +2458,32 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHier
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplateDatasetIdPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsDatasetTemplateKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigSourceHierarchyDatasetsProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2330,6 +2554,12 @@ func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfig
 }
 
 func flattenDatastreamStreamDestinationConfigBigqueryDestinationConfigBlmtConfigRootPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2473,14 +2703,32 @@ func flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabasesMysqlTa
 }
 
 func flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamBackfillAllMysqlExcludedObjectsMysqlDatabasesMysqlTablesMysqlColumnsCollation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2609,10 +2857,22 @@ func flattenDatastreamStreamBackfillAllPostgresqlExcludedObjectsPostgresqlSchema
 }
 
 func flattenDatastreamStreamBackfillAllPostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamBackfillAllPostgresqlExcludedObjectsPostgresqlSchemasPostgresqlTablesPostgresqlColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2738,10 +2998,22 @@ func flattenDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemasOracleT
 }
 
 func flattenDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamBackfillAllOracleExcludedObjectsOracleSchemasOracleTablesOracleColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2842,10 +3114,22 @@ func flattenDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColu
 }
 
 func flattenDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsColumn(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatastreamStreamBackfillAllSqlServerExcludedObjectsSchemasTablesColumnsDataType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2884,6 +3168,12 @@ func flattenDatastreamStreamBackfillAllSalesforceExcludedObjectsObjects(v interf
 }
 
 func flattenDatastreamStreamBackfillAllSalesforceExcludedObjectsObjectsObjectName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -2907,6 +3197,12 @@ func flattenDatastreamStreamBackfillAllSalesforceExcludedObjectsObjectsFields(v 
 }
 
 func flattenDatastreamStreamBackfillAllSalesforceExcludedObjectsObjectsFieldsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3112,6 +3408,12 @@ func flattenDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollection
 }
 
 func flattenDatastreamStreamBackfillAllMongodbExcludedObjectsDatabasesCollectionsFieldsField(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3124,6 +3426,12 @@ func flattenDatastreamStreamBackfillNone(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenDatastreamStreamCustomerManagedEncryptionKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -3580,6 +3888,12 @@ func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSpannerIde
 }
 
 func flattenDatastreamStreamRuleSetsObjectFilterSourceObjectIdentifierSpannerIdentifierSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

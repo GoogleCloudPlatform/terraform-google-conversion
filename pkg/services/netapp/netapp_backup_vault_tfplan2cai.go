@@ -18,6 +18,7 @@ package netapp
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -69,6 +70,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 func NetappBackupVaultTfplan2caiConverter() cai.Tfplan2caiConverter {
@@ -136,6 +138,12 @@ func GetNetappBackupVaultCaiObject(d tpgresource.TerraformResourceData, config *
 		return nil, err
 	} else if v, ok := d.GetOkExists("backup_retention_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupRetentionPolicyProp)) && (ok || !reflect.DeepEqual(v, backupRetentionPolicyProp)) {
 		obj["backupRetentionPolicy"] = backupRetentionPolicyProp
+	}
+	kmsConfigProp, err := expandNetappBackupVaultKmsConfig(d.Get("kms_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kms_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(kmsConfigProp)) && (ok || !reflect.DeepEqual(v, kmsConfigProp)) {
+		obj["kmsConfig"] = kmsConfigProp
 	}
 	effectiveLabelsProp, err := expandNetappBackupVaultEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
@@ -226,6 +234,10 @@ func expandNetappBackupVaultBackupRetentionPolicyMonthlyBackupImmutable(v interf
 }
 
 func expandNetappBackupVaultBackupRetentionPolicyManualBackupImmutable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupVaultKmsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

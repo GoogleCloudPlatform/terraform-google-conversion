@@ -27,6 +27,10 @@ func TestAccContainerCluster(t *testing.T) {
 	}
 	tests := []test.TestCase{
 		{
+			Name: "TestAccContainerCluster_withDatabaseEncryption",
+			Skip: "Bug in the API, https://github.com/hashicorp/terraform-provider-google/issues/26882",
+		},
+		{
 			Name: "TestAccContainerCluster_withSandboxConfigType",
 			Skip: "Need to fix the testing framework to handle the order of array items (map) node_config.taint",
 		},
@@ -126,6 +130,9 @@ func TestAccContainerCluster(t *testing.T) {
 		},
 		{
 			Name: "TestAccContainerCluster_withManagedOpenTelemetryConfig",
+		},
+		{
+			Name: "TestAccContainerCluster_withManagedMLDiagnosticsConfig",
 		},
 		{
 			Name: "TestAccContainerCluster_withMasterAuthorizedNetworksConfig",
@@ -335,6 +342,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withAutopilotDefaultComputeClassEnabled",
 		},
 		{
+			Name: "TestAccContainerCluster_withAutopilotClusterPolicy",
+		},
+		{
 			Name: "TestAccContainerCluster_withShieldedNodes",
 		},
 		{
@@ -441,9 +451,6 @@ func TestAccContainerCluster(t *testing.T) {
 		},
 		{
 			Name: "TestAccContainerCluster_withCostManagementConfig",
-		},
-		{
-			Name: "TestAccContainerCluster_withDatabaseEncryption",
 		},
 		{
 			Name: "TestAccContainerCluster_withAdvancedDatapath",

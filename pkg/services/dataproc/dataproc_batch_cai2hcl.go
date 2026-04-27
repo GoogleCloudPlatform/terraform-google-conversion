@@ -19,6 +19,7 @@ package dataproc
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type DataprocBatchCai2hclConverter struct {
@@ -173,6 +175,12 @@ func flattenDataprocBatchRuntimeConfigVersion(v interface{}, d *schema.ResourceD
 }
 
 func flattenDataprocBatchRuntimeConfigContainerImage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -209,6 +217,12 @@ func flattenDataprocBatchRuntimeConfigAutotuningConfigScenarios(v interface{}, d
 }
 
 func flattenDataprocBatchRuntimeConfigCohort(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -265,6 +279,12 @@ func flattenDataprocBatchEnvironmentConfigExecutionConfigNetworkTags(v interface
 }
 
 func flattenDataprocBatchEnvironmentConfigExecutionConfigKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -273,14 +293,32 @@ func flattenDataprocBatchEnvironmentConfigExecutionConfigTtl(v interface{}, d *s
 }
 
 func flattenDataprocBatchEnvironmentConfigExecutionConfigStagingBucket(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDataprocBatchEnvironmentConfigExecutionConfigNetworkUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDataprocBatchEnvironmentConfigExecutionConfigSubnetworkUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -316,6 +354,12 @@ func flattenDataprocBatchEnvironmentConfigPeripheralsConfig(v interface{}, d *sc
 }
 
 func flattenDataprocBatchEnvironmentConfigPeripheralsConfigMetastoreService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -334,6 +378,12 @@ func flattenDataprocBatchEnvironmentConfigPeripheralsConfigSparkHistoryServerCon
 }
 
 func flattenDataprocBatchEnvironmentConfigPeripheralsConfigSparkHistoryServerConfigDataprocCluster(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -362,6 +412,12 @@ func flattenDataprocBatchPysparkBatch(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenDataprocBatchPysparkBatchMainPythonFileUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -426,10 +482,22 @@ func flattenDataprocBatchSparkBatchArchiveUris(v interface{}, d *schema.Resource
 }
 
 func flattenDataprocBatchSparkBatchMainJarFileUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDataprocBatchSparkBatchMainClass(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -454,6 +522,12 @@ func flattenDataprocBatchSparkRBatch(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenDataprocBatchSparkRBatchMainRFileUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -488,6 +562,12 @@ func flattenDataprocBatchSparkSqlBatch(v interface{}, d *schema.ResourceData, co
 }
 
 func flattenDataprocBatchSparkSqlBatchQueryFileUri(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

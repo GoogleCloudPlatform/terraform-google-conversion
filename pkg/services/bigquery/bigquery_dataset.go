@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
@@ -69,6 +70,26 @@ func validateDefaultTableExpirationMs(v interface{}, k string) (ws []string, err
 	}
 
 	return
+}
+
+func customCollationDiff(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
+	// 1. Check if the configuration is explicitly set to an empty string.
+	// We use GetRawConfig to see what the user actually wrote,
+	// before the SDK "fills in" computed values.
+	conf := d.GetRawConfig()
+	if !conf.IsNull() && conf.GetAttr("default_collation").IsKnown() && !conf.GetAttr("default_collation").IsNull() {
+		val := conf.GetAttr("default_collation").AsString()
+
+		// 2. If config is "", but the state (old value) is NOT "", force an update.
+		old, _ := d.GetChange("default_collation")
+		if old != "" && val == "" {
+			// THIS is what goes inside the block:
+			if err := d.SetNew("default_collation", ""); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
 }
 
 // bigqueryDatasetAccessHash is a custom hash function for the access block.
@@ -126,6 +147,15 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
+
+func init() {
+	registry.Schema{
+		Name:        "google_bigquery_dataset",
+		ProductName: "bigquery",
+		Type:        registry.SchemaTypeResource,
+		Schema:      ResourceBigQueryDataset(),
+	}.Register()
+}
 
 const BigQueryDatasetAssetType string = "bigquery.googleapis.com/Dataset"
 

@@ -88,7 +88,7 @@ func ResourceConverterChronicleFeed() cai.ResourceConverter {
 }
 
 func GetChronicleFeedCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/feeds/{{feed}}")
+	name, err := cai.AssetName(d, config, "//chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/feeds/{{feed}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

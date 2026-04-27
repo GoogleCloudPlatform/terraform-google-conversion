@@ -19,6 +19,7 @@ package netapp
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type NetappStoragePoolCai2hclConverter struct {
@@ -143,6 +145,8 @@ func (c *NetappStoragePoolCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["enable_hot_tier_auto_resize"] = flattenNetappStoragePoolEnableHotTierAutoResize(res["enableHotTierAutoResize"], d, config)
 	hclData["qos_type"] = flattenNetappStoragePoolQosType(res["qosType"], d, config)
 	hclData["type"] = flattenNetappStoragePoolType(res["type"], d, config)
+	hclData["scale_type"] = flattenNetappStoragePoolScaleType(res["scaleType"], d, config)
+	hclData["mode"] = flattenNetappStoragePoolMode(res["mode"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -170,6 +174,12 @@ func flattenNetappStoragePoolCapacityGib(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenNetappStoragePoolDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -188,10 +198,22 @@ func flattenNetappStoragePoolNetwork(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenNetappStoragePoolActiveDirectory(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappStoragePoolKmsConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -204,6 +226,12 @@ func flattenNetappStoragePoolZone(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenNetappStoragePoolReplicaZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -224,6 +252,12 @@ func flattenNetappStoragePoolTotalIops(v interface{}, d *schema.ResourceData, co
 }
 
 func flattenNetappStoragePoolHotTierSizeGib(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -236,5 +270,13 @@ func flattenNetappStoragePoolQosType(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenNetappStoragePoolType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetappStoragePoolScaleType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetappStoragePoolMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

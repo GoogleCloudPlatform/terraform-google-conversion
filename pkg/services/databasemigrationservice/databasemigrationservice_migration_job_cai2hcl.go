@@ -19,6 +19,7 @@ package databasemigrationservice
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type DatabaseMigrationServiceMigrationJobCai2hclConverter struct {
@@ -149,6 +151,12 @@ func (c *DatabaseMigrationServiceMigrationJobCai2hclConverter) convertResourceDa
 }
 
 func flattenDatabaseMigrationServiceMigrationJobDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -216,10 +224,22 @@ func flattenDatabaseMigrationServiceMigrationJobDumpFlagsDumpFlags(v interface{}
 }
 
 func flattenDatabaseMigrationServiceMigrationJobDumpFlagsDumpFlagsName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatabaseMigrationServiceMigrationJobDumpFlagsDumpFlagsValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -242,6 +262,12 @@ func flattenDatabaseMigrationServiceMigrationJobPerformanceConfigDumpParallelLev
 }
 
 func flattenDatabaseMigrationServiceMigrationJobDumpPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -278,6 +304,12 @@ func flattenDatabaseMigrationServiceMigrationJobReverseSshConnectivity(v interfa
 }
 
 func flattenDatabaseMigrationServiceMigrationJobReverseSshConnectivityVmIp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -299,10 +331,22 @@ func flattenDatabaseMigrationServiceMigrationJobReverseSshConnectivityVmPort(v i
 }
 
 func flattenDatabaseMigrationServiceMigrationJobReverseSshConnectivityVm(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDatabaseMigrationServiceMigrationJobReverseSshConnectivityVpc(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -321,5 +365,11 @@ func flattenDatabaseMigrationServiceMigrationJobVpcPeeringConnectivity(v interfa
 }
 
 func flattenDatabaseMigrationServiceMigrationJobVpcPeeringConnectivityVpc(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

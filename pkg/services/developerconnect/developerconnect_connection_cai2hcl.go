@@ -19,6 +19,7 @@ package developerconnect
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type DeveloperConnectConnectionCai2hclConverter struct {
@@ -233,6 +235,12 @@ func flattenDeveloperConnectConnectionGithubEnterpriseConfig(v interface{}, d *s
 }
 
 func flattenDeveloperConnectConnectionGithubEnterpriseConfigPrivateKeySecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -262,6 +270,12 @@ func flattenDeveloperConnectConnectionGithubEnterpriseConfigServiceDirectoryConf
 }
 
 func flattenDeveloperConnectConnectionGithubEnterpriseConfigSslCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -277,14 +291,32 @@ func flattenDeveloperConnectConnectionGithubEnterpriseConfigHostUri(v interface{
 }
 
 func flattenDeveloperConnectConnectionGithubEnterpriseConfigAppId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDeveloperConnectConnectionGithubEnterpriseConfigWebhookSecretSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDeveloperConnectConnectionGithubEnterpriseConfigAppInstallationId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -292,6 +324,12 @@ func flattenDeveloperConnectConnectionLabels(v interface{}, d *schema.ResourceDa
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenDeveloperConnectConnectionEtag(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -370,6 +408,12 @@ func flattenDeveloperConnectConnectionGitlabEnterpriseConfigServiceDirectoryConf
 }
 
 func flattenDeveloperConnectConnectionGitlabEnterpriseConfigSslCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -623,6 +667,12 @@ func flattenDeveloperConnectConnectionBitbucketDataCenterConfigServiceDirectoryC
 }
 
 func flattenDeveloperConnectConnectionBitbucketDataCenterConfigSslCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -762,6 +812,12 @@ func flattenDeveloperConnectConnectionHttpConfigBasicAuthentication(v interface{
 }
 
 func flattenDeveloperConnectConnectionHttpConfigBasicAuthenticationPasswordSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -791,6 +847,12 @@ func flattenDeveloperConnectConnectionHttpConfigBearerTokenAuthentication(v inte
 }
 
 func flattenDeveloperConnectConnectionHttpConfigBearerTokenAuthenticationTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -831,6 +893,12 @@ func flattenDeveloperConnectConnectionHttpConfigServiceDirectoryConfigService(v 
 }
 
 func flattenDeveloperConnectConnectionHttpConfigSslCaCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

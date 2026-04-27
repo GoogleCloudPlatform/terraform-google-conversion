@@ -18,6 +18,7 @@ package netapp
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -69,6 +70,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 func NetappStoragePoolTfplan2caiConverter() cai.Tfplan2caiConverter {
@@ -215,6 +217,18 @@ func GetNetappStoragePoolCaiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
+	scaleTypeProp, err := expandNetappStoragePoolScaleType(d.Get("scale_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scale_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(scaleTypeProp)) && (ok || !reflect.DeepEqual(v, scaleTypeProp)) {
+		obj["scaleType"] = scaleTypeProp
+	}
+	modeProp, err := expandNetappStoragePoolMode(d.Get("mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(modeProp)) && (ok || !reflect.DeepEqual(v, modeProp)) {
+		obj["mode"] = modeProp
+	}
 	effectiveLabelsProp, err := expandNetappStoragePoolEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -290,6 +304,14 @@ func expandNetappStoragePoolQosType(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandNetappStoragePoolType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolScaleType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappStoragePoolMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

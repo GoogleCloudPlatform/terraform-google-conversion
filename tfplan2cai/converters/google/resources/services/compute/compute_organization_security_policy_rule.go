@@ -134,11 +134,29 @@ func GetComputeOrganizationSecurityPolicyRuleApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("action"); !tpgresource.IsEmptyValue(reflect.ValueOf(actionProp)) && (ok || !reflect.DeepEqual(v, actionProp)) {
 		obj["action"] = actionProp
 	}
+	preconfiguredWafConfigProp, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfig(d.Get("preconfigured_waf_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("preconfigured_waf_config"); ok || !reflect.DeepEqual(v, preconfiguredWafConfigProp) {
+		obj["preconfiguredWafConfig"] = preconfiguredWafConfigProp
+	}
 	previewProp, err := expandComputeOrganizationSecurityPolicyRulePreview(d.Get("preview"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("preview"); !tpgresource.IsEmptyValue(reflect.ValueOf(previewProp)) && (ok || !reflect.DeepEqual(v, previewProp)) {
 		obj["preview"] = previewProp
+	}
+	redirectOptionsProp, err := expandComputeOrganizationSecurityPolicyRuleRedirectOptions(d.Get("redirect_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("redirect_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(redirectOptionsProp)) && (ok || !reflect.DeepEqual(v, redirectOptionsProp)) {
+		obj["redirectOptions"] = redirectOptionsProp
+	}
+	headerActionProp, err := expandComputeOrganizationSecurityPolicyRuleHeaderAction(d.Get("header_action"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("header_action"); !tpgresource.IsEmptyValue(reflect.ValueOf(headerActionProp)) && (ok || !reflect.DeepEqual(v, headerActionProp)) {
+		obj["headerAction"] = headerActionProp
 	}
 	directionProp, err := expandComputeOrganizationSecurityPolicyRuleDirection(d.Get("direction"), d, config)
 	if err != nil {
@@ -341,7 +359,356 @@ func expandComputeOrganizationSecurityPolicyRuleAction(v interface{}, d tpgresou
 	return v, nil
 }
 
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExclusion, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusion(original["exclusion"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExclusion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exclusions"] = transformedExclusion
+	}
+
+	return transformed, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedRequestHeader, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestHeader(original["request_header"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestHeader); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestHeadersToExclude"] = transformedRequestHeader
+		}
+
+		transformedRequestCookie, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestCookie(original["request_cookie"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestCookie); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestCookiesToExclude"] = transformedRequestCookie
+		}
+
+		transformedRequestUri, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestUri(original["request_uri"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestUrisToExclude"] = transformedRequestUri
+		}
+
+		transformedRequestQueryParam, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestQueryParam(original["request_query_param"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestQueryParam); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestQueryParamsToExclude"] = transformedRequestQueryParam
+		}
+
+		transformedTargetRuleSet, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionTargetRuleSet(original["target_rule_set"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetRuleSet); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetRuleSet"] = transformedTargetRuleSet
+		}
+
+		transformedTargetRuleIds, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionTargetRuleIds(original["target_rule_ids"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetRuleIds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetRuleIds"] = transformedTargetRuleIds
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestHeader(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestHeaderOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestHeaderValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestHeaderOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestCookie(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestCookieOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestCookieValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestCookieOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestCookieValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestUriOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestUriValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestUriOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestUriValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestQueryParam(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestQueryParamOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestQueryParamValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestQueryParamOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionRequestQueryParamValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionTargetRuleSet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfigExclusionTargetRuleIds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeOrganizationSecurityPolicyRulePreview(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRuleRedirectOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandComputeOrganizationSecurityPolicyRuleRedirectOptionsType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	transformedTarget, err := expandComputeOrganizationSecurityPolicyRuleRedirectOptionsTarget(original["target"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTarget); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["target"] = transformedTarget
+	}
+
+	return transformed, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRuleRedirectOptionsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRuleRedirectOptionsTarget(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRuleHeaderAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRequestHeadersToAdds, err := expandComputeOrganizationSecurityPolicyRuleHeaderActionRequestHeadersToAdds(original["request_headers_to_adds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestHeadersToAdds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestHeadersToAdds"] = transformedRequestHeadersToAdds
+	}
+
+	return transformed, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRuleHeaderActionRequestHeadersToAdds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedHeaderName, err := expandComputeOrganizationSecurityPolicyRuleHeaderActionRequestHeadersToAddsHeaderName(original["header_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerName"] = transformedHeaderName
+		}
+
+		transformedHeaderValue, err := expandComputeOrganizationSecurityPolicyRuleHeaderActionRequestHeadersToAddsHeaderValue(original["header_value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedHeaderValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["headerValue"] = transformedHeaderValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRuleHeaderActionRequestHeadersToAddsHeaderName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyRuleHeaderActionRequestHeadersToAddsHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

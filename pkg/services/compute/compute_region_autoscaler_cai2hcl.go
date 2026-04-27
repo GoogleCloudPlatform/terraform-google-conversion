@@ -19,6 +19,7 @@ package compute
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type ComputeRegionAutoscalerCai2hclConverter struct {
@@ -153,6 +155,12 @@ func flattenComputeRegionAutoscalerName(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenComputeRegionAutoscalerDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -405,6 +413,12 @@ func flattenComputeRegionAutoscalerAutoscalingPolicyMetricType(v interface{}, d 
 }
 
 func flattenComputeRegionAutoscalerAutoscalingPolicyMetricFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -507,6 +521,12 @@ func flattenComputeRegionAutoscalerAutoscalingPolicyScalingSchedulesDisabled(v i
 }
 
 func flattenComputeRegionAutoscalerAutoscalingPolicyScalingSchedulesDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

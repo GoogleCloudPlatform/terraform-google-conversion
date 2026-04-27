@@ -19,6 +19,7 @@ package securesourcemanager
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type SecureSourceManagerInstanceCai2hclConverter struct {
@@ -144,6 +146,12 @@ func flattenSecureSourceManagerInstanceLabels(v interface{}, d *schema.ResourceD
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenSecureSourceManagerInstanceKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -237,6 +245,12 @@ func flattenSecureSourceManagerInstancePrivateConfigCustomHostConfigGitSsh(v int
 }
 
 func flattenSecureSourceManagerInstancePrivateConfigCaPool(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

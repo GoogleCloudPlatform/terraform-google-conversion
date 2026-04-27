@@ -19,6 +19,7 @@ package certificatemanager
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type CertificateManagerCertificateMapEntryCai2hclConverter struct {
@@ -143,6 +145,12 @@ func (c *CertificateManagerCertificateMapEntryCai2hclConverter) convertResourceD
 }
 
 func flattenCertificateManagerCertificateMapEntryDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -154,10 +162,22 @@ func flattenCertificateManagerCertificateMapEntryCertificates(v interface{}, d *
 }
 
 func flattenCertificateManagerCertificateMapEntryHostname(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCertificateManagerCertificateMapEntryMatcher(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

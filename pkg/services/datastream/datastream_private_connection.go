@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
@@ -59,6 +60,15 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
+
+func init() {
+	registry.Schema{
+		Name:        "google_datastream_private_connection",
+		ProductName: "datastream",
+		Type:        registry.SchemaTypeResource,
+		Schema:      ResourceDatastreamPrivateConnection(),
+	}.Register()
+}
 
 const DatastreamPrivateConnectionAssetType string = "datastream.googleapis.com/PrivateConnection"
 
@@ -195,6 +205,19 @@ Format: projects/{project}/global/{networks}/{name}`,
 				Description: `The combination of labels configured directly on the resource
  and default labels configured on the provider.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
+			},
+			"deletion_policy": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Description: `The deletion policy for the private connection. Setting 'FORCE' will also delete any child
+routes that belong to this private connection. Setting 'DEFAULT' will fail the delete if
+child routes exist. Defaults to 'FORCE' for backwards compatibility.
+
+When a 'terraform destroy' or 'terraform apply' would delete the resource,
+the command will fail if this field is set to "PREVENT" in Terraform state.
+When set to "ABANDON", the command will remove the resource from Terraform
+management without updating or deleting the resource in the API.
+When set to "DELETE", the command will behave as if set to "DEFAULT".`,
 			},
 			"project": {
 				Type:     schema.TypeString,

@@ -19,6 +19,7 @@ package monitoring
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type MonitoringAlertPolicyCai2hclConverter struct {
@@ -240,6 +242,12 @@ func flattenMonitoringAlertPolicyConditionsConditionAbsentAggregationsGroupByFie
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionAbsentAggregationsAlignmentPeriod(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -296,6 +304,12 @@ func flattenMonitoringAlertPolicyConditionsConditionAbsentDuration(v interface{}
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionAbsentFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -419,6 +433,12 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdThresholdValue(v in
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionThresholdDenominatorFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -453,6 +473,12 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregat
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionThresholdDenominatorAggregationsAlignmentPeriod(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -568,6 +594,12 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdAggregationsGroupBy
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionThresholdAggregationsAlignmentPeriod(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -576,6 +608,12 @@ func flattenMonitoringAlertPolicyConditionsConditionThresholdAggregationsCrossSe
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionThresholdFilter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -663,10 +701,22 @@ func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageQuery
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageEvaluationInterval(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -675,10 +725,22 @@ func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageLabel
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageRuleGroup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenMonitoringAlertPolicyConditionsConditionPrometheusQueryLanguageAlertRule(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1036,10 +1098,22 @@ func flattenMonitoringAlertPolicyAlertStrategyNotificationRateLimit(v interface{
 }
 
 func flattenMonitoringAlertPolicyAlertStrategyNotificationRateLimitPeriod(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenMonitoringAlertPolicyAlertStrategyAutoClose(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1072,6 +1146,12 @@ func flattenMonitoringAlertPolicyAlertStrategyNotificationChannelStrategyNotific
 }
 
 func flattenMonitoringAlertPolicyAlertStrategyNotificationChannelStrategyRenotifyInterval(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1104,6 +1184,12 @@ func flattenMonitoringAlertPolicyDocumentation(v interface{}, d *schema.Resource
 }
 
 func flattenMonitoringAlertPolicyDocumentationContent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1112,6 +1198,12 @@ func flattenMonitoringAlertPolicyDocumentationMimeType(v interface{}, d *schema.
 }
 
 func flattenMonitoringAlertPolicyDocumentationSubject(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -1136,9 +1228,21 @@ func flattenMonitoringAlertPolicyDocumentationLinks(v interface{}, d *schema.Res
 }
 
 func flattenMonitoringAlertPolicyDocumentationLinksDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenMonitoringAlertPolicyDocumentationLinksUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

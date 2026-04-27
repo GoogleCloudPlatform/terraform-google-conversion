@@ -19,6 +19,7 @@ package iambeta
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type IAMBetaWorkloadIdentityPoolProviderCai2hclConverter struct {
@@ -161,10 +163,22 @@ func (c *IAMBetaWorkloadIdentityPoolProviderCai2hclConverter) convertResourceDat
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -177,6 +191,12 @@ func flattenIAMBetaWorkloadIdentityPoolProviderAttributeMapping(v interface{}, d
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderAttributeCondition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -239,6 +259,12 @@ func flattenIAMBetaWorkloadIdentityPoolProviderOidcIssuerUri(v interface{}, d *s
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderOidcJwksJson(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -317,6 +343,12 @@ func flattenIAMBetaWorkloadIdentityPoolProviderX509TrustStoreTrustAnchors(v inte
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderX509TrustStoreTrustAnchorsPemCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -340,6 +372,12 @@ func flattenIAMBetaWorkloadIdentityPoolProviderX509TrustStoreIntermediateCas(v i
 }
 
 func flattenIAMBetaWorkloadIdentityPoolProviderX509TrustStoreIntermediateCasPemCertificate(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
