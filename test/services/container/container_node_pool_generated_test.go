@@ -299,6 +299,7 @@ func TestAccContainerNodePool(t *testing.T) {
 					"node_config.guest_accelerator.gpu_driver_installation_config",
 					"node_config.guest_accelerator.gpu_partition_size",
 					"node_config.guest_accelerator.type",
+					"node_config.linux_node_config.accurate_time_config.enable_ptp_kvm_time_sync",
 					"node_count",
 					"provider",
 					"timeouts",
