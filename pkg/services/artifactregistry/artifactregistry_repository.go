@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
@@ -109,9 +110,22 @@ func durationDiffSuppress(k, oldr, newr string, d *schema.ResourceData) bool {
 }
 
 func mapHashID(v any) int {
-	replaceNestedValue(v, []string{"condition", "older_than"}, expandDuration)
-	replaceNestedValue(v, []string{"condition", "newer_than"}, expandDuration)
-	return schema.HashString(fmt.Sprintf("%v", v))
+	// v's dynamic type can differ between config and state, so we need to marshal and unmarshal to ensure consistent key order.
+	b, err := json.Marshal(v)
+	if err != nil {
+		return schema.HashString(fmt.Sprintf("%v", v))
+	}
+	var c any
+	if err := json.Unmarshal(b, &c); err != nil {
+		return schema.HashString(fmt.Sprintf("%v", v))
+	}
+	m, ok := c.(map[string]any)
+	if !ok {
+		return schema.HashString(fmt.Sprintf("%v", v))
+	}
+	replaceNestedValue(m, []string{"condition", "older_than"}, expandDuration)
+	replaceNestedValue(m, []string{"condition", "newer_than"}, expandDuration)
+	return schema.HashString(fmt.Sprintf("%v", m))
 }
 
 func expandDuration(v any) (any, bool) {
@@ -203,6 +217,15 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
+
+func init() {
+	registry.Schema{
+		Name:        "google_artifact_registry_repository",
+		ProductName: "artifactregistry",
+		Type:        registry.SchemaTypeResource,
+		Schema:      ResourceArtifactRegistryRepository(),
+	}.Register()
+}
 
 const ArtifactRegistryRepositoryAssetType string = "artifactregistry.googleapis.com/Repository"
 

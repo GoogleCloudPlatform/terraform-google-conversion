@@ -19,6 +19,7 @@ package iambeta
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type IAMBetaWorkloadIdentityPoolCai2hclConverter struct {
@@ -159,10 +161,22 @@ func (c *IAMBetaWorkloadIdentityPoolCai2hclConverter) convertResourceData(asset 
 }
 
 func flattenIAMBetaWorkloadIdentityPoolDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenIAMBetaWorkloadIdentityPoolDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -252,8 +266,9 @@ func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundles(v
 	for k, raw := range l {
 		original := raw.(map[string]interface{})
 		transformed = append(transformed, map[string]interface{}{
-			"trust_domain":  k,
-			"trust_anchors": flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchors(original["trustAnchors"], d, config),
+			"trust_domain":            k,
+			"trust_anchors":           flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustAnchors(original["trustAnchors"], d, config),
+			"trust_default_shared_ca": flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustDefaultSharedCa(original["trustDefaultSharedCa"], d, config),
 		})
 	}
 	return transformed
@@ -286,6 +301,10 @@ func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTr
 	if transformed == "" {
 		return "unknown"
 	}
+	return v
+}
+
+func flattenIAMBetaWorkloadIdentityPoolInlineTrustConfigAdditionalTrustBundlesTrustDefaultSharedCa(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

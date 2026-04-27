@@ -95,7 +95,7 @@ func ResourceConverterChronicleRuleDeployment() cai.ResourceConverter {
 }
 
 func GetChronicleRuleDeploymentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/rules/{{rule}}/deployment")
+	name, err := cai.AssetName(d, config, "//chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/rules/{{rule}}/deployment")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

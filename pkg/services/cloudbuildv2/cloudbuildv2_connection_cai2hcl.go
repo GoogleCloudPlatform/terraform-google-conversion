@@ -19,6 +19,7 @@ package cloudbuildv2
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type Cloudbuildv2ConnectionCai2hclConverter struct {
@@ -174,6 +176,12 @@ func flattenCloudbuildv2ConnectionGithubConfigAuthorizerCredential(v interface{}
 }
 
 func flattenCloudbuildv2ConnectionGithubConfigAuthorizerCredentialOauthTokenSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -251,14 +259,32 @@ func flattenCloudbuildv2ConnectionGithubEnterpriseConfigAppId(v interface{}, d *
 }
 
 func flattenCloudbuildv2ConnectionGithubEnterpriseConfigAppSlug(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudbuildv2ConnectionGithubEnterpriseConfigPrivateKeySecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenCloudbuildv2ConnectionGithubEnterpriseConfigWebhookSecretSecretVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -305,6 +331,12 @@ func flattenCloudbuildv2ConnectionGithubEnterpriseConfigServiceDirectoryConfigSe
 }
 
 func flattenCloudbuildv2ConnectionGithubEnterpriseConfigSslCa(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -423,6 +455,12 @@ func flattenCloudbuildv2ConnectionGitlabConfigServiceDirectoryConfigService(v in
 }
 
 func flattenCloudbuildv2ConnectionGitlabConfigSslCa(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -548,6 +586,12 @@ func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigServiceDirectoryConfi
 }
 
 func flattenCloudbuildv2ConnectionBitbucketDataCenterConfigSslCa(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

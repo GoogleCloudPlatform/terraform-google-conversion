@@ -19,6 +19,7 @@ package gkeonprem
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type GkeonpremVmwareClusterCai2hclConverter struct {
@@ -166,6 +168,12 @@ func flattenGkeonpremVmwareClusterAdminClusterMembership(v interface{}, d *schem
 }
 
 func flattenGkeonpremVmwareClusterDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -531,10 +539,22 @@ func flattenGkeonpremVmwareClusterNetworkConfigControlPlaneV2ConfigControlPlaneI
 }
 
 func flattenGkeonpremVmwareClusterNetworkConfigControlPlaneV2ConfigControlPlaneIpBlockNetmask(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGkeonpremVmwareClusterNetworkConfigControlPlaneV2ConfigControlPlaneIpBlockGateway(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -559,6 +579,12 @@ func flattenGkeonpremVmwareClusterNetworkConfigControlPlaneV2ConfigControlPlaneI
 }
 
 func flattenGkeonpremVmwareClusterNetworkConfigControlPlaneV2ConfigControlPlaneIpBlockIpsIp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -603,10 +629,22 @@ func flattenGkeonpremVmwareClusterLoadBalancerVipConfig(v interface{}, d *schema
 }
 
 func flattenGkeonpremVmwareClusterLoadBalancerVipConfigControlPlaneVip(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGkeonpremVmwareClusterLoadBalancerVipConfigIngressVip(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -629,10 +667,22 @@ func flattenGkeonpremVmwareClusterLoadBalancerF5Config(v interface{}, d *schema.
 }
 
 func flattenGkeonpremVmwareClusterLoadBalancerF5ConfigAddress(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGkeonpremVmwareClusterLoadBalancerF5ConfigPartition(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -19,6 +19,7 @@ package vpcaccess
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type VPCAccessConnectorCai2hclConverter struct {
@@ -157,6 +159,12 @@ func flattenVPCAccessConnectorNetwork(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenVPCAccessConnectorIpCidrRange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -249,6 +257,12 @@ func flattenVPCAccessConnectorSubnet(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenVPCAccessConnectorSubnetName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

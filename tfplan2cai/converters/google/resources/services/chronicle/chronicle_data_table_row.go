@@ -88,7 +88,7 @@ func ResourceConverterChronicleDataTableRow() cai.ResourceConverter {
 }
 
 func GetChronicleDataTableRowCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/dataTables/{{data_table_id}}/dataTableRows/{{data_table_row}}")
+	name, err := cai.AssetName(d, config, "//chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/dataTables/{{data_table_id}}/dataTableRows/{{data_table_row}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

@@ -88,7 +88,7 @@ func ResourceConverterChronicleDashboardChart() cai.ResourceConverter {
 }
 
 func GetChronicleDashboardChartCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/dashboardCharts/{{chart_id}}")
+	name, err := cai.AssetName(d, config, "//chronicle.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance}}/dashboardCharts/{{chart_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

@@ -88,7 +88,7 @@ func ResourceConverterDiscoveryEngineLicenseConfig() cai.ResourceConverter {
 }
 
 func GetDiscoveryEngineLicenseConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-discoveryengine.googleapis.com/projects/{{project}}/locations/{{location}}/licenseConfigs/{{license_config_id}}")
+	name, err := cai.AssetName(d, config, "//discoveryengine.googleapis.com/projects/{{project}}/locations/{{location}}/licenseConfigs/{{license_config_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

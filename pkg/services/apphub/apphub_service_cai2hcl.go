@@ -19,6 +19,7 @@ package apphub
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type ApphubServiceCai2hclConverter struct {
@@ -141,10 +143,22 @@ func (c *ApphubServiceCai2hclConverter) convertResourceData(asset caiasset.Asset
 }
 
 func flattenApphubServiceDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenApphubServiceDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -227,6 +241,12 @@ func flattenApphubServiceAttributesDeveloperOwners(v interface{}, d *schema.Reso
 }
 
 func flattenApphubServiceAttributesDeveloperOwnersDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -262,6 +282,12 @@ func flattenApphubServiceAttributesOperatorOwners(v interface{}, d *schema.Resou
 }
 
 func flattenApphubServiceAttributesOperatorOwnersDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -297,6 +323,12 @@ func flattenApphubServiceAttributesBusinessOwners(v interface{}, d *schema.Resou
 }
 
 func flattenApphubServiceAttributesBusinessOwnersDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

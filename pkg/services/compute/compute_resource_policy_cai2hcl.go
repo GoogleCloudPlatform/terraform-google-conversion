@@ -19,6 +19,7 @@ package compute
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type ComputeResourcePolicyCai2hclConverter struct {
@@ -156,6 +158,12 @@ func flattenComputeResourcePolicyName(v interface{}, d *schema.ResourceData, con
 }
 
 func flattenComputeResourcePolicyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -414,6 +422,12 @@ func flattenComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesGuestFl
 }
 
 func flattenComputeResourcePolicySnapshotSchedulePolicySnapshotPropertiesChainName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -476,6 +490,12 @@ func flattenComputeResourcePolicyGroupPlacementPolicyCollocation(v interface{}, 
 }
 
 func flattenComputeResourcePolicyGroupPlacementPolicyGpuTopology(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -563,10 +583,22 @@ func flattenComputeResourcePolicyInstanceSchedulePolicyTimeZone(v interface{}, d
 }
 
 func flattenComputeResourcePolicyInstanceSchedulePolicyStartTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenComputeResourcePolicyInstanceSchedulePolicyExpirationTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -606,6 +638,12 @@ func flattenComputeResourcePolicyWorkloadPolicyMaxTopologyDistance(v interface{}
 }
 
 func flattenComputeResourcePolicyWorkloadPolicyAcceleratorTopology(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

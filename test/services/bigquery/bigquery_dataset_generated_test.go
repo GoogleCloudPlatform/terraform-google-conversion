@@ -98,6 +98,9 @@ func TestAccBigQueryDataset(t *testing.T) {
 		{
 			Name: "TestAccBigQueryDataset_externalCatalogDatasetOptions_update",
 		},
+		{
+			Name: "TestAccBigQueryDataset_collationUpdate",
+		},
 	}
 
 	for _, tt := range tests {

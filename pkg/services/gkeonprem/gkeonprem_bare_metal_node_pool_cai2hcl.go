@@ -19,6 +19,7 @@ package gkeonprem
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type GkeonpremBareMetalNodePoolCai2hclConverter struct {
@@ -140,6 +142,12 @@ func (c *GkeonpremBareMetalNodePoolCai2hclConverter) convertResourceData(asset c
 }
 
 func flattenGkeonpremBareMetalNodePoolDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -187,6 +195,12 @@ func flattenGkeonpremBareMetalNodePoolNodePoolConfigNodeConfigs(v interface{}, d
 }
 
 func flattenGkeonpremBareMetalNodePoolNodePoolConfigNodeConfigsNodeIp(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -220,10 +234,22 @@ func flattenGkeonpremBareMetalNodePoolNodePoolConfigTaints(v interface{}, d *sch
 }
 
 func flattenGkeonpremBareMetalNodePoolNodePoolConfigTaintsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenGkeonpremBareMetalNodePoolNodePoolConfigTaintsValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

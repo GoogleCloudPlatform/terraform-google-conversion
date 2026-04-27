@@ -140,6 +140,12 @@ func GetVertexAIReasoningEngineApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("context_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(contextSpecProp)) && (ok || !reflect.DeepEqual(v, contextSpecProp)) {
 		obj["contextSpec"] = contextSpecProp
 	}
+	effectiveLabelsProp, err := expandVertexAIReasoningEngineEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
+	}
 
 	return obj, nil
 }
@@ -216,6 +222,13 @@ func expandVertexAIReasoningEngineSpec(v interface{}, d tpgresource.TerraformRes
 		return nil, err
 	} else if val := reflect.ValueOf(transformedPackageSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["packageSpec"] = transformedPackageSpec
+	}
+
+	transformedContainerSpec, err := expandVertexAIReasoningEngineSpecContainerSpec(original["container_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContainerSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["containerSpec"] = transformedContainerSpec
 	}
 
 	transformedSourceCodeSpec, err := expandVertexAIReasoningEngineSpecSourceCodeSpec(original["source_code_spec"], d, config)
@@ -610,6 +623,32 @@ func expandVertexAIReasoningEngineSpecPackageSpecRequirementsGcsUri(v interface{
 	return v, nil
 }
 
+func expandVertexAIReasoningEngineSpecContainerSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedImageUri, err := expandVertexAIReasoningEngineSpecContainerSpecImageUri(original["image_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedImageUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["imageUri"] = transformedImageUri
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineSpecContainerSpecImageUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandVertexAIReasoningEngineSpecSourceCodeSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -627,6 +666,13 @@ func expandVertexAIReasoningEngineSpecSourceCodeSpec(v interface{}, d tpgresourc
 		return nil, err
 	} else if val := reflect.ValueOf(transformedInlineSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["inlineSource"] = transformedInlineSource
+	}
+
+	transformedImageSpec, err := expandVertexAIReasoningEngineSpecSourceCodeSpecImageSpec(original["image_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["imageSpec"] = transformedImageSpec
 	}
 
 	transformedPythonSpec, err := expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpec(original["python_spec"], d, config)
@@ -670,6 +716,44 @@ func expandVertexAIReasoningEngineSpecSourceCodeSpecInlineSource(v interface{}, 
 
 func expandVertexAIReasoningEngineSpecSourceCodeSpecInlineSourceSourceArchive(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecImageSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBuildArgs, err := expandVertexAIReasoningEngineSpecSourceCodeSpecImageSpecBuildArgs(original["build_args"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["buildArgs"] = transformedBuildArgs
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineSpecSourceCodeSpecImageSpecBuildArgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandVertexAIReasoningEngineSpecSourceCodeSpecPythonSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1024,4 +1108,15 @@ func expandVertexAIReasoningEngineContextSpecMemoryBankConfigTtlConfigMemoryRevi
 
 func expandVertexAIReasoningEngineContextSpecMemoryBankConfigDisableMemoryRevisions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandVertexAIReasoningEngineEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }

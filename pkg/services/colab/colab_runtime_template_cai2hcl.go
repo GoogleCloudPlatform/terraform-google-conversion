@@ -19,6 +19,7 @@ package colab
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type ColabRuntimeTemplateCai2hclConverter struct {
@@ -168,6 +170,12 @@ func flattenColabRuntimeTemplateDisplayName(v interface{}, d *schema.ResourceDat
 }
 
 func flattenColabRuntimeTemplateDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -194,6 +202,12 @@ func flattenColabRuntimeTemplateMachineSpecMachineType(v interface{}, d *schema.
 }
 
 func flattenColabRuntimeTemplateMachineSpecAcceleratorType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -265,6 +279,12 @@ func flattenColabRuntimeTemplateNetworkSpecNetwork(v interface{}, d *schema.Reso
 }
 
 func flattenColabRuntimeTemplateNetworkSpecSubnetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -344,6 +364,12 @@ func flattenColabRuntimeTemplateEncryptionSpec(v interface{}, d *schema.Resource
 }
 
 func flattenColabRuntimeTemplateEncryptionSpecKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -386,10 +412,22 @@ func flattenColabRuntimeTemplateSoftwareConfigEnv(v interface{}, d *schema.Resou
 }
 
 func flattenColabRuntimeTemplateSoftwareConfigEnvName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenColabRuntimeTemplateSoftwareConfigEnvValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -412,10 +450,22 @@ func flattenColabRuntimeTemplateSoftwareConfigPostStartupScriptConfig(v interfac
 }
 
 func flattenColabRuntimeTemplateSoftwareConfigPostStartupScriptConfigPostStartupScript(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenColabRuntimeTemplateSoftwareConfigPostStartupScriptConfigPostStartupScriptUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

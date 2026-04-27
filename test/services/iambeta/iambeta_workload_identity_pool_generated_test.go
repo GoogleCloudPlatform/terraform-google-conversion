@@ -62,6 +62,7 @@ func TestAccIAMBetaWorkloadIdentityPool(t *testing.T) {
 			test.BidirectionalConversion(
 				t,
 				[]string{
+					"attestation_rules",
 					"count",
 					"deletion_protection",
 					"depends_on",

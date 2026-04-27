@@ -19,6 +19,7 @@ package clouddeploy
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type ClouddeployDeployPolicyCai2hclConverter struct {
@@ -143,6 +145,12 @@ func (c *ClouddeployDeployPolicyCai2hclConverter) convertResourceData(asset caia
 }
 
 func flattenClouddeployDeployPolicyDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -193,6 +201,12 @@ func flattenClouddeployDeployPolicySelectorsTarget(v interface{}, d *schema.Reso
 }
 
 func flattenClouddeployDeployPolicySelectorsTargetId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -217,6 +231,12 @@ func flattenClouddeployDeployPolicySelectorsDeliveryPipeline(v interface{}, d *s
 }
 
 func flattenClouddeployDeployPolicySelectorsDeliveryPipelineId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

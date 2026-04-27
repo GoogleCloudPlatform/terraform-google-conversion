@@ -19,6 +19,7 @@ package workbench
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type WorkbenchInstanceCai2hclConverter struct {
@@ -216,6 +218,12 @@ func flattenWorkbenchInstanceGceSetupAcceleratorConfigsType(v interface{}, d *sc
 }
 
 func flattenWorkbenchInstanceGceSetupAcceleratorConfigsCoreCount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -301,6 +309,12 @@ func flattenWorkbenchInstanceGceSetupContainerImageRepository(v interface{}, d *
 }
 
 func flattenWorkbenchInstanceGceSetupContainerImageTag(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -337,6 +351,12 @@ func flattenWorkbenchInstanceGceSetupBootDiskDiskEncryption(v interface{}, d *sc
 }
 
 func flattenWorkbenchInstanceGceSetupBootDiskKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -375,6 +395,12 @@ func flattenWorkbenchInstanceGceSetupDataDisksDiskEncryption(v interface{}, d *s
 }
 
 func flattenWorkbenchInstanceGceSetupDataDisksKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -499,6 +525,12 @@ func flattenWorkbenchInstanceGceSetupReservationAffinityConsumeReservationType(v
 }
 
 func flattenWorkbenchInstanceGceSetupReservationAffinityKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

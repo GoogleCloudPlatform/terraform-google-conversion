@@ -19,6 +19,7 @@ package redis
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type RedisClusterCai2hclConverter struct {
@@ -304,6 +306,12 @@ func flattenRedisClusterZoneDistributionConfigMode(v interface{}, d *schema.Reso
 }
 
 func flattenRedisClusterZoneDistributionConfigZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -570,6 +578,12 @@ func flattenRedisClusterMaintenancePolicyWeeklyMaintenanceWindowStartTimeNanos(v
 }
 
 func flattenRedisClusterMaintenanceVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -610,6 +624,12 @@ func flattenRedisClusterCrossClusterReplicationConfigPrimaryCluster(v interface{
 }
 
 func flattenRedisClusterCrossClusterReplicationConfigPrimaryClusterCluster(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -633,10 +653,22 @@ func flattenRedisClusterCrossClusterReplicationConfigSecondaryClusters(v interfa
 }
 
 func flattenRedisClusterCrossClusterReplicationConfigSecondaryClustersCluster(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenRedisClusterKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -645,5 +677,11 @@ func flattenRedisClusterServerCaMode(v interface{}, d *schema.ResourceData, conf
 }
 
 func flattenRedisClusterServerCaPool(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

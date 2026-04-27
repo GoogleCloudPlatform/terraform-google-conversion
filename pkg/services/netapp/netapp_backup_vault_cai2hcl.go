@@ -19,6 +19,7 @@ package netapp
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type NetappBackupVaultCai2hclConverter struct {
@@ -122,7 +124,7 @@ func (c *NetappBackupVaultCai2hclConverter) convertResourceData(asset caiasset.A
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"create_time": struct{}{}, "destination_backup_vault": struct{}{}, "effective_labels": struct{}{}, "source_backup_vault": struct{}{}, "source_region": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}}
+	outputFields := map[string]struct{}{"backups_crypto_key_version": struct{}{}, "create_time": struct{}{}, "destination_backup_vault": struct{}{}, "effective_labels": struct{}{}, "encryption_state": struct{}{}, "source_backup_vault": struct{}{}, "source_region": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//netapp.googleapis.com/projects/{{project}}/locations/{{location}}/backupVaults/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenNetappBackupVaultDescription(res["description"], d, config)
@@ -130,6 +132,7 @@ func (c *NetappBackupVaultCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["backup_vault_type"] = flattenNetappBackupVaultBackupVaultType(res["backupVaultType"], d, config)
 	hclData["backup_region"] = flattenNetappBackupVaultBackupRegion(res["backupRegion"], d, config)
 	hclData["backup_retention_policy"] = flattenNetappBackupVaultBackupRetentionPolicy(res["backupRetentionPolicy"], d, config)
+	hclData["kms_config"] = flattenNetappBackupVaultKmsConfig(res["kmsConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -142,6 +145,12 @@ func (c *NetappBackupVaultCai2hclConverter) convertResourceData(asset caiasset.A
 }
 
 func flattenNetappBackupVaultDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -153,6 +162,12 @@ func flattenNetappBackupVaultBackupVaultType(v interface{}, d *schema.ResourceDa
 }
 
 func flattenNetappBackupVaultBackupRegion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -211,5 +226,15 @@ func flattenNetappBackupVaultBackupRetentionPolicyMonthlyBackupImmutable(v inter
 }
 
 func flattenNetappBackupVaultBackupRetentionPolicyManualBackupImmutable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetappBackupVaultKmsConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

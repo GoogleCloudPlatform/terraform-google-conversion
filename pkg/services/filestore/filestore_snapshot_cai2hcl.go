@@ -19,6 +19,7 @@ package filestore
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type FilestoreSnapshotCai2hclConverter struct {
@@ -139,6 +141,12 @@ func (c *FilestoreSnapshotCai2hclConverter) convertResourceData(asset caiasset.A
 }
 
 func flattenFilestoreSnapshotDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

@@ -19,6 +19,7 @@ package netapp
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type NetappVolumeCai2hclConverter struct {
@@ -148,6 +150,7 @@ func (c *NetappVolumeCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	hclData["throughput_mibps"] = flattenNetappVolumeThroughputMibps(res["throughputMibps"], d, config)
 	hclData["cache_parameters"] = flattenNetappVolumeCacheParameters(res["cacheParameters"], d, config)
 	hclData["block_devices"] = flattenNetappVolumeBlockDevices(res["blockDevices"], d, config)
+	hclData["large_capacity_config"] = flattenNetappVolumeLargeCapacityConfig(res["largeCapacityConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -160,6 +163,12 @@ func (c *NetappVolumeCai2hclConverter) convertResourceData(asset caiasset.Asset)
 }
 
 func flattenNetappVolumeShareName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -231,6 +240,12 @@ func flattenNetappVolumeExportPolicyRules(v interface{}, d *schema.ResourceData,
 }
 
 func flattenNetappVolumeExportPolicyRulesAllowedClients(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -311,6 +326,12 @@ func flattenNetappVolumeLabels(v interface{}, d *schema.ResourceData, config *tr
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenNetappVolumeDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -343,10 +364,22 @@ func flattenNetappVolumeRestoreParameters(v interface{}, d *schema.ResourceData,
 }
 
 func flattenNetappVolumeRestoreParametersSourceSnapshot(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeRestoreParametersSourceBackup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -684,6 +717,12 @@ func flattenNetappVolumeBackupConfigBackupPolicies(v interface{}, d *schema.Reso
 }
 
 func flattenNetappVolumeBackupConfigBackupVault(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -777,18 +816,42 @@ func flattenNetappVolumeHybridReplicationParameters(v interface{}, d *schema.Res
 }
 
 func flattenNetappVolumeHybridReplicationParametersReplication(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeHybridReplicationParametersPeerVolumeName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeHybridReplicationParametersPeerClusterName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeHybridReplicationParametersPeerSvmName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -797,10 +860,22 @@ func flattenNetappVolumeHybridReplicationParametersPeerIpAddresses(v interface{}
 }
 
 func flattenNetappVolumeHybridReplicationParametersClusterLocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeHybridReplicationParametersDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -864,14 +939,32 @@ func flattenNetappVolumeCacheParameters(v interface{}, d *schema.ResourceData, c
 }
 
 func flattenNetappVolumeCacheParametersPeerVolumeName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeCacheParametersPeerClusterName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenNetappVolumeCacheParametersPeerSvmName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -936,4 +1029,35 @@ func flattenNetappVolumeBlockDevicesHostGroups(v interface{}, d *schema.Resource
 
 func flattenNetappVolumeBlockDevicesOsType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenNetappVolumeLargeCapacityConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["constituent_count"] =
+		flattenNetappVolumeLargeCapacityConfigConstituentCount(original["constituentCount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetappVolumeLargeCapacityConfigConstituentCount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
 }

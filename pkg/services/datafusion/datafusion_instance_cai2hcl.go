@@ -19,6 +19,7 @@ package datafusion
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -66,6 +67,7 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 	_ = googleapi.Error{}
+	_ = json.Unmarshal
 )
 
 type DataFusionInstanceCai2hclConverter struct {
@@ -163,6 +165,12 @@ func flattenDataFusionInstanceName(v interface{}, d *schema.ResourceData, config
 }
 
 func flattenDataFusionInstanceDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -202,6 +210,12 @@ func flattenDataFusionInstancePrivateInstance(v interface{}, d *schema.ResourceD
 }
 
 func flattenDataFusionInstanceDataprocServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -226,10 +240,22 @@ func flattenDataFusionInstanceNetworkConfig(v interface{}, d *schema.ResourceDat
 }
 
 func flattenDataFusionInstanceNetworkConfigIpAllocation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDataFusionInstanceNetworkConfigNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -254,10 +280,22 @@ func flattenDataFusionInstanceNetworkConfigPrivateServiceConnectConfig(v interfa
 }
 
 func flattenDataFusionInstanceNetworkConfigPrivateServiceConnectConfigNetworkAttachment(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenDataFusionInstanceNetworkConfigPrivateServiceConnectConfigUnreachableCidrBlock(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
@@ -266,6 +304,12 @@ func flattenDataFusionInstanceZone(v interface{}, d *schema.ResourceData, config
 }
 
 func flattenDataFusionInstanceDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

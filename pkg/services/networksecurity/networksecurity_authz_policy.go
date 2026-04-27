@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
@@ -59,6 +60,15 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
+
+func init() {
+	registry.Schema{
+		Name:        "google_network_security_authz_policy",
+		ProductName: "networksecurity",
+		Type:        registry.SchemaTypeResource,
+		Schema:      ResourceNetworkSecurityAuthzPolicy(),
+	}.Register()
+}
 
 const NetworkSecurityAuthzPolicyAssetType string = "networksecurity.googleapis.com/AuthzPolicy"
 
@@ -1024,6 +1034,7 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 			},
 			"policy_profile": {
 				Type:         schema.TypeString,
+				Computed:     true,
 				Optional:     true,
 				ForceNew:     true,
 				ValidateFunc: verify.ValidateEnum([]string{"REQUEST_AUTHZ", "CONTENT_AUTHZ", ""}),

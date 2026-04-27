@@ -88,7 +88,7 @@ func ResourceConverterDiscoveryEngineAclConfig() cai.ResourceConverter {
 }
 
 func GetDiscoveryEngineAclConfigCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-discoveryengine.googleapis.com/projects/{{project}}/locations/{{location}}/aclConfig")
+	name, err := cai.AssetName(d, config, "//discoveryengine.googleapis.com/projects/{{project}}/locations/{{location}}/aclConfig")
 	if err != nil {
 		return []cai.Asset{}, err
 	}

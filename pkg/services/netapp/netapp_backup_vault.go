@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tgcresource"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/tpgresource"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
@@ -59,6 +60,15 @@ var (
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
 )
+
+func init() {
+	registry.Schema{
+		Name:        "google_netapp_backup_vault",
+		ProductName: "netapp",
+		Type:        registry.SchemaTypeResource,
+		Schema:      ResourceNetappBackupVault(),
+	}.Register()
+}
 
 const NetappBackupVaultAssetType string = "netapp.googleapis.com/BackupVault"
 
@@ -131,6 +141,13 @@ func ResourceNetappBackupVault() *schema.Resource {
 				Optional:    true,
 				Description: `An optional description of this resource.`,
 			},
+			"kms_config": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Description: `Specifies the Key Management System (KMS) configuration to be used for
+backup encryption. Format:
+'projects/{{project}}/locations/{{location}}/kmsConfigs/{{kms_config}}'`,
+			},
 			"labels": {
 				Type:     schema.TypeMap,
 				Optional: true,
@@ -140,6 +157,13 @@ func ResourceNetappBackupVault() *schema.Resource {
 **Note**: This field is non-authoritative, and will only manage the labels present in your configuration.
 Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
+			},
+			"backups_crypto_key_version": {
+				Type:     schema.TypeString,
+				Computed: true,
+				Description: `The crypto key version used to encrypt the backup vault.
+Format:
+'projects/{{project}}/locations/{{location}}/keyRings/{{key_ring}}/cryptoKeys/{{crypto_key}}/cryptoKeyVersions/{{crypto_key_version}}'`,
 			},
 			"create_time": {
 				Type:        schema.TypeString,
@@ -156,6 +180,11 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 				Computed:    true,
 				Description: `All of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services.`,
 				Elem:        &schema.Schema{Type: schema.TypeString},
+			},
+			"encryption_state": {
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: `Encryption state of customer-managed encryption keys (CMEK) backups.`,
 			},
 			"source_backup_vault": {
 				Type:        schema.TypeString,

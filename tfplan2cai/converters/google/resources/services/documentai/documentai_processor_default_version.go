@@ -88,7 +88,7 @@ func ResourceConverterDocumentAIProcessorDefaultVersion() cai.ResourceConverter 
 }
 
 func GetDocumentAIProcessorDefaultVersionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//{{location}}-documentai.googleapis.com/{{processor}}")
+	name, err := cai.AssetName(d, config, "//documentai.googleapis.com/{{processor}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
