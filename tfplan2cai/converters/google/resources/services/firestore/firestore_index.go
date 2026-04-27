@@ -271,6 +271,13 @@ func expandFirestoreIndexFields(v interface{}, d tpgresource.TerraformResourceDa
 			transformed["arrayConfig"] = transformedArrayConfig
 		}
 
+		transformedSearchConfig, err := expandFirestoreIndexFieldsSearchConfig(original["search_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSearchConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["searchConfig"] = transformedSearchConfig
+		}
+
 		transformedVectorConfig, err := expandFirestoreIndexFieldsVectorConfig(original["vector_config"], d, config)
 		if err != nil {
 			return nil, err
@@ -292,6 +299,123 @@ func expandFirestoreIndexFieldsOrder(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandFirestoreIndexFieldsArrayConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexFieldsSearchConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTextSpec, err := expandFirestoreIndexFieldsSearchConfigTextSpec(original["text_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTextSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["textSpec"] = transformedTextSpec
+	}
+
+	transformedGeoSpec, err := expandFirestoreIndexFieldsSearchConfigGeoSpec(original["geo_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["geoSpec"] = transformedGeoSpec
+	}
+
+	return transformed, nil
+}
+
+func expandFirestoreIndexFieldsSearchConfigTextSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIndexSpecs, err := expandFirestoreIndexFieldsSearchConfigTextSpecIndexSpecs(original["index_specs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIndexSpecs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["indexSpecs"] = transformedIndexSpecs
+	}
+
+	return transformed, nil
+}
+
+func expandFirestoreIndexFieldsSearchConfigTextSpecIndexSpecs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIndexType, err := expandFirestoreIndexFieldsSearchConfigTextSpecIndexSpecsIndexType(original["index_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIndexType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["indexType"] = transformedIndexType
+		}
+
+		transformedMatchType, err := expandFirestoreIndexFieldsSearchConfigTextSpecIndexSpecsMatchType(original["match_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMatchType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["matchType"] = transformedMatchType
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandFirestoreIndexFieldsSearchConfigTextSpecIndexSpecsIndexType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexFieldsSearchConfigTextSpecIndexSpecsMatchType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexFieldsSearchConfigGeoSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGeoJsonIndexingDisabled, err := expandFirestoreIndexFieldsSearchConfigGeoSpecGeoJsonIndexingDisabled(original["geo_json_indexing_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["geoJsonIndexingDisabled"] = transformedGeoJsonIndexingDisabled
+	}
+
+	return transformed, nil
+}
+
+func expandFirestoreIndexFieldsSearchConfigGeoSpecGeoJsonIndexingDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
