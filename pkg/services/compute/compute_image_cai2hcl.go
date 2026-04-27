@@ -134,6 +134,7 @@ func (c *ComputeImageCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	hclData["guest_os_features"] = flattenComputeImageGuestOsFeatures(res["guestOsFeatures"], d, config)
 	hclData["image_encryption_key"] = flattenComputeImageImageEncryptionKey(res["imageEncryptionKey"], d, config)
 	hclData["labels"] = flattenComputeImageLabels(res["labels"], d, config)
+	hclData["params"] = flattenComputeImageParams(res["params"], d, config)
 	hclData["licenses"] = flattenComputeImageLicenses(res["licenses"], d, config)
 	hclData["name"] = flattenComputeImageName(res["name"], d, config)
 	hclData["raw_disk"] = flattenComputeImageRawDisk(res["rawDisk"], d, config)
@@ -280,6 +281,24 @@ func flattenComputeImageImageEncryptionKeyRsaEncryptedKey(v interface{}, d *sche
 func flattenComputeImageLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+func flattenComputeImageParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeImageParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeImageParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeImageLicenses(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v
