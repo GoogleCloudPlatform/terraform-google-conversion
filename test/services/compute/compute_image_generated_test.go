@@ -71,6 +71,9 @@ func TestAccComputeImage(t *testing.T) {
 		{
 			Name: "TestAccComputeImage_sourceDiskEncryptionKey",
 		},
+		{
+			Name: "TestAccComputeImage_resourceManagerTags",
+		},
 	}
 
 	for _, tt := range tests {
@@ -94,6 +97,8 @@ func TestAccComputeImage(t *testing.T) {
 					"image_encryption_key.raw_key",
 					"image_encryption_key.rsa_encrypted_key",
 					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
 					"provider",
 					"raw_disk",
 					"raw_disk.source",
