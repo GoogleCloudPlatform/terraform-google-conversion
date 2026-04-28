@@ -508,6 +508,20 @@ func expandDataplexDatascanDataQualitySpec(v interface{}, d tpgresource.Terrafor
 		transformed["catalogPublishingEnabled"] = transformedCatalogPublishingEnabled
 	}
 
+	transformedEnableCatalogBasedRules, err := expandDataplexDatascanDataQualitySpecEnableCatalogBasedRules(original["enable_catalog_based_rules"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableCatalogBasedRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableCatalogBasedRules"] = transformedEnableCatalogBasedRules
+	}
+
+	transformedFilter, err := expandDataplexDatascanDataQualitySpecFilter(original["filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filter"] = transformedFilter
+	}
+
 	return transformed, nil
 }
 
@@ -767,6 +781,13 @@ func expandDataplexDatascanDataQualitySpecRules(v interface{}, d tpgresource.Ter
 			transformed["description"] = transformedDescription
 		}
 
+		transformedAttributes, err := expandDataplexDatascanDataQualitySpecRulesAttributes(original["attributes"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAttributes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["attributes"] = transformedAttributes
+		}
+
 		transformedRangeExpectation, err := expandDataplexDatascanDataQualitySpecRulesRangeExpectation(original["range_expectation"], d, config)
 		if err != nil {
 			return nil, err
@@ -830,6 +851,13 @@ func expandDataplexDatascanDataQualitySpecRules(v interface{}, d tpgresource.Ter
 			transformed["sqlAssertion"] = transformedSqlAssertion
 		}
 
+		transformedTemplateReference, err := expandDataplexDatascanDataQualitySpecRulesTemplateReference(original["template_reference"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTemplateReference); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["templateReference"] = transformedTemplateReference
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -861,6 +889,17 @@ func expandDataplexDatascanDataQualitySpecRulesSuspended(v interface{}, d tpgres
 
 func expandDataplexDatascanDataQualitySpecRulesDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesAttributes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandDataplexDatascanDataQualitySpecRulesRangeExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1158,7 +1197,77 @@ func expandDataplexDatascanDataQualitySpecRulesSqlAssertionSqlStatement(v interf
 	return v, nil
 }
 
+func expandDataplexDatascanDataQualitySpecRulesTemplateReference(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandDataplexDatascanDataQualitySpecRulesTemplateReferenceName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedValues, err := expandDataplexDatascanDataQualitySpecRulesTemplateReferenceValues(original["values"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValues); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["values"] = transformedValues
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesTemplateReferenceName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesTemplateReferenceValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+	if v == nil {
+		return map[string]interface{}{}, nil
+	}
+	m := make(map[string]interface{})
+	for _, raw := range v.(*schema.Set).List() {
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedValue, err := expandDataplexDatascanDataQualitySpecRulesTemplateReferenceValuesValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		transformedName, err := tpgresource.ExpandString(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		}
+		m[transformedName] = transformed
+	}
+	return m, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesTemplateReferenceValuesValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDataplexDatascanDataQualitySpecCatalogPublishingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecEnableCatalogBasedRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
