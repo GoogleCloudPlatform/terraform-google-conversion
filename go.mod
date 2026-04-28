@@ -24,7 +24,6 @@ require (
 require (
 	cloud.google.com/go/auth v0.20.0
 	cloud.google.com/go/auth/oauth2adapt v0.2.8
-	cloud.google.com/go/bigtable v1.46.0
 	github.com/gammazero/workerpool v1.1.3
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
@@ -43,6 +42,7 @@ require (
 	bitbucket.org/creachadair/stringset v0.0.11 // indirect
 	cel.dev/expr v0.25.1 // indirect
 	cloud.google.com/go v0.123.0 // indirect
+	cloud.google.com/go/bigtable v1.46.0 // indirect
 	cloud.google.com/go/compute/metadata v0.9.0 // indirect
 	cloud.google.com/go/iam v1.7.0 // indirect
 	cloud.google.com/go/longrunning v0.9.0 // indirect
