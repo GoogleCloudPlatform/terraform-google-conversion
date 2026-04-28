@@ -520,6 +520,20 @@ func expandOracleDatabaseDbSystemPropertiesDbHomeDatabase(v interface{}, d tpgre
 		transformed["opsInsightsStatus"] = transformedOpsInsightsStatus
 	}
 
+	transformedPluggableDatabaseId, err := expandOracleDatabaseDbSystemPropertiesDbHomeDatabasePluggableDatabaseId(original["pluggable_database_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPluggableDatabaseId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pluggableDatabaseId"] = transformedPluggableDatabaseId
+	}
+
+	transformedPluggableDatabaseName, err := expandOracleDatabaseDbSystemPropertiesDbHomeDatabasePluggableDatabaseName(original["pluggable_database_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPluggableDatabaseName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pluggableDatabaseName"] = transformedPluggableDatabaseName
+	}
+
 	transformedProperties, err := expandOracleDatabaseDbSystemPropertiesDbHomeDatabaseProperties(original["properties"], d, config)
 	if err != nil {
 		return nil, err
@@ -582,6 +596,14 @@ func expandOracleDatabaseDbSystemPropertiesDbHomeDatabaseOciUrl(v interface{}, d
 }
 
 func expandOracleDatabaseDbSystemPropertiesDbHomeDatabaseOpsInsightsStatus(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseDbSystemPropertiesDbHomeDatabasePluggableDatabaseId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseDbSystemPropertiesDbHomeDatabasePluggableDatabaseName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
