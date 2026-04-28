@@ -65,7 +65,7 @@ func (u *SpannerDatabaseIamUpdater) GetResourceIamPolicy() (*cloudresourcemanage
 		return nil, err
 	}
 
-	call := u.Config.NewSpannerClient(userAgent).Projects.Instances.Databases.GetIamPolicy(SpannerDatabaseId{
+	call := NewClient(u.Config, userAgent).Projects.Instances.Databases.GetIamPolicy(SpannerDatabaseId{
 		Project:  u.project,
 		Database: u.database,
 		Instance: u.instance,
@@ -110,7 +110,7 @@ func (u *SpannerDatabaseIamUpdater) SetResourceIamPolicy(policy *cloudresourcema
 		return err
 	}
 
-	call := u.Config.NewSpannerClient(userAgent).Projects.Instances.Databases.SetIamPolicy(SpannerDatabaseId{
+	call := NewClient(u.Config, userAgent).Projects.Instances.Databases.SetIamPolicy(SpannerDatabaseId{
 		Project:  u.project,
 		Database: u.database,
 		Instance: u.instance,
