@@ -275,6 +275,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_secure_source_manager_instance":                  securesourcemanager.SecureSourceManagerInstanceTfplan2caiConverter(),
 	"google_scc_v2_folder_mute_config":                       securitycenterv2.SecurityCenterV2FolderMuteConfigTfplan2caiConverter(),
 	"google_scc_v2_organization_mute_config":                 securitycenterv2.SecurityCenterV2OrganizationMuteConfigTfplan2caiConverter(),
+	"google_scc_v2_organization_notification_config":         securitycenterv2.SecurityCenterV2OrganizationNotificationConfigTfplan2caiConverter(),
 	"google_spanner_database":                                spanner.SpannerDatabaseTfplan2caiConverter(),
 	"google_spanner_instance":                                spanner.SpannerInstanceTfplan2caiConverter(),
 	"google_storage_insights_report_config":                  storageinsights.StorageInsightsReportConfigTfplan2caiConverter(),
