@@ -632,6 +632,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"SecurityCenterV2FolderMuteConfig":       securitycenterv2.NewSecurityCenterV2FolderMuteConfigCai2hclConverter(provider),
 		"SecurityCenterV2OrganizationMuteConfig": securitycenterv2.NewSecurityCenterV2OrganizationMuteConfigCai2hclConverter(provider),
 	},
+	"securitycenter.googleapis.com/NotificationConfig": {
+		"Default": securitycenterv2.NewSecurityCenterV2OrganizationNotificationConfigCai2hclConverter(provider),
+	},
 	"spanner.googleapis.com/Database": {
 		"Default": spanner.NewSpannerDatabaseCai2hclConverter(provider),
 	},
