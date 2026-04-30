@@ -97,8 +97,8 @@ func GetCESToolsetCaiObject(d tpgresource.TerraformResourceData, config *transpo
 			Name: name,
 			Type: CESToolsetAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ces/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ces/v1beta/rest",
 				DiscoveryName:        "Toolset",
 				Data:                 obj,
 			},
