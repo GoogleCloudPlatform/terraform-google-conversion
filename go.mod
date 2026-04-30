@@ -11,12 +11,12 @@ require (
 	github.com/hashicorp/hcl v1.0.0
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/hashicorp/terraform-json v0.27.2
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260430210513-6393f96c17e4
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260430222029-a5bb593fceb2
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.11.1
-	github.com/zclconf/go-cty v1.17.0
+	github.com/zclconf/go-cty v1.18.1
 	go.uber.org/zap v1.27.0
 	google.golang.org/api v0.275.0
 )
@@ -27,7 +27,7 @@ require (
 	github.com/gammazero/workerpool v1.1.3
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
-	github.com/hashicorp/terraform-plugin-framework v1.17.0
+	github.com/hashicorp/terraform-plugin-framework v1.19.0
 	github.com/hashicorp/terraform-plugin-framework-validators v0.12.0
 	github.com/sethvargo/go-retry v0.3.0
 	github.com/sirupsen/logrus v1.9.3
@@ -73,12 +73,12 @@ require (
 	github.com/googleapis/gax-go/v2 v2.21.0 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
-	github.com/hashicorp/go-version v1.7.0 // indirect
+	github.com/hashicorp/go-version v1.9.0 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.5.0 // indirect
-	github.com/hashicorp/terraform-plugin-go v0.30.0 // indirect
+	github.com/hashicorp/terraform-plugin-go v0.31.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.10.0 // indirect
-	github.com/hashicorp/terraform-plugin-testing v1.14.1 // indirect
+	github.com/hashicorp/terraform-plugin-testing v1.15.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
@@ -108,13 +108,13 @@ require (
 	go.uber.org/multierr v1.10.0 // indirect
 	go4.org/netipx v0.0.0-20231129151722-fdeea329fbba // indirect
 	golang.org/x/crypto v0.49.0 // indirect
-	golang.org/x/mod v0.33.0 // indirect
+	golang.org/x/mod v0.35.0 // indirect
 	golang.org/x/net v0.52.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
-	golang.org/x/sys v0.42.0 // indirect
-	golang.org/x/text v0.35.0 // indirect
+	golang.org/x/sys v0.43.0 // indirect
+	golang.org/x/text v0.36.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
-	golang.org/x/tools v0.42.0 // indirect
+	golang.org/x/tools v0.43.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20260319201613-d00831a3d3e7 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260401024825-9d38bb4040a9 // indirect
