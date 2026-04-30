@@ -225,7 +225,6 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_kms_crypto_key":                                  kms.KMSCryptoKeyTfplan2caiConverter(),
 	"google_kms_crypto_key_version":                          kms.KMSCryptoKeyVersionTfplan2caiConverter(),
 	"google_kms_ekm_connection":                              kms.KMSEkmConnectionTfplan2caiConverter(),
-	"google_kms_key_handle":                                  kms.KMSKeyHandleTfplan2caiConverter(),
 	"google_kms_key_ring":                                    kms.KMSKeyRingTfplan2caiConverter(),
 	"google_kms_key_ring_import_job":                         kms.KMSKeyRingImportJobTfplan2caiConverter(),
 	"google_logging_metric":                                  logging.LoggingMetricTfplan2caiConverter(),

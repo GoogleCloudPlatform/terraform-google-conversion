@@ -223,9 +223,6 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"cloudkms.googleapis.com/ImportJob": {
 		"Default": kms.NewKMSKeyRingImportJobCai2hclConverter(provider),
 	},
-	"cloudkms.googleapis.com/KeyHandle": {
-		"Default": kms.NewKMSKeyHandleCai2hclConverter(provider),
-	},
 	"cloudkms.googleapis.com/KeyRing": {
 		"Default": kms.NewKMSKeyRingCai2hclConverter(provider),
 	},
