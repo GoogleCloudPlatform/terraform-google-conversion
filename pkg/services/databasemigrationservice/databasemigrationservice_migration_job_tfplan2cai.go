@@ -181,6 +181,12 @@ func GetDatabaseMigrationServiceMigrationJobCaiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("vpc_peering_connectivity"); !tpgresource.IsEmptyValue(reflect.ValueOf(vpcPeeringConnectivityProp)) && (ok || !reflect.DeepEqual(v, vpcPeeringConnectivityProp)) {
 		obj["vpcPeeringConnectivity"] = vpcPeeringConnectivityProp
 	}
+	objectsConfigProp, err := expandDatabaseMigrationServiceMigrationJobObjectsConfig(d.Get("objects_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("objects_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(objectsConfigProp)) && (ok || !reflect.DeepEqual(v, objectsConfigProp)) {
+		obj["objectsConfig"] = objectsConfigProp
+	}
 	effectiveLabelsProp, err := expandDatabaseMigrationServiceMigrationJobEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -403,6 +409,145 @@ func expandDatabaseMigrationServiceMigrationJobVpcPeeringConnectivity(v interfac
 }
 
 func expandDatabaseMigrationServiceMigrationJobVpcPeeringConnectivityVpc(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSourceObjectsConfig, err := expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfig(original["source_objects_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceObjectsConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceObjectsConfig"] = transformedSourceObjectsConfig
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedObjectsSelectionType, err := expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectsSelectionType(original["objects_selection_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedObjectsSelectionType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["objectsSelectionType"] = transformedObjectsSelectionType
+	}
+
+	transformedObjectConfigs, err := expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigs(original["object_configs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedObjectConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["objectConfigs"] = transformedObjectConfigs
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectsSelectionType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedObjectIdentifier, err := expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifier(original["object_identifier"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedObjectIdentifier); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["objectIdentifier"] = transformedObjectIdentifier
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	transformedDatabase, err := expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierDatabase(original["database"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["database"] = transformedDatabase
+	}
+
+	transformedSchema, err := expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierSchema(original["schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["schema"] = transformedSchema
+	}
+
+	transformedTable, err := expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierTable(original["table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["table"] = transformedTable
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

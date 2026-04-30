@@ -139,6 +139,7 @@ func (c *DatabaseMigrationServiceMigrationJobCai2hclConverter) convertResourceDa
 	hclData["static_ip_connectivity"] = flattenDatabaseMigrationServiceMigrationJobStaticIpConnectivity(res["staticIpConnectivity"], d, config)
 	hclData["reverse_ssh_connectivity"] = flattenDatabaseMigrationServiceMigrationJobReverseSshConnectivity(res["reverseSshConnectivity"], d, config)
 	hclData["vpc_peering_connectivity"] = flattenDatabaseMigrationServiceMigrationJobVpcPeeringConnectivity(res["vpcPeeringConnectivity"], d, config)
+	hclData["objects_config"] = flattenDatabaseMigrationServiceMigrationJobObjectsConfig(res["objectsConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -365,6 +366,113 @@ func flattenDatabaseMigrationServiceMigrationJobVpcPeeringConnectivity(v interfa
 }
 
 func flattenDatabaseMigrationServiceMigrationJobVpcPeeringConnectivityVpc(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["source_objects_config"] =
+		flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfig(original["sourceObjectsConfig"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["objects_selection_type"] =
+		flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectsSelectionType(original["objectsSelectionType"], d, config)
+	transformed["object_configs"] =
+		flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigs(original["objectConfigs"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectsSelectionType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigs(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"object_identifier": flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifier(original["objectIdentifier"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifier(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["type"] =
+		flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierType(original["type"], d, config)
+	transformed["database"] =
+		flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierDatabase(original["database"], d, config)
+	transformed["schema"] =
+		flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierSchema(original["schema"], d, config)
+	transformed["table"] =
+		flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierTable(original["table"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierSchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenDatabaseMigrationServiceMigrationJobObjectsConfigSourceObjectsConfigObjectConfigsObjectIdentifierTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}

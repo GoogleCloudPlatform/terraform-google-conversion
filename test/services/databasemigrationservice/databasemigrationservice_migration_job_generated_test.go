@@ -33,6 +33,9 @@ func TestAccDatabaseMigrationServiceMigrationJob(t *testing.T) {
 			Name: "TestAccDatabaseMigrationServiceMigrationJob_databaseMigrationServiceMigrationJobPostgresToPostgresExample",
 		},
 		{
+			Name: "TestAccDatabaseMigrationServiceMigrationJob_databaseMigrationServiceMigrationJobPostgresToPostgresObjectsExample",
+		},
+		{
 			Name: "TestAccDatabaseMigrationServiceMigrationJob_databaseMigrationServiceMigrationJobPostgresToAlloydbExample",
 		},
 		{
