@@ -97,8 +97,8 @@ func GetCESAgentCaiObject(d tpgresource.TerraformResourceData, config *transport
 			Name: name,
 			Type: CESAgentAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ces/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ces/v1beta/rest",
 				DiscoveryName:        "Agent",
 				Data:                 obj,
 			},

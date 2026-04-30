@@ -97,8 +97,8 @@ func GetCESDeploymentCaiObject(d tpgresource.TerraformResourceData, config *tran
 			Name: name,
 			Type: CESDeploymentAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ces/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/ces/v1beta/rest",
 				DiscoveryName:        "Deployment",
 				Data:                 obj,
 			},
