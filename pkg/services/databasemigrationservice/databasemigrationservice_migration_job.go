@@ -166,6 +166,93 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 				ForceNew:    true,
 				Description: `The location where the migration job should reside.`,
 			},
+			"objects_config": {
+				Type:     schema.TypeList,
+				Computed: true,
+				Optional: true,
+				ForceNew: true,
+				Description: `The objects that need to be migrated. If unset, the default is to migrate
+all objects available on the source.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"source_objects_config": {
+							Type:        schema.TypeList,
+							Computed:    true,
+							Optional:    true,
+							ForceNew:    true,
+							Description: `Configuration for the source objects to be migrated.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"object_configs": {
+										Type:     schema.TypeList,
+										Optional: true,
+										ForceNew: true,
+										Description: `The list of objects to migrate. Should only be set when
+'objectsSelectionType' is 'SPECIFIED_OBJECTS'.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"object_identifier": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													ForceNew:    true,
+													Description: `The identifier of the migration job object.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"type": {
+																Type:         schema.TypeString,
+																Required:     true,
+																ForceNew:     true,
+																ValidateFunc: verify.ValidateEnum([]string{"DATABASE", "SCHEMA", "TABLE"}),
+																Description: `The category of the migration job object: 'DATABASE',
+'SCHEMA', or 'TABLE'. Possible values: ["DATABASE", "SCHEMA", "TABLE"]`,
+															},
+															"database": {
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+																Description: `The database name. Required only if the object uses
+a database name as part of its unique identifier.`,
+															},
+															"schema": {
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+																Description: `The schema name. Required only if the object uses
+a schema name as part of its unique identifier.`,
+															},
+															"table": {
+																Type:     schema.TypeString,
+																Optional: true,
+																ForceNew: true,
+																Description: `The table name. Required only if the object is a level
+below database or schema.`,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"objects_selection_type": {
+										Type:         schema.TypeString,
+										Computed:     true,
+										Optional:     true,
+										ForceNew:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"ALL_OBJECTS", "SPECIFIED_OBJECTS", ""}),
+										Description: `The objects selection type of the migration job. When set to
+'SPECIFIED_OBJECTS', only the objects listed in 'objectConfigs' are
+migrated. When set to 'ALL_OBJECTS', all objects available on the
+source are migrated. Possible values: ["ALL_OBJECTS", "SPECIFIED_OBJECTS"]`,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"performance_config": {
 				Type:        schema.TypeList,
 				Optional:    true,
