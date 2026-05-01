@@ -683,6 +683,13 @@ func expandWorkstationsWorkstationConfigPersistentDirectories(v interface{}, d t
 			transformed["gcePd"] = transformedGcePd
 		}
 
+		transformedGceHd, err := expandWorkstationsWorkstationConfigPersistentDirectoriesGceHd(original["gce_hd"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedGceHd); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["gceHd"] = transformedGceHd
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -759,6 +766,65 @@ func expandWorkstationsWorkstationConfigPersistentDirectoriesGcePdReclaimPolicy(
 }
 
 func expandWorkstationsWorkstationConfigPersistentDirectoriesGcePdSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigPersistentDirectoriesGceHd(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSizeGb, err := expandWorkstationsWorkstationConfigPersistentDirectoriesGceHdSizeGb(original["size_gb"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSizeGb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sizeGb"] = transformedSizeGb
+	}
+
+	transformedSourceSnapshot, err := expandWorkstationsWorkstationConfigPersistentDirectoriesGceHdSourceSnapshot(original["source_snapshot"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceSnapshot); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceSnapshot"] = transformedSourceSnapshot
+	}
+
+	transformedReclaimPolicy, err := expandWorkstationsWorkstationConfigPersistentDirectoriesGceHdReclaimPolicy(original["reclaim_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReclaimPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["reclaimPolicy"] = transformedReclaimPolicy
+	}
+
+	transformedArchiveTimeout, err := expandWorkstationsWorkstationConfigPersistentDirectoriesGceHdArchiveTimeout(original["archive_timeout"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedArchiveTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["archiveTimeout"] = transformedArchiveTimeout
+	}
+
+	return transformed, nil
+}
+
+func expandWorkstationsWorkstationConfigPersistentDirectoriesGceHdSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigPersistentDirectoriesGceHdSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigPersistentDirectoriesGceHdReclaimPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigPersistentDirectoriesGceHdArchiveTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
