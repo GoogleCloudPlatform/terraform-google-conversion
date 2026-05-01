@@ -291,6 +291,7 @@ func TestAccContainerNodePool(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"name_prefix",
+					"network_config.accelerator_network_profile",
 					"network_config.create_pod_range",
 					"node_config.boot_disk.provisioned_iops",
 					"node_config.boot_disk.provisioned_throughput",
