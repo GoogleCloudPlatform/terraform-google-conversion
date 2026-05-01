@@ -49,9 +49,16 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
-import "net/url"
+import (
+	"net/url"
 
-var _ = url.Parse
+	rmClient "github.com/hashicorp/terraform-provider-google-beta/google-beta/services/resourcemanager/client"
+)
+
+var (
+	_ = url.Parse
+	_ = rmClient.NewClient
+)
 
 var (
 	_ = bytes.Clone

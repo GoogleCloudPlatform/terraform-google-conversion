@@ -40,9 +40,16 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
 
-import "net/url"
+import (
+	"net/url"
 
-var _ = url.Parse
+	rmClient "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager/client"
+)
+
+var (
+	_ = url.Parse
+	_ = rmClient.NewClient
+)
 
 var (
 	_ = bytes.Clone
