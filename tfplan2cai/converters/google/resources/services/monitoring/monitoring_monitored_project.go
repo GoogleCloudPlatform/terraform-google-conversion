@@ -49,6 +49,12 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+import (
+	rmClient "github.com/hashicorp/terraform-provider-google-beta/google-beta/services/resourcemanager/client"
+)
+
+var _ = rmClient.NewClient
+
 func ResourceMonitoringMonitoredProjectNameDiffSuppressFunc(k, old, new string, d tpgresource.TerraformResourceDataChange) bool {
 	// Don't suppress if values are empty strings
 	if old == "" || new == "" {

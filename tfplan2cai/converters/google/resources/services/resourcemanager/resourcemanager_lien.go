@@ -49,6 +49,12 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+import (
+	rmClient "github.com/hashicorp/terraform-provider-google-beta/google-beta/services/resourcemanager/client"
+)
+
+var _ = rmClient.NewClient
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
