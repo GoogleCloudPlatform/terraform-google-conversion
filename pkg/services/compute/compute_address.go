@@ -252,6 +252,11 @@ address is specified, it must be within the subnetwork's IP range.
 This field can only be used with INTERNAL type with
 GCE_ENDPOINT/DNS_RESOLVER purposes.`,
 			},
+			"address_id": {
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: `The unique numeric identifier for the resource. This identifier is defined by the server.`,
+			},
 			"creation_timestamp": {
 				Type:        schema.TypeString,
 				Computed:    true,
