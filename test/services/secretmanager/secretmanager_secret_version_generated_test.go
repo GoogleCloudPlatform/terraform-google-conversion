@@ -15,16 +15,14 @@
 package secretmanager_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccSecretManagerSecretVersion(t *testing.T) {
-	if os.Getenv("WRITE_FILES") != "" {
-		t.Parallel()
-	}
+	t.Parallel()
+
 	tests := []test.TestCase{
 		{
 			Name: "TestAccSecretManagerSecretVersion_update",

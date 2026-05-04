@@ -15,16 +15,14 @@
 package gkehub2_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccGKEHub2Feature(t *testing.T) {
-	if os.Getenv("WRITE_FILES") != "" {
-		t.Parallel()
-	}
+	t.Parallel()
+
 	tests := []test.TestCase{
 		{
 			Name: "TestAccGKEHubFeature_gkehubFeatureFleetObservability",
