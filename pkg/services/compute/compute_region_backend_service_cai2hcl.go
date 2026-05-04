@@ -169,6 +169,7 @@ func (c *ComputeRegionBackendServiceCai2hclConverter) convertResourceData(asset 
 	hclData["security_policy"] = flattenComputeRegionBackendServiceSecurityPolicy(res["securityPolicy"], d, config)
 	hclData["session_affinity"] = flattenComputeRegionBackendServiceSessionAffinity(res["sessionAffinity"], d, config)
 	hclData["strong_session_affinity_cookie"] = flattenComputeRegionBackendServiceStrongSessionAffinityCookie(res["strongSessionAffinityCookie"], d, config)
+	hclData["connection_tracking_policy"] = flattenComputeRegionBackendServiceConnectionTrackingPolicy(res["connectionTrackingPolicy"], d, config)
 	hclData["timeout_sec"] = flattenComputeRegionBackendServiceTimeoutSec(res["timeoutSec"], d, config)
 	hclData["log_config"] = flattenComputeRegionBackendServiceLogConfig(res["logConfig"], d, config)
 	hclData["network"] = flattenComputeRegionBackendServiceNetwork(res["network"], d, config)
@@ -1460,6 +1461,55 @@ func flattenComputeRegionBackendServiceStrongSessionAffinityCookiePath(v interfa
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenComputeRegionBackendServiceConnectionTrackingPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["idle_timeout_sec"] =
+		flattenComputeRegionBackendServiceConnectionTrackingPolicyIdleTimeoutSec(original["idleTimeoutSec"], d, config)
+	transformed["tracking_mode"] =
+		flattenComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(original["trackingMode"], d, config)
+	transformed["connection_persistence_on_unhealthy_backends"] =
+		flattenComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(original["connectionPersistenceOnUnhealthyBackends"], d, config)
+	transformed["enable_strong_affinity"] =
+		flattenComputeRegionBackendServiceConnectionTrackingPolicyEnableStrongAffinity(original["enableStrongAffinity"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeRegionBackendServiceConnectionTrackingPolicyIdleTimeoutSec(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeRegionBackendServiceConnectionTrackingPolicyEnableStrongAffinity(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
