@@ -134,6 +134,12 @@ func GetCESEvaluationApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("golden"); !tpgresource.IsEmptyValue(reflect.ValueOf(goldenProp)) && (ok || !reflect.DeepEqual(v, goldenProp)) {
 		obj["golden"] = goldenProp
 	}
+	scenarioProp, err := expandCESEvaluationScenario(d.Get("scenario"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scenario"); !tpgresource.IsEmptyValue(reflect.ValueOf(scenarioProp)) && (ok || !reflect.DeepEqual(v, scenarioProp)) {
+		obj["scenario"] = scenarioProp
+	}
 
 	return obj, nil
 }
@@ -1616,5 +1622,885 @@ func expandCESEvaluationGoldenTurnsStepsExpectationMockToolResponseToolsetToolTo
 }
 
 func expandCESEvaluationGoldenEvaluationExpectations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenario(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTask, err := expandCESEvaluationScenarioTask(original["task"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTask); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["task"] = transformedTask
+	}
+
+	transformedUserFacts, err := expandCESEvaluationScenarioUserFacts(original["user_facts"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserFacts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userFacts"] = transformedUserFacts
+	}
+
+	transformedMaxTurns, err := expandCESEvaluationScenarioMaxTurns(original["max_turns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxTurns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxTurns"] = transformedMaxTurns
+	}
+
+	transformedRubrics, err := expandCESEvaluationScenarioRubrics(original["rubrics"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRubrics); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rubrics"] = transformedRubrics
+	}
+
+	transformedScenarioExpectations, err := expandCESEvaluationScenarioScenarioExpectations(original["scenario_expectations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScenarioExpectations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scenarioExpectations"] = transformedScenarioExpectations
+	}
+
+	transformedVariableOverrides, err := expandCESEvaluationScenarioVariableOverrides(original["variable_overrides"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVariableOverrides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["variableOverrides"] = transformedVariableOverrides
+	}
+
+	transformedUserGoalBehavior, err := expandCESEvaluationScenarioUserGoalBehavior(original["user_goal_behavior"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserGoalBehavior); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userGoalBehavior"] = transformedUserGoalBehavior
+	}
+
+	transformedTaskCompletionBehavior, err := expandCESEvaluationScenarioTaskCompletionBehavior(original["task_completion_behavior"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTaskCompletionBehavior); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["taskCompletionBehavior"] = transformedTaskCompletionBehavior
+	}
+
+	transformedEvaluationExpectations, err := expandCESEvaluationScenarioEvaluationExpectations(original["evaluation_expectations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEvaluationExpectations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["evaluationExpectations"] = transformedEvaluationExpectations
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioTask(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioUserFacts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandCESEvaluationScenarioUserFactsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedValue, err := expandCESEvaluationScenarioUserFactsValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESEvaluationScenarioUserFactsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioUserFactsValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioMaxTurns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioRubrics(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedToolExpectation, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectation(original["tool_expectation"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedToolExpectation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["toolExpectation"] = transformedToolExpectation
+		}
+
+		transformedAgentResponse, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponse(original["agent_response"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAgentResponse); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["agentResponse"] = transformedAgentResponse
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpectedToolCall, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCall(original["expected_tool_call"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpectedToolCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expectedToolCall"] = transformedExpectedToolCall
+	}
+
+	transformedMockToolResponse, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponse(original["mock_tool_response"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMockToolResponse); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mockToolResponse"] = transformedMockToolResponse
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedId, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedDisplayName, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedArgs, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallArgs(original["args"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedArgs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["args"] = transformedArgs
+	}
+
+	transformedTool, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallTool(original["tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tool"] = transformedTool
+	}
+
+	transformedToolsetTool, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallToolsetTool(original["toolset_tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolsetTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolsetTool"] = transformedToolsetTool
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallArgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallToolsetTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToolset, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallToolsetToolToolset(original["toolset"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolset"] = transformedToolset
+	}
+
+	transformedToolId, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallToolsetToolToolId(original["tool_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolId"] = transformedToolId
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallToolsetToolToolset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationExpectedToolCallToolsetToolToolId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedId, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedDisplayName, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedResponse, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseResponse(original["response"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponse); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["response"] = transformedResponse
+	}
+
+	transformedTool, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseTool(original["tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tool"] = transformedTool
+	}
+
+	transformedToolsetTool, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseToolsetTool(original["toolset_tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolsetTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolsetTool"] = transformedToolsetTool
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseToolsetTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToolset, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseToolsetToolToolset(original["toolset"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolset"] = transformedToolset
+	}
+
+	transformedToolId, err := expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseToolsetToolToolId(original["tool_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolId"] = transformedToolId
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseToolsetToolToolset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsToolExpectationMockToolResponseToolsetToolToolId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRole, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseRole(original["role"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRole); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["role"] = transformedRole
+	}
+
+	transformedChunks, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunks(original["chunks"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedChunks); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["chunks"] = transformedChunks
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedText, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksText(original["text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["text"] = transformedText
+		}
+
+		transformedUpdatedVariables, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksUpdatedVariables(original["updated_variables"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUpdatedVariables); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["updatedVariables"] = transformedUpdatedVariables
+		}
+
+		transformedBlob, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksBlob(original["blob"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBlob); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["blob"] = transformedBlob
+		}
+
+		transformedImage, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksImage(original["image"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["image"] = transformedImage
+		}
+
+		transformedToolCall, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCall(original["tool_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedToolCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["toolCall"] = transformedToolCall
+		}
+
+		transformedToolResponse, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponse(original["tool_response"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedToolResponse); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["toolResponse"] = transformedToolResponse
+		}
+
+		transformedAgentTransfer, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksAgentTransfer(original["agent_transfer"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAgentTransfer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["agentTransfer"] = transformedAgentTransfer
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksUpdatedVariables(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksBlob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMimeType, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksBlobMimeType(original["mime_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMimeType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mimeType"] = transformedMimeType
+	}
+
+	transformedData, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksBlobData(original["data"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedData); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["data"] = transformedData
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksBlobMimeType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksBlobData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMimeType, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksImageMimeType(original["mime_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMimeType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mimeType"] = transformedMimeType
+	}
+
+	transformedData, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksImageData(original["data"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedData); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["data"] = transformedData
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksImageMimeType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksImageData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedId, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedDisplayName, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedArgs, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallArgs(original["args"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedArgs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["args"] = transformedArgs
+	}
+
+	transformedTool, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallTool(original["tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tool"] = transformedTool
+	}
+
+	transformedToolsetTool, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallToolsetTool(original["toolset_tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolsetTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolsetTool"] = transformedToolsetTool
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallArgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallToolsetTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToolset, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallToolsetToolToolset(original["toolset"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolset"] = transformedToolset
+	}
+
+	transformedToolId, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallToolsetToolToolId(original["tool_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolId"] = transformedToolId
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallToolsetToolToolset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolCallToolsetToolToolId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedId, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseId(original["id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["id"] = transformedId
+	}
+
+	transformedDisplayName, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedResponse, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseResponse(original["response"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResponse); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["response"] = transformedResponse
+	}
+
+	transformedTool, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseTool(original["tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tool"] = transformedTool
+	}
+
+	transformedToolsetTool, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseToolsetTool(original["toolset_tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolsetTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolsetTool"] = transformedToolsetTool
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseToolsetTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToolset, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseToolsetToolToolset(original["toolset"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolset); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolset"] = transformedToolset
+	}
+
+	transformedToolId, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseToolsetToolToolId(original["tool_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolId"] = transformedToolId
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseToolsetToolToolset(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksToolResponseToolsetToolToolId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksAgentTransfer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTargetAgent, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksAgentTransferTargetAgent(original["target_agent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetAgent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["targetAgent"] = transformedTargetAgent
+	}
+
+	transformedDisplayName, err := expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksAgentTransferDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	return transformed, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksAgentTransferTargetAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioScenarioExpectationsAgentResponseChunksAgentTransferDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioVariableOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESEvaluationScenarioUserGoalBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioTaskCompletionBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESEvaluationScenarioEvaluationExpectations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
