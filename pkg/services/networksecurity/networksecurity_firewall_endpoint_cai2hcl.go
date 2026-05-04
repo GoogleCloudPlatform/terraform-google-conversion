@@ -145,13 +145,6 @@ func flattenNetworkSecurityFirewallEndpointLabels(v interface{}, d *schema.Resou
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 func flattenNetworkSecurityFirewallEndpointBillingProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return "unknown"
-	}
-	transformed := v.(string)
-	if transformed == "" {
-		return "unknown"
-	}
 	return v
 }
 
