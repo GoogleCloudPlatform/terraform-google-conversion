@@ -124,7 +124,7 @@ func (c *ComputeAddressCai2hclConverter) convertResourceData(asset caiasset.Asse
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}, "users": struct{}{}}
+	outputFields := map[string]struct{}{"address_id": struct{}{}, "creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "terraform_labels": struct{}{}, "users": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/addresses/{{name}}", outputFields, hclData)
 
 	hclData["address"] = flattenComputeAddressAddress(res["address"], d, config)

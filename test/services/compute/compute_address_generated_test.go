@@ -52,6 +52,9 @@ func TestAccComputeAddress(t *testing.T) {
 			Name: "TestAccComputeAddress_networkTier",
 		},
 		{
+			Name: "TestAccComputeAddress_addressId",
+		},
+		{
 			Name: "TestAccComputeAddress_internal",
 		},
 		{
