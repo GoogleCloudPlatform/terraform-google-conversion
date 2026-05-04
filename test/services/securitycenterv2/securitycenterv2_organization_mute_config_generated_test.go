@@ -15,16 +15,14 @@
 package securitycenterv2_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccSecurityCenterV2OrganizationMuteConfig(t *testing.T) {
-	if os.Getenv("WRITE_FILES") != "" {
-		t.Parallel()
-	}
+	t.Parallel()
+
 	tests := []test.TestCase{
 		{
 			Name: "TestAccSecurityCenterV2OrganizationMuteConfig_sccV2OrganizationMuteConfigBasicExample",

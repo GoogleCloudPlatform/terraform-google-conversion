@@ -15,16 +15,14 @@
 package privateca_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccPrivatecaCertificateTemplate(t *testing.T) {
-	if os.Getenv("WRITE_FILES") != "" {
-		t.Parallel()
-	}
+	t.Parallel()
+
 	tests := []test.TestCase{
 		{
 			Name: "TestAccPrivatecaCertificateTemplate_privatecaTemplateBasicExample",

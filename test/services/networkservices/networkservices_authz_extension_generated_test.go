@@ -15,16 +15,14 @@
 package networkservices_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
 func TestAccNetworkServicesAuthzExtension(t *testing.T) {
-	if os.Getenv("WRITE_FILES") != "" {
-		t.Parallel()
-	}
+	t.Parallel()
+
 	tests := []test.TestCase{
 		{
 			Name: "TestAccNetworkServicesAuthzExtension_networkServicesAuthzExtensionBasicExample",
