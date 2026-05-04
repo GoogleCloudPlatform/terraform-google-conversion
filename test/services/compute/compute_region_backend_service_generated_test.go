@@ -45,6 +45,9 @@ func TestAccComputeRegionBackendService(t *testing.T) {
 			Name: "TestAccComputeRegionBackendService_regionBackendServiceBalancingModeExample",
 		},
 		{
+			Name: "TestAccComputeRegionBackendService_regionBackendServiceConnectionTrackingExample",
+		},
+		{
 			Name: "TestAccComputeRegionBackendService_regionBackendServiceIpAddressSelectionPolicyExample",
 		},
 		{

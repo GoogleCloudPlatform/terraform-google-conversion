@@ -259,6 +259,12 @@ func GetComputeRegionBackendServiceCaiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("strong_session_affinity_cookie"); !tpgresource.IsEmptyValue(reflect.ValueOf(strongSessionAffinityCookieProp)) && (ok || !reflect.DeepEqual(v, strongSessionAffinityCookieProp)) {
 		obj["strongSessionAffinityCookie"] = strongSessionAffinityCookieProp
 	}
+	connectionTrackingPolicyProp, err := expandComputeRegionBackendServiceConnectionTrackingPolicy(d.Get("connection_tracking_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("connection_tracking_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(connectionTrackingPolicyProp)) && (ok || !reflect.DeepEqual(v, connectionTrackingPolicyProp)) {
+		obj["connectionTrackingPolicy"] = connectionTrackingPolicyProp
+	}
 	timeoutSecProp, err := expandComputeRegionBackendServiceTimeoutSec(d.Get("timeout_sec"), d, config)
 	if err != nil {
 		return nil, err
@@ -1516,6 +1522,65 @@ func expandComputeRegionBackendServiceStrongSessionAffinityCookieName(v interfac
 }
 
 func expandComputeRegionBackendServiceStrongSessionAffinityCookiePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdleTimeoutSec, err := expandComputeRegionBackendServiceConnectionTrackingPolicyIdleTimeoutSec(original["idle_timeout_sec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleTimeoutSec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleTimeoutSec"] = transformedIdleTimeoutSec
+	}
+
+	transformedTrackingMode, err := expandComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(original["tracking_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTrackingMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["trackingMode"] = transformedTrackingMode
+	}
+
+	transformedConnectionPersistenceOnUnhealthyBackends, err := expandComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(original["connection_persistence_on_unhealthy_backends"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectionPersistenceOnUnhealthyBackends); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectionPersistenceOnUnhealthyBackends"] = transformedConnectionPersistenceOnUnhealthyBackends
+	}
+
+	transformedEnableStrongAffinity, err := expandComputeRegionBackendServiceConnectionTrackingPolicyEnableStrongAffinity(original["enable_strong_affinity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableStrongAffinity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableStrongAffinity"] = transformedEnableStrongAffinity
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicyIdleTimeoutSec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicyTrackingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicyConnectionPersistenceOnUnhealthyBackends(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceConnectionTrackingPolicyEnableStrongAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
