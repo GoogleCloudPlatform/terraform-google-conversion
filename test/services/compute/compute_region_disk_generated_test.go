@@ -69,6 +69,18 @@ func TestAccComputeRegionDisk(t *testing.T) {
 		{
 			Name: "TestAccComputeRegionDisk_VSSWindows",
 		},
+		{
+			Name: "TestAccComputeRegionDisk_fromImageKMS",
+		},
+		{
+			Name: "TestAccComputeRegionDisk_fromImageCSEK",
+		},
+		{
+			Name: "TestAccComputeRegionDisk_fromImageRSA",
+		},
+		{
+			Name: "TestAccComputeRegionDisk_fromImageKMSWithServiceAccount",
+		},
 	}
 
 	for _, tt := range tests {
@@ -95,6 +107,9 @@ func TestAccComputeRegionDisk(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"source_image_encryption_key",
+					"source_image_encryption_key.raw_key",
+					"source_image_encryption_key.rsa_encrypted_key",
 					"timeouts",
 				},
 				"google_compute_region_disk",

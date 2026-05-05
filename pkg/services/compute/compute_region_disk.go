@@ -196,6 +196,21 @@ Applicable only for bootable disks.`,
 				Elem: computeRegionDiskGuestOsFeaturesSchema(),
 				// Default schema.HashSchema is used.
 			},
+			"image": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				ForceNew:         true,
+				DiffSuppressFunc: DiskImageDiffSuppress,
+				Description: `The image from which to initialize this disk. This can be
+one of: the image's 'self_link', 'projects/{project}/global/images/{image}',
+'projects/{project}/global/images/family/{family}', 'global/images/{image}',
+'global/images/family/{family}', 'family/{family}', '{project}/{family}',
+'{project}/{image}', '{family}', or '{image}'. If referred by family, the
+images names must include the family name. If they don't, use the
+[google_compute_image data source](/docs/providers/google/d/compute_image.html).
+For instance, the image 'centos-6-v20180104' includes its family name 'centos-6'.
+These images can be referred by family name here.`,
+			},
 			"labels": {
 				Type:     schema.TypeMap,
 				Optional: true,
@@ -293,6 +308,48 @@ For example, the following are valid values:
 * zones/{zone}/disks/{disk}
 * regions/{region}/disks/{disk}`,
 			},
+			"source_image_encryption_key": {
+				Type:     schema.TypeList,
+				Optional: true,
+				ForceNew: true,
+				Description: `The customer-supplied encryption key of the source image. Required if
+the source image is protected by a customer-supplied encryption key.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"kms_key_name": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							ForceNew:    true,
+							Description: `The name of the encryption key that is stored in Google Cloud KMS.`,
+						},
+						"kms_key_service_account": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Description: `The service account used for the encryption request for the given KMS key.
+If absent, the Compute Engine Service Agent service account is used.`,
+						},
+						"raw_key": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Description: `Specifies a 256-bit customer-supplied encryption key, encoded in
+RFC 4648 base64 to either encrypt or decrypt this resource.`,
+							Sensitive: true,
+						},
+						"rsa_encrypted_key": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Description: `Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit
+customer-supplied encryption key to either encrypt or decrypt
+this resource. You can provide either the rawKey or the rsaEncryptedKey.`,
+							Sensitive: true,
+						},
+					},
+				},
+			},
 			"source_snapshot_encryption_key": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -361,6 +418,15 @@ internally during updates.`,
 				Description: `The ID value of the disk used to create this image. This value may
 be used to determine whether the image was taken from the current
 or a previous instance of a given disk name.`,
+			},
+			"source_image_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+				Description: `The ID value of the image used to create this disk. This value
+identifies the exact image that was used to create this persistent
+disk. For example, if you created the persistent disk from an image
+that was later deleted and recreated under the same name, the source
+image ID would identify the exact version of the image that was used.`,
 			},
 			"source_snapshot_id": {
 				Type:     schema.TypeString,

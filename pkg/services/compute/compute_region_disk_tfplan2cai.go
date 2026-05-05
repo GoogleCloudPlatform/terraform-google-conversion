@@ -121,6 +121,12 @@ func GetComputeRegionDiskCaiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("disk_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(diskEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, diskEncryptionKeyProp)) {
 		obj["diskEncryptionKey"] = diskEncryptionKeyProp
 	}
+	sourceImageEncryptionKeyProp, err := expandComputeRegionDiskSourceImageEncryptionKey(d.Get("source_image_encryption_key"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_image_encryption_key"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceImageEncryptionKeyProp)) && (ok || !reflect.DeepEqual(v, sourceImageEncryptionKeyProp)) {
+		obj["sourceImageEncryptionKey"] = sourceImageEncryptionKeyProp
+	}
 	sourceSnapshotEncryptionKeyProp, err := expandComputeRegionDiskSourceSnapshotEncryptionKey(d.Get("source_snapshot_encryption_key"), d, config)
 	if err != nil {
 		return nil, err
@@ -229,6 +235,12 @@ func GetComputeRegionDiskCaiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("snapshot"); !tpgresource.IsEmptyValue(reflect.ValueOf(snapshotProp)) && (ok || !reflect.DeepEqual(v, snapshotProp)) {
 		obj["sourceSnapshot"] = snapshotProp
 	}
+	imageProp, err := expandComputeRegionDiskImage(d.Get("image"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("image"); !tpgresource.IsEmptyValue(reflect.ValueOf(imageProp)) && (ok || !reflect.DeepEqual(v, imageProp)) {
+		obj["sourceImage"] = imageProp
+	}
 
 	obj, err = resourceComputeRegionDiskEncoder(d, config, obj)
 	if err != nil {
@@ -326,6 +338,65 @@ func expandComputeRegionDiskDiskEncryptionKeyRsaEncryptedKey(v interface{}, d tp
 }
 
 func expandComputeRegionDiskDiskEncryptionKeyKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskSourceImageEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRawKey, err := expandComputeRegionDiskSourceImageEncryptionKeyRawKey(original["raw_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRawKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rawKey"] = transformedRawKey
+	}
+
+	transformedRsaEncryptedKey, err := expandComputeRegionDiskSourceImageEncryptionKeyRsaEncryptedKey(original["rsa_encrypted_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRsaEncryptedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["rsaEncryptedKey"] = transformedRsaEncryptedKey
+	}
+
+	transformedKmsKeyName, err := expandComputeRegionDiskSourceImageEncryptionKeyKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	transformedKmsKeyServiceAccount, err := expandComputeRegionDiskSourceImageEncryptionKeyKmsKeyServiceAccount(original["kms_key_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyServiceAccount"] = transformedKmsKeyServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandComputeRegionDiskSourceImageEncryptionKeyRawKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskSourceImageEncryptionKeyRsaEncryptedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskSourceImageEncryptionKeyKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionDiskSourceImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -517,4 +588,8 @@ func expandComputeRegionDiskSnapshot(v interface{}, d tpgresource.TerraformResou
 	}
 	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
 	return url, nil
+}
+
+func expandComputeRegionDiskImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
