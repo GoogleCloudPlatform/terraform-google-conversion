@@ -8,11 +8,12 @@ import (
 	"google.golang.org/api/cloudresourcemanager/v1"
 	"google.golang.org/api/option"
 
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 )
 
 func NewClient(c *transport_tpg.Config, userAgent string) *cloudresourcemanager.Service {
-	resourceManagerBasePath := transport_tpg.RemoveBasePathVersion(c.ResourceManagerBasePath)
+	resourceManagerBasePath := transport_tpg.RemoveBasePathVersion(transport_tpg.BaseUrl(registry.GetProduct("resourcemanager"), c))
 	log.Printf("[INFO] Instantiating Google Cloud ResourceManager client for path %s", resourceManagerBasePath)
 	clientResourceManager, err := cloudresourcemanager.NewService(c.Context, option.WithHTTPClient(c.Client))
 	if err != nil {
