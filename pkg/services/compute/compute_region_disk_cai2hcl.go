@@ -134,10 +134,11 @@ func (c *ComputeRegionDiskCai2hclConverter) convertResourceData(asset caiasset.A
 		return nil, nil
 	}
 
-	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "disk_id": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "last_attach_timestamp": struct{}{}, "last_detach_timestamp": struct{}{}, "source_disk_id": struct{}{}, "source_snapshot_id": struct{}{}, "terraform_labels": struct{}{}, "users": struct{}{}}
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "disk_id": struct{}{}, "effective_labels": struct{}{}, "label_fingerprint": struct{}{}, "last_attach_timestamp": struct{}{}, "last_detach_timestamp": struct{}{}, "source_disk_id": struct{}{}, "source_image_id": struct{}{}, "source_snapshot_id": struct{}{}, "terraform_labels": struct{}{}, "users": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/disks/{{name}}", outputFields, hclData)
 
 	hclData["disk_encryption_key"] = flattenComputeRegionDiskDiskEncryptionKey(res["diskEncryptionKey"], d, config)
+	hclData["source_image_encryption_key"] = flattenComputeRegionDiskSourceImageEncryptionKey(res["sourceImageEncryptionKey"], d, config)
 	hclData["source_snapshot_encryption_key"] = flattenComputeRegionDiskSourceSnapshotEncryptionKey(res["sourceSnapshotEncryptionKey"], d, config)
 	hclData["description"] = flattenComputeRegionDiskDescription(res["description"], d, config)
 	hclData["labels"] = flattenComputeRegionDiskLabels(res["labels"], d, config)
@@ -155,6 +156,7 @@ func (c *ComputeRegionDiskCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["provisioned_throughput"] = flattenComputeRegionDiskProvisionedThroughput(res["provisionedThroughput"], d, config)
 	hclData["region"] = flattenComputeRegionDiskRegion(res["region"], d, config)
 	hclData["snapshot"] = flattenComputeRegionDiskSnapshot(res["sourceSnapshot"], d, config)
+	hclData["image"] = flattenComputeRegionDiskImage(res["sourceImage"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -205,6 +207,66 @@ func flattenComputeRegionDiskDiskEncryptionKeyRsaEncryptedKey(v interface{}, d *
 }
 
 func flattenComputeRegionDiskDiskEncryptionKeyKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenComputeRegionDiskSourceImageEncryptionKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["raw_key"] =
+		flattenComputeRegionDiskSourceImageEncryptionKeyRawKey(original["rawKey"], d, config)
+	transformed["rsa_encrypted_key"] =
+		flattenComputeRegionDiskSourceImageEncryptionKeyRsaEncryptedKey(original["rsaEncryptedKey"], d, config)
+	transformed["kms_key_name"] =
+		flattenComputeRegionDiskSourceImageEncryptionKeyKmsKeyName(original["kmsKeyName"], d, config)
+	transformed["kms_key_service_account"] =
+		flattenComputeRegionDiskSourceImageEncryptionKeyKmsKeyServiceAccount(original["kmsKeyServiceAccount"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeRegionDiskSourceImageEncryptionKeyRawKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenComputeRegionDiskSourceImageEncryptionKeyRsaEncryptedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenComputeRegionDiskSourceImageEncryptionKeyKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenComputeRegionDiskSourceImageEncryptionKeyKmsKeyServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}
@@ -429,6 +491,16 @@ func flattenComputeRegionDiskSnapshot(v interface{}, d *schema.ResourceData, con
 		return v
 	}
 	return relative
+}
+
+func flattenComputeRegionDiskImage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
 }
 
 func resourceComputeRegionDiskDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
