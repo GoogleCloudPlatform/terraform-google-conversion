@@ -87,6 +87,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 		{
 			Name: "TestAccComputeSubnetwork_resourceManagerTags",
 		},
+		{
+			Name: "TestAccComputeSubnetwork_ipv6UpdateWithPdp",
+		},
 	}
 
 	for _, tt := range tests {
