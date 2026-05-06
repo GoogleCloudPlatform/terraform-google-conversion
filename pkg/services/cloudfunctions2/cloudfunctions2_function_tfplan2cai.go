@@ -614,7 +614,7 @@ func expandCloudfunctions2functionServiceConfig(v interface{}, d tpgresource.Ter
 	transformedAllTrafficOnLatestRevision, err := expandCloudfunctions2functionServiceConfigAllTrafficOnLatestRevision(original["all_traffic_on_latest_revision"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedAllTrafficOnLatestRevision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["allTrafficOnLatestRevision"] = transformedAllTrafficOnLatestRevision
 	}
 
