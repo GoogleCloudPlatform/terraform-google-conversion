@@ -140,6 +140,12 @@ func GetComputeOrganizationSecurityPolicyApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
+	advancedOptionsConfigProp, err := expandComputeOrganizationSecurityPolicyAdvancedOptionsConfig(d.Get("advanced_options_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("advanced_options_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(advancedOptionsConfigProp)) && (ok || !reflect.DeepEqual(v, advancedOptionsConfigProp)) {
+		obj["advancedOptionsConfig"] = advancedOptionsConfigProp
+	}
 	parentProp, err := expandComputeOrganizationSecurityPolicyParent(d.Get("parent"), d, config)
 	if err != nil {
 		return nil, err
@@ -167,6 +173,100 @@ func expandComputeOrganizationSecurityPolicyFingerprint(v interface{}, d tpgreso
 }
 
 func expandComputeOrganizationSecurityPolicyType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAdvancedOptionsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedJsonParsing, err := expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigJsonParsing(original["json_parsing"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJsonParsing); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jsonParsing"] = transformedJsonParsing
+	}
+
+	transformedJsonCustomConfig, err := expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigJsonCustomConfig(original["json_custom_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJsonCustomConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jsonCustomConfig"] = transformedJsonCustomConfig
+	}
+
+	transformedLogLevel, err := expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigLogLevel(original["log_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLogLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["logLevel"] = transformedLogLevel
+	}
+
+	transformedUserIpRequestHeaders, err := expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigUserIpRequestHeaders(original["user_ip_request_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUserIpRequestHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["userIpRequestHeaders"] = transformedUserIpRequestHeaders
+	}
+
+	transformedRequestBodyInspectionSize, err := expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigRequestBodyInspectionSize(original["request_body_inspection_size"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestBodyInspectionSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestBodyInspectionSize"] = transformedRequestBodyInspectionSize
+	}
+
+	return transformed, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigJsonParsing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigJsonCustomConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedContentTypes, err := expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigJsonCustomConfigContentTypes(original["content_types"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContentTypes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["contentTypes"] = transformedContentTypes
+	}
+
+	return transformed, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigJsonCustomConfigContentTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigLogLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigUserIpRequestHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeOrganizationSecurityPolicyAdvancedOptionsConfigRequestBodyInspectionSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
