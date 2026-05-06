@@ -231,9 +231,9 @@ non-overlapping within a network. Only IPv4 is supported.
 Field is optional when 'reserved_internal_range' is defined, otherwise required.`,
 			},
 			"ip_collection": {
-				Type:     schema.TypeString,
-				Optional: true,
-				ForceNew: true,
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
 				Description: `Resource reference of a PublicDelegatedPrefix. The PDP must be a sub-PDP
 in EXTERNAL_IPV6_SUBNETWORK_CREATION or INTERNAL_IPV6_SUBNETWORK_CREATION
 mode. Use one of the following formats to specify a sub-PDP when creating
