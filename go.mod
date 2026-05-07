@@ -12,7 +12,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/hashicorp/terraform-json v0.27.2
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260507210442-add3320b8c52
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260507221820-8a5f8708def5
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.11.1
@@ -28,7 +28,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/terraform-plugin-framework v1.19.0
-	github.com/hashicorp/terraform-plugin-framework-validators v0.12.0
+	github.com/hashicorp/terraform-plugin-framework-validators v0.19.0
 	github.com/sethvargo/go-retry v0.3.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.8.1
