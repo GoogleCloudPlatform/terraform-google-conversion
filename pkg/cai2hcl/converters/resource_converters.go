@@ -389,6 +389,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"datamigration.googleapis.com/MigrationJob": {
 		"Default": databasemigrationservice.NewDatabaseMigrationServiceMigrationJobCai2hclConverter(provider),
 	},
+	"dataplex.googleapis.com/DataScan": {
+		"Default": dataplex.NewDataplexDatascanCai2hclConverter(provider),
+	},
 	"dataplex.googleapis.com/Glossary": {
 		"Default": dataplex.NewDataplexGlossaryCai2hclConverter(provider),
 	},
