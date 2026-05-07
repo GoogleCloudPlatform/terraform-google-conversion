@@ -82,6 +82,21 @@ func TestAccAlloydbInstance(t *testing.T) {
 		{
 			Name: "TestAccAlloydbInstance_ObservabilityConfig_Update",
 		},
+		{
+			Name: "TestAccAlloydbInstance_secondaryInstanceUpdateMachineConfig",
+		},
+		{
+			Name: "TestAccAlloydbInstance_secondaryInstanceWithReadPoolInstance",
+		},
+		{
+			Name: "TestAccAlloydbInstance_secondaryInstanceUpdateDatabaseFlag",
+		},
+		{
+			Name: "TestAccAlloydbInstance_secondaryInstanceUpdateQueryInsightConfig",
+		},
+		{
+			Name: "TestAccAlloydbInstance_secondaryInstanceMaximumFields",
+		},
 	}
 
 	for _, tt := range tests {

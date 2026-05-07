@@ -87,6 +87,15 @@ func TestAccWorkbenchInstance(t *testing.T) {
 		{
 			Name: "TestAccWorkbenchInstance_updateJupyterLab",
 		},
+		{
+			Name: "TestAccWorkbenchInstance_shielded_config_update",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_shielded_config_remove",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_shielded_config_double_apply",
+		},
 	}
 
 	for _, tt := range tests {

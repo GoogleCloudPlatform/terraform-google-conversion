@@ -126,6 +126,9 @@ func TestAccComputeRegionBackendService(t *testing.T) {
 		{
 			Name: "TestAccComputeRegionBackendService_withNetworkPassThroughLbTrafficPolicy",
 		},
+		{
+			Name: "TestAccComputeRegionBackendService_regionBackendServiceHaPolicyManualLeader_update",
+		},
 	}
 
 	for _, tt := range tests {

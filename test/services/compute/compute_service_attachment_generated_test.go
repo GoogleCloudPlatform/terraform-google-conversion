@@ -54,6 +54,9 @@ func TestAccComputeServiceAttachment(t *testing.T) {
 		{
 			Name: "TestAccComputeServiceAttachment_serviceAttachmentEndpointUrl",
 		},
+		{
+			Name: "TestAccComputeServiceAttachment_tunnelingConfigUpdate",
+		},
 	}
 
 	for _, tt := range tests {

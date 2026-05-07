@@ -123,6 +123,63 @@ func TestAccAlloydbCluster(t *testing.T) {
 		{
 			Name: "TestAccAlloydbCluster_withDataplexConfigDisabled",
 		},
+		{
+			Name: "TestAccAlloydbCluster_restore",
+		},
+		{
+			Name: "TestAccAlloydbCluster_restoreFromBackupDrBackup",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterMandatoryFields",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterMissingSecondaryConfig",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterDefinedSecondaryConfigButMissingClusterTypeSecondary",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterDefinedSecondaryConfigButClusterTypeIsPrimary",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterUpdate",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterUsingCMEK",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterWithNetworkConfig",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterWithNetworkConfigAndAllocatedIPRange",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterPromote",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterPromoteAndSimultaneousUpdate",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterPromoteAndDeleteOriginalPrimary",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterPromoteAndUpdate",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterPromoteWithNetworkConfigAndAllocatedIPRange",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterPromoteAndAddAndDeleteAutomatedBackupPolicyAndInitialUser",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterPromoteAndDeleteTimeBasedRetentionPolicy",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryClusterPromoteAndAddContinuousBackupConfig",
+		},
+		{
+			Name: "TestAccAlloydbCluster_secondaryInstanceWithNetworkConfigAndAllocatedIPRange",
+		},
 	}
 
 	for _, tt := range tests {

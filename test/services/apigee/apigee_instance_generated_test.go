@@ -39,6 +39,9 @@ func TestAccApigeeInstance(t *testing.T) {
 		{
 			Name: "TestAccApigeeInstance_apigeeInstanceServiceAttachmentBasicTestExample",
 		},
+		{
+			Name: "TestAccApigeeInstance_updateConsumerAcceptList",
+		},
 	}
 
 	for _, tt := range tests {

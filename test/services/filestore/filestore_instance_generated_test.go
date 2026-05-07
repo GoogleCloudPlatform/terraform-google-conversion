@@ -64,6 +64,12 @@ func TestAccFilestoreInstance(t *testing.T) {
 		{
 			Name: "TestAccFilestoreInstance_psc_ipv6",
 		},
+		{
+			Name: "TestAccFilestoreInstance_restore",
+		},
+		{
+			Name: "TestAccFilestoreInstance_restoreBackupDR",
+		},
 	}
 
 	for _, tt := range tests {

@@ -33,6 +33,9 @@ func TestAccCertificateManagerDnsAuthorization(t *testing.T) {
 		{
 			Name: "TestAccCertificateManagerDnsAuthorization_update",
 		},
+		{
+			Name: "TestAccCertificateManagerDnsAuthorization_migration",
+		},
 	}
 
 	for _, tt := range tests {
