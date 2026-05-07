@@ -128,6 +128,12 @@ func GetStorageAnywhereCacheApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("ttl"); !tpgresource.IsEmptyValue(reflect.ValueOf(ttlProp)) && (ok || !reflect.DeepEqual(v, ttlProp)) {
 		obj["ttl"] = ttlProp
 	}
+	ingestOnWriteProp, err := expandStorageAnywhereCacheIngestOnWrite(d.Get("ingest_on_write"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ingest_on_write"); !tpgresource.IsEmptyValue(reflect.ValueOf(ingestOnWriteProp)) && (ok || !reflect.DeepEqual(v, ingestOnWriteProp)) {
+		obj["ingestOnWrite"] = ingestOnWriteProp
+	}
 
 	return obj, nil
 }
@@ -141,5 +147,9 @@ func expandStorageAnywhereCacheAdmissionPolicy(v interface{}, d tpgresource.Terr
 }
 
 func expandStorageAnywhereCacheTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandStorageAnywhereCacheIngestOnWrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
