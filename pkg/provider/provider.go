@@ -9,6 +9,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/envvar"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/registry"
 	transport_tpg "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/transport"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
@@ -299,13 +300,13 @@ func ProviderConfigure(ctx context.Context, d *schema.ResourceData, p *schema.Pr
 	// only check environment variables if none of these values are set in config- this
 	// means config beats env var in all cases.
 	if config.ExternalCredentials == nil && config.AccessToken == "" && config.Credentials == "" {
-		config.Credentials = transport_tpg.MultiEnvSearch([]string{
+		config.Credentials = envvar.MultiEnvSearch([]string{
 			"GOOGLE_CREDENTIALS",
 			"GOOGLE_CLOUD_KEYFILE_JSON",
 			"GCLOUD_KEYFILE_JSON",
 		})
 
-		config.AccessToken = transport_tpg.MultiEnvSearch([]string{
+		config.AccessToken = envvar.MultiEnvSearch([]string{
 			"GOOGLE_OAUTH_ACCESS_TOKEN",
 		})
 	}
@@ -315,7 +316,7 @@ func ProviderConfigure(ctx context.Context, d *schema.ResourceData, p *schema.Pr
 		customEndpoint := ""
 		if v := d.Get(p.CustomEndpointField).(string); v != "" {
 			customEndpoint = v
-		} else if v = transport_tpg.MultiEnvSearch([]string{p.CustomEndpointEnvVar}); v != "" {
+		} else if v = envvar.MultiEnvSearch([]string{p.CustomEndpointEnvVar}); v != "" {
 			customEndpoint = v
 		}
 		if customEndpoint != "" {
