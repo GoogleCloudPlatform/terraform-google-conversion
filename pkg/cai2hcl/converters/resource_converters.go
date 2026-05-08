@@ -101,6 +101,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"Default": container.NewContainerClusterCai2hclConverter(provider),
 	},
 	// ####### END handwritten resources ###########
+	"aiplatform.googleapis.com/NotebookExecutionJob": {
+		"Default": colab.NewColabNotebookExecutionCai2hclConverter(provider),
+	},
 	"aiplatform.googleapis.com/NotebookRuntime": {
 		"Default": colab.NewColabRuntimeCai2hclConverter(provider),
 	},

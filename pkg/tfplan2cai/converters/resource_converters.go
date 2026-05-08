@@ -122,6 +122,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_cloudfunctions2_function":                        cloudfunctions2.Cloudfunctions2functionTfplan2caiConverter(),
 	"google_cloud_quotas_quota_preference":                   cloudquotas.CloudQuotasQuotaPreferenceTfplan2caiConverter(),
 	"google_cloud_tasks_queue":                               cloudtasks.CloudTasksQueueTfplan2caiConverter(),
+	"google_colab_notebook_execution":                        colab.ColabNotebookExecutionTfplan2caiConverter(),
 	"google_colab_runtime":                                   colab.ColabRuntimeTfplan2caiConverter(),
 	"google_colab_runtime_template":                          colab.ColabRuntimeTemplateTfplan2caiConverter(),
 	"google_compute_address":                                 compute.ComputeAddressTfplan2caiConverter(),
