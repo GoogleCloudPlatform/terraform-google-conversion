@@ -313,6 +313,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"compute.googleapis.com/RegionDisk": {
 		"Default": compute.NewComputeRegionDiskCai2hclConverter(provider),
 	},
+	"compute.googleapis.com/RegionInstantSnapshot": {
+		"Default": compute.NewComputeRegionInstantSnapshotCai2hclConverter(provider),
+	},
 	"compute.googleapis.com/Reservation": {
 		"Default": compute.NewComputeReservationCai2hclConverter(provider),
 	},
