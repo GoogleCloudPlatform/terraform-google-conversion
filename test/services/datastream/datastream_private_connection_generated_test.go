@@ -59,6 +59,7 @@ func TestAccDatastreamPrivateConnection(t *testing.T) {
 					"location",
 					"private_connection_id",
 					"provider",
+					"psc_interface_config",
 					"timeouts",
 				},
 				"google_datastream_private_connection",
