@@ -155,6 +155,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_compute_region_backend_service":                  compute.ComputeRegionBackendServiceTfplan2caiConverter(),
 	"google_compute_region_disk":                             compute.ComputeRegionDiskTfplan2caiConverter(),
 	"google_compute_region_health_check":                     compute.ComputeRegionHealthCheckTfplan2caiConverter(),
+	"google_compute_region_instant_snapshot":                 compute.ComputeRegionInstantSnapshotTfplan2caiConverter(),
 	"google_compute_region_network_endpoint_group":           compute.ComputeRegionNetworkEndpointGroupTfplan2caiConverter(),
 	"google_compute_region_network_firewall_policy":          compute.ComputeRegionNetworkFirewallPolicyTfplan2caiConverter(),
 	"google_compute_region_security_policy":                  compute.ComputeRegionSecurityPolicyTfplan2caiConverter(),
