@@ -98,7 +98,7 @@ func GetComputeRegionInstantSnapshotCaiAssets(d tpgresource.TerraformResourceDat
 		return []caiasset.Asset{
 			{
 				Name: name,
-				Type: ComputeRegionInstantSnapshotAssetType,
+				Type: ComputeInstantSnapshotAssetType,
 				Resource: &caiasset.AssetResource{
 					Version:              "v1",
 					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",

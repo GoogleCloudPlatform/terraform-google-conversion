@@ -49,6 +49,12 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 			} else if true && strings.Contains(asset.Name, "regions") {
 				converter = ConverterMap[asset.Type]["ComputeRegionHealthCheck"]
 			}
+		case "compute.googleapis.com/InstantSnapshot":
+			if true && strings.Contains(asset.Name, "zones") {
+				converter = ConverterMap[asset.Type]["ComputeInstantSnapshot"]
+			} else if true && strings.Contains(asset.Name, "regions") {
+				converter = ConverterMap[asset.Type]["ComputeRegionInstantSnapshot"]
+			}
 		case "compute.googleapis.com/NetworkEndpointGroup":
 			if true && strings.Contains(asset.Name, "global") {
 				converter = ConverterMap[asset.Type]["ComputeGlobalNetworkEndpointGroup"]
