@@ -289,7 +289,8 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"Default": compute.NewComputeImageCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/InstantSnapshot": {
-		"Default": compute.NewComputeInstantSnapshotCai2hclConverter(provider),
+		"ComputeInstantSnapshot":       compute.NewComputeInstantSnapshotCai2hclConverter(provider),
+		"ComputeRegionInstantSnapshot": compute.NewComputeRegionInstantSnapshotCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/Interconnect": {
 		"Default": compute.NewComputeInterconnectCai2hclConverter(provider),
@@ -319,9 +320,6 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"compute.googleapis.com/RegionDisk": {
 		"Default": compute.NewComputeRegionDiskCai2hclConverter(provider),
-	},
-	"compute.googleapis.com/RegionInstantSnapshot": {
-		"Default": compute.NewComputeRegionInstantSnapshotCai2hclConverter(provider),
 	},
 	"compute.googleapis.com/Reservation": {
 		"Default": compute.NewComputeReservationCai2hclConverter(provider),

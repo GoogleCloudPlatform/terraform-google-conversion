@@ -70,8 +70,6 @@ func init() {
 	}.Register()
 }
 
-const ComputeRegionInstantSnapshotAssetType string = "compute.googleapis.com/RegionInstantSnapshot"
-
 const ComputeRegionInstantSnapshotSchemaName string = "google_compute_region_instant_snapshot"
 
 func ResourceComputeRegionInstantSnapshot() *schema.Resource {
