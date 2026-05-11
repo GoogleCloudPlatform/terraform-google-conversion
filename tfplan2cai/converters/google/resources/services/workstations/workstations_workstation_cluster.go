@@ -128,6 +128,18 @@ func GetWorkstationsWorkstationClusterApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
+	workstationAuthorizationUrlProp, err := expandWorkstationsWorkstationClusterWorkstationAuthorizationUrl(d.Get("workstation_authorization_url"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("workstation_authorization_url"); !tpgresource.IsEmptyValue(reflect.ValueOf(workstationAuthorizationUrlProp)) && (ok || !reflect.DeepEqual(v, workstationAuthorizationUrlProp)) {
+		obj["workstationAuthorizationUrl"] = workstationAuthorizationUrlProp
+	}
+	workstationLaunchUrlProp, err := expandWorkstationsWorkstationClusterWorkstationLaunchUrl(d.Get("workstation_launch_url"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("workstation_launch_url"); !tpgresource.IsEmptyValue(reflect.ValueOf(workstationLaunchUrlProp)) && (ok || !reflect.DeepEqual(v, workstationLaunchUrlProp)) {
+		obj["workstationLaunchUrl"] = workstationLaunchUrlProp
+	}
 	etagProp, err := expandWorkstationsWorkstationClusterEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
@@ -177,6 +189,14 @@ func expandWorkstationsWorkstationClusterSubnetwork(v interface{}, d tpgresource
 }
 
 func expandWorkstationsWorkstationClusterDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationClusterWorkstationAuthorizationUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationClusterWorkstationLaunchUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
