@@ -15,6 +15,7 @@ package converters
 
 import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/cai2hcl/models"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/accessapproval"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
@@ -101,6 +102,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 		"Default": container.NewContainerClusterCai2hclConverter(provider),
 	},
 	// ####### END handwritten resources ###########
+	"accessapproval.googleapis.com/AccessApprovalSettings": {
+		"Default": accessapproval.NewAccessApprovalFolderSettingsCai2hclConverter(provider),
+	},
 	"aiplatform.googleapis.com/NotebookExecutionJob": {
 		"Default": colab.NewColabNotebookExecutionCai2hclConverter(provider),
 	},

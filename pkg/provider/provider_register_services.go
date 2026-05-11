@@ -3,6 +3,7 @@ package provider
 import (
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/container"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/resourcemanager"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/accessapproval"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/alloydb"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apigee"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
