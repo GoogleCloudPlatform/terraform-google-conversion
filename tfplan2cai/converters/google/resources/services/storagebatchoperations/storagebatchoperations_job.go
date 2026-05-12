@@ -140,6 +140,12 @@ func GetStorageBatchOperationsJobApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("put_object_hold"); !tpgresource.IsEmptyValue(reflect.ValueOf(putObjectHoldProp)) && (ok || !reflect.DeepEqual(v, putObjectHoldProp)) {
 		obj["putObjectHold"] = putObjectHoldProp
 	}
+	descriptionProp, err := expandStorageBatchOperationsJobDescription(d.Get("description"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+		obj["description"] = descriptionProp
+	}
 
 	return obj, nil
 }
@@ -446,5 +452,9 @@ func expandStorageBatchOperationsJobPutObjectHoldEventBasedHold(v interface{}, d
 }
 
 func expandStorageBatchOperationsJobPutObjectHoldTemporaryHold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandStorageBatchOperationsJobDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
