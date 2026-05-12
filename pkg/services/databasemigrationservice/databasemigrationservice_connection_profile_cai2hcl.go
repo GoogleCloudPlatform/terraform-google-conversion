@@ -134,6 +134,7 @@ func (c *DatabaseMigrationServiceConnectionProfileCai2hclConverter) convertResou
 
 	hclData["display_name"] = flattenDatabaseMigrationServiceConnectionProfileDisplayName(res["displayName"], d, config)
 	hclData["labels"] = flattenDatabaseMigrationServiceConnectionProfileLabels(res["labels"], d, config)
+	hclData["role"] = flattenDatabaseMigrationServiceConnectionProfileRole(res["role"], d, config)
 	hclData["mysql"] = flattenDatabaseMigrationServiceConnectionProfileMysql(res["mysql"], d, config)
 	hclData["postgresql"] = flattenDatabaseMigrationServiceConnectionProfilePostgresql(res["postgresql"], d, config)
 	hclData["oracle"] = flattenDatabaseMigrationServiceConnectionProfileOracle(res["oracle"], d, config)
@@ -163,6 +164,10 @@ func flattenDatabaseMigrationServiceConnectionProfileDisplayName(v interface{}, 
 func flattenDatabaseMigrationServiceConnectionProfileLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+func flattenDatabaseMigrationServiceConnectionProfileRole(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenDatabaseMigrationServiceConnectionProfileMysql(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -288,12 +293,16 @@ func flattenDatabaseMigrationServiceConnectionProfilePostgresql(v interface{}, d
 		flattenDatabaseMigrationServiceConnectionProfilePostgresqlUsername(original["username"], d, config)
 	transformed["password"] =
 		flattenDatabaseMigrationServiceConnectionProfilePostgresqlPassword(original["password"], d, config)
+	transformed["database"] =
+		flattenDatabaseMigrationServiceConnectionProfilePostgresqlDatabase(original["database"], d, config)
 	transformed["ssl"] =
 		flattenDatabaseMigrationServiceConnectionProfilePostgresqlSsl(original["ssl"], d, config)
 	transformed["cloud_sql_id"] =
 		flattenDatabaseMigrationServiceConnectionProfilePostgresqlCloudSqlId(original["cloudSqlId"], d, config)
 	transformed["alloydb_cluster_id"] =
 		flattenDatabaseMigrationServiceConnectionProfilePostgresqlAlloydbClusterId(original["alloydbClusterId"], d, config)
+	transformed["private_connectivity"] =
+		flattenDatabaseMigrationServiceConnectionProfilePostgresqlPrivateConnectivity(original["privateConnectivity"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -339,6 +348,10 @@ func flattenDatabaseMigrationServiceConnectionProfilePostgresqlUsername(v interf
 
 func flattenDatabaseMigrationServiceConnectionProfilePostgresqlPassword(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return d.Get("postgresql.0.password")
+}
+
+func flattenDatabaseMigrationServiceConnectionProfilePostgresqlDatabase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenDatabaseMigrationServiceConnectionProfilePostgresqlSsl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -393,6 +406,31 @@ func flattenDatabaseMigrationServiceConnectionProfilePostgresqlAlloydbClusterId(
 	}
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
+	}
+	return v
+}
+
+func flattenDatabaseMigrationServiceConnectionProfilePostgresqlPrivateConnectivity(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["private_connection"] =
+		flattenDatabaseMigrationServiceConnectionProfilePostgresqlPrivateConnectivityPrivateConnection(original["privateConnection"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatabaseMigrationServiceConnectionProfilePostgresqlPrivateConnectivityPrivateConnection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
 	}
 	return v
 }

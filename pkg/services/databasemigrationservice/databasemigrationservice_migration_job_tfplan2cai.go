@@ -151,6 +151,12 @@ func GetDatabaseMigrationServiceMigrationJobCaiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("performance_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(performanceConfigProp)) && (ok || !reflect.DeepEqual(v, performanceConfigProp)) {
 		obj["performanceConfig"] = performanceConfigProp
 	}
+	postgresHomogeneousConfigProp, err := expandDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfig(d.Get("postgres_homogeneous_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("postgres_homogeneous_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(postgresHomogeneousConfigProp)) && (ok || !reflect.DeepEqual(v, postgresHomogeneousConfigProp)) {
+		obj["postgresHomogeneousConfig"] = postgresHomogeneousConfigProp
+	}
 	dumpPathProp, err := expandDatabaseMigrationServiceMigrationJobDumpPath(d.Get("dump_path"), d, config)
 	if err != nil {
 		return nil, err
@@ -298,6 +304,43 @@ func expandDatabaseMigrationServiceMigrationJobPerformanceConfig(v interface{}, 
 }
 
 func expandDatabaseMigrationServiceMigrationJobPerformanceConfigDumpParallelLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIsNativeLogical, err := expandDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfigIsNativeLogical(original["is_native_logical"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["isNativeLogical"] = transformedIsNativeLogical
+	}
+
+	transformedMaxAdditionalSubscriptions, err := expandDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfigMaxAdditionalSubscriptions(original["max_additional_subscriptions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxAdditionalSubscriptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxAdditionalSubscriptions"] = transformedMaxAdditionalSubscriptions
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfigIsNativeLogical(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfigMaxAdditionalSubscriptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

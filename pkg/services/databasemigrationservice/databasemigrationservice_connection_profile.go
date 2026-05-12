@@ -382,7 +382,7 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 						"cloud_sql_id": {
 							Type:        schema.TypeString,
 							Optional:    true,
-							Description: `If the source is a Cloud SQL database, use this field to provide the Cloud SQL instance ID of the source.`,
+							Description: `If the connection profile is a Cloud SQL database, use this field to provide the Cloud SQL instance ID.`,
 						},
 						"host": {
 							Type:         schema.TypeString,
@@ -609,18 +609,24 @@ Static IP address connectivity configured on service project.`,
 						"alloydb_cluster_id": {
 							Type:        schema.TypeString,
 							Optional:    true,
-							Description: `If the connected database is an AlloyDB instance, use this field to provide the AlloyDB cluster ID.`,
+							Description: `If the connection profile is an AlloyDB instance, use this field to provide the AlloyDB cluster ID.`,
 						},
 						"cloud_sql_id": {
 							Type:        schema.TypeString,
 							Optional:    true,
-							Description: `If the source is a Cloud SQL database, use this field to provide the Cloud SQL instance ID of the source.`,
+							Description: `If the connection profile is a Cloud SQL database, use this field to provide the Cloud SQL instance ID.`,
+						},
+						"database": {
+							Type:        schema.TypeString,
+							Computed:    true,
+							Optional:    true,
+							Description: `The name of the specific database within the host.`,
 						},
 						"host": {
 							Type:         schema.TypeString,
 							Optional:     true,
 							Description:  `The IP or hostname of the source MySQL database.`,
-							RequiredWith: []string{"postgresql.0.password", "postgresql.0.port", "postgresql.0.username"},
+							RequiredWith: []string{"postgresql.0.port"},
 						},
 						"password": {
 							Type:     schema.TypeString,
@@ -629,13 +635,28 @@ Static IP address connectivity configured on service project.`,
 							Description: `Input only. The password for the user that Database Migration Service will be using to connect to the database.
 This field is not returned on request, and the value is encrypted when stored in Database Migration Service.`,
 							Sensitive:    true,
-							RequiredWith: []string{"postgresql.0.host", "postgresql.0.port", "postgresql.0.username"},
+							RequiredWith: []string{"postgresql.0.username"},
 						},
 						"port": {
 							Type:         schema.TypeInt,
 							Optional:     true,
 							Description:  `The network port of the source MySQL database.`,
-							RequiredWith: []string{"postgresql.0.host", "postgresql.0.password", "postgresql.0.username"},
+							RequiredWith: []string{"postgresql.0.host"},
+						},
+						"private_connectivity": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Private connectivity.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"private_connection": {
+										Type:        schema.TypeString,
+										Required:    true,
+										Description: `Required. The resource name (URI) of the private connection.`,
+									},
+								},
+							},
 						},
 						"ssl": {
 							Type:        schema.TypeList,
@@ -683,11 +704,18 @@ If this field is used then the 'clientCertificate' field is mandatory.`,
 							Type:         schema.TypeString,
 							Optional:     true,
 							Description:  `The username that Database Migration Service will use to connect to the database. The value is encrypted when stored in Database Migration Service.`,
-							RequiredWith: []string{"postgresql.0.host", "postgresql.0.password", "postgresql.0.port"},
+							RequiredWith: []string{"postgresql.0.password"},
 						},
 					},
 				},
 				ExactlyOneOf: []string{"alloydb", "cloudsql", "mysql", "oracle", "postgresql"},
+			},
+			"role": {
+				Type:         schema.TypeString,
+				Computed:     true,
+				Optional:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"SOURCE", "DESTINATION", ""}),
+				Description:  `The connection profile role. Possible values: ["SOURCE", "DESTINATION"]`,
 			},
 			"create_time": {
 				Type:        schema.TypeString,
