@@ -134,6 +134,7 @@ func (c *DatabaseMigrationServiceMigrationJobCai2hclConverter) convertResourceDa
 	hclData["destination"] = flattenDatabaseMigrationServiceMigrationJobDestination(res["destination"], d, config)
 	hclData["dump_flags"] = flattenDatabaseMigrationServiceMigrationJobDumpFlags(res["dumpFlags"], d, config)
 	hclData["performance_config"] = flattenDatabaseMigrationServiceMigrationJobPerformanceConfig(res["performanceConfig"], d, config)
+	hclData["postgres_homogeneous_config"] = flattenDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfig(res["postgresHomogeneousConfig"], d, config)
 	hclData["dump_path"] = flattenDatabaseMigrationServiceMigrationJobDumpPath(res["dumpPath"], d, config)
 	hclData["dump_type"] = flattenDatabaseMigrationServiceMigrationJobDumpType(res["dumpType"], d, config)
 	hclData["static_ip_connectivity"] = flattenDatabaseMigrationServiceMigrationJobStaticIpConnectivity(res["staticIpConnectivity"], d, config)
@@ -260,6 +261,46 @@ func flattenDatabaseMigrationServiceMigrationJobPerformanceConfig(v interface{},
 
 func flattenDatabaseMigrationServiceMigrationJobPerformanceConfigDumpParallelLevel(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["is_native_logical"] =
+		flattenDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfigIsNativeLogical(original["isNativeLogical"], d, config)
+	transformed["max_additional_subscriptions"] =
+		flattenDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfigMaxAdditionalSubscriptions(original["maxAdditionalSubscriptions"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfigIsNativeLogical(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return false
+	}
+	return v
+}
+
+func flattenDatabaseMigrationServiceMigrationJobPostgresHomogeneousConfigMaxAdditionalSubscriptions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
 }
 
 func flattenDatabaseMigrationServiceMigrationJobDumpPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

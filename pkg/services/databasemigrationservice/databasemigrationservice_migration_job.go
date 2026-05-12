@@ -269,6 +269,26 @@ source are migrated. Possible values: ["ALL_OBJECTS", "SPECIFIED_OBJECTS"]`,
 					},
 				},
 			},
+			"postgres_homogeneous_config": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: `PostgreSQL to PostgreSQL configuration.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"is_native_logical": {
+							Type:        schema.TypeBool,
+							Required:    true,
+							Description: `Whether the migration uses native logical replication.`,
+						},
+						"max_additional_subscriptions": {
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Description: `Maximum number of additional subscriptions to use for the migration job.`,
+						},
+					},
+				},
+			},
 			"reverse_ssh_connectivity": {
 				Type:        schema.TypeList,
 				Optional:    true,
@@ -301,7 +321,7 @@ bastion server for the SSH tunnel.`,
 						},
 					},
 				},
-				ExactlyOneOf: []string{"static_ip_connectivity", "vpc_peering_connectivity"},
+				ConflictsWith: []string{"static_ip_connectivity", "vpc_peering_connectivity"},
 			},
 			"static_ip_connectivity": {
 				Type:     schema.TypeList,
@@ -314,7 +334,7 @@ Cloud SQL console or using Cloud SQL APIs.`,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{},
 				},
-				ExactlyOneOf: []string{"reverse_ssh_connectivity", "vpc_peering_connectivity"},
+				ConflictsWith: []string{"reverse_ssh_connectivity", "vpc_peering_connectivity"},
 			},
 			"vpc_peering_connectivity": {
 				Type:        schema.TypeList,
@@ -330,7 +350,7 @@ Cloud SQL console or using Cloud SQL APIs.`,
 						},
 					},
 				},
-				ExactlyOneOf: []string{"reverse_ssh_connectivity", "static_ip_connectivity"},
+				ConflictsWith: []string{"reverse_ssh_connectivity", "static_ip_connectivity"},
 			},
 			"create_time": {
 				Type:        schema.TypeString,

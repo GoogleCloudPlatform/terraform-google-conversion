@@ -39,6 +39,9 @@ func TestAccDatabaseMigrationServiceMigrationJob(t *testing.T) {
 		{
 			Name: "TestAccDatabaseMigrationServiceMigrationJob_update",
 		},
+		{
+			Name: "TestAccDatabaseMigrationServiceMigrationJob_postgresQuickstart",
+		},
 	}
 
 	for _, tt := range tests {

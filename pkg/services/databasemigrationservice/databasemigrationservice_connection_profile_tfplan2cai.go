@@ -121,6 +121,12 @@ func GetDatabaseMigrationServiceConnectionProfileCaiObject(d tpgresource.Terrafo
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
+	roleProp, err := expandDatabaseMigrationServiceConnectionProfileRole(d.Get("role"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("role"); !tpgresource.IsEmptyValue(reflect.ValueOf(roleProp)) && (ok || !reflect.DeepEqual(v, roleProp)) {
+		obj["role"] = roleProp
+	}
 	mysqlProp, err := expandDatabaseMigrationServiceConnectionProfileMysql(d.Get("mysql"), d, config)
 	if err != nil {
 		return nil, err
@@ -162,6 +168,10 @@ func GetDatabaseMigrationServiceConnectionProfileCaiObject(d tpgresource.Terrafo
 }
 
 func expandDatabaseMigrationServiceConnectionProfileDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfileRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -341,6 +351,13 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresql(v interface{}, d 
 		transformed["password"] = transformedPassword
 	}
 
+	transformedDatabase, err := expandDatabaseMigrationServiceConnectionProfilePostgresqlDatabase(original["database"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDatabase); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["database"] = transformedDatabase
+	}
+
 	transformedSsl, err := expandDatabaseMigrationServiceConnectionProfilePostgresqlSsl(original["ssl"], d, config)
 	if err != nil {
 		return nil, err
@@ -362,6 +379,13 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresql(v interface{}, d 
 		transformed["alloydbClusterId"] = transformedAlloydbClusterId
 	}
 
+	transformedPrivateConnectivity, err := expandDatabaseMigrationServiceConnectionProfilePostgresqlPrivateConnectivity(original["private_connectivity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateConnectivity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateConnectivity"] = transformedPrivateConnectivity
+	}
+
 	return transformed, nil
 }
 
@@ -378,6 +402,10 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresqlUsername(v interfa
 }
 
 func expandDatabaseMigrationServiceConnectionProfilePostgresqlPassword(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlDatabase(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -445,6 +473,32 @@ func expandDatabaseMigrationServiceConnectionProfilePostgresqlCloudSqlId(v inter
 }
 
 func expandDatabaseMigrationServiceConnectionProfilePostgresqlAlloydbClusterId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlPrivateConnectivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPrivateConnection, err := expandDatabaseMigrationServiceConnectionProfilePostgresqlPrivateConnectivityPrivateConnection(original["private_connection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrivateConnection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["privateConnection"] = transformedPrivateConnection
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServiceConnectionProfilePostgresqlPrivateConnectivityPrivateConnection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
