@@ -147,6 +147,7 @@ func (c *NetappBackupPolicyCai2hclConverter) convertResourceData(asset caiasset.
 func flattenNetappBackupPolicyLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenNetappBackupPolicyDailyBackupLimit(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	// Handles the string fixed64 format
 	if strVal, ok := v.(string); ok {

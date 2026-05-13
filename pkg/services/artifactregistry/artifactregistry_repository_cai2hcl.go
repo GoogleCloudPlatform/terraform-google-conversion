@@ -174,6 +174,7 @@ func flattenArtifactRegistryRepositoryDescription(v interface{}, d *schema.Resou
 func flattenArtifactRegistryRepositoryLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenArtifactRegistryRepositoryKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

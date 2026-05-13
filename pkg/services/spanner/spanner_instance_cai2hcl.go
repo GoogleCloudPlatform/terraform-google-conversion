@@ -219,6 +219,7 @@ func flattenSpannerInstanceProcessingUnits(v interface{}, d *schema.ResourceData
 func flattenSpannerInstanceLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenSpannerInstanceAutoscalingConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

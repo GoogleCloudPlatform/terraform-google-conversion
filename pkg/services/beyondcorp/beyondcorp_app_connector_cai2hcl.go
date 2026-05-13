@@ -154,6 +154,7 @@ func flattenBeyondcorpAppConnectorDisplayName(v interface{}, d *schema.ResourceD
 func flattenBeyondcorpAppConnectorLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenBeyondcorpAppConnectorPrincipalInfo(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

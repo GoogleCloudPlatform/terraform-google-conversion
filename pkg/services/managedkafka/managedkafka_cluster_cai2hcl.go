@@ -217,6 +217,7 @@ func flattenManagedKafkaClusterGcpConfigKmsKey(v interface{}, d *schema.Resource
 func flattenManagedKafkaClusterLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenManagedKafkaClusterCapacityConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

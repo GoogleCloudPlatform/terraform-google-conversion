@@ -190,6 +190,7 @@ func flattenGkeonpremBareMetalClusterBareMetalVersion(v interface{}, d *schema.R
 func flattenGkeonpremBareMetalClusterAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenGkeonpremBareMetalClusterNetworkConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

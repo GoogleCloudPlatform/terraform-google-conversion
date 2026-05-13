@@ -174,6 +174,7 @@ func flattenGkeonpremBareMetalAdminClusterBareMetalVersion(v interface{}, d *sch
 func flattenGkeonpremBareMetalAdminClusterAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenGkeonpremBareMetalAdminClusterNetworkConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

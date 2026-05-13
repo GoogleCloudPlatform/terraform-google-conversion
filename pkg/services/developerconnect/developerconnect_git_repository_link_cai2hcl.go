@@ -156,6 +156,7 @@ func flattenDeveloperConnectGitRepositoryLinkCloneUri(v interface{}, d *schema.R
 func flattenDeveloperConnectGitRepositoryLinkLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenDeveloperConnectGitRepositoryLinkEtag(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

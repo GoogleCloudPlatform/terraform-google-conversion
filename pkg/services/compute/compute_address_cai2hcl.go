@@ -207,6 +207,7 @@ func flattenComputeAddressSubnetwork(v interface{}, d *schema.ResourceData, conf
 func flattenComputeAddressLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeAddressNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v

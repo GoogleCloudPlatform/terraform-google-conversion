@@ -161,6 +161,7 @@ func flattenCertificateManagerCertificateDescription(v interface{}, d *schema.Re
 func flattenCertificateManagerCertificateLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenCertificateManagerCertificateScope(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

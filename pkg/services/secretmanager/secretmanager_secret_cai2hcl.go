@@ -151,9 +151,11 @@ func (c *SecretManagerSecretCai2hclConverter) convertResourceData(asset caiasset
 func flattenSecretManagerSecretLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenSecretManagerSecretAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenSecretManagerSecretVersionAliases(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

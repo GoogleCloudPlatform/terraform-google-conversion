@@ -162,6 +162,7 @@ func flattenNetworkServicesAuthzExtensionDescription(v interface{}, d *schema.Re
 func flattenNetworkServicesAuthzExtensionLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenNetworkServicesAuthzExtensionLoadBalancingScheme(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

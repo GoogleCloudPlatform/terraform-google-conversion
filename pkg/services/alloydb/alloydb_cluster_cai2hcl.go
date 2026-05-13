@@ -161,6 +161,7 @@ func (c *AlloydbClusterCai2hclConverter) convertResourceData(asset caiasset.Asse
 func flattenAlloydbClusterLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenAlloydbClusterEncryptionConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -244,6 +245,7 @@ func flattenAlloydbClusterEtag(v interface{}, d *schema.ResourceData, config *tr
 func flattenAlloydbClusterAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenAlloydbClusterDatabaseVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

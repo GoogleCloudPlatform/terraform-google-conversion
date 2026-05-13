@@ -156,6 +156,7 @@ func (c *NetworkServicesGatewayCai2hclConverter) convertResourceData(asset caias
 func flattenNetworkServicesGatewayLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenNetworkServicesGatewayDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

@@ -154,6 +154,7 @@ func flattenGkeonpremBareMetalNodePoolDisplayName(v interface{}, d *schema.Resou
 func flattenGkeonpremBareMetalNodePoolAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenGkeonpremBareMetalNodePoolNodePoolConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

@@ -181,6 +181,7 @@ func flattenComputeGlobalForwardingRuleIpVersion(v interface{}, d *schema.Resour
 func flattenComputeGlobalForwardingRuleLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeGlobalForwardingRuleLoadBalancingScheme(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

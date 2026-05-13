@@ -151,9 +151,11 @@ func (c *SecretManagerRegionalRegionalSecretCai2hclConverter) convertResourceDat
 func flattenSecretManagerRegionalRegionalSecretLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenSecretManagerRegionalRegionalSecretAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenSecretManagerRegionalRegionalSecretVersionAliases(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

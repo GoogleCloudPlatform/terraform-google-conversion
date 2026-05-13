@@ -186,6 +186,7 @@ func flattenNetappStoragePoolDescription(v interface{}, d *schema.ResourceData, 
 func flattenNetappStoragePoolLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenNetappStoragePoolNetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return "unknown"

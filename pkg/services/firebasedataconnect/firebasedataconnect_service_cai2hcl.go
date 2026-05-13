@@ -154,6 +154,7 @@ func flattenFirebaseDataConnectServiceDisplayName(v interface{}, d *schema.Resou
 func flattenFirebaseDataConnectServiceAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenFirebaseDataConnectServiceLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }

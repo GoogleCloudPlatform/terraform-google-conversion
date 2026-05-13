@@ -452,6 +452,7 @@ func flattenPrivatecaCaPoolPublishingOptionsEncodingFormat(v interface{}, d *sch
 func flattenPrivatecaCaPoolLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenPrivatecaCaPoolEncryptionSpec(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

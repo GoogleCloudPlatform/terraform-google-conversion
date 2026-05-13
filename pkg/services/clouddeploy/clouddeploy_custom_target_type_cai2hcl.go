@@ -156,9 +156,11 @@ func flattenClouddeployCustomTargetTypeDescription(v interface{}, d *schema.Reso
 func flattenClouddeployCustomTargetTypeAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenClouddeployCustomTargetTypeLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenClouddeployCustomTargetTypeCustomActions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

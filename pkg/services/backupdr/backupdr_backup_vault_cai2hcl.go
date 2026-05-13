@@ -159,6 +159,7 @@ func flattenBackupDRBackupVaultDescription(v interface{}, d *schema.ResourceData
 func flattenBackupDRBackupVaultLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenBackupDRBackupVaultBackupMinimumEnforcedRetentionDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return "unknown"
@@ -183,6 +184,7 @@ func flattenBackupDRBackupVaultEffectiveTime(v interface{}, d *schema.ResourceDa
 func flattenBackupDRBackupVaultAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenBackupDRBackupVaultAccessRestriction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

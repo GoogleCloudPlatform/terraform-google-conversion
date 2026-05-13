@@ -158,6 +158,7 @@ func (c *KMSCryptoKeyCai2hclConverter) convertResourceData(asset caiasset.Asset)
 func flattenKMSCryptoKeyLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenKMSCryptoKeyPurpose(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
