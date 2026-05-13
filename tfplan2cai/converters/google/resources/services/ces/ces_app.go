@@ -200,6 +200,12 @@ func GetCESAppApiObject(d tpgresource.TerraformResourceData, config *transport_t
 	} else if v, ok := d.GetOkExists("time_zone_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(timeZoneSettingsProp)) && (ok || !reflect.DeepEqual(v, timeZoneSettingsProp)) {
 		obj["timeZoneSettings"] = timeZoneSettingsProp
 	}
+	toolExecutionModeProp, err := expandCESAppToolExecutionMode(d.Get("tool_execution_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tool_execution_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(toolExecutionModeProp)) && (ok || !reflect.DeepEqual(v, toolExecutionModeProp)) {
+		obj["toolExecutionMode"] = toolExecutionModeProp
+	}
 	variableDeclarationsProp, err := expandCESAppVariableDeclarations(d.Get("variable_declarations"), d, config)
 	if err != nil {
 		return nil, err
@@ -1089,6 +1095,10 @@ func expandCESAppTimeZoneSettings(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandCESAppTimeZoneSettingsTimeZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppToolExecutionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
