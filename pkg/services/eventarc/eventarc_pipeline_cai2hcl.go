@@ -150,6 +150,7 @@ func (c *EventarcPipelineCai2hclConverter) convertResourceData(asset caiasset.As
 func flattenEventarcPipelineAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenEventarcPipelineDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -290,6 +291,7 @@ func flattenEventarcPipelineRetryPolicyMinRetryDelay(v interface{}, d *schema.Re
 func flattenEventarcPipelineLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenEventarcPipelineDestinations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v

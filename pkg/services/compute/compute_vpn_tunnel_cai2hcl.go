@@ -315,6 +315,7 @@ func flattenComputeVpnTunnelRemoteTrafficSelector(v interface{}, d *schema.Resou
 func flattenComputeVpnTunnelLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeVpnTunnelParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

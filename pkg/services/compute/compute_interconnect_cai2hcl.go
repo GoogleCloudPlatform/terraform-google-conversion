@@ -258,6 +258,7 @@ func flattenComputeInterconnectCustomerName(v interface{}, d *schema.ResourceDat
 func flattenComputeInterconnectLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeInterconnectMacsec(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

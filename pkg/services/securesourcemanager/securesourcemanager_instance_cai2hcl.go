@@ -145,6 +145,7 @@ func (c *SecureSourceManagerInstanceCai2hclConverter) convertResourceData(asset 
 func flattenSecureSourceManagerInstanceLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenSecureSourceManagerInstanceKmsKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

@@ -281,6 +281,7 @@ func flattenComputeImageImageEncryptionKeyRsaEncryptedKey(v interface{}, d *sche
 func flattenComputeImageLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeImageParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

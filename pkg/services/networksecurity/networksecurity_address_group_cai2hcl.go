@@ -156,6 +156,7 @@ func flattenNetworkSecurityAddressGroupDescription(v interface{}, d *schema.Reso
 func flattenNetworkSecurityAddressGroupLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenNetworkSecurityAddressGroupType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

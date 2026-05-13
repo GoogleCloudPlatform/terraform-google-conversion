@@ -161,6 +161,7 @@ func (c *RedisClusterCai2hclConverter) convertResourceData(asset caiasset.Asset)
 func flattenRedisClusterLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenRedisClusterGcsSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

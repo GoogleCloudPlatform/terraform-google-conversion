@@ -362,6 +362,7 @@ func flattenComputeDiskDescription(v interface{}, d *schema.ResourceData, config
 func flattenComputeDiskLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeDiskName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return "unknown"

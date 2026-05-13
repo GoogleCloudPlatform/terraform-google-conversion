@@ -158,9 +158,11 @@ func flattenClouddeployAutomationDescription(v interface{}, d *schema.ResourceDa
 func flattenClouddeployAutomationAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenClouddeployAutomationLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenClouddeployAutomationSuspended(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

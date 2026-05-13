@@ -147,6 +147,7 @@ func (c *EventarcGoogleApiSourceCai2hclConverter) convertResourceData(asset caia
 func flattenEventarcGoogleApiSourceLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenEventarcGoogleApiSourceCryptoKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -160,6 +161,7 @@ func flattenEventarcGoogleApiSourceCryptoKeyName(v interface{}, d *schema.Resour
 func flattenEventarcGoogleApiSourceAnnotations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
+
 func flattenEventarcGoogleApiSourceDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

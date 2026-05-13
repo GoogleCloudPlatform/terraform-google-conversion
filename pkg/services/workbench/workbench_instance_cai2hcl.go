@@ -549,6 +549,7 @@ func flattenWorkbenchInstanceDisableProxyAccess(v interface{}, d *schema.Resourc
 func flattenWorkbenchInstanceLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenWorkbenchInstanceEnableThirdPartyIdentity(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

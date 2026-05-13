@@ -144,6 +144,7 @@ func (c *NetworkSecurityFirewallEndpointCai2hclConverter) convertResourceData(as
 func flattenNetworkSecurityFirewallEndpointLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenNetworkSecurityFirewallEndpointBillingProjectId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

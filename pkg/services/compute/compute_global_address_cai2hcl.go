@@ -175,6 +175,7 @@ func flattenComputeGlobalAddressName(v interface{}, d *schema.ResourceData, conf
 func flattenComputeGlobalAddressLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeGlobalAddressIpVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

@@ -233,6 +233,7 @@ func flattenGKEBackupBackupPlanRetentionPolicyLocked(v interface{}, d *schema.Re
 func flattenGKEBackupBackupPlanLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenGKEBackupBackupPlanBackupSchedule(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

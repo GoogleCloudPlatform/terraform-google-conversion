@@ -149,6 +149,7 @@ func (c *DatastreamStreamCai2hclConverter) convertResourceData(asset caiasset.As
 func flattenDatastreamStreamLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenDatastreamStreamDisplayName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return "unknown"

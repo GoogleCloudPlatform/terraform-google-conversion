@@ -158,6 +158,7 @@ func flattenAlloydbBackupDisplayName(v interface{}, d *schema.ResourceData, conf
 func flattenAlloydbBackupLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenAlloydbBackupType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

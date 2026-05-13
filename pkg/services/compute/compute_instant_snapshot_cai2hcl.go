@@ -168,6 +168,7 @@ func flattenComputeInstantSnapshotDescription(v interface{}, d *schema.ResourceD
 func flattenComputeInstantSnapshotLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeInstantSnapshotParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

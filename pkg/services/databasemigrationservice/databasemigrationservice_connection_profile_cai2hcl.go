@@ -164,6 +164,7 @@ func flattenDatabaseMigrationServiceConnectionProfileDisplayName(v interface{}, 
 func flattenDatabaseMigrationServiceConnectionProfileLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenDatabaseMigrationServiceConnectionProfileRole(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

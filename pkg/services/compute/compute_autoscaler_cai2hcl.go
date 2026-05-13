@@ -534,6 +534,7 @@ func flattenComputeAutoscalerTarget(v interface{}, d *schema.ResourceData, confi
 	}
 	return relative
 }
+
 func flattenComputeAutoscalerZone(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return v

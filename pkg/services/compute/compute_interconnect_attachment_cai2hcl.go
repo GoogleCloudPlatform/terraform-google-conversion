@@ -305,6 +305,7 @@ func flattenComputeInterconnectAttachmentSubnetLength(v interface{}, d *schema.R
 func flattenComputeInterconnectAttachmentLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenComputeInterconnectAttachmentCandidateCloudRouterIpAddress(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

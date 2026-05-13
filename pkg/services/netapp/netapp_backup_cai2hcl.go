@@ -165,6 +165,7 @@ func flattenNetappBackupSourceVolume(v interface{}, d *schema.ResourceData, conf
 func flattenNetappBackupLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenNetappBackupSourceSnapshot(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

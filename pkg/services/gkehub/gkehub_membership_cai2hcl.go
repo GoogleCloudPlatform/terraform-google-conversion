@@ -144,6 +144,7 @@ func (c *GKEHubMembershipCai2hclConverter) convertResourceData(asset caiasset.As
 func flattenGKEHubMembershipLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenGKEHubMembershipEndpoint(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

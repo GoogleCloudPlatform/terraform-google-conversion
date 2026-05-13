@@ -157,6 +157,7 @@ func flattenCertificateManagerCertificateMapEntryDescription(v interface{}, d *s
 func flattenCertificateManagerCertificateMapEntryLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenCertificateManagerCertificateMapEntryCertificates(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

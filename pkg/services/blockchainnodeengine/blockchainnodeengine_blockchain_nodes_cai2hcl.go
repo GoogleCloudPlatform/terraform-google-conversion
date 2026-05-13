@@ -144,6 +144,7 @@ func (c *BlockchainNodeEngineBlockchainNodesCai2hclConverter) convertResourceDat
 func flattenBlockchainNodeEngineBlockchainNodesLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenBlockchainNodeEngineBlockchainNodesEthereumDetails(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

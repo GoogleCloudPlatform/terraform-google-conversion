@@ -325,6 +325,7 @@ func flattenNetappVolumeUnixPermissions(v interface{}, d *schema.ResourceData, c
 func flattenNetappVolumeLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenNetappVolumeDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

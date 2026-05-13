@@ -916,6 +916,7 @@ func flattenCloudfunctions2functionEventTriggerRetryPolicy(v interface{}, d *sch
 func flattenCloudfunctions2functionLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenCloudfunctions2functionKmsKeyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil

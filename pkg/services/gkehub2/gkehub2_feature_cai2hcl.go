@@ -149,6 +149,7 @@ func (c *GKEHub2FeatureCai2hclConverter) convertResourceData(asset caiasset.Asse
 func flattenGKEHub2FeatureLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
+
 func flattenGKEHub2FeatureSpec(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
