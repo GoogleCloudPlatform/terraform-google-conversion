@@ -110,6 +110,12 @@ func GetNetworkConnectivityMulticloudDataTransferConfigCaiObject(d tpgresource.T
 
 func GetNetworkConnectivityMulticloudDataTransferConfigApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	nameProp, err := expandNetworkConnectivityMulticloudDataTransferConfigName(d.Get("name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+		obj["name"] = nameProp
+	}
 	etagProp, err := expandNetworkConnectivityMulticloudDataTransferConfigEtag(d.Get("etag"), d, config)
 	if err != nil {
 		return nil, err
@@ -136,6 +142,10 @@ func GetNetworkConnectivityMulticloudDataTransferConfigApiObject(d tpgresource.T
 	}
 
 	return obj, nil
+}
+
+func expandNetworkConnectivityMulticloudDataTransferConfigName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandNetworkConnectivityMulticloudDataTransferConfigEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
