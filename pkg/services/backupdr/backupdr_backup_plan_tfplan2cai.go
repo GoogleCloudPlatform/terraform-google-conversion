@@ -157,6 +157,12 @@ func GetBackupDRBackupPlanCaiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("disk_backup_plan_properties"); !tpgresource.IsEmptyValue(reflect.ValueOf(diskBackupPlanPropertiesProp)) && (ok || !reflect.DeepEqual(v, diskBackupPlanPropertiesProp)) {
 		obj["diskBackupPlanProperties"] = diskBackupPlanPropertiesProp
 	}
+	computeInstanceBackupPlanPropertiesProp, err := expandBackupDRBackupPlanComputeInstanceBackupPlanProperties(d.Get("compute_instance_backup_plan_properties"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("compute_instance_backup_plan_properties"); !tpgresource.IsEmptyValue(reflect.ValueOf(computeInstanceBackupPlanPropertiesProp)) && (ok || !reflect.DeepEqual(v, computeInstanceBackupPlanPropertiesProp)) {
+		obj["computeInstanceBackupPlanProperties"] = computeInstanceBackupPlanPropertiesProp
+	}
 
 	return obj, nil
 }
@@ -420,5 +426,31 @@ func expandBackupDRBackupPlanDiskBackupPlanProperties(v interface{}, d tpgresour
 }
 
 func expandBackupDRBackupPlanDiskBackupPlanPropertiesGuestFlush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRBackupPlanComputeInstanceBackupPlanProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGuestFlush, err := expandBackupDRBackupPlanComputeInstanceBackupPlanPropertiesGuestFlush(original["guest_flush"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["guestFlush"] = transformedGuestFlush
+	}
+
+	return transformed, nil
+}
+
+func expandBackupDRBackupPlanComputeInstanceBackupPlanPropertiesGuestFlush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
