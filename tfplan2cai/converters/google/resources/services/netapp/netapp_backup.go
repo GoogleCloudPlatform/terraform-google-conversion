@@ -128,6 +128,12 @@ func GetNetappBackupApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("source_snapshot"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceSnapshotProp)) && (ok || !reflect.DeepEqual(v, sourceSnapshotProp)) {
 		obj["sourceSnapshot"] = sourceSnapshotProp
 	}
+	ontapSourceProp, err := expandNetappBackupOntapSource(d.Get("ontap_source"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ontap_source"); !tpgresource.IsEmptyValue(reflect.ValueOf(ontapSourceProp)) && (ok || !reflect.DeepEqual(v, ontapSourceProp)) {
+		obj["ontapSource"] = ontapSourceProp
+	}
 	effectiveLabelsProp, err := expandNetappBackupEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -147,6 +153,54 @@ func expandNetappBackupSourceVolume(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandNetappBackupSourceSnapshot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupOntapSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStoragePool, err := expandNetappBackupOntapSourceStoragePool(original["storage_pool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStoragePool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["storagePool"] = transformedStoragePool
+	}
+
+	transformedVolumeUuid, err := expandNetappBackupOntapSourceVolumeUuid(original["volume_uuid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVolumeUuid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["volumeUuid"] = transformedVolumeUuid
+	}
+
+	transformedSnapshotUuid, err := expandNetappBackupOntapSourceSnapshotUuid(original["snapshot_uuid"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSnapshotUuid); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["snapshotUuid"] = transformedSnapshotUuid
+	}
+
+	return transformed, nil
+}
+
+func expandNetappBackupOntapSourceStoragePool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupOntapSourceVolumeUuid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappBackupOntapSourceSnapshotUuid(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
