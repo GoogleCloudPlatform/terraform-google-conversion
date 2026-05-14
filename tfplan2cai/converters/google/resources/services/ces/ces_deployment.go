@@ -268,6 +268,13 @@ func expandCESDeploymentChannelProfileWebWidgetConfig(v interface{}, d tpgresour
 		transformed["webWidgetTitle"] = transformedWebWidgetTitle
 	}
 
+	transformedSecuritySettings, err := expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettings(original["security_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecuritySettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["securitySettings"] = transformedSecuritySettings
+	}
+
 	return transformed, nil
 }
 
@@ -280,6 +287,65 @@ func expandCESDeploymentChannelProfileWebWidgetConfigTheme(v interface{}, d tpgr
 }
 
 func expandCESDeploymentChannelProfileWebWidgetConfigWebWidgetTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnablePublicAccess, err := expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsEnablePublicAccess(original["enable_public_access"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enablePublicAccess"] = transformedEnablePublicAccess
+	}
+
+	transformedEnableOriginCheck, err := expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsEnableOriginCheck(original["enable_origin_check"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enableOriginCheck"] = transformedEnableOriginCheck
+	}
+
+	transformedAllowedOrigins, err := expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsAllowedOrigins(original["allowed_origins"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedOrigins); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedOrigins"] = transformedAllowedOrigins
+	}
+
+	transformedEnableRecaptcha, err := expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsEnableRecaptcha(original["enable_recaptcha"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enableRecaptcha"] = transformedEnableRecaptcha
+	}
+
+	return transformed, nil
+}
+
+func expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsEnablePublicAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsEnableOriginCheck(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsAllowedOrigins(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsEnableRecaptcha(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
