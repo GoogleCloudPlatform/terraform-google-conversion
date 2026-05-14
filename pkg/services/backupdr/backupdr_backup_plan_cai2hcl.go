@@ -139,6 +139,7 @@ func (c *BackupDRBackupPlanCai2hclConverter) convertResourceData(asset caiasset.
 	hclData["backup_rules"] = flattenBackupDRBackupPlanBackupRules(res["backupRules"], d, config)
 	hclData["log_retention_days"] = flattenBackupDRBackupPlanLogRetentionDays(res["logRetentionDays"], d, config)
 	hclData["disk_backup_plan_properties"] = flattenBackupDRBackupPlanDiskBackupPlanProperties(res["diskBackupPlanProperties"], d, config)
+	hclData["compute_instance_backup_plan_properties"] = flattenBackupDRBackupPlanComputeInstanceBackupPlanProperties(res["computeInstanceBackupPlanProperties"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -426,6 +427,27 @@ func flattenBackupDRBackupPlanDiskBackupPlanProperties(v interface{}, d *schema.
 }
 
 func flattenBackupDRBackupPlanDiskBackupPlanPropertiesGuestFlush(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return false
+	}
+	return v
+}
+
+func flattenBackupDRBackupPlanComputeInstanceBackupPlanProperties(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["guest_flush"] =
+		flattenBackupDRBackupPlanComputeInstanceBackupPlanPropertiesGuestFlush(original["guestFlush"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenBackupDRBackupPlanComputeInstanceBackupPlanPropertiesGuestFlush(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return false
 	}
