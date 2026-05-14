@@ -306,6 +306,7 @@ func TestAccContainerNodePool(t *testing.T) {
 					"node_count",
 					"provider",
 					"timeouts",
+					"version",
 				},
 				"google_container_node_pool",
 			)
