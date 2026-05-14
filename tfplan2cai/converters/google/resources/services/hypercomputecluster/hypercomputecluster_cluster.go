@@ -1392,10 +1392,21 @@ func expandHypercomputeclusterClusterStorageResourcesConfigNewBucketAutoclass(v 
 		transformed["enabled"] = transformedEnabled
 	}
 
+	transformedTerminalStorageClass, err := expandHypercomputeclusterClusterStorageResourcesConfigNewBucketAutoclassTerminalStorageClass(original["terminal_storage_class"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTerminalStorageClass); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["terminalStorageClass"] = transformedTerminalStorageClass
+	}
+
 	return transformed, nil
 }
 
 func expandHypercomputeclusterClusterStorageResourcesConfigNewBucketAutoclassEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterStorageResourcesConfigNewBucketAutoclassTerminalStorageClass(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1579,6 +1590,13 @@ func expandHypercomputeclusterClusterStorageResourcesConfigNewLustre(v interface
 		transformed["lustre"] = transformedLustre
 	}
 
+	transformedPerUnitStorageThroughput, err := expandHypercomputeclusterClusterStorageResourcesConfigNewLustrePerUnitStorageThroughput(original["per_unit_storage_throughput"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPerUnitStorageThroughput); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["perUnitStorageThroughput"] = transformedPerUnitStorageThroughput
+	}
+
 	return transformed, nil
 }
 
@@ -1595,6 +1613,10 @@ func expandHypercomputeclusterClusterStorageResourcesConfigNewLustreFilesystem(v
 }
 
 func expandHypercomputeclusterClusterStorageResourcesConfigNewLustreLustre(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterStorageResourcesConfigNewLustrePerUnitStorageThroughput(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
