@@ -365,6 +365,16 @@ to include directives regarding slower scale down, as described above.`,
 								},
 							},
 						},
+						"stabilization_period": {
+							Type:     schema.TypeInt,
+							Optional: true,
+							Description: `The number of seconds that the autoscaler waits for load stabilization
+before making scale-in decisions.
+
+This might appear as a delay in scaling in but it is an important mechanism
+for your application to not have fluctuating size due to short term load
+fluctuations.`,
+						},
 					},
 				},
 			},

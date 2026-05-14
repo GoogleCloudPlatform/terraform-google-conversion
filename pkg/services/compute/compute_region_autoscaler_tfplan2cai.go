@@ -190,6 +190,13 @@ func expandComputeRegionAutoscalerAutoscalingPolicy(v interface{}, d tpgresource
 		transformed["coolDownPeriodSec"] = transformedCooldownPeriod
 	}
 
+	transformedStabilizationPeriod, err := expandComputeRegionAutoscalerAutoscalingPolicyStabilizationPeriod(original["stabilization_period"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStabilizationPeriod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["stabilizationPeriodSec"] = transformedStabilizationPeriod
+	}
+
 	transformedMode, err := expandComputeRegionAutoscalerAutoscalingPolicyMode(original["mode"], d, config)
 	if err != nil {
 		return nil, err
@@ -244,6 +251,10 @@ func expandComputeRegionAutoscalerAutoscalingPolicyMaxReplicas(v interface{}, d 
 }
 
 func expandComputeRegionAutoscalerAutoscalingPolicyCooldownPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionAutoscalerAutoscalingPolicyStabilizationPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
