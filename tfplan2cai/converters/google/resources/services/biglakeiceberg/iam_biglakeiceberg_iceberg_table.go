@@ -250,6 +250,18 @@ func (u *BiglakeIcebergIcebergTableIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("v1/projects/%s/catalogs/%s/namespaces/%s/tables/%s", u.project, u.catalog, u.namespace, u.name)
 }
 
+func BiglakeIcebergIcebergTableIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "catalog", IdentityKey: "catalog"},
+			{Key: "namespace", IdentityKey: "namespace"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "v1/projects/%s/catalogs/%s/namespaces/%s/tables/%s",
+	})
+}
+
 func (u *BiglakeIcebergIcebergTableIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-biglakeiceberg-icebergtable-%s", u.GetResourceId())
 }

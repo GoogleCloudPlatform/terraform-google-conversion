@@ -225,6 +225,16 @@ func (u *IAMBetaWorkloadIdentityPoolIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/global/workloadIdentityPools/%s", u.project, u.workloadIdentityPoolId)
 }
 
+func IAMBetaWorkloadIdentityPoolIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "workloadIdentityPoolId", IdentityKey: "workload_identity_pool_id"},
+		},
+		UriFormat: "projects/%s/locations/global/workloadIdentityPools/%s",
+	})
+}
+
 func (u *IAMBetaWorkloadIdentityPoolIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-iambeta-workloadidentitypool-%s", u.GetResourceId())
 }

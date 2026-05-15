@@ -186,6 +186,15 @@ func (u *ServiceDirectoryNamespaceIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("%s", u.name)
 }
 
+func ServiceDirectoryNamespaceIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "%s",
+	})
+}
+
 func (u *ServiceDirectoryNamespaceIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-servicedirectory-namespace-%s", u.GetResourceId())
 }

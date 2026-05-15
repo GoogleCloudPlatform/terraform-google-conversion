@@ -239,6 +239,17 @@ func (u *BeyondcorpSecurityGatewayApplicationIamUpdater) GetResourceId() string 
 	return fmt.Sprintf("projects/%s/locations/global/securityGateways/%s/applications/%s", u.project, u.securityGatewayId, u.applicationId)
 }
 
+func BeyondcorpSecurityGatewayApplicationIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "securityGatewayId", IdentityKey: "security_gateway_id"},
+			{Key: "applicationId", IdentityKey: "application_id"},
+		},
+		UriFormat: "projects/%s/locations/global/securityGateways/%s/applications/%s",
+	})
+}
+
 func (u *BeyondcorpSecurityGatewayApplicationIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-beyondcorp-securitygatewayapplication-%s", u.GetResourceId())
 }

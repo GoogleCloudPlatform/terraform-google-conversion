@@ -244,6 +244,17 @@ func (u *BigqueryAnalyticsHubDataExchangeIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/dataExchanges/%s", u.project, u.location, u.dataExchangeId)
 }
 
+func BigqueryAnalyticsHubDataExchangeIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "dataExchangeId", IdentityKey: "data_exchange_id"},
+		},
+		UriFormat: "projects/%s/locations/%s/dataExchanges/%s",
+	})
+}
+
 func (u *BigqueryAnalyticsHubDataExchangeIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-bigqueryanalyticshub-dataexchange-%s", u.GetResourceId())
 }

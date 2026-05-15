@@ -220,6 +220,16 @@ func (u *ComputeSnapshotIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/global/snapshots/%s", u.project, u.name)
 }
 
+func ComputeSnapshotIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "projects/%s/global/snapshots/%s",
+	})
+}
+
 func (u *ComputeSnapshotIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-compute-snapshot-%s", u.GetResourceId())
 }

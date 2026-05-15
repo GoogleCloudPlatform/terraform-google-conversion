@@ -244,6 +244,17 @@ func (u *ComputeRegionDiskIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/regions/%s/disks/%s", u.project, u.region, u.name)
 }
 
+func ComputeRegionDiskIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "region", IdentityKey: "region"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "projects/%s/regions/%s/disks/%s",
+	})
+}
+
 func (u *ComputeRegionDiskIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-compute-regiondisk-%s", u.GetResourceId())
 }

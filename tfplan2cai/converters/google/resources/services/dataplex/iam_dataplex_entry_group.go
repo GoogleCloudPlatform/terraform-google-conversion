@@ -244,6 +244,17 @@ func (u *DataplexEntryGroupIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/entryGroups/%s", u.project, u.location, u.entryGroupId)
 }
 
+func DataplexEntryGroupIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "entryGroupId", IdentityKey: "entry_group_id"},
+		},
+		UriFormat: "projects/%s/locations/%s/entryGroups/%s",
+	})
+}
+
 func (u *DataplexEntryGroupIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-dataplex-entrygroup-%s", u.GetResourceId())
 }

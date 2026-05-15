@@ -46,6 +46,19 @@ func FolderIdParseFunc(d *schema.ResourceData, _ *transport_tpg.Config) error {
 	return nil
 }
 
+// FolderIamParentResourceIdentityParser returns the parent folder's id
+func FolderIamParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, _ *transport_tpg.Config) (string, error) {
+	v, ok := identity.GetOk("folder")
+	if !ok {
+		return "", fmt.Errorf("import identity is missing attribute %q", "folder")
+	}
+	s, ok := v.(string)
+	if !ok || s == "" {
+		return "", fmt.Errorf("import identity attribute %q must be a non-empty string", "folder")
+	}
+	return CanonicalFolderId(s), nil
+}
+
 func (u *FolderIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.Policy, error) {
 	userAgent, err := tpgresource.GenerateUserAgentString(u.d, u.Config.UserAgent)
 	if err != nil {

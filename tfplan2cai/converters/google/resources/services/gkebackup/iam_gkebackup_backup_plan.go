@@ -244,6 +244,17 @@ func (u *GKEBackupBackupPlanIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/backupPlans/%s", u.project, u.location, u.name)
 }
 
+func GKEBackupBackupPlanIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "projects/%s/locations/%s/backupPlans/%s",
+	})
+}
+
 func (u *GKEBackupBackupPlanIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-gkebackup-backupplan-%s", u.GetResourceId())
 }

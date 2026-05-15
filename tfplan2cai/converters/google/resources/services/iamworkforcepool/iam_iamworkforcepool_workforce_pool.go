@@ -210,6 +210,16 @@ func (u *IAMWorkforcePoolWorkforcePoolIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("locations/%s/workforcePools/%s", u.location, u.workforcePoolId)
 }
 
+func IAMWorkforcePoolWorkforcePoolIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "location", IdentityKey: "location"},
+			{Key: "workforcePoolId", IdentityKey: "workforce_pool_id"},
+		},
+		UriFormat: "locations/%s/workforcePools/%s",
+	})
+}
+
 func (u *IAMWorkforcePoolWorkforcePoolIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-iamworkforcepool-workforcepool-%s", u.GetResourceId())
 }

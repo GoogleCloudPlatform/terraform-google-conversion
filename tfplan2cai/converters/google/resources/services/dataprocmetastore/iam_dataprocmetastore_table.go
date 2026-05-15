@@ -274,6 +274,19 @@ func (u *DataprocMetastoreTableIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/services/%s/databases/%s/tables/%s", u.project, u.location, u.serviceId, u.databaseId, u.table)
 }
 
+func DataprocMetastoreTableIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "serviceId", IdentityKey: "service_id"},
+			{Key: "databaseId", IdentityKey: "database_id"},
+			{Key: "table", IdentityKey: "table"},
+		},
+		UriFormat: "projects/%s/locations/%s/services/%s/databases/%s/tables/%s",
+	})
+}
+
 func (u *DataprocMetastoreTableIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-dataprocmetastore-table-%s", u.GetResourceId())
 }

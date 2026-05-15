@@ -224,6 +224,16 @@ func (u *ComputeBackendServiceIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/global/backendServices/%s", u.project, u.name)
 }
 
+func ComputeBackendServiceIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "projects/%s/global/backendServices/%s",
+	})
+}
+
 func (u *ComputeBackendServiceIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-compute-backendservice-%s", u.GetResourceId())
 }

@@ -201,6 +201,16 @@ func (u *SecurityCenterV2OrganizationSourceIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("organizations/%s/sources/%s", u.organization, u.source)
 }
 
+func SecurityCenterV2OrganizationSourceIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "organization", IdentityKey: "organization"},
+			{Key: "source", IdentityKey: "source"},
+		},
+		UriFormat: "organizations/%s/sources/%s",
+	})
+}
+
 func (u *SecurityCenterV2OrganizationSourceIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-securitycenterv2-organizationsource-%s", u.GetResourceId())
 }

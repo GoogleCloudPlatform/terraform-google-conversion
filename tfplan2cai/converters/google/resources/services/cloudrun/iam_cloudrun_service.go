@@ -246,6 +246,17 @@ func (u *CloudRunServiceIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("v1/projects/%s/locations/%s/services/%s", u.project, u.location, u.service)
 }
 
+func CloudRunServiceIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "service", IdentityKey: "service"},
+		},
+		UriFormat: "v1/projects/%s/locations/%s/services/%s",
+	})
+}
+
 func (u *CloudRunServiceIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-cloudrun-service-%s", u.GetResourceId())
 }

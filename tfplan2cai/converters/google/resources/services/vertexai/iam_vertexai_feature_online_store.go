@@ -244,6 +244,17 @@ func (u *VertexAIFeatureOnlineStoreIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/featureOnlineStores/%s", u.project, u.region, u.featureOnlineStore)
 }
 
+func VertexAIFeatureOnlineStoreIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "region", IdentityKey: "region"},
+			{Key: "featureOnlineStore", IdentityKey: "feature_online_store"},
+		},
+		UriFormat: "projects/%s/locations/%s/featureOnlineStores/%s",
+	})
+}
+
 func (u *VertexAIFeatureOnlineStoreIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-vertexai-featureonlinestore-%s", u.GetResourceId())
 }

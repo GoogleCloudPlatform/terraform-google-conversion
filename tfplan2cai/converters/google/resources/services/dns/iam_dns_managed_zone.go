@@ -226,6 +226,16 @@ func (u *DNSManagedZoneIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/managedZones/%s", u.project, u.managedZone)
 }
 
+func DNSManagedZoneIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "managedZone", IdentityKey: "managed_zone"},
+		},
+		UriFormat: "projects/%s/managedZones/%s",
+	})
+}
+
 func (u *DNSManagedZoneIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-dns-managedzone-%s", u.GetResourceId())
 }

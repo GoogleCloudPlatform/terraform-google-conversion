@@ -186,6 +186,15 @@ func (u *DataCatalogPolicyTagIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("%s", u.policyTag)
 }
 
+func DataCatalogPolicyTagIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "policyTag", IdentityKey: "policy_tag"},
+		},
+		UriFormat: "%s",
+	})
+}
+
 func (u *DataCatalogPolicyTagIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-datacatalog-policytag-%s", u.GetResourceId())
 }

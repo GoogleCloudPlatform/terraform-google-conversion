@@ -244,6 +244,17 @@ func (u *ClouddeployCustomTargetTypeIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/customTargetTypes/%s", u.project, u.location, u.name)
 }
 
+func ClouddeployCustomTargetTypeIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "projects/%s/locations/%s/customTargetTypes/%s",
+	})
+}
+
 func (u *ClouddeployCustomTargetTypeIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-clouddeploy-customtargettype-%s", u.GetResourceId())
 }

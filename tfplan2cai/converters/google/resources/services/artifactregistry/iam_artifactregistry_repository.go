@@ -244,6 +244,17 @@ func (u *ArtifactRegistryRepositoryIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/repositories/%s", u.project, u.location, u.repository)
 }
 
+func ArtifactRegistryRepositoryIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "repository", IdentityKey: "repository"},
+		},
+		UriFormat: "projects/%s/locations/%s/repositories/%s",
+	})
+}
+
 func (u *ArtifactRegistryRepositoryIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-artifactregistry-repository-%s", u.GetResourceId())
 }

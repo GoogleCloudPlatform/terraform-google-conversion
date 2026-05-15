@@ -245,6 +245,18 @@ func (u *LoggingLogViewIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("%s/locations/%s/buckets/%s/views/%s", u.parent, u.location, u.bucket, u.name)
 }
 
+func LoggingLogViewIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "parent", IdentityKey: "parent"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "bucket", IdentityKey: "bucket"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "%s/locations/%s/buckets/%s/views/%s",
+	})
+}
+
 func (u *LoggingLogViewIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-logging-logview-%s", u.GetResourceId())
 }

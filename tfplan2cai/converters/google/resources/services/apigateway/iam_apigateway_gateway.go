@@ -244,6 +244,17 @@ func (u *ApiGatewayGatewayIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/gateways/%s", u.project, u.region, u.gateway)
 }
 
+func ApiGatewayGatewayIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "region", IdentityKey: "region"},
+			{Key: "gateway", IdentityKey: "gateway"},
+		},
+		UriFormat: "projects/%s/locations/%s/gateways/%s",
+	})
+}
+
 func (u *ApiGatewayGatewayIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-apigateway-gateway-%s", u.GetResourceId())
 }

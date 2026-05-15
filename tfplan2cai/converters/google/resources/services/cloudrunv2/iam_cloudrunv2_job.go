@@ -244,6 +244,17 @@ func (u *CloudRunV2JobIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/jobs/%s", u.project, u.location, u.name)
 }
 
+func CloudRunV2JobIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "projects/%s/locations/%s/jobs/%s",
+	})
+}
+
 func (u *CloudRunV2JobIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-cloudrunv2-job-%s", u.GetResourceId())
 }

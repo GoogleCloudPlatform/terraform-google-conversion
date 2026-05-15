@@ -248,6 +248,17 @@ func (u *PrivatecaCaPoolIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/caPools/%s", u.project, u.location, u.caPool)
 }
 
+func PrivatecaCaPoolIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "caPool", IdentityKey: "ca_pool"},
+		},
+		UriFormat: "projects/%s/locations/%s/caPools/%s",
+	})
+}
+
 func (u *PrivatecaCaPoolIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-privateca-capool-%s", u.GetResourceId())
 }
