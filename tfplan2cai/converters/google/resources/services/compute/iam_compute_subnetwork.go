@@ -248,6 +248,17 @@ func (u *ComputeSubnetworkIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/regions/%s/subnetworks/%s", u.project, u.region, u.subnetwork)
 }
 
+func ComputeSubnetworkIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "region", IdentityKey: "region"},
+			{Key: "subnetwork", IdentityKey: "subnetwork"},
+		},
+		UriFormat: "projects/%s/regions/%s/subnetworks/%s",
+	})
+}
+
 func (u *ComputeSubnetworkIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-compute-subnetwork-%s", u.GetResourceId())
 }

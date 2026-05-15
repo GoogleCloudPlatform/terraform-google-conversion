@@ -201,6 +201,16 @@ func (u *HealthcareConsentStoreIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("%s/consentStores/%s", u.dataset, u.consentStoreId)
 }
 
+func HealthcareConsentStoreIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "dataset", IdentityKey: "dataset"},
+			{Key: "consentStoreId", IdentityKey: "consent_store_id"},
+		},
+		UriFormat: "%s/consentStores/%s",
+	})
+}
+
 func (u *HealthcareConsentStoreIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-healthcare-consentstore-%s", u.GetResourceId())
 }

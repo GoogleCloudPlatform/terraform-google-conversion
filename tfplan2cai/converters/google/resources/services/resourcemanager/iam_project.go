@@ -42,6 +42,19 @@ func ProjectIdParseFunc(d *schema.ResourceData, _ *transport_tpg.Config) error {
 	return nil
 }
 
+// ProjectIamParentParentResourceIdentityParser returns the parent project's id
+func ProjectIamParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, _ *transport_tpg.Config) (string, error) {
+	v, ok := identity.GetOk("project")
+	if !ok {
+		return "", fmt.Errorf("import identity is missing attribute %q", "project")
+	}
+	s, ok := v.(string)
+	if !ok || s == "" {
+		return "", fmt.Errorf("import identity attribute %q must be a non-empty string", "project")
+	}
+	return s, nil
+}
+
 func (u *ProjectIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.Policy, error) {
 	projectId := tpgresource.GetResourceNameFromSelfLink(u.resourceId)
 

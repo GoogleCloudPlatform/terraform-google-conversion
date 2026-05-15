@@ -201,6 +201,16 @@ func (u *VertexAIFeaturestoreEntitytypeIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("%s/entityTypes/%s", u.featurestore, u.entitytype)
 }
 
+func VertexAIFeaturestoreEntitytypeIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "featurestore", IdentityKey: "featurestore"},
+			{Key: "entitytype", IdentityKey: "entitytype"},
+		},
+		UriFormat: "%s/entityTypes/%s",
+	})
+}
+
 func (u *VertexAIFeaturestoreEntitytypeIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-vertexai-featurestoreentitytype-%s", u.GetResourceId())
 }

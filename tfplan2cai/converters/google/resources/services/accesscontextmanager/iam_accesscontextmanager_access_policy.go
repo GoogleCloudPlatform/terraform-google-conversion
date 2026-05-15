@@ -186,6 +186,15 @@ func (u *AccessContextManagerAccessPolicyIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("accessPolicies/%s", u.name)
 }
 
+func AccessContextManagerAccessPolicyIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "accessPolicies/%s",
+	})
+}
+
 func (u *AccessContextManagerAccessPolicyIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-accesscontextmanager-accesspolicy-%s", u.GetResourceId())
 }

@@ -248,6 +248,17 @@ func (u *ComputeRegionInstantSnapshotIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/regions/%s/instantSnapshots/%s", u.project, u.region, u.name)
 }
 
+func ComputeRegionInstantSnapshotIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "region", IdentityKey: "region"},
+			{Key: "name", IdentityKey: "name"},
+		},
+		UriFormat: "projects/%s/regions/%s/instantSnapshots/%s",
+	})
+}
+
 func (u *ComputeRegionInstantSnapshotIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-compute-regioninstantsnapshot-%s", u.GetResourceId())
 }

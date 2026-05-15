@@ -212,6 +212,15 @@ func (u *IapTunnelIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/iap_tunnel", u.project)
 }
 
+func IapTunnelIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+		},
+		UriFormat: "projects/%s/iap_tunnel",
+	})
+}
+
 func (u *IapTunnelIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-iap-tunnel-%s", u.GetResourceId())
 }

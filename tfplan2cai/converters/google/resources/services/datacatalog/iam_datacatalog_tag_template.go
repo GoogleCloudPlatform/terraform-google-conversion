@@ -244,6 +244,17 @@ func (u *DataCatalogTagTemplateIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/tagTemplates/%s", u.project, u.region, u.tagTemplate)
 }
 
+func DataCatalogTagTemplateIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "region", IdentityKey: "region"},
+			{Key: "tagTemplate", IdentityKey: "tag_template"},
+		},
+		UriFormat: "projects/%s/locations/%s/tagTemplates/%s",
+	})
+}
+
 func (u *DataCatalogTagTemplateIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-datacatalog-tagtemplate-%s", u.GetResourceId())
 }

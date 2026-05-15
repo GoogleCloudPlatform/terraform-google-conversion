@@ -244,6 +244,17 @@ func (u *VertexAIReasoningEngineIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/reasoningEngines/%s", u.project, u.region, u.reasoningEngine)
 }
 
+func VertexAIReasoningEngineIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "region", IdentityKey: "region"},
+			{Key: "reasoningEngine", IdentityKey: "reasoning_engine"},
+		},
+		UriFormat: "projects/%s/locations/%s/reasoningEngines/%s",
+	})
+}
+
 func (u *VertexAIReasoningEngineIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-vertexai-reasoningengine-%s", u.GetResourceId())
 }

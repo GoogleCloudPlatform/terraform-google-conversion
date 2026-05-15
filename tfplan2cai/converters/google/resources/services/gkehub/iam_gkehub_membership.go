@@ -244,6 +244,17 @@ func (u *GKEHubMembershipIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/memberships/%s", u.project, u.location, u.membershipId)
 }
 
+func GKEHubMembershipIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "membershipId", IdentityKey: "membership_id"},
+		},
+		UriFormat: "projects/%s/locations/%s/memberships/%s",
+	})
+}
+
 func (u *GKEHubMembershipIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-gkehub-membership-%s", u.GetResourceId())
 }

@@ -244,6 +244,17 @@ func (u *DataplexGlossaryIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/glossaries/%s", u.project, u.location, u.glossaryId)
 }
 
+func DataplexGlossaryIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "glossaryId", IdentityKey: "glossary_id"},
+		},
+		UriFormat: "projects/%s/locations/%s/glossaries/%s",
+	})
+}
+
 func (u *DataplexGlossaryIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-dataplex-glossary-%s", u.GetResourceId())
 }

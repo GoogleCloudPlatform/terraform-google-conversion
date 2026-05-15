@@ -244,6 +244,17 @@ func (u *CloudFunctionsCloudFunctionIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/functions/%s", u.project, u.region, u.cloudFunction)
 }
 
+func CloudFunctionsCloudFunctionIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "region", IdentityKey: "region"},
+			{Key: "cloudFunction", IdentityKey: "cloud_function"},
+		},
+		UriFormat: "projects/%s/locations/%s/functions/%s",
+	})
+}
+
 func (u *CloudFunctionsCloudFunctionIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-cloudfunctions-cloudfunction-%s", u.GetResourceId())
 }

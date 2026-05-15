@@ -244,6 +244,17 @@ func (u *NotebooksRuntimeIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/runtimes/%s", u.project, u.location, u.runtimeName)
 }
 
+func NotebooksRuntimeIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "runtimeName", IdentityKey: "runtime_name"},
+		},
+		UriFormat: "projects/%s/locations/%s/runtimes/%s",
+	})
+}
+
 func (u *NotebooksRuntimeIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-notebooks-runtime-%s", u.GetResourceId())
 }

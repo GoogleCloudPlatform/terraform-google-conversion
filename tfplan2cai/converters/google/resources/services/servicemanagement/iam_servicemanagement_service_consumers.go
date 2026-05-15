@@ -201,6 +201,16 @@ func (u *ServiceManagementServiceConsumersIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("services/%s/consumers/%s", u.serviceName, u.consumerProject)
 }
 
+func ServiceManagementServiceConsumersIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "serviceName", IdentityKey: "service_name"},
+			{Key: "consumerProject", IdentityKey: "consumer_project"},
+		},
+		UriFormat: "services/%s/consumers/%s",
+	})
+}
+
 func (u *ServiceManagementServiceConsumersIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-servicemanagement-serviceconsumers-%s", u.GetResourceId())
 }

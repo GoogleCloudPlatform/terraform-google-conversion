@@ -261,6 +261,18 @@ func (u *GeminiRepositoryGroupIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/locations/%s/codeRepositoryIndexes/%s/repositoryGroups/%s", u.project, u.location, u.codeRepositoryIndex, u.repositoryGroupId)
 }
 
+func GeminiRepositoryGroupIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "location", IdentityKey: "location"},
+			{Key: "codeRepositoryIndex", IdentityKey: "code_repository_index"},
+			{Key: "repositoryGroupId", IdentityKey: "repository_group_id"},
+		},
+		UriFormat: "projects/%s/locations/%s/codeRepositoryIndexes/%s/repositoryGroups/%s",
+	})
+}
+
 func (u *GeminiRepositoryGroupIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-gemini-repositorygroup-%s", u.GetResourceId())
 }

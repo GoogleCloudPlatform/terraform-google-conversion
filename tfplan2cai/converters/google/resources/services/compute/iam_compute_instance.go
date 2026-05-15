@@ -248,6 +248,17 @@ func (u *ComputeInstanceIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/zones/%s/instances/%s", u.project, u.zone, u.instanceName)
 }
 
+func ComputeInstanceIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "zone", IdentityKey: "zone"},
+			{Key: "instanceName", IdentityKey: "instance_name"},
+		},
+		UriFormat: "projects/%s/zones/%s/instances/%s",
+	})
+}
+
 func (u *ComputeInstanceIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-compute-instance-%s", u.GetResourceId())
 }

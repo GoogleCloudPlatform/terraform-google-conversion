@@ -201,6 +201,16 @@ func (u *ApigeeEnvironmentIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("%s/environments/%s", u.orgId, u.envId)
 }
 
+func ApigeeEnvironmentIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "orgId", IdentityKey: "org_id"},
+			{Key: "envId", IdentityKey: "env_id"},
+		},
+		UriFormat: "%s/environments/%s",
+	})
+}
+
 func (u *ApigeeEnvironmentIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-apigee-environment-%s", u.GetResourceId())
 }

@@ -220,6 +220,16 @@ func (u *PubsubSchemaIamUpdater) GetResourceId() string {
 	return fmt.Sprintf("projects/%s/schemas/%s", u.project, u.schema)
 }
 
+func PubsubSchemaIamParentParentResourceIdentityParser(d *schema.ResourceData, identity *schema.IdentityData, transportConfig *transport_tpg.Config) (string, error) {
+	return tpgiamresource.ParseIamResourceIdentity(d, identity, transportConfig, tpgiamresource.IamResourceIdentityConfig{
+		Params: []tpgiamresource.IamIdentityParam{
+			{Key: "project", IdentityKey: "project"},
+			{Key: "schema", IdentityKey: "schema"},
+		},
+		UriFormat: "projects/%s/schemas/%s",
+	})
+}
+
 func (u *PubsubSchemaIamUpdater) GetMutexKey() string {
 	return fmt.Sprintf("iam-pubsub-schema-%s", u.GetResourceId())
 }
