@@ -128,6 +128,19 @@ func IpDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
 	return addr_equality && netmask_equality
 }
 
+// CustomDiff function for secondary_ip_range.
+// Normalizes old state and new config sets before Set comparison to prevent false TypeSet diffs.
+// Specifically handles two Beta-only scenarios where state diverges from HCL config:
+// 1. Automatically inherits allocated ULA CIDRs from state when omitted in HCL config.
+// 2. Normalizes ip_collection self-links to relative paths to match user config short names.
+func resourceComputeSubnetworkSecondaryIpRangeCustomDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	return resourceComputeSubnetworkSecondaryIpRangeCustomDiffFunc(diff)
+}
+
+func resourceComputeSubnetworkSecondaryIpRangeCustomDiffFunc(diff tpgresource.TerraformResourceDiff) error {
+	return nil
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel

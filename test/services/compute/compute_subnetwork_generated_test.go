@@ -73,6 +73,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 			Name: "TestAccComputeSubnetwork_secondaryIpRanges_sendEmpty",
 		},
 		{
+			Name: "TestAccComputeSubnetwork_secondaryIpv6Ranges",
+		},
+		{
 			Name: "TestAccComputeSubnetwork_flowLogs",
 		},
 		{

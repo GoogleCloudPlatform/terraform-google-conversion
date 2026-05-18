@@ -137,6 +137,19 @@ func IpDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
 	return addr_equality && netmask_equality
 }
 
+// CustomDiff function for secondary_ip_range.
+// Normalizes old state and new config sets before Set comparison to prevent false TypeSet diffs.
+// Specifically handles two Beta-only scenarios where state diverges from HCL config:
+// 1. Automatically inherits allocated ULA CIDRs from state when omitted in HCL config.
+// 2. Normalizes ip_collection self-links to relative paths to match user config short names.
+func resourceComputeSubnetworkSecondaryIpRangeCustomDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	return resourceComputeSubnetworkSecondaryIpRangeCustomDiffFunc(diff)
+}
+
+func resourceComputeSubnetworkSecondaryIpRangeCustomDiffFunc(diff tpgresource.TerraformResourceDiff) error {
+	return nil
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -388,6 +401,20 @@ func expandComputeSubnetworkSecondaryIpRange(v interface{}, d tpgresource.Terraf
 			transformed["reservedInternalRange"] = transformedReservedInternalRange
 		}
 
+		transformedIpVersion, err := expandComputeSubnetworkSecondaryIpRangeIpVersion(original["ip_version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipVersion"] = transformedIpVersion
+		}
+
+		transformedIpCollection, err := expandComputeSubnetworkSecondaryIpRangeIpCollection(original["ip_collection"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpCollection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipCollection"] = transformedIpCollection
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -402,6 +429,14 @@ func expandComputeSubnetworkSecondaryIpRangeIpCidrRange(v interface{}, d tpgreso
 }
 
 func expandComputeSubnetworkSecondaryIpRangeReservedInternalRange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkSecondaryIpRangeIpVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeSubnetworkSecondaryIpRangeIpCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
