@@ -177,6 +177,12 @@ func ExpandExternalCredentialsConfig(v interface{}) (*ExternalCredentials, error
 	return config, nil
 }
 
+type RPCClient struct {
+	ProxyAddress string
+	Address      string
+	Package      string
+}
+
 // Config is the configuration structure used to instantiate the Google
 // provider.
 type Config struct {
@@ -219,6 +225,8 @@ type Config struct {
 
 	PreferGlobalEndpoints   bool
 	PreferRegionalEndpoints bool
+
+	RPCClients map[string]*RPCClient
 }
 
 var DefaultClientScopes = []string{
@@ -370,6 +378,8 @@ func (c *Config) LoadAndValidate(ctx context.Context) error {
 		c.PollInterval = 10 * time.Second
 	}
 
+	c.setRPCClients()
+
 	// gRPC Logging setup
 	logger := logrus.StandardLogger()
 
@@ -511,6 +521,10 @@ func (c *Config) getTokenSource(ctx context.Context, clientScopes []string, init
 		return nil, fmt.Errorf("%s", err)
 	}
 	return creds.TokenSource, nil
+}
+
+func (c *Config) setRPCClients() {
+	c.RPCClients = make(map[string]*RPCClient)
 }
 
 // StaticTokenSource is used to be able to identify static token sources without reflection.
