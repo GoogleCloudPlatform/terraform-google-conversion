@@ -188,6 +188,12 @@ func GetDialogflowConversationProfileApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("tts_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(ttsConfigProp)) && (ok || !reflect.DeepEqual(v, ttsConfigProp)) {
 		obj["ttsConfig"] = ttsConfigProp
 	}
+	sipConfigProp, err := expandDialogflowConversationProfileSipConfig(d.Get("sip_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("sip_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(sipConfigProp)) && (ok || !reflect.DeepEqual(v, sipConfigProp)) {
+		obj["sipConfig"] = sipConfigProp
+	}
 	newRecognitionResultNotificationConfigProp, err := expandDialogflowConversationProfileNewRecognitionResultNotificationConfig(d.Get("new_recognition_result_notification_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -1738,6 +1744,98 @@ func expandDialogflowConversationProfileTtsConfigVoiceName(v interface{}, d tpgr
 }
 
 func expandDialogflowConversationProfileTtsConfigVoiceSsmlGender(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSipConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCreateConversationOnTheFly, err := expandDialogflowConversationProfileSipConfigCreateConversationOnTheFly(original["create_conversation_on_the_fly"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["createConversationOnTheFly"] = transformedCreateConversationOnTheFly
+	}
+
+	transformedInactiveStart, err := expandDialogflowConversationProfileSipConfigInactiveStart(original["inactive_start"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["inactiveStart"] = transformedInactiveStart
+	}
+
+	transformedMaxAudioRecordingDuration, err := expandDialogflowConversationProfileSipConfigMaxAudioRecordingDuration(original["max_audio_recording_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxAudioRecordingDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxAudioRecordingDuration"] = transformedMaxAudioRecordingDuration
+	}
+
+	transformedAllowVirtualAgentInteraction, err := expandDialogflowConversationProfileSipConfigAllowVirtualAgentInteraction(original["allow_virtual_agent_interaction"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["allowVirtualAgentInteraction"] = transformedAllowVirtualAgentInteraction
+	}
+
+	transformedKeepConversationRunning, err := expandDialogflowConversationProfileSipConfigKeepConversationRunning(original["keep_conversation_running"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["keepConversationRunning"] = transformedKeepConversationRunning
+	}
+
+	transformedCopyInboundCallLegHeaders, err := expandDialogflowConversationProfileSipConfigCopyInboundCallLegHeaders(original["copy_inbound_call_leg_headers"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCopyInboundCallLegHeaders); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["copyInboundCallLegHeaders"] = transformedCopyInboundCallLegHeaders
+	}
+
+	transformedIgnoreReinviteMediaDirection, err := expandDialogflowConversationProfileSipConfigIgnoreReinviteMediaDirection(original["ignore_reinvite_media_direction"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["ignoreReinviteMediaDirection"] = transformedIgnoreReinviteMediaDirection
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowConversationProfileSipConfigCreateConversationOnTheFly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSipConfigInactiveStart(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSipConfigMaxAudioRecordingDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSipConfigAllowVirtualAgentInteraction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSipConfigKeepConversationRunning(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSipConfigCopyInboundCallLegHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSipConfigIgnoreReinviteMediaDirection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
