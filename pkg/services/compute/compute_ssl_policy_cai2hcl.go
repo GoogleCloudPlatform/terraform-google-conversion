@@ -132,6 +132,7 @@ func (c *ComputeSslPolicyCai2hclConverter) convertResourceData(asset caiasset.As
 	hclData["profile"] = flattenComputeSslPolicyProfile(res["profile"], d, config)
 	hclData["min_tls_version"] = flattenComputeSslPolicyMinTlsVersion(res["minTlsVersion"], d, config)
 	hclData["custom_features"] = flattenComputeSslPolicyCustomFeatures(res["customFeatures"], d, config)
+	hclData["post_quantum_key_exchange"] = flattenComputeSslPolicyPostQuantumKeyExchange(res["postQuantumKeyExchange"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -177,4 +178,8 @@ func flattenComputeSslPolicyCustomFeatures(v interface{}, d *schema.ResourceData
 		return v
 	}
 	return schema.NewSet(schema.HashString, v.([]interface{}))
+}
+
+func flattenComputeSslPolicyPostQuantumKeyExchange(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }

@@ -157,6 +157,12 @@ func GetComputeRegionSslPolicyApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("custom_features"); ok || !reflect.DeepEqual(v, customFeaturesProp) {
 		obj["customFeatures"] = customFeaturesProp
 	}
+	postQuantumKeyExchangeProp, err := expandComputeRegionSslPolicyPostQuantumKeyExchange(d.Get("post_quantum_key_exchange"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("post_quantum_key_exchange"); !tpgresource.IsEmptyValue(reflect.ValueOf(postQuantumKeyExchangeProp)) && (ok || !reflect.DeepEqual(v, postQuantumKeyExchangeProp)) {
+		obj["postQuantumKeyExchange"] = postQuantumKeyExchangeProp
+	}
 	fingerprintProp, err := expandComputeRegionSslPolicyFingerprint(d.Get("fingerprint"), d, config)
 	if err != nil {
 		return nil, err
@@ -191,6 +197,10 @@ func expandComputeRegionSslPolicyMinTlsVersion(v interface{}, d tpgresource.Terr
 
 func expandComputeRegionSslPolicyCustomFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeRegionSslPolicyPostQuantumKeyExchange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
