@@ -25,6 +25,12 @@ func TestAccComputeRegionSslPolicy(t *testing.T) {
 
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeRegionSslPolicy_regionSslPolicyBasicExample",
+		},
+		{
+			Name: "TestAccComputeRegionSslPolicy_regionSslPolicyPostQuantumExample",
+		},
+		{
 			Name: "TestAccComputeRegionSslPolicy_regionInherit",
 		},
 		{
@@ -35,6 +41,9 @@ func TestAccComputeRegionSslPolicy(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeRegionSslPolicy_update_from_custom",
+		},
+		{
+			Name: "TestAccComputeRegionSslPolicy_postQuantumKeyExchange",
 		},
 	}
 

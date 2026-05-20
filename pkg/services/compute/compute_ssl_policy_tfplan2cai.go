@@ -145,6 +145,12 @@ func GetComputeSslPolicyCaiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("custom_features"); !tpgresource.IsEmptyValue(reflect.ValueOf(customFeaturesProp)) && (ok || !reflect.DeepEqual(v, customFeaturesProp)) {
 		obj["customFeatures"] = customFeaturesProp
 	}
+	postQuantumKeyExchangeProp, err := expandComputeSslPolicyPostQuantumKeyExchange(d.Get("post_quantum_key_exchange"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("post_quantum_key_exchange"); !tpgresource.IsEmptyValue(reflect.ValueOf(postQuantumKeyExchangeProp)) && (ok || !reflect.DeepEqual(v, postQuantumKeyExchangeProp)) {
+		obj["postQuantumKeyExchange"] = postQuantumKeyExchangeProp
+	}
 
 	return obj, nil
 }
@@ -167,5 +173,9 @@ func expandComputeSslPolicyMinTlsVersion(v interface{}, d tpgresource.TerraformR
 
 func expandComputeSslPolicyCustomFeatures(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandComputeSslPolicyPostQuantumKeyExchange(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

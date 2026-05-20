@@ -28,6 +28,9 @@ func TestAccComputeSslPolicy(t *testing.T) {
 			Name: "TestAccComputeSslPolicy_sslPolicyBasicExample",
 		},
 		{
+			Name: "TestAccComputeSslPolicy_sslPolicyPostQuantumExample",
+		},
+		{
 			Name: "TestAccComputeSslPolicy_update",
 		},
 		{
@@ -35,6 +38,9 @@ func TestAccComputeSslPolicy(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeSslPolicy_update_from_custom",
+		},
+		{
+			Name: "TestAccComputeSslPolicy_postQuantumKeyExchange",
 		},
 	}
 
