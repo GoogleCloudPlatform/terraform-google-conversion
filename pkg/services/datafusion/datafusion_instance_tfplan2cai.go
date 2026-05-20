@@ -217,6 +217,12 @@ func GetDataFusionInstanceCaiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("accelerators"); !tpgresource.IsEmptyValue(reflect.ValueOf(acceleratorsProp)) && (ok || !reflect.DeepEqual(v, acceleratorsProp)) {
 		obj["accelerators"] = acceleratorsProp
 	}
+	maintenancePolicyProp, err := expandDataFusionInstanceMaintenancePolicy(d.Get("maintenance_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("maintenance_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(maintenancePolicyProp)) && (ok || !reflect.DeepEqual(v, maintenancePolicyProp)) {
+		obj["maintenancePolicy"] = maintenancePolicyProp
+	}
 	tagsProp, err := expandDataFusionInstanceTags(d.Get("tags"), d, config)
 	if err != nil {
 		return nil, err
@@ -484,6 +490,120 @@ func expandDataFusionInstanceAcceleratorsAcceleratorType(v interface{}, d tpgres
 }
 
 func expandDataFusionInstanceAcceleratorsState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataFusionInstanceMaintenancePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMaintenanceWindow, err := expandDataFusionInstanceMaintenancePolicyMaintenanceWindow(original["maintenance_window"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaintenanceWindow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maintenanceWindow"] = transformedMaintenanceWindow
+	}
+
+	return transformed, nil
+}
+
+func expandDataFusionInstanceMaintenancePolicyMaintenanceWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRecurringTimeWindow, err := expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindow(original["recurring_time_window"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRecurringTimeWindow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["recurringTimeWindow"] = transformedRecurringTimeWindow
+	}
+
+	return transformed, nil
+}
+
+func expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWindow, err := expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindow(original["window"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWindow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["window"] = transformedWindow
+	}
+
+	transformedRecurrence, err := expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowRecurrence(original["recurrence"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRecurrence); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["recurrence"] = transformedRecurrence
+	}
+
+	return transformed, nil
+}
+
+func expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStartTime, err := expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindowStartTime(original["start_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["startTime"] = transformedStartTime
+	}
+
+	transformedEndTime, err := expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindowEndTime(original["end_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endTime"] = transformedEndTime
+	}
+
+	return transformed, nil
+}
+
+func expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindowStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindowEndTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowRecurrence(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

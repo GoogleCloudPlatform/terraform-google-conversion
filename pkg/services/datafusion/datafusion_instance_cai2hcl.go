@@ -124,7 +124,7 @@ func (c *DataFusionInstanceCai2hclConverter) convertResourceData(asset caiasset.
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"api_endpoint": struct{}{}, "create_time": struct{}{}, "effective_labels": struct{}{}, "gcs_bucket": struct{}{}, "p4_service_account": struct{}{}, "service_endpoint": struct{}{}, "state": struct{}{}, "state_message": struct{}{}, "tenant_project_id": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
+	outputFields := map[string]struct{}{"api_endpoint": struct{}{}, "create_time": struct{}{}, "effective_labels": struct{}{}, "gcs_bucket": struct{}{}, "maintenance_events": struct{}{}, "p4_service_account": struct{}{}, "service_endpoint": struct{}{}, "state": struct{}{}, "state_message": struct{}{}, "tenant_project_id": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//datafusion.googleapis.com/projects/{{project}}/locations/{{region}}/instances/{{name}}", outputFields, hclData)
 
 	hclData["name"] = flattenDataFusionInstanceName(res["name"], d, config)
@@ -145,6 +145,7 @@ func (c *DataFusionInstanceCai2hclConverter) convertResourceData(asset caiasset.
 	hclData["crypto_key_config"] = flattenDataFusionInstanceCryptoKeyConfig(res["cryptoKeyConfig"], d, config)
 	hclData["event_publish_config"] = flattenDataFusionInstanceEventPublishConfig(res["eventPublishConfig"], d, config)
 	hclData["accelerators"] = flattenDataFusionInstanceAccelerators(res["accelerators"], d, config)
+	hclData["maintenance_policy"] = flattenDataFusionInstanceMaintenancePolicy(res["maintenancePolicy"], d, config)
 	hclData["tags"] = flattenDataFusionInstanceTags(res["tags"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -398,6 +399,99 @@ func flattenDataFusionInstanceAcceleratorsAcceleratorType(v interface{}, d *sche
 }
 
 func flattenDataFusionInstanceAcceleratorsState(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDataFusionInstanceMaintenancePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["maintenance_window"] =
+		flattenDataFusionInstanceMaintenancePolicyMaintenanceWindow(original["maintenanceWindow"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDataFusionInstanceMaintenancePolicyMaintenanceWindow(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["recurring_time_window"] =
+		flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindow(original["recurringTimeWindow"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindow(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["window"] =
+		flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindow(original["window"], d, config)
+	transformed["recurrence"] =
+		flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowRecurrence(original["recurrence"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindow(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["start_time"] =
+		flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindowStartTime(original["startTime"], d, config)
+	transformed["end_time"] =
+		flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindowEndTime(original["endTime"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindowStartTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowWindowEndTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenDataFusionInstanceMaintenancePolicyMaintenanceWindowRecurringTimeWindowRecurrence(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 
