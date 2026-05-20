@@ -55,6 +55,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withAddons",
 		},
 		{
+			Name: "TestAccContainerCluster_agentSandbox",
+		},
+		{
 			Name: "TestAccContainerCluster_withDeletionProtection",
 		},
 		{
