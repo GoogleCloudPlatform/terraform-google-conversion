@@ -93,6 +93,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 		{
 			Name: "TestAccComputeSubnetwork_ipv6UpdateWithPdp",
 		},
+		{
+			Name: "TestAccComputeSubnetwork_secondaryIpRangeInternalRangeInUse",
+		},
 	}
 
 	for _, tt := range tests {
