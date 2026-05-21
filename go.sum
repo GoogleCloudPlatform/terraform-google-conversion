@@ -9,8 +9,8 @@ cloud.google.com/go/auth/oauth2adapt v0.2.8 h1:keo8NaayQZ6wimpNSmW5OPc283g65QNIi
 cloud.google.com/go/auth/oauth2adapt v0.2.8/go.mod h1:XQ9y31RkqZCcwJWNSx2Xvric3RrU88hAYYbjDWYDL+c=
 cloud.google.com/go/bigquery v1.74.0 h1:Q6bAMv+eyvufOpIrfrYxhM46qq1D3ZQTdgUDQqKS+n8=
 cloud.google.com/go/bigquery v1.74.0/go.mod h1:iViO7Cx3A/cRKcHNRsHB3yqGAMInFBswrE9Pxazsc90=
-cloud.google.com/go/bigtable v1.46.0 h1:Bd6vITx01s6gsdEPvjIGJL/oMMdKvraGI34UiixR2gk=
-cloud.google.com/go/bigtable v1.46.0/go.mod h1:GUM6PdkG3rrDse9kugqvX5+ktwo3ldfLtLi1VFn5Wj4=
+cloud.google.com/go/bigtable v1.47.0 h1:NGLgDSr/i79BTGCjxH/maPKxyvl5q8/SsBsyLK52kdI=
+cloud.google.com/go/bigtable v1.47.0/go.mod h1:GUM6PdkG3rrDse9kugqvX5+ktwo3ldfLtLi1VFn5Wj4=
 cloud.google.com/go/compute/metadata v0.9.0 h1:pDUj4QMoPejqq20dK0Pg2N4yG9zIkYGdBtwLoEkH9Zs=
 cloud.google.com/go/compute/metadata v0.9.0/go.mod h1:E0bWwX5wTnLPedCKqk3pJmVgCBSM6qQI1yTBdEb3C10=
 cloud.google.com/go/iam v1.7.0 h1:JD3zh0C6LHl16aCn5Akff0+GELdp1+4hmh6ndoFLl8U=
@@ -184,8 +184,8 @@ github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1 h1:2yPUd7esMOpuTaG3y1iEla1i
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1/go.mod h1:sq8qsxh+PwdvTQFcd17kfCoBgQo46ADNMvCpKE7t/gY=
 github.com/hashicorp/terraform-plugin-testing v1.15.0 h1:/fimKyl0YgD7aAtJkuuAZjwBASXhCIwWqMbDLnKLMe4=
 github.com/hashicorp/terraform-plugin-testing v1.15.0/go.mod h1:bGXMw7bE95EiZhSBV3rM2W8TiffaPTDuLS+HFI/lIYs=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260521175727-b0ade54fb809 h1:MP8T5QWhb6LP+f3j92rIznw6/Og6mBfQnZAACEkzjCs=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260521175727-b0ade54fb809/go.mod h1:uxIjYDqJZNGa8gBBwH+i1/rgJoEIiCUj/NGFhI8mBXA=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260521203446-cf843e224f9d h1:9Ao2hEehvdE/gDUBJWu2wC88gGIVY6GanNgXAiekNPo=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20260521203446-cf843e224f9d/go.mod h1:L2DsgkalAwUunCiZtPSaSYjTkGeYqjlRufNNrWRgg0s=
 github.com/hashicorp/terraform-registry-address v0.4.0 h1:S1yCGomj30Sao4l5BMPjTGZmCNzuv7/GDTDX99E9gTk=
 github.com/hashicorp/terraform-registry-address v0.4.0/go.mod h1:LRS1Ay0+mAiRkUyltGT+UHWkIqTFvigGn/LbMshfflE=
 github.com/hashicorp/terraform-svchost v0.1.1 h1:EZZimZ1GxdqFRinZ1tpJwVxxt49xc/S52uzrw4x0jKQ=
