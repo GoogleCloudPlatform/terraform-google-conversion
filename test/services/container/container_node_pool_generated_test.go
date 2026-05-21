@@ -136,6 +136,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withGPU",
 		},
 		{
+			Name: "TestAccContainerNodePool_withRDMA",
+		},
+		{
 			Name: "TestAccContainerNodePool_withManagement",
 		},
 		{
