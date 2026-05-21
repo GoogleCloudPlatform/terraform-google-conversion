@@ -761,6 +761,13 @@ func expandCESGuardrailLlmPromptSecurity(v interface{}, d tpgresource.TerraformR
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedFailOpen, err := expandCESGuardrailLlmPromptSecurityFailOpen(original["fail_open"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFailOpen); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["failOpen"] = transformedFailOpen
+	}
+
 	transformedCustomPolicy, err := expandCESGuardrailLlmPromptSecurityCustomPolicy(original["custom_policy"], d, config)
 	if err != nil {
 		return nil, err
@@ -776,6 +783,10 @@ func expandCESGuardrailLlmPromptSecurity(v interface{}, d tpgresource.TerraformR
 	}
 
 	return transformed, nil
+}
+
+func expandCESGuardrailLlmPromptSecurityFailOpen(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESGuardrailLlmPromptSecurityCustomPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
