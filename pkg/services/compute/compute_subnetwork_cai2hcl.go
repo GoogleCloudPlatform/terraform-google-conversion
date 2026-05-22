@@ -189,12 +189,11 @@ func flattenComputeSubnetworkReservedInternalRange(v interface{}, d *schema.Reso
 	if v == nil {
 		return v
 	}
-	// Normalize the URL to the prefixed format: networkconnectivity.googleapis.com/projects/...
-	path, err := tpgresource.GetRelativePath(v.(string))
+	relative, err := tpgresource.GetRelativePath(v.(string))
 	if err != nil {
 		return v
 	}
-	return "networkconnectivity.googleapis.com/" + path
+	return relative
 }
 
 func flattenComputeSubnetworkName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -267,12 +266,11 @@ func flattenComputeSubnetworkSecondaryIpRangeReservedInternalRange(v interface{}
 	if v == nil {
 		return v
 	}
-	// Normalize the URL to the prefixed format: networkconnectivity.googleapis.com/projects/...
-	path, err := tpgresource.GetRelativePath(v.(string))
+	relative, err := tpgresource.GetRelativePath(v.(string))
 	if err != nil {
 		return v
 	}
-	return "networkconnectivity.googleapis.com/" + path
+	return relative
 }
 
 func flattenComputeSubnetworkPrivateIpGoogleAccess(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
