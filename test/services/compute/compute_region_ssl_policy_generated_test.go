@@ -66,6 +66,7 @@ func TestAccComputeRegionSslPolicy(t *testing.T) {
 					"dynamic",
 					"for_each",
 					"lifecycle",
+					"post_quantum_key_exchange",
 					"provider",
 					"timeouts",
 				},
