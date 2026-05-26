@@ -61,6 +61,8 @@ func TestAccDatastreamPrivateConnection(t *testing.T) {
 					"provider",
 					"psc_interface_config",
 					"timeouts",
+					"vpc_peering_config.subnet",
+					"vpc_peering_config.vpc",
 				},
 				"google_datastream_private_connection",
 			)
