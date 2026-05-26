@@ -192,6 +192,18 @@ func GetComputeNetworkFirewallPolicyRuleApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("disabled"); ok || !reflect.DeepEqual(v, disabledProp) {
 		obj["disabled"] = disabledProp
 	}
+	targetTypeProp, err := expandComputeNetworkFirewallPolicyRuleTargetType(d.Get("target_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("target_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetTypeProp)) && (ok || !reflect.DeepEqual(v, targetTypeProp)) {
+		obj["targetType"] = targetTypeProp
+	}
+	targetForwardingRulesProp, err := expandComputeNetworkFirewallPolicyRuleTargetForwardingRules(d.Get("target_forwarding_rules"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("target_forwarding_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetForwardingRulesProp)) && (ok || !reflect.DeepEqual(v, targetForwardingRulesProp)) {
+		obj["targetForwardingRules"] = targetForwardingRulesProp
+	}
 
 	return obj, nil
 }
@@ -547,5 +559,13 @@ func expandComputeNetworkFirewallPolicyRuleTargetSecureTagsState(v interface{}, 
 }
 
 func expandComputeNetworkFirewallPolicyRuleDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNetworkFirewallPolicyRuleTargetType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeNetworkFirewallPolicyRuleTargetForwardingRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
