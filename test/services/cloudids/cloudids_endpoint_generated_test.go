@@ -12,7 +12,7 @@
 //
 // ----------------------------------------------------------------------------
 
-package compute_test
+package cloudids_test
 
 import (
 	"testing"
@@ -20,21 +20,12 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/test"
 )
 
-func TestAccComputeInterconnect(t *testing.T) {
+func TestAccCloudIdsEndpoint(t *testing.T) {
 	t.Parallel()
 
 	tests := []test.TestCase{
 		{
-			Name: "TestAccComputeInterconnect_computeInterconnectBasicTestExample",
-		},
-		{
-			Name: "TestAccComputeInterconnect_computeInterconnectBasicTestExample_update",
-		},
-		{
-			Name: "TestAccComputeInterconnect_computeInterconnectMacsecTest",
-		},
-		{
-			Name: "TestAccComputeInterconnect_resourceManagerTags",
+			Name: "TestAccCloudIdsEndpoint_basic",
 		},
 	}
 
@@ -57,12 +48,11 @@ func TestAccComputeInterconnect(t *testing.T) {
 					"dynamic",
 					"for_each",
 					"lifecycle",
-					"params",
-					"params.resource_manager_tags",
+					"location",
 					"provider",
 					"timeouts",
 				},
-				"google_compute_interconnect",
+				"google_cloud_ids_endpoint",
 			)
 		})
 	}

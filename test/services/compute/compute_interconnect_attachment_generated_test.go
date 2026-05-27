@@ -36,6 +36,12 @@ func TestAccComputeInterconnectAttachment(t *testing.T) {
 		{
 			Name: "TestAccComputeInterconnectAttachment_computeInterconnectAttachmentCustomRangesExample",
 		},
+		{
+			Name: "TestAccComputeInterconnectAttachment_l2DedicatedExample",
+		},
+		{
+			Name: "TestAccComputeInterconnectAttachment_resourceManagerTags",
+		},
 	}
 
 	for _, tt := range tests {
@@ -63,6 +69,7 @@ func TestAccComputeInterconnectAttachment(t *testing.T) {
 					"provider",
 					"subnet_length",
 					"timeouts",
+					"vlan_tag8021q",
 				},
 				"google_compute_interconnect_attachment",
 			)
