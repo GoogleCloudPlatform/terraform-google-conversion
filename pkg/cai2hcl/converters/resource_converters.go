@@ -31,6 +31,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudids"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudquotas"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
@@ -501,6 +502,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"identitytoolkit.googleapis.com/Tenant": {
 		"Default": identityplatform.NewIdentityPlatformTenantCai2hclConverter(provider),
+	},
+	"ids.googleapis.com/Endpoint": {
+		"Default": cloudids.NewCloudIdsEndpointCai2hclConverter(provider),
 	},
 	"logging.googleapis.com/LogMetric": {
 		"Default": logging.NewLoggingMetricCai2hclConverter(provider),

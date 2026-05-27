@@ -48,6 +48,9 @@ func TestAccCertificateManagerCertificate(t *testing.T) {
 		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerClientAuthCertificateExample",
 		},
+		{
+			Name: "TestAccCertificateManagerCertificate_migration",
+		},
 	}
 
 	for _, tt := range tests {

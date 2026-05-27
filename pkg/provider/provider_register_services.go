@@ -19,6 +19,7 @@ import (
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudbuildv2"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/clouddeploy"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudfunctions2"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudids"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudquotas"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/cloudtasks"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/colab"
