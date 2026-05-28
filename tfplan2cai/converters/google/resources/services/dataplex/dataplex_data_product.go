@@ -233,10 +233,21 @@ func expandDataplexDataProductAccessGroupsPrincipal(v interface{}, d tpgresource
 		transformed["googleGroup"] = transformedGoogleGroup
 	}
 
+	transformedServiceAccount, err := expandDataplexDataProductAccessGroupsPrincipalServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
 	return transformed, nil
 }
 
 func expandDataplexDataProductAccessGroupsPrincipalGoogleGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDataProductAccessGroupsPrincipalServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
