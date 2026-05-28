@@ -121,6 +121,7 @@ func TestAccComputeSubnetwork(t *testing.T) {
 					"params",
 					"params.resource_manager_tags",
 					"provider",
+					"resolve_subnet_mask",
 					"send_secondary_ip_range_if_empty",
 					"timeouts",
 				},
