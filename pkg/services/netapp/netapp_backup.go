@@ -110,6 +110,37 @@ func ResourceNetappBackup() *schema.Resource {
 Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
 			},
+			"ontap_source": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `Details of the ONTAP source volume and snapshot.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"storage_pool": {
+							Type:     schema.TypeString,
+							Required: true,
+							ForceNew: true,
+							Description: `Name of the storage pool. This must be specified for creating backups for ONTAP mode volumes.
+Format: 'projects/{{project}}/locations/{{location}}/storagePools/{{storage_pool_id}}'`,
+						},
+						"volume_uuid": {
+							Type:        schema.TypeString,
+							Required:    true,
+							ForceNew:    true,
+							Description: `The UUID of the ONTAP source volume.`,
+						},
+						"snapshot_uuid": {
+							Type:        schema.TypeString,
+							Computed:    true,
+							Optional:    true,
+							ForceNew:    true,
+							Description: `The UUID of the ONTAP source snapshot.`,
+						},
+					},
+				},
+			},
 			"source_snapshot": {
 				Type:             schema.TypeString,
 				Optional:         true,

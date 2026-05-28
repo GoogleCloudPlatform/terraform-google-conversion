@@ -131,6 +131,7 @@ func (c *NetappBackupCai2hclConverter) convertResourceData(asset caiasset.Asset)
 	hclData["source_volume"] = flattenNetappBackupSourceVolume(res["sourceVolume"], d, config)
 	hclData["labels"] = flattenNetappBackupLabels(res["labels"], d, config)
 	hclData["source_snapshot"] = flattenNetappBackupSourceSnapshot(res["sourceSnapshot"], d, config)
+	hclData["ontap_source"] = flattenNetappBackupOntapSource(res["ontapSource"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -173,5 +174,49 @@ func flattenNetappBackupSourceSnapshot(v interface{}, d *schema.ResourceData, co
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenNetappBackupOntapSource(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["storage_pool"] =
+		flattenNetappBackupOntapSourceStoragePool(original["storagePool"], d, config)
+	transformed["volume_uuid"] =
+		flattenNetappBackupOntapSourceVolumeUuid(original["volumeUuid"], d, config)
+	transformed["snapshot_uuid"] =
+		flattenNetappBackupOntapSourceSnapshotUuid(original["snapshotUuid"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetappBackupOntapSourceStoragePool(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenNetappBackupOntapSourceVolumeUuid(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenNetappBackupOntapSourceSnapshotUuid(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
