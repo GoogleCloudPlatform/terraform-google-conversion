@@ -472,6 +472,20 @@ func expandNetworkManagementConnectivityTestDestination(v interface{}, d tpgreso
 		transformed["projectId"] = transformedProjectId
 	}
 
+	transformedGkePod, err := expandNetworkManagementConnectivityTestDestinationGkePod(original["gke_pod"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGkePod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gkePod"] = transformedGkePod
+	}
+
+	transformedNetworkType, err := expandNetworkManagementConnectivityTestDestinationNetworkType(original["network_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkType"] = transformedNetworkType
+	}
+
 	return transformed, nil
 }
 
@@ -516,6 +530,14 @@ func expandNetworkManagementConnectivityTestDestinationNetwork(v interface{}, d 
 }
 
 func expandNetworkManagementConnectivityTestDestinationProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestDestinationGkePod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkManagementConnectivityTestDestinationNetworkType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
