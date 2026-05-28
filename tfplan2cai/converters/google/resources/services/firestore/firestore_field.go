@@ -192,7 +192,7 @@ func expandFirestoreFieldIndexConfig(v interface{}, d tpgresource.TerraformResou
 }
 
 /*
- * Expands an empty terraform config into an empty object.
+ * Expands an empty ttlConfig terraform block into an empty object.
  *
  * Used to differentiate a user specifying an empty block versus a null/unset block.
  *
@@ -203,11 +203,18 @@ func expandFirestoreFieldTtlConfig(v interface{}, d tpgresource.TerraformResourc
 	if v == nil {
 		return nil, nil
 	}
-
 	l := v.([]interface{})
 	if len(l) == 0 {
 		return nil, nil
 	}
-	// A set, but empty object.
-	return struct{}{}, nil
+	// A set (but possibly) empty value.
+	transformed := make(map[string]interface{})
+	if l[0] != nil {
+		original := l[0].(map[string]interface{})
+		originalValue := original["expiration_offset"]
+		if val := reflect.ValueOf(originalValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["expiration_offset"] = originalValue
+		}
+	}
+	return transformed, nil
 }
