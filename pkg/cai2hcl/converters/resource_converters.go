@@ -640,12 +640,19 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	"securesourcemanager.googleapis.com/Instance": {
 		"Default": securesourcemanager.NewSecureSourceManagerInstanceCai2hclConverter(provider),
 	},
+	"securitycenter.googleapis.com/BigQueryExport": {
+		"SecurityCenterV2FolderSccBigQueryExport":        securitycenterv2.NewSecurityCenterV2FolderSccBigQueryExportCai2hclConverter(provider),
+		"SecurityCenterV2OrganizationSccBigQueryExport":  securitycenterv2.NewSecurityCenterV2OrganizationSccBigQueryExportCai2hclConverter(provider),
+		"SecurityCenterV2OrganizationSccBigQueryExports": securitycenterv2.NewSecurityCenterV2OrganizationSccBigQueryExportsCai2hclConverter(provider),
+	},
 	"securitycenter.googleapis.com/MuteConfig": {
 		"SecurityCenterV2FolderMuteConfig":       securitycenterv2.NewSecurityCenterV2FolderMuteConfigCai2hclConverter(provider),
 		"SecurityCenterV2OrganizationMuteConfig": securitycenterv2.NewSecurityCenterV2OrganizationMuteConfigCai2hclConverter(provider),
 	},
 	"securitycenter.googleapis.com/NotificationConfig": {
-		"Default": securitycenterv2.NewSecurityCenterV2OrganizationNotificationConfigCai2hclConverter(provider),
+		"SecurityCenterV2FolderNotificationConfig":       securitycenterv2.NewSecurityCenterV2FolderNotificationConfigCai2hclConverter(provider),
+		"SecurityCenterV2OrganizationNotificationConfig": securitycenterv2.NewSecurityCenterV2OrganizationNotificationConfigCai2hclConverter(provider),
+		"SecurityCenterV2ProjectNotificationConfig":      securitycenterv2.NewSecurityCenterV2ProjectNotificationConfigCai2hclConverter(provider),
 	},
 	"spanner.googleapis.com/Database": {
 		"Default": spanner.NewSpannerDatabaseCai2hclConverter(provider),
