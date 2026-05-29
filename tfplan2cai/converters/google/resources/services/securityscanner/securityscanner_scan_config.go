@@ -164,6 +164,12 @@ func GetSecurityScannerScanConfigApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("export_to_security_command_center"); !tpgresource.IsEmptyValue(reflect.ValueOf(exportToSecurityCommandCenterProp)) && (ok || !reflect.DeepEqual(v, exportToSecurityCommandCenterProp)) {
 		obj["exportToSecurityCommandCenter"] = exportToSecurityCommandCenterProp
 	}
+	ignoreHttpStatusErrorsProp, err := expandSecurityScannerScanConfigIgnoreHttpStatusErrors(d.Get("ignore_http_status_errors"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ignore_http_status_errors"); !tpgresource.IsEmptyValue(reflect.ValueOf(ignoreHttpStatusErrorsProp)) && (ok || !reflect.DeepEqual(v, ignoreHttpStatusErrorsProp)) {
+		obj["ignoreHttpStatusErrors"] = ignoreHttpStatusErrorsProp
+	}
 
 	return obj, nil
 }
@@ -344,5 +350,9 @@ func expandSecurityScannerScanConfigTargetPlatforms(v interface{}, d tpgresource
 }
 
 func expandSecurityScannerScanConfigExportToSecurityCommandCenter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecurityScannerScanConfigIgnoreHttpStatusErrors(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
