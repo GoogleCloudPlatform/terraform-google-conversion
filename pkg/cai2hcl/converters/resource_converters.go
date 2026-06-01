@@ -104,7 +104,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	// ####### END handwritten resources ###########
 	"accessapproval.googleapis.com/AccessApprovalSettings": {
-		"Default": accessapproval.NewAccessApprovalFolderSettingsCai2hclConverter(provider),
+		"AccessApprovalFolderSettings":       accessapproval.NewAccessApprovalFolderSettingsCai2hclConverter(provider),
+		"AccessApprovalOrganizationSettings": accessapproval.NewAccessApprovalOrganizationSettingsCai2hclConverter(provider),
+		"AccessApprovalProjectSettings":      accessapproval.NewAccessApprovalProjectSettingsCai2hclConverter(provider),
 	},
 	"aiplatform.googleapis.com/NotebookExecutionJob": {
 		"Default": colab.NewColabNotebookExecutionCai2hclConverter(provider),
