@@ -90,6 +90,8 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_container_node_pool": container.ContainerNodePoolTfplan2caiConverter(),
 	// ####### END handwritten resources ###########
 	"google_folder_access_approval_settings":                 accessapproval.AccessApprovalFolderSettingsTfplan2caiConverter(),
+	"google_organization_access_approval_settings":           accessapproval.AccessApprovalOrganizationSettingsTfplan2caiConverter(),
+	"google_project_access_approval_settings":                accessapproval.AccessApprovalProjectSettingsTfplan2caiConverter(),
 	"google_alloydb_backup":                                  alloydb.AlloydbBackupTfplan2caiConverter(),
 	"google_alloydb_cluster":                                 alloydb.AlloydbClusterTfplan2caiConverter(),
 	"google_alloydb_instance":                                alloydb.AlloydbInstanceTfplan2caiConverter(),

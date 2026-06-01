@@ -21,6 +21,14 @@ func ConvertResource(asset caiasset.Asset) ([]*models.TerraformResourceBlock, er
 		// Edge cases
 		// Handle the edge case that multiple Terraform resources share the same CAI asset type
 		switch asset.Type {
+		case "accessapproval.googleapis.com/AccessApprovalSettings":
+			if true && strings.Contains(asset.Name, "folders") {
+				converter = ConverterMap[asset.Type]["AccessApprovalFolderSettings"]
+			} else if true && strings.Contains(asset.Name, "organizations") {
+				converter = ConverterMap[asset.Type]["AccessApprovalOrganizationSettings"]
+			} else if true && strings.Contains(asset.Name, "projects") {
+				converter = ConverterMap[asset.Type]["AccessApprovalProjectSettings"]
+			}
 		case "cloudasset.googleapis.com/Feed":
 			if true && strings.Contains(asset.Name, "folders") {
 				converter = ConverterMap[asset.Type]["CloudAssetFolderFeed"]
