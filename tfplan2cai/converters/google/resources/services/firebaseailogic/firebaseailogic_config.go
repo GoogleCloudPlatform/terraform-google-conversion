@@ -210,7 +210,7 @@ func expandFirebaseAILogicConfigTrafficFilter(v interface{}, d tpgresource.Terra
 	transformedTemplateOnly, err := expandFirebaseAILogicConfigTrafficFilterTemplateOnly(original["template_only"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedTemplateOnly); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["templateOnly"] = transformedTemplateOnly
 	}
 
