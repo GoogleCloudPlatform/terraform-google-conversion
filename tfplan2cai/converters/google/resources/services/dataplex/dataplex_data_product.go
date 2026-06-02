@@ -110,6 +110,12 @@ func GetDataplexDataProductCaiObject(d tpgresource.TerraformResourceData, config
 
 func GetDataplexDataProductApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	accessApprovalConfigProp, err := expandDataplexDataProductAccessApprovalConfig(d.Get("access_approval_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("access_approval_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(accessApprovalConfigProp)) && (ok || !reflect.DeepEqual(v, accessApprovalConfigProp)) {
+		obj["accessApprovalConfig"] = accessApprovalConfigProp
+	}
 	displayNameProp, err := expandDataplexDataProductDisplayName(d.Get("display_name"), d, config)
 	if err != nil {
 		return nil, err
@@ -142,6 +148,32 @@ func GetDataplexDataProductApiObject(d tpgresource.TerraformResourceData, config
 	}
 
 	return obj, nil
+}
+
+func expandDataplexDataProductAccessApprovalConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedApproverEmails, err := expandDataplexDataProductAccessApprovalConfigApproverEmails(original["approver_emails"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApproverEmails); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["approverEmails"] = transformedApproverEmails
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDataProductAccessApprovalConfigApproverEmails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDataplexDataProductDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
