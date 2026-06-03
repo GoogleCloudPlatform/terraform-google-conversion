@@ -63,6 +63,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkmanagement"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkservices"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
@@ -255,6 +256,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_netapp_kmsconfig":                                netapp.NetappkmsconfigTfplan2caiConverter(),
 	"google_network_connectivity_group":                      networkconnectivity.NetworkConnectivityGroupTfplan2caiConverter(),
 	"google_network_connectivity_policy_based_route":         networkconnectivity.NetworkConnectivityPolicyBasedRouteTfplan2caiConverter(),
+	"google_network_management_connectivity_test":            networkmanagement.NetworkManagementConnectivityTestTfplan2caiConverter(),
 	"google_network_security_address_group":                  networksecurity.NetworkSecurityAddressGroupTfplan2caiConverter(),
 	"google_network_security_authz_policy":                   networksecurity.NetworkSecurityAuthzPolicyTfplan2caiConverter(),
 	"google_network_security_client_tls_policy":              networksecurity.NetworkSecurityClientTlsPolicyTfplan2caiConverter(),
