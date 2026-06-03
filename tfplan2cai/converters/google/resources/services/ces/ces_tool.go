@@ -110,6 +110,12 @@ func GetCESToolCaiObject(d tpgresource.TerraformResourceData, config *transport_
 
 func GetCESToolApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	agentToolProp, err := expandCESToolAgentTool(d.Get("agent_tool"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("agent_tool"); !tpgresource.IsEmptyValue(reflect.ValueOf(agentToolProp)) && (ok || !reflect.DeepEqual(v, agentToolProp)) {
+		obj["agentTool"] = agentToolProp
+	}
 	clientFunctionProp, err := expandCESToolClientFunction(d.Get("client_function"), d, config)
 	if err != nil {
 		return nil, err
@@ -128,6 +134,12 @@ func GetCESToolApiObject(d tpgresource.TerraformResourceData, config *transport_
 	} else if v, ok := d.GetOkExists("execution_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(executionTypeProp)) && (ok || !reflect.DeepEqual(v, executionTypeProp)) {
 		obj["executionType"] = executionTypeProp
 	}
+	fileSearchToolProp, err := expandCESToolFileSearchTool(d.Get("file_search_tool"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("file_search_tool"); !tpgresource.IsEmptyValue(reflect.ValueOf(fileSearchToolProp)) && (ok || !reflect.DeepEqual(v, fileSearchToolProp)) {
+		obj["fileSearchTool"] = fileSearchToolProp
+	}
 	googleSearchToolProp, err := expandCESToolGoogleSearchTool(d.Get("google_search_tool"), d, config)
 	if err != nil {
 		return nil, err
@@ -140,8 +152,62 @@ func GetCESToolApiObject(d tpgresource.TerraformResourceData, config *transport_
 	} else if v, ok := d.GetOkExists("python_function"); !tpgresource.IsEmptyValue(reflect.ValueOf(pythonFunctionProp)) && (ok || !reflect.DeepEqual(v, pythonFunctionProp)) {
 		obj["pythonFunction"] = pythonFunctionProp
 	}
+	widgetToolProp, err := expandCESToolWidgetTool(d.Get("widget_tool"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("widget_tool"); !tpgresource.IsEmptyValue(reflect.ValueOf(widgetToolProp)) && (ok || !reflect.DeepEqual(v, widgetToolProp)) {
+		obj["widgetTool"] = widgetToolProp
+	}
 
 	return obj, nil
+}
+
+func expandCESToolAgentTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandCESToolAgentToolName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedDescription, err := expandCESToolAgentToolDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedAgent, err := expandCESToolAgentToolAgent(original["agent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAgent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["agent"] = transformedAgent
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolAgentToolName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolAgentToolDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolAgentToolAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESToolClientFunction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -758,6 +824,13 @@ func expandCESToolDataStoreTool(v interface{}, d tpgresource.TerraformResourceDa
 		transformed["boostSpecs"] = transformedBoostSpecs
 	}
 
+	transformedDataStoreSource, err := expandCESToolDataStoreToolDataStoreSource(original["data_store_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataStoreSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataStoreSource"] = transformedDataStoreSource
+	}
+
 	transformedDescription, err := expandCESToolDataStoreToolDescription(original["description"], d, config)
 	if err != nil {
 		return nil, err
@@ -770,6 +843,13 @@ func expandCESToolDataStoreTool(v interface{}, d tpgresource.TerraformResourceDa
 		return nil, err
 	} else if val := reflect.ValueOf(transformedEngineSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["engineSource"] = transformedEngineSource
+	}
+
+	transformedFilterParameterBehavior, err := expandCESToolDataStoreToolFilterParameterBehavior(original["filter_parameter_behavior"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilterParameterBehavior); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filterParameterBehavior"] = transformedFilterParameterBehavior
 	}
 
 	transformedMaxResults, err := expandCESToolDataStoreToolMaxResults(original["max_results"], d, config)
@@ -999,6 +1079,164 @@ func expandCESToolDataStoreToolBoostSpecsSpecConditionBoostSpecsCondition(v inte
 	return v, nil
 }
 
+func expandCESToolDataStoreToolDataStoreSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFilter, err := expandCESToolDataStoreToolDataStoreSourceFilter(original["filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filter"] = transformedFilter
+	}
+
+	transformedDataStore, err := expandCESToolDataStoreToolDataStoreSourceDataStore(original["data_store"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataStore); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataStore"] = transformedDataStore
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStore(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConnectorConfig, err := expandCESToolDataStoreToolDataStoreSourceDataStoreConnectorConfig(original["connector_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConnectorConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["connectorConfig"] = transformedConnectorConfig
+	}
+
+	transformedCreateTime, err := expandCESToolDataStoreToolDataStoreSourceDataStoreCreateTime(original["create_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCreateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["createTime"] = transformedCreateTime
+	}
+
+	transformedDisplayName, err := expandCESToolDataStoreToolDataStoreSourceDataStoreDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedDocumentProcessingMode, err := expandCESToolDataStoreToolDataStoreSourceDataStoreDocumentProcessingMode(original["document_processing_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDocumentProcessingMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["documentProcessingMode"] = transformedDocumentProcessingMode
+	}
+
+	transformedName, err := expandCESToolDataStoreToolDataStoreSourceDataStoreName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedType, err := expandCESToolDataStoreToolDataStoreSourceDataStoreType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreConnectorConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCollection, err := expandCESToolDataStoreToolDataStoreSourceDataStoreConnectorConfigCollection(original["collection"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCollection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["collection"] = transformedCollection
+	}
+
+	transformedCollectionDisplayName, err := expandCESToolDataStoreToolDataStoreSourceDataStoreConnectorConfigCollectionDisplayName(original["collection_display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCollectionDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["collectionDisplayName"] = transformedCollectionDisplayName
+	}
+
+	transformedDataSource, err := expandCESToolDataStoreToolDataStoreSourceDataStoreConnectorConfigDataSource(original["data_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataSource"] = transformedDataSource
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreConnectorConfigCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreConnectorConfigCollectionDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreConnectorConfigDataSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreCreateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreDocumentProcessingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolDataStoreSourceDataStoreType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandCESToolDataStoreToolDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -1205,6 +1443,10 @@ func expandCESToolDataStoreToolEngineSourceEngine(v interface{}, d tpgresource.T
 }
 
 func expandCESToolDataStoreToolEngineSourceFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolFilterParameterBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1469,6 +1711,65 @@ func expandCESToolExecutionType(v interface{}, d tpgresource.TerraformResourceDa
 	return v, nil
 }
 
+func expandCESToolFileSearchTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCorpusType, err := expandCESToolFileSearchToolCorpusType(original["corpus_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCorpusType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["corpusType"] = transformedCorpusType
+	}
+
+	transformedName, err := expandCESToolFileSearchToolName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedDescription, err := expandCESToolFileSearchToolDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedFileCorpus, err := expandCESToolFileSearchToolFileCorpus(original["file_corpus"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFileCorpus); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fileCorpus"] = transformedFileCorpus
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolFileSearchToolCorpusType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolFileSearchToolName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolFileSearchToolDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolFileSearchToolFileCorpus(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandCESToolGoogleSearchTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -1516,6 +1817,13 @@ func expandCESToolGoogleSearchTool(v interface{}, d tpgresource.TerraformResourc
 		transformed["preferredDomains"] = transformedPreferredDomains
 	}
 
+	transformedPromptConfig, err := expandCESToolGoogleSearchToolPromptConfig(original["prompt_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPromptConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["promptConfig"] = transformedPromptConfig
+	}
+
 	return transformed, nil
 }
 
@@ -1536,6 +1844,43 @@ func expandCESToolGoogleSearchToolName(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandCESToolGoogleSearchToolPreferredDomains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolGoogleSearchToolPromptConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTextPrompt, err := expandCESToolGoogleSearchToolPromptConfigTextPrompt(original["text_prompt"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTextPrompt); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["textPrompt"] = transformedTextPrompt
+	}
+
+	transformedVoicePrompt, err := expandCESToolGoogleSearchToolPromptConfigVoicePrompt(original["voice_prompt"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVoicePrompt); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["voicePrompt"] = transformedVoicePrompt
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolGoogleSearchToolPromptConfigTextPrompt(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolGoogleSearchToolPromptConfigVoicePrompt(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1584,5 +1929,531 @@ func expandCESToolPythonFunctionName(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandCESToolPythonFunctionPythonCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandCESToolWidgetToolName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedDescription, err := expandCESToolWidgetToolDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedWidgetType, err := expandCESToolWidgetToolWidgetType(original["widget_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWidgetType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["widgetType"] = transformedWidgetType
+	}
+
+	transformedUiConfig, err := expandCESToolWidgetToolUiConfig(original["ui_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUiConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uiConfig"] = transformedUiConfig
+	}
+
+	transformedDataMapping, err := expandCESToolWidgetToolDataMapping(original["data_mapping"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataMapping); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataMapping"] = transformedDataMapping
+	}
+
+	transformedTextResponseConfig, err := expandCESToolWidgetToolTextResponseConfig(original["text_response_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTextResponseConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["textResponseConfig"] = transformedTextResponseConfig
+	}
+
+	transformedParameters, err := expandCESToolWidgetToolParameters(original["parameters"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParameters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parameters"] = transformedParameters
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolWidgetToolName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolWidgetType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolUiConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandCESToolWidgetToolDataMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSourceToolName, err := expandCESToolWidgetToolDataMappingSourceToolName(original["source_tool_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceToolName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceToolName"] = transformedSourceToolName
+	}
+
+	transformedFieldMappings, err := expandCESToolWidgetToolDataMappingFieldMappings(original["field_mappings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFieldMappings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fieldMappings"] = transformedFieldMappings
+	}
+
+	transformedPythonFunction, err := expandCESToolWidgetToolDataMappingPythonFunction(original["python_function"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPythonFunction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pythonFunction"] = transformedPythonFunction
+	}
+
+	transformedMode, err := expandCESToolWidgetToolDataMappingMode(original["mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mode"] = transformedMode
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolWidgetToolDataMappingSourceToolName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolDataMappingFieldMappings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESToolWidgetToolDataMappingPythonFunction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandCESToolWidgetToolDataMappingPythonFunctionName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedPythonCode, err := expandCESToolWidgetToolDataMappingPythonFunctionPythonCode(original["python_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPythonCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pythonCode"] = transformedPythonCode
+	}
+
+	transformedDescription, err := expandCESToolWidgetToolDataMappingPythonFunctionDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolWidgetToolDataMappingPythonFunctionName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolDataMappingPythonFunctionPythonCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolDataMappingPythonFunctionDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolDataMappingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolTextResponseConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandCESToolWidgetToolTextResponseConfigType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	transformedStaticText, err := expandCESToolWidgetToolTextResponseConfigStaticText(original["static_text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStaticText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["staticText"] = transformedStaticText
+	}
+
+	transformedTextResponseInstruction, err := expandCESToolWidgetToolTextResponseConfigTextResponseInstruction(original["text_response_instruction"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTextResponseInstruction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["textResponseInstruction"] = transformedTextResponseInstruction
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolWidgetToolTextResponseConfigType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolTextResponseConfigStaticText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolTextResponseConfigTextResponseInstruction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAdditionalProperties, err := expandCESToolWidgetToolParametersAdditionalProperties(original["additional_properties"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAdditionalProperties); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["additionalProperties"] = transformedAdditionalProperties
+	}
+
+	transformedAnyOf, err := expandCESToolWidgetToolParametersAnyOf(original["any_of"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAnyOf); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["anyOf"] = transformedAnyOf
+	}
+
+	transformedDefault, err := expandCESToolWidgetToolParametersDefault(original["default"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefault); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["default"] = transformedDefault
+	}
+
+	transformedDefs, err := expandCESToolWidgetToolParametersDefs(original["defs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDefs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["defs"] = transformedDefs
+	}
+
+	transformedDescription, err := expandCESToolWidgetToolParametersDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedEnum, err := expandCESToolWidgetToolParametersEnum(original["enum"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnum); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enum"] = transformedEnum
+	}
+
+	transformedItems, err := expandCESToolWidgetToolParametersItems(original["items"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedItems); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["items"] = transformedItems
+	}
+
+	transformedMaxItems, err := expandCESToolWidgetToolParametersMaxItems(original["max_items"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxItems); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxItems"] = transformedMaxItems
+	}
+
+	transformedMaximum, err := expandCESToolWidgetToolParametersMaximum(original["maximum"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaximum); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maximum"] = transformedMaximum
+	}
+
+	transformedMinItems, err := expandCESToolWidgetToolParametersMinItems(original["min_items"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinItems); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minItems"] = transformedMinItems
+	}
+
+	transformedMinimum, err := expandCESToolWidgetToolParametersMinimum(original["minimum"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinimum); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minimum"] = transformedMinimum
+	}
+
+	transformedNullable, err := expandCESToolWidgetToolParametersNullable(original["nullable"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNullable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nullable"] = transformedNullable
+	}
+
+	transformedPrefixItems, err := expandCESToolWidgetToolParametersPrefixItems(original["prefix_items"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrefixItems); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["prefixItems"] = transformedPrefixItems
+	}
+
+	transformedProperties, err := expandCESToolWidgetToolParametersProperties(original["properties"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProperties); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["properties"] = transformedProperties
+	}
+
+	transformedRef, err := expandCESToolWidgetToolParametersRef(original["ref"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRef); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ref"] = transformedRef
+	}
+
+	transformedRequired, err := expandCESToolWidgetToolParametersRequired(original["required"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequired); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["required"] = transformedRequired
+	}
+
+	transformedTitle, err := expandCESToolWidgetToolParametersTitle(original["title"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["title"] = transformedTitle
+	}
+
+	transformedType, err := expandCESToolWidgetToolParametersType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	transformedUniqueItems, err := expandCESToolWidgetToolParametersUniqueItems(original["unique_items"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUniqueItems); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["uniqueItems"] = transformedUniqueItems
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolWidgetToolParametersAdditionalProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandCESToolWidgetToolParametersAnyOf(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandCESToolWidgetToolParametersDefault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandCESToolWidgetToolParametersDefs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandCESToolWidgetToolParametersDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersEnum(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersItems(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandCESToolWidgetToolParametersMaxItems(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersMaximum(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersMinItems(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersMinimum(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersNullable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersPrefixItems(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandCESToolWidgetToolParametersProperties(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandCESToolWidgetToolParametersRef(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersRequired(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolWidgetToolParametersUniqueItems(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
