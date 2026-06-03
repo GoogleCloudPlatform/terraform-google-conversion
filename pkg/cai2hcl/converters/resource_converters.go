@@ -64,6 +64,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkmanagement"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkservices"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
@@ -564,6 +565,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"networkconnectivity.googleapis.com/PolicyBasedRoute": {
 		"Default": networkconnectivity.NewNetworkConnectivityPolicyBasedRouteCai2hclConverter(provider),
+	},
+	"networkmanagement.googleapis.com/ConnectivityTest": {
+		"Default": networkmanagement.NewNetworkManagementConnectivityTestCai2hclConverter(provider),
 	},
 	"networksecurity.googleapis.com/AddressGroup": {
 		"Default": networksecurity.NewNetworkSecurityAddressGroupCai2hclConverter(provider),

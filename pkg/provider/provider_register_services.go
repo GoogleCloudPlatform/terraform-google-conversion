@@ -51,6 +51,7 @@ import (
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/monitoring"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/netapp"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkconnectivity"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkmanagement"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networksecurity"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/networkservices"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/privateca"
