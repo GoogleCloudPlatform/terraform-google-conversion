@@ -454,7 +454,7 @@ func expandBackupDRRestoreWorkloadComputeInstanceRestoreProperties(v interface{}
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedAllocationAffinity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["allocationAffinity"] = transformedAllocationAffinity
+		transformed["reservationAffinity"] = transformedAllocationAffinity
 	}
 
 	transformedResourcePolicies, err := expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesResourcePolicies(original["resource_policies"], d, config)
@@ -1166,7 +1166,7 @@ func expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesNetworkInterfa
 		if err != nil {
 			return nil, err
 		} else if val := reflect.ValueOf(transformedIpAddress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["ipAddress"] = transformedIpAddress
+			transformed["networkIP"] = transformedIpAddress
 		}
 
 		transformedIpv6Address, err := expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesNetworkInterfacesIpv6Address(original["ipv6_address"], d, config)
@@ -1295,7 +1295,7 @@ func expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesNetworkInterfa
 		if err != nil {
 			return nil, err
 		} else if val := reflect.ValueOf(transformedExternalIp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["externalIp"] = transformedExternalIp
+			transformed["natIP"] = transformedExternalIp
 		}
 
 		transformedExternalIpv6, err := expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesNetworkInterfacesAccessConfigsExternalIpv6(original["external_ipv6"], d, config)
@@ -1401,7 +1401,7 @@ func expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesNetworkInterfa
 		if err != nil {
 			return nil, err
 		} else if val := reflect.ValueOf(transformedExternalIp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["externalIp"] = transformedExternalIp
+			transformed["natIP"] = transformedExternalIp
 		}
 
 		transformedExternalIpv6, err := expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesNetworkInterfacesIpv6AccessConfigsExternalIpv6(original["external_ipv6"], d, config)
@@ -1633,7 +1633,7 @@ func expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesAllocationAffi
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedConsumeAllocationType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-		transformed["consumeAllocationType"] = transformedConsumeAllocationType
+		transformed["consumeReservationType"] = transformedConsumeAllocationType
 	}
 
 	transformedKey, err := expandBackupDRRestoreWorkloadComputeInstanceRestorePropertiesAllocationAffinityKey(original["key"], d, config)
