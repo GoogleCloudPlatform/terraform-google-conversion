@@ -654,6 +654,9 @@ func TestAccContainerCluster(t *testing.T) {
 		{
 			Name: "TestAccContainerCluster_custom_subnet",
 		},
+		{
+			Name: "TestAccContainerCluster_withNodeCreationConfig",
+		},
 	}
 
 	for _, tt := range tests {
