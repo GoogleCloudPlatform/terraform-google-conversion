@@ -110,6 +110,12 @@ func GetCloudRunV2WorkerPoolCaiObject(d tpgresource.TerraformResourceData, confi
 
 func GetCloudRunV2WorkerPoolApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	nameProp, err := expandCloudRunV2WorkerPoolName(d.Get("name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+		obj["name"] = nameProp
+	}
 	descriptionProp, err := expandCloudRunV2WorkerPoolDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -177,7 +183,16 @@ func GetCloudRunV2WorkerPoolApiObject(d tpgresource.TerraformResourceData, confi
 		obj["annotations"] = effectiveAnnotationsProp
 	}
 
+	return resourceCloudRunV2WorkerPoolEncoder(d, config, obj)
+}
+
+func resourceCloudRunV2WorkerPoolEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	delete(obj, "name") // Field not allowed when creating.
 	return obj, nil
+}
+
+func expandCloudRunV2WorkerPoolName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return tpgresource.GetResourceNameFromSelfLink(v.(string)), nil
 }
 
 func expandCloudRunV2WorkerPoolDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
