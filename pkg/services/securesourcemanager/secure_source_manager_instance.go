@@ -160,6 +160,16 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 								},
 							},
 						},
+						"psc_allowed_projects": {
+							Type:     schema.TypeList,
+							Optional: true,
+							ForceNew: true,
+							Description: `Optional. Additional allowed projects for setting up PSC connections.
+Instance host project is automatically allowed and does not need to be included in this list.`,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 					},
 				},
 			},

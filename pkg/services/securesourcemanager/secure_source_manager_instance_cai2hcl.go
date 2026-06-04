@@ -168,6 +168,8 @@ func flattenSecureSourceManagerInstancePrivateConfig(v interface{}, d *schema.Re
 		flattenSecureSourceManagerInstancePrivateConfigCustomHostConfig(original["customHostConfig"], d, config)
 	transformed["ca_pool"] =
 		flattenSecureSourceManagerInstancePrivateConfigCaPool(original["caPool"], d, config)
+	transformed["psc_allowed_projects"] =
+		flattenSecureSourceManagerInstancePrivateConfigPscAllowedProjects(original["pscAllowedProjects"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -252,6 +254,10 @@ func flattenSecureSourceManagerInstancePrivateConfigCaPool(v interface{}, d *sch
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenSecureSourceManagerInstancePrivateConfigPscAllowedProjects(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

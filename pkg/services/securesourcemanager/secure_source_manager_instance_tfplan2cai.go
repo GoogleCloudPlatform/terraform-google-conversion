@@ -180,6 +180,13 @@ func expandSecureSourceManagerInstancePrivateConfig(v interface{}, d tpgresource
 		transformed["caPool"] = transformedCaPool
 	}
 
+	transformedPscAllowedProjects, err := expandSecureSourceManagerInstancePrivateConfigPscAllowedProjects(original["psc_allowed_projects"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscAllowedProjects); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscAllowedProjects"] = transformedPscAllowedProjects
+	}
+
 	return transformed, nil
 }
 
@@ -247,6 +254,10 @@ func expandSecureSourceManagerInstancePrivateConfigCustomHostConfigGitSsh(v inte
 }
 
 func expandSecureSourceManagerInstancePrivateConfigCaPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerInstancePrivateConfigPscAllowedProjects(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
