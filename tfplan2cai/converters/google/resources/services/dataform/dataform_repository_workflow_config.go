@@ -140,6 +140,12 @@ func GetDataformRepositoryWorkflowConfigApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("time_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(timeZoneProp)) && (ok || !reflect.DeepEqual(v, timeZoneProp)) {
 		obj["timeZone"] = timeZoneProp
 	}
+	disabledProp, err := expandDataformRepositoryWorkflowConfigDisabled(d.Get("disabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
+		obj["disabled"] = disabledProp
+	}
 
 	return obj, nil
 }
@@ -285,5 +291,9 @@ func expandDataformRepositoryWorkflowConfigCronSchedule(v interface{}, d tpgreso
 }
 
 func expandDataformRepositoryWorkflowConfigTimeZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataformRepositoryWorkflowConfigDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
