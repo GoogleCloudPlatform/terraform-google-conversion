@@ -129,6 +129,8 @@ func (c *DatabaseMigrationServiceMigrationJobCai2hclConverter) convertResourceDa
 
 	hclData["display_name"] = flattenDatabaseMigrationServiceMigrationJobDisplayName(res["displayName"], d, config)
 	hclData["labels"] = flattenDatabaseMigrationServiceMigrationJobLabels(res["labels"], d, config)
+	hclData["stop_on_warnings"] = flattenDatabaseMigrationServiceMigrationJobStopOnWarnings(res["stopOnWarnings"], d, config)
+	hclData["desired_state"] = flattenDatabaseMigrationServiceMigrationJobDesiredState(res["state"], d, config)
 	hclData["type"] = flattenDatabaseMigrationServiceMigrationJobType(res["type"], d, config)
 	hclData["source"] = flattenDatabaseMigrationServiceMigrationJobSource(res["source"], d, config)
 	hclData["destination"] = flattenDatabaseMigrationServiceMigrationJobDestination(res["destination"], d, config)
@@ -164,6 +166,29 @@ func flattenDatabaseMigrationServiceMigrationJobDisplayName(v interface{}, d *sc
 
 func flattenDatabaseMigrationServiceMigrationJobLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
+}
+
+func flattenDatabaseMigrationServiceMigrationJobStopOnWarnings(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDatabaseMigrationServiceMigrationJobDesiredState(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "NOT_STARTED"
+	}
+
+	switch v.(string) {
+	case "DRAFT", "NOT_STARTED":
+		return "NOT_STARTED"
+	case "FAILED":
+		if phase, ok := d.Get("phase").(string); ok && phase == "PROMOTE_IN_PROGRESS" {
+			return "RUNNING"
+		}
+		return "NOT_STARTED"
+	default:
+		// Map all other active states (RUNNING, COMPLETED, STOPPED, etc.) to RUNNING
+		return "RUNNING"
+	}
 }
 
 func flattenDatabaseMigrationServiceMigrationJobType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
