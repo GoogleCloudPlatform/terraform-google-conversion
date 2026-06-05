@@ -205,6 +205,10 @@ func flattenPubsubTopicSchemaSettings(v interface{}, d *schema.ResourceData, con
 		flattenPubsubTopicSchemaSettingsSchema(original["schema"], d, config)
 	transformed["encoding"] =
 		flattenPubsubTopicSchemaSettingsEncoding(original["encoding"], d, config)
+	transformed["first_revision_id"] =
+		flattenPubsubTopicSchemaSettingsFirstRevisionId(original["firstRevisionId"], d, config)
+	transformed["last_revision_id"] =
+		flattenPubsubTopicSchemaSettingsLastRevisionId(original["lastRevisionId"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -223,6 +227,26 @@ func flattenPubsubTopicSchemaSettingsSchema(v interface{}, d *schema.ResourceDat
 }
 
 func flattenPubsubTopicSchemaSettingsEncoding(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenPubsubTopicSchemaSettingsFirstRevisionId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenPubsubTopicSchemaSettingsLastRevisionId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

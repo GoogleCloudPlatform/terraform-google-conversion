@@ -245,6 +245,20 @@ func expandPubsubTopicSchemaSettings(v interface{}, d tpgresource.TerraformResou
 		transformed["encoding"] = transformedEncoding
 	}
 
+	transformedFirstRevisionId, err := expandPubsubTopicSchemaSettingsFirstRevisionId(original["first_revision_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFirstRevisionId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["firstRevisionId"] = transformedFirstRevisionId
+	}
+
+	transformedLastRevisionId, err := expandPubsubTopicSchemaSettingsLastRevisionId(original["last_revision_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLastRevisionId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["lastRevisionId"] = transformedLastRevisionId
+	}
+
 	return transformed, nil
 }
 
@@ -253,6 +267,14 @@ func expandPubsubTopicSchemaSettingsSchema(v interface{}, d tpgresource.Terrafor
 }
 
 func expandPubsubTopicSchemaSettingsEncoding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicSchemaSettingsFirstRevisionId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicSchemaSettingsLastRevisionId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
