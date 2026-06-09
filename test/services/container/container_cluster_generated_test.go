@@ -657,6 +657,9 @@ func TestAccContainerCluster(t *testing.T) {
 		{
 			Name: "TestAccContainerCluster_withNodeCreationConfig",
 		},
+		{
+			Name: "TestAccContainerCluster_withSlurmOperatorConfig",
+		},
 	}
 
 	for _, tt := range tests {
