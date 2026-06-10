@@ -88,7 +88,7 @@ func ResourceConverterCloudSecurityComplianceFramework() cai.ResourceConverter {
 }
 
 func GetCloudSecurityComplianceFrameworkCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//cloudsecuritycompliance.googleapis.com/organizations/{{organization}}/locations/{{location}}/frameworks/{{framework_id}}")
+	name, err := cai.AssetName(d, config, "//cloudsecuritycompliance.googleapis.com/{{parent}}/locations/{{location}}/frameworks/{{framework_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -134,11 +134,16 @@ func GetCloudSecurityComplianceFrameworkApiObject(d tpgresource.TerraformResourc
 
 func resourceCloudSecurityComplianceFrameworkEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
 	// Build the fullname for the Framework resource from the provided
-	// organization, location and frameworkId fields and set it on the
+	// parent, location and framework_id fields and set it on the
 	// API object that will be sent in the request.
-	org, ok := d.Get("organization").(string)
-	if !ok || org == "" {
-		return nil, fmt.Errorf("organization is required and must be a non-empty string")
+	// Extract the parent scope, falling back to organization for backward compatibility
+	var parentStr string
+	if parent, ok := d.GetOk("parent"); ok && parent.(string) != "" {
+		parentStr = parent.(string)
+	} else if org, ok := d.GetOk("organization"); ok && org.(string) != "" {
+		parentStr = fmt.Sprintf("organizations/%s", org.(string))
+	} else {
+		return nil, fmt.Errorf("either parent or organization must be provided")
 	}
 	loc, ok := d.Get("location").(string)
 	if !ok || loc == "" {
@@ -149,7 +154,7 @@ func resourceCloudSecurityComplianceFrameworkEncoder(d tpgresource.TerraformReso
 		return nil, fmt.Errorf("framework_id is required and must be a non-empty string")
 	}
 	// Compose the resource name in the expected API format.
-	name := fmt.Sprintf("organizations/%s/locations/%s/frameworks/%s", org, loc, fw)
+	name := fmt.Sprintf("%s/locations/%s/frameworks/%s", parentStr, loc, fw)
 	obj["name"] = name
 	return obj, nil
 }
