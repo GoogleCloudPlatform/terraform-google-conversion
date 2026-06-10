@@ -88,7 +88,7 @@ func ResourceConverterCloudSecurityComplianceFrameworkDeployment() cai.ResourceC
 }
 
 func GetCloudSecurityComplianceFrameworkDeploymentCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//cloudsecuritycompliance.googleapis.com/organizations/{{organization}}/locations/{{location}}/frameworkDeployments/{{framework_deployment_id}}")
+	name, err := cai.AssetName(d, config, "//cloudsecuritycompliance.googleapis.com/{{parent}}/locations/{{location}}/frameworkDeployments/{{framework_deployment_id}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
