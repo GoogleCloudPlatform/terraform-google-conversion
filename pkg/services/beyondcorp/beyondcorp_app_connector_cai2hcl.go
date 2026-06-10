@@ -85,9 +85,13 @@ func NewBeyondcorpAppConnectorCai2hclConverter(provider *schema.Provider) models
 }
 
 // Convert converts asset to HCL resource blocks.
-func (c *BeyondcorpAppConnectorCai2hclConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
+func (c *BeyondcorpAppConnectorCai2hclConverter) Convert(assets []caiasset.Asset, options *models.ResourceConverterOptions) ([]*models.TerraformResourceBlock, error) {
+	if len(assets) > 1 {
+		return nil, fmt.Errorf("multiple assets are not supported")
+	}
+
 	var blocks []*models.TerraformResourceBlock
-	block, err := c.convertResourceData(asset)
+	block, err := c.convertResourceData(assets[0])
 	if err != nil {
 		return nil, err
 	}
