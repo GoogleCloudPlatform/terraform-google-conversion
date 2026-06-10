@@ -140,6 +140,7 @@ func (c *ComputeReservationCai2hclConverter) convertResourceData(asset caiasset.
 	hclData["delete_at_time"] = flattenComputeReservationDeleteAtTime(res["deleteAtTime"], d, config)
 	hclData["delete_after_duration"] = flattenComputeReservationDeleteAfterDuration(res["deleteAfterDuration"], d, config)
 	hclData["reservation_sharing_policy"] = flattenComputeReservationReservationSharingPolicy(res["reservationSharingPolicy"], d, config)
+	hclData["params"] = flattenComputeReservationParams(res["params"], d, config)
 	hclData["zone"] = flattenComputeReservationZone(res["zone"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -463,6 +464,24 @@ func flattenComputeReservationReservationSharingPolicy(v interface{}, d *schema.
 }
 
 func flattenComputeReservationReservationSharingPolicyServiceShareType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeReservationParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeReservationParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeReservationParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
