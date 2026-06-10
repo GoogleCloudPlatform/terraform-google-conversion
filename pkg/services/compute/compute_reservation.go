@@ -250,6 +250,25 @@ Cannot be used with delete_after_duration.`,
 				ForceNew:    true,
 				Description: `An optional description of this resource.`,
 			},
+			"params": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `Additional params passed with the request, but not persisted as part of resource payload`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"resource_manager_tags": {
+							Type:     schema.TypeMap,
+							Optional: true,
+							Description: `Resource manager tags to be bound to the reservation. Tag keys and values have the
+same definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},
+and values are in the format tagValues/456.`,
+							Elem: &schema.Schema{Type: schema.TypeString},
+						},
+					},
+				},
+			},
 			"reservation_sharing_policy": {
 				Type:        schema.TypeList,
 				Computed:    true,

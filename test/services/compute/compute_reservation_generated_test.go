@@ -45,6 +45,9 @@ func TestAccComputeReservation(t *testing.T) {
 		{
 			Name: "TestAccComputeReservation_deleteAfterDuration",
 		},
+		{
+			Name: "TestAccComputeReservation_resourceManagerTags",
+		},
 	}
 
 	for _, tt := range tests {
@@ -68,6 +71,8 @@ func TestAccComputeReservation(t *testing.T) {
 					"dynamic",
 					"for_each",
 					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
 					"provider",
 					"share_settings",
 					"timeouts",
