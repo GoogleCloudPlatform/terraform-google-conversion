@@ -85,9 +85,13 @@ func NewNetworkSecurityFirewallEndpointAssociationCai2hclConverter(provider *sch
 }
 
 // Convert converts asset to HCL resource blocks.
-func (c *NetworkSecurityFirewallEndpointAssociationCai2hclConverter) Convert(asset caiasset.Asset) ([]*models.TerraformResourceBlock, error) {
+func (c *NetworkSecurityFirewallEndpointAssociationCai2hclConverter) Convert(assets []caiasset.Asset, options *models.ResourceConverterOptions) ([]*models.TerraformResourceBlock, error) {
+	if len(assets) > 1 {
+		return nil, fmt.Errorf("multiple assets are not supported")
+	}
+
 	var blocks []*models.TerraformResourceBlock
-	block, err := c.convertResourceData(asset)
+	block, err := c.convertResourceData(assets[0])
 	if err != nil {
 		return nil, err
 	}
