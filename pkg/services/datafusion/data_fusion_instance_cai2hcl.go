@@ -91,7 +91,7 @@ func (c *DataFusionInstanceCai2hclConverter) Convert(assets []caiasset.Asset, op
 	}
 
 	var blocks []*models.TerraformResourceBlock
-	block, err := c.convertResourceData(assets[0])
+	block, err := c.convertResourceData(assets[0], options)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (c *DataFusionInstanceCai2hclConverter) Convert(assets []caiasset.Asset, op
 	return blocks, nil
 }
 
-func (c *DataFusionInstanceCai2hclConverter) convertResourceData(asset caiasset.Asset) (*models.TerraformResourceBlock, error) {
+func (c *DataFusionInstanceCai2hclConverter) convertResourceData(asset caiasset.Asset, options *models.ResourceConverterOptions) (*models.TerraformResourceBlock, error) {
 	if asset.Resource == nil || asset.Resource.Data == nil {
 		return nil, fmt.Errorf("asset resource data is nil")
 	}
@@ -117,14 +117,19 @@ func (c *DataFusionInstanceCai2hclConverter) convertResourceData(asset caiasset.
 
 	assetNameParts := strings.Split(asset.Name, "/")
 
-	hclBlockName := assetNameParts[len(assetNameParts)-1]
-	digitRegex := regexp.MustCompile(`^\d+$`)
-	nameValidator := regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_-]*$")
-	if digitRegex.MatchString(hclBlockName) || !nameValidator.MatchString(hclBlockName) {
-		hasher := sha256.New()
-		hasher.Write([]byte(hclBlockName))
-		fullHash := hex.EncodeToString(hasher.Sum(nil))
-		hclBlockName = fmt.Sprintf("resource%s", fullHash[:8])
+	var hclBlockName string
+	if options != nil && options.ResourceName != "" {
+		hclBlockName = options.ResourceName
+	} else {
+		hclBlockName = assetNameParts[len(assetNameParts)-1]
+		digitRegex := regexp.MustCompile(`^\d+$`)
+		nameValidator := regexp.MustCompile("^[a-zA-Z_][a-zA-Z0-9_-]*$")
+		if digitRegex.MatchString(hclBlockName) || !nameValidator.MatchString(hclBlockName) {
+			hasher := sha256.New()
+			hasher.Write([]byte(hclBlockName))
+			fullHash := hex.EncodeToString(hasher.Sum(nil))
+			hclBlockName = fmt.Sprintf("resource%s", fullHash[:8])
+		}
 	}
 	hclData := make(map[string]interface{})
 
