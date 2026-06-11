@@ -229,6 +229,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withNodeConfigReservationAffinitySpecific",
 		},
 		{
+			Name: "TestAccContainerCluster_withNodeConfigNodeImageConfig",
+		},
+		{
 			Name: "TestAccContainerCluster_withWorkloadMetadataConfig",
 		},
 		{

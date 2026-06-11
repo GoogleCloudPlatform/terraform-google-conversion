@@ -115,6 +115,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withWindowsNodeConfig",
 		},
 		{
+			Name: "TestAccContainerNodePool_withNodeImageConfig",
+		},
+		{
 			Name: "TestAccContainerNodePool_withCgroupMode",
 		},
 		{
