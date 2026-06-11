@@ -97,8 +97,8 @@ func GetBackupDRBackupPlanCaiObject(d tpgresource.TerraformResourceData, config 
 			Name: name,
 			Type: BackupDRBackupPlanAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/backupdr/v1/rest",
+				Version:              "v1beta",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/backupdr/v1beta/rest",
 				DiscoveryName:        "BackupPlan",
 				Data:                 obj,
 			},
