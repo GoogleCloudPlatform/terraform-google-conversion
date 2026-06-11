@@ -202,6 +202,13 @@ func expandBackupDRRestoreWorkloadComputeInstanceTargetEnvironment(v interface{}
 		transformed["zone"] = transformedZone
 	}
 
+	transformedUseProjectServiceAccount, err := expandBackupDRRestoreWorkloadComputeInstanceTargetEnvironmentUseProjectServiceAccount(original["use_project_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseProjectServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useProjectServiceAccount"] = transformedUseProjectServiceAccount
+	}
+
 	return transformed, nil
 }
 
@@ -210,6 +217,10 @@ func expandBackupDRRestoreWorkloadComputeInstanceTargetEnvironmentProject(v inte
 }
 
 func expandBackupDRRestoreWorkloadComputeInstanceTargetEnvironmentZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRRestoreWorkloadComputeInstanceTargetEnvironmentUseProjectServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -239,6 +250,13 @@ func expandBackupDRRestoreWorkloadDiskTargetEnvironment(v interface{}, d tpgreso
 		transformed["zone"] = transformedZone
 	}
 
+	transformedUseProjectServiceAccount, err := expandBackupDRRestoreWorkloadDiskTargetEnvironmentUseProjectServiceAccount(original["use_project_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseProjectServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useProjectServiceAccount"] = transformedUseProjectServiceAccount
+	}
+
 	return transformed, nil
 }
 
@@ -247,6 +265,10 @@ func expandBackupDRRestoreWorkloadDiskTargetEnvironmentProject(v interface{}, d 
 }
 
 func expandBackupDRRestoreWorkloadDiskTargetEnvironmentZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRRestoreWorkloadDiskTargetEnvironmentUseProjectServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -283,6 +305,13 @@ func expandBackupDRRestoreWorkloadRegionDiskTargetEnvironment(v interface{}, d t
 		transformed["replicaZones"] = transformedReplicaZones
 	}
 
+	transformedUseProjectServiceAccount, err := expandBackupDRRestoreWorkloadRegionDiskTargetEnvironmentUseProjectServiceAccount(original["use_project_service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseProjectServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useProjectServiceAccount"] = transformedUseProjectServiceAccount
+	}
+
 	return transformed, nil
 }
 
@@ -295,6 +324,10 @@ func expandBackupDRRestoreWorkloadRegionDiskTargetEnvironmentRegion(v interface{
 }
 
 func expandBackupDRRestoreWorkloadRegionDiskTargetEnvironmentReplicaZones(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRRestoreWorkloadRegionDiskTargetEnvironmentUseProjectServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
