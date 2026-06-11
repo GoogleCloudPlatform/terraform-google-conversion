@@ -49,9 +49,6 @@ func TestAccCloudbuildv2Connection(t *testing.T) {
 			Name: "TestAccCloudbuildv2Connection_GleConnection",
 		},
 		{
-			Name: "TestAccCloudbuildv2Connection_GleOldConnection",
-		},
-		{
 			Name: "TestAccCloudbuildv2Connection_GlePrivConnection",
 		},
 		{
