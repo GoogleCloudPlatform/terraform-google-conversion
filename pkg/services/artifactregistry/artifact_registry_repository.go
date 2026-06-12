@@ -680,7 +680,6 @@ not be validated.`,
 						"upstream_credentials": {
 							Type:        schema.TypeList,
 							Optional:    true,
-							ForceNew:    true,
 							Description: `The credentials used to access the remote repository.`,
 							MaxItems:    1,
 							Elem: &schema.Resource{
@@ -688,7 +687,6 @@ not be validated.`,
 									"username_password_credentials": {
 										Type:        schema.TypeList,
 										Optional:    true,
-										ForceNew:    true,
 										Description: `Use username and password to access the remote repository.`,
 										MaxItems:    1,
 										Elem: &schema.Resource{
@@ -696,7 +694,6 @@ not be validated.`,
 												"password_secret_version": {
 													Type:     schema.TypeString,
 													Optional: true,
-													ForceNew: true,
 													Description: `The Secret Manager key version that holds the password to access the
 remote repository. Must be in the format of
 'projects/{project}/secrets/{secret}/versions/{version}'.`,
@@ -704,7 +701,6 @@ remote repository. Must be in the format of
 												"username": {
 													Type:        schema.TypeString,
 													Optional:    true,
-													ForceNew:    true,
 													Description: `The username to access the remote repository.`,
 												},
 											},

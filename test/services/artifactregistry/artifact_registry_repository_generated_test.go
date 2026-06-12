@@ -100,6 +100,9 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 			Name: "TestAccArtifactRegistryRepository_preferRegionalEndpoints",
 		},
 		{
+			Name: "TestAccArtifactRegistryRepository_remoteWithAuthUpdate",
+		},
+		{
 			Name: "TestAccArtifactRegistryRepository_virtual",
 		},
 		{
@@ -129,7 +132,6 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 					"location",
 					"provider",
 					"remote_repository_config.disable_upstream_validation",
-					"remote_repository_config.upstream_credentials",
 					"repository_id",
 					"timeouts",
 				},
