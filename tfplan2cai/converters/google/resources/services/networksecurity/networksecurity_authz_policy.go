@@ -134,6 +134,12 @@ func GetNetworkSecurityAuthzPolicyApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("http_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(httpRulesProp)) && (ok || !reflect.DeepEqual(v, httpRulesProp)) {
 		obj["httpRules"] = httpRulesProp
 	}
+	networkRulesProp, err := expandNetworkSecurityAuthzPolicyNetworkRules(d.Get("network_rules"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("network_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkRulesProp)) && (ok || !reflect.DeepEqual(v, networkRulesProp)) {
+		obj["networkRules"] = networkRulesProp
+	}
 	actionProp, err := expandNetworkSecurityAuthzPolicyAction(d.Get("action"), d, config)
 	if err != nil {
 		return nil, err
@@ -1838,6 +1844,411 @@ func expandNetworkSecurityAuthzPolicyHttpRulesToNotOperationsMethods(v interface
 }
 
 func expandNetworkSecurityAuthzPolicyHttpRulesWhen(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedFrom, err := expandNetworkSecurityAuthzPolicyNetworkRulesFrom(original["from"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFrom); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["from"] = transformedFrom
+		}
+
+		transformedTo, err := expandNetworkSecurityAuthzPolicyNetworkRulesTo(original["to"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["to"] = transformedTo
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFrom(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSources, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromSources(original["sources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSources); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sources"] = transformedSources
+	}
+
+	transformedNotSources, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSources(original["not_sources"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNotSources); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["notSources"] = transformedNotSources
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromSources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIpBlocks, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesIpBlocks(original["ip_blocks"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpBlocks); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipBlocks"] = transformedIpBlocks
+		}
+
+		transformedPrincipals, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipals(original["principals"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrincipals); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["principals"] = transformedPrincipals
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesIpBlocks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPrefix, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesIpBlocksPrefix(original["prefix"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrefix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["prefix"] = transformedPrefix
+		}
+
+		transformedLength, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesIpBlocksLength(original["length"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLength); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["length"] = transformedLength
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesIpBlocksPrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesIpBlocksLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipals(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPrincipalSelector, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipalSelector(original["principal_selector"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrincipalSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["principalSelector"] = transformedPrincipalSelector
+		}
+
+		transformedPrincipal, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipal(original["principal"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrincipal); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["principal"] = transformedPrincipal
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipalSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipal(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExact, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipalExact(original["exact"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exact"] = transformedExact
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipalExact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSources(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedIpBlocks, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesIpBlocks(original["ip_blocks"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedIpBlocks); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["ipBlocks"] = transformedIpBlocks
+		}
+
+		transformedPrincipals, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipals(original["principals"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrincipals); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["principals"] = transformedPrincipals
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesIpBlocks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPrefix, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesIpBlocksPrefix(original["prefix"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrefix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["prefix"] = transformedPrefix
+		}
+
+		transformedLength, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesIpBlocksLength(original["length"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedLength); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["length"] = transformedLength
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesIpBlocksPrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesIpBlocksLength(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipals(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPrincipalSelector, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipalSelector(original["principal_selector"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrincipalSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["principalSelector"] = transformedPrincipalSelector
+		}
+
+		transformedPrincipal, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipal(original["principal"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPrincipal); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["principal"] = transformedPrincipal
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipalSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipal(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExact, err := expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipalExact(original["exact"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exact"] = transformedExact
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipalExact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesTo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOperations, err := expandNetworkSecurityAuthzPolicyNetworkRulesToOperations(original["operations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOperations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["operations"] = transformedOperations
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesToOperations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedSnis, err := expandNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnis(original["snis"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSnis); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["snis"] = transformedSnis
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnis(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedExact, err := expandNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisExact(original["exact"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["exact"] = transformedExact
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisExact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
