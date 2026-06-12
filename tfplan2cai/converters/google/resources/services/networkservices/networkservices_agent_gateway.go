@@ -249,6 +249,13 @@ func expandNetworkServicesAgentGatewayNetworkConfig(v interface{}, d tpgresource
 		transformed["egress"] = transformedEgress
 	}
 
+	transformedDnsPeeringConfig, err := expandNetworkServicesAgentGatewayNetworkConfigDnsPeeringConfig(original["dns_peering_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDnsPeeringConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dnsPeeringConfig"] = transformedDnsPeeringConfig
+	}
+
 	return transformed, nil
 }
 
@@ -275,6 +282,54 @@ func expandNetworkServicesAgentGatewayNetworkConfigEgress(v interface{}, d tpgre
 }
 
 func expandNetworkServicesAgentGatewayNetworkConfigEgressNetworkAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentGatewayNetworkConfigDnsPeeringConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDomains, err := expandNetworkServicesAgentGatewayNetworkConfigDnsPeeringConfigDomains(original["domains"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDomains); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["domains"] = transformedDomains
+	}
+
+	transformedTargetProject, err := expandNetworkServicesAgentGatewayNetworkConfigDnsPeeringConfigTargetProject(original["target_project"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetProject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["targetProject"] = transformedTargetProject
+	}
+
+	transformedTargetNetwork, err := expandNetworkServicesAgentGatewayNetworkConfigDnsPeeringConfigTargetNetwork(original["target_network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTargetNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["targetNetwork"] = transformedTargetNetwork
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkServicesAgentGatewayNetworkConfigDnsPeeringConfigDomains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentGatewayNetworkConfigDnsPeeringConfigTargetProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentGatewayNetworkConfigDnsPeeringConfigTargetNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
