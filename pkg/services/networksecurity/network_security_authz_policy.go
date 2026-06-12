@@ -1032,6 +1032,185 @@ Examples:
 Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
 			},
+			"network_rules": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `A list of authorization HTTP rules to match against the incoming request.A policy match occurs when at least one HTTP rule matches the request or when no HTTP rules are specified in the policy. At least one HTTP Rule is required for Allow or Deny Action.
+Limited to 5 rules.`,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"from": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Describes properties of one or more sources of a request.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"not_sources": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Describes the negated properties of request sources. Matches requests from sources that do not match the criteria specified in this field. At least one of sources or notSources must be specified. Limited to 1 not_source.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"ip_blocks": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A list of IP addresses or IP address ranges to match against the source IP address of the request. Limited to 10 ipBlocks per Authorization Policy`,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"length": {
+																Type:        schema.TypeInt,
+																Required:    true,
+																Description: `The length of the address range.`,
+															},
+															"prefix": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The address prefix.`,
+															},
+														},
+													},
+												},
+												"principals": {
+													Type:     schema.TypeList,
+													Optional: true,
+													Description: `A list of identities derived from the client's certificate. This field will not match on a request unless mutual TLS is enabled for the Forwarding rule or Gateway. Each identity is a string whose value is matched against the URI SAN, or DNS SAN or the subject field in the client's certificate. The match can be exact, prefix, suffix or a substring match. One of exact, prefix, suffix or contains must be specified.
+Limited to 5 principals.`,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"principal": {
+																Type:     schema.TypeList,
+																Optional: true,
+																Description: `Required. A non-empty string whose value is matched against the principal value based on the principalSelector.
+Only exact match can be applied for CLIENT_CERT_URI_SAN, CLIENT_CERT_DNS_NAME_SAN, CLIENT_CERT_COMMON_NAME selectors.`,
+																MaxItems: 1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"exact": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must match exactly the string specified here.
+Examples:
+* abc only matches the value abc.`,
+																		},
+																	},
+																},
+															},
+															"principal_selector": {
+																Type:         schema.TypeString,
+																Optional:     true,
+																ValidateFunc: verify.ValidateEnum([]string{"PRINCIPAL_SELECTOR_UNSPECIFIED", "CLIENT_CERT_URI_SAN", "CLIENT_CERT_DNS_NAME_SAN", "CLIENT_CERT_COMMON_NAME", ""}),
+																Description:  `An enum to decide what principal value the principal rule will match against. If not specified, the PrincipalSelector is CLIENT_CERT_URI_SAN. Default value: "CLIENT_CERT_URI_SAN" Possible values: ["PRINCIPAL_SELECTOR_UNSPECIFIED", "CLIENT_CERT_URI_SAN", "CLIENT_CERT_DNS_NAME_SAN", "CLIENT_CERT_COMMON_NAME"]`,
+																Default:      "CLIENT_CERT_URI_SAN",
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"sources": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Describes the properties of a request's sources. At least one of sources or notSources must be specified. Limited to 1 source. A match occurs when ANY source (in sources or notSources) matches the request. Within a single source, the match follows AND semantics across fields and OR semantics within a single field, i.e. a match occurs when ANY principal matches AND ANY ipBlocks match.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"ip_blocks": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A list of IP addresses or IP address ranges to match against the source IP address of the request. Limited to 10 ipBlocks per Authorization Policy`,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"length": {
+																Type:        schema.TypeInt,
+																Required:    true,
+																Description: `The length of the address range.`,
+															},
+															"prefix": {
+																Type:        schema.TypeString,
+																Required:    true,
+																Description: `The address prefix.`,
+															},
+														},
+													},
+												},
+												"principals": {
+													Type:     schema.TypeList,
+													Optional: true,
+													Description: `A list of identities derived from the client's certificate. This field will not match on a request unless mutual TLS is enabled for the Forwarding rule or Gateway. Each identity is a string whose value is matched against the URI SAN, or DNS SAN or the subject field in the client's certificate. The match can be exact, prefix, suffix or a substring match. One of exact, prefix, suffix or contains must be specified.
+Limited to 5 principals.`,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"principal": {
+																Type:     schema.TypeList,
+																Optional: true,
+																Description: `Required. A non-empty string whose value is matched against the principal value based on the principalSelector.
+Only exact match can be applied for CLIENT_CERT_URI_SAN, CLIENT_CERT_DNS_NAME_SAN, CLIENT_CERT_COMMON_NAME selectors.`,
+																MaxItems: 1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"exact": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must match exactly the string specified here.
+Examples:
+* abc only matches the value abc.`,
+																		},
+																	},
+																},
+															},
+															"principal_selector": {
+																Type:         schema.TypeString,
+																Optional:     true,
+																ValidateFunc: verify.ValidateEnum([]string{"PRINCIPAL_SELECTOR_UNSPECIFIED", "CLIENT_CERT_URI_SAN", "CLIENT_CERT_DNS_NAME_SAN", "CLIENT_CERT_COMMON_NAME", ""}),
+																Description:  `An enum to decide what principal value the principal rule will match against. If not specified, the PrincipalSelector is CLIENT_CERT_URI_SAN. Default value: "CLIENT_CERT_URI_SAN" Possible values: ["PRINCIPAL_SELECTOR_UNSPECIFIED", "CLIENT_CERT_URI_SAN", "CLIENT_CERT_DNS_NAME_SAN", "CLIENT_CERT_COMMON_NAME"]`,
+																Default:      "CLIENT_CERT_URI_SAN",
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"to": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Describes properties of one or more targets of a request`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"operations": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Describes properties of one or more targets of a request. At least one of operations or notOperations must be specified. Limited to 1 operation.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"snis": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: ``,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"exact": {
+																Type:        schema.TypeString,
+																Optional:    true,
+																Description: ``,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"policy_profile": {
 				Type:         schema.TypeString,
 				Computed:     true,
