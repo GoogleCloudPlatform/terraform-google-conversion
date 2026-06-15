@@ -132,6 +132,8 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 					"location",
 					"provider",
 					"remote_repository_config.disable_upstream_validation",
+					"remote_repository_config.upstream_credentials.username_password_credentials.password_secret_version",
+					"remote_repository_config.upstream_credentials.username_password_credentials.username",
 					"repository_id",
 					"timeouts",
 				},
