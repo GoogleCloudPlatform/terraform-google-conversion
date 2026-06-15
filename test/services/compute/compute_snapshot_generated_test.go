@@ -42,6 +42,9 @@ func TestAccComputeSnapshot(t *testing.T) {
 		{
 			Name: "TestAccComputeSnapshot_snapshotType",
 		},
+		{
+			Name: "TestAccComputeSnapshot_resourceManagerTags",
+		},
 	}
 
 	for _, tt := range tests {
@@ -63,6 +66,8 @@ func TestAccComputeSnapshot(t *testing.T) {
 					"dynamic",
 					"for_each",
 					"lifecycle",
+					"params",
+					"params.resource_manager_tags",
 					"provider",
 					"snapshot_encryption_key.raw_key",
 					"snapshot_encryption_key.rsa_encrypted_key",
