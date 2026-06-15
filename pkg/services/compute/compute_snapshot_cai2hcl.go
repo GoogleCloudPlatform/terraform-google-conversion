@@ -159,6 +159,7 @@ func (c *ComputeSnapshotCai2hclConverter) convertResourceData(asset caiasset.Ass
 	hclData["storage_locations"] = flattenComputeSnapshotStorageLocations(res["storageLocations"], d, config)
 	hclData["labels"] = flattenComputeSnapshotLabels(res["labels"], d, config)
 	hclData["snapshot_type"] = flattenComputeSnapshotSnapshotType(res["snapshotType"], d, config)
+	hclData["params"] = flattenComputeSnapshotParams(res["params"], d, config)
 	hclData["zone"] = flattenComputeSnapshotZone(res["zone"], d, config)
 	hclData["snapshot_encryption_key"] = flattenComputeSnapshotSnapshotEncryptionKey(res["snapshotEncryptionKey"], d, config)
 	hclData["source_disk_encryption_key"] = flattenComputeSnapshotSourceDiskEncryptionKey(res["sourceDiskEncryptionKey"], d, config)
@@ -235,6 +236,24 @@ func flattenComputeSnapshotLabels(v interface{}, d *schema.ResourceData, config 
 }
 
 func flattenComputeSnapshotSnapshotType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeSnapshotParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["resource_manager_tags"] =
+		flattenComputeSnapshotParamsResourceManagerTags(original["resourceManagerTags"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeSnapshotParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
