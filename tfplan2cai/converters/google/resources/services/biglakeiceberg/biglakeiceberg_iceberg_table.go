@@ -65,6 +65,44 @@ func icebergTablePropertiesDiffSuppress(k, old, new string, d *schema.ResourceDa
 	return false
 }
 
+// expandIcebergTableSortOrderForCommit converts the Terraform "sort_order" block
+// into the SortOrder body of an "add-sort-order" commit update. The "order-id" is
+// assigned by the server, so only the fields are sent. Returns nil when no sort
+// order is configured.
+func expandIcebergTableSortOrderForCommit(v interface{}) map[string]interface{} {
+	l, ok := v.([]interface{})
+	if !ok || len(l) == 0 || l[0] == nil {
+		return nil
+	}
+	raw, ok := l[0].(map[string]interface{})
+	if !ok {
+		return nil
+	}
+	rawFields, ok := raw["fields"].([]interface{})
+	if !ok || len(rawFields) == 0 {
+		return nil
+	}
+	fields := make([]interface{}, 0, len(rawFields))
+	for _, f := range rawFields {
+		fm, ok := f.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		fields = append(fields, map[string]interface{}{
+			"source-id":  fm["source_id"],
+			"transform":  fm["transform"],
+			"direction":  fm["direction"],
+			"null-order": fm["null_order"],
+		})
+	}
+	return map[string]interface{}{
+		// order-id is required on the SortOrder body; the server reassigns it,
+		// and "set-default-sort-order: -1" then selects this last-added order.
+		"order-id": 1,
+		"fields":   fields,
+	}
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -150,6 +188,12 @@ func GetBiglakeIcebergIcebergTableApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("partition_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(partitionSpecProp)) && (ok || !reflect.DeepEqual(v, partitionSpecProp)) {
 		obj["partition-spec"] = partitionSpecProp
 	}
+	sortOrderProp, err := expandBiglakeIcebergIcebergTableSortOrder(d.Get("sort_order"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("sort_order"); !tpgresource.IsEmptyValue(reflect.ValueOf(sortOrderProp)) && (ok || !reflect.DeepEqual(v, sortOrderProp)) {
+		obj["write-order"] = sortOrderProp
+	}
 	propertiesProp, err := expandBiglakeIcebergIcebergTableProperties(d.Get("properties"), d, config)
 	if err != nil {
 		return nil, err
@@ -157,6 +201,20 @@ func GetBiglakeIcebergIcebergTableApiObject(d tpgresource.TerraformResourceData,
 		obj["properties"] = propertiesProp
 	}
 
+	return resourceBiglakeIcebergIcebergTableEncoder(d, config, obj)
+}
+
+func resourceBiglakeIcebergIcebergTableEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// The Iceberg SortOrder sent as "write-order" requires an "order-id", and the
+	// create request is rejected without it. order_id is not user-settable (it is
+	// output-only in the schema): a table created with a sort order always gets
+	// id 1, since id 0 is reserved for the unsorted order. So we inject 1 here
+	// rather than asking the user for it.
+	if wo, ok := obj["write-order"].(map[string]interface{}); ok {
+		if _, hasId := wo["order-id"]; !hasId {
+			wo["order-id"] = 1
+		}
+	}
 	return obj, nil
 }
 
@@ -388,6 +446,101 @@ func expandBiglakeIcebergIcebergTablePartitionSpecFieldsName(v interface{}, d tp
 }
 
 func expandBiglakeIcebergIcebergTablePartitionSpecFieldsTransform(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBiglakeIcebergIcebergTableSortOrder(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOrderId, err := expandBiglakeIcebergIcebergTableSortOrderOrderId(original["order_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOrderId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["order-id"] = transformedOrderId
+	}
+
+	transformedFields, err := expandBiglakeIcebergIcebergTableSortOrderFields(original["fields"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fields"] = transformedFields
+	}
+
+	return transformed, nil
+}
+
+func expandBiglakeIcebergIcebergTableSortOrderOrderId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBiglakeIcebergIcebergTableSortOrderFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedSourceId, err := expandBiglakeIcebergIcebergTableSortOrderFieldsSourceId(original["source_id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSourceId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["source-id"] = transformedSourceId
+		}
+
+		transformedTransform, err := expandBiglakeIcebergIcebergTableSortOrderFieldsTransform(original["transform"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTransform); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["transform"] = transformedTransform
+		}
+
+		transformedDirection, err := expandBiglakeIcebergIcebergTableSortOrderFieldsDirection(original["direction"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDirection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["direction"] = transformedDirection
+		}
+
+		transformedNullOrder, err := expandBiglakeIcebergIcebergTableSortOrderFieldsNullOrder(original["null_order"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNullOrder); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["null-order"] = transformedNullOrder
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandBiglakeIcebergIcebergTableSortOrderFieldsSourceId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBiglakeIcebergIcebergTableSortOrderFieldsTransform(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBiglakeIcebergIcebergTableSortOrderFieldsDirection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBiglakeIcebergIcebergTableSortOrderFieldsNullOrder(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
