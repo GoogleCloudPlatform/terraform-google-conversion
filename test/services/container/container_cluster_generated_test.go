@@ -460,6 +460,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withAdvancedDatapath",
 		},
 		{
+			Name: "TestAccContainerCluster_dataplaneOptimizationMode",
+		},
+		{
 			Name: "TestAccContainerCluster_enableCiliumPolicies",
 		},
 		{
