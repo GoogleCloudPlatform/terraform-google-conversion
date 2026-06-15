@@ -31,6 +31,9 @@ func TestAccNetworkSecurityAuthzPolicy(t *testing.T) {
 			Name: "TestAccNetworkSecurityAuthzPolicy_networkSecurityAuthzPolicyMcpExample",
 		},
 		{
+			Name: "TestAccNetworkSecurityAuthzPolicy_networkSecurityAuthzPolicyNetworkRulesExample",
+		},
+		{
 			Name: "TestAccNetworkSecurityAuthzPolicy_networkServicesAuthzPolicyHttpRules",
 		},
 		{
