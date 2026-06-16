@@ -76,6 +76,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securitycenterv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/storageinsights"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/tags"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
@@ -294,6 +295,7 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_spanner_database":                                spanner.SpannerDatabaseTfplan2caiConverter(),
 	"google_spanner_instance":                                spanner.SpannerInstanceTfplan2caiConverter(),
 	"google_storage_insights_report_config":                  storageinsights.StorageInsightsReportConfigTfplan2caiConverter(),
+	"google_tags_tag_binding":                                tags.TagsTagBindingTfplan2caiConverter(),
 	"google_vmwareengine_network":                            vmwareengine.VmwareengineNetworkTfplan2caiConverter(),
 	"google_vmwareengine_network_peering":                    vmwareengine.VmwareengineNetworkPeeringTfplan2caiConverter(),
 	"google_vmwareengine_network_policy":                     vmwareengine.VmwareengineNetworkPolicyTfplan2caiConverter(),

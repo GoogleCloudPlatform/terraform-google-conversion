@@ -77,6 +77,7 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securitycenterv2"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/storageinsights"
+	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/tags"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
@@ -239,6 +240,9 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"cloudquotas.googleapis.com/QuotaPreference": {
 		"Default": cloudquotas.NewCloudQuotasQuotaPreferenceCai2hclConverter(provider),
+	},
+	"cloudresourcemanager.googleapis.com/TagBinding": {
+		"Default": tags.NewTagsTagBindingCai2hclConverter(provider),
 	},
 	"cloudtasks.googleapis.com/Queue": {
 		"Default": cloudtasks.NewCloudTasksQueueCai2hclConverter(provider),
