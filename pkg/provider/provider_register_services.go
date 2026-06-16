@@ -63,6 +63,7 @@ import (
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/securitycenterv2"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/spanner"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/storageinsights"
+	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/tags"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vmwareengine"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/vpcaccess"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/workbench"
