@@ -670,6 +670,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withTaintConfig",
 		},
 		{
+			Name: "TestAccContainerCluster_skipNodePoolRefresh",
+		},
+		{
 			Name: "TestAccContainerCluster_withNodePoolTaintConfig",
 		},
 		{
