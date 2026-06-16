@@ -28,6 +28,9 @@ func TestAccKMSCryptoKeyVersion(t *testing.T) {
 			Name: "TestAccKmsCryptoKeyVersion_basic",
 		},
 		{
+			Name: "TestAccKmsCryptoKeyVersion_importBlockWithResourceIdentity",
+		},
+		{
 			Name: "TestAccKmsCryptoKeyVersionWithSymmetricHSM",
 		},
 		{
