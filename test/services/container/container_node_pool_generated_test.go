@@ -274,6 +274,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_acceleratorNetworkProfile_Lifecycle",
 		},
 		{
+			Name: "TestAccContainerNodePool_ignoreNodeCountChanges",
+		},
+		{
 			Name: "TestAccContainerNodePool_withTaintConfig",
 		},
 	}
