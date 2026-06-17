@@ -138,6 +138,16 @@ func (c *ComputeReservationCai2hclConverter) convertResourceData(asset caiasset.
 		return nil, err
 	}
 
+	res, err = resourceComputeReservationDecoder(d, config, res)
+	if err != nil {
+		return nil, err
+	}
+
+	if res == nil {
+		// Decoding the object has resulted in it being gone. It may be marked deleted.
+		return nil, nil
+	}
+
 	outputFields := map[string]struct{}{"commitment": struct{}{}, "creation_timestamp": struct{}{}, "id": struct{}{}, "kind": struct{}{}, "linked_commitments": struct{}{}, "reservation_block_count": struct{}{}, "resource_status": struct{}{}, "satisfies_pzs": struct{}{}, "status": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/reservations/{{name}}", outputFields, hclData)
 
@@ -514,4 +524,8 @@ func resourceComputeReservationTgcDecoder(d *schema.ResourceData, meta interface
 		}
 	}
 	return res, hclData, nil
+}
+func resourceComputeReservationDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+
+	return res, nil
 }
