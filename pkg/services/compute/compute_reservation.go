@@ -51,6 +51,10 @@ var (
 	_ = rmClient.NewClient
 )
 
+func computeReservationProjectMapDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	return false
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -297,9 +301,10 @@ and values are in the format tagValues/456.`,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"project_map": {
-							Type:        schema.TypeSet,
-							Optional:    true,
-							Description: `A map of project number and project config. This is only valid when shareType's value is SPECIFIC_PROJECTS.`,
+							Type:             schema.TypeSet,
+							Optional:         true,
+							DiffSuppressFunc: computeReservationProjectMapDiffSuppress,
+							Description:      `A map of project number and project config. This is only valid when shareType's value is SPECIFIC_PROJECTS.`,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": {
