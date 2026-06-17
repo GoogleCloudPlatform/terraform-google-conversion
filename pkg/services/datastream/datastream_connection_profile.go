@@ -226,6 +226,14 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 							Required:    true,
 							Description: `Username for the MongoDB connection.`,
 						},
+						"additional_options": {
+							Type:     schema.TypeMap,
+							Optional: true,
+							Description: `A map of additional options for the MongoDB connection.
+Keys are case-sensitive and should match the official
+MongoDB connection string options: https://www.mongodb.com/docs/manual/reference/connection-string-options/`,
+							Elem: &schema.Schema{Type: schema.TypeString},
+						},
 						"password": {
 							Type:     schema.TypeString,
 							Optional: true,
