@@ -158,6 +158,12 @@ func GetNetworkServicesAgentGatewayApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
 		obj["labels"] = effectiveLabelsProp
 	}
+	nameProp, err := expandNetworkServicesAgentGatewayName(d.Get("name"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
+		obj["name"] = nameProp
+	}
 
 	return obj, nil
 }
@@ -342,4 +348,25 @@ func expandNetworkServicesAgentGatewayEffectiveLabels(v interface{}, d tpgresour
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandNetworkServicesAgentGatewayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+
+	project, err := tpgresource.GetProject(d, config)
+	if err != nil {
+		return nil, err
+	}
+
+	location := d.Get("location").(string)
+	name := v.(string)
+
+	// If name is already a full resource name, return it as-is.
+	if strings.HasPrefix(name, "projects/") {
+		return name, nil
+	}
+
+	return fmt.Sprintf("projects/%s/locations/%s/agentGateways/%s", project, location, name), nil
 }
