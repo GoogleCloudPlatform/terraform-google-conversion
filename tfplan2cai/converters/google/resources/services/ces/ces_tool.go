@@ -152,6 +152,18 @@ func GetCESToolApiObject(d tpgresource.TerraformResourceData, config *transport_
 	} else if v, ok := d.GetOkExists("python_function"); !tpgresource.IsEmptyValue(reflect.ValueOf(pythonFunctionProp)) && (ok || !reflect.DeepEqual(v, pythonFunctionProp)) {
 		obj["pythonFunction"] = pythonFunctionProp
 	}
+	timeoutProp, err := expandCESToolTimeout(d.Get("timeout"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("timeout"); !tpgresource.IsEmptyValue(reflect.ValueOf(timeoutProp)) && (ok || !reflect.DeepEqual(v, timeoutProp)) {
+		obj["timeout"] = timeoutProp
+	}
+	toolFakeConfigProp, err := expandCESToolToolFakeConfig(d.Get("tool_fake_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tool_fake_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(toolFakeConfigProp)) && (ok || !reflect.DeepEqual(v, toolFakeConfigProp)) {
+		obj["toolFakeConfig"] = toolFakeConfigProp
+	}
 	widgetToolProp, err := expandCESToolWidgetTool(d.Get("widget_tool"), d, config)
 	if err != nil {
 		return nil, err
@@ -1929,6 +1941,69 @@ func expandCESToolPythonFunctionName(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandCESToolPythonFunctionPythonCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolToolFakeConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableFakeMode, err := expandCESToolToolFakeConfigEnableFakeMode(original["enable_fake_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableFakeMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableFakeMode"] = transformedEnableFakeMode
+	}
+
+	transformedCodeBlock, err := expandCESToolToolFakeConfigCodeBlock(original["code_block"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCodeBlock); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["codeBlock"] = transformedCodeBlock
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolToolFakeConfigEnableFakeMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolToolFakeConfigCodeBlock(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPythonCode, err := expandCESToolToolFakeConfigCodeBlockPythonCode(original["python_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPythonCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pythonCode"] = transformedPythonCode
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolToolFakeConfigCodeBlockPythonCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
