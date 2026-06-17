@@ -140,6 +140,12 @@ func GetCESToolsetApiObject(d tpgresource.TerraformResourceData, config *transpo
 	} else if v, ok := d.GetOkExists("mcp_toolset"); !tpgresource.IsEmptyValue(reflect.ValueOf(mcpToolsetProp)) && (ok || !reflect.DeepEqual(v, mcpToolsetProp)) {
 		obj["mcpToolset"] = mcpToolsetProp
 	}
+	toolFakeConfigProp, err := expandCESToolsetToolFakeConfig(d.Get("tool_fake_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tool_fake_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(toolFakeConfigProp)) && (ok || !reflect.DeepEqual(v, toolFakeConfigProp)) {
+		obj["toolFakeConfig"] = toolFakeConfigProp
+	}
 
 	return obj, nil
 }
@@ -962,4 +968,63 @@ func expandCESToolsetMcpToolsetCustomHeaders(v interface{}, d tpgresource.Terraf
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandCESToolsetToolFakeConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableFakeMode, err := expandCESToolsetToolFakeConfigEnableFakeMode(original["enable_fake_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableFakeMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableFakeMode"] = transformedEnableFakeMode
+	}
+
+	transformedCodeBlock, err := expandCESToolsetToolFakeConfigCodeBlock(original["code_block"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCodeBlock); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["codeBlock"] = transformedCodeBlock
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetToolFakeConfigEnableFakeMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetToolFakeConfigCodeBlock(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPythonCode, err := expandCESToolsetToolFakeConfigCodeBlockPythonCode(original["python_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPythonCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pythonCode"] = transformedPythonCode
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolsetToolFakeConfigCodeBlockPythonCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
