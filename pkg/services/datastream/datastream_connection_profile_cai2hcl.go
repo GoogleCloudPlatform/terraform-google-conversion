@@ -749,6 +749,8 @@ func flattenDatastreamConnectionProfileMongodbProfile(v interface{}, d *schema.R
 		flattenDatastreamConnectionProfileMongodbProfileSecretManagerStoredPassword(original["secretManagerStoredPassword"], d, config)
 	transformed["ssl_config"] =
 		flattenDatastreamConnectionProfileMongodbProfileSslConfig(original["sslConfig"], d, config)
+	transformed["additional_options"] =
+		flattenDatastreamConnectionProfileMongodbProfileAdditionalOptions(original["additionalOptions"], d, config)
 	transformed["srv_connection_format"] =
 		flattenDatastreamConnectionProfileMongodbProfileSrvConnectionFormat(original["srvConnectionFormat"], d, config)
 	transformed["standard_connection_format"] =
@@ -905,6 +907,10 @@ func flattenDatastreamConnectionProfileMongodbProfileSslConfigSecretManagerStore
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenDatastreamConnectionProfileMongodbProfileAdditionalOptions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
