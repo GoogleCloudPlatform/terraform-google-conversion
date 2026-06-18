@@ -74,6 +74,7 @@ func TestAccComputeReservation(t *testing.T) {
 					"params",
 					"params.resource_manager_tags",
 					"provider",
+					"share_settings",
 					"share_settings.project_map",
 					"share_settings.projects",
 					"timeouts",
