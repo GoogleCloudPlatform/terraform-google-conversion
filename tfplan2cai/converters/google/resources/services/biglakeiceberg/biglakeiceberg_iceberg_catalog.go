@@ -122,6 +122,18 @@ func GetBiglakeIcebergIcebergCatalogApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("catalog_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(catalogTypeProp)) && (ok || !reflect.DeepEqual(v, catalogTypeProp)) {
 		obj["catalog-type"] = catalogTypeProp
 	}
+	defaultLocationProp, err := expandBiglakeIcebergIcebergCatalogDefaultLocation(d.Get("default_location"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("default_location"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultLocationProp)) && (ok || !reflect.DeepEqual(v, defaultLocationProp)) {
+		obj["default-location"] = defaultLocationProp
+	}
+	restrictedLocationsConfigProp, err := expandBiglakeIcebergIcebergCatalogRestrictedLocationsConfig(d.Get("restricted_locations_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("restricted_locations_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(restrictedLocationsConfigProp)) && (ok || !reflect.DeepEqual(v, restrictedLocationsConfigProp)) {
+		obj["restricted-locations-config"] = restrictedLocationsConfigProp
+	}
 
 	return obj, nil
 }
@@ -131,5 +143,35 @@ func expandBiglakeIcebergIcebergCatalogCredentialMode(v interface{}, d tpgresour
 }
 
 func expandBiglakeIcebergIcebergCatalogCatalogType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBiglakeIcebergIcebergCatalogDefaultLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBiglakeIcebergIcebergCatalogRestrictedLocationsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRestrictedLocations, err := expandBiglakeIcebergIcebergCatalogRestrictedLocationsConfigRestrictedLocations(original["restricted_locations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRestrictedLocations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["restricted-locations"] = transformedRestrictedLocations
+	}
+
+	return transformed, nil
+}
+
+func expandBiglakeIcebergIcebergCatalogRestrictedLocationsConfigRestrictedLocations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
