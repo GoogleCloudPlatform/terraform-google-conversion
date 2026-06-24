@@ -269,6 +269,13 @@ func expandNetworkServicesLbEdgeExtensionExtensionChainsExtensions(v interface{}
 			transformed["forwardHeaders"] = transformedForwardHeaders
 		}
 
+		transformedForwardAttributes, err := expandNetworkServicesLbEdgeExtensionExtensionChainsExtensionsForwardAttributes(original["forward_attributes"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedForwardAttributes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["forwardAttributes"] = transformedForwardAttributes
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -291,6 +298,10 @@ func expandNetworkServicesLbEdgeExtensionExtensionChainsExtensionsSupportedEvent
 }
 
 func expandNetworkServicesLbEdgeExtensionExtensionChainsExtensionsForwardHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesLbEdgeExtensionExtensionChainsExtensionsForwardAttributes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
