@@ -184,6 +184,12 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withKubeletConfig",
 		},
 		{
+			Name: "TestAccContainerCluster_withKubeletConfigShutdownGracePeriod",
+		},
+		{
+			Name: "TestAccContainerCluster_withInlineNodePoolShutdownGracePeriod",
+		},
+		{
 			Name: "TestAccContainerCluster_withNodeConfigFastSocket",
 		},
 		{
