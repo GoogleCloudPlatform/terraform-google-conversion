@@ -128,6 +128,12 @@ func GetDataLossPreventionInspectTemplateApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("inspect_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(inspectConfigProp)) && (ok || !reflect.DeepEqual(v, inspectConfigProp)) {
 		obj["inspectConfig"] = inspectConfigProp
 	}
+	allowLimitedAvailabilityInfoTypesProp, err := expandDataLossPreventionInspectTemplateAllowLimitedAvailabilityInfoTypes(d.Get("allow_limited_availability_info_types"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_limited_availability_info_types"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowLimitedAvailabilityInfoTypesProp)) && (ok || !reflect.DeepEqual(v, allowLimitedAvailabilityInfoTypesProp)) {
+		obj["allowLimitedAvailabilityInfoTypes"] = allowLimitedAvailabilityInfoTypesProp
+	}
 
 	return resourceDataLossPreventionInspectTemplateEncoder(d, config, obj)
 }
@@ -1451,5 +1457,9 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredTy
 }
 
 func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredTypeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionInspectTemplateAllowLimitedAvailabilityInfoTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
