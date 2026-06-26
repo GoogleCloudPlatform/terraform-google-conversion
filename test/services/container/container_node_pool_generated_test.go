@@ -85,6 +85,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withReservationAffinitySpecific",
 		},
 		{
+			Name: "TestAccContainerNodePool_withReservationAffinityAnyReservationThenFail",
+		},
+		{
 			Name: "TestAccContainerNodePool_withWorkloadIdentityConfig",
 		},
 		{
