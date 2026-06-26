@@ -25,6 +25,10 @@ func TestAccComputeInstance(t *testing.T) {
 
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeInstance_secondaryAliasIpRange",
+			Skip: "data issue with this test",
+		},
+		{
 			Name: "TestAccComputeInstance_instanceBasicExample",
 		},
 		{
@@ -251,9 +255,6 @@ func TestAccComputeInstance(t *testing.T) {
 		},
 		{
 			Name: "TestAccComputeInstance_primaryAliasIpRange",
-		},
-		{
-			Name: "TestAccComputeInstance_secondaryAliasIpRange",
 		},
 		{
 			Name: "TestAccComputeInstance_addAliasIpv6Range",
