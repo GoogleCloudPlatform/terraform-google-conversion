@@ -235,6 +235,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withNodeConfigReservationAffinitySpecific",
 		},
 		{
+			Name: "TestAccContainerCluster_withNodeConfigReservationAffinityAnyReservationThenFail",
+		},
+		{
 			Name: "TestAccContainerCluster_withNodeConfigNodeImageConfig",
 		},
 		{
