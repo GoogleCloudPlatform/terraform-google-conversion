@@ -212,6 +212,12 @@ func GetAppEngineStandardAppVersionApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("manual_scaling"); !tpgresource.IsEmptyValue(reflect.ValueOf(manualScalingProp)) && (ok || !reflect.DeepEqual(v, manualScalingProp)) {
 		obj["manualScaling"] = manualScalingProp
 	}
+	appEngineBundledServicesProp, err := expandAppEngineStandardAppVersionAppEngineBundledServices(d.Get("app_engine_bundled_services"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("app_engine_bundled_services"); !tpgresource.IsEmptyValue(reflect.ValueOf(appEngineBundledServicesProp)) && (ok || !reflect.DeepEqual(v, appEngineBundledServicesProp)) {
+		obj["appEngineBundledServices"] = appEngineBundledServicesProp
+	}
 
 	return obj, nil
 }
@@ -877,5 +883,10 @@ func expandAppEngineStandardAppVersionManualScaling(v interface{}, d tpgresource
 }
 
 func expandAppEngineStandardAppVersionManualScalingInstances(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineStandardAppVersionAppEngineBundledServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
