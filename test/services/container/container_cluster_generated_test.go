@@ -286,6 +286,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withNodePoolNodeDrainConfig",
 		},
 		{
+			Name: "TestAccContainerCluster_withNodePoolMaintenancePolicy",
+		},
+		{
 			Name: "TestAccContainerCluster_withClusterDisruptionBudget",
 		},
 		{

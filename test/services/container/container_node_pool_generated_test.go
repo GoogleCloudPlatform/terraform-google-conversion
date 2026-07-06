@@ -154,6 +154,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withNodeDrainConfig",
 		},
 		{
+			Name: "TestAccContainerNodePool_withMaintenancePolicy",
+		},
+		{
 			Name: "TestAccContainerNodePool_withAccurateTimeConfig",
 		},
 		{
