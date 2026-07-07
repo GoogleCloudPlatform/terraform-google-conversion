@@ -292,7 +292,10 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withClusterDisruptionBudget",
 		},
 		{
-			Name: "TestAccContainerCluster_withMaintenanceWindow",
+			Name: "TestAccContainerCluster_withDailyMaintenanceWindow",
+		},
+		{
+			Name: "TestAccContainerCluster_withRecurringTimeWindow",
 		},
 		{
 			Name: "TestAccContainerCluster_withRecurringMaintenanceWindow",
