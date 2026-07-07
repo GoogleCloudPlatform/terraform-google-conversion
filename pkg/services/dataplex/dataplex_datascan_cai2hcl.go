@@ -1247,8 +1247,15 @@ func flattenDataplexDatascanDataDocumentationSpec(v interface{}, d *schema.Resou
 	if v == nil {
 		return nil
 	}
+	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
+	transformed["catalog_publishing_enabled"] =
+		flattenDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(original["catalogPublishingEnabled"], d, config)
 	return []interface{}{transformed}
+}
+
+func flattenDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func resourceDataplexDatascanTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
