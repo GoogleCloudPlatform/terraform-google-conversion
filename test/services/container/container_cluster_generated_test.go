@@ -679,6 +679,15 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withNodeCreationConfig",
 		},
 		{
+			Name: "TestAccContainerCluster_withCustomNodeInitGcs",
+		},
+		{
+			Name: "TestAccContainerCluster_withCustomNodeInitSecret",
+		},
+		{
+			Name: "TestAccContainerCluster_withCustomNodeInitInline",
+		},
+		{
 			Name: "TestAccContainerCluster_withSlurmOperatorConfig",
 		},
 		{
