@@ -164,6 +164,12 @@ func GetOracleDatabaseCloudVmClusterApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("backup_odb_subnet"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupOdbSubnetProp)) && (ok || !reflect.DeepEqual(v, backupOdbSubnetProp)) {
 		obj["backupOdbSubnet"] = backupOdbSubnetProp
 	}
+	exascaleDbStorageVaultProp, err := expandOracleDatabaseCloudVmClusterExascaleDbStorageVault(d.Get("exascale_db_storage_vault"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("exascale_db_storage_vault"); !tpgresource.IsEmptyValue(reflect.ValueOf(exascaleDbStorageVaultProp)) && (ok || !reflect.DeepEqual(v, exascaleDbStorageVaultProp)) {
+		obj["exascaleDbStorageVault"] = exascaleDbStorageVaultProp
+	}
 	effectiveLabelsProp, err := expandOracleDatabaseCloudVmClusterEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -418,6 +424,13 @@ func expandOracleDatabaseCloudVmClusterProperties(v interface{}, d tpgresource.T
 		transformed["clusterName"] = transformedClusterName
 	}
 
+	transformedStorageManagementType, err := expandOracleDatabaseCloudVmClusterPropertiesStorageManagementType(original["storage_management_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStorageManagementType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["storageManagementType"] = transformedStorageManagementType
+	}
+
 	return transformed, nil
 }
 
@@ -626,6 +639,10 @@ func expandOracleDatabaseCloudVmClusterPropertiesClusterName(v interface{}, d tp
 	return v, nil
 }
 
+func expandOracleDatabaseCloudVmClusterPropertiesStorageManagementType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandOracleDatabaseCloudVmClusterCidr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -647,6 +664,10 @@ func expandOracleDatabaseCloudVmClusterOdbSubnet(v interface{}, d tpgresource.Te
 }
 
 func expandOracleDatabaseCloudVmClusterBackupOdbSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseCloudVmClusterExascaleDbStorageVault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

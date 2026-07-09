@@ -1709,9 +1709,22 @@ func expandDataplexDatascanDataDocumentationSpec(v interface{}, d tpgresource.Te
 		transformed := make(map[string]interface{})
 		return transformed, nil
 	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedCatalogPublishingEnabled, err := expandDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(original["catalog_publishing_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCatalogPublishingEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["catalogPublishingEnabled"] = transformedCatalogPublishingEnabled
+	}
+
 	return transformed, nil
+}
+
+func expandDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDataplexDatascanEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {

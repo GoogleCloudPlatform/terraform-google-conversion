@@ -122,6 +122,12 @@ func GetOracleDatabaseExascaleDbStorageVaultApiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("gcp_oracle_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(gcpOracleZoneProp)) && (ok || !reflect.DeepEqual(v, gcpOracleZoneProp)) {
 		obj["gcpOracleZone"] = gcpOracleZoneProp
 	}
+	exadataInfrastructureProp, err := expandOracleDatabaseExascaleDbStorageVaultExadataInfrastructure(d.Get("exadata_infrastructure"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("exadata_infrastructure"); !tpgresource.IsEmptyValue(reflect.ValueOf(exadataInfrastructureProp)) && (ok || !reflect.DeepEqual(v, exadataInfrastructureProp)) {
+		obj["exadataInfrastructure"] = exadataInfrastructureProp
+	}
 	propertiesProp, err := expandOracleDatabaseExascaleDbStorageVaultProperties(d.Get("properties"), d, config)
 	if err != nil {
 		return nil, err
@@ -143,6 +149,10 @@ func expandOracleDatabaseExascaleDbStorageVaultDisplayName(v interface{}, d tpgr
 }
 
 func expandOracleDatabaseExascaleDbStorageVaultGcpOracleZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseExascaleDbStorageVaultExadataInfrastructure(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

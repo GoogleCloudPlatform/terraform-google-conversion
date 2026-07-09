@@ -313,7 +313,13 @@ Cloud Storage bucket (//storage.googleapis.com/projects/PROJECT_ID/buckets/BUCKE
 				Description: `DataDocumentationScan related setting.`,
 				MaxItems:    1,
 				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{},
+					Schema: map[string]*schema.Schema{
+						"catalog_publishing_enabled": {
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Description: `If set, the latest DataScan job result will be published to Knowledge Catalog.`,
+						},
+					},
 				},
 				ExactlyOneOf: []string{"data_discovery_spec", "data_documentation_spec", "data_profile_spec", "data_quality_spec"},
 			},

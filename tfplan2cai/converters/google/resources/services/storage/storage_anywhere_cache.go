@@ -49,6 +49,16 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+// Suppresses diffs for Anywhere Cache admission policy where "admit-on-second-miss"
+// is deprecated and falls back to "admit-on-first-miss".
+func StorageAnywhereCacheAdmissionPolicyDiffSuppress(_, old, new string, _ *schema.ResourceData) bool {
+	if old == new {
+		return true
+	}
+	return (old == "admit-on-first-miss" && new == "admit-on-second-miss") ||
+		(old == "admit-on-second-miss" && new == "admit-on-first-miss")
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel

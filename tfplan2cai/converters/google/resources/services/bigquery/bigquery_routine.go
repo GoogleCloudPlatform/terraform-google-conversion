@@ -629,6 +629,13 @@ func expandBigQueryRoutineExternalRuntimeOptions(v interface{}, d tpgresource.Te
 		transformed["runtimeVersion"] = transformedRuntimeVersion
 	}
 
+	transformedContainerRequestConcurrency, err := expandBigQueryRoutineExternalRuntimeOptionsContainerRequestConcurrency(original["container_request_concurrency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContainerRequestConcurrency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["containerRequestConcurrency"] = transformedContainerRequestConcurrency
+	}
+
 	return transformed, nil
 }
 
@@ -649,5 +656,9 @@ func expandBigQueryRoutineExternalRuntimeOptionsMaxBatchingRows(v interface{}, d
 }
 
 func expandBigQueryRoutineExternalRuntimeOptionsRuntimeVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineExternalRuntimeOptionsContainerRequestConcurrency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

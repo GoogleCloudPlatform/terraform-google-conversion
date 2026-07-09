@@ -310,6 +310,20 @@ func expandComputeRegionNetworkFirewallPolicyWithRulesRule(v interface{}, d tpgr
 			transformed["disabled"] = transformedDisabled
 		}
 
+		transformedTargetType, err := expandComputeRegionNetworkFirewallPolicyWithRulesRuleTargetType(original["target_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetType"] = transformedTargetType
+		}
+
+		transformedTargetForwardingRules, err := expandComputeRegionNetworkFirewallPolicyWithRulesRuleTargetForwardingRules(original["target_forwarding_rules"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetForwardingRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetForwardingRules"] = transformedTargetForwardingRules
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -644,6 +658,14 @@ func expandComputeRegionNetworkFirewallPolicyWithRulesRuleTlsInspect(v interface
 }
 
 func expandComputeRegionNetworkFirewallPolicyWithRulesRuleDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkFirewallPolicyWithRulesRuleTargetType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkFirewallPolicyWithRulesRuleTargetForwardingRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

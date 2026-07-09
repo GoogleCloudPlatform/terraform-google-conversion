@@ -85,6 +85,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withReservationAffinitySpecific",
 		},
 		{
+			Name: "TestAccContainerNodePool_withReservationAffinityAnyReservationThenFail",
+		},
+		{
 			Name: "TestAccContainerNodePool_withWorkloadIdentityConfig",
 		},
 		{
@@ -95,6 +98,9 @@ func TestAccContainerNodePool(t *testing.T) {
 		},
 		{
 			Name: "TestAccContainerNodePool_withKubeletConfig",
+		},
+		{
+			Name: "TestAccContainerNodePool_withKubeletConfigShutdownGracePeriod",
 		},
 		{
 			Name: "TestAccContainerNodePool_withInvalidKubeletCpuManagerPolicy",
@@ -146,6 +152,9 @@ func TestAccContainerNodePool(t *testing.T) {
 		},
 		{
 			Name: "TestAccContainerNodePool_withNodeDrainConfig",
+		},
+		{
+			Name: "TestAccContainerNodePool_withMaintenancePolicy",
 		},
 		{
 			Name: "TestAccContainerNodePool_withAccurateTimeConfig",
@@ -299,6 +308,7 @@ func TestAccContainerNodePool(t *testing.T) {
 					"depends_on",
 					"dynamic",
 					"for_each",
+					"ignore_node_count_changes",
 					"lifecycle",
 					"name_prefix",
 					"network_config.accelerator_network_profile",
@@ -316,6 +326,8 @@ func TestAccContainerNodePool(t *testing.T) {
 					"node_config.taint.effect",
 					"node_config.taint.key",
 					"node_config.taint.value",
+					"node_config.taint_config",
+					"node_config.taint_config.architecture_taint_behavior",
 					"node_count",
 					"provider",
 					"timeouts",
