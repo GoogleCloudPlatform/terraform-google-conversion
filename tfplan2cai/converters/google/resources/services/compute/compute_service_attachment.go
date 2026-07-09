@@ -193,7 +193,7 @@ func GetComputeServiceAttachmentApiObject(d tpgresource.TerraformResourceData, c
 	enableProxyProtocolProp, err := expandComputeServiceAttachmentEnableProxyProtocol(d.Get("enable_proxy_protocol"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_proxy_protocol"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableProxyProtocolProp)) && (ok || !reflect.DeepEqual(v, enableProxyProtocolProp)) {
+	} else if v, ok := d.GetOkExists("enable_proxy_protocol"); ok || !reflect.DeepEqual(v, enableProxyProtocolProp) {
 		obj["enableProxyProtocol"] = enableProxyProtocolProp
 	}
 	domainNamesProp, err := expandComputeServiceAttachmentDomainNames(d.Get("domain_names"), d, config)
