@@ -128,6 +128,12 @@ func GetDataLossPreventionInspectTemplateApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("inspect_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(inspectConfigProp)) && (ok || !reflect.DeepEqual(v, inspectConfigProp)) {
 		obj["inspectConfig"] = inspectConfigProp
 	}
+	allowLimitedAvailabilityInfoTypesProp, err := expandDataLossPreventionInspectTemplateAllowLimitedAvailabilityInfoTypes(d.Get("allow_limited_availability_info_types"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_limited_availability_info_types"); !tpgresource.IsEmptyValue(reflect.ValueOf(allowLimitedAvailabilityInfoTypesProp)) && (ok || !reflect.DeepEqual(v, allowLimitedAvailabilityInfoTypesProp)) {
+		obj["allowLimitedAvailabilityInfoTypes"] = allowLimitedAvailabilityInfoTypesProp
+	}
 
 	return resourceDataLossPreventionInspectTemplateEncoder(d, config, obj)
 }
@@ -183,6 +189,13 @@ func expandDataLossPreventionInspectTemplateInspectConfig(v interface{}, d tpgre
 		transformed["minLikelihood"] = transformedMinLikelihood
 	}
 
+	transformedMinLikelihoodPerInfoType, err := expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoType(original["min_likelihood_per_info_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinLikelihoodPerInfoType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minLikelihoodPerInfoType"] = transformedMinLikelihoodPerInfoType
+	}
+
 	transformedLimits, err := expandDataLossPreventionInspectTemplateInspectConfigLimits(original["limits"], d, config)
 	if err != nil {
 		return nil, err
@@ -230,6 +243,79 @@ func expandDataLossPreventionInspectTemplateInspectConfigIncludeQuote(v interfac
 }
 
 func expandDataLossPreventionInspectTemplateInspectConfigMinLikelihood(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedInfoType, err := expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoTypeInfoType(original["info_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedInfoType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["infoType"] = transformedInfoType
+		}
+
+		transformedMinLikelihood, err := expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoTypeMinLikelihood(original["min_likelihood"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMinLikelihood); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["minLikelihood"] = transformedMinLikelihood
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoTypeInfoType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoTypeInfoTypeName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedVersion, err := expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoTypeInfoTypeVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoTypeInfoTypeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoTypeInfoTypeVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionInspectTemplateInspectConfigMinLikelihoodPerInfoTypeMinLikelihood(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1451,5 +1537,9 @@ func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredTy
 }
 
 func expandDataLossPreventionInspectTemplateInspectConfigCustomInfoTypesStoredTypeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionInspectTemplateAllowLimitedAvailabilityInfoTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

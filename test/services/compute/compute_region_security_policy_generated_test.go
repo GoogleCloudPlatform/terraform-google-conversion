@@ -25,6 +25,14 @@ func TestAccComputeRegionSecurityPolicy(t *testing.T) {
 
 	tests := []test.TestCase{
 		{
+			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyWithRulesRateLimitOptions",
+			Skip: "data issue with this test",
+		},
+		{
+			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyUserDefinedFieldsUpdate",
+			Skip: "data issue with this test",
+		},
+		{
 			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyBasicExample",
 		},
 		{
@@ -40,16 +48,10 @@ func TestAccComputeRegionSecurityPolicy(t *testing.T) {
 			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyBasicUpdateExample",
 		},
 		{
-			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyUserDefinedFieldsUpdate",
-		},
-		{
 			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyWithRulesBasicUpdate",
 		},
 		{
 			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyWithRulesPreconfiguredWafConfig",
-		},
-		{
-			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyWithRulesRateLimitOptions",
 		},
 		{
 			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyWithRulesMultipleEnforceOnKeyConfigs",

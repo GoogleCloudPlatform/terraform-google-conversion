@@ -128,6 +128,12 @@ func GetDataplexDataProductApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	iconProp, err := expandDataplexDataProductIcon(d.Get("icon"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("icon"); !tpgresource.IsEmptyValue(reflect.ValueOf(iconProp)) && (ok || !reflect.DeepEqual(v, iconProp)) {
+		obj["icon"] = iconProp
+	}
 	ownerEmailsProp, err := expandDataplexDataProductOwnerEmails(d.Get("owner_emails"), d, config)
 	if err != nil {
 		return nil, err
@@ -181,6 +187,10 @@ func expandDataplexDataProductDisplayName(v interface{}, d tpgresource.Terraform
 }
 
 func expandDataplexDataProductDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDataProductIcon(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -184,6 +184,12 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withKubeletConfig",
 		},
 		{
+			Name: "TestAccContainerCluster_withKubeletConfigShutdownGracePeriod",
+		},
+		{
+			Name: "TestAccContainerCluster_withInlineNodePoolShutdownGracePeriod",
+		},
+		{
 			Name: "TestAccContainerCluster_withNodeConfigFastSocket",
 		},
 		{
@@ -227,6 +233,9 @@ func TestAccContainerCluster(t *testing.T) {
 		},
 		{
 			Name: "TestAccContainerCluster_withNodeConfigReservationAffinitySpecific",
+		},
+		{
+			Name: "TestAccContainerCluster_withNodeConfigReservationAffinityAnyReservationThenFail",
 		},
 		{
 			Name: "TestAccContainerCluster_withNodeConfigNodeImageConfig",
@@ -277,10 +286,16 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withNodePoolNodeDrainConfig",
 		},
 		{
+			Name: "TestAccContainerCluster_withNodePoolMaintenancePolicy",
+		},
+		{
 			Name: "TestAccContainerCluster_withClusterDisruptionBudget",
 		},
 		{
-			Name: "TestAccContainerCluster_withMaintenanceWindow",
+			Name: "TestAccContainerCluster_withDailyMaintenanceWindow",
+		},
+		{
+			Name: "TestAccContainerCluster_withRecurringTimeWindow",
 		},
 		{
 			Name: "TestAccContainerCluster_withRecurringMaintenanceWindow",
@@ -698,6 +713,7 @@ func TestAccContainerCluster(t *testing.T) {
 					"depends_on",
 					"dynamic",
 					"for_each",
+					"ignore_node_count_changes",
 					"ip_allocation_policy.cluster_ipv4_cidr_block",
 					"ip_allocation_policy.services_ipv4_cidr_block",
 					"lifecycle",
@@ -714,6 +730,7 @@ func TestAccContainerCluster(t *testing.T) {
 					"node_config.taint.effect",
 					"node_config.taint.key",
 					"node_config.taint.value",
+					"node_pool.ignore_node_count_changes",
 					"node_pool.name_prefix",
 					"node_pool.node_config.guest_accelerator",
 					"node_pool.node_config.guest_accelerator.count",
@@ -728,6 +745,7 @@ func TestAccContainerCluster(t *testing.T) {
 					"node_version",
 					"provider",
 					"remove_default_node_pool",
+					"skip_node_pool_refresh",
 					"timeouts",
 				},
 				"google_container_cluster",
