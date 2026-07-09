@@ -65,6 +65,15 @@ func TestAccComputeInstance(t *testing.T) {
 			Name: "TestAccComputeInstance_descriptionUpdate",
 		},
 		{
+			Name: "TestAccComputeInstance_workloadIdentity_add",
+		},
+		{
+			Name: "TestAccComputeInstance_workloadIdentity_remove",
+		},
+		{
+			Name: "TestAccComputeInstance_workloadIdentity_update",
+		},
+		{
 			Name: "TestAccComputeInstance_IP",
 		},
 		{
