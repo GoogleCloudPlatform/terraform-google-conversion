@@ -57,6 +57,9 @@ func TestAccComputeRouter(t *testing.T) {
 		{
 			Name: "TestAccComputeRouter_resourceManagerTags",
 		},
+		{
+			Name: "TestAccComputeRouter_keepaliveIntervalDefault",
+		},
 	}
 
 	for _, tt := range tests {
