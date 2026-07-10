@@ -435,6 +435,20 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigL
 		transformed["enableImageAnnotation"] = transformedEnableImageAnnotation
 	}
 
+	transformedEnableLlmLayoutParsing, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigLayoutParsingConfigEnableLlmLayoutParsing(original["enable_llm_layout_parsing"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableLlmLayoutParsing); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableLlmLayoutParsing"] = transformedEnableLlmLayoutParsing
+	}
+
+	transformedEnableGetProcessedDocument, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigLayoutParsingConfigEnableGetProcessedDocument(original["enable_get_processed_document"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableGetProcessedDocument); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableGetProcessedDocument"] = transformedEnableGetProcessedDocument
+	}
+
 	transformedStructuredContentTypes, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigLayoutParsingConfigStructuredContentTypes(original["structured_content_types"], d, config)
 	if err != nil {
 		return nil, err
@@ -471,6 +485,14 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigL
 }
 
 func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigLayoutParsingConfigEnableImageAnnotation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigLayoutParsingConfigEnableLlmLayoutParsing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigDefaultParsingConfigLayoutParsingConfigEnableGetProcessedDocument(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -604,6 +626,20 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverride
 		transformed["enableImageAnnotation"] = transformedEnableImageAnnotation
 	}
 
+	transformedEnableLlmLayoutParsing, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesLayoutParsingConfigEnableLlmLayoutParsing(original["enable_llm_layout_parsing"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableLlmLayoutParsing); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableLlmLayoutParsing"] = transformedEnableLlmLayoutParsing
+	}
+
+	transformedEnableGetProcessedDocument, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesLayoutParsingConfigEnableGetProcessedDocument(original["enable_get_processed_document"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableGetProcessedDocument); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableGetProcessedDocument"] = transformedEnableGetProcessedDocument
+	}
+
 	transformedStructuredContentTypes, err := expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesLayoutParsingConfigStructuredContentTypes(original["structured_content_types"], d, config)
 	if err != nil {
 		return nil, err
@@ -640,6 +676,14 @@ func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverride
 }
 
 func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesLayoutParsingConfigEnableImageAnnotation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesLayoutParsingConfigEnableLlmLayoutParsing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreDocumentProcessingConfigParsingConfigOverridesLayoutParsingConfigEnableGetProcessedDocument(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
