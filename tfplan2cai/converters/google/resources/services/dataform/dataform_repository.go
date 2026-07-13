@@ -206,6 +206,13 @@ func expandDataformRepositoryGitRemoteSettings(v interface{}, d tpgresource.Terr
 		transformed["sshAuthenticationConfig"] = transformedSshAuthenticationConfig
 	}
 
+	transformedGitRepositoryLink, err := expandDataformRepositoryGitRemoteSettingsGitRepositoryLink(original["git_repository_link"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGitRepositoryLink); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gitRepositoryLink"] = transformedGitRepositoryLink
+	}
+
 	transformedTokenStatus, err := expandDataformRepositoryGitRemoteSettingsTokenStatus(original["token_status"], d, config)
 	if err != nil {
 		return nil, err
@@ -262,6 +269,10 @@ func expandDataformRepositoryGitRemoteSettingsSshAuthenticationConfigUserPrivate
 }
 
 func expandDataformRepositoryGitRemoteSettingsSshAuthenticationConfigHostPublicKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataformRepositoryGitRemoteSettingsGitRepositoryLink(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
