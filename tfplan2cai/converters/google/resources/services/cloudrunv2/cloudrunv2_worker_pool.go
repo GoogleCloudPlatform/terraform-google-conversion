@@ -146,12 +146,6 @@ func GetCloudRunV2WorkerPoolApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("binary_authorization"); !tpgresource.IsEmptyValue(reflect.ValueOf(binaryAuthorizationProp)) && (ok || !reflect.DeepEqual(v, binaryAuthorizationProp)) {
 		obj["binaryAuthorization"] = binaryAuthorizationProp
 	}
-	customAudiencesProp, err := expandCloudRunV2WorkerPoolCustomAudiences(d.Get("custom_audiences"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("custom_audiences"); !tpgresource.IsEmptyValue(reflect.ValueOf(customAudiencesProp)) && (ok || !reflect.DeepEqual(v, customAudiencesProp)) {
-		obj["customAudiences"] = customAudiencesProp
-	}
 	scalingProp, err := expandCloudRunV2WorkerPoolScaling(d.Get("scaling"), d, config)
 	if err != nil {
 		return nil, err
@@ -256,10 +250,6 @@ func expandCloudRunV2WorkerPoolBinaryAuthorizationUseDefault(v interface{}, d tp
 }
 
 func expandCloudRunV2WorkerPoolBinaryAuthorizationPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandCloudRunV2WorkerPoolCustomAudiences(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
