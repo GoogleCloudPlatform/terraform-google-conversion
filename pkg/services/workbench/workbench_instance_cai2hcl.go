@@ -142,6 +142,7 @@ func (c *WorkbenchInstanceCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["labels"] = flattenWorkbenchInstanceLabels(res["labels"], d, config)
 	hclData["enable_third_party_identity"] = flattenWorkbenchInstanceEnableThirdPartyIdentity(res["enableThirdPartyIdentity"], d, config)
 	hclData["enable_managed_euc"] = flattenWorkbenchInstanceEnableManagedEuc(res["enableManagedEuc"], d, config)
+	hclData["enable_deletion_protection"] = flattenWorkbenchInstanceEnableDeletionProtection(res["enableDeletionProtection"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -569,5 +570,9 @@ func flattenWorkbenchInstanceEnableThirdPartyIdentity(v interface{}, d *schema.R
 }
 
 func flattenWorkbenchInstanceEnableManagedEuc(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenWorkbenchInstanceEnableDeletionProtection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

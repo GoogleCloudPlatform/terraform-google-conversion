@@ -327,6 +327,12 @@ func ResourceWorkbenchInstance() *schema.Resource {
 				ForceNew:    true,
 				Description: `Optional. If true, the workbench instance will not register with the proxy.`,
 			},
+			"enable_deletion_protection": {
+				Type:        schema.TypeBool,
+				Computed:    true,
+				Optional:    true,
+				Description: `Optional. If true, deletion protection will be enabled for this Workbench Instance.`,
+			},
 			"enable_managed_euc": {
 				Type:        schema.TypeBool,
 				Optional:    true,

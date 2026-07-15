@@ -145,6 +145,12 @@ func GetWorkbenchInstanceCaiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("enable_managed_euc"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableManagedEucProp)) && (ok || !reflect.DeepEqual(v, enableManagedEucProp)) {
 		obj["enableManagedEuc"] = enableManagedEucProp
 	}
+	enableDeletionProtectionProp, err := expandWorkbenchInstanceEnableDeletionProtection(d.Get("enable_deletion_protection"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_deletion_protection"); ok || !reflect.DeepEqual(v, enableDeletionProtectionProp) {
+		obj["enableDeletionProtection"] = enableDeletionProtectionProp
+	}
 	effectiveLabelsProp, err := expandWorkbenchInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -815,6 +821,10 @@ func expandWorkbenchInstanceEnableThirdPartyIdentity(v interface{}, d tpgresourc
 }
 
 func expandWorkbenchInstanceEnableManagedEuc(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceEnableDeletionProtection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
