@@ -382,10 +382,11 @@ func flattenWorkbenchInstanceGceSetupDataDisks(v interface{}, d *schema.Resource
 			continue
 		}
 		transformed = append(transformed, map[string]interface{}{
-			"disk_size_gb":    flattenWorkbenchInstanceGceSetupDataDisksDiskSizeGb(original["diskSizeGb"], d, config),
-			"disk_type":       flattenWorkbenchInstanceGceSetupDataDisksDiskType(original["diskType"], d, config),
-			"disk_encryption": flattenWorkbenchInstanceGceSetupDataDisksDiskEncryption(original["diskEncryption"], d, config),
-			"kms_key":         flattenWorkbenchInstanceGceSetupDataDisksKmsKey(original["kmsKey"], d, config),
+			"disk_size_gb":      flattenWorkbenchInstanceGceSetupDataDisksDiskSizeGb(original["diskSizeGb"], d, config),
+			"disk_type":         flattenWorkbenchInstanceGceSetupDataDisksDiskType(original["diskType"], d, config),
+			"disk_encryption":   flattenWorkbenchInstanceGceSetupDataDisksDiskEncryption(original["diskEncryption"], d, config),
+			"kms_key":           flattenWorkbenchInstanceGceSetupDataDisksKmsKey(original["kmsKey"], d, config),
+			"resource_policies": flattenWorkbenchInstanceGceSetupDataDisksResourcePolicies(original["resourcePolicies"], d, config),
 		})
 	}
 	return transformed
@@ -410,6 +411,10 @@ func flattenWorkbenchInstanceGceSetupDataDisksKmsKey(v interface{}, d *schema.Re
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenWorkbenchInstanceGceSetupDataDisksResourcePolicies(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
