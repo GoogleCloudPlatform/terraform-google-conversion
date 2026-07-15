@@ -389,6 +389,20 @@ func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServices(v int
 		transformed["allowedServices"] = transformedAllowedServices
 	}
 
+	transformedAllowedServicePatterns, err := expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatterns(original["allowed_service_patterns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedServicePatterns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedServicePatterns"] = transformedAllowedServicePatterns
+	}
+
+	transformedServicePatternsEnforcementScopes, err := expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesServicePatternsEnforcementScopes(original["service_patterns_enforcement_scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServicePatternsEnforcementScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["servicePatternsEnforcementScopes"] = transformedServicePatternsEnforcementScopes
+	}
+
 	return transformed, nil
 }
 
@@ -398,6 +412,119 @@ func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesEnable
 
 func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatterns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedService, err := expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsService(original["service"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["service"] = transformedService
+		}
+
+		transformedPattern, err := expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsPattern(original["pattern"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPattern); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pattern"] = transformedPattern
+		}
+
+		transformedModifiers, err := expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsModifiers(original["modifiers"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedModifiers); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["modifiers"] = transformedModifiers
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsPattern(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsModifiers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAddRequestHeader, err := expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeader(original["add_request_header"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAddRequestHeader); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["addRequestHeader"] = transformedAddRequestHeader
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeader(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKey, err := expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeaderKey(original["key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["key"] = transformedKey
+	}
+
+	transformedValue, err := expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeaderValue(original["value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["value"] = transformedValue
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeaderKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterStatusVpcAccessibleServicesServicePatternsEnforcementScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1086,6 +1213,20 @@ func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServices(v inter
 		transformed["allowedServices"] = transformedAllowedServices
 	}
 
+	transformedAllowedServicePatterns, err := expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatterns(original["allowed_service_patterns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedServicePatterns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedServicePatterns"] = transformedAllowedServicePatterns
+	}
+
+	transformedServicePatternsEnforcementScopes, err := expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesServicePatternsEnforcementScopes(original["service_patterns_enforcement_scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServicePatternsEnforcementScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["servicePatternsEnforcementScopes"] = transformedServicePatternsEnforcementScopes
+	}
+
 	return transformed, nil
 }
 
@@ -1095,6 +1236,119 @@ func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesEnableRe
 
 func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatterns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedService, err := expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsService(original["service"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["service"] = transformedService
+		}
+
+		transformedPattern, err := expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsPattern(original["pattern"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPattern); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pattern"] = transformedPattern
+		}
+
+		transformedModifiers, err := expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsModifiers(original["modifiers"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedModifiers); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["modifiers"] = transformedModifiers
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsPattern(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsModifiers(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedAddRequestHeader, err := expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeader(original["add_request_header"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAddRequestHeader); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["addRequestHeader"] = transformedAddRequestHeader
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeader(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKey, err := expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeaderKey(original["key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["key"] = transformedKey
+	}
+
+	transformedValue, err := expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeaderValue(original["value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["value"] = transformedValue
+	}
+
+	return transformed, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeaderKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesAllowedServicePatternsModifiersAddRequestHeaderValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterSpecVpcAccessibleServicesServicePatternsEnforcementScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
