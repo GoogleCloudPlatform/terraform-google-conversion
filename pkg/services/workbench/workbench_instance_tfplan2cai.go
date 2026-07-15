@@ -586,6 +586,13 @@ func expandWorkbenchInstanceGceSetupDataDisks(v interface{}, d tpgresource.Terra
 			transformed["kmsKey"] = transformedKmsKey
 		}
 
+		transformedResourcePolicies, err := expandWorkbenchInstanceGceSetupDataDisksResourcePolicies(original["resource_policies"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedResourcePolicies); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["resourcePolicies"] = transformedResourcePolicies
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -604,6 +611,10 @@ func expandWorkbenchInstanceGceSetupDataDisksDiskEncryption(v interface{}, d tpg
 }
 
 func expandWorkbenchInstanceGceSetupDataDisksKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupDataDisksResourcePolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

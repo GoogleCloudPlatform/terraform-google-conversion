@@ -88,6 +88,9 @@ func TestAccWorkbenchInstance(t *testing.T) {
 			Name: "TestAccWorkbenchInstance_updateJupyterLab",
 		},
 		{
+			Name: "TestAccWorkbenchInstance_updateResourcePolicies",
+		},
+		{
 			Name: "TestAccWorkbenchInstance_shielded_config_update",
 		},
 		{
