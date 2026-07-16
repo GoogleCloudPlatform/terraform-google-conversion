@@ -190,6 +190,8 @@ func flattenWorkbenchInstanceGceSetup(v interface{}, d *schema.ResourceData, con
 		flattenWorkbenchInstanceGceSetupConfidentialInstanceConfig(original["confidentialInstanceConfig"], d, config)
 	transformed["reservation_affinity"] =
 		flattenWorkbenchInstanceGceSetupReservationAffinity(original["reservationAffinity"], d, config)
+	transformed["min_cpu_platform"] =
+		flattenWorkbenchInstanceGceSetupMinCpuPlatform(original["minCpuPlatform"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -550,6 +552,10 @@ func flattenWorkbenchInstanceGceSetupReservationAffinityKey(v interface{}, d *sc
 }
 
 func flattenWorkbenchInstanceGceSetupReservationAffinityValues(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenWorkbenchInstanceGceSetupMinCpuPlatform(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

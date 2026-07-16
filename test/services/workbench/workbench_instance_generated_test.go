@@ -55,6 +55,9 @@ func TestAccWorkbenchInstance(t *testing.T) {
 			Name: "TestAccWorkbenchInstance_removeGpu",
 		},
 		{
+			Name: "TestAccWorkbenchInstance_updateMinCpuPlatform",
+		},
+		{
 			Name: "TestAccWorkbenchInstance_updateMetadata",
 		},
 		{

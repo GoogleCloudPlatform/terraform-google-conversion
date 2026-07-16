@@ -278,6 +278,13 @@ func expandWorkbenchInstanceGceSetup(v interface{}, d tpgresource.TerraformResou
 		transformed["reservationAffinity"] = transformedReservationAffinity
 	}
 
+	transformedMinCpuPlatform, err := expandWorkbenchInstanceGceSetupMinCpuPlatform(original["min_cpu_platform"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinCpuPlatform); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minCpuPlatform"] = transformedMinCpuPlatform
+	}
+
 	return transformed, nil
 }
 
@@ -805,6 +812,10 @@ func expandWorkbenchInstanceGceSetupReservationAffinityKey(v interface{}, d tpgr
 }
 
 func expandWorkbenchInstanceGceSetupReservationAffinityValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkbenchInstanceGceSetupMinCpuPlatform(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
