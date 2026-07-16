@@ -61,6 +61,7 @@ func TestAccBackupDRBackupVault(t *testing.T) {
 					"for_each",
 					"force_delete",
 					"force_update",
+					"force_update_access_restriction",
 					"ignore_backup_plan_references",
 					"ignore_inactive_datasources",
 					"labels",
