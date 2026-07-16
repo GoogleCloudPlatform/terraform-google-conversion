@@ -542,6 +542,12 @@ https://cloud.google.com/vpc/docs/using-routes#canipforward`,
 							Description:      `Optional. Custom metadata to apply to this instance.`,
 							Elem:             &schema.Schema{Type: schema.TypeString},
 						},
+						"min_cpu_platform": {
+							Type:        schema.TypeString,
+							Computed:    true,
+							Optional:    true,
+							Description: `Optional. The minimum CPU platform to use for this instance.`,
+						},
 						"network_interfaces": {
 							Type:        schema.TypeList,
 							Computed:    true,
