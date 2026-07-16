@@ -359,6 +359,15 @@ func TestAccComputeInstance(t *testing.T) {
 			Name: "TestAccComputeInstance_queueCount",
 		},
 		{
+			Name: "TestAccComputeInstance_flexStart",
+		},
+		{
+			Name: "TestAccComputeInstance_reservationBound",
+		},
+		{
+			Name: "TestAccComputeInstance_provisioningModelEmptyString",
+		},
+		{
 			Name: "TestAccComputeInstance_spotVM",
 		},
 		{
