@@ -218,6 +218,12 @@ func GetComputeFutureReservationApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
+	zoneProp, err := expandComputeFutureReservationZone(d.Get("zone"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(zoneProp)) && (ok || !reflect.DeepEqual(v, zoneProp)) {
+		obj["zone"] = zoneProp
+	}
 
 	return obj, nil
 }
@@ -850,4 +856,12 @@ func expandComputeFutureReservationParamsResourceManagerTags(v interface{}, d tp
 
 func expandComputeFutureReservationName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandComputeFutureReservationZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("zones", v.(string), "project", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for zone: %s", err)
+	}
+	return f.RelativeLink(), nil
 }
