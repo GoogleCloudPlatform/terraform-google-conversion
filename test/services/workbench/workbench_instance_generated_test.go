@@ -55,6 +55,9 @@ func TestAccWorkbenchInstance(t *testing.T) {
 			Name: "TestAccWorkbenchInstance_removeGpu",
 		},
 		{
+			Name: "TestAccWorkbenchInstance_updateMinCpuPlatform",
+		},
+		{
 			Name: "TestAccWorkbenchInstance_updateMetadata",
 		},
 		{
@@ -86,6 +89,12 @@ func TestAccWorkbenchInstance(t *testing.T) {
 		},
 		{
 			Name: "TestAccWorkbenchInstance_updateJupyterLab",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateDeleteProtection",
+		},
+		{
+			Name: "TestAccWorkbenchInstance_updateResourcePolicies",
 		},
 		{
 			Name: "TestAccWorkbenchInstance_shielded_config_update",

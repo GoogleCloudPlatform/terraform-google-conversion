@@ -41,7 +41,8 @@ import (
 )
 
 var metadataDefaults = map[string]string{
-	"enable-jupyterlab4": "true",
+	"enable-jupyterlab4":      "true",
+	"new-proxy-agent-enabled": "true",
 }
 
 var WorkbenchInstanceSettableUnmodifiableDefaultMetadata = []string{
@@ -326,6 +327,12 @@ func ResourceWorkbenchInstance() *schema.Resource {
 				ForceNew:    true,
 				Description: `Optional. If true, the workbench instance will not register with the proxy.`,
 			},
+			"enable_deletion_protection": {
+				Type:        schema.TypeBool,
+				Computed:    true,
+				Optional:    true,
+				Description: `Optional. If true, deletion protection will be enabled for this Workbench Instance.`,
+			},
 			"enable_managed_euc": {
 				Type:        schema.TypeBool,
 				Optional:    true,
@@ -493,6 +500,16 @@ up to a maximum of 64000 GB (64 TB). If not specified, this defaults to
 only applicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'
 Learn more about using your own encryption keys.'`,
 									},
+									"resource_policies": {
+										Type:             schema.TypeList,
+										Computed:         true,
+										Optional:         true,
+										DiffSuppressFunc: tpgresource.CompareSelfLinkRelativePaths,
+										Description:      `Optional. Resource policies applied to this disk.`,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
 								},
 							},
 						},
@@ -524,6 +541,12 @@ https://cloud.google.com/vpc/docs/using-routes#canipforward`,
 							DiffSuppressFunc: WorkbenchInstanceMetadataDiffSuppress,
 							Description:      `Optional. Custom metadata to apply to this instance.`,
 							Elem:             &schema.Schema{Type: schema.TypeString},
+						},
+						"min_cpu_platform": {
+							Type:        schema.TypeString,
+							Computed:    true,
+							Optional:    true,
+							Description: `Optional. The minimum CPU platform to use for this instance.`,
 						},
 						"network_interfaces": {
 							Type:        schema.TypeList,

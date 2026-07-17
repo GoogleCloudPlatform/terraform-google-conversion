@@ -97,7 +97,6 @@ func ResourceBackupDRBackupVault() *schema.Resource {
 			"access_restriction": {
 				Type:         schema.TypeString,
 				Optional:     true,
-				ForceNew:     true,
 				ValidateFunc: verify.ValidateEnum([]string{"ACCESS_RESTRICTION_UNSPECIFIED", "WITHIN_PROJECT", "WITHIN_ORGANIZATION", "UNRESTRICTED", "WITHIN_ORG_BUT_UNRESTRICTED_FOR_BA", ""}),
 				Description:  `Access restriction for the backup vault. Default value is 'WITHIN_ORGANIZATION' if not provided during creation. Default value: "WITHIN_ORGANIZATION" Possible values: ["ACCESS_RESTRICTION_UNSPECIFIED", "WITHIN_PROJECT", "WITHIN_ORGANIZATION", "UNRESTRICTED", "WITHIN_ORG_BUT_UNRESTRICTED_FOR_BA"]`,
 				Default:      "WITHIN_ORGANIZATION",
@@ -167,6 +166,11 @@ Please refer to the field 'effective_annotations' for all of the annotations pre
  expiration schedule defined by the associated backup plan is shorter than the minimum
  retention set by the backup vault.`,
 				Default: false,
+			},
+			"force_update_access_restriction": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: `If set to true, we will force update access restriction even if some non compliant data sources are present.`,
 			},
 			"ignore_backup_plan_references": {
 				Type:     schema.TypeBool,
@@ -243,7 +247,8 @@ Please refer to the field 'effective_labels' for all of the labels present on th
  CREATING
  ACTIVE
  DELETING
- ERROR`,
+ ERROR
+ UPDATING`,
 			},
 			"terraform_labels": {
 				Type:     schema.TypeMap,
