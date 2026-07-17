@@ -142,6 +142,7 @@ func (c *WorkbenchInstanceCai2hclConverter) convertResourceData(asset caiasset.A
 	hclData["labels"] = flattenWorkbenchInstanceLabels(res["labels"], d, config)
 	hclData["enable_third_party_identity"] = flattenWorkbenchInstanceEnableThirdPartyIdentity(res["enableThirdPartyIdentity"], d, config)
 	hclData["enable_managed_euc"] = flattenWorkbenchInstanceEnableManagedEuc(res["enableManagedEuc"], d, config)
+	hclData["enable_deletion_protection"] = flattenWorkbenchInstanceEnableDeletionProtection(res["enableDeletionProtection"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -189,6 +190,8 @@ func flattenWorkbenchInstanceGceSetup(v interface{}, d *schema.ResourceData, con
 		flattenWorkbenchInstanceGceSetupConfidentialInstanceConfig(original["confidentialInstanceConfig"], d, config)
 	transformed["reservation_affinity"] =
 		flattenWorkbenchInstanceGceSetupReservationAffinity(original["reservationAffinity"], d, config)
+	transformed["min_cpu_platform"] =
+		flattenWorkbenchInstanceGceSetupMinCpuPlatform(original["minCpuPlatform"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -382,10 +385,11 @@ func flattenWorkbenchInstanceGceSetupDataDisks(v interface{}, d *schema.Resource
 			continue
 		}
 		transformed = append(transformed, map[string]interface{}{
-			"disk_size_gb":    flattenWorkbenchInstanceGceSetupDataDisksDiskSizeGb(original["diskSizeGb"], d, config),
-			"disk_type":       flattenWorkbenchInstanceGceSetupDataDisksDiskType(original["diskType"], d, config),
-			"disk_encryption": flattenWorkbenchInstanceGceSetupDataDisksDiskEncryption(original["diskEncryption"], d, config),
-			"kms_key":         flattenWorkbenchInstanceGceSetupDataDisksKmsKey(original["kmsKey"], d, config),
+			"disk_size_gb":      flattenWorkbenchInstanceGceSetupDataDisksDiskSizeGb(original["diskSizeGb"], d, config),
+			"disk_type":         flattenWorkbenchInstanceGceSetupDataDisksDiskType(original["diskType"], d, config),
+			"disk_encryption":   flattenWorkbenchInstanceGceSetupDataDisksDiskEncryption(original["diskEncryption"], d, config),
+			"kms_key":           flattenWorkbenchInstanceGceSetupDataDisksKmsKey(original["kmsKey"], d, config),
+			"resource_policies": flattenWorkbenchInstanceGceSetupDataDisksResourcePolicies(original["resourcePolicies"], d, config),
 		})
 	}
 	return transformed
@@ -410,6 +414,10 @@ func flattenWorkbenchInstanceGceSetupDataDisksKmsKey(v interface{}, d *schema.Re
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenWorkbenchInstanceGceSetupDataDisksResourcePolicies(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -547,6 +555,10 @@ func flattenWorkbenchInstanceGceSetupReservationAffinityValues(v interface{}, d 
 	return v
 }
 
+func flattenWorkbenchInstanceGceSetupMinCpuPlatform(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenWorkbenchInstanceInstanceOwners(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -564,5 +576,9 @@ func flattenWorkbenchInstanceEnableThirdPartyIdentity(v interface{}, d *schema.R
 }
 
 func flattenWorkbenchInstanceEnableManagedEuc(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenWorkbenchInstanceEnableDeletionProtection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

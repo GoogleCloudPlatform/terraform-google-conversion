@@ -88,9 +88,6 @@ func TestAccRedisCluster(t *testing.T) {
 			Name: "TestAccRedisCluster_redisClusterTlsEnabled",
 		},
 		{
-			Name: "TestAccRedisCluster_redisClusterMaintenanceVersion",
-		},
-		{
 			Name: "TestAccRedisCluster_redisClusterHaWithLabelsUpdate",
 		},
 		{

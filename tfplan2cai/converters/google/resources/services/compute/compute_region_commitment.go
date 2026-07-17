@@ -49,6 +49,12 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+// computeRegionCommitmentExistingReservationsDiffSuppress suppresses diffs for existing resources
+// when state (old) is empty. This prevents forced recreations when upgrading from provider versions prior to 7.37.0.
+func computeRegionCommitmentExistingReservationsDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	return d.Id() != "" && old == ""
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel

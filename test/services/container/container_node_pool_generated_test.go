@@ -288,6 +288,12 @@ func TestAccContainerNodePool(t *testing.T) {
 		{
 			Name: "TestAccContainerNodePool_withTaintConfig",
 		},
+		{
+			Name: "TestAccContainerNodePool_withCustomNodeInit",
+		},
+		{
+			Name: "TestAccContainerNodePool_withCustomNodeInitSecret",
+		},
 	}
 
 	for _, tt := range tests {
