@@ -682,6 +682,7 @@ func TestAccContainerCluster(t *testing.T) {
 					"deletion_protection",
 					"depends_on",
 					"dynamic",
+					"enterprise_config",
 					"for_each",
 					"ip_allocation_policy.cluster_ipv4_cidr_block",
 					"ip_allocation_policy.services_ipv4_cidr_block",
