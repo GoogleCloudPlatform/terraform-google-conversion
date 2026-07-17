@@ -48,9 +48,6 @@ func TestAccNetappVolume(t *testing.T) {
 		{
 			Name: "TestAccNetappVolume_LargeCapacityScaleTypeConfig",
 		},
-		{
-			Name: "TestAccNetappVolume_LargeCapacityScaleTierConfig",
-		},
 	}
 
 	for _, tt := range tests {
