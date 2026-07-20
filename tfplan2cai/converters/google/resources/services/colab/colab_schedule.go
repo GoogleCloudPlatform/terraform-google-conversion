@@ -177,6 +177,18 @@ func GetColabScheduleApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("create_notebook_execution_job_request"); !tpgresource.IsEmptyValue(reflect.ValueOf(createNotebookExecutionJobRequestProp)) && (ok || !reflect.DeepEqual(v, createNotebookExecutionJobRequestProp)) {
 		obj["createNotebookExecutionJobRequest"] = createNotebookExecutionJobRequestProp
 	}
+	createPipelineJobRequestProp, err := expandColabScheduleCreatePipelineJobRequest(d.Get("create_pipeline_job_request"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("create_pipeline_job_request"); !tpgresource.IsEmptyValue(reflect.ValueOf(createPipelineJobRequestProp)) && (ok || !reflect.DeepEqual(v, createPipelineJobRequestProp)) {
+		obj["createPipelineJobRequest"] = createPipelineJobRequestProp
+	}
+	maxConcurrentActiveRunCountProp, err := expandColabScheduleMaxConcurrentActiveRunCount(d.Get("max_concurrent_active_run_count"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("max_concurrent_active_run_count"); !tpgresource.IsEmptyValue(reflect.ValueOf(maxConcurrentActiveRunCountProp)) && (ok || !reflect.DeepEqual(v, maxConcurrentActiveRunCountProp)) {
+		obj["maxConcurrentActiveRunCount"] = maxConcurrentActiveRunCountProp
+	}
 
 	return resourceColabScheduleEncoder(d, config, obj)
 }
@@ -193,16 +205,26 @@ func resourceColabScheduleEncoder(d tpgresource.TerraformResourceData, meta inte
 		return nil, err
 	}
 
-	// createNotebookExecutionJobRequest does not exist in update requests
-	if obj["createNotebookExecutionJobRequest"] == nil {
-		return obj, nil
+	// Handle parent injection for creation requests if parent is not explicitly provided
+	if obj["createNotebookExecutionJobRequest"] != nil {
+		jobRequest, ok := obj["createNotebookExecutionJobRequest"].(map[string]interface{})
+		if !ok {
+			return nil, fmt.Errorf("createNotebookExecutionJobRequest is not of type map[string]interface{} or is nil")
+		}
+		if jobRequest["parent"] == nil || jobRequest["parent"] == "" {
+			jobRequest["parent"] = fmt.Sprintf("projects/%s/locations/%s", project, location)
+		}
 	}
 
-	jobRequest, ok := obj["createNotebookExecutionJobRequest"].(map[string]interface{})
-	if !ok {
-		return nil, fmt.Errorf("createNotebookExecutionJobRequest is not of type map[string]interface{} or is nil")
+	if obj["createPipelineJobRequest"] != nil {
+		pipelineRequest, ok := obj["createPipelineJobRequest"].(map[string]interface{})
+		if !ok {
+			return nil, fmt.Errorf("createPipelineJobRequest is not of type map[string]interface{} or is nil")
+		}
+		if pipelineRequest["parent"] == nil || pipelineRequest["parent"] == "" {
+			pipelineRequest["parent"] = fmt.Sprintf("projects/%s/locations/%s", project, location)
+		}
 	}
-	jobRequest["parent"] = fmt.Sprintf("projects/%s/locations/%s", project, location)
 
 	return obj, nil
 }
@@ -252,6 +274,20 @@ func expandColabScheduleCreateNotebookExecutionJobRequest(v interface{}, d tpgre
 		return nil, err
 	} else if val := reflect.ValueOf(transformedNotebookExecutionJob); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["notebookExecutionJob"] = transformedNotebookExecutionJob
+	}
+
+	transformedNotebookExecutionJobId, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobId(original["notebook_execution_job_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNotebookExecutionJobId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["notebookExecutionJobId"] = transformedNotebookExecutionJobId
+	}
+
+	transformedParent, err := expandColabScheduleCreateNotebookExecutionJobRequestParent(original["parent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parent"] = transformedParent
 	}
 
 	return transformed, nil
@@ -323,6 +359,76 @@ func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJob(v 
 		return nil, err
 	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	transformedCreateTime, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCreateTime(original["create_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCreateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["createTime"] = transformedCreateTime
+	}
+
+	transformedCustomEnvironmentSpec, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpec(original["custom_environment_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCustomEnvironmentSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["customEnvironmentSpec"] = transformedCustomEnvironmentSpec
+	}
+
+	transformedEncryptionSpec, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobEncryptionSpec(original["encryption_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncryptionSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["encryptionSpec"] = transformedEncryptionSpec
+	}
+
+	transformedJobState, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobJobState(original["job_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJobState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jobState"] = transformedJobState
+	}
+
+	transformedKernelName, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobKernelName(original["kernel_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKernelName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kernelName"] = transformedKernelName
+	}
+
+	transformedLabels, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobLabels(original["labels"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labels"] = transformedLabels
+	}
+
+	transformedName, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedScheduleResourceName, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobScheduleResourceName(original["schedule_resource_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScheduleResourceName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scheduleResourceName"] = transformedScheduleResourceName
+	}
+
+	transformedUpdateTime, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobUpdateTime(original["update_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUpdateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["updateTime"] = transformedUpdateTime
+	}
+
+	transformedWorkbenchRuntime, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobWorkbenchRuntime(original["workbench_runtime"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWorkbenchRuntime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["workbenchRuntime"] = transformedWorkbenchRuntime
 	}
 
 	return transformed, nil
@@ -423,5 +529,797 @@ func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobExe
 }
 
 func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCreateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMachineSpec, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpec(original["machine_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMachineSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["machineSpec"] = transformedMachineSpec
+	}
+
+	transformedNetworkSpec, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecNetworkSpec(original["network_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkSpec"] = transformedNetworkSpec
+	}
+
+	transformedPersistentDiskSpec, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecPersistentDiskSpec(original["persistent_disk_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPersistentDiskSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["persistentDiskSpec"] = transformedPersistentDiskSpec
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAcceleratorCount, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecAcceleratorCount(original["accelerator_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAcceleratorCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["acceleratorCount"] = transformedAcceleratorCount
+	}
+
+	transformedAcceleratorType, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecAcceleratorType(original["accelerator_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAcceleratorType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["acceleratorType"] = transformedAcceleratorType
+	}
+
+	transformedGpuPartitionSize, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecGpuPartitionSize(original["gpu_partition_size"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGpuPartitionSize); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gpuPartitionSize"] = transformedGpuPartitionSize
+	}
+
+	transformedMachineType, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecMachineType(original["machine_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMachineType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["machineType"] = transformedMachineType
+	}
+
+	transformedReservationAffinity, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinity(original["reservation_affinity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReservationAffinity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["reservationAffinity"] = transformedReservationAffinity
+	}
+
+	transformedTpuTopology, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecTpuTopology(original["tpu_topology"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTpuTopology); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tpuTopology"] = transformedTpuTopology
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecAcceleratorCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecAcceleratorType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecGpuPartitionSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKey, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinityKey(original["key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["key"] = transformedKey
+	}
+
+	transformedReservationAffinityType, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinityReservationAffinityType(original["reservation_affinity_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReservationAffinityType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["reservationAffinityType"] = transformedReservationAffinityType
+	}
+
+	transformedUseReservationPool, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinityUseReservationPool(original["use_reservation_pool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseReservationPool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useReservationPool"] = transformedUseReservationPool
+	}
+
+	transformedValues, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinityValues(original["values"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValues); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["values"] = transformedValues
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinityKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinityReservationAffinityType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinityUseReservationPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecReservationAffinityValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecMachineSpecTpuTopology(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecNetworkSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableInternetAccess, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecNetworkSpecEnableInternetAccess(original["enable_internet_access"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableInternetAccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableInternetAccess"] = transformedEnableInternetAccess
+	}
+
+	transformedNetwork, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecNetworkSpecNetwork(original["network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["network"] = transformedNetwork
+	}
+
+	transformedSubnetwork, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecNetworkSpecSubnetwork(original["subnetwork"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["subnetwork"] = transformedSubnetwork
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecNetworkSpecEnableInternetAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecNetworkSpecNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecNetworkSpecSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecPersistentDiskSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDiskSizeGb, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecPersistentDiskSpecDiskSizeGb(original["disk_size_gb"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDiskSizeGb); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["diskSizeGb"] = transformedDiskSizeGb
+	}
+
+	transformedDiskType, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecPersistentDiskSpecDiskType(original["disk_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDiskType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["diskType"] = transformedDiskType
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecPersistentDiskSpecDiskSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobCustomEnvironmentSpecPersistentDiskSpecDiskType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobEncryptionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsKeyName, err := expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobEncryptionSpecKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobEncryptionSpecKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobJobState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobKernelName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobScheduleResourceName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobUpdateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobWorkbenchRuntime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreateNotebookExecutionJobRequestParent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequest(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedParent, err := expandColabScheduleCreatePipelineJobRequestParent(original["parent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parent"] = transformedParent
+	}
+
+	transformedPipelineJob, err := expandColabScheduleCreatePipelineJobRequestPipelineJob(original["pipeline_job"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPipelineJob); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pipelineJob"] = transformedPipelineJob
+	}
+
+	transformedPipelineJobId, err := expandColabScheduleCreatePipelineJobRequestPipelineJobId(original["pipeline_job_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPipelineJobId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pipelineJobId"] = transformedPipelineJobId
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestParent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCreateTime, err := expandColabScheduleCreatePipelineJobRequestPipelineJobCreateTime(original["create_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCreateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["createTime"] = transformedCreateTime
+	}
+
+	transformedDisplayName, err := expandColabScheduleCreatePipelineJobRequestPipelineJobDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedEncryptionSpec, err := expandColabScheduleCreatePipelineJobRequestPipelineJobEncryptionSpec(original["encryption_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEncryptionSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["encryptionSpec"] = transformedEncryptionSpec
+	}
+
+	transformedEndTime, err := expandColabScheduleCreatePipelineJobRequestPipelineJobEndTime(original["end_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endTime"] = transformedEndTime
+	}
+
+	transformedLabels, err := expandColabScheduleCreatePipelineJobRequestPipelineJobLabels(original["labels"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labels"] = transformedLabels
+	}
+
+	transformedName, err := expandColabScheduleCreatePipelineJobRequestPipelineJobName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedNetwork, err := expandColabScheduleCreatePipelineJobRequestPipelineJobNetwork(original["network"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["network"] = transformedNetwork
+	}
+
+	transformedPipelineSpec, err := expandColabScheduleCreatePipelineJobRequestPipelineJobPipelineSpec(original["pipeline_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPipelineSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pipelineSpec"] = transformedPipelineSpec
+	}
+
+	transformedPreflightValidations, err := expandColabScheduleCreatePipelineJobRequestPipelineJobPreflightValidations(original["preflight_validations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPreflightValidations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["preflightValidations"] = transformedPreflightValidations
+	}
+
+	transformedPscInterfaceConfig, err := expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfig(original["psc_interface_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscInterfaceConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscInterfaceConfig"] = transformedPscInterfaceConfig
+	}
+
+	transformedReservedIpRanges, err := expandColabScheduleCreatePipelineJobRequestPipelineJobReservedIpRanges(original["reserved_ip_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedReservedIpRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["reservedIpRanges"] = transformedReservedIpRanges
+	}
+
+	transformedRuntimeConfig, err := expandColabScheduleCreatePipelineJobRequestPipelineJobRuntimeConfig(original["runtime_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRuntimeConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["runtimeConfig"] = transformedRuntimeConfig
+	}
+
+	transformedScheduleName, err := expandColabScheduleCreatePipelineJobRequestPipelineJobScheduleName(original["schedule_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScheduleName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scheduleName"] = transformedScheduleName
+	}
+
+	transformedServiceAccount, err := expandColabScheduleCreatePipelineJobRequestPipelineJobServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	transformedStartTime, err := expandColabScheduleCreatePipelineJobRequestPipelineJobStartTime(original["start_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStartTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["startTime"] = transformedStartTime
+	}
+
+	transformedState, err := expandColabScheduleCreatePipelineJobRequestPipelineJobState(original["state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["state"] = transformedState
+	}
+
+	transformedTemplateMetadata, err := expandColabScheduleCreatePipelineJobRequestPipelineJobTemplateMetadata(original["template_metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTemplateMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["templateMetadata"] = transformedTemplateMetadata
+	}
+
+	transformedTemplateUri, err := expandColabScheduleCreatePipelineJobRequestPipelineJobTemplateUri(original["template_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTemplateUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["templateUri"] = transformedTemplateUri
+	}
+
+	transformedUpdateTime, err := expandColabScheduleCreatePipelineJobRequestPipelineJobUpdateTime(original["update_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUpdateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["updateTime"] = transformedUpdateTime
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobCreateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobEncryptionSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsKeyName, err := expandColabScheduleCreatePipelineJobRequestPipelineJobEncryptionSpecKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobEncryptionSpecKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobEndTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobPipelineSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobPreflightValidations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDnsPeeringConfigs, err := expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigDnsPeeringConfigs(original["dns_peering_configs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDnsPeeringConfigs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dnsPeeringConfigs"] = transformedDnsPeeringConfigs
+	}
+
+	transformedNetworkAttachment, err := expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigNetworkAttachment(original["network_attachment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkAttachment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkAttachment"] = transformedNetworkAttachment
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigDnsPeeringConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDomain, err := expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigDnsPeeringConfigsDomain(original["domain"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDomain); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["domain"] = transformedDomain
+		}
+
+		transformedTargetNetwork, err := expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigDnsPeeringConfigsTargetNetwork(original["target_network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetNetwork"] = transformedTargetNetwork
+		}
+
+		transformedTargetProject, err := expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigDnsPeeringConfigsTargetProject(original["target_project"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTargetProject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["targetProject"] = transformedTargetProject
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigDnsPeeringConfigsDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigDnsPeeringConfigsTargetNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigDnsPeeringConfigsTargetProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobPscInterfaceConfigNetworkAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobReservedIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobRuntimeConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFailurePolicy, err := expandColabScheduleCreatePipelineJobRequestPipelineJobRuntimeConfigFailurePolicy(original["failure_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFailurePolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["failurePolicy"] = transformedFailurePolicy
+	}
+
+	transformedGcsOutputDirectory, err := expandColabScheduleCreatePipelineJobRequestPipelineJobRuntimeConfigGcsOutputDirectory(original["gcs_output_directory"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGcsOutputDirectory); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["gcsOutputDirectory"] = transformedGcsOutputDirectory
+	}
+
+	transformedParameterValues, err := expandColabScheduleCreatePipelineJobRequestPipelineJobRuntimeConfigParameterValues(original["parameter_values"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedParameterValues); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["parameterValues"] = transformedParameterValues
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobRuntimeConfigFailurePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobRuntimeConfigGcsOutputDirectory(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobRuntimeConfigParameterValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobScheduleName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobStartTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobTemplateMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedVersion, err := expandColabScheduleCreatePipelineJobRequestPipelineJobTemplateMetadataVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	return transformed, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobTemplateMetadataVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobTemplateUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobUpdateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleCreatePipelineJobRequestPipelineJobId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabScheduleMaxConcurrentActiveRunCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
