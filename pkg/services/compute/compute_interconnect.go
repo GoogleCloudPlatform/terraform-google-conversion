@@ -106,9 +106,8 @@ bundle, not the speed of the entire bundle. Can take one of the following values
 			"location": {
 				Type:             schema.TypeString,
 				Required:         true,
-				ForceNew:         true,
 				DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
-				Description: `URL of the InterconnectLocation object that represents where this connection is to be provisioned.
+				Description: `URL of the InterconnectLocation object that represents where this connection is requested to be provisioned.
 Specifies the location inside Google's Networks.`,
 			},
 			"name": {
@@ -307,6 +306,12 @@ Note: 'MACSEC' is a legacy value and has the same meaning as 'IF_MACSEC'.`,
 				Computed:    true,
 				Description: `All of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services.`,
 				Elem:        &schema.Schema{Type: schema.TypeString},
+			},
+			"effective_location": {
+				Type:     schema.TypeString,
+				Computed: true,
+				Description: `URL of the InterconnectLocation object that represents where this connection is to be provisioned.
+Specifies the location inside Google's Networks.`,
 			},
 			"expected_outages": {
 				Type:        schema.TypeList,

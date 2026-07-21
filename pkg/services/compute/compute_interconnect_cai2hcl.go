@@ -133,7 +133,7 @@ func (c *ComputeInterconnectCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"available_features": struct{}{}, "circuit_infos": struct{}{}, "creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "expected_outages": struct{}{}, "google_ip_address": struct{}{}, "google_reference_id": struct{}{}, "interconnect_attachments": struct{}{}, "interconnect_groups": struct{}{}, "label_fingerprint": struct{}{}, "operational_status": struct{}{}, "peer_ip_address": struct{}{}, "provisioned_link_count": struct{}{}, "satisfies_pzs": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "wire_groups": struct{}{}}
+	outputFields := map[string]struct{}{"available_features": struct{}{}, "circuit_infos": struct{}{}, "creation_timestamp": struct{}{}, "effective_labels": struct{}{}, "effective_location": struct{}{}, "expected_outages": struct{}{}, "google_ip_address": struct{}{}, "google_reference_id": struct{}{}, "interconnect_attachments": struct{}{}, "interconnect_groups": struct{}{}, "label_fingerprint": struct{}{}, "operational_status": struct{}{}, "peer_ip_address": struct{}{}, "provisioned_link_count": struct{}{}, "satisfies_pzs": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "wire_groups": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/interconnects/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenComputeInterconnectDescription(res["description"], d, config)
