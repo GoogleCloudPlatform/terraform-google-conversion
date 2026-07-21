@@ -702,6 +702,9 @@ func TestAccContainerCluster(t *testing.T) {
 		{
 			Name: "TestAccContainerCluster_withNodePoolTaintConfig_none",
 		},
+		{
+			Name: "TestAccContainerCluster_withNodeReadinessConfig",
+		},
 	}
 
 	for _, tt := range tests {
