@@ -51,6 +51,9 @@ func TestAccSecretManagerSecretVersion(t *testing.T) {
 		{
 			Name: "TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataWriteOnlyExample",
 		},
+		{
+			Name: "TestAccSecretManagerSecretVersion_neitherSecretDataSet",
+		},
 	}
 
 	for _, tt := range tests {
