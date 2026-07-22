@@ -1005,13 +1005,6 @@ func expandCloudRunV2WorkerPoolTemplateContainersLivenessProbeHttpGetHttpHeaders
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
-		transformedPort, err := expandCloudRunV2WorkerPoolTemplateContainersLivenessProbeHttpGetHttpHeadersPort(original["port"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["port"] = transformedPort
-		}
-
 		transformedName, err := expandCloudRunV2WorkerPoolTemplateContainersLivenessProbeHttpGetHttpHeadersName(original["name"], d, config)
 		if err != nil {
 			return nil, err
@@ -1029,10 +1022,6 @@ func expandCloudRunV2WorkerPoolTemplateContainersLivenessProbeHttpGetHttpHeaders
 		req = append(req, transformed)
 	}
 	return req, nil
-}
-
-func expandCloudRunV2WorkerPoolTemplateContainersLivenessProbeHttpGetHttpHeadersPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandCloudRunV2WorkerPoolTemplateContainersLivenessProbeHttpGetHttpHeadersName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1243,13 +1232,6 @@ func expandCloudRunV2WorkerPoolTemplateContainersStartupProbeHttpGetHttpHeaders(
 		original := raw.(map[string]interface{})
 		transformed := make(map[string]interface{})
 
-		transformedPort, err := expandCloudRunV2WorkerPoolTemplateContainersStartupProbeHttpGetHttpHeadersPort(original["port"], d, config)
-		if err != nil {
-			return nil, err
-		} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
-			transformed["port"] = transformedPort
-		}
-
 		transformedName, err := expandCloudRunV2WorkerPoolTemplateContainersStartupProbeHttpGetHttpHeadersName(original["name"], d, config)
 		if err != nil {
 			return nil, err
@@ -1267,10 +1249,6 @@ func expandCloudRunV2WorkerPoolTemplateContainersStartupProbeHttpGetHttpHeaders(
 		req = append(req, transformed)
 	}
 	return req, nil
-}
-
-func expandCloudRunV2WorkerPoolTemplateContainersStartupProbeHttpGetHttpHeadersPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
 }
 
 func expandCloudRunV2WorkerPoolTemplateContainersStartupProbeHttpGetHttpHeadersName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
