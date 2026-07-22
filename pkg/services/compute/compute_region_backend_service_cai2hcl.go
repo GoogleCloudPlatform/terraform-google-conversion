@@ -1553,6 +1553,10 @@ func flattenComputeRegionBackendServiceLogConfig(v interface{}, d *schema.Resour
 		flattenComputeRegionBackendServiceLogConfigOptionalMode(original["optionalMode"], d, config)
 	transformed["optional_fields"] =
 		flattenComputeRegionBackendServiceLogConfigOptionalFields(original["optionalFields"], d, config)
+	transformed["request_headers"] =
+		flattenComputeRegionBackendServiceLogConfigRequestHeaders(original["loggingHttpRequestHeaders"], d, config)
+	transformed["response_headers"] =
+		flattenComputeRegionBackendServiceLogConfigResponseHeaders(original["loggingHttpResponseHeaders"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1572,6 +1576,66 @@ func flattenComputeRegionBackendServiceLogConfigOptionalMode(v interface{}, d *s
 }
 
 func flattenComputeRegionBackendServiceLogConfigOptionalFields(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeRegionBackendServiceLogConfigRequestHeaders(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"header_name": flattenComputeRegionBackendServiceLogConfigRequestHeadersHeaderName(original["headerName"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeRegionBackendServiceLogConfigRequestHeadersHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeRegionBackendServiceLogConfigResponseHeaders(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"header_name": flattenComputeRegionBackendServiceLogConfigResponseHeadersHeaderName(original["headerName"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeRegionBackendServiceLogConfigResponseHeadersHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

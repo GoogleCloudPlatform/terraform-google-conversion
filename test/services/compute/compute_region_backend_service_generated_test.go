@@ -112,6 +112,9 @@ func TestAccComputeRegionBackendService(t *testing.T) {
 			Name: "TestAccComputeRegionBackendService_withLogConfig",
 		},
 		{
+			Name: "TestAccComputeRegionBackendService_withLogConfigRequestResponseHeaders",
+		},
+		{
 			Name: "TestAccComputeRegionBackendService_zonalILB",
 		},
 		{
