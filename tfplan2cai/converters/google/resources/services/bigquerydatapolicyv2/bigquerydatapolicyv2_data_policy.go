@@ -140,6 +140,12 @@ func GetBigqueryDatapolicyv2DataPolicyApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("data_policy_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataPolicyIdProp)) && (ok || !reflect.DeepEqual(v, dataPolicyIdProp)) {
 		obj["dataPolicyId"] = dataPolicyIdProp
 	}
+	dataGovernanceTagProp, err := expandBigqueryDatapolicyv2DataPolicyDataGovernanceTag(d.Get("data_governance_tag"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("data_governance_tag"); !tpgresource.IsEmptyValue(reflect.ValueOf(dataGovernanceTagProp)) && (ok || !reflect.DeepEqual(v, dataGovernanceTagProp)) {
+		obj["dataGovernanceTag"] = dataGovernanceTagProp
+	}
 
 	return resourceBigqueryDatapolicyv2DataPolicyEncoder(d, config, obj)
 }
@@ -203,5 +209,42 @@ func expandBigqueryDatapolicyv2DataPolicyGrantees(v interface{}, d tpgresource.T
 }
 
 func expandBigqueryDatapolicyv2DataPolicyDataPolicyId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryDatapolicyv2DataPolicyDataGovernanceTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKey, err := expandBigqueryDatapolicyv2DataPolicyDataGovernanceTagKey(original["key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["key"] = transformedKey
+	}
+
+	transformedValue, err := expandBigqueryDatapolicyv2DataPolicyDataGovernanceTagValue(original["value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["value"] = transformedValue
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryDatapolicyv2DataPolicyDataGovernanceTagKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryDatapolicyv2DataPolicyDataGovernanceTagValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
