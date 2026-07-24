@@ -34,6 +34,9 @@ func TestAccComputeRouter(t *testing.T) {
 			Name: "TestAccComputeRouter_computeRouterMd5encryptedExample",
 		},
 		{
+			Name: "TestAccComputeRouter_routerNccGwExample",
+		},
+		{
 			Name: "TestAccComputeRouter_basic",
 		},
 		{
