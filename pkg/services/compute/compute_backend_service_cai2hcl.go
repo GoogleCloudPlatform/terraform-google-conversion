@@ -1704,6 +1704,10 @@ func flattenComputeBackendServiceLogConfig(v interface{}, d *schema.ResourceData
 		flattenComputeBackendServiceLogConfigOptionalMode(original["optionalMode"], d, config)
 	transformed["optional_fields"] =
 		flattenComputeBackendServiceLogConfigOptionalFields(original["optionalFields"], d, config)
+	transformed["request_headers"] =
+		flattenComputeBackendServiceLogConfigRequestHeaders(original["loggingHttpRequestHeaders"], d, config)
+	transformed["response_headers"] =
+		flattenComputeBackendServiceLogConfigResponseHeaders(original["loggingHttpResponseHeaders"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1723,6 +1727,66 @@ func flattenComputeBackendServiceLogConfigOptionalMode(v interface{}, d *schema.
 }
 
 func flattenComputeBackendServiceLogConfigOptionalFields(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeBackendServiceLogConfigRequestHeaders(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"header_name": flattenComputeBackendServiceLogConfigRequestHeadersHeaderName(original["headerName"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeBackendServiceLogConfigRequestHeadersHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeBackendServiceLogConfigResponseHeaders(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"header_name": flattenComputeBackendServiceLogConfigResponseHeadersHeaderName(original["headerName"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeBackendServiceLogConfigResponseHeadersHeaderName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
 	return v
 }
 

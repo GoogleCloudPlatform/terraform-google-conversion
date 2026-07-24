@@ -957,6 +957,34 @@ For example: orca_load_report, tls.protocol`,
 Supported values: INCLUDE_ALL_OPTIONAL, EXCLUDE_ALL_OPTIONAL, CUSTOM. Possible values: ["INCLUDE_ALL_OPTIONAL", "EXCLUDE_ALL_OPTIONAL", "CUSTOM"]`,
 							AtLeastOneOf: []string{"log_config.0.enable", "log_config.0.optional_mode", "log_config.0.sample_rate"},
 						},
+						"request_headers": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `This field can only be specified if logging is enabled for this backend service and if the BackendService protocol is one of HTTP, HTTPS, HTTP2 and GRPC. Contains a list of request headers to be logged.`,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"header_name": {
+										Type:        schema.TypeString,
+										Required:    true,
+										Description: `The header name to match on for logging.`,
+									},
+								},
+							},
+						},
+						"response_headers": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `This field can only be specified if logging is enabled for this backend service and if the BackendService protocol is one of HTTP, HTTPS, HTTP2 and GRPC. Contains a list of response headers to be logged.`,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"header_name": {
+										Type:        schema.TypeString,
+										Required:    true,
+										Description: `The header name to match on for logging.`,
+									},
+								},
+							},
+						},
 						"sample_rate": {
 							Type:             schema.TypeFloat,
 							Optional:         true,
