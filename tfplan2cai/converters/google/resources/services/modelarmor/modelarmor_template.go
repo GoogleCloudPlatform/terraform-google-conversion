@@ -477,6 +477,13 @@ func expandModelArmorTemplateTemplateMetadata(v interface{}, d tpgresource.Terra
 		transformed["enforcementType"] = transformedEnforcementType
 	}
 
+	transformedFilterVersionSelector, err := expandModelArmorTemplateTemplateMetadataFilterVersionSelector(original["filter_version_selector"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilterVersionSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filterVersionSelector"] = transformedFilterVersionSelector
+	}
+
 	return transformed, nil
 }
 
@@ -535,6 +542,43 @@ func expandModelArmorTemplateTemplateMetadataCustomLlmResponseSafetyErrorMessage
 }
 
 func expandModelArmorTemplateTemplateMetadataEnforcementType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandModelArmorTemplateTemplateMetadataFilterVersionSelector(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAlias, err := expandModelArmorTemplateTemplateMetadataFilterVersionSelectorAlias(original["alias"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAlias); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["alias"] = transformedAlias
+	}
+
+	transformedVersion, err := expandModelArmorTemplateTemplateMetadataFilterVersionSelectorVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	return transformed, nil
+}
+
+func expandModelArmorTemplateTemplateMetadataFilterVersionSelectorAlias(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandModelArmorTemplateTemplateMetadataFilterVersionSelectorVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

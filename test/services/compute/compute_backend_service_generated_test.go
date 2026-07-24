@@ -137,6 +137,9 @@ func TestAccComputeBackendService(t *testing.T) {
 			Name: "TestAccComputeBackendService_withLogConfigMode",
 		},
 		{
+			Name: "TestAccComputeBackendService_withLogConfigRequestResponseHeaders",
+		},
+		{
 			Name: "TestAccComputeBackendService_trafficDirectorUpdateBasic",
 		},
 		{

@@ -49,6 +49,10 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+import (
+	"github.com/hashicorp/go-version"
+)
+
 func parseDurationAsSeconds(v string) (int, bool) {
 	if len(v) == 0 {
 		return 0, false
@@ -82,6 +86,150 @@ func rolloutSequenceDurationDiffSuppress(_, old, new string, _ *schema.ResourceD
 		return false
 	}
 	return oldSeconds == newSeconds
+}
+
+// Compares two GKE versions using the standard go-version package.
+// Returns true if minVer is strictly greater than targetVer.
+// Returns true if targetVer is empty (representing a new rollout sequence).
+// Returns false if minVer is empty (representing an unset min_*_version field).
+func shouldUpgradeRolloutSequence(minVer, targetVer string) (bool, error) {
+	if minVer == "" {
+		return false, nil
+	}
+	minV, err := version.NewVersion(minVer)
+	if err != nil {
+		return false, fmt.Errorf("invalid min version format %q: %w", minVer, err)
+	}
+
+	if targetVer == "" {
+		return true, nil
+	}
+	targetV, err := version.NewVersion(targetVer)
+	if err != nil {
+		return false, fmt.Errorf("invalid target version format %q: %w", targetVer, err)
+	}
+
+	return minV.GreaterThan(targetV), nil
+}
+
+// Polls the state of a RolloutSequence resource, until it enters a state other
+// than INITIALIZING or until the 1h timeout passes.
+func pollSequenceInitialization(d *schema.ResourceData, meta interface{}) error {
+	config := meta.(*transport_tpg.Config)
+	url, err := tpgresource.ReplaceVars(d, config, "{{GKEHub2BasePath}}projects/{{project}}/locations/global/rolloutSequences/{{rollout_sequence_id}}")
+	if err != nil {
+		return err
+	}
+
+	project, err := tpgresource.GetProject(d, config)
+	if err != nil {
+		return fmt.Errorf("failed to fetch project for RolloutSequence: %w", err)
+	}
+	billingProject := project
+	if bp, err := tpgresource.GetBillingProject(d, config); err == nil {
+		billingProject = bp
+	}
+	userAgent, err := tpgresource.GenerateUserAgentString(d, config.UserAgent)
+	if err != nil {
+		return err
+	}
+
+	pollRead := func() (map[string]interface{}, error) {
+		return transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+			Config:    config,
+			Method:    "GET",
+			Project:   billingProject,
+			RawURL:    url,
+			UserAgent: userAgent,
+		})
+	}
+
+	checkResponse := func(resp map[string]interface{}, respErr error) transport_tpg.PollResult {
+		if respErr != nil {
+			return transport_tpg.ErrorPollResult(respErr)
+		}
+		if resp == nil {
+			return transport_tpg.PendingStatusPollResult("nil response")
+		}
+
+		opStateRaw, ok := resp["operationalState"]
+		if !ok || opStateRaw == nil {
+			return transport_tpg.PendingStatusPollResult("operationalState missing")
+		}
+
+		opState, ok := opStateRaw.(map[string]interface{})
+		if !ok {
+			return transport_tpg.ErrorPollResult(fmt.Errorf("operationalState is not a map"))
+		}
+
+		stateRaw, ok := opState["state"]
+		if !ok || stateRaw == nil {
+			return transport_tpg.PendingStatusPollResult("state missing")
+		}
+		state, ok := stateRaw.(string)
+		if !ok {
+			return transport_tpg.ErrorPollResult(fmt.Errorf("state is not a string"))
+		}
+
+		if state == "INITIALIZING" {
+			return transport_tpg.PendingStatusPollResult("INITIALIZING")
+		}
+
+		return transport_tpg.SuccessPollResult()
+	}
+
+	return transport_tpg.PollingWaitTime(pollRead, checkResponse, "Polling RolloutSequence initialization", 1*time.Hour, 1)
+}
+
+// Fetches the current targetControlPlaneVersion and targetNodeVersion values of the RolloutSequence resource.
+func fetchCurrentTargetVersions(d *schema.ResourceData, meta interface{}) (string, string, error) {
+	config := meta.(*transport_tpg.Config)
+	userAgent, err := tpgresource.GenerateUserAgentString(d, config.UserAgent)
+	if err != nil {
+		return "", "", err
+	}
+	project, err := tpgresource.GetProject(d, config)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to fetch project for RolloutSequence: %w", err)
+	}
+	billingProject := project
+	if bp, err := tpgresource.GetBillingProject(d, config); err == nil {
+		billingProject = bp
+	}
+	url, err := tpgresource.ReplaceVars(d, config, "{{GKEHub2BasePath}}projects/{{project}}/locations/global/rolloutSequences/{{rollout_sequence_id}}")
+	if err != nil {
+		return "", "", err
+	}
+
+	res, err := transport_tpg.SendRequest(transport_tpg.SendRequestOptions{
+		Config:    config,
+		Method:    "GET",
+		Project:   billingProject,
+		RawURL:    url,
+		UserAgent: userAgent,
+	})
+	if err != nil {
+		return "", "", fmt.Errorf("failed to fetch latest RolloutSequence state: %w", err)
+	}
+
+	targetCPVer := ""
+	if v, ok := res["targetControlPlaneVersion"]; ok && v != nil {
+		if s, ok := v.(string); ok {
+			targetCPVer = s
+		} else {
+			return "", "", fmt.Errorf("expected targetControlPlaneVersion to be a string, got %T", v)
+		}
+	}
+	targetNodeVer := ""
+	if v, ok := res["targetNodeVersion"]; ok && v != nil {
+		if s, ok := v.(string); ok {
+			targetNodeVer = s
+		} else {
+			return "", "", fmt.Errorf("expected targetNodeVersion to be a string, got %T", v)
+		}
+	}
+
+	return targetCPVer, targetNodeVer, nil
 }
 
 var (
@@ -325,7 +473,7 @@ func expandGKEHub2RolloutSequenceAutoUpgradeConfig(v interface{}, d tpgresource.
 	transformedRolloutCreationScope, err := expandGKEHub2RolloutSequenceAutoUpgradeConfigRolloutCreationScope(original["rollout_creation_scope"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedRolloutCreationScope); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["rolloutCreationScope"] = transformedRolloutCreationScope
 	}
 
@@ -337,8 +485,13 @@ func expandGKEHub2RolloutSequenceAutoUpgradeConfigRolloutCreationScope(v interfa
 		return nil, nil
 	}
 	l := v.([]interface{})
-	if len(l) == 0 || l[0] == nil {
+	if len(l) == 0 {
 		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
 	}
 	raw := l[0]
 	original := raw.(map[string]interface{})
@@ -347,7 +500,7 @@ func expandGKEHub2RolloutSequenceAutoUpgradeConfigRolloutCreationScope(v interfa
 	transformedUpgradeTypes, err := expandGKEHub2RolloutSequenceAutoUpgradeConfigRolloutCreationScopeUpgradeTypes(original["upgrade_types"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedUpgradeTypes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["upgradeTypes"] = transformedUpgradeTypes
 	}
 
