@@ -601,6 +601,16 @@ not be validated.`,
 							},
 							ExactlyOneOf: []string{"remote_repository_config.0.apt_repository", "remote_repository_config.0.common_repository", "remote_repository_config.0.docker_repository", "remote_repository_config.0.maven_repository", "remote_repository_config.0.npm_repository", "remote_repository_config.0.python_repository", "remote_repository_config.0.yum_repository"},
 						},
+						"no_cache": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
+							Description: `The repository will act as a non-caching proxy (connector mode).`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{},
+							},
+						},
 						"npm_repository": {
 							Type:        schema.TypeList,
 							Optional:    true,
