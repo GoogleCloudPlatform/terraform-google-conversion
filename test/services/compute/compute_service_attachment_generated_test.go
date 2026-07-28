@@ -58,6 +58,9 @@ func TestAccComputeServiceAttachment(t *testing.T) {
 			Name: "TestAccComputeServiceAttachment_connectionLimitUpdate",
 		},
 		{
+			Name: "TestAccComputeServiceAttachment_consumerAcceptListsPermadiff",
+		},
+		{
 			Name: "TestAccComputeServiceAttachment_tunnelingConfigUpdate",
 		},
 	}
@@ -77,6 +80,7 @@ func TestAccComputeServiceAttachment(t *testing.T) {
 				[]string{
 					"consumer_accept_lists.connection_limit",
 					"consumer_accept_lists.endpoint_url",
+					"consumer_accept_lists.network_url",
 					"consumer_accept_lists.project_id_or_num",
 					"consumer_reject_lists",
 					"count",
