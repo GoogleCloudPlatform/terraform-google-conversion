@@ -110,6 +110,12 @@ func GetApihubPluginInstanceCaiObject(d tpgresource.TerraformResourceData, confi
 
 func GetApihubPluginInstanceApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	sourceProjectIdProp, err := expandApihubPluginInstanceSourceProjectId(d.Get("source_project_id"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("source_project_id"); !tpgresource.IsEmptyValue(reflect.ValueOf(sourceProjectIdProp)) && (ok || !reflect.DeepEqual(v, sourceProjectIdProp)) {
+		obj["sourceProjectId"] = sourceProjectIdProp
+	}
 	disableProp, err := expandApihubPluginInstanceDisable(d.Get("disable"), d, config)
 	if err != nil {
 		return nil, err
@@ -136,6 +142,10 @@ func GetApihubPluginInstanceApiObject(d tpgresource.TerraformResourceData, confi
 	}
 
 	return obj, nil
+}
+
+func expandApihubPluginInstanceSourceProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandApihubPluginInstanceDisable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
