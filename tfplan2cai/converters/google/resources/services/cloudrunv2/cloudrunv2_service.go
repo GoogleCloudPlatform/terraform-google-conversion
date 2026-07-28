@@ -730,6 +730,13 @@ func expandCloudRunV2ServiceTemplateContainers(v interface{}, d tpgresource.Terr
 			transformed["ports"] = transformedPorts
 		}
 
+		transformedSandboxLauncher, err := expandCloudRunV2ServiceTemplateContainersSandboxLauncher(original["sandbox_launcher"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSandboxLauncher); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sandboxLauncher"] = transformedSandboxLauncher
+		}
+
 		transformedVolumeMounts, err := expandCloudRunV2ServiceTemplateContainersVolumeMounts(original["volume_mounts"], d, config)
 		if err != nil {
 			return nil, err
@@ -1013,6 +1020,10 @@ func expandCloudRunV2ServiceTemplateContainersPortsName(v interface{}, d tpgreso
 }
 
 func expandCloudRunV2ServiceTemplateContainersPortsContainerPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateContainersSandboxLauncher(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
