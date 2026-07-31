@@ -151,6 +151,7 @@ func (c *NetworkServicesGatewayCai2hclConverter) convertResourceData(asset caias
 	hclData["ip_version"] = flattenNetworkServicesGatewayIpVersion(res["ipVersion"], d, config)
 	hclData["envoy_headers"] = flattenNetworkServicesGatewayEnvoyHeaders(res["envoyHeaders"], d, config)
 	hclData["routing_mode"] = flattenNetworkServicesGatewayRoutingMode(res["routingMode"], d, config)
+	hclData["allow_global_access"] = flattenNetworkServicesGatewayAllowGlobalAccess(res["allowGlobalAccess"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -255,5 +256,9 @@ func flattenNetworkServicesGatewayEnvoyHeaders(v interface{}, d *schema.Resource
 }
 
 func flattenNetworkServicesGatewayRoutingMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkServicesGatewayAllowGlobalAccess(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

@@ -176,6 +176,14 @@ it will accept traffic destined for any port (1-65535) on its​ assigned IP add
 This field is configurable only for gateways of type SECURE_WEB_GATEWAY.`,
 				ConflictsWith: []string{"ports"},
 			},
+			"allow_global_access": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				ForceNew: true,
+				Description: `Optional. If true, the gateway will allow traffic from clients outside
+of the region where the gateway is located.
+This field is configurable only for gateways of type SECURE_WEB_GATEWAY.`,
+			},
 			"certificate_urls": {
 				Type:     schema.TypeList,
 				Optional: true,
