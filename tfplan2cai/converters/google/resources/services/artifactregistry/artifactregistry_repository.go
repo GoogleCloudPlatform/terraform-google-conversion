@@ -818,6 +818,13 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d tpg
 		transformed["disableUpstreamValidation"] = transformedDisableUpstreamValidation
 	}
 
+	transformedNoCache, err := expandArtifactRegistryRepositoryRemoteRepositoryConfigNoCache(original["no_cache"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["noCache"] = transformedNoCache
+	}
+
 	return transformed, nil
 }
 
@@ -1266,6 +1273,24 @@ func expandArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsUs
 
 func expandArtifactRegistryRepositoryRemoteRepositoryConfigDisableUpstreamValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandArtifactRegistryRepositoryRemoteRepositoryConfigNoCache(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandArtifactRegistryRepositoryCleanupPolicyDryRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

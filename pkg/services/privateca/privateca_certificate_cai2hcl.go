@@ -276,11 +276,10 @@ func flattenPrivatecaCertificateConfigSubjectConfigSubjectCountryCode(v interfac
 
 func flattenPrivatecaCertificateConfigSubjectConfigSubjectOrganization(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		return "unknown"
+		return nil
 	}
-	transformed := v.(string)
-	if transformed == "" {
-		return "unknown"
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
 	}
 	return v
 }

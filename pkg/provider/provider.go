@@ -225,6 +225,11 @@ func Provider() *schema.Provider {
 				Optional:     true,
 				ValidateFunc: ValidateCustomEndpoint,
 			},
+			"agent_identity_custom_endpoint": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				ValidateFunc: ValidateCustomEndpoint,
+			},
 			"agent_registry_custom_endpoint": &schema.Schema{
 				Type:         schema.TypeString,
 				Optional:     true,
@@ -436,6 +441,11 @@ func Provider() *schema.Provider {
 				ValidateFunc: ValidateCustomEndpoint,
 			},
 			"cloud_security_compliance_custom_endpoint": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				ValidateFunc: ValidateCustomEndpoint,
+			},
+			"cloud_support_custom_endpoint": &schema.Schema{
 				Type:         schema.TypeString,
 				Optional:     true,
 				ValidateFunc: ValidateCustomEndpoint,

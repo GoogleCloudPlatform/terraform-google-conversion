@@ -128,6 +128,12 @@ func GetWorkstationsWorkstationConfigApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("idle_timeout"); !tpgresource.IsEmptyValue(reflect.ValueOf(idleTimeoutProp)) && (ok || !reflect.DeepEqual(v, idleTimeoutProp)) {
 		obj["idleTimeout"] = idleTimeoutProp
 	}
+	idleActionProp, err := expandWorkstationsWorkstationConfigIdleAction(d.Get("idle_action"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("idle_action"); !tpgresource.IsEmptyValue(reflect.ValueOf(idleActionProp)) && (ok || !reflect.DeepEqual(v, idleActionProp)) {
+		obj["idleAction"] = idleActionProp
+	}
 	runningTimeoutProp, err := expandWorkstationsWorkstationConfigRunningTimeout(d.Get("running_timeout"), d, config)
 	if err != nil {
 		return nil, err
@@ -225,6 +231,10 @@ func expandWorkstationsWorkstationConfigEtag(v interface{}, d tpgresource.Terraf
 }
 
 func expandWorkstationsWorkstationConfigIdleTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigIdleAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

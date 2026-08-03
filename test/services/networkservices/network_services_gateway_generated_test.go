@@ -69,6 +69,9 @@ func TestAccNetworkServicesGateway(t *testing.T) {
 		{
 			Name: "TestAccNetworkServicesGateway_swpAllPortsReplace",
 		},
+		{
+			Name: "TestAccNetworkServicesGateway_swpAllowGlobalAccess",
+		},
 	}
 
 	for _, tt := range tests {

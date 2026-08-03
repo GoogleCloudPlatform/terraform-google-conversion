@@ -199,6 +199,12 @@ func GetNetworkServicesGatewayCaiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("routing_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(routingModeProp)) && (ok || !reflect.DeepEqual(v, routingModeProp)) {
 		obj["routingMode"] = routingModeProp
 	}
+	allowGlobalAccessProp, err := expandNetworkServicesGatewayAllowGlobalAccess(d.Get("allow_global_access"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("allow_global_access"); ok || !reflect.DeepEqual(v, allowGlobalAccessProp) {
+		obj["allowGlobalAccess"] = allowGlobalAccessProp
+	}
 	effectiveLabelsProp, err := expandNetworkServicesGatewayEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -262,6 +268,10 @@ func expandNetworkServicesGatewayEnvoyHeaders(v interface{}, d tpgresource.Terra
 }
 
 func expandNetworkServicesGatewayRoutingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesGatewayAllowGlobalAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
