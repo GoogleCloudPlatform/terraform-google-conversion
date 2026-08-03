@@ -554,6 +554,20 @@ func expandCloudRunV2ServiceTemplateScaling(v interface{}, d tpgresource.Terrafo
 		transformed["maxInstanceCount"] = transformedMaxInstanceCount
 	}
 
+	transformedCpuUtilization, err := expandCloudRunV2ServiceTemplateScalingCpuUtilization(original["cpu_utilization"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCpuUtilization); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cpuUtilization"] = transformedCpuUtilization
+	}
+
+	transformedConcurrencyUtilization, err := expandCloudRunV2ServiceTemplateScalingConcurrencyUtilization(original["concurrency_utilization"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConcurrencyUtilization); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["concurrencyUtilization"] = transformedConcurrencyUtilization
+	}
+
 	return transformed, nil
 }
 
@@ -562,6 +576,14 @@ func expandCloudRunV2ServiceTemplateScalingMinInstanceCount(v interface{}, d tpg
 }
 
 func expandCloudRunV2ServiceTemplateScalingMaxInstanceCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateScalingCpuUtilization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateScalingConcurrencyUtilization(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -728,6 +750,13 @@ func expandCloudRunV2ServiceTemplateContainers(v interface{}, d tpgresource.Terr
 			return nil, err
 		} else if val := reflect.ValueOf(transformedPorts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["ports"] = transformedPorts
+		}
+
+		transformedSandboxLauncher, err := expandCloudRunV2ServiceTemplateContainersSandboxLauncher(original["sandbox_launcher"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSandboxLauncher); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sandboxLauncher"] = transformedSandboxLauncher
 		}
 
 		transformedVolumeMounts, err := expandCloudRunV2ServiceTemplateContainersVolumeMounts(original["volume_mounts"], d, config)
@@ -1013,6 +1042,10 @@ func expandCloudRunV2ServiceTemplateContainersPortsName(v interface{}, d tpgreso
 }
 
 func expandCloudRunV2ServiceTemplateContainersPortsContainerPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceTemplateContainersSandboxLauncher(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

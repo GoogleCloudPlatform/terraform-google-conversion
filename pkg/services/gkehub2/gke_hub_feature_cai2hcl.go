@@ -436,11 +436,10 @@ func flattenGKEHub2FeatureSpecWorkloadidentity(v interface{}, d *schema.Resource
 
 func flattenGKEHub2FeatureSpecWorkloadidentityScopeTenancyPool(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		return "unknown"
+		return nil
 	}
-	transformed := v.(string)
-	if transformed == "" {
-		return "unknown"
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
 	}
 	return v
 }

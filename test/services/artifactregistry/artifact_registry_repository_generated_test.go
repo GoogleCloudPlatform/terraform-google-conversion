@@ -43,6 +43,9 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteExample",
 		},
 		{
+			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryConnectorExample",
+		},
+		{
 			Name: "TestAccArtifactRegistryRepository_artifactRegistryRepositoryRemoteAptExample",
 		},
 		{
@@ -107,6 +110,9 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 		},
 		{
 			Name: "TestAccArtifactRegistryRepository_remote",
+		},
+		{
+			Name: "TestAccArtifactRegistryRepository_remoteNoCache",
 		},
 	}
 

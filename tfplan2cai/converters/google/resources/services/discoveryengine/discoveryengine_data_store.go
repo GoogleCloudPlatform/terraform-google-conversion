@@ -134,6 +134,12 @@ func GetDiscoveryEngineDataStoreApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("content_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(contentConfigProp)) && (ok || !reflect.DeepEqual(v, contentConfigProp)) {
 		obj["contentConfig"] = contentConfigProp
 	}
+	aclEnabledProp, err := expandDiscoveryEngineDataStoreAclEnabled(d.Get("acl_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("acl_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(aclEnabledProp)) && (ok || !reflect.DeepEqual(v, aclEnabledProp)) {
+		obj["aclEnabled"] = aclEnabledProp
+	}
 	advancedSiteSearchConfigProp, err := expandDiscoveryEngineDataStoreAdvancedSiteSearchConfig(d.Get("advanced_site_search_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -169,6 +175,10 @@ func expandDiscoveryEngineDataStoreSolutionTypes(v interface{}, d tpgresource.Te
 }
 
 func expandDiscoveryEngineDataStoreContentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataStoreAclEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

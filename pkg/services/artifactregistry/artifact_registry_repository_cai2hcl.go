@@ -455,6 +455,8 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfig(v interface{}, d *s
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentials(original["upstreamCredentials"], d, config)
 	transformed["disable_upstream_validation"] =
 		flattenArtifactRegistryRepositoryRemoteRepositoryConfigDisableUpstreamValidation(original["disableUpstreamValidation"], d, config)
+	transformed["no_cache"] =
+		flattenArtifactRegistryRepositoryRemoteRepositoryConfigNoCache(original["noCache"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -814,6 +816,14 @@ func flattenArtifactRegistryRepositoryRemoteRepositoryConfigUpstreamCredentialsU
 
 func flattenArtifactRegistryRepositoryRemoteRepositoryConfigDisableUpstreamValidation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return d.Get("remote_repository_config.0.disable_upstream_validation")
+}
+
+func flattenArtifactRegistryRepositoryRemoteRepositoryConfigNoCache(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	return []interface{}{transformed}
 }
 
 func flattenArtifactRegistryRepositoryCleanupPolicyDryRun(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

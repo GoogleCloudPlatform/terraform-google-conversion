@@ -270,6 +270,13 @@ func expandBigQueryRoutineArguments(v interface{}, d tpgresource.TerraformResour
 			transformed["dataType"] = transformedDataType
 		}
 
+		transformedTableType, err := expandBigQueryRoutineArgumentsTableType(original["table_type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTableType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tableType"] = transformedTableType
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -288,6 +295,76 @@ func expandBigQueryRoutineArgumentsMode(v interface{}, d tpgresource.TerraformRe
 }
 
 func expandBigQueryRoutineArgumentsDataType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(b, &m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func expandBigQueryRoutineArgumentsTableType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedColumns, err := expandBigQueryRoutineArgumentsTableTypeColumns(original["columns"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedColumns); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["columns"] = transformedColumns
+	}
+
+	return transformed, nil
+}
+
+func expandBigQueryRoutineArgumentsTableTypeColumns(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandBigQueryRoutineArgumentsTableTypeColumnsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedType, err := expandBigQueryRoutineArgumentsTableTypeColumnsType(original["type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["type"] = transformedType
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandBigQueryRoutineArgumentsTableTypeColumnsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineArgumentsTableTypeColumnsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	b := []byte(v.(string))
 	if len(b) == 0 {
 		return nil, nil

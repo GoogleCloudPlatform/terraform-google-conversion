@@ -142,6 +142,7 @@ func (c *ComputeRouterCai2hclConverter) convertResourceData(asset caiasset.Asset
 	hclData["bgp"] = flattenComputeRouterBgp(res["bgp"], d, config)
 	hclData["encrypted_interconnect_router"] = flattenComputeRouterEncryptedInterconnectRouter(res["encryptedInterconnectRouter"], d, config)
 	hclData["md5_authentication_keys"] = flattenComputeRouterMd5AuthenticationKeys(res["md5AuthenticationKeys"], d, config)
+	hclData["ncc_gateway"] = flattenComputeRouterNccGateway(res["nccGateway"], d, config)
 	hclData["params"] = flattenComputeRouterParams(res["params"], d, config)
 	hclData["region"] = flattenComputeRouterRegion(res["region"], d, config)
 
@@ -326,6 +327,17 @@ func flattenComputeRouterMd5AuthenticationKeysKey(v interface{}, d *schema.Resou
 		return "unknown"
 	}
 	return v
+}
+
+func flattenComputeRouterNccGateway(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	relative, err := tpgresource.GetRelativePath(v.(string))
+	if err != nil {
+		return v
+	}
+	return relative
 }
 
 func flattenComputeRouterParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

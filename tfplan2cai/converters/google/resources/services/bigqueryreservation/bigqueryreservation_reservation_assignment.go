@@ -122,6 +122,12 @@ func GetBigqueryReservationReservationAssignmentApiObject(d tpgresource.Terrafor
 	} else if v, ok := d.GetOkExists("job_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(jobTypeProp)) && (ok || !reflect.DeepEqual(v, jobTypeProp)) {
 		obj["jobType"] = jobTypeProp
 	}
+	principalProp, err := expandBigqueryReservationReservationAssignmentPrincipal(d.Get("principal"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("principal"); !tpgresource.IsEmptyValue(reflect.ValueOf(principalProp)) && (ok || !reflect.DeepEqual(v, principalProp)) {
+		obj["principal"] = principalProp
+	}
 
 	return obj, nil
 }
@@ -131,5 +137,9 @@ func expandBigqueryReservationReservationAssignmentAssignee(v interface{}, d tpg
 }
 
 func expandBigqueryReservationReservationAssignmentJobType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationAssignmentPrincipal(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
