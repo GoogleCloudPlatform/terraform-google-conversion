@@ -711,6 +711,9 @@ func TestAccContainerCluster(t *testing.T) {
 		{
 			Name: "TestAccContainerCluster_withNodeReadinessConfig",
 		},
+		{
+			Name: "TestAccContainerCluster_withHighScaleCheckpointingConfig",
+		},
 	}
 
 	for _, tt := range tests {
