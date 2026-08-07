@@ -164,6 +164,12 @@ func GetBigqueryReservationReservationApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("reservation_group"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservationGroupProp)) && (ok || !reflect.DeepEqual(v, reservationGroupProp)) {
 		obj["reservationGroup"] = reservationGroupProp
 	}
+	effectiveLabelsProp, err := expandBigqueryReservationReservationEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
+	}
 
 	return obj, nil
 }
@@ -235,4 +241,15 @@ func expandBigqueryReservationReservationMaxSlots(v interface{}, d tpgresource.T
 
 func expandBigqueryReservationReservationReservationGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandBigqueryReservationReservationEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
