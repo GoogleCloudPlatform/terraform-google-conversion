@@ -126,25 +126,25 @@ func GetVmwareengineNetworkPeeringApiObject(d tpgresource.TerraformResourceData,
 	exportCustomRoutesProp, err := expandVmwareengineNetworkPeeringExportCustomRoutes(d.Get("export_custom_routes"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("export_custom_routes"); ok || !reflect.DeepEqual(v, exportCustomRoutesProp) {
+	} else if v, ok := d.GetOkExists("export_custom_routes"); ok || (v != nil && !reflect.DeepEqual(v, exportCustomRoutesProp)) {
 		obj["exportCustomRoutes"] = exportCustomRoutesProp
 	}
 	importCustomRoutesProp, err := expandVmwareengineNetworkPeeringImportCustomRoutes(d.Get("import_custom_routes"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("import_custom_routes"); ok || !reflect.DeepEqual(v, importCustomRoutesProp) {
+	} else if v, ok := d.GetOkExists("import_custom_routes"); ok || (v != nil && !reflect.DeepEqual(v, importCustomRoutesProp)) {
 		obj["importCustomRoutes"] = importCustomRoutesProp
 	}
 	exportCustomRoutesWithPublicIpProp, err := expandVmwareengineNetworkPeeringExportCustomRoutesWithPublicIp(d.Get("export_custom_routes_with_public_ip"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("export_custom_routes_with_public_ip"); ok || !reflect.DeepEqual(v, exportCustomRoutesWithPublicIpProp) {
+	} else if v, ok := d.GetOkExists("export_custom_routes_with_public_ip"); ok || (v != nil && !reflect.DeepEqual(v, exportCustomRoutesWithPublicIpProp)) {
 		obj["exportCustomRoutesWithPublicIp"] = exportCustomRoutesWithPublicIpProp
 	}
 	importCustomRoutesWithPublicIpProp, err := expandVmwareengineNetworkPeeringImportCustomRoutesWithPublicIp(d.Get("import_custom_routes_with_public_ip"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("import_custom_routes_with_public_ip"); ok || !reflect.DeepEqual(v, importCustomRoutesWithPublicIpProp) {
+	} else if v, ok := d.GetOkExists("import_custom_routes_with_public_ip"); ok || (v != nil && !reflect.DeepEqual(v, importCustomRoutesWithPublicIpProp)) {
 		obj["importCustomRoutesWithPublicIp"] = importCustomRoutesWithPublicIpProp
 	}
 	peerNetworkTypeProp, err := expandVmwareengineNetworkPeeringPeerNetworkType(d.Get("peer_network_type"), d, config)

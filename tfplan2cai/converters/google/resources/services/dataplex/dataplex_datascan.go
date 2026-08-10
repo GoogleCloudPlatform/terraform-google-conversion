@@ -149,19 +149,19 @@ func GetDataplexDatascanApiObject(d tpgresource.TerraformResourceData, config *t
 	dataProfileSpecProp, err := expandDataplexDatascanDataProfileSpec(d.Get("data_profile_spec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("data_profile_spec"); ok || !reflect.DeepEqual(v, dataProfileSpecProp) {
+	} else if v, ok := d.GetOkExists("data_profile_spec"); ok || (v != nil && !reflect.DeepEqual(v, dataProfileSpecProp)) {
 		obj["dataProfileSpec"] = dataProfileSpecProp
 	}
 	dataDiscoverySpecProp, err := expandDataplexDatascanDataDiscoverySpec(d.Get("data_discovery_spec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("data_discovery_spec"); ok || !reflect.DeepEqual(v, dataDiscoverySpecProp) {
+	} else if v, ok := d.GetOkExists("data_discovery_spec"); ok || (v != nil && !reflect.DeepEqual(v, dataDiscoverySpecProp)) {
 		obj["dataDiscoverySpec"] = dataDiscoverySpecProp
 	}
 	dataDocumentationSpecProp, err := expandDataplexDatascanDataDocumentationSpec(d.Get("data_documentation_spec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("data_documentation_spec"); ok || !reflect.DeepEqual(v, dataDocumentationSpecProp) {
+	} else if v, ok := d.GetOkExists("data_documentation_spec"); ok || (v != nil && !reflect.DeepEqual(v, dataDocumentationSpecProp)) {
 		obj["dataDocumentationSpec"] = dataDocumentationSpecProp
 	}
 	effectiveLabelsProp, err := expandDataplexDatascanEffectiveLabels(d.Get("effective_labels"), d, config)

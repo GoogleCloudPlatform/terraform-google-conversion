@@ -220,7 +220,7 @@ func GetComputeGlobalForwardingRuleCaiObject(d tpgresource.TerraformResourceData
 	noAutomateDnsZoneProp, err := expandComputeGlobalForwardingRuleNoAutomateDnsZone(d.Get("no_automate_dns_zone"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("no_automate_dns_zone"); ok || !reflect.DeepEqual(v, noAutomateDnsZoneProp) {
+	} else if v, ok := d.GetOkExists("no_automate_dns_zone"); ok || (v != nil && !reflect.DeepEqual(v, noAutomateDnsZoneProp)) {
 		obj["noAutomateDnsZone"] = noAutomateDnsZoneProp
 	}
 	effectiveLabelsProp, err := expandComputeGlobalForwardingRuleEffectiveLabels(d.Get("effective_labels"), d, config)

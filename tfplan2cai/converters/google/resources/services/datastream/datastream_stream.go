@@ -230,13 +230,13 @@ func GetDatastreamStreamApiObject(d tpgresource.TerraformResourceData, config *t
 	backfillAllProp, err := expandDatastreamStreamBackfillAll(d.Get("backfill_all"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("backfill_all"); ok || !reflect.DeepEqual(v, backfillAllProp) {
+	} else if v, ok := d.GetOkExists("backfill_all"); ok || (v != nil && !reflect.DeepEqual(v, backfillAllProp)) {
 		obj["backfillAll"] = backfillAllProp
 	}
 	backfillNoneProp, err := expandDatastreamStreamBackfillNone(d.Get("backfill_none"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("backfill_none"); ok || !reflect.DeepEqual(v, backfillNoneProp) {
+	} else if v, ok := d.GetOkExists("backfill_none"); ok || (v != nil && !reflect.DeepEqual(v, backfillNoneProp)) {
 		obj["backfillNone"] = backfillNoneProp
 	}
 	customerManagedEncryptionKeyProp, err := expandDatastreamStreamCustomerManagedEncryptionKey(d.Get("customer_managed_encryption_key"), d, config)

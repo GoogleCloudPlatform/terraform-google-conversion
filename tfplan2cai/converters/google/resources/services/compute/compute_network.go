@@ -125,7 +125,7 @@ func GetComputeNetworkApiObject(d tpgresource.TerraformResourceData, config *tra
 	autoCreateSubnetworksProp, err := expandComputeNetworkAutoCreateSubnetworks(d.Get("auto_create_subnetworks"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("auto_create_subnetworks"); ok || !reflect.DeepEqual(v, autoCreateSubnetworksProp) {
+	} else if v, ok := d.GetOkExists("auto_create_subnetworks"); ok || (v != nil && !reflect.DeepEqual(v, autoCreateSubnetworksProp)) {
 		obj["autoCreateSubnetworks"] = autoCreateSubnetworksProp
 	}
 	routingConfigProp, err := expandComputeNetworkRoutingConfig(nil, d, config)

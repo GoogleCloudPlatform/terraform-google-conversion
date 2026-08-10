@@ -142,7 +142,7 @@ func GetDatastreamConnectionProfileCaiObject(d tpgresource.TerraformResourceData
 	bigqueryProfileProp, err := expandDatastreamConnectionProfileBigqueryProfile(d.Get("bigquery_profile"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("bigquery_profile"); ok || !reflect.DeepEqual(v, bigqueryProfileProp) {
+	} else if v, ok := d.GetOkExists("bigquery_profile"); ok || (v != nil && !reflect.DeepEqual(v, bigqueryProfileProp)) {
 		obj["bigqueryProfile"] = bigqueryProfileProp
 	}
 	postgresqlProfileProp, err := expandDatastreamConnectionProfilePostgresqlProfile(d.Get("postgresql_profile"), d, config)

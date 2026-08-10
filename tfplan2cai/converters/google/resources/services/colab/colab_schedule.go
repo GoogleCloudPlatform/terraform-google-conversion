@@ -168,7 +168,7 @@ func GetColabScheduleApiObject(d tpgresource.TerraformResourceData, config *tran
 	allowQueueingProp, err := expandColabScheduleAllowQueueing(d.Get("allow_queueing"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("allow_queueing"); ok || !reflect.DeepEqual(v, allowQueueingProp) {
+	} else if v, ok := d.GetOkExists("allow_queueing"); ok || (v != nil && !reflect.DeepEqual(v, allowQueueingProp)) {
 		obj["allowQueueing"] = allowQueueingProp
 	}
 	createNotebookExecutionJobRequestProp, err := expandColabScheduleCreateNotebookExecutionJobRequest(d.Get("create_notebook_execution_job_request"), d, config)

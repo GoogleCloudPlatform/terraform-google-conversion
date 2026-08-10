@@ -148,7 +148,7 @@ func GetWorkbenchInstanceCaiObject(d tpgresource.TerraformResourceData, config *
 	enableDeletionProtectionProp, err := expandWorkbenchInstanceEnableDeletionProtection(d.Get("enable_deletion_protection"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_deletion_protection"); ok || !reflect.DeepEqual(v, enableDeletionProtectionProp) {
+	} else if v, ok := d.GetOkExists("enable_deletion_protection"); ok || (v != nil && !reflect.DeepEqual(v, enableDeletionProtectionProp)) {
 		obj["enableDeletionProtection"] = enableDeletionProtectionProp
 	}
 	effectiveLabelsProp, err := expandWorkbenchInstanceEffectiveLabels(d.Get("effective_labels"), d, config)

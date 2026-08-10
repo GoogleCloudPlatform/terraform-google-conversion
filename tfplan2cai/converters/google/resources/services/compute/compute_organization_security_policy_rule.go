@@ -137,13 +137,13 @@ func GetComputeOrganizationSecurityPolicyRuleApiObject(d tpgresource.TerraformRe
 	preconfiguredWafConfigProp, err := expandComputeOrganizationSecurityPolicyRulePreconfiguredWafConfig(d.Get("preconfigured_waf_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("preconfigured_waf_config"); ok || !reflect.DeepEqual(v, preconfiguredWafConfigProp) {
+	} else if v, ok := d.GetOkExists("preconfigured_waf_config"); ok || (v != nil && !reflect.DeepEqual(v, preconfiguredWafConfigProp)) {
 		obj["preconfiguredWafConfig"] = preconfiguredWafConfigProp
 	}
 	previewProp, err := expandComputeOrganizationSecurityPolicyRulePreview(d.Get("preview"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("preview"); ok || !reflect.DeepEqual(v, previewProp) {
+	} else if v, ok := d.GetOkExists("preview"); ok || (v != nil && !reflect.DeepEqual(v, previewProp)) {
 		obj["preview"] = previewProp
 	}
 	redirectOptionsProp, err := expandComputeOrganizationSecurityPolicyRuleRedirectOptions(d.Get("redirect_options"), d, config)
@@ -173,7 +173,7 @@ func GetComputeOrganizationSecurityPolicyRuleApiObject(d tpgresource.TerraformRe
 	enableLoggingProp, err := expandComputeOrganizationSecurityPolicyRuleEnableLogging(d.Get("enable_logging"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_logging"); ok || !reflect.DeepEqual(v, enableLoggingProp) {
+	} else if v, ok := d.GetOkExists("enable_logging"); ok || (v != nil && !reflect.DeepEqual(v, enableLoggingProp)) {
 		obj["enableLogging"] = enableLoggingProp
 	}
 	targetServiceAccountsProp, err := expandComputeOrganizationSecurityPolicyRuleTargetServiceAccounts(d.Get("target_service_accounts"), d, config)

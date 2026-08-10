@@ -149,7 +149,7 @@ func GetComputeResourcePolicyApiObject(d tpgresource.TerraformResourceData, conf
 	diskConsistencyGroupPolicyProp, err := expandComputeResourcePolicyDiskConsistencyGroupPolicy(d.Get("disk_consistency_group_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("disk_consistency_group_policy"); ok || !reflect.DeepEqual(v, diskConsistencyGroupPolicyProp) {
+	} else if v, ok := d.GetOkExists("disk_consistency_group_policy"); ok || (v != nil && !reflect.DeepEqual(v, diskConsistencyGroupPolicyProp)) {
 		obj["diskConsistencyGroupPolicy"] = diskConsistencyGroupPolicyProp
 	}
 	workloadPolicyProp, err := expandComputeResourcePolicyWorkloadPolicy(d.Get("workload_policy"), d, config)

@@ -142,7 +142,7 @@ func GetComputeRegionTargetTcpProxyCaiObject(d tpgresource.TerraformResourceData
 	proxyBindProp, err := expandComputeRegionTargetTcpProxyProxyBind(d.Get("proxy_bind"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("proxy_bind"); ok || !reflect.DeepEqual(v, proxyBindProp) {
+	} else if v, ok := d.GetOkExists("proxy_bind"); ok || (v != nil && !reflect.DeepEqual(v, proxyBindProp)) {
 		obj["proxyBind"] = proxyBindProp
 	}
 	regionProp, err := expandComputeRegionTargetTcpProxyRegion(d.Get("region"), d, config)

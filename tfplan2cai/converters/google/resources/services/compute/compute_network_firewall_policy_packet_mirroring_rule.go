@@ -149,7 +149,7 @@ func GetComputeNetworkFirewallPolicyPacketMirroringRuleApiObject(d tpgresource.T
 	targetSecureTagsProp, err := expandComputeNetworkFirewallPolicyPacketMirroringRuleTargetSecureTags(d.Get("target_secure_tags"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("target_secure_tags"); ok || !reflect.DeepEqual(v, targetSecureTagsProp) {
+	} else if v, ok := d.GetOkExists("target_secure_tags"); ok || (v != nil && !reflect.DeepEqual(v, targetSecureTagsProp)) {
 		obj["targetSecureTags"] = targetSecureTagsProp
 	}
 	tlsInspectProp, err := expandComputeNetworkFirewallPolicyPacketMirroringRuleTlsInspect(d.Get("tls_inspect"), d, config)

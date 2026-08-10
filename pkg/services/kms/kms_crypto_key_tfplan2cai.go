@@ -142,7 +142,7 @@ func GetKMSCryptoKeyCaiObject(d tpgresource.TerraformResourceData, config *trans
 	importOnlyProp, err := expandKMSCryptoKeyImportOnly(d.Get("import_only"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("import_only"); ok || !reflect.DeepEqual(v, importOnlyProp) {
+	} else if v, ok := d.GetOkExists("import_only"); ok || (v != nil && !reflect.DeepEqual(v, importOnlyProp)) {
 		obj["importOnly"] = importOnlyProp
 	}
 	cryptoKeyBackendProp, err := expandKMSCryptoKeyCryptoKeyBackend(d.Get("crypto_key_backend"), d, config)

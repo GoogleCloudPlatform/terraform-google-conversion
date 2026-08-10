@@ -113,13 +113,13 @@ func GetApigeeControlPlaneAccessApiObject(d tpgresource.TerraformResourceData, c
 	synchronizerIdentitiesProp, err := expandApigeeControlPlaneAccessSynchronizerIdentities(d.Get("synchronizer_identities"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("synchronizer_identities"); ok || !reflect.DeepEqual(v, synchronizerIdentitiesProp) {
+	} else if v, ok := d.GetOkExists("synchronizer_identities"); ok || (v != nil && !reflect.DeepEqual(v, synchronizerIdentitiesProp)) {
 		obj["synchronizerIdentities"] = synchronizerIdentitiesProp
 	}
 	analyticsPublisherIdentitiesProp, err := expandApigeeControlPlaneAccessAnalyticsPublisherIdentities(d.Get("analytics_publisher_identities"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("analytics_publisher_identities"); ok || !reflect.DeepEqual(v, analyticsPublisherIdentitiesProp) {
+	} else if v, ok := d.GetOkExists("analytics_publisher_identities"); ok || (v != nil && !reflect.DeepEqual(v, analyticsPublisherIdentitiesProp)) {
 		obj["analyticsPublisherIdentities"] = analyticsPublisherIdentitiesProp
 	}
 

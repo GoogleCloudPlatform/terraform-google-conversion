@@ -130,7 +130,7 @@ func GetComputeFirewallCaiObject(d tpgresource.TerraformResourceData, config *tr
 	descriptionProp, err := expandComputeFirewallDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); ok || !reflect.DeepEqual(v, descriptionProp) {
+	} else if v, ok := d.GetOkExists("description"); ok || (v != nil && !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	destinationRangesProp, err := expandComputeFirewallDestinationRanges(d.Get("destination_ranges"), d, config)
@@ -148,13 +148,13 @@ func GetComputeFirewallCaiObject(d tpgresource.TerraformResourceData, config *tr
 	disabledProp, err := expandComputeFirewallDisabled(d.Get("disabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("disabled"); ok || !reflect.DeepEqual(v, disabledProp) {
+	} else if v, ok := d.GetOkExists("disabled"); ok || (v != nil && !reflect.DeepEqual(v, disabledProp)) {
 		obj["disabled"] = disabledProp
 	}
 	logConfigProp, err := expandComputeFirewallLogConfig(d.Get("log_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("log_config"); ok || !reflect.DeepEqual(v, logConfigProp) {
+	} else if v, ok := d.GetOkExists("log_config"); ok || (v != nil && !reflect.DeepEqual(v, logConfigProp)) {
 		obj["logConfig"] = logConfigProp
 	}
 	nameProp, err := expandComputeFirewallName(d.Get("name"), d, config)
@@ -172,7 +172,7 @@ func GetComputeFirewallCaiObject(d tpgresource.TerraformResourceData, config *tr
 	priorityProp, err := expandComputeFirewallPriority(d.Get("priority"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("priority"); ok || !reflect.DeepEqual(v, priorityProp) {
+	} else if v, ok := d.GetOkExists("priority"); ok || (v != nil && !reflect.DeepEqual(v, priorityProp)) {
 		obj["priority"] = priorityProp
 	}
 	sourceRangesProp, err := expandComputeFirewallSourceRanges(d.Get("source_ranges"), d, config)

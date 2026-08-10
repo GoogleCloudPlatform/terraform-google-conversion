@@ -137,7 +137,7 @@ func GetDataprocSessionTemplateApiObject(d tpgresource.TerraformResourceData, co
 	sparkConnectSessionProp, err := expandDataprocSessionTemplateSparkConnectSession(d.Get("spark_connect_session"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("spark_connect_session"); ok || !reflect.DeepEqual(v, sparkConnectSessionProp) {
+	} else if v, ok := d.GetOkExists("spark_connect_session"); ok || (v != nil && !reflect.DeepEqual(v, sparkConnectSessionProp)) {
 		obj["sparkConnectSession"] = sparkConnectSessionProp
 	}
 	effectiveLabelsProp, err := expandDataprocSessionTemplateEffectiveLabels(d.Get("effective_labels"), d, config)

@@ -167,7 +167,7 @@ func GetDatabaseMigrationServiceMigrationJobApiObject(d tpgresource.TerraformRes
 	staticIpConnectivityProp, err := expandDatabaseMigrationServiceMigrationJobStaticIpConnectivity(d.Get("static_ip_connectivity"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("static_ip_connectivity"); ok || !reflect.DeepEqual(v, staticIpConnectivityProp) {
+	} else if v, ok := d.GetOkExists("static_ip_connectivity"); ok || (v != nil && !reflect.DeepEqual(v, staticIpConnectivityProp)) {
 		obj["staticIpConnectivity"] = staticIpConnectivityProp
 	}
 	reverseSshConnectivityProp, err := expandDatabaseMigrationServiceMigrationJobReverseSshConnectivity(d.Get("reverse_ssh_connectivity"), d, config)

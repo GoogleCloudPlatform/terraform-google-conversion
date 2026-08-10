@@ -202,7 +202,7 @@ func GetNetworkServicesGatewayCaiObject(d tpgresource.TerraformResourceData, con
 	allowGlobalAccessProp, err := expandNetworkServicesGatewayAllowGlobalAccess(d.Get("allow_global_access"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("allow_global_access"); ok || !reflect.DeepEqual(v, allowGlobalAccessProp) {
+	} else if v, ok := d.GetOkExists("allow_global_access"); ok || (v != nil && !reflect.DeepEqual(v, allowGlobalAccessProp)) {
 		obj["allowGlobalAccess"] = allowGlobalAccessProp
 	}
 	effectiveLabelsProp, err := expandNetworkServicesGatewayEffectiveLabels(d.Get("effective_labels"), d, config)

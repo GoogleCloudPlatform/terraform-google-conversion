@@ -161,7 +161,7 @@ func GetComputeBackendBucketApiObject(d tpgresource.TerraformResourceData, confi
 	loadBalancingSchemeProp, err := expandComputeBackendBucketLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("load_balancing_scheme"); ok || !reflect.DeepEqual(v, loadBalancingSchemeProp) {
+	} else if v, ok := d.GetOkExists("load_balancing_scheme"); ok || (v != nil && !reflect.DeepEqual(v, loadBalancingSchemeProp)) {
 		obj["loadBalancingScheme"] = loadBalancingSchemeProp
 	}
 	paramsProp, err := expandComputeBackendBucketParams(d.Get("params"), d, config)

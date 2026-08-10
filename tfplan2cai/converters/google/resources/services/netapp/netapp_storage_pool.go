@@ -197,7 +197,7 @@ func GetNetappStoragePoolApiObject(d tpgresource.TerraformResourceData, config *
 	enableHotTierAutoResizeProp, err := expandNetappStoragePoolEnableHotTierAutoResize(d.Get("enable_hot_tier_auto_resize"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_hot_tier_auto_resize"); ok || !reflect.DeepEqual(v, enableHotTierAutoResizeProp) {
+	} else if v, ok := d.GetOkExists("enable_hot_tier_auto_resize"); ok || (v != nil && !reflect.DeepEqual(v, enableHotTierAutoResizeProp)) {
 		obj["enableHotTierAutoResize"] = enableHotTierAutoResizeProp
 	}
 	qosTypeProp, err := expandNetappStoragePoolQosType(d.Get("qos_type"), d, config)
