@@ -124,7 +124,7 @@ func GetGKEHub2FeatureCaiObject(d tpgresource.TerraformResourceData, config *tra
 	fleetDefaultMemberConfigProp, err := expandGKEHub2FeatureFleetDefaultMemberConfig(d.Get("fleet_default_member_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("fleet_default_member_config"); ok || !reflect.DeepEqual(v, fleetDefaultMemberConfigProp) {
+	} else if v, ok := d.GetOkExists("fleet_default_member_config"); ok || (v != nil && !reflect.DeepEqual(v, fleetDefaultMemberConfigProp)) {
 		obj["fleetDefaultMemberConfig"] = fleetDefaultMemberConfigProp
 	}
 	effectiveLabelsProp, err := expandGKEHub2FeatureEffectiveLabels(d.Get("effective_labels"), d, config)

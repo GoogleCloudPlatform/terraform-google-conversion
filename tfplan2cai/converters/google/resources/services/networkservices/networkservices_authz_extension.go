@@ -143,7 +143,7 @@ func GetNetworkServicesAuthzExtensionApiObject(d tpgresource.TerraformResourceDa
 	failOpenProp, err := expandNetworkServicesAuthzExtensionFailOpen(d.Get("fail_open"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("fail_open"); ok || !reflect.DeepEqual(v, failOpenProp) {
+	} else if v, ok := d.GetOkExists("fail_open"); ok || (v != nil && !reflect.DeepEqual(v, failOpenProp)) {
 		obj["failOpen"] = failOpenProp
 	}
 	metadataProp, err := expandNetworkServicesAuthzExtensionMetadata(d.Get("metadata"), d, config)

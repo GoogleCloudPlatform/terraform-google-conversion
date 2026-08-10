@@ -154,7 +154,7 @@ func GetComputeBackendBucketCaiObject(d tpgresource.TerraformResourceData, confi
 	enableCdnProp, err := expandComputeBackendBucketEnableCdn(d.Get("enable_cdn"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_cdn"); ok || !reflect.DeepEqual(v, enableCdnProp) {
+	} else if v, ok := d.GetOkExists("enable_cdn"); ok || (v != nil && !reflect.DeepEqual(v, enableCdnProp)) {
 		obj["enableCdn"] = enableCdnProp
 	}
 	nameProp, err := expandComputeBackendBucketName(d.Get("name"), d, config)
@@ -166,7 +166,7 @@ func GetComputeBackendBucketCaiObject(d tpgresource.TerraformResourceData, confi
 	loadBalancingSchemeProp, err := expandComputeBackendBucketLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("load_balancing_scheme"); ok || !reflect.DeepEqual(v, loadBalancingSchemeProp) {
+	} else if v, ok := d.GetOkExists("load_balancing_scheme"); ok || (v != nil && !reflect.DeepEqual(v, loadBalancingSchemeProp)) {
 		obj["loadBalancingScheme"] = loadBalancingSchemeProp
 	}
 	paramsProp, err := expandComputeBackendBucketParams(d.Get("params"), d, config)

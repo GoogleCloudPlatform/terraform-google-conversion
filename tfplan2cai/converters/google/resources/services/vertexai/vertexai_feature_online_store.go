@@ -119,7 +119,7 @@ func GetVertexAIFeatureOnlineStoreApiObject(d tpgresource.TerraformResourceData,
 	optimizedProp, err := expandVertexAIFeatureOnlineStoreOptimized(d.Get("optimized"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("optimized"); ok || !reflect.DeepEqual(v, optimizedProp) {
+	} else if v, ok := d.GetOkExists("optimized"); ok || (v != nil && !reflect.DeepEqual(v, optimizedProp)) {
 		obj["optimized"] = optimizedProp
 	}
 	dedicatedServingEndpointProp, err := expandVertexAIFeatureOnlineStoreDedicatedServingEndpoint(d.Get("dedicated_serving_endpoint"), d, config)

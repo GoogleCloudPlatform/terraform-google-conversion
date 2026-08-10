@@ -147,7 +147,7 @@ func GetDNSManagedZoneApiObject(d tpgresource.TerraformResourceData, config *tra
 	privateVisibilityConfigProp, err := expandDNSManagedZonePrivateVisibilityConfig(d.Get("private_visibility_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("private_visibility_config"); ok || !reflect.DeepEqual(v, privateVisibilityConfigProp) {
+	} else if v, ok := d.GetOkExists("private_visibility_config"); ok || (v != nil && !reflect.DeepEqual(v, privateVisibilityConfigProp)) {
 		obj["privateVisibilityConfig"] = privateVisibilityConfigProp
 	}
 	forwardingConfigProp, err := expandDNSManagedZoneForwardingConfig(d.Get("forwarding_config"), d, config)

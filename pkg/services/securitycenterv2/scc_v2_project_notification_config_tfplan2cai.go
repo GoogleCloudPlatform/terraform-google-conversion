@@ -130,7 +130,7 @@ func GetSecurityCenterV2ProjectNotificationConfigCaiObject(d tpgresource.Terrafo
 	streamingConfigProp, err := expandSecurityCenterV2ProjectNotificationConfigStreamingConfig(d.Get("streaming_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("streaming_config"); ok || !reflect.DeepEqual(v, streamingConfigProp) {
+	} else if v, ok := d.GetOkExists("streaming_config"); ok || (v != nil && !reflect.DeepEqual(v, streamingConfigProp)) {
 		obj["streamingConfig"] = streamingConfigProp
 	}
 

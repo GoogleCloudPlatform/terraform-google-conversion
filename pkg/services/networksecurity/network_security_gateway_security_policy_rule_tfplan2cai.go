@@ -118,7 +118,7 @@ func GetNetworkSecurityGatewaySecurityPolicyRuleCaiObject(d tpgresource.Terrafor
 	enabledProp, err := expandNetworkSecurityGatewaySecurityPolicyRuleEnabled(d.Get("enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enabled"); ok || !reflect.DeepEqual(v, enabledProp) {
+	} else if v, ok := d.GetOkExists("enabled"); ok || (v != nil && !reflect.DeepEqual(v, enabledProp)) {
 		obj["enabled"] = enabledProp
 	}
 	priorityProp, err := expandNetworkSecurityGatewaySecurityPolicyRulePriority(d.Get("priority"), d, config)

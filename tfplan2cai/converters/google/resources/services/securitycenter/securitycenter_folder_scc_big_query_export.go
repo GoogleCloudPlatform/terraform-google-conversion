@@ -125,7 +125,7 @@ func GetSecurityCenterFolderSccBigQueryExportApiObject(d tpgresource.TerraformRe
 	filterProp, err := expandSecurityCenterFolderSccBigQueryExportFilter(d.Get("filter"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("filter"); ok || !reflect.DeepEqual(v, filterProp) {
+	} else if v, ok := d.GetOkExists("filter"); ok || (v != nil && !reflect.DeepEqual(v, filterProp)) {
 		obj["filter"] = filterProp
 	}
 

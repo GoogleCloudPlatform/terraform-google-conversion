@@ -113,13 +113,13 @@ func GetModelArmorGlobalFloorsettingApiObject(d tpgresource.TerraformResourceDat
 	filterConfigProp, err := expandModelArmorGlobalFloorsettingFilterConfig(d.Get("filter_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("filter_config"); ok || !reflect.DeepEqual(v, filterConfigProp) {
+	} else if v, ok := d.GetOkExists("filter_config"); ok || (v != nil && !reflect.DeepEqual(v, filterConfigProp)) {
 		obj["filterConfig"] = filterConfigProp
 	}
 	enableFloorSettingEnforcementProp, err := expandModelArmorGlobalFloorsettingEnableFloorSettingEnforcement(d.Get("enable_floor_setting_enforcement"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_floor_setting_enforcement"); ok || !reflect.DeepEqual(v, enableFloorSettingEnforcementProp) {
+	} else if v, ok := d.GetOkExists("enable_floor_setting_enforcement"); ok || (v != nil && !reflect.DeepEqual(v, enableFloorSettingEnforcementProp)) {
 		obj["enableFloorSettingEnforcement"] = enableFloorSettingEnforcementProp
 	}
 	integratedServicesProp, err := expandModelArmorGlobalFloorsettingIntegratedServices(d.Get("integrated_services"), d, config)

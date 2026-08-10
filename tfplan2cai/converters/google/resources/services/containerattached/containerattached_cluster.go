@@ -160,7 +160,7 @@ func GetContainerAttachedClusterApiObject(d tpgresource.TerraformResourceData, c
 	loggingConfigProp, err := expandContainerAttachedClusterLoggingConfig(d.Get("logging_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("logging_config"); ok || !reflect.DeepEqual(v, loggingConfigProp) {
+	} else if v, ok := d.GetOkExists("logging_config"); ok || (v != nil && !reflect.DeepEqual(v, loggingConfigProp)) {
 		obj["loggingConfig"] = loggingConfigProp
 	}
 	authorizationProp, err := expandContainerAttachedClusterAuthorization(d.Get("authorization"), d, config)

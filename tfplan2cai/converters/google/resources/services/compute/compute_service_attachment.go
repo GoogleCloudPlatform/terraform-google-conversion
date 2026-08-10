@@ -187,13 +187,13 @@ func GetComputeServiceAttachmentApiObject(d tpgresource.TerraformResourceData, c
 	natSubnetsProp, err := expandComputeServiceAttachmentNatSubnets(d.Get("nat_subnets"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("nat_subnets"); ok || !reflect.DeepEqual(v, natSubnetsProp) {
+	} else if v, ok := d.GetOkExists("nat_subnets"); ok || (v != nil && !reflect.DeepEqual(v, natSubnetsProp)) {
 		obj["natSubnets"] = natSubnetsProp
 	}
 	enableProxyProtocolProp, err := expandComputeServiceAttachmentEnableProxyProtocol(d.Get("enable_proxy_protocol"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_proxy_protocol"); ok || !reflect.DeepEqual(v, enableProxyProtocolProp) {
+	} else if v, ok := d.GetOkExists("enable_proxy_protocol"); ok || (v != nil && !reflect.DeepEqual(v, enableProxyProtocolProp)) {
 		obj["enableProxyProtocol"] = enableProxyProtocolProp
 	}
 	domainNamesProp, err := expandComputeServiceAttachmentDomainNames(d.Get("domain_names"), d, config)
@@ -211,19 +211,19 @@ func GetComputeServiceAttachmentApiObject(d tpgresource.TerraformResourceData, c
 	consumerRejectListsProp, err := expandComputeServiceAttachmentConsumerRejectLists(d.Get("consumer_reject_lists"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("consumer_reject_lists"); ok || !reflect.DeepEqual(v, consumerRejectListsProp) {
+	} else if v, ok := d.GetOkExists("consumer_reject_lists"); ok || (v != nil && !reflect.DeepEqual(v, consumerRejectListsProp)) {
 		obj["consumerRejectLists"] = consumerRejectListsProp
 	}
 	consumerAcceptListsProp, err := expandComputeServiceAttachmentConsumerAcceptLists(d.Get("consumer_accept_lists"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("consumer_accept_lists"); ok || !reflect.DeepEqual(v, consumerAcceptListsProp) {
+	} else if v, ok := d.GetOkExists("consumer_accept_lists"); ok || (v != nil && !reflect.DeepEqual(v, consumerAcceptListsProp)) {
 		obj["consumerAcceptLists"] = consumerAcceptListsProp
 	}
 	reconcileConnectionsProp, err := expandComputeServiceAttachmentReconcileConnections(d.Get("reconcile_connections"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("reconcile_connections"); ok || !reflect.DeepEqual(v, reconcileConnectionsProp) {
+	} else if v, ok := d.GetOkExists("reconcile_connections"); ok || (v != nil && !reflect.DeepEqual(v, reconcileConnectionsProp)) {
 		obj["reconcileConnections"] = reconcileConnectionsProp
 	}
 	propagatedConnectionLimitProp, err := expandComputeServiceAttachmentPropagatedConnectionLimit(d.Get("propagated_connection_limit"), d, config)

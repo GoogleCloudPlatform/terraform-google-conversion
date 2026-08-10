@@ -155,7 +155,7 @@ func GetNetworkConnectivityTransportApiObject(d tpgresource.TerraformResourceDat
 	adminEnabledProp, err := expandNetworkConnectivityTransportAdminEnabled(d.Get("admin_enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("admin_enabled"); ok || !reflect.DeepEqual(v, adminEnabledProp) {
+	} else if v, ok := d.GetOkExists("admin_enabled"); ok || (v != nil && !reflect.DeepEqual(v, adminEnabledProp)) {
 		obj["adminEnabled"] = adminEnabledProp
 	}
 	networkProp, err := expandNetworkConnectivityTransportNetwork(d.Get("network"), d, config)
@@ -185,13 +185,13 @@ func GetNetworkConnectivityTransportApiObject(d tpgresource.TerraformResourceDat
 	pscRoutingEnabledProp, err := expandNetworkConnectivityTransportPscRoutingEnabled(d.Get("psc_routing_enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("psc_routing_enabled"); ok || !reflect.DeepEqual(v, pscRoutingEnabledProp) {
+	} else if v, ok := d.GetOkExists("psc_routing_enabled"); ok || (v != nil && !reflect.DeepEqual(v, pscRoutingEnabledProp)) {
 		obj["pscRoutingEnabled"] = pscRoutingEnabledProp
 	}
 	autoAcceptProp, err := expandNetworkConnectivityTransportAutoAccept(d.Get("auto_accept"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("auto_accept"); ok || !reflect.DeepEqual(v, autoAcceptProp) {
+	} else if v, ok := d.GetOkExists("auto_accept"); ok || (v != nil && !reflect.DeepEqual(v, autoAcceptProp)) {
 		obj["autoAccept"] = autoAcceptProp
 	}
 	effectiveLabelsProp, err := expandNetworkConnectivityTransportEffectiveLabels(d.Get("effective_labels"), d, config)

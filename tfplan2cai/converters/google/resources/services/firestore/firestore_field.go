@@ -113,13 +113,13 @@ func GetFirestoreFieldApiObject(d tpgresource.TerraformResourceData, config *tra
 	indexConfigProp, err := expandFirestoreFieldIndexConfig(d.Get("index_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("index_config"); ok || !reflect.DeepEqual(v, indexConfigProp) {
+	} else if v, ok := d.GetOkExists("index_config"); ok || (v != nil && !reflect.DeepEqual(v, indexConfigProp)) {
 		obj["indexConfig"] = indexConfigProp
 	}
 	ttlConfigProp, err := expandFirestoreFieldTtlConfig(d.Get("ttl_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ttl_config"); ok || !reflect.DeepEqual(v, ttlConfigProp) {
+	} else if v, ok := d.GetOkExists("ttl_config"); ok || (v != nil && !reflect.DeepEqual(v, ttlConfigProp)) {
 		obj["ttlConfig"] = ttlConfigProp
 	}
 

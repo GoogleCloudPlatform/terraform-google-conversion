@@ -152,7 +152,7 @@ func GetComputeRouteApiObject(d tpgresource.TerraformResourceData, config *trans
 	priorityProp, err := expandComputeRoutePriority(d.Get("priority"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("priority"); ok || !reflect.DeepEqual(v, priorityProp) {
+	} else if v, ok := d.GetOkExists("priority"); ok || (v != nil && !reflect.DeepEqual(v, priorityProp)) {
 		obj["priority"] = priorityProp
 	}
 	tagsProp, err := expandComputeRouteTags(d.Get("tags"), d, config)

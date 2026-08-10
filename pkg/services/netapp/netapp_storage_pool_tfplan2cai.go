@@ -178,7 +178,7 @@ func GetNetappStoragePoolCaiObject(d tpgresource.TerraformResourceData, config *
 	customPerformanceEnabledProp, err := expandNetappStoragePoolCustomPerformanceEnabled(d.Get("custom_performance_enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("custom_performance_enabled"); ok || !reflect.DeepEqual(v, customPerformanceEnabledProp) {
+	} else if v, ok := d.GetOkExists("custom_performance_enabled"); ok || (v != nil && !reflect.DeepEqual(v, customPerformanceEnabledProp)) {
 		obj["customPerformanceEnabled"] = customPerformanceEnabledProp
 	}
 	totalThroughputMibpsProp, err := expandNetappStoragePoolTotalThroughputMibps(d.Get("total_throughput_mibps"), d, config)
@@ -202,7 +202,7 @@ func GetNetappStoragePoolCaiObject(d tpgresource.TerraformResourceData, config *
 	enableHotTierAutoResizeProp, err := expandNetappStoragePoolEnableHotTierAutoResize(d.Get("enable_hot_tier_auto_resize"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_hot_tier_auto_resize"); ok || !reflect.DeepEqual(v, enableHotTierAutoResizeProp) {
+	} else if v, ok := d.GetOkExists("enable_hot_tier_auto_resize"); ok || (v != nil && !reflect.DeepEqual(v, enableHotTierAutoResizeProp)) {
 		obj["enableHotTierAutoResize"] = enableHotTierAutoResizeProp
 	}
 	qosTypeProp, err := expandNetappStoragePoolQosType(d.Get("qos_type"), d, config)
