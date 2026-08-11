@@ -50,7 +50,26 @@ import (
 )
 
 func chronicleRuleDeploymentNilRunFrequencyDiffSuppressFunc(_, old, new string, _ *schema.ResourceData) bool {
+	// Ignore run frequency when it is not specified. This is a fix for
+	// https://github.com/hashicorp/terraform-provider-google/issues/21347.
 	if new == "" {
+		return true
+	}
+	// Suppress diffs for coerced run frequencies. With the release of customizable
+	// schedules, setting a multi-event rule to LIVE or HOURLY will set the backend
+	// state to LIVE_CUSTOMIZABLE or HOURLY_CUSTOMIZABLE, respectively. Non-large match
+	// window rules requesting DAILY are also coerced to HOURLY_CUSTOMIZABLE. So by
+	// suppressing this diff we avoid a permadiff.
+	if (old == "LIVE_CUSTOMIZABLE" && new == "LIVE") || (old == "HOURLY_CUSTOMIZABLE" && (new == "HOURLY" || new == "DAILY")) {
+		return true
+	}
+	// For single-event rules, we coerce HOURLY and DAILY to LIVE. Note that this
+	// creates an edge case when a legacy multi-event rule is set to LIVE and the
+	// new requested state is HOURLY - in this case, nothing will happen. There is
+	// no good way to differentiate this, so the only solution is for the user to
+	// update their terraform config to begin using the new CUSTOMIZABLE run
+	// frequencies.
+	if old == "LIVE" && (new == "HOURLY" || new == "DAILY") {
 		return true
 	}
 	return false
@@ -141,6 +160,12 @@ func GetChronicleRuleDeploymentApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("run_frequency"); !tpgresource.IsEmptyValue(reflect.ValueOf(runFrequencyProp)) && (ok || !reflect.DeepEqual(v, runFrequencyProp)) {
 		obj["runFrequency"] = runFrequencyProp
 	}
+	scheduleCustomizationsProp, err := expandChronicleRuleDeploymentScheduleCustomizations(d.Get("schedule_customizations"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("schedule_customizations"); !tpgresource.IsEmptyValue(reflect.ValueOf(scheduleCustomizationsProp)) && (ok || !reflect.DeepEqual(v, scheduleCustomizationsProp)) {
+		obj["scheduleCustomizations"] = scheduleCustomizationsProp
+	}
 
 	return obj, nil
 }
@@ -158,5 +183,42 @@ func expandChronicleRuleDeploymentArchived(v interface{}, d tpgresource.Terrafor
 }
 
 func expandChronicleRuleDeploymentRunFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleRuleDeploymentScheduleCustomizations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnsureEnrichmentCompleteness, err := expandChronicleRuleDeploymentScheduleCustomizationsEnsureEnrichmentCompleteness(original["ensure_enrichment_completeness"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["ensureEnrichmentCompleteness"] = transformedEnsureEnrichmentCompleteness
+	}
+
+	transformedLateArrivingDataAdjustment, err := expandChronicleRuleDeploymentScheduleCustomizationsLateArrivingDataAdjustment(original["late_arriving_data_adjustment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLateArrivingDataAdjustment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["lateArrivingDataAdjustment"] = transformedLateArrivingDataAdjustment
+	}
+
+	return transformed, nil
+}
+
+func expandChronicleRuleDeploymentScheduleCustomizationsEnsureEnrichmentCompleteness(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleRuleDeploymentScheduleCustomizationsLateArrivingDataAdjustment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

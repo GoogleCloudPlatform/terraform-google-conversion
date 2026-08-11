@@ -25,13 +25,8 @@ func TestAccBeyondcorpAppConnection(t *testing.T) {
 
 	tests := []test.TestCase{
 		{
-			Name: "TestAccBeyondcorpAppConnection_beyondcorpAppConnectionBasicExample",
-		},
-		{
-			Name: "TestAccBeyondcorpAppConnection_beyondcorpAppConnectionFullExample",
-		},
-		{
-			Name: "TestAccBeyondcorpAppConnection_beyondcorpAppConnectionUpdateExample",
+			Name: "TestAccBeyondcorpAppConnection_skipped",
+			Skip: "All samples and tests were removed in standard provider.",
 		},
 	}
 
