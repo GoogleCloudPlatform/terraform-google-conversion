@@ -1390,10 +1390,98 @@ func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfig(v 
 		transformed["model"] = transformedModel
 	}
 
+	transformedGenerationTriggerConfig, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfig(original["generation_trigger_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGenerationTriggerConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["generationTriggerConfig"] = transformedGenerationTriggerConfig
+	}
+
 	return transformed, nil
 }
 
 func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigModel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGenerationRule, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRule(original["generation_rule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGenerationRule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["generationRule"] = transformedGenerationRule
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdleDuration, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRuleIdleDuration(original["idle_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleDuration"] = transformedIdleDuration
+	}
+
+	transformedFixedInterval, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRuleFixedInterval(original["fixed_interval"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFixedInterval); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fixedInterval"] = transformedFixedInterval
+	}
+
+	transformedEventCount, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRuleEventCount(original["event_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEventCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["eventCount"] = transformedEventCount
+	}
+
+	transformedOverlapEventCount, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRuleOverlapEventCount(original["overlap_event_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOverlapEventCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["overlapEventCount"] = transformedOverlapEventCount
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRuleIdleDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRuleFixedInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRuleEventCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigGenerationConfigGenerationTriggerConfigGenerationRuleOverlapEventCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

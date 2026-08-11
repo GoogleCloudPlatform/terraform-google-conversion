@@ -128,6 +128,18 @@ func GetSecureSourceManagerRepositoryApiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("initial_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(initialConfigProp)) && (ok || !reflect.DeepEqual(v, initialConfigProp)) {
 		obj["initialConfig"] = initialConfigProp
 	}
+	serviceAccountProp, err := expandSecureSourceManagerRepositoryServiceAccount(d.Get("service_account"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("service_account"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceAccountProp)) && (ok || !reflect.DeepEqual(v, serviceAccountProp)) {
+		obj["serviceAccount"] = serviceAccountProp
+	}
+	scanConfigProp, err := expandSecureSourceManagerRepositoryScanConfig(d.Get("scan_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scan_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(scanConfigProp)) && (ok || !reflect.DeepEqual(v, scanConfigProp)) {
+		obj["scanConfig"] = scanConfigProp
+	}
 
 	return obj, nil
 }
@@ -196,5 +208,68 @@ func expandSecureSourceManagerRepositoryInitialConfigLicense(v interface{}, d tp
 }
 
 func expandSecureSourceManagerRepositoryInitialConfigReadme(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerRepositoryServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerRepositoryScanConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSecretScanConfig, err := expandSecureSourceManagerRepositoryScanConfigSecretScanConfig(original["secret_scan_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecretScanConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["secretScanConfig"] = transformedSecretScanConfig
+	}
+
+	return transformed, nil
+}
+
+func expandSecureSourceManagerRepositoryScanConfigSecretScanConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandSecureSourceManagerRepositoryScanConfigSecretScanConfigEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedInspectTemplate, err := expandSecureSourceManagerRepositoryScanConfigSecretScanConfigInspectTemplate(original["inspect_template"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInspectTemplate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["inspectTemplate"] = transformedInspectTemplate
+	}
+
+	return transformed, nil
+}
+
+func expandSecureSourceManagerRepositoryScanConfigSecretScanConfigEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerRepositoryScanConfigSecretScanConfigInspectTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
