@@ -102,7 +102,7 @@ func GetComputeGlobalAddressCaiAssets(d tpgresource.TerraformResourceData, confi
 				Resource: &caiasset.AssetResource{
 					Version:              "v1",
 					DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest",
-					DiscoveryName:        "Address",
+					DiscoveryName:        "GlobalAddress",
 					Data:                 obj,
 					Location:             location,
 				},
