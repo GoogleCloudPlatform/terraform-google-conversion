@@ -55,6 +55,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_namePrefix",
 		},
 		{
+			Name: "TestAccContainerNodePool_namePrefix_long",
+		},
+		{
 			Name: "TestAccContainerNodePool_noName",
 		},
 		{
