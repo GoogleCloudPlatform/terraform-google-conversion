@@ -2,8 +2,10 @@ package common
 
 import (
 	"fmt"
+	"sort"
+	"strings"
 
-	"github.com/hashicorp/hcl/hcl/printer"
+	"github.com/hashicorp/hcl/v2"
 	"github.com/hashicorp/hcl/v2/hclwrite"
 	"github.com/zclconf/go-cty/cty"
 )
@@ -13,17 +15,36 @@ func HclWriteBlocks(blocks []*HCLResourceBlock) ([]byte, error) {
 	f := hclwrite.NewFile()
 	rootBody := f.Body()
 
+	variableMap := make(map[string]struct{})
+
 	for _, resourceBlock := range blocks {
 		hclBlock := rootBody.AppendNewBlock("resource", resourceBlock.Labels)
-		if err := hclWriteBlock(resourceBlock.Value, hclBlock.Body()); err != nil {
+		if err := hclWriteBlock(resourceBlock.Value, hclBlock.Body(), variableMap); err != nil {
 			return nil, err
 		}
 	}
 
-	return printer.Format(f.Bytes())
+	varNames := make([]string, 0, len(variableMap))
+	for name := range variableMap {
+		varNames = append(varNames, name)
+	}
+	sort.Strings(varNames)
+
+	for _, name := range varNames {
+		rootBody.AppendNewline()
+		varBlock := rootBody.AppendNewBlock("variable", []string{name})
+
+		// type = string
+		t := hcl.Traversal{
+			hcl.TraverseRoot{Name: "string"},
+		}
+		varBlock.Body().SetAttributeTraversal("type", t)
+	}
+
+	return f.Bytes(), nil
 }
 
-func hclWriteBlock(val cty.Value, body *hclwrite.Body) error {
+func hclWriteBlock(val cty.Value, body *hclwrite.Body, variableMap map[string]struct{}) error {
 	if val.IsNull() {
 		return nil
 	}
@@ -40,7 +61,7 @@ func hclWriteBlock(val cty.Value, body *hclwrite.Body) error {
 		switch {
 		case objValType.IsObjectType():
 			newBlock := body.AppendNewBlock(objKey.AsString(), nil)
-			if err := hclWriteBlock(objVal, newBlock.Body()); err != nil {
+			if err := hclWriteBlock(objVal, newBlock.Body(), variableMap); err != nil {
 				return err
 			}
 		case objValType.IsCollectionType():
@@ -53,7 +74,7 @@ func hclWriteBlock(val cty.Value, body *hclwrite.Body) error {
 				for listIterator.Next() {
 					_, listVal := listIterator.Element()
 					subBlock := body.AppendNewBlock(objKey.AsString(), nil)
-					if err := hclWriteBlock(listVal, subBlock.Body()); err != nil {
+					if err := hclWriteBlock(listVal, subBlock.Body(), variableMap); err != nil {
 						return err
 					}
 				}
@@ -61,6 +82,25 @@ func hclWriteBlock(val cty.Value, body *hclwrite.Body) error {
 			}
 			fallthrough
 		default:
+			if objValType == cty.String {
+				strVal := objVal.AsString()
+				if strVal == "" {
+					continue
+				}
+
+				if strings.HasPrefix(strVal, "unknown.") {
+					varName := strings.TrimPrefix(strVal, "unknown.")
+					variableMap[varName] = struct{}{}
+
+					t := hcl.Traversal{
+						hcl.TraverseRoot{Name: "var"},
+						hcl.TraverseAttr{Name: varName},
+					}
+					body.SetAttributeTraversal(objKey.AsString(), t)
+					continue
+				}
+			}
+
 			if objValType.FriendlyName() == "string" && objVal.AsString() == "" {
 				continue
 			}
