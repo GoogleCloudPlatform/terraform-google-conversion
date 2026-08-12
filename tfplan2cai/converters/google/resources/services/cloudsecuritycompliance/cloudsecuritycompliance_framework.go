@@ -49,6 +49,19 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+func cloudsecuritycomplianceFrameworkCloudControlDetailsHash(v interface{}) int {
+	if v == nil {
+		return 0
+	}
+
+	var buf bytes.Buffer
+	m := v.(map[string]interface{})
+
+	buf.WriteString(fmt.Sprintf("%s-", m["name"].(string)))
+
+	return tpgresource.Hashcode(buf.String())
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -160,6 +173,7 @@ func resourceCloudSecurityComplianceFrameworkEncoder(d tpgresource.TerraformReso
 }
 
 func expandCloudSecurityComplianceFrameworkCloudControlDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	if v == nil {
 		return nil, nil
 	}
