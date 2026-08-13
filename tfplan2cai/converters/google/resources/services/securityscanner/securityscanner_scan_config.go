@@ -170,6 +170,12 @@ func GetSecurityScannerScanConfigApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("ignore_http_status_errors"); !tpgresource.IsEmptyValue(reflect.ValueOf(ignoreHttpStatusErrorsProp)) && (ok || !reflect.DeepEqual(v, ignoreHttpStatusErrorsProp)) {
 		obj["ignoreHttpStatusErrors"] = ignoreHttpStatusErrorsProp
 	}
+	staticIpScanProp, err := expandSecurityScannerScanConfigStaticIpScan(d.Get("static_ip_scan"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("static_ip_scan"); !tpgresource.IsEmptyValue(reflect.ValueOf(staticIpScanProp)) && (ok || !reflect.DeepEqual(v, staticIpScanProp)) {
+		obj["staticIpScan"] = staticIpScanProp
+	}
 
 	return obj, nil
 }
@@ -354,5 +360,9 @@ func expandSecurityScannerScanConfigExportToSecurityCommandCenter(v interface{},
 }
 
 func expandSecurityScannerScanConfigIgnoreHttpStatusErrors(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecurityScannerScanConfigStaticIpScan(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
