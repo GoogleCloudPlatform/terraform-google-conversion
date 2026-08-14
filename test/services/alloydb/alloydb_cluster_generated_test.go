@@ -46,6 +46,9 @@ func TestAccAlloydbCluster(t *testing.T) {
 			Name: "TestAccAlloydbCluster_upgrade",
 		},
 		{
+			Name: "TestAccAlloydbCluster_upgradeWithSimultaneousUpdate",
+		},
+		{
 			Name: "TestAccAlloydbCluster_withSubscriptionTypeTrial",
 		},
 		{
