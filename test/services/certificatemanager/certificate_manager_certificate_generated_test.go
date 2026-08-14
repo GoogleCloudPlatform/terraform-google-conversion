@@ -34,6 +34,9 @@ func TestAccCertificateManagerCertificate(t *testing.T) {
 			Name: "TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateExample",
 		},
 		{
+			Name: "TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateWriteOnlyExample",
+		},
+		{
 			Name: "TestAccCertificateManagerCertificate_certificateManagerSelfManagedCertificateRegionalExample",
 		},
 		{
