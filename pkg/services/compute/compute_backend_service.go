@@ -714,7 +714,6 @@ For internal load balancing, a URL to a HealthCheck resource must be specified i
 			},
 			"iap": {
 				Type:     schema.TypeList,
-				Computed: true,
 				Optional: true,
 				Description: `Settings for enabling Cloud Identity Aware Proxy.
 If OAuth client is not set, the Google-managed OAuth client is used.`,
@@ -731,6 +730,7 @@ If OAuth client is not set, the Google-managed OAuth client is used.`,
 							Optional:         true,
 							DiffSuppressFunc: tpgresource.EmptyOrDefaultStringSuppress(" "),
 							Description:      `OAuth2 Client ID for IAP`,
+							Sensitive:        true,
 						},
 						"oauth2_client_secret": {
 							Type:        schema.TypeString,
