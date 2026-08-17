@@ -400,6 +400,13 @@ func expandWorkbenchInstanceGceSetup(v interface{}, d tpgresource.TerraformResou
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedComputeInstanceId, err := expandWorkbenchInstanceGceSetupComputeInstanceId(original["compute_instance_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedComputeInstanceId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instanceId"] = transformedComputeInstanceId
+	}
+
 	transformedMachineType, err := expandWorkbenchInstanceGceSetupMachineType(original["machine_type"], d, config)
 	if err != nil {
 		return nil, err
@@ -513,6 +520,10 @@ func expandWorkbenchInstanceGceSetup(v interface{}, d tpgresource.TerraformResou
 	}
 
 	return transformed, nil
+}
+
+func expandWorkbenchInstanceGceSetupComputeInstanceId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandWorkbenchInstanceGceSetupMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {

@@ -1500,6 +1500,13 @@ func expandCESToolDataStoreToolModalityConfigs(v interface{}, d tpgresource.Terr
 			transformed["rewriterConfig"] = transformedRewriterConfig
 		}
 
+		transformedSnippetsConfig, err := expandCESToolDataStoreToolModalityConfigsSnippetsConfig(original["snippets_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSnippetsConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["snippetsConfig"] = transformedSnippetsConfig
+		}
+
 		transformedSummarizationConfig, err := expandCESToolDataStoreToolModalityConfigsSummarizationConfig(original["summarization_config"], d, config)
 		if err != nil {
 			return nil, err
@@ -1631,6 +1638,32 @@ func expandCESToolDataStoreToolModalityConfigsRewriterConfigModelSettingsTempera
 }
 
 func expandCESToolDataStoreToolModalityConfigsRewriterConfigPrompt(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolModalityConfigsSnippetsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableSnippets, err := expandCESToolDataStoreToolModalityConfigsSnippetsConfigEnableSnippets(original["enable_snippets"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enableSnippets"] = transformedEnableSnippets
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolDataStoreToolModalityConfigsSnippetsConfigEnableSnippets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1929,6 +1962,13 @@ func expandCESToolPythonFunction(v interface{}, d tpgresource.TerraformResourceD
 		transformed["pythonCode"] = transformedPythonCode
 	}
 
+	transformedServiceDirectoryConfig, err := expandCESToolPythonFunctionServiceDirectoryConfig(original["service_directory_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceDirectoryConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceDirectoryConfig"] = transformedServiceDirectoryConfig
+	}
+
 	return transformed, nil
 }
 
@@ -1941,6 +1981,32 @@ func expandCESToolPythonFunctionName(v interface{}, d tpgresource.TerraformResou
 }
 
 func expandCESToolPythonFunctionPythonCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolPythonFunctionServiceDirectoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedService, err := expandCESToolPythonFunctionServiceDirectoryConfigService(original["service"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedService); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["service"] = transformedService
+	}
+
+	return transformed, nil
+}
+
+func expandCESToolPythonFunctionServiceDirectoryConfigService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

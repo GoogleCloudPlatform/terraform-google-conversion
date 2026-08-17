@@ -157,6 +157,12 @@ func GetColabNotebookExecutionCaiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("custom_environment_spec"); !tpgresource.IsEmptyValue(reflect.ValueOf(customEnvironmentSpecProp)) && (ok || !reflect.DeepEqual(v, customEnvironmentSpecProp)) {
 		obj["customEnvironmentSpec"] = customEnvironmentSpecProp
 	}
+	workbenchRuntimeProp, err := expandColabNotebookExecutionWorkbenchRuntime(d.Get("workbench_runtime"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("workbench_runtime"); !tpgresource.IsEmptyValue(reflect.ValueOf(workbenchRuntimeProp)) && (ok || !reflect.DeepEqual(v, workbenchRuntimeProp)) {
+		obj["workbenchRuntime"] = workbenchRuntimeProp
+	}
 	gcsOutputUriProp, err := expandColabNotebookExecutionGcsOutputUri(d.Get("gcs_output_uri"), d, config)
 	if err != nil {
 		return nil, err
@@ -324,6 +330,13 @@ func expandColabNotebookExecutionCustomEnvironmentSpec(v interface{}, d tpgresou
 		transformed["networkSpec"] = transformedNetworkSpec
 	}
 
+	transformedShieldedInstanceConfig, err := expandColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfig(original["shielded_instance_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedShieldedInstanceConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["shieldedInstanceConfig"] = transformedShieldedInstanceConfig
+	}
+
 	return transformed, nil
 }
 
@@ -457,6 +470,124 @@ func expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpecNetwork(v inter
 }
 
 func expandColabNotebookExecutionCustomEnvironmentSpecNetworkSpecSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableIntegrityMonitoring, err := expandColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableIntegrityMonitoring(original["enable_integrity_monitoring"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableIntegrityMonitoring); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableIntegrityMonitoring"] = transformedEnableIntegrityMonitoring
+	}
+
+	transformedEnableSecureBoot, err := expandColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableSecureBoot(original["enable_secure_boot"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableSecureBoot); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableSecureBoot"] = transformedEnableSecureBoot
+	}
+
+	transformedEnableVtpm, err := expandColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableVtpm(original["enable_vtpm"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableVtpm); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableVtpm"] = transformedEnableVtpm
+	}
+
+	return transformed, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableIntegrityMonitoring(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableSecureBoot(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableVtpm(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionWorkbenchRuntime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedVmImage, err := expandColabNotebookExecutionWorkbenchRuntimeVmImage(original["vm_image"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVmImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["vmImage"] = transformedVmImage
+	}
+
+	return transformed, nil
+}
+
+func expandColabNotebookExecutionWorkbenchRuntimeVmImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedFamily, err := expandColabNotebookExecutionWorkbenchRuntimeVmImageFamily(original["family"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFamily); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["family"] = transformedFamily
+	}
+
+	transformedName, err := expandColabNotebookExecutionWorkbenchRuntimeVmImageName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedProject, err := expandColabNotebookExecutionWorkbenchRuntimeVmImageProject(original["project"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProject); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["project"] = transformedProject
+	}
+
+	return transformed, nil
+}
+
+func expandColabNotebookExecutionWorkbenchRuntimeVmImageFamily(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionWorkbenchRuntimeVmImageName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandColabNotebookExecutionWorkbenchRuntimeVmImageProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

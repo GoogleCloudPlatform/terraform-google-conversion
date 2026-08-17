@@ -892,10 +892,21 @@ func expandVertexAIReasoningEngineSpecContainerSpec(v interface{}, d tpgresource
 		transformed["imageUri"] = transformedImageUri
 	}
 
+	transformedPort, err := expandVertexAIReasoningEngineSpecContainerSpecPort(original["port"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPort); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["port"] = transformedPort
+	}
+
 	return transformed, nil
 }
 
 func expandVertexAIReasoningEngineSpecContainerSpecImageUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecContainerSpecPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
