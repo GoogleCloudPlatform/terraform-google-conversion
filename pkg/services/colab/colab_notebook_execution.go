@@ -186,6 +186,35 @@ func ResourceColabNotebookExecution() *schema.Resource {
 								},
 							},
 						},
+						"shielded_instance_config": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
+							Description: `Shielded VM configuration.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"enable_integrity_monitoring": {
+										Type:        schema.TypeBool,
+										Optional:    true,
+										ForceNew:    true,
+										Description: `Defines whether the instance has integrity monitoring enabled. Enables monitoring and attestation of the boot integrity of the instance. The attestation is performed against the integrity policy baseline. This baseline is initially derived from the implicitly trusted boot image when the instance is created. Enabled by default.`,
+									},
+									"enable_secure_boot": {
+										Type:        schema.TypeBool,
+										Optional:    true,
+										ForceNew:    true,
+										Description: `Defines whether the instance has Secure Boot enabled. Secure Boot helps ensure that the system only runs authentic software by verifying the digital signature of all boot components, and halting the boot process if signature verification fails. Disabled by default.`,
+									},
+									"enable_vtpm": {
+										Type:        schema.TypeBool,
+										Optional:    true,
+										ForceNew:    true,
+										Description: `Defines whether the instance has the vTPM enabled. Enabled by default.`,
+									},
+								},
+							},
+						},
 					},
 				},
 				ExactlyOneOf: []string{"custom_environment_spec", "notebook_runtime_template_resource_name"},
@@ -290,6 +319,48 @@ func ResourceColabNotebookExecution() *schema.Resource {
 				ForceNew:     true,
 				Description:  `The service account to run the execution as.`,
 				ExactlyOneOf: []string{"execution_user", "service_account"},
+			},
+			"workbench_runtime": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `Configuration for a Workbench Instances-based environment.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"vm_image": {
+							Type:        schema.TypeList,
+							Required:    true,
+							ForceNew:    true,
+							Description: `Custom Compute Engine VM image for the Workbench instance.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"family": {
+										Type:         schema.TypeString,
+										Optional:     true,
+										ForceNew:     true,
+										Description:  `Use this VM image family to find the image; the newest image in this family will be used.`,
+										ExactlyOneOf: []string{"workbench_runtime.0.vm_image.0.family", "workbench_runtime.0.vm_image.0.name"},
+									},
+									"name": {
+										Type:         schema.TypeString,
+										Optional:     true,
+										ForceNew:     true,
+										Description:  `Use VM image name to find the image.`,
+										ExactlyOneOf: []string{"workbench_runtime.0.vm_image.0.family", "workbench_runtime.0.vm_image.0.name"},
+									},
+									"project": {
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+										Description: `The name of the Google Cloud project that this VM image belongs to. Format: {project_id}`,
+									},
+								},
+							},
+						},
+					},
+				},
 			},
 			"project": {
 				Type:     schema.TypeString,

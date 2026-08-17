@@ -30,6 +30,12 @@ func TestAccColabNotebookExecution(t *testing.T) {
 		{
 			Name: "TestAccColabNotebookExecution_colabNotebookExecutionCustomEnvExample",
 		},
+		{
+			Name: "TestAccColabNotebookExecution_colabNotebookExecutionWorkbenchRuntimeVmExample",
+		},
+		{
+			Name: "TestAccColabNotebookExecution_colabNotebookExecutionWorkbenchRuntimeVmNameExample",
+		},
 	}
 
 	for _, tt := range tests {
@@ -46,10 +52,9 @@ func TestAccColabNotebookExecution(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"custom_environment_spec.shielded_instance_config",
 					"deletion_protection",
 					"depends_on",
-					"direct_notebook_source",
-					"direct_notebook_source.content",
 					"dynamic",
 					"for_each",
 					"lifecycle",
@@ -57,6 +62,7 @@ func TestAccColabNotebookExecution(t *testing.T) {
 					"notebook_execution_job_id",
 					"provider",
 					"timeouts",
+					"workbench_runtime",
 				},
 				"google_colab_notebook_execution",
 			)

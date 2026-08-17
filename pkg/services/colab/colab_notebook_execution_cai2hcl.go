@@ -143,6 +143,7 @@ func (c *ColabNotebookExecutionCai2hclConverter) convertResourceData(asset caias
 	hclData["execution_timeout"] = flattenColabNotebookExecutionExecutionTimeout(res["executionTimeout"], d, config)
 	hclData["notebook_runtime_template_resource_name"] = flattenColabNotebookExecutionNotebookRuntimeTemplateResourceName(res["notebookRuntimeTemplateResourceName"], d, config)
 	hclData["custom_environment_spec"] = flattenColabNotebookExecutionCustomEnvironmentSpec(res["customEnvironmentSpec"], d, config)
+	hclData["workbench_runtime"] = flattenColabNotebookExecutionWorkbenchRuntime(res["workbenchRuntime"], d, config)
 	hclData["gcs_output_uri"] = flattenColabNotebookExecutionGcsOutputUri(res["gcsOutputUri"], d, config)
 	hclData["execution_user"] = flattenColabNotebookExecutionExecutionUser(res["executionUser"], d, config)
 	hclData["service_account"] = flattenColabNotebookExecutionServiceAccount(res["serviceAccount"], d, config)
@@ -299,6 +300,8 @@ func flattenColabNotebookExecutionCustomEnvironmentSpec(v interface{}, d *schema
 		flattenColabNotebookExecutionCustomEnvironmentSpecPersistentDiskSpec(original["persistentDiskSpec"], d, config)
 	transformed["network_spec"] =
 		flattenColabNotebookExecutionCustomEnvironmentSpecNetworkSpec(original["networkSpec"], d, config)
+	transformed["shielded_instance_config"] =
+		flattenColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfig(original["shieldedInstanceConfig"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -429,6 +432,98 @@ func flattenColabNotebookExecutionCustomEnvironmentSpecNetworkSpecNetwork(v inte
 }
 
 func flattenColabNotebookExecutionCustomEnvironmentSpecNetworkSpecSubnetwork(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["enable_integrity_monitoring"] =
+		flattenColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableIntegrityMonitoring(original["enableIntegrityMonitoring"], d, config)
+	transformed["enable_secure_boot"] =
+		flattenColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableSecureBoot(original["enableSecureBoot"], d, config)
+	transformed["enable_vtpm"] =
+		flattenColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableVtpm(original["enableVtpm"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableIntegrityMonitoring(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableSecureBoot(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenColabNotebookExecutionCustomEnvironmentSpecShieldedInstanceConfigEnableVtpm(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenColabNotebookExecutionWorkbenchRuntime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["vm_image"] =
+		flattenColabNotebookExecutionWorkbenchRuntimeVmImage(original["vmImage"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenColabNotebookExecutionWorkbenchRuntimeVmImage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["family"] =
+		flattenColabNotebookExecutionWorkbenchRuntimeVmImageFamily(original["family"], d, config)
+	transformed["name"] =
+		flattenColabNotebookExecutionWorkbenchRuntimeVmImageName(original["name"], d, config)
+	transformed["project"] =
+		flattenColabNotebookExecutionWorkbenchRuntimeVmImageProject(original["project"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenColabNotebookExecutionWorkbenchRuntimeVmImageFamily(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenColabNotebookExecutionWorkbenchRuntimeVmImageName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenColabNotebookExecutionWorkbenchRuntimeVmImageProject(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}
