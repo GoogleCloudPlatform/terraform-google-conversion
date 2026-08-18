@@ -20,7 +20,6 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/blockchainnodeengine"
@@ -105,9 +104,6 @@ var ConverterMap = map[string]cai.Tfplan2caiConverter{
 	"google_artifact_registry_repository":                    artifactregistry.ArtifactRegistryRepositoryTfplan2caiConverter(),
 	"google_backup_dr_backup_plan":                           backupdr.BackupDRBackupPlanTfplan2caiConverter(),
 	"google_backup_dr_backup_vault":                          backupdr.BackupDRBackupVaultTfplan2caiConverter(),
-	"google_beyondcorp_app_connection":                       beyondcorp.BeyondcorpAppConnectionTfplan2caiConverter(),
-	"google_beyondcorp_app_connector":                        beyondcorp.BeyondcorpAppConnectorTfplan2caiConverter(),
-	"google_beyondcorp_app_gateway":                          beyondcorp.BeyondcorpAppGatewayTfplan2caiConverter(),
 	"google_bigquery_dataset":                                bigquery.BigQueryDatasetTfplan2caiConverter(),
 	"google_binary_authorization_attestor":                   binaryauthorization.BinaryAuthorizationAttestorTfplan2caiConverter(),
 	"google_blockchain_node_engine_blockchain_nodes":         blockchainnodeengine.BlockchainNodeEngineBlockchainNodesTfplan2caiConverter(),
