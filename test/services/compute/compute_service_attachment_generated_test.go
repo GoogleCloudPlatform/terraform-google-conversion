@@ -61,6 +61,9 @@ func TestAccComputeServiceAttachment(t *testing.T) {
 			Name: "TestAccComputeServiceAttachment_consumerAcceptListsPermadiff",
 		},
 		{
+			Name: "TestAccComputeServiceAttachment_serviceAttachmentMultipleSubnets",
+		},
+		{
 			Name: "TestAccComputeServiceAttachment_tunnelingConfigUpdate",
 		},
 	}

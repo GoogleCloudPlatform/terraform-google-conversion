@@ -241,6 +241,7 @@ func expandComputeServiceAttachmentTargetService(v interface{}, d tpgresource.Te
 }
 
 func expandComputeServiceAttachmentNatSubnets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	l := v.([]interface{})
 	req := make([]interface{}, 0, len(l))
 	for _, raw := range l {
@@ -266,6 +267,7 @@ func expandComputeServiceAttachmentDomainNames(v interface{}, d tpgresource.Terr
 }
 
 func expandComputeServiceAttachmentConsumerRejectLists(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
