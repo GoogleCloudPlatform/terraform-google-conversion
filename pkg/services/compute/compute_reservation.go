@@ -368,11 +368,6 @@ reservations that are tied to a commitment.`,
 					Type: schema.TypeString,
 				},
 			},
-			"reservation_block_count": {
-				Type:        schema.TypeInt,
-				Computed:    true,
-				Description: `The number of reservation blocks associated with this reservation.`,
-			},
 			"resource_status": {
 				Type:        schema.TypeList,
 				Computed:    true,
