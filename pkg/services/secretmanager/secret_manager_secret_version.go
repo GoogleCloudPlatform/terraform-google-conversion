@@ -77,27 +77,12 @@ const SecretManagerSecretVersionSchemaName string = "google_secret_manager_secre
 func ResourceSecretManagerSecretVersion() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-			"secret_data_wo_version": {
-				Type:        schema.TypeInt,
-				Optional:    true,
-				ForceNew:    true,
-				Description: `Triggers update of secret data write-only. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)`,
-				Default:     0,
-			},
 			"secret_data": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				ForceNew:     true,
-				Description:  `The secret data. Must be no larger than 64KiB.`,
-				Sensitive:    true,
-				ExactlyOneOf: []string{"secret_data", "secret_data_wo"},
-			},
-			"secret_data_wo": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				Description:  `The secret data. Must be no larger than 64KiB. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)`,
-				WriteOnly:    true,
-				ExactlyOneOf: []string{"secret_data", "secret_data_wo"},
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
+				Description: `The secret data. Must be no larger than 64KiB.`,
+				Sensitive:   true,
 			},
 
 			"secret": {

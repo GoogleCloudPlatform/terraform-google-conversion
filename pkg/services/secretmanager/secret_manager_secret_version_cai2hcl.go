@@ -172,15 +172,13 @@ func flattenSecretManagerSecretVersionEnabled(v interface{}, d *schema.ResourceD
 }
 
 func flattenSecretManagerSecretVersionPayload(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
+	original := make(map[string]interface{}, 0)
+	if v != nil {
+		original = v.(map[string]interface{})
 	}
-	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
 	transformed["secret_data"] =
 		flattenSecretManagerSecretVersionPayloadSecretData(original["data"], d, config)
-	transformed["secret_data_wo_version"] =
-		flattenSecretManagerSecretVersionPayloadSecretDataWoVersion(original["SecretDataWoVersion"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -189,29 +187,13 @@ func flattenSecretManagerSecretVersionPayload(v interface{}, d *schema.ResourceD
 
 func flattenSecretManagerSecretVersionPayloadSecretData(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		return nil
+		return "unknown"
 	}
-	if strVal, ok := v.(string); ok && strVal == "" {
-		return nil
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
 	}
 	return v
-}
-
-func flattenSecretManagerSecretVersionPayloadSecretDataWoVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	// Handles the string fixed64 format
-	if strVal, ok := v.(string); ok {
-		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
-			return intVal
-		}
-	}
-
-	// number values are represented as float64
-	if floatVal, ok := v.(float64); ok {
-		intVal := int(floatVal)
-		return intVal
-	}
-
-	return v // let terraform core handle it otherwise
 }
 
 func resourceSecretManagerSecretVersionDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {

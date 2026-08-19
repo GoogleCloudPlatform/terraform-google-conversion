@@ -79,8 +79,6 @@ func TestAccMonitoringUptimeCheckConfig(t *testing.T) {
 					"dynamic",
 					"for_each",
 					"http_check.auth_info.password",
-					"http_check.auth_info.password_wo",
-					"http_check.auth_info.password_wo_version",
 					"http_check.body",
 					"lifecycle",
 					"provider",
