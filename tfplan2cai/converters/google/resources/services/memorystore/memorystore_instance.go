@@ -142,6 +142,12 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("authorization_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(authorizationModeProp)) && (ok || !reflect.DeepEqual(v, authorizationModeProp)) {
 		obj["authorizationMode"] = authorizationModeProp
 	}
+	aclPolicyProp, err := expandMemorystoreInstanceAclPolicy(d.Get("acl_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("acl_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(aclPolicyProp)) && (ok || !reflect.DeepEqual(v, aclPolicyProp)) {
+		obj["aclPolicy"] = aclPolicyProp
+	}
 	transitEncryptionModeProp, err := expandMemorystoreInstanceTransitEncryptionMode(d.Get("transit_encryption_mode"), d, config)
 	if err != nil {
 		return nil, err
@@ -415,6 +421,10 @@ func expandMemorystoreInstanceReplicaCount(v interface{}, d tpgresource.Terrafor
 }
 
 func expandMemorystoreInstanceAuthorizationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceAclPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
