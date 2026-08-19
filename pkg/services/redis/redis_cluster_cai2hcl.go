@@ -133,7 +133,7 @@ func (c *RedisClusterCai2hclConverter) convertResourceData(asset caiasset.Asset,
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"available_maintenance_versions": struct{}{}, "backup_collection": struct{}{}, "create_time": struct{}{}, "discovery_endpoints": struct{}{}, "effective_labels": struct{}{}, "effective_maintenance_version": struct{}{}, "maintenance_schedule": struct{}{}, "managed_server_ca": struct{}{}, "precise_size_gb": struct{}{}, "psc_connections": struct{}{}, "psc_service_attachments": struct{}{}, "size_gb": struct{}{}, "state": struct{}{}, "state_info": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}}
+	outputFields := map[string]struct{}{"available_maintenance_versions": struct{}{}, "backup_collection": struct{}{}, "create_time": struct{}{}, "discovery_endpoints": struct{}{}, "effective_labels": struct{}{}, "effective_maintenance_version": struct{}{}, "is_acl_policy_in_sync": struct{}{}, "maintenance_schedule": struct{}{}, "managed_server_ca": struct{}{}, "precise_size_gb": struct{}{}, "psc_connections": struct{}{}, "psc_service_attachments": struct{}{}, "size_gb": struct{}{}, "state": struct{}{}, "state_info": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//redis.googleapis.com/projects/{{project}}/locations/{{region}}/clusters/{{name}}", outputFields, hclData)
 
 	hclData["labels"] = flattenRedisClusterLabels(res["labels"], d, config)
@@ -141,6 +141,7 @@ func (c *RedisClusterCai2hclConverter) convertResourceData(asset caiasset.Asset,
 	hclData["managed_backup_source"] = flattenRedisClusterManagedBackupSource(res["managedBackupSource"], d, config)
 	hclData["automated_backup_config"] = flattenRedisClusterAutomatedBackupConfig(res["automatedBackupConfig"], d, config)
 	hclData["authorization_mode"] = flattenRedisClusterAuthorizationMode(res["authorizationMode"], d, config)
+	hclData["acl_policy"] = flattenRedisClusterAclPolicy(res["aclPolicy"], d, config)
 	hclData["transit_encryption_mode"] = flattenRedisClusterTransitEncryptionMode(res["transitEncryptionMode"], d, config)
 	hclData["node_type"] = flattenRedisClusterNodeType(res["nodeType"], d, config)
 	hclData["zone_distribution_config"] = flattenRedisClusterZoneDistributionConfig(res["zoneDistributionConfig"], d, config)
@@ -284,6 +285,16 @@ func flattenRedisClusterAutomatedBackupConfigRetention(v interface{}, d *schema.
 }
 
 func flattenRedisClusterAuthorizationMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenRedisClusterAclPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 

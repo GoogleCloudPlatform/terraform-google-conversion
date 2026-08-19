@@ -90,6 +90,11 @@ projects/{projectId}/locations/{locationId}/clusters/{clusterId}`,
 				Required:    true,
 				Description: `Required. Number of shards for the Redis cluster.`,
 			},
+			"acl_policy": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: `Optional. The name of the ACL policy to attach to the cluster.`,
+			},
 			"authorization_mode": {
 				Type:         schema.TypeString,
 				Optional:     true,
@@ -576,6 +581,11 @@ projects/{network_project_id}/global/networks/{network_id}.`,
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: `This field represents the actual maintenance version of the cluster.`,
+			},
+			"is_acl_policy_in_sync": {
+				Type:        schema.TypeBool,
+				Computed:    true,
+				Description: `Optional. Whether the ACL policy is in sync with the cluster.`,
 			},
 			"maintenance_schedule": {
 				Type:        schema.TypeList,
