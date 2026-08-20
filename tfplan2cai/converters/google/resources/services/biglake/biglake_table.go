@@ -214,6 +214,13 @@ func expandBiglakeTableHiveOptionsStorageDescriptor(v interface{}, d tpgresource
 		transformed["outputFormat"] = transformedOutputFormat
 	}
 
+	transformedSerdeInfo, err := expandBiglakeTableHiveOptionsStorageDescriptorSerdeInfo(original["serde_info"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSerdeInfo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serdeInfo"] = transformedSerdeInfo
+	}
+
 	return transformed, nil
 }
 
@@ -226,5 +233,31 @@ func expandBiglakeTableHiveOptionsStorageDescriptorInputFormat(v interface{}, d 
 }
 
 func expandBiglakeTableHiveOptionsStorageDescriptorOutputFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBiglakeTableHiveOptionsStorageDescriptorSerdeInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSerializationLib, err := expandBiglakeTableHiveOptionsStorageDescriptorSerdeInfoSerializationLib(original["serialization_lib"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSerializationLib); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serializationLib"] = transformedSerializationLib
+	}
+
+	return transformed, nil
+}
+
+func expandBiglakeTableHiveOptionsStorageDescriptorSerdeInfoSerializationLib(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

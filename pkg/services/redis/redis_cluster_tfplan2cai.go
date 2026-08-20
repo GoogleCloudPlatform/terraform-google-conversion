@@ -139,6 +139,12 @@ func GetRedisClusterCaiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("authorization_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(authorizationModeProp)) && (ok || !reflect.DeepEqual(v, authorizationModeProp)) {
 		obj["authorizationMode"] = authorizationModeProp
 	}
+	aclPolicyProp, err := expandRedisClusterAclPolicy(d.Get("acl_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("acl_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(aclPolicyProp)) && (ok || !reflect.DeepEqual(v, aclPolicyProp)) {
+		obj["aclPolicy"] = aclPolicyProp
+	}
 	transitEncryptionModeProp, err := expandRedisClusterTransitEncryptionMode(d.Get("transit_encryption_mode"), d, config)
 	if err != nil {
 		return nil, err
@@ -391,6 +397,10 @@ func expandRedisClusterAutomatedBackupConfigRetention(v interface{}, d tpgresour
 }
 
 func expandRedisClusterAuthorizationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterAclPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
