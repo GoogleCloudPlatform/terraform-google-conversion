@@ -256,6 +256,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withHostMaintenancePolicy",
 		},
 		{
+			Name: "TestAccContainerNodePool_withOpportunisticMaintenance",
+		},
+		{
 			Name: "TestAccContainerNodePool_withConfidentialBootDisk",
 		},
 		{

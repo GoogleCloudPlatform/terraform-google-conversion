@@ -93,6 +93,9 @@ func TestAccRedisCluster(t *testing.T) {
 		{
 			Name: "TestAccRedisCluster_customerManagedCas",
 		},
+		{
+			Name: "TestAccRedisCluster_withAclPolicy",
+		},
 	}
 
 	for _, tt := range tests {
