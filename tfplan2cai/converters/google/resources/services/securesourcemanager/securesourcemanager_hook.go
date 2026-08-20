@@ -137,7 +137,7 @@ func GetSecureSourceManagerHookApiObject(d tpgresource.TerraformResourceData, co
 	pushOptionProp, err := expandSecureSourceManagerHookPushOption(d.Get("push_option"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("push_option"); ok || !reflect.DeepEqual(v, pushOptionProp) {
+	} else if v, ok := d.GetOkExists("push_option"); ok || (v != nil && !reflect.DeepEqual(v, pushOptionProp)) {
 		obj["pushOption"] = pushOptionProp
 	}
 

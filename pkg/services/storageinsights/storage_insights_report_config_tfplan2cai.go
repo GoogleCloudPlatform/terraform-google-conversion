@@ -124,7 +124,7 @@ func GetStorageInsightsReportConfigCaiObject(d tpgresource.TerraformResourceData
 	parquetOptionsProp, err := expandStorageInsightsReportConfigParquetOptions(d.Get("parquet_options"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("parquet_options"); ok || !reflect.DeepEqual(v, parquetOptionsProp) {
+	} else if v, ok := d.GetOkExists("parquet_options"); ok || (v != nil && !reflect.DeepEqual(v, parquetOptionsProp)) {
 		obj["parquetOptions"] = parquetOptionsProp
 	}
 	csvOptionsProp, err := expandStorageInsightsReportConfigCsvOptions(d.Get("csv_options"), d, config)

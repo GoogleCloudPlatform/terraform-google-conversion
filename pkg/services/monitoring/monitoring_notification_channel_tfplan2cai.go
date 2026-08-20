@@ -154,7 +154,7 @@ func GetMonitoringNotificationChannelCaiObject(d tpgresource.TerraformResourceDa
 	enabledProp, err := expandMonitoringNotificationChannelEnabled(d.Get("enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enabled"); ok || !reflect.DeepEqual(v, enabledProp) {
+	} else if v, ok := d.GetOkExists("enabled"); ok || (v != nil && !reflect.DeepEqual(v, enabledProp)) {
 		obj["enabled"] = enabledProp
 	}
 

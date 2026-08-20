@@ -133,7 +133,7 @@ func GetMemorystoreInstanceApiObject(d tpgresource.TerraformResourceData, config
 	replicaCountProp, err := expandMemorystoreInstanceReplicaCount(d.Get("replica_count"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("replica_count"); ok || !reflect.DeepEqual(v, replicaCountProp) {
+	} else if v, ok := d.GetOkExists("replica_count"); ok || (v != nil && !reflect.DeepEqual(v, replicaCountProp)) {
 		obj["replicaCount"] = replicaCountProp
 	}
 	authorizationModeProp, err := expandMemorystoreInstanceAuthorizationMode(d.Get("authorization_mode"), d, config)

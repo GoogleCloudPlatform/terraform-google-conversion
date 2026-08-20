@@ -172,7 +172,7 @@ func GetComputeTargetHttpsProxyCaiObject(d tpgresource.TerraformResourceData, co
 	proxyBindProp, err := expandComputeTargetHttpsProxyProxyBind(d.Get("proxy_bind"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("proxy_bind"); ok || !reflect.DeepEqual(v, proxyBindProp) {
+	} else if v, ok := d.GetOkExists("proxy_bind"); ok || (v != nil && !reflect.DeepEqual(v, proxyBindProp)) {
 		obj["proxyBind"] = proxyBindProp
 	}
 	httpKeepAliveTimeoutSecProp, err := expandComputeTargetHttpsProxyHttpKeepAliveTimeoutSec(d.Get("http_keep_alive_timeout_sec"), d, config)

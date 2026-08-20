@@ -185,7 +185,7 @@ func GetCESAgentApiObject(d tpgresource.TerraformResourceData, config *transport
 	llmAgentProp, err := expandCESAgentLlmAgent(d.Get("llm_agent"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("llm_agent"); ok || !reflect.DeepEqual(v, llmAgentProp) {
+	} else if v, ok := d.GetOkExists("llm_agent"); ok || (v != nil && !reflect.DeepEqual(v, llmAgentProp)) {
 		obj["llmAgent"] = llmAgentProp
 	}
 	remoteDialogflowAgentProp, err := expandCESAgentRemoteDialogflowAgent(d.Get("remote_dialogflow_agent"), d, config)

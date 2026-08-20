@@ -113,7 +113,7 @@ func GetVmwareengineSubnetApiObject(d tpgresource.TerraformResourceData, config 
 	ipCidrRangeProp, err := expandVmwareengineSubnetIpCidrRange(d.Get("ip_cidr_range"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("ip_cidr_range"); ok || !reflect.DeepEqual(v, ipCidrRangeProp) {
+	} else if v, ok := d.GetOkExists("ip_cidr_range"); ok || (v != nil && !reflect.DeepEqual(v, ipCidrRangeProp)) {
 		obj["ipCidrRange"] = ipCidrRangeProp
 	}
 

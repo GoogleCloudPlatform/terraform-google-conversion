@@ -137,7 +137,7 @@ func GetNetappBackupPolicyApiObject(d tpgresource.TerraformResourceData, config 
 	enabledProp, err := expandNetappBackupPolicyEnabled(d.Get("enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enabled"); ok || !reflect.DeepEqual(v, enabledProp) {
+	} else if v, ok := d.GetOkExists("enabled"); ok || (v != nil && !reflect.DeepEqual(v, enabledProp)) {
 		obj["enabled"] = enabledProp
 	}
 	effectiveLabelsProp, err := expandNetappBackupPolicyEffectiveLabels(d.Get("effective_labels"), d, config)

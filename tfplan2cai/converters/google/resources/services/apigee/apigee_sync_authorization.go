@@ -113,7 +113,7 @@ func GetApigeeSyncAuthorizationApiObject(d tpgresource.TerraformResourceData, co
 	identitiesProp, err := expandApigeeSyncAuthorizationIdentities(d.Get("identities"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("identities"); ok || !reflect.DeepEqual(v, identitiesProp) {
+	} else if v, ok := d.GetOkExists("identities"); ok || (v != nil && !reflect.DeepEqual(v, identitiesProp)) {
 		obj["identities"] = identitiesProp
 	}
 	etagProp, err := expandApigeeSyncAuthorizationEtag(d.Get("etag"), d, config)

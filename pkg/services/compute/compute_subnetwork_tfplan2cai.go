@@ -160,13 +160,13 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 	secondaryIpRangeProp, err := expandComputeSubnetworkSecondaryIpRange(d.Get("secondary_ip_range"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("secondary_ip_range"); ok || !reflect.DeepEqual(v, secondaryIpRangeProp) {
+	} else if v, ok := d.GetOkExists("secondary_ip_range"); ok || (v != nil && !reflect.DeepEqual(v, secondaryIpRangeProp)) {
 		obj["secondaryIpRanges"] = secondaryIpRangeProp
 	}
 	privateIpGoogleAccessProp, err := expandComputeSubnetworkPrivateIpGoogleAccess(d.Get("private_ip_google_access"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("private_ip_google_access"); ok || !reflect.DeepEqual(v, privateIpGoogleAccessProp) {
+	} else if v, ok := d.GetOkExists("private_ip_google_access"); ok || (v != nil && !reflect.DeepEqual(v, privateIpGoogleAccessProp)) {
 		obj["privateIpGoogleAccess"] = privateIpGoogleAccessProp
 	}
 	privateIpv6GoogleAccessProp, err := expandComputeSubnetworkPrivateIpv6GoogleAccess(d.Get("private_ipv6_google_access"), d, config)
@@ -184,7 +184,7 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 	logConfigProp, err := expandComputeSubnetworkLogConfig(d.Get("log_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("log_config"); ok || !reflect.DeepEqual(v, logConfigProp) {
+	} else if v, ok := d.GetOkExists("log_config"); ok || (v != nil && !reflect.DeepEqual(v, logConfigProp)) {
 		obj["logConfig"] = logConfigProp
 	}
 	stackTypeProp, err := expandComputeSubnetworkStackType(d.Get("stack_type"), d, config)
@@ -220,7 +220,7 @@ func GetComputeSubnetworkCaiObject(d tpgresource.TerraformResourceData, config *
 	allowSubnetCidrRoutesOverlapProp, err := expandComputeSubnetworkAllowSubnetCidrRoutesOverlap(d.Get("allow_subnet_cidr_routes_overlap"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("allow_subnet_cidr_routes_overlap"); ok || !reflect.DeepEqual(v, allowSubnetCidrRoutesOverlapProp) {
+	} else if v, ok := d.GetOkExists("allow_subnet_cidr_routes_overlap"); ok || (v != nil && !reflect.DeepEqual(v, allowSubnetCidrRoutesOverlapProp)) {
 		obj["allowSubnetCidrRoutesOverlap"] = allowSubnetCidrRoutesOverlapProp
 	}
 	paramsProp, err := expandComputeSubnetworkParams(d.Get("params"), d, config)

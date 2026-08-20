@@ -113,7 +113,7 @@ func GetModelArmorTemplateApiObject(d tpgresource.TerraformResourceData, config 
 	filterConfigProp, err := expandModelArmorTemplateFilterConfig(d.Get("filter_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("filter_config"); ok || !reflect.DeepEqual(v, filterConfigProp) {
+	} else if v, ok := d.GetOkExists("filter_config"); ok || (v != nil && !reflect.DeepEqual(v, filterConfigProp)) {
 		obj["filterConfig"] = filterConfigProp
 	}
 	templateMetadataProp, err := expandModelArmorTemplateTemplateMetadata(d.Get("template_metadata"), d, config)

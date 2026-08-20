@@ -9,7 +9,6 @@ import (
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
-	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/binaryauthorization"
 	_ "github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/blockchainnodeengine"

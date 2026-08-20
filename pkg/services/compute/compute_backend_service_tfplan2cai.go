@@ -118,7 +118,7 @@ func GetComputeBackendServiceCaiObject(d tpgresource.TerraformResourceData, conf
 	affinityCookieTtlSecProp, err := expandComputeBackendServiceAffinityCookieTtlSec(d.Get("affinity_cookie_ttl_sec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("affinity_cookie_ttl_sec"); ok || !reflect.DeepEqual(v, affinityCookieTtlSecProp) {
+	} else if v, ok := d.GetOkExists("affinity_cookie_ttl_sec"); ok || (v != nil && !reflect.DeepEqual(v, affinityCookieTtlSecProp)) {
 		obj["affinityCookieTtlSec"] = affinityCookieTtlSecProp
 	}
 	backendProp, err := expandComputeBackendServiceBackend(d.Get("backend"), d, config)
@@ -184,7 +184,7 @@ func GetComputeBackendServiceCaiObject(d tpgresource.TerraformResourceData, conf
 	enableCDNProp, err := expandComputeBackendServiceEnableCDN(d.Get("enable_cdn"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_cdn"); ok || !reflect.DeepEqual(v, enableCDNProp) {
+	} else if v, ok := d.GetOkExists("enable_cdn"); ok || (v != nil && !reflect.DeepEqual(v, enableCDNProp)) {
 		obj["enableCDN"] = enableCDNProp
 	}
 	healthChecksProp, err := expandComputeBackendServiceHealthChecks(d.Get("health_checks"), d, config)
@@ -196,7 +196,7 @@ func GetComputeBackendServiceCaiObject(d tpgresource.TerraformResourceData, conf
 	iapProp, err := expandComputeBackendServiceIap(d.Get("iap"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("iap"); ok || !reflect.DeepEqual(v, iapProp) {
+	} else if v, ok := d.GetOkExists("iap"); ok || (v != nil && !reflect.DeepEqual(v, iapProp)) {
 		obj["iap"] = iapProp
 	}
 	ipAddressSelectionPolicyProp, err := expandComputeBackendServiceIpAddressSelectionPolicy(d.Get("ip_address_selection_policy"), d, config)

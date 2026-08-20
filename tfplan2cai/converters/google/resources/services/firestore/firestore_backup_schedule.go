@@ -119,7 +119,7 @@ func GetFirestoreBackupScheduleApiObject(d tpgresource.TerraformResourceData, co
 	dailyRecurrenceProp, err := expandFirestoreBackupScheduleDailyRecurrence(d.Get("daily_recurrence"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("daily_recurrence"); ok || !reflect.DeepEqual(v, dailyRecurrenceProp) {
+	} else if v, ok := d.GetOkExists("daily_recurrence"); ok || (v != nil && !reflect.DeepEqual(v, dailyRecurrenceProp)) {
 		obj["dailyRecurrence"] = dailyRecurrenceProp
 	}
 	weeklyRecurrenceProp, err := expandFirestoreBackupScheduleWeeklyRecurrence(d.Get("weekly_recurrence"), d, config)

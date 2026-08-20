@@ -125,7 +125,7 @@ func GetApigeeSecurityMonitoringConditionApiObject(d tpgresource.TerraformResour
 	includeAllResourcesProp, err := expandApigeeSecurityMonitoringConditionIncludeAllResources(d.Get("include_all_resources"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("include_all_resources"); ok || !reflect.DeepEqual(v, includeAllResourcesProp) {
+	} else if v, ok := d.GetOkExists("include_all_resources"); ok || (v != nil && !reflect.DeepEqual(v, includeAllResourcesProp)) {
 		obj["includeAllResources"] = includeAllResourcesProp
 	}
 

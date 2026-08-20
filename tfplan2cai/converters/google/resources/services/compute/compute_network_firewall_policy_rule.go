@@ -171,25 +171,25 @@ func GetComputeNetworkFirewallPolicyRuleApiObject(d tpgresource.TerraformResourc
 	enableLoggingProp, err := expandComputeNetworkFirewallPolicyRuleEnableLogging(d.Get("enable_logging"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_logging"); ok || !reflect.DeepEqual(v, enableLoggingProp) {
+	} else if v, ok := d.GetOkExists("enable_logging"); ok || (v != nil && !reflect.DeepEqual(v, enableLoggingProp)) {
 		obj["enableLogging"] = enableLoggingProp
 	}
 	targetServiceAccountsProp, err := expandComputeNetworkFirewallPolicyRuleTargetServiceAccounts(d.Get("target_service_accounts"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("target_service_accounts"); ok || !reflect.DeepEqual(v, targetServiceAccountsProp) {
+	} else if v, ok := d.GetOkExists("target_service_accounts"); ok || (v != nil && !reflect.DeepEqual(v, targetServiceAccountsProp)) {
 		obj["targetServiceAccounts"] = targetServiceAccountsProp
 	}
 	targetSecureTagsProp, err := expandComputeNetworkFirewallPolicyRuleTargetSecureTags(d.Get("target_secure_tags"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("target_secure_tags"); ok || !reflect.DeepEqual(v, targetSecureTagsProp) {
+	} else if v, ok := d.GetOkExists("target_secure_tags"); ok || (v != nil && !reflect.DeepEqual(v, targetSecureTagsProp)) {
 		obj["targetSecureTags"] = targetSecureTagsProp
 	}
 	disabledProp, err := expandComputeNetworkFirewallPolicyRuleDisabled(d.Get("disabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("disabled"); ok || !reflect.DeepEqual(v, disabledProp) {
+	} else if v, ok := d.GetOkExists("disabled"); ok || (v != nil && !reflect.DeepEqual(v, disabledProp)) {
 		obj["disabled"] = disabledProp
 	}
 	targetTypeProp, err := expandComputeNetworkFirewallPolicyRuleTargetType(d.Get("target_type"), d, config)

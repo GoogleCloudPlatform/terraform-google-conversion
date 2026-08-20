@@ -148,7 +148,7 @@ func (c *ComputeReservationCai2hclConverter) convertResourceData(asset caiasset.
 		return nil, nil
 	}
 
-	outputFields := map[string]struct{}{"commitment": struct{}{}, "creation_timestamp": struct{}{}, "id": struct{}{}, "kind": struct{}{}, "linked_commitments": struct{}{}, "reservation_block_count": struct{}{}, "resource_status": struct{}{}, "satisfies_pzs": struct{}{}, "status": struct{}{}}
+	outputFields := map[string]struct{}{"commitment": struct{}{}, "creation_timestamp": struct{}{}, "id": struct{}{}, "kind": struct{}{}, "linked_commitments": struct{}{}, "resource_status": struct{}{}, "satisfies_pzs": struct{}{}, "status": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/zones/{{zone}}/reservations/{{name}}", outputFields, hclData)
 
 	hclData["description"] = flattenComputeReservationDescription(res["description"], d, config)

@@ -137,7 +137,7 @@ func GetComputeRouterApiObject(d tpgresource.TerraformResourceData, config *tran
 	descriptionProp, err := expandComputeRouterDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); ok || !reflect.DeepEqual(v, descriptionProp) {
+	} else if v, ok := d.GetOkExists("description"); ok || (v != nil && !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	networkProp, err := expandComputeRouterNetwork(d.Get("network"), d, config)
@@ -149,7 +149,7 @@ func GetComputeRouterApiObject(d tpgresource.TerraformResourceData, config *tran
 	bgpProp, err := expandComputeRouterBgp(d.Get("bgp"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("bgp"); ok || !reflect.DeepEqual(v, bgpProp) {
+	} else if v, ok := d.GetOkExists("bgp"); ok || (v != nil && !reflect.DeepEqual(v, bgpProp)) {
 		obj["bgp"] = bgpProp
 	}
 	encryptedInterconnectRouterProp, err := expandComputeRouterEncryptedInterconnectRouter(d.Get("encrypted_interconnect_router"), d, config)

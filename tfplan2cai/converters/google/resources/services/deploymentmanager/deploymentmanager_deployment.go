@@ -150,7 +150,7 @@ func GetDeploymentManagerDeploymentApiObject(d tpgresource.TerraformResourceData
 	labelsProp, err := expandDeploymentManagerDeploymentLabels(d.Get("labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("labels"); ok || !reflect.DeepEqual(v, labelsProp) {
+	} else if v, ok := d.GetOkExists("labels"); ok || (v != nil && !reflect.DeepEqual(v, labelsProp)) {
 		obj["labels"] = labelsProp
 	}
 	targetProp, err := expandDeploymentManagerDeploymentTarget(d.Get("target"), d, config)

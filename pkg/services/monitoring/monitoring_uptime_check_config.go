@@ -185,32 +185,16 @@ func ResourceMonitoringUptimeCheckConfig() *schema.Resource {
 							MaxItems:    1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"password": {
+										Type:        schema.TypeString,
+										Required:    true,
+										Description: `The password to authenticate.`,
+										Sensitive:   true,
+									},
 									"username": {
 										Type:        schema.TypeString,
 										Required:    true,
 										Description: `The username to authenticate.`,
-									},
-									"password": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										Description:  `The password to authenticate.`,
-										Sensitive:    true,
-										ExactlyOneOf: []string{},
-									},
-									"password_wo": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										Description:  `The password to authenticate.`,
-										WriteOnly:    true,
-										ExactlyOneOf: []string{},
-										RequiredWith: []string{"http_check.0.auth_info.0.password_wo_version"},
-									},
-									"password_wo_version": {
-										Type:         schema.TypeString,
-										Optional:     true,
-										ForceNew:     true,
-										Description:  `The password write-only version.`,
-										RequiredWith: []string{"http_check.0.auth_info.0.password_wo"},
 									},
 								},
 							},

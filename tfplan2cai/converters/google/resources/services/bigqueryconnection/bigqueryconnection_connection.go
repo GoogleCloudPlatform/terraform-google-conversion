@@ -161,13 +161,13 @@ func GetBigqueryConnectionConnectionApiObject(d tpgresource.TerraformResourceDat
 	cloudResourceProp, err := expandBigqueryConnectionConnectionCloudResource(d.Get("cloud_resource"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("cloud_resource"); ok || !reflect.DeepEqual(v, cloudResourceProp) {
+	} else if v, ok := d.GetOkExists("cloud_resource"); ok || (v != nil && !reflect.DeepEqual(v, cloudResourceProp)) {
 		obj["cloudResource"] = cloudResourceProp
 	}
 	sparkProp, err := expandBigqueryConnectionConnectionSpark(d.Get("spark"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("spark"); ok || !reflect.DeepEqual(v, sparkProp) {
+	} else if v, ok := d.GetOkExists("spark"); ok || (v != nil && !reflect.DeepEqual(v, sparkProp)) {
 		obj["spark"] = sparkProp
 	}
 	configurationProp, err := expandBigqueryConnectionConnectionConfiguration(d.Get("configuration"), d, config)

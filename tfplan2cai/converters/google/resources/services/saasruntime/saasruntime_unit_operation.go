@@ -113,7 +113,7 @@ func GetSaasRuntimeUnitOperationApiObject(d tpgresource.TerraformResourceData, c
 	deprovisionProp, err := expandSaasRuntimeUnitOperationDeprovision(d.Get("deprovision"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("deprovision"); ok || !reflect.DeepEqual(v, deprovisionProp) {
+	} else if v, ok := d.GetOkExists("deprovision"); ok || (v != nil && !reflect.DeepEqual(v, deprovisionProp)) {
 		obj["deprovision"] = deprovisionProp
 	}
 	provisionProp, err := expandSaasRuntimeUnitOperationProvision(d.Get("provision"), d, config)

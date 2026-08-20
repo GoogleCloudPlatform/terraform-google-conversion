@@ -125,7 +125,7 @@ func GetFirestoreChangeStreamApiObject(d tpgresource.TerraformResourceData, conf
 	databaseScopeProp, err := expandFirestoreChangeStreamDatabaseScope(d.Get("database_scope"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("database_scope"); ok || !reflect.DeepEqual(v, databaseScopeProp) {
+	} else if v, ok := d.GetOkExists("database_scope"); ok || (v != nil && !reflect.DeepEqual(v, databaseScopeProp)) {
 		obj["databaseScope"] = databaseScopeProp
 	}
 	collectionGroupScopeProp, err := expandFirestoreChangeStreamCollectionGroupScope(d.Get("collection_group_scope"), d, config)
