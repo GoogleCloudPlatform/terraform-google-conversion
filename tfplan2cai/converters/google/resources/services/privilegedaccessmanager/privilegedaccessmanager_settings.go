@@ -119,13 +119,13 @@ func GetPrivilegedAccessManagerSettingsApiObject(d tpgresource.TerraformResource
 	serviceAccountApproverSettingsProp, err := expandPrivilegedAccessManagerSettingsServiceAccountApproverSettings(d.Get("service_account_approver_settings"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("service_account_approver_settings"); ok || !reflect.DeepEqual(v, serviceAccountApproverSettingsProp) {
+	} else if v, ok := d.GetOkExists("service_account_approver_settings"); ok || (v != nil && !reflect.DeepEqual(v, serviceAccountApproverSettingsProp)) {
 		obj["serviceAccountApproverSettings"] = serviceAccountApproverSettingsProp
 	}
 	emailNotificationSettingsProp, err := expandPrivilegedAccessManagerSettingsEmailNotificationSettings(d.Get("email_notification_settings"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("email_notification_settings"); ok || !reflect.DeepEqual(v, emailNotificationSettingsProp) {
+	} else if v, ok := d.GetOkExists("email_notification_settings"); ok || (v != nil && !reflect.DeepEqual(v, emailNotificationSettingsProp)) {
 		obj["emailNotificationSettings"] = emailNotificationSettingsProp
 	}
 

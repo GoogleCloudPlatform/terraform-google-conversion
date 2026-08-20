@@ -167,13 +167,13 @@ func GetPrivilegedAccessManagerEntitlementApiObject(d tpgresource.TerraformResou
 	requesterJustificationConfigProp, err := expandPrivilegedAccessManagerEntitlementRequesterJustificationConfig(d.Get("requester_justification_config"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("requester_justification_config"); ok || !reflect.DeepEqual(v, requesterJustificationConfigProp) {
+	} else if v, ok := d.GetOkExists("requester_justification_config"); ok || (v != nil && !reflect.DeepEqual(v, requesterJustificationConfigProp)) {
 		obj["requesterJustificationConfig"] = requesterJustificationConfigProp
 	}
 	additionalNotificationTargetsProp, err := expandPrivilegedAccessManagerEntitlementAdditionalNotificationTargets(d.Get("additional_notification_targets"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("additional_notification_targets"); ok || !reflect.DeepEqual(v, additionalNotificationTargetsProp) {
+	} else if v, ok := d.GetOkExists("additional_notification_targets"); ok || (v != nil && !reflect.DeepEqual(v, additionalNotificationTargetsProp)) {
 		obj["additionalNotificationTargets"] = additionalNotificationTargetsProp
 	}
 

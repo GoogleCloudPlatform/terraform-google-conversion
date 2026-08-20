@@ -184,7 +184,7 @@ func GetComputeRegionBackendServiceCaiObject(d tpgresource.TerraformResourceData
 	iapProp, err := expandComputeRegionBackendServiceIap(d.Get("iap"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("iap"); ok || !reflect.DeepEqual(v, iapProp) {
+	} else if v, ok := d.GetOkExists("iap"); ok || (v != nil && !reflect.DeepEqual(v, iapProp)) {
 		obj["iap"] = iapProp
 	}
 	ipAddressSelectionPolicyProp, err := expandComputeRegionBackendServiceIpAddressSelectionPolicy(d.Get("ip_address_selection_policy"), d, config)

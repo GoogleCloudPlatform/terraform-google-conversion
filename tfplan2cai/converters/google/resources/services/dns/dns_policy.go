@@ -131,13 +131,13 @@ func GetDNSPolicyApiObject(d tpgresource.TerraformResourceData, config *transpor
 	enableInboundForwardingProp, err := expandDNSPolicyEnableInboundForwarding(d.Get("enable_inbound_forwarding"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_inbound_forwarding"); ok || !reflect.DeepEqual(v, enableInboundForwardingProp) {
+	} else if v, ok := d.GetOkExists("enable_inbound_forwarding"); ok || (v != nil && !reflect.DeepEqual(v, enableInboundForwardingProp)) {
 		obj["enableInboundForwarding"] = enableInboundForwardingProp
 	}
 	enableLoggingProp, err := expandDNSPolicyEnableLogging(d.Get("enable_logging"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_logging"); ok || !reflect.DeepEqual(v, enableLoggingProp) {
+	} else if v, ok := d.GetOkExists("enable_logging"); ok || (v != nil && !reflect.DeepEqual(v, enableLoggingProp)) {
 		obj["enableLogging"] = enableLoggingProp
 	}
 	nameProp, err := expandDNSPolicyName(d.Get("name"), d, config)

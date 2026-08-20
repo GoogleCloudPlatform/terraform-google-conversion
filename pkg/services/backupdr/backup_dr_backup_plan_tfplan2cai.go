@@ -118,7 +118,7 @@ func GetBackupDRBackupPlanCaiObject(d tpgresource.TerraformResourceData, config 
 	descriptionProp, err := expandBackupDRBackupPlanDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("description"); ok || !reflect.DeepEqual(v, descriptionProp) {
+	} else if v, ok := d.GetOkExists("description"); ok || (v != nil && !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
 	backupVaultProp, err := expandBackupDRBackupPlanBackupVault(d.Get("backup_vault"), d, config)

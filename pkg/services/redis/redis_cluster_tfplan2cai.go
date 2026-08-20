@@ -172,7 +172,7 @@ func GetRedisClusterCaiObject(d tpgresource.TerraformResourceData, config *trans
 	replicaCountProp, err := expandRedisClusterReplicaCount(d.Get("replica_count"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("replica_count"); ok || !reflect.DeepEqual(v, replicaCountProp) {
+	} else if v, ok := d.GetOkExists("replica_count"); ok || (v != nil && !reflect.DeepEqual(v, replicaCountProp)) {
 		obj["replicaCount"] = replicaCountProp
 	}
 	shardCountProp, err := expandRedisClusterShardCount(d.Get("shard_count"), d, config)

@@ -166,7 +166,7 @@ func GetComputeRegionNetworkEndpointGroupCaiObject(d tpgresource.TerraformResour
 	appEngineProp, err := expandComputeRegionNetworkEndpointGroupAppEngine(d.Get("app_engine"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("app_engine"); ok || !reflect.DeepEqual(v, appEngineProp) {
+	} else if v, ok := d.GetOkExists("app_engine"); ok || (v != nil && !reflect.DeepEqual(v, appEngineProp)) {
 		obj["appEngine"] = appEngineProp
 	}
 	cloudFunctionProp, err := expandComputeRegionNetworkEndpointGroupCloudFunction(d.Get("cloud_function"), d, config)

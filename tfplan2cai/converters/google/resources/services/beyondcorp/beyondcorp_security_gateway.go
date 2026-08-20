@@ -144,13 +144,13 @@ func GetBeyondcorpSecurityGatewayApiObject(d tpgresource.TerraformResourceData, 
 	serviceDiscoveryProp, err := expandBeyondcorpSecurityGatewayServiceDiscovery(d.Get("service_discovery"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("service_discovery"); ok || !reflect.DeepEqual(v, serviceDiscoveryProp) {
+	} else if v, ok := d.GetOkExists("service_discovery"); ok || (v != nil && !reflect.DeepEqual(v, serviceDiscoveryProp)) {
 		obj["serviceDiscovery"] = serviceDiscoveryProp
 	}
 	loggingProp, err := expandBeyondcorpSecurityGatewayLogging(d.Get("logging"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("logging"); ok || !reflect.DeepEqual(v, loggingProp) {
+	} else if v, ok := d.GetOkExists("logging"); ok || (v != nil && !reflect.DeepEqual(v, loggingProp)) {
 		obj["logging"] = loggingProp
 	}
 

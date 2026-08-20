@@ -197,7 +197,7 @@ func GetNetappStoragePoolApiObject(d tpgresource.TerraformResourceData, config *
 	enableHotTierAutoResizeProp, err := expandNetappStoragePoolEnableHotTierAutoResize(d.Get("enable_hot_tier_auto_resize"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("enable_hot_tier_auto_resize"); ok || !reflect.DeepEqual(v, enableHotTierAutoResizeProp) {
+	} else if v, ok := d.GetOkExists("enable_hot_tier_auto_resize"); ok || (v != nil && !reflect.DeepEqual(v, enableHotTierAutoResizeProp)) {
 		obj["enableHotTierAutoResize"] = enableHotTierAutoResizeProp
 	}
 	qosTypeProp, err := expandNetappStoragePoolQosType(d.Get("qos_type"), d, config)
@@ -211,12 +211,6 @@ func GetNetappStoragePoolApiObject(d tpgresource.TerraformResourceData, config *
 		return nil, err
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
-	}
-	scaleTierProp, err := expandNetappStoragePoolScaleTier(d.Get("scale_tier"), d, config)
-	if err != nil {
-		return nil, err
-	} else if v, ok := d.GetOkExists("scale_tier"); !tpgresource.IsEmptyValue(reflect.ValueOf(scaleTierProp)) && (ok || !reflect.DeepEqual(v, scaleTierProp)) {
-		obj["scaleTier"] = scaleTierProp
 	}
 	scaleTypeProp, err := expandNetappStoragePoolScaleType(d.Get("scale_type"), d, config)
 	if err != nil {
@@ -305,10 +299,6 @@ func expandNetappStoragePoolQosType(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandNetappStoragePoolType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
-}
-
-func expandNetappStoragePoolScaleTier(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

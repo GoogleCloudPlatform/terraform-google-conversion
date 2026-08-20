@@ -81,26 +81,6 @@ func validateDefaultTableExpirationMs(v interface{}, k string) (ws []string, err
 	return
 }
 
-func customCollationDiff(_ context.Context, d *schema.ResourceDiff, meta interface{}) error {
-	// 1. Check if the configuration is explicitly set to an empty string.
-	// We use GetRawConfig to see what the user actually wrote,
-	// before the SDK "fills in" computed values.
-	conf := d.GetRawConfig()
-	if !conf.IsNull() && conf.GetAttr("default_collation").IsKnown() && !conf.GetAttr("default_collation").IsNull() {
-		val := conf.GetAttr("default_collation").AsString()
-
-		// 2. If config is "", but the state (old value) is NOT "", force an update.
-		old, _ := d.GetChange("default_collation")
-		if old != "" && val == "" {
-			// THIS is what goes inside the block:
-			if err := d.SetNew("default_collation", ""); err != nil {
-				return err
-			}
-		}
-	}
-	return nil
-}
-
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -207,7 +187,7 @@ func GetBigQueryDatasetApiObject(d tpgresource.TerraformResourceData, config *tr
 	friendlyNameProp, err := expandBigQueryDatasetFriendlyName(d.Get("friendly_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("friendly_name"); ok || !reflect.DeepEqual(v, friendlyNameProp) {
+	} else if v, ok := d.GetOkExists("friendly_name"); ok || (v != nil && !reflect.DeepEqual(v, friendlyNameProp)) {
 		obj["friendlyName"] = friendlyNameProp
 	}
 	locationProp, err := expandBigQueryDatasetLocation(d.Get("location"), d, config)
@@ -231,7 +211,7 @@ func GetBigQueryDatasetApiObject(d tpgresource.TerraformResourceData, config *tr
 	defaultCollationProp, err := expandBigQueryDatasetDefaultCollation(d.Get("default_collation"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("default_collation"); ok || !reflect.DeepEqual(v, defaultCollationProp) {
+	} else if v, ok := d.GetOkExists("default_collation"); ok || (v != nil && !reflect.DeepEqual(v, defaultCollationProp)) {
 		obj["defaultCollation"] = defaultCollationProp
 	}
 	storageBillingModelProp, err := expandBigQueryDatasetStorageBillingModel(d.Get("storage_billing_model"), d, config)

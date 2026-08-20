@@ -2344,13 +2344,6 @@ func expandDataLossPreventionJobTriggerInspectJobActions(v interface{}, d tpgres
 			transformed["publishFindingsToDataplexCatalog"] = transformedPublishFindingsToDataplexCatalog
 		}
 
-		transformedPublishFindingsToCloudDataCatalog, err := expandDataLossPreventionJobTriggerInspectJobActionsPublishFindingsToCloudDataCatalog(original["publish_findings_to_cloud_data_catalog"], d, config)
-		if err != nil {
-			return nil, err
-		} else {
-			transformed["publishFindingsToCloudDataCatalog"] = transformedPublishFindingsToCloudDataCatalog
-		}
-
 		transformedJobNotificationEmails, err := expandDataLossPreventionJobTriggerInspectJobActionsJobNotificationEmails(original["job_notification_emails"], d, config)
 		if err != nil {
 			return nil, err
@@ -2558,24 +2551,6 @@ func expandDataLossPreventionJobTriggerInspectJobActionsPublishSummaryToCscc(v i
 }
 
 func expandDataLossPreventionJobTriggerInspectJobActionsPublishFindingsToDataplexCatalog(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	l := v.([]interface{})
-	if len(l) == 0 {
-		return nil, nil
-	}
-
-	if l[0] == nil {
-		transformed := make(map[string]interface{})
-		return transformed, nil
-	}
-	transformed := make(map[string]interface{})
-
-	return transformed, nil
-}
-
-func expandDataLossPreventionJobTriggerInspectJobActionsPublishFindingsToCloudDataCatalog(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
 	}

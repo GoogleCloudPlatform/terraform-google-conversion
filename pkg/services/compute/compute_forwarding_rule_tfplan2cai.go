@@ -196,7 +196,7 @@ func GetComputeForwardingRuleCaiObject(d tpgresource.TerraformResourceData, conf
 	allowGlobalAccessProp, err := expandComputeForwardingRuleAllowGlobalAccess(d.Get("allow_global_access"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("allow_global_access"); ok || !reflect.DeepEqual(v, allowGlobalAccessProp) {
+	} else if v, ok := d.GetOkExists("allow_global_access"); ok || (v != nil && !reflect.DeepEqual(v, allowGlobalAccessProp)) {
 		obj["allowGlobalAccess"] = allowGlobalAccessProp
 	}
 	allPortsProp, err := expandComputeForwardingRuleAllPorts(d.Get("all_ports"), d, config)
@@ -232,13 +232,13 @@ func GetComputeForwardingRuleCaiObject(d tpgresource.TerraformResourceData, conf
 	allowPscGlobalAccessProp, err := expandComputeForwardingRuleAllowPscGlobalAccess(d.Get("allow_psc_global_access"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("allow_psc_global_access"); ok || !reflect.DeepEqual(v, allowPscGlobalAccessProp) {
+	} else if v, ok := d.GetOkExists("allow_psc_global_access"); ok || (v != nil && !reflect.DeepEqual(v, allowPscGlobalAccessProp)) {
 		obj["allowPscGlobalAccess"] = allowPscGlobalAccessProp
 	}
 	noAutomateDnsZoneProp, err := expandComputeForwardingRuleNoAutomateDnsZone(d.Get("no_automate_dns_zone"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("no_automate_dns_zone"); ok || !reflect.DeepEqual(v, noAutomateDnsZoneProp) {
+	} else if v, ok := d.GetOkExists("no_automate_dns_zone"); ok || (v != nil && !reflect.DeepEqual(v, noAutomateDnsZoneProp)) {
 		obj["noAutomateDnsZone"] = noAutomateDnsZoneProp
 	}
 	ipVersionProp, err := expandComputeForwardingRuleIpVersion(d.Get("ip_version"), d, config)

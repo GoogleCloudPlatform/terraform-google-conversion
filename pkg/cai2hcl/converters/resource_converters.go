@@ -21,7 +21,6 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/apphub"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/artifactregistry"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/backupdr"
-	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/beyondcorp"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/bigquery"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/binaryauthorization"
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/services/blockchainnodeengine"
@@ -151,15 +150,6 @@ var ConverterMap = map[string]map[string]models.Cai2hclConverter{
 	},
 	"backupdr.googleapis.com/BackupVault": {
 		"Default": backupdr.NewBackupDRBackupVaultCai2hclConverter(provider),
-	},
-	"beyondcorp.googleapis.com/AppConnection": {
-		"Default": beyondcorp.NewBeyondcorpAppConnectionCai2hclConverter(provider),
-	},
-	"beyondcorp.googleapis.com/AppConnector": {
-		"Default": beyondcorp.NewBeyondcorpAppConnectorCai2hclConverter(provider),
-	},
-	"beyondcorp.googleapis.com/AppGateway": {
-		"Default": beyondcorp.NewBeyondcorpAppGatewayCai2hclConverter(provider),
 	},
 	"bigquery.googleapis.com/Dataset": {
 		"Default": bigquery.NewBigQueryDatasetCai2hclConverter(provider),

@@ -125,19 +125,19 @@ func GetSpannerBackupScheduleApiObject(d tpgresource.TerraformResourceData, conf
 	specProp, err := expandSpannerBackupScheduleSpec(d.Get("spec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("spec"); ok || !reflect.DeepEqual(v, specProp) {
+	} else if v, ok := d.GetOkExists("spec"); ok || (v != nil && !reflect.DeepEqual(v, specProp)) {
 		obj["spec"] = specProp
 	}
 	fullBackupSpecProp, err := expandSpannerBackupScheduleFullBackupSpec(d.Get("full_backup_spec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("full_backup_spec"); ok || !reflect.DeepEqual(v, fullBackupSpecProp) {
+	} else if v, ok := d.GetOkExists("full_backup_spec"); ok || (v != nil && !reflect.DeepEqual(v, fullBackupSpecProp)) {
 		obj["fullBackupSpec"] = fullBackupSpecProp
 	}
 	incrementalBackupSpecProp, err := expandSpannerBackupScheduleIncrementalBackupSpec(d.Get("incremental_backup_spec"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("incremental_backup_spec"); ok || !reflect.DeepEqual(v, incrementalBackupSpecProp) {
+	} else if v, ok := d.GetOkExists("incremental_backup_spec"); ok || (v != nil && !reflect.DeepEqual(v, incrementalBackupSpecProp)) {
 		obj["incrementalBackupSpec"] = incrementalBackupSpecProp
 	}
 	encryptionConfigProp, err := expandSpannerBackupScheduleEncryptionConfig(d.Get("encryption_config"), d, config)

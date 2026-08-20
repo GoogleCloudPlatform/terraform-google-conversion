@@ -119,25 +119,25 @@ func GetComputeNetworkPeeringRoutesConfigApiObject(d tpgresource.TerraformResour
 	exportCustomRoutesProp, err := expandComputeNetworkPeeringRoutesConfigExportCustomRoutes(d.Get("export_custom_routes"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("export_custom_routes"); ok || !reflect.DeepEqual(v, exportCustomRoutesProp) {
+	} else if v, ok := d.GetOkExists("export_custom_routes"); ok || (v != nil && !reflect.DeepEqual(v, exportCustomRoutesProp)) {
 		obj["exportCustomRoutes"] = exportCustomRoutesProp
 	}
 	importCustomRoutesProp, err := expandComputeNetworkPeeringRoutesConfigImportCustomRoutes(d.Get("import_custom_routes"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("import_custom_routes"); ok || !reflect.DeepEqual(v, importCustomRoutesProp) {
+	} else if v, ok := d.GetOkExists("import_custom_routes"); ok || (v != nil && !reflect.DeepEqual(v, importCustomRoutesProp)) {
 		obj["importCustomRoutes"] = importCustomRoutesProp
 	}
 	exportSubnetRoutesWithPublicIpProp, err := expandComputeNetworkPeeringRoutesConfigExportSubnetRoutesWithPublicIp(d.Get("export_subnet_routes_with_public_ip"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("export_subnet_routes_with_public_ip"); ok || !reflect.DeepEqual(v, exportSubnetRoutesWithPublicIpProp) {
+	} else if v, ok := d.GetOkExists("export_subnet_routes_with_public_ip"); ok || (v != nil && !reflect.DeepEqual(v, exportSubnetRoutesWithPublicIpProp)) {
 		obj["exportSubnetRoutesWithPublicIp"] = exportSubnetRoutesWithPublicIpProp
 	}
 	importSubnetRoutesWithPublicIpProp, err := expandComputeNetworkPeeringRoutesConfigImportSubnetRoutesWithPublicIp(d.Get("import_subnet_routes_with_public_ip"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("import_subnet_routes_with_public_ip"); ok || !reflect.DeepEqual(v, importSubnetRoutesWithPublicIpProp) {
+	} else if v, ok := d.GetOkExists("import_subnet_routes_with_public_ip"); ok || (v != nil && !reflect.DeepEqual(v, importSubnetRoutesWithPublicIpProp)) {
 		obj["importSubnetRoutesWithPublicIp"] = importSubnetRoutesWithPublicIpProp
 	}
 

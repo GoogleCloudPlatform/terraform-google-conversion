@@ -178,10 +178,11 @@ func flattenWorkflowsWorkflowServiceAccount(v interface{}, d *schema.ResourceDat
 
 func flattenWorkflowsWorkflowSourceContents(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		return nil
+		return "unknown"
 	}
-	if strVal, ok := v.(string); ok && strVal == "" {
-		return nil
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
 	}
 	return v
 }

@@ -125,7 +125,7 @@ func GetDNSResponsePolicyApiObject(d tpgresource.TerraformResourceData, config *
 	networksProp, err := expandDNSResponsePolicyNetworks(d.Get("networks"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("networks"); ok || !reflect.DeepEqual(v, networksProp) {
+	} else if v, ok := d.GetOkExists("networks"); ok || (v != nil && !reflect.DeepEqual(v, networksProp)) {
 		obj["networks"] = networksProp
 	}
 	gkeClustersProp, err := expandDNSResponsePolicyGkeClusters(d.Get("gke_clusters"), d, config)

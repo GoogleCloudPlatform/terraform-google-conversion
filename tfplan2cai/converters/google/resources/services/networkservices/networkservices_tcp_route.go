@@ -119,19 +119,19 @@ func GetNetworkServicesTcpRouteApiObject(d tpgresource.TerraformResourceData, co
 	meshesProp, err := expandNetworkServicesTcpRouteMeshes(d.Get("meshes"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("meshes"); ok || !reflect.DeepEqual(v, meshesProp) {
+	} else if v, ok := d.GetOkExists("meshes"); ok || (v != nil && !reflect.DeepEqual(v, meshesProp)) {
 		obj["meshes"] = meshesProp
 	}
 	gatewaysProp, err := expandNetworkServicesTcpRouteGateways(d.Get("gateways"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("gateways"); ok || !reflect.DeepEqual(v, gatewaysProp) {
+	} else if v, ok := d.GetOkExists("gateways"); ok || (v != nil && !reflect.DeepEqual(v, gatewaysProp)) {
 		obj["gateways"] = gatewaysProp
 	}
 	rulesProp, err := expandNetworkServicesTcpRouteRules(d.Get("rules"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("rules"); ok || !reflect.DeepEqual(v, rulesProp) {
+	} else if v, ok := d.GetOkExists("rules"); ok || (v != nil && !reflect.DeepEqual(v, rulesProp)) {
 		obj["rules"] = rulesProp
 	}
 	effectiveLabelsProp, err := expandNetworkServicesTcpRouteEffectiveLabels(d.Get("effective_labels"), d, config)

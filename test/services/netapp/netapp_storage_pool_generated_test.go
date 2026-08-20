@@ -60,9 +60,6 @@ func TestAccNetappStoragePool(t *testing.T) {
 		{
 			Name: "TestAccNetappStoragePool_ScaleType",
 		},
-		{
-			Name: "TestAccNetappStoragePool_ScaleTier",
-		},
 	}
 
 	for _, tt := range tests {

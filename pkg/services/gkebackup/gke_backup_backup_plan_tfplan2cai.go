@@ -148,7 +148,7 @@ func GetGKEBackupBackupPlanCaiObject(d tpgresource.TerraformResourceData, config
 	deactivatedProp, err := expandGKEBackupBackupPlanDeactivated(d.Get("deactivated"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("deactivated"); ok || !reflect.DeepEqual(v, deactivatedProp) {
+	} else if v, ok := d.GetOkExists("deactivated"); ok || (v != nil && !reflect.DeepEqual(v, deactivatedProp)) {
 		obj["deactivated"] = deactivatedProp
 	}
 	backupConfigProp, err := expandGKEBackupBackupPlanBackupConfig(d.Get("backup_config"), d, config)

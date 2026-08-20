@@ -142,7 +142,7 @@ func GetComputeRegionSslPolicyCaiObject(d tpgresource.TerraformResourceData, con
 	customFeaturesProp, err := expandComputeRegionSslPolicyCustomFeatures(d.Get("custom_features"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("custom_features"); ok || !reflect.DeepEqual(v, customFeaturesProp) {
+	} else if v, ok := d.GetOkExists("custom_features"); ok || (v != nil && !reflect.DeepEqual(v, customFeaturesProp)) {
 		obj["customFeatures"] = customFeaturesProp
 	}
 	postQuantumKeyExchangeProp, err := expandComputeRegionSslPolicyPostQuantumKeyExchange(d.Get("post_quantum_key_exchange"), d, config)

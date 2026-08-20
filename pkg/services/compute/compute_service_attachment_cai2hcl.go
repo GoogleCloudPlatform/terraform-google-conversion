@@ -221,7 +221,10 @@ func flattenComputeServiceAttachmentDomainNames(v interface{}, d *schema.Resourc
 }
 
 func flattenComputeServiceAttachmentConsumerRejectLists(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	return v
+	if v == nil {
+		return v
+	}
+	return schema.NewSet(schema.HashString, v.([]interface{}))
 }
 
 func flattenComputeServiceAttachmentConsumerAcceptLists(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -247,32 +250,14 @@ func flattenComputeServiceAttachmentConsumerAcceptLists(v interface{}, d *schema
 }
 
 func flattenComputeServiceAttachmentConsumerAcceptListsProjectIdOrNum(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	if strVal, ok := v.(string); ok && strVal == "" {
-		return nil
-	}
 	return v
 }
 
 func flattenComputeServiceAttachmentConsumerAcceptListsNetworkUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	if strVal, ok := v.(string); ok && strVal == "" {
-		return nil
-	}
 	return v
 }
 
 func flattenComputeServiceAttachmentConsumerAcceptListsEndpointUrl(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
-	if v == nil {
-		return nil
-	}
-	if strVal, ok := v.(string); ok && strVal == "" {
-		return nil
-	}
 	return v
 }
 

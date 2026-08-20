@@ -173,7 +173,7 @@ func GetApigeeSecurityActionApiObject(d tpgresource.TerraformResourceData, confi
 	allowProp, err := expandApigeeSecurityActionAllow(d.Get("allow"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("allow"); ok || !reflect.DeepEqual(v, allowProp) {
+	} else if v, ok := d.GetOkExists("allow"); ok || (v != nil && !reflect.DeepEqual(v, allowProp)) {
 		obj["allow"] = allowProp
 	}
 	denyProp, err := expandApigeeSecurityActionDeny(d.Get("deny"), d, config)

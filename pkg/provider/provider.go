@@ -795,11 +795,6 @@ func Provider() *schema.Provider {
 				Optional:     true,
 				ValidateFunc: ValidateCustomEndpoint,
 			},
-			"ml_engine_custom_endpoint": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: ValidateCustomEndpoint,
-			},
 			"model_armor_custom_endpoint": &schema.Schema{
 				Type:         schema.TypeString,
 				Optional:     true,
@@ -841,11 +836,6 @@ func Provider() *schema.Provider {
 				ValidateFunc: ValidateCustomEndpoint,
 			},
 			"network_services_custom_endpoint": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: ValidateCustomEndpoint,
-			},
-			"notebooks_custom_endpoint": &schema.Schema{
 				Type:         schema.TypeString,
 				Optional:     true,
 				ValidateFunc: ValidateCustomEndpoint,

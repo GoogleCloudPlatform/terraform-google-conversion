@@ -119,7 +119,7 @@ func GetMonitoringGenericServiceApiObject(d tpgresource.TerraformResourceData, c
 	userLabelsProp, err := expandMonitoringGenericServiceUserLabels(d.Get("user_labels"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("user_labels"); ok || !reflect.DeepEqual(v, userLabelsProp) {
+	} else if v, ok := d.GetOkExists("user_labels"); ok || (v != nil && !reflect.DeepEqual(v, userLabelsProp)) {
 		obj["userLabels"] = userLabelsProp
 	}
 	basicServiceProp, err := expandMonitoringGenericServiceBasicService(d.Get("basic_service"), d, config)

@@ -172,7 +172,7 @@ func GetGkeonpremVmwareClusterCaiObject(d tpgresource.TerraformResourceData, con
 	vmTrackingEnabledProp, err := expandGkeonpremVmwareClusterVmTrackingEnabled(d.Get("vm_tracking_enabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("vm_tracking_enabled"); ok || !reflect.DeepEqual(v, vmTrackingEnabledProp) {
+	} else if v, ok := d.GetOkExists("vm_tracking_enabled"); ok || (v != nil && !reflect.DeepEqual(v, vmTrackingEnabledProp)) {
 		obj["vmTrackingEnabled"] = vmTrackingEnabledProp
 	}
 	autoRepairConfigProp, err := expandGkeonpremVmwareClusterAutoRepairConfig(d.Get("auto_repair_config"), d, config)

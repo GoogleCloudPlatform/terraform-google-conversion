@@ -160,7 +160,7 @@ func GetBigQueryDatasetCaiObject(d tpgresource.TerraformResourceData, config *tr
 	friendlyNameProp, err := expandBigQueryDatasetFriendlyName(d.Get("friendly_name"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("friendly_name"); ok || !reflect.DeepEqual(v, friendlyNameProp) {
+	} else if v, ok := d.GetOkExists("friendly_name"); ok || (v != nil && !reflect.DeepEqual(v, friendlyNameProp)) {
 		obj["friendlyName"] = friendlyNameProp
 	}
 	locationProp, err := expandBigQueryDatasetLocation(d.Get("location"), d, config)
@@ -184,7 +184,7 @@ func GetBigQueryDatasetCaiObject(d tpgresource.TerraformResourceData, config *tr
 	defaultCollationProp, err := expandBigQueryDatasetDefaultCollation(d.Get("default_collation"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("default_collation"); ok || !reflect.DeepEqual(v, defaultCollationProp) {
+	} else if v, ok := d.GetOkExists("default_collation"); ok || (v != nil && !reflect.DeepEqual(v, defaultCollationProp)) {
 		obj["defaultCollation"] = defaultCollationProp
 	}
 	storageBillingModelProp, err := expandBigQueryDatasetStorageBillingModel(d.Get("storage_billing_model"), d, config)

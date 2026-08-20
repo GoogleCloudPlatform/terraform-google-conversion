@@ -166,7 +166,7 @@ func GetPubsubSubscriptionCaiObject(d tpgresource.TerraformResourceData, config 
 	expirationPolicyProp, err := expandPubsubSubscriptionExpirationPolicy(d.Get("expiration_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("expiration_policy"); ok || !reflect.DeepEqual(v, expirationPolicyProp) {
+	} else if v, ok := d.GetOkExists("expiration_policy"); ok || (v != nil && !reflect.DeepEqual(v, expirationPolicyProp)) {
 		obj["expirationPolicy"] = expirationPolicyProp
 	}
 	filterProp, err := expandPubsubSubscriptionFilter(d.Get("filter"), d, config)
@@ -178,13 +178,13 @@ func GetPubsubSubscriptionCaiObject(d tpgresource.TerraformResourceData, config 
 	deadLetterPolicyProp, err := expandPubsubSubscriptionDeadLetterPolicy(d.Get("dead_letter_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("dead_letter_policy"); ok || !reflect.DeepEqual(v, deadLetterPolicyProp) {
+	} else if v, ok := d.GetOkExists("dead_letter_policy"); ok || (v != nil && !reflect.DeepEqual(v, deadLetterPolicyProp)) {
 		obj["deadLetterPolicy"] = deadLetterPolicyProp
 	}
 	retryPolicyProp, err := expandPubsubSubscriptionRetryPolicy(d.Get("retry_policy"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("retry_policy"); ok || !reflect.DeepEqual(v, retryPolicyProp) {
+	} else if v, ok := d.GetOkExists("retry_policy"); ok || (v != nil && !reflect.DeepEqual(v, retryPolicyProp)) {
 		obj["retryPolicy"] = retryPolicyProp
 	}
 	enableMessageOrderingProp, err := expandPubsubSubscriptionEnableMessageOrdering(d.Get("enable_message_ordering"), d, config)
