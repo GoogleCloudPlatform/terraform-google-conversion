@@ -1289,10 +1289,21 @@ func expandVertexAIReasoningEngineSpecBuildSpec(v interface{}, d tpgresource.Ter
 		transformed["workerPool"] = transformedWorkerPool
 	}
 
+	transformedServiceAccount, err := expandVertexAIReasoningEngineSpecBuildSpecServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
 	return transformed, nil
 }
 
 func expandVertexAIReasoningEngineSpecBuildSpecWorkerPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineSpecBuildSpecServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
