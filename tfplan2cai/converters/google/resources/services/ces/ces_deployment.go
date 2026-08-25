@@ -128,6 +128,18 @@ func GetCESDeploymentApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
+	instagramCredentialsProp, err := expandCESDeploymentInstagramCredentials(d.Get("instagram_credentials"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("instagram_credentials"); !tpgresource.IsEmptyValue(reflect.ValueOf(instagramCredentialsProp)) && (ok || !reflect.DeepEqual(v, instagramCredentialsProp)) {
+		obj["instagramCredentials"] = instagramCredentialsProp
+	}
+	whatsappCredentialsProp, err := expandCESDeploymentWhatsappCredentials(d.Get("whatsapp_credentials"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("whatsapp_credentials"); !tpgresource.IsEmptyValue(reflect.ValueOf(whatsappCredentialsProp)) && (ok || !reflect.DeepEqual(v, whatsappCredentialsProp)) {
+		obj["whatsappCredentials"] = whatsappCredentialsProp
+	}
 
 	return obj, nil
 }
@@ -350,5 +362,123 @@ func expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsEnableRecap
 }
 
 func expandCESDeploymentDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentInstagramCredentials(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAuthCode, err := expandCESDeploymentInstagramCredentialsAuthCode(original["auth_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authCode"] = transformedAuthCode
+	}
+
+	transformedConversationProfileId, err := expandCESDeploymentInstagramCredentialsConversationProfileId(original["conversation_profile_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConversationProfileId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conversationProfileId"] = transformedConversationProfileId
+	}
+
+	return transformed, nil
+}
+
+func expandCESDeploymentInstagramCredentialsAuthCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentInstagramCredentialsConversationProfileId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentWhatsappCredentials(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAuthCode, err := expandCESDeploymentWhatsappCredentialsAuthCode(original["auth_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authCode"] = transformedAuthCode
+	}
+
+	transformedBusinessAccountId, err := expandCESDeploymentWhatsappCredentialsBusinessAccountId(original["business_account_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBusinessAccountId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["businessAccountId"] = transformedBusinessAccountId
+	}
+
+	transformedConversationProfileId, err := expandCESDeploymentWhatsappCredentialsConversationProfileId(original["conversation_profile_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConversationProfileId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["conversationProfileId"] = transformedConversationProfileId
+	}
+
+	transformedPhoneNumber, err := expandCESDeploymentWhatsappCredentialsPhoneNumber(original["phone_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumber"] = transformedPhoneNumber
+	}
+
+	transformedPin, err := expandCESDeploymentWhatsappCredentialsPin(original["pin"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPin); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pin"] = transformedPin
+	}
+
+	transformedWabaId, err := expandCESDeploymentWhatsappCredentialsWabaId(original["waba_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWabaId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["wabaId"] = transformedWabaId
+	}
+
+	return transformed, nil
+}
+
+func expandCESDeploymentWhatsappCredentialsAuthCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentWhatsappCredentialsBusinessAccountId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentWhatsappCredentialsConversationProfileId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentWhatsappCredentialsPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentWhatsappCredentialsPin(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentWhatsappCredentialsWabaId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
