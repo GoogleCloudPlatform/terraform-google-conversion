@@ -123,6 +123,19 @@ When set to TRUE, request or response processing continues without error. Any su
 * If response headers have not been delivered to the downstream client, a generic 500 error is returned to the client. The error response can be tailored by configuring a custom error response in the load balancer.
 * If response headers have been delivered, then the HTTP stream to the downstream client is reset.`,
 			},
+			"forward_attributes": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `List of the Envoy attributes to forward to the extension server. The attributes
+provided here are included as part of the 'ProcessingRequest.attributes' field
+(of type 'map'), where the keys are the attribute names. Refer to the
+[documentation](https://cloud.google.com/service-extensions/docs/attributes)
+for the names of attributes that can be forwarded. If omitted, no attributes
+are sent. Each element is a string indicating the attribute name.`,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 			"forward_headers": {
 				Type:        schema.TypeList,
 				Optional:    true,
