@@ -163,6 +163,12 @@ func GetNetworkServicesAuthzExtensionCaiObject(d tpgresource.TerraformResourceDa
 	} else if v, ok := d.GetOkExists("forward_headers"); !tpgresource.IsEmptyValue(reflect.ValueOf(forwardHeadersProp)) && (ok || !reflect.DeepEqual(v, forwardHeadersProp)) {
 		obj["forwardHeaders"] = forwardHeadersProp
 	}
+	forwardAttributesProp, err := expandNetworkServicesAuthzExtensionForwardAttributes(d.Get("forward_attributes"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("forward_attributes"); !tpgresource.IsEmptyValue(reflect.ValueOf(forwardAttributesProp)) && (ok || !reflect.DeepEqual(v, forwardAttributesProp)) {
+		obj["forwardAttributes"] = forwardAttributesProp
+	}
 	wireFormatProp, err := expandNetworkServicesAuthzExtensionWireFormat(d.Get("wire_format"), d, config)
 	if err != nil {
 		return nil, err
@@ -221,6 +227,10 @@ func expandNetworkServicesAuthzExtensionMetadata(v interface{}, d tpgresource.Te
 }
 
 func expandNetworkServicesAuthzExtensionForwardHeaders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAuthzExtensionForwardAttributes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
