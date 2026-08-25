@@ -971,10 +971,21 @@ func expandCESAppLoggingSettingsConversationLoggingSettings(v interface{}, d tpg
 		transformed["disableConversationLogging"] = transformedDisableConversationLogging
 	}
 
+	transformedRetentionWindow, err := expandCESAppLoggingSettingsConversationLoggingSettingsRetentionWindow(original["retention_window"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRetentionWindow); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["retentionWindow"] = transformedRetentionWindow
+	}
+
 	return transformed, nil
 }
 
 func expandCESAppLoggingSettingsConversationLoggingSettingsDisableConversationLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppLoggingSettingsConversationLoggingSettingsRetentionWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
