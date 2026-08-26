@@ -152,6 +152,12 @@ func GetDiscoveryEngineLicenseConfigApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("free_trial"); !tpgresource.IsEmptyValue(reflect.ValueOf(freeTrialProp)) && (ok || !reflect.DeepEqual(v, freeTrialProp)) {
 		obj["freeTrial"] = freeTrialProp
 	}
+	lastUserUpdateTimeProp, err := expandDiscoveryEngineLicenseConfigLastUserUpdateTime(d.Get("last_user_update_time"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("last_user_update_time"); !tpgresource.IsEmptyValue(reflect.ValueOf(lastUserUpdateTimeProp)) && (ok || !reflect.DeepEqual(v, lastUserUpdateTimeProp)) {
+		obj["lastUserUpdateTime"] = lastUserUpdateTimeProp
+	}
 
 	return obj, nil
 }
@@ -269,5 +275,9 @@ func expandDiscoveryEngineLicenseConfigSubscriptionTerm(v interface{}, d tpgreso
 }
 
 func expandDiscoveryEngineLicenseConfigFreeTrial(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineLicenseConfigLastUserUpdateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
