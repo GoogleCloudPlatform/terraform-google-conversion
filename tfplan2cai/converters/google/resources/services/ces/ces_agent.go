@@ -631,6 +631,13 @@ func expandCESAgentRemoteDialogflowAgent(v interface{}, d tpgresource.TerraformR
 		transformed["inputVariableMapping"] = transformedInputVariableMapping
 	}
 
+	transformedLanguageCodeVariable, err := expandCESAgentRemoteDialogflowAgentLanguageCodeVariable(original["language_code_variable"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLanguageCodeVariable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["languageCodeVariable"] = transformedLanguageCodeVariable
+	}
+
 	transformedOutputVariableMapping, err := expandCESAgentRemoteDialogflowAgentOutputVariableMapping(original["output_variable_mapping"], d, config)
 	if err != nil {
 		return nil, err
@@ -669,6 +676,10 @@ func expandCESAgentRemoteDialogflowAgentInputVariableMapping(v interface{}, d tp
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandCESAgentRemoteDialogflowAgentLanguageCodeVariable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESAgentRemoteDialogflowAgentOutputVariableMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
